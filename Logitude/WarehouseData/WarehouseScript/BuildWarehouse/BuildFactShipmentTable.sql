@@ -33,7 +33,7 @@
    declare @AccountingClosed as bit
    declare @Status as int
    declare @Location as nvarchar(40)
-   declare @Origin as int
+   declare @MainCarriageFromPort as int
    declare @FinalDestination as int
    declare @IsDeparted as bit
    declare @MainCarriageATD as datetime
@@ -115,6 +115,19 @@
   declare @CutoffDate as datetime
   declare @Consolidator as int
 
+  declare @ConsolidatorRef1 as varchar(50)
+  declare @ShipmentNotes as varchar(1000)
+  declare @Notify1 as int
+  declare @Notify1Ref1 as varchar(50)
+  declare @Notify2 as int
+  declare @Notify2Ref1 as varchar(50)
+  declare @Coloader as int
+  declare @ColoaderRef1 as varchar(50)
+  declare @ShipperNotExporter as int
+  declare @ShipperNotExporterRef1 as varchar(50)
+  declare @ReleasingAgent as int
+  declare @ReleasingAgentRef1 as varchar(50)
+
 
 
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
@@ -131,7 +144,7 @@
 	mainCarriageCarrierPartners.Id_Number,valueOfGoodsCurrency.Id_Number,WarehouseLegWarehousePartners.Id_Number,forwarderPartners.Id_Number,createdByUser.Id_Number,customerAgentImportPartners.Id_Number , customerAgentExportPartners.Id_Number, dw_ShipmentMasterDatas.AirlinePrefix,
 	dw_ShipmentMasterDatas.BookingConfirmationNumber , dw_ShipmentMasterDatas.MainCarriageATA , dw_ShipmentMasterDatas.MAWBOBLDate , dw_Shipments.StatusDate , dw_Shipments.CustomsDeclarationNumber ,  dw_Shipments.FirstOperationalCloseDate,
 	 dw_Shipments.EstimatedFinalArrivalDate , dw_Shipments.ActualFinalArrivalDate,  dw_Shipments.Routing , dw_Shipments.DescriptionOfGoods , dw_Shipments.PreCarriageETD , dw_ShipmentMasterDatas.MainCarriageETA , NewDIM_MoveTypes.Id_Number , NewDIM_Vessels.Id_Number , NewDIM_SpecialServicesTypes.Id_Number,
-	 dw_ShipmentMasterDatas.MasterShipmentNumber , dw_Shipments.ARInvoices , @dw_Shipments.CustomFieldsVariable, dw_Shipments.CutoffDate , ConsolidatorIdPartners.Id_Number
+	 dw_ShipmentMasterDatas.MasterShipmentNumber , dw_Shipments.ARInvoices , @dw_Shipments.CustomFieldsVariable, dw_Shipments.CutoffDate , ConsolidatorIdPartners.Id_Number,dw_Shipments.ConsolidatorReference,dw_Shipments.Notes ,Notify1Partners.Id_Number,dw_Shipments.Notify1Reference, Notify2Partners.Id_Number,dw_Shipments.Notify2Reference,ColoaderPartners.Id_Number,dw_Shipments.ColoaderReference1,ShipperNotExporterPartners.Id_Number,dw_Shipments.ShipperNotExporterReference,ReleasingAgentPartners.Id_Number,dw_Shipments.ReleasingAgentReference1
 
 
 	From dw_Shipments
@@ -180,18 +193,24 @@
 	inner JOIN NewDIM_SpecialServicesTypes   ON dw_Shipments.SpecialServicesTypeId = NewDIM_SpecialServicesTypes.Id
 	inner JOIN dw_CustomObjectFields  ON dw_Shipments.Tenant = dw_CustomObjectFields.Tenant
 	inner JOIN NewDIM_Partners ConsolidatorIdPartners ON dw_Shipments.ConsolidatorId = ConsolidatorIdPartners.Id
+	inner JOIN NewDIM_Partners Notify1Partners ON dw_Shipments.Notify1Id = Notify1Partners.Id
+	inner JOIN NewDIM_Partners Notify2Partners ON dw_Shipments.Notify2Id = Notify2Partners.Id
+	inner JOIN NewDIM_Partners ColoaderPartners ON dw_Shipments.ColoaderId = ColoaderPartners.Id
+	inner JOIN NewDIM_Partners ShipperNotExporterPartners ON dw_Shipments.ShipperNotExporterId = ShipperNotExporterPartners.Id
+	inner JOIN NewDIM_Partners ReleasingAgentPartners ON dw_Shipments.ReleasingAgentId = ReleasingAgentPartners.Id
+
 	 where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D') 
 
 	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO    @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Shipper , @Consignee , @Agent, @Customer 
 	,@Incoterm , @TotalGrossWeightInKG, @TotalChargeableWeightInKG , @TotalVolumeInCBM , @NumberOfPackages , @NumberOfContainers , @Salesman ,@AccountManager,@TotalProfitInLocalCurrency ,
 	 @TotalProfitInProfitCurrency ,  @LocalCurrency , @ProfitCurrency  , @OperationallyClosed , @AccountingClosed , @Status , @Location   ,
-    @MainCarriageATD ,  @ArrivedDate ,  @CustomsClearenceDate ,@MasterDataId ,@MainCarriageToPortId, @Transshipment1ToPortId,@Transshipment2ToPortId ,@Transshipment3ToPortId, @Origin ,@ToPortId,@DirectionId,@TransportModeId , @Tenant ,@CreateDate, @LastUpdateDate,@OperationalDate,@OperationalCloseDate,@AccountingCloseDate,
+    @MainCarriageATD ,  @ArrivedDate ,  @CustomsClearenceDate ,@MasterDataId ,@MainCarriageToPortId, @Transshipment1ToPortId,@Transshipment2ToPortId ,@Transshipment3ToPortId, @MainCarriageFromPort ,@ToPortId,@DirectionId,@TransportModeId , @Tenant ,@CreateDate, @LastUpdateDate,@OperationalDate,@OperationalCloseDate,@AccountingCloseDate,
     @OpenReceivablesInLocalCurrency,@OpenReceivablesInProfitCurrency,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency,@OpenPayablesInLocalCurrency,@OpenPayablesInProfitCurrency,@AccountedPayablesInLocalCurrency,@AccountedPayablesInProfitCurrency,
     @AgentReference1,@AgentReference2,@CustomerReference1,@CustomerReference2 , @ShipperReference1,@ShipperReference2,@ConsigneeReference1,@ConsigneeReference2,@MainHarmonize,@AMSBL,@FirstPickupETA,@FirstPickupETD,
 	@FreightPC,@MainCarriageETD,@MainCarriageFinalDestinationATA ,@MainCarriageFinalDestinationETA,@CarrierNumber,@ProjectNumber,@OtherChargePC,@TEU,@ValueOfGoods,
 	@Carrier,@ValueOfGoodsCurrency,@Warehouse,@Forwarder,@CreatedBy,@CustomAgentImportId , @CustomAgentExportId , @AirlinePrefix , 
 	@BookingConfirmationNumber, @MainCarriageATA, @MAWBOBLDate, @StatusDate, @CustomsDeclarationNumber, @FirstOperationalCloseDate, @EstimatedFinalArrivalDate, @ActualFinalArrivalDate, @Routing, @DescriptionOfGoods, @PreCarriageETD, @MainCarriageETA,@MoveType,@Vessel , @SpecialServices,
-	@MasterShipmentNumber,@ARInvoices, @CursorCustomFieldsVariable , @CutoffDate , @Consolidator
+	@MasterShipmentNumber,@ARInvoices, @CursorCustomFieldsVariable , @CutoffDate , @Consolidator ,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1
 	
 
 
@@ -283,19 +302,22 @@
 
 	 ------------------------------------------------------
 
-      insert into #Fact_ShipmentsTemp ([Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[DirectHouse],[Type],[Department],[Branch],[Shipment Number],[House],[Master],[Shipper],[Consignee],[Agent],[Customer],[Incoterm],[Gross Weight (KG)],[Chargeable Weight (KG)],[Total Volume (CBM)],[Number of Packages],[Number of Containers],[Salesman],[Account Manager],[Profit ( Local )],[Profit],[Local Currency ],[Profit Currency],[Operationally Closed],[Accounting Closed],[Status],[Location],[Origin],[Final Destination],[Is Departed],[Departed Date],[Is Arrived],[Arrived Date],[Is Customs Cleared],[Customs Clearence Date],[Total Shipments],[Create Date],[Last Update Date],[Operational Date],[Operational Close Date],[Accounting Close Date],[Open Receivables ( Local )],[Open Receivables ( Profit )],[Accounted Receivables ( Local )],[Accounted Receivables ( Profit )],[Open Payables ( Local )],[Open Payables ( Profit )],[Accounted Payables ( Local )],[Accounted Payables ( Profit )], [Agent Ref1],[Agent Ref2],[AMS BL],[Consignee Ref1],[Consignee Ref2],[Created By],[Custom Agent],[Customer Ref1],[Customer Ref2],[First Pickup Date],[Freight PC],[Carrier Date ],[Carrier],[Carrier Number],[Main Harmonize],[Other Charge PC],[Project#],[Shipper Ref1],[Shipper Ref2],[TEU],[Value of Goods],[Value of Goods Currency],[Warehouse Terminal],[Forwarder] , [Booking Confirmation Number], [Main Carriage ATA], [Master Date], [Status Date], [Customs Declaration Number],  [First Operational Close Date],   [Estimated Final Arrival Date], [Actual Final Arrival Date],  [Routing], [Description Of Goods], [Pre Carriage ETD], [Main Carriage ETA] , [Main Carriage ETD] , [Move Type]  , [Vessel] , [Special Services] , [First Pickup ETA] , [First Pickup ETD] , [Master Shipment Number] , [AR Invoices] ,[CustomFieldNamesVariable] , [Create Date Time], [Update Date Time],[Operational Date Time],[Cutoff Date],[Consolidator]) 
-      values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @Status, @Location,  @Origin , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared , dbo.GetDateFormateAsNumber(@CustomsClearenceDate) , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@Forwarder ,  @BookingConfirmationNumber,@MainCarriageATA ,dbo.GetDateFormateAsNumber(@MAWBOBLDate) , dbo.GetDateFormateAsNumber(@StatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServices ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator)
+      insert into #Fact_ShipmentsTemp ([Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[DirectHouse],[Type],[Department],[Branch],[Shipment Number],[House],[Master],[Shipper],[Consignee],[Agent],[Customer],[Incoterm],[Gross Weight (KG)],[Chargeable Weight (KG)],[Total Volume (CBM)],[Number of Packages],[Number of Containers],[Salesman],[Account Manager],[Profit ( Local )],[Profit],[Local Currency ],[Profit Currency],[Operationally Closed],[Accounting Closed],[Status],[Location],[MainCarriage From Port],[MainCarriage To Port],[Is Departed],[MainCarriage ATD],[Is Arrived],[Arrived Date],[Is Customs Cleared],[Customs Clearence Date],[Total Shipments],[Create Date],[Last Update Date],[Operational Date],[Operational Close Date],[Accounting Close Date],[Open Receivables ( Local )],[Open Receivables ( Profit )],[Accounted Receivables ( Local )],[Accounted Receivables ( Profit )],[Open Payables ( Local )],[Open Payables ( Profit )],[Accounted Payables ( Local )],[Accounted Payables ( Profit )], [Agent Ref1],[Agent Ref2],[AMS BL],[Consignee Ref1],[Consignee Ref2],[Created By],[Custom Agent],[Customer Ref1],[Customer Ref2],[First Pickup Date],[Freight PC],[Carrier Date ],[Carrier],[Carrier Number],[Main Harmonize],[Other Charge PC],[Project#],[Shipper Ref1],[Shipper Ref2],[TEU],[Value of Goods],[Value of Goods Currency],[Warehouse Terminal],[Forwarder] , [Booking Confirmation Number], [Main Carriage ATA], [Master Date], [Status Date], [Customs Declaration Number],  [First Operational Close Date],   [Estimated Final Arrival Date], [Actual Final Arrival Date],  [Routing], [Description Of Goods], [Pre Carriage ETD], [Main Carriage ETA] , [Main Carriage ETD] , [Move Type]  , [Vessel] , [Special Services] , [First Pickup ETA] , [First Pickup ETD] , [Master Shipment Number] , [AR Invoices] ,[CustomFieldNamesVariable] , [Create Date Time], [Update Date Time],[Operational Date Time],[Cutoff Date],[Consolidator],[Consolidator Ref1] ,[Shipment Notes], [Notify 1],[Notify 1 Ref1],[Notify 2],[Notify 2 Ref1],[Coloader],[Coloader Ref1],[Shipper Not Exporter],[Shipper Not Exporter Ref1],[Releasing Agent],[Releasing Agent Ref1]) 
+      values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @Status, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared , dbo.GetDateFormateAsNumber(@CustomsClearenceDate) , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@Forwarder ,  @BookingConfirmationNumber,@MainCarriageATA ,dbo.GetDateFormateAsNumber(@MAWBOBLDate) , dbo.GetDateFormateAsNumber(@StatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServices ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1)
 	FETCH NEXT FROM ShipmentsCursor    INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Shipper , @Consignee , @Agent, @Customer 
 	,@Incoterm , @TotalGrossWeightInKG, @TotalChargeableWeightInKG , @TotalVolumeInCBM , @NumberOfPackages , @NumberOfContainers , @Salesman ,@AccountManager ,@TotalProfitInLocalCurrency , 
 	 @TotalProfitInProfitCurrency ,  @LocalCurrency , @ProfitCurrency  , @OperationallyClosed , @AccountingClosed , @Status , @Location   ,
-	 @MainCarriageATD ,  @ArrivedDate ,  @CustomsClearenceDate ,@MasterDataId ,@MainCarriageToPortId, @Transshipment1ToPortId,@Transshipment2ToPortId ,@Transshipment3ToPortId, @Origin ,@ToPortId,@DirectionId,@TransportModeId , @Tenant ,@CreateDate,@LastUpdateDate,@OperationalDate,@OperationalCloseDate,@AccountingCloseDate,
+	 @MainCarriageATD ,  @ArrivedDate ,  @CustomsClearenceDate ,@MasterDataId ,@MainCarriageToPortId, @Transshipment1ToPortId,@Transshipment2ToPortId ,@Transshipment3ToPortId, @MainCarriageFromPort ,@ToPortId,@DirectionId,@TransportModeId , @Tenant ,@CreateDate,@LastUpdateDate,@OperationalDate,@OperationalCloseDate,@AccountingCloseDate,
      @OpenReceivablesInLocalCurrency,@OpenReceivablesInProfitCurrency,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency,@OpenPayablesInLocalCurrency,@OpenPayablesInProfitCurrency,@AccountedPayablesInLocalCurrency,@AccountedPayablesInProfitCurrency,
     @AgentReference1,@AgentReference2,@CustomerReference1,@CustomerReference2 , @ShipperReference1,@ShipperReference2,@ConsigneeReference1,@ConsigneeReference2,@MainHarmonize,@AMSBL,@FirstPickupETA,@FirstPickupETD,
 	@FreightPC,@MainCarriageETD,@MainCarriageFinalDestinationATA ,@MainCarriageFinalDestinationETA,@CarrierNumber,@ProjectNumber,@OtherChargePC,@TEU,@ValueOfGoods,
 	@Carrier,@ValueOfGoodsCurrency,@Warehouse,@Forwarder,@CreatedBy,@CustomAgentImportId , @CustomAgentExportId, @AirlinePrefix,
 	@BookingConfirmationNumber, @MainCarriageATA, @MAWBOBLDate, @StatusDate, @CustomsDeclarationNumber, @FirstOperationalCloseDate, @EstimatedFinalArrivalDate, @ActualFinalArrivalDate, @Routing, @DescriptionOfGoods, @PreCarriageETD, @MainCarriageETA,@MoveType , @Vessel , @SpecialServices,
-	@MasterShipmentNumber,@ARInvoices,@CursorCustomFieldsVariable, @CutoffDate ,@Consolidator
+	@MasterShipmentNumber,@ARInvoices,@CursorCustomFieldsVariable, @CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1
 		
 		End
 	CLOSE ShipmentsCursor
 	DEALLOCATE ShipmentsCursor
+
+
+	

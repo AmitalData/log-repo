@@ -283,6 +283,15 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @DIM_PartnersCodeNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersCodeNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersCodeNewId,0,'DIM_Partners','[Code]','Code','Text','true',0,15,'false','false','true','[Name],[Partner Type]','false','false','false')  
+declare @DIM_Partnersaddress1NewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_Partnersaddress1NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@DIM_Partnersaddress1NewId,0,'DIM_Partners','[address1]','address1','Text','false',0,65,'false','false','true','Operational ','false','false','false')  
+declare @DIM_Partnersaddress2NewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_Partnersaddress2NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@DIM_Partnersaddress2NewId,0,'DIM_Partners','[address2]','address2','Text','false',0,65,'false','false','true','Operational ','false','false','false')  
+declare @DIM_PartnersPhoneNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersPhoneNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersPhoneNewId,0,'DIM_Partners','[Phone]','Phone','Text','false',0,40,'false','false','true','Partners','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @DIM_PortsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PortsNewId OUTPUT,'DWObjectTable' 
@@ -571,18 +580,18 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsLocationNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsLocationNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsLocationNewId,0,'Fact_Shipments','[Location]','Location','nText','false',0,40,'false','false','true','Operational','false','false','false')  
-declare @Fact_ShipmentsOriginNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ShipmentsOriginNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsOriginNewId,0,'Fact_Shipments','[Origin]','Origin','Dimension','false',0,0,'DIM_Ports','false','false','true','Operational','false','false','false')  
-declare @Fact_ShipmentsFinalDestinationNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ShipmentsFinalDestinationNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsFinalDestinationNewId,0,'Fact_Shipments','[Final Destination]','Final Destination','Dimension','false',0,0,'DIM_Ports','false','false','true','Operational','false','false','false')  
+declare @Fact_ShipmentsMainCarriageFromPortNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsMainCarriageFromPortNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsMainCarriageFromPortNewId,0,'Fact_Shipments','[MainCarriage From Port]','MainCarriage From Port','Dimension','false',0,0,'DIM_Ports','false','false','true','Operational','false','false','false')  
+declare @Fact_ShipmentsMainCarriageToPortNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsMainCarriageToPortNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsMainCarriageToPortNewId,0,'Fact_Shipments','[MainCarriage To Port]','MainCarriage To Port','Dimension','false',0,0,'DIM_Ports','false','false','true','Operational','false','false','false')  
 declare @Fact_ShipmentsIsDepartedNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsIsDepartedNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsIsDepartedNewId,0,'Fact_Shipments','[Is Departed]','Departed','Boolean','false',0,0,'false','false','true','Operational','false','false','false')  
-declare @Fact_ShipmentsDepartedDateNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ShipmentsDepartedDateNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,Category2,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsDepartedDateNewId,0,'Fact_Shipments','[Departed Date]','Departed Date','DateTime','false',0,0,'false','false','true','Dates','Operational','false','false','false')  
+declare @Fact_ShipmentsMainCarriageATDNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsMainCarriageATDNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,Category2,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsMainCarriageATDNewId,0,'Fact_Shipments','[MainCarriage ATD]','MainCarriage ATD','DateTime','false',0,0,'false','false','true','Dates','Operational','false','false','false')  
 declare @Fact_ShipmentsIsArrivedNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsIsArrivedNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsIsArrivedNewId,0,'Fact_Shipments','[Is Arrived]','Arrived','Boolean','false',0,0,'false','false','true','Operational','false','false','false')  
@@ -904,3 +913,39 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsConsolidatorNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsConsolidatorNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsConsolidatorNewId,0,'Fact_Shipments','[Consolidator]','Consolidator','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false')  
+declare @Fact_ShipmentsConsolidatorRef1NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsConsolidatorRef1NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsConsolidatorRef1NewId,0,'Fact_Shipments','[Consolidator Ref1]','Consolidator Ref1','Text','false',0,50,'false','false','true','References ','false','false','false')  
+declare @Fact_ShipmentsShipmentNotesNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsShipmentNotesNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,Category2,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsShipmentNotesNewId,0,'Fact_Shipments','[Shipment Notes]','Shipment Notes','Text','false',0,1000,'false','false','true','Operational ','General ','false','false','false')  
+declare @Fact_ShipmentsNotify1NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsNotify1NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsNotify1NewId,0,'Fact_Shipments','[Notify 1]','Notify 1','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false')  
+declare @Fact_ShipmentsNotify1Ref1NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsNotify1Ref1NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsNotify1Ref1NewId,0,'Fact_Shipments','[Notify 1 Ref1]','Notify 1 Ref1','Text','false',0,50,'false','false','true','References ','false','false','false')  
+declare @Fact_ShipmentsNotify2NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsNotify2NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsNotify2NewId,0,'Fact_Shipments','[Notify 2]','Notify 2','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false')  
+declare @Fact_ShipmentsNotify2Ref1NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsNotify2Ref1NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsNotify2Ref1NewId,0,'Fact_Shipments','[Notify 2 Ref1]','Notify 2 Ref1','Text','false',0,50,'false','false','true','References ','false','false','false')  
+declare @Fact_ShipmentsColoaderNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsColoaderNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsColoaderNewId,0,'Fact_Shipments','[Coloader]','Coloader','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false')  
+declare @Fact_ShipmentsColoaderRef1NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsColoaderRef1NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsColoaderRef1NewId,0,'Fact_Shipments','[Coloader Ref1]','Coloader Ref1','Text','false',0,50,'false','false','true','References ','false','false','false')  
+declare @Fact_ShipmentsShipperNotExporterNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsShipperNotExporterNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsShipperNotExporterNewId,0,'Fact_Shipments','[Shipper Not Exporter]','Shipper Not Exporter','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false')  
+declare @Fact_ShipmentsShipperNotExporterRef1NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsShipperNotExporterRef1NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsShipperNotExporterRef1NewId,0,'Fact_Shipments','[Shipper Not Exporter Ref1]','Shipper Not Exporter Ref1','Text','false',0,50,'false','false','true','References','false','false','false')  
+declare @Fact_ShipmentsReleasingAgentNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsReleasingAgentNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsReleasingAgentNewId,0,'Fact_Shipments','[Releasing Agent]','Releasing Agent','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false')  
+declare @Fact_ShipmentsReleasingAgentRef1NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsReleasingAgentRef1NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsReleasingAgentRef1NewId,0,'Fact_Shipments','[Releasing Agent Ref1]','Releasing Agent Ref1','Text','false',0,50,'false','false','true','References ','false','false','false')  
