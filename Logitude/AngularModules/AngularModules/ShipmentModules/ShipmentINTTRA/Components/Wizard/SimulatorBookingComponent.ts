@@ -4,24 +4,30 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { INTRAWebService, INTRAResult } from '../../../../Shipment/Services/INTRAWebService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 
 @Component({
     moduleId: module.id,
     templateUrl: './SimulatorBookingComponent.html',
 })
 
-export class SimulatorBookingComponent {
+export class SimulatorBookingComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
+    public EntityPM: ShipmentPM = null;
     private CurrentSession = SessionLocator.SelectedSession;
     private ShipmentId: string;
     private INTRAWebService: INTRAWebService;
+    public DataContext = this;
+    public ObjectTableName: string = "Shipment";
 
     constructor() {
-
+        super();
     }
 
     SetWindowArgs(args) {
-        this.ShipmentId = args;
+        this.EntityPM = args;
+        this.ShipmentId = this.EntityPM.Id;
         this.INTRAWebService  = new INTRAWebService();
         this.INTRAWebService .ValidateBooking(this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) {
@@ -37,6 +43,20 @@ export class SimulatorBookingComponent {
                 }
             }
         });
+    }
+
+    get INTTRABookingStatusName() { return this.EntityPM.INTTRABookingStatusName; }
+    set INTTRABookingStatusName(value: string) {
+        if (this.EntityPM.INTTRABookingStatusName != value) {
+            this.EntityPM.INTTRABookingStatusName = value;
+        }
+    }
+
+    get INTTRABookingTransStatusName() { return this.EntityPM.INTTRABookingTransStatusName; }
+    set INTTRABookingTransStatusName(value: string) {
+        if (this.EntityPM.INTTRABookingTransStatusName != value) {
+            this.EntityPM.INTTRABookingTransStatusName = value;
+        }
     }
 
     CloseButtonClicked() {

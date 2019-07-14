@@ -5946,6 +5946,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARPaymentTextCode_ARPaymentMChronologicalDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ChronologicalDate", DefaultText = "%ApprovedDate should be bigger or equals to the Last Chronological Date %Date",LocalDefaultText = @"תאריך הקבלה חייב להיות גבוה או שווה לתאריך הקבלה האחרונה %Date", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode ARPaymentTextCode_ARPaymentOPaymentInProcesscantModified = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.PaymentInProcess-cantModified", DefaultText = "Payment in process - can't be modified",LocalDefaultText = @"הקבלה בתהליך בניה - לא ניתן לבצע שינויים", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

@@ -20,10 +20,10 @@ export class JournalOpService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/JournalOp';
     }
 
-    GetYearTransferJournal(year: string) {
+    GetYearTransferJournal(year: string, myOperation: string, lastYearTransferJournalPMId: string ) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        var url = this._apiUrl + '/GetYearTransferJournal?year=' + year;
+        var url = this._apiUrl + '/GetYearTransferJournal?year=' + year + "&myOperation=" + myOperation + "&lastYearTransferJournalPMId=" + lastYearTransferJournalPMId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
