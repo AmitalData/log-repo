@@ -2220,6 +2220,12 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string INTTRADocumentTypeCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string INTTRABookingTransStatusCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string INTTRABookingStatusCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastFinalDestination { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

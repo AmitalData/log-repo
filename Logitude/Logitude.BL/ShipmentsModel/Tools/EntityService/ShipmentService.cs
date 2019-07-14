@@ -2472,6 +2472,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.ShipmentPayableStatusCode = "NOPA";
 
                 entityPM.INTTRASIStatusCode = "NSEN";
+                entityPM.INTTRABookingStatusCode = "NS";
+                entityPM.INTTRABookingTransStatusCode = "NST";
 
                 if (entityPM.ProfitExchangeRate == null)
                 {

@@ -2268,6 +2268,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.INTTRADocumentTypeCode = shipment.INTTRADocumentTypeCode;
             shipmentPM.INTTRALastStatusDate = shipment.INTTRALastStatusDate;
             shipmentPM.ContainerLastStatusDate = shipment.ContainerLastStatusDate;
+            shipmentPM.INTTRABookingStatusCode = shipment.INTTRABookingStatusCode;
+            shipmentPM.INTTRABookingTransStatusCode = shipment.INTTRABookingTransStatusCode;
+
 
             shipmentPM.Notify1Reference = shipment.Notify1Reference;
             shipmentPM.Notify2Reference = shipment.Notify2Reference;
