@@ -175,8 +175,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicatorLoading();
-            var computedWeight: number = this.ComputeWeightInKG(this.Weight);
-            this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, computedWeight).subscribe(res => {
+            this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, this.Weight, this.WeightCode, this.GrossWeight, this.GrossWeightCode, this.Volume, this.VolumeUnitCode).subscribe(res => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.AvailableTariffs = res.Result;
