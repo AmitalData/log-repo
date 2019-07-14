@@ -125,6 +125,8 @@
    declare @ARInvoices as varchar(1000)
    declare @MasterShipmentNumber as varchar(20)
   --@[DeclareCustomFieldsVariable]
+  declare @CutoffDate as datetime
+  declare @Consolidator as int
 
    declare @ConsolidatorRef1 as varchar(50)
   declare @ShipmentNotes as varchar(1000)
