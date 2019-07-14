@@ -111,7 +111,9 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 
                 }
 
-                BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask( args,false);
+                //BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask( args,false);
+                var myBatchAccFunctionalTestTask = new BatchAccFunctionalTestTask(null);
+                myBatchAccFunctionalTestTask.CreateQBatchTask<BatchFunctionalTestTaskArg>(args, args.Tenant, $"CreateBatchFunctionalTestTask({args.MyState.ToString()})", true);
 
 
                 scope.Complete();

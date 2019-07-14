@@ -128,13 +128,18 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                     //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     //service.Update(entityPM, true);
 
-                    IYearTransferService yearTransferService = new YearTransferService();
-                    journal = yearTransferService.ProccessJournal(accountingContext, year, authToken.Tenant);
-                    bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
-                    var parser = new JournalApproveParser(journal, false,
-                    AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal, SuppressCheckGLAccountIsMultiCurrencyWI40640)
-                    );
-                    parser.ParseIt();
+                    ICheckAndQYearTransferService yearTransferService = new YearTransferService();
+                    //yearTransferService.CheckThrowExceptionIfNeeded(accountingContext, year, authToken.Tenant);
+                    yearTransferService.Check_CreateQBatchTaskYearTransfer(year, authToken.Tenant);
+
+
+
+                    //journal = yearTransferService.ProccessJournal(accountingContext, year, authToken.Tenant);
+                    //bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
+                    //var parser = new JournalApproveParser(journal, false,
+                    //AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal, SuppressCheckGLAccountIsMultiCurrencyWI40640)
+                    //);
+                    //parser.ParseIt();
 
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, journal);
