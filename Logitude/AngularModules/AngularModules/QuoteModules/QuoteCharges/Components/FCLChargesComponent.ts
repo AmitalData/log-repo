@@ -114,7 +114,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "QTCH") {
                     if (this.IsAdhoc) {
-                        if (this.ItemsSource.Collection.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
+                        if (this.ItemsSource.Collection.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null || d.SaleQuantity != null || d.CostQuantity != null).length > 0) {
                             this.CheckUpdateQuantities();
                         }
 
@@ -1027,6 +1027,14 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 isDifferentOrders = true;
             }
             else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "BTEU" && f.SaleQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+
+
+            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != entityQuantity).length > 0) {
                 isDifferentOrders = true;
             }
 
