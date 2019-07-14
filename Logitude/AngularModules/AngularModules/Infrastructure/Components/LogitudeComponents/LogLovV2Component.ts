@@ -519,7 +519,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.LookUp2 = this.LookUpTable.LookUp2;
         this.headerColumns = [];
         this.dataColumns = [];
-        if (this.LookUpTableName == 'Card' || this.LookUpTableName == 'User') {
+        if (this.LookUpTableName == 'Card' || this.LookUpTableName == 'User' || this.LookUpTableName == 'ChargesType') {
             this.DropDownWidth = 400;
         }
         if (this.LookUpTableName == 'Carrier') {

@@ -29,6 +29,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.Date = DateTool.GetCurrentDateAsUtc();
     }
 
+
+
+
     private originPortId: string;
     get OriginPortId() {
         return this.originPortId;
@@ -71,8 +74,45 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set WeightCode(value: string) {
         if (this.weightCode != value) {
             this.weightCode = value;
+            this.ComputeVolumetricWeight();
        }
     }
+
+    private grossWeightCode: string = "KG";
+    get GrossWeightCode() {
+        return this.grossWeightCode;
+    }
+    set GrossWeightCode(value: string) {
+        if (this.grossWeightCode != value) {
+            this.grossWeightCode = value;
+            this.ComputeVolumetricWeight();
+        }
+    }
+
+    private Ratio: number = 6.00;
+
+    private volumeUnitCode: string = "CBM";
+    get VolumeUnitCode() {
+        return this.volumeUnitCode;
+    }
+    set VolumeUnitCode(value: string) {
+        if (this.volumeUnitCode != value) {
+            this.volumeUnitCode = value;
+            this.ComputeVolumetricWeight();
+        }
+    }
+
+
+
+
+
+    private ComputeVolumetricWeight() {
+
+        this.Weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
+    }
+
+
+    
 
     private weight: number;
     get Weight() {
@@ -86,6 +126,18 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
 
+    private volume: number;
+    get Volume() {
+        return this.volume;
+    }
+    set Volume(value: number) {
+        if (this.volume != value) {
+            this.volume = value;
+            this.ComputeVolumetricWeight();
+        }
+    }
+
+
 
 
     private grossWeight: number;
@@ -95,7 +147,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set GrossWeight(value: number) {
         if (this.grossWeight != value) {
             this.grossWeight = value;
-            this.SetUIProperties();
+            this.ComputeVolumetricWeight();
         }
     }
 
@@ -123,8 +175,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicatorLoading();
-            var computedWeight: number = this.ComputeWeightInKG(this.Weight);
-            this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, computedWeight).subscribe(res => {
+            this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, this.Weight, this.WeightCode, this.GrossWeight, this.GrossWeightCode, this.Volume, this.VolumeUnitCode).subscribe(res => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.AvailableTariffs = res.Result;
