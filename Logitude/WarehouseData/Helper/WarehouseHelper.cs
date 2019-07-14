@@ -305,11 +305,11 @@ namespace WarehouseData.Helper
 
         private string GetCustomFieldTenantsUpdated(string desconnectionString)
         {
-
+            string result = string.Empty;
             TableClass objectFieldTable = tableLists.Where(d => d.TableName == "ObjectField").FirstOrDefault();
             TableClass tenantTable = tableLists.Where(d => d.TableName == "Tenant").FirstOrDefault();
+            if (string.IsNullOrEmpty(objectFieldTable.RefreshIds) && string.IsNullOrEmpty(tenantTable.RefreshIds)) return result;
             List<string> tenantNumbersLists = !string.IsNullOrEmpty(tenantTable.RefreshIds) ? tenantTable.RefreshIds.Replace("(", "").Replace(")", "").Replace("'", "").Split(',').ToList() : new List<string>();
-            string result = string.Empty;
             if (!string.IsNullOrEmpty(objectFieldTable.RefreshIds))
             {
                 var customObjectFields = new DataTable();
@@ -318,7 +318,6 @@ namespace WarehouseData.Helper
                 {
                     sourceConnection.Open();
                     string sql = "SELECT  Tenant from " + objectFieldTable.Dw_TableName + " where id in " + objectFieldTable.RefreshIds;
-
                     SqlCommand commandSourceData = new SqlCommand(sql, sourceConnection);
                     SqlDataReader reader = commandSourceData.ExecuteReader();
                     customObjectFields.Load(reader);
