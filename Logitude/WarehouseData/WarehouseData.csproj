@@ -274,7 +274,9 @@
     <Content Include="WarehouseScript\Others\Day 17[AbedAddFuncationResolveCustomFieldDateValue].sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="WarehouseScript\Others\Day 18[AbedAddFuncationSplitString].sql" />
+    <Content Include="WarehouseScript\Others\Day 18[AbedAddFuncationSplitString].sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
