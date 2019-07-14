@@ -509,9 +509,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 DetailedControlClients = true,
                 Category1 = null,
                 Category5 = null,
-                Suppress_DoNotShowCardWithoutActivity = false,
+                Suppress_DoNotShowCardWithoutActivity = true,
                 IsRevenueExpenseReport = false,
                 MyTrailReportLevel = ReportLevel.GLAccount,
+                
 
             };
 
