@@ -205,11 +205,12 @@ export class TasksSchedulerPM {
     public set LastRunStartTime(newValue: Date) { if (this.lastRunStartTime != newValue) { this.lastRunStartTime = newValue; this.MarkAsDirty("LastRunStartTime"); } }
        
 	 
-    private schedulerDetailsData: string;
+    private schedulerDetailsData: any;
     public get SchedulerDetailsData() { return this.schedulerDetailsData; }
-    public set SchedulerDetailsData(newValue: string) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
-       
-	 
+    public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
+
+
+
 
     public OldEntityPM: TasksSchedulerPM;
 		

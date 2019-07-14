@@ -111,16 +111,19 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
+                    this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.SelectedVersionNumber)[0];
+
+                    if (this.CurrentVersion == null) {
+                        this.CurrentVersion = this.EntityPM.ActiveVersions.filter(d => d.Version == this.SelectedVersionNumber)[0];   
+                    }
+
                     if (this.CurrentVersion.IsDraft) {
-                        this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.CurrentVersion.Version)[0];
                         this.FillTariffLines(this.CurrentVersion.TariffLines);
                     }
-
                     else {
-                        this.CurrentVersion = this.EntityPM.ActiveVersions.filter(d => d.Version == this.SelectedVersionNumber)[0];
                         this.LoadTariffLines("currentVersion");
                     }
-
+                    
                     if (this.isApproveButtonClicked) {
                         this.isApproveButtonClicked = false;
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
@@ -759,6 +762,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge10Price = item.Surcharge10Price;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
+            tariffLine.IsFromAllOtherPorts = item.IsFromAllOtherPorts;
+            tariffLine.IsToAllOtherPorts = item.IsToAllOtherPorts;
             copiedVersion.AddTariffLine(tariffLine);
         });
 

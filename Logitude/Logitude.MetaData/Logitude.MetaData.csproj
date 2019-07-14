@@ -574,6 +574,8 @@
     <None Include="EntityFiles\ShipmentsModel\AWBCustomsInformation.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBInformation.lxml" />
     <None Include="EntityFiles\ShipmentsModel\HarmonizeCode.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\INTTRABookingStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\INTTRABookingTransStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\MessagingStock.lxml">
       <SubType>Designer</SubType>
     </None>

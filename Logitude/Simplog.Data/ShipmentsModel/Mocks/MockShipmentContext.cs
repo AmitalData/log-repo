@@ -753,6 +753,32 @@ namespace Simplog.Data.ShipmentsModel.Mocks
                 throw new NotImplementedException();
             }
         }
+
+        public IDbSet<INTTRABookingTransStatus> INTTRABookingTransStatuses
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<INTTRABookingStatus> INTTRABookingStatuses
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
         public IDbSet<INTTRAStatus> INTTRAStatuses
         {
             get
