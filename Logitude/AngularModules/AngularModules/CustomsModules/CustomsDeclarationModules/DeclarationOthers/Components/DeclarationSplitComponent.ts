@@ -490,16 +490,27 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                 this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
             }, 500);
 
+        }else{
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+            this.StopBusyIndicator();
+            this.cd.detectChanges();
         }
 
     }
     resample_single(canvas, width, height, resize_canvas) {
         console.log("RESAMPLE: start");
 
+
         var width_source = canvas.width;
         var height_source = canvas.height;
         width = Math.round(width);
         height = Math.round(height);
+
+        width_source = width_source == 0 ? 1 : width_source;
+        height_source = height_source == 0 ? 1 : height_source;
+        width = width == 0 ? 1 : width;
+        height = height == 0 ? 1 : height;
 
         var ratio_w = width_source / width;
         var ratio_h = height_source / height;
