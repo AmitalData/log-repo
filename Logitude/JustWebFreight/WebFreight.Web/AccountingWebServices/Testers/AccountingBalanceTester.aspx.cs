@@ -42,6 +42,7 @@ using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.BankAccountPages;
 using Logitude.Accounting.BL;
 using Logitude.Accounting.BL.CoreBL.FunctionalTests;
+using Logitude.Accounting.BL.CoreBL.Batch;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -94,6 +95,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //s.ClearDB(1148);
             try
             {
+
+               
 
 
                 //AuthenticationUtil.Impersonate(1, 
@@ -1344,6 +1347,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             {
                 Tenant = 989,
                 YY = 17,
+                Immediate =false
             };
             try
             {
@@ -1360,37 +1364,25 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
                 int YY = param.YY;
                 int tenant = param.Tenant;
+                bool Immediate = param.Immediate;
                 JournalPM journal = null;
-                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
+                if (Immediate)
                 {
-                    var accountingContext = AccountingContext.GetContext(tenant);
-                    IYearTransferService yearTransferService = new YearTransferService();
-                    journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant);
-                    if (journal != null)
-                    {
-                        //var parser = new JournalApproveParser(journal, false,
-                        //AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal)
-                        //);
-                        //parser.ParseIt();
-                        bool toComplete = false;
-                        if (!toComplete)
-                        {
-                            throw new Exception("ddd");
-                        }
-                        scope.Complete();
-                    }
-
-
-                }
-                if (journal != null)
-                {
-                    var journalJson = JsonConvert.SerializeObject(journal);
-                    _LabelResult.Text = journalJson;
+                    journal = ImmediateYearTransferthod(YY, tenant);
                 }
                 else
                 {
-                    _LabelResult.Text = "No journal";
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        var accountingContext = AccountingContext.GetContext(tenant);
+
+                        ICheckAndQYearTransferService yearTransferService = new YearTransferService();
+                        string taskiD = yearTransferService.Check_CreateQBatchTaskYearTransfer(YY, tenant);
+
+                        scope.Complete();
+                    }
                 }
+                
             }
             catch (Exception)
             {
@@ -1412,6 +1404,43 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
         }
 
+        private JournalPM ImmediateYearTransferthod(int YY, int tenant)
+        {
+            JournalPM journal;
+            using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
+            {
+                var accountingContext = AccountingContext.GetContext(tenant);
+
+                IYearTransferService yearTransferService = new YearTransferService();
+                journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant);
+                if (journal != null)
+                {
+                    //var parser = new JournalApproveParser(journal, false,
+                    //AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal)
+                    //);
+                    //parser.ParseIt();
+                    bool toComplete = false;
+                    if (!toComplete)
+                    {
+                        throw new Exception("ddd");
+                    }
+                    scope.Complete();
+                }
+
+
+            }
+            if (journal != null)
+            {
+                var journalJson = JsonConvert.SerializeObject(journal);
+                _LabelResult.Text = journalJson;
+            }
+            else
+            {
+                _LabelResult.Text = "No journal";
+            }
+
+            return journal;
+        }
 
         protected void ButtonYearTransferCancel_Click(object sender, EventArgs e)
         {
@@ -1441,7 +1470,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
-                    IYearTransferService yearTransferService = new YearTransferService();
+                    ICancelYearTransferService yearTransferService = new YearTransferService();
                     journal = yearTransferService.CancelYear(accountingContext, YY, tenant);
                     if (journal != null)
                     {

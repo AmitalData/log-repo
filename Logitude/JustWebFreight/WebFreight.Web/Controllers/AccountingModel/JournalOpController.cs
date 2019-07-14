@@ -109,13 +109,13 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
         }
 
 
-        public HttpResponseMessage GetYearTransferJournal(int year)
+        public HttpResponseMessage GetYearTransferJournal(int year,string myOperation, string lastYearTransferJournalPMId)
         {
 
             
             try
             {
-                JournalPM journal = null;
+                //JournalPM journal = null;
                 using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
@@ -127,17 +127,59 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
 
                     //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     //service.Update(entityPM, true);
+                    switch (myOperation)
+                    {
+                        case "Check_CreateQBatchTaskYearTransfer":
+                            {
+                                ICheckAndQYearTransferService yearTransferService = new YearTransferService();
+                                //yearTransferService.CheckThrowExceptionIfNeeded(accountingContext, year, authToken.Tenant);
+                                var BatchTaskYearTransferId = yearTransferService.Check_CreateQBatchTaskYearTransfer(year, authToken.Tenant);
+                                scope.Complete();
+                                return Request.CreateResponse(HttpStatusCode.OK, new { BatchTaskYearTransferId  = BatchTaskYearTransferId });
+                            }
+                            break;
+                        case "CheckCancelYear":
+                            {
+                                ICancelYearTransferService yearTransferService = new YearTransferService();
+                                //yearTransferService.CheckThrowExceptionIfNeeded(accountingContext, year, authToken.Tenant);
+                                var LastYearTransferJournalPM = yearTransferService.CheckCancelYear(accountingContext,year, authToken.Tenant);
+                                scope.Complete();
+                                return Request.CreateResponse(HttpStatusCode.OK, new { lastYearTransferJournalPMId = LastYearTransferJournalPM.Id });
 
-                    IYearTransferService yearTransferService = new YearTransferService();
-                    journal = yearTransferService.ProccessJournal(accountingContext, year, authToken.Tenant);
-                    bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
-                    var parser = new JournalApproveParser(journal, false,
-                    AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal, SuppressCheckGLAccountIsMultiCurrencyWI40640)
-                    );
-                    parser.ParseIt();
+                            }
+                            break;
 
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, journal);
+                        case "DoCancelYear":
+                            {
+
+                                ICancelYearTransferService yearTransferService = new YearTransferService();
+                                //yearTransferService.CheckThrowExceptionIfNeeded(accountingContext, year, authToken.Tenant);
+                                var LastYearTransferJournalPM = yearTransferService.CheckCancelYear(accountingContext, year, authToken.Tenant);
+                                if (LastYearTransferJournalPM.Id != lastYearTransferJournalPMId)
+                                {
+                                    throw new Exception("Its seemed onther thread Cancel Journal " + lastYearTransferJournalPMId);
+                                }
+                                JournalPM stornoJournalPM = yearTransferService.DoCancelYear(accountingContext, LastYearTransferJournalPM, authToken.Tenant);
+                                scope.Complete();
+                                return Request.CreateResponse(HttpStatusCode.OK, stornoJournalPM);
+
+                            }
+                            break;
+
+                        default:
+                            throw new Exception("myOperation must be ");
+                            break;
+                    }
+                    
+
+
+                    //journal = yearTransferService.ProccessJournal(accountingContext, year, authToken.Tenant);
+                    //bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
+                    //var parser = new JournalApproveParser(journal, false,
+                    //AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal, SuppressCheckGLAccountIsMultiCurrencyWI40640)
+                    //);
+                    //parser.ParseIt();
+
                 }
             }
 

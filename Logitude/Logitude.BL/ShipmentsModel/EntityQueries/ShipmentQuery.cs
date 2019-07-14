@@ -2272,6 +2272,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.INTTRABookingTransStatusCode = shipment.INTTRABookingTransStatusCode;
 
 
+            INTTRABookingStatusRepository iNTTRABookingStatusRepository = new INTTRABookingStatusRepository(repository.context);
+            shipmentPM.INTTRABookingStatusName = iNTTRABookingStatusRepository.GetSingleINTTRABookingStatus(shipmentPM.INTTRABookingStatusCode).Name;
+
+            INTTRABookingTransStatusRepository iNTTRABookingTransStatusRepository = new INTTRABookingTransStatusRepository(repository.context);
+            shipmentPM.INTTRABookingTransStatusName = iNTTRABookingTransStatusRepository.GetSingleINTTRABookingTransStatus(shipmentPM.INTTRABookingTransStatusCode).Name;
+
             shipmentPM.Notify1Reference = shipment.Notify1Reference;
             shipmentPM.Notify2Reference = shipment.Notify2Reference;
             shipmentPM.ShipperNotExporterReference = shipment.ShipperNotExporterReference;
@@ -11255,6 +11261,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                INTTRASIStatusCode = f.INTTRASIStatusCode,
                                INTTRASIStatusName = f.INTTRASIStatusName,
                                INTTRASIStatusDate = f.INTTRASIStatusDate,
+                               INTTRABookingStatusCode = f.INTTRABookingStatusCode,
+                               INTTRABookingStatusName = f.INTTRABookingStatusName,
+                               INTTRABookingTransStatusName = f.INTTRABookingTransStatusName,
+                               INTTRABookingTransStatusCode = f.INTTRABookingTransStatusCode,
                                LastFinalDestination = f.LastFinalDestination,
                                FirstPickupETA = f.FirstPickupETA,
                                FirstPickupETD = f.FirstPickupETD,
@@ -11596,6 +11606,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     INTTRASIStatusCode = f.INTTRASIStatusCode,
                     INTTRASIStatusName = f.INTTRASIStatusName,
                     INTTRASIStatusDate = f.INTTRASIStatusDate,
+                    INTTRABookingStatusCode = f.INTTRABookingStatusCode,
+                    INTTRABookingStatusName = f.INTTRABookingStatusName,
+                    INTTRABookingTransStatusName = f.INTTRABookingTransStatusName,
+                    INTTRABookingTransStatusCode = f.INTTRABookingTransStatusCode,
                     LastFinalDestination = f.LastFinalDestination,
                     FirstPickupETA = f.FirstPickupETA,
                     FirstPickupETD = f.FirstPickupETD,

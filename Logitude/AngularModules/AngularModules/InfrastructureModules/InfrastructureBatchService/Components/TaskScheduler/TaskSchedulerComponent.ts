@@ -127,7 +127,7 @@ export class TaskSchedulerComponent implements OnInit  {
         }
 
         else {
-            //this.LoadHistoryList();
+           // this.LoadHistoryList();
             this.LoadTaskHistories();
         }
     }
@@ -308,21 +308,17 @@ export class TaskSchedulerComponent implements OnInit  {
         if (!this.SelectedRow) {
             //if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
             //    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
-                
             //}
-            //sortingCol = "NextRunTime";
             //filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
-            return;
         }
         else {
             if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
                 if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
                     filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
-                   
                 }
-                sortingCol = "StartDateTimeUTC";
                 filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
             }
+            //return
         }
 
         filters.GetCount = getCount;

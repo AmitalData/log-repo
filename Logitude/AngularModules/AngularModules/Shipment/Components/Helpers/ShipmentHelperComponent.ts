@@ -541,7 +541,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     ShowINTTRABookingWizard() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "INTTRA e-booking Wizard";
-        logWindow.WindowArgs = this.EntityPM.Id;
+        logWindow.WindowArgs = this.EntityPM;
         logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/SimulatorBookingComponent');
     }
 

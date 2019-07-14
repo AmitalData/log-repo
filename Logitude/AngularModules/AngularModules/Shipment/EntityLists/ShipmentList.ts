@@ -403,6 +403,8 @@ export class ShipmentList {
 		INTTRADocumentTypeCode: string;
 		INTTRABookingTransStatusCode: string;
 		INTTRABookingStatusCode: string;
+		INTTRABookingTransStatusName: string;
+		INTTRABookingStatusName: string;
 		From: string;
 		To: string;
 		Origin: string;
