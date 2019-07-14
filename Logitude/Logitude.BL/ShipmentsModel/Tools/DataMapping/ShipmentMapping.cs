@@ -511,6 +511,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.INTTRAIsFreighted = entityPM.INTTRAIsFreighted;
             entityPoco.INTTRADocumentTypeCode = entityPM.INTTRADocumentTypeCode;
             entityPoco.INTTRALastStatusDate = entityPM.INTTRALastStatusDate;
+            entityPoco.INTTRABookingTransStatusCode = entityPM.INTTRABookingTransStatusCode;
+            entityPoco.INTTRABookingStatusCode = entityPM.INTTRABookingStatusCode;
         }
         private static void BuildRoutingField(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, IShipmentsContext objectContext)
         {

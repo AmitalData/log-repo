@@ -11,8 +11,43 @@
             <table>
                 <tr>
                     <td>
-                        <div>
+                        <div class="MediaFill">
+                            <div class="MediaFillRelative">
+                                <ScrollViewer>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <table>
 
+                                                    <!-- INTTRABookingStatusName -->
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width: 180px;">
+                                                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'INTTRABookingStatusCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td> <div>{{INTTRABookingStatusName}}</div></td>
+                                                    </tr>
+
+                                                    <!-- INTTRABookingTransStatusName -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'INTTRABookingTransStatusCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td> <div>{{INTTRABookingTransStatusName}}</div></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </ScrollViewer>
+                            </div>
                         </div>
                     </td>
                 </tr>
