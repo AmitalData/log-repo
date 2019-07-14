@@ -687,12 +687,13 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         });
 
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
-        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsComparToChecked);
 
         if (this.VersionsList == null || (this.VersionsList != null && this.VersionsList.length == 0)) {
             this.isComparToChecked = false;
             this.IsFirstDraft = true;
         }
+        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsComparToChecked && !this.IsFirstDraft);
+
     }
     
     private selectedVersion: VersionClass;
