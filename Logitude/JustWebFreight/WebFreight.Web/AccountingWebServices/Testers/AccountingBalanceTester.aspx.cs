@@ -42,6 +42,7 @@ using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.BankAccountPages;
 using Logitude.Accounting.BL;
 using Logitude.Accounting.BL.CoreBL.FunctionalTests;
+using Logitude.Accounting.BL.CoreBL.Batch;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -94,6 +95,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //s.ClearDB(1148);
             try
             {
+
+               
 
 
                 //AuthenticationUtil.Impersonate(1, 
@@ -1441,7 +1444,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
-                    IYearTransferService yearTransferService = new YearTransferService();
+                    ICancelYearTransferService yearTransferService = new YearTransferService();
                     journal = yearTransferService.CancelYear(accountingContext, YY, tenant);
                     if (journal != null)
                     {
