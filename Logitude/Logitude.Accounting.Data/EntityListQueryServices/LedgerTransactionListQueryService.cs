@@ -358,6 +358,45 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return myGenericCallBack;
         }
 
+        public GenericCallBack GetReconciliationFilterCallBack(QueryOperations queryOperations,
+            string AccountId,
+            int tenant)
+        {
+            IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+            const int MaxTotal = 99001;
+            query2 = ReconciliationFilter(AccountId, query2);
+            var callback11 =
+                (from r in query2
+                 group r by 1 into gb
+                 select new
+                 {
+                     TotalRecord = gb.Count(),
+                     MaxCreateDate = gb.Max(r => r.CreateDate)//.ToString("yyyy-MM-dd hh:mm:ss")
+                 })
+             .FirstOrDefault() ?? new
+             {
+                 TotalRecord = 0,
+                 MaxCreateDate = DateTime.MinValue
+             }
+             ;
+            var myGenericCallBack = new GenericCallBack();
+            myGenericCallBack.MaxFieldName = "CreateDate";
+            myGenericCallBack.TotalRecord = callback11.TotalRecord;
+            myGenericCallBack.MaxValueAsString = callback11.MaxCreateDate
+                //.ToString("yyyy-MM-dd HH:mm:ss");
+                //.ToString("MM/dd/yyyy hh:mm:ss.fff tt");                        
+                //.ToString("g");                        
+                .ToString("o");   //                     
+
+            if (callback11.TotalRecord > MaxTotal)
+            {
+                myGenericCallBack.TotalRecord = MaxTotal;
+                myGenericCallBack.IsPartial = true;
+
+            }
+            return myGenericCallBack;
+        }
+
         private static IQueryable<LedgerTransactionList> OpenReconciliationFilter(string AccountId, IQueryable<LedgerTransactionList> query2
             , int MaxTotal
             )
@@ -365,6 +404,17 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             query2 = query2
                 .Where(rec => rec.IsReconciled == false)
                 .Where(rec => rec.InReconcileProgress == false)// Seee CreateJournalReconcileService!!!
+                .Where(rec => rec.AccountId == AccountId)
+                .OrderBy(rec => rec.AccountingDate)
+                //.Take(MaxTotal);
+                ;
+            return query2;
+        }
+
+        private static IQueryable<LedgerTransactionList> ReconciliationFilter(string AccountId, IQueryable<LedgerTransactionList> query2
+            )
+        {
+            query2 = query2
                 .Where(rec => rec.AccountId == AccountId)
                 .OrderBy(rec => rec.AccountingDate)
                 //.Take(MaxTotal);
@@ -394,7 +444,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
             const int MaxTotal = 99001;
+
             query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
+
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
             query2 = query2
                 .Where(rec => rec.CreateDate <= maxCreateDate)
@@ -406,7 +458,26 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             var mylist = query2.ToList();
             return mylist;
         }
-        
+        public List<LedgerTransactionList> GetReconciliationFilterList(QueryOperations queryOperations, GenericCallBack callback,
+            string AccountId,
+            int tenant)
+        {
+            IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+            const int MaxTotal = 99001;
+
+            query2 = ReconciliationFilter(AccountId, query2);
+
+            DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
+            query2 = query2
+                .Where(rec => rec.CreateDate <= maxCreateDate)
+                .Take(callback.TotalRecord);
+            var skipped = (queryOperations.PageIndex - 1);// * queryOperations.PageSize;
+            query2 = query2
+                .Skip(skipped)
+                .Take(queryOperations.PageSize);
+            var mylist = query2.ToList();
+            return mylist;
+        }
 
         private IQueryable<LedgerTransactionList> BasicListFilter(QueryOperations queryOperations, int tenant)
         {
