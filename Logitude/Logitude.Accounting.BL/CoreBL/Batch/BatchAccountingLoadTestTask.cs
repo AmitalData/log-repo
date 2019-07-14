@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
 
             var args = new BatchAccountingLoadArg() { Tenant = tenant, ActionType = ActionType, Amount = amount, SleepEveryMinute = sleepEveryMinute, JournalYYYY = year };
-            this.CreateQBatchTask<BatchAccountingLoadArg>(args, args.Tenant, "CreateBatchAccountingLoadTestTask", false);
+            this.CreateQBatchTaskExecution<BatchAccountingLoadArg>(args, args.Tenant, "CreateBatchAccountingLoadTestTask", false);
 
 
 

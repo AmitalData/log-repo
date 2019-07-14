@@ -1,6 +1,7 @@
 ﻿using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -113,7 +114,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
 
         }
 
-        public  void CreateQBatchTask<TServiceArg>(TServiceArg args4PrametersXml, int tenant, string Subject ,bool delay2Min)
+        public  string CreateQBatchTaskExecution<TServiceArg>(TServiceArg args4PrametersXml, int tenant, string Subject ,bool delay2Min)
             where TServiceArg : class
         {
 
@@ -162,8 +163,8 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
                 }, myTimeSpan);
-
-
+            LogMessagingUtil.Instance.AppendLine("CreateQBatchTaskExecution:taskExe.Id:" + taskExe.Id);
+            return taskExe.Id;
         }
     }
 }

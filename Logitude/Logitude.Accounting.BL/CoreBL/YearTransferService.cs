@@ -36,12 +36,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
         
-        public void Check_CreateQBatchTaskYearTransfer(int YYyear, int tenant)
+        public string Check_CreateQBatchTaskYearTransfer(int YYyear, int tenant)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             CheckThrowExceptionIfNeeded(accountingContext, YYyear, tenant);
             var myBatchYearTransferService = new BatchYearTransferService(null);
-            myBatchYearTransferService.CreateQBatchTask<BatchYearTransferParams>(new BatchYearTransferParams() { Tenant = YYyear, YYyear = tenant }, 1106, $"YearTransfer({YYyear})", false);
+            return myBatchYearTransferService.CreateQBatchTaskExecution<BatchYearTransferParams>(new BatchYearTransferParams() { Tenant = tenant, YYyear = YYyear }, tenant, $"YearTransfer({YYyear})", false);
         }
 
 

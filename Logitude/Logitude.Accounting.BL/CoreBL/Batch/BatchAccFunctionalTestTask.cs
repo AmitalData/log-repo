@@ -80,7 +80,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                             JournalToGLAccountMoreData.BuildJournals(parameterArgsFromCommunicationsData.Tenant, parameterArgsFromCommunicationsData.JournalInput);
                             parameterArgs.MyState = AccFunctionalState.CheckTrailReport.ToString();
-                            this.CreateQBatchTask<BatchFunctionalTestTaskArg>(parameterArgs, parameterArgs.Tenant, $"CreateBatchFunctionalTestTask({parameterArgs.MyState.ToString()})", true);
+                            this.CreateQBatchTaskExecution<BatchFunctionalTestTaskArg>(parameterArgs, parameterArgs.Tenant, $"CreateBatchFunctionalTestTask({parameterArgs.MyState.ToString()})", true);
                             scope.Complete();
                         }
                         break;
