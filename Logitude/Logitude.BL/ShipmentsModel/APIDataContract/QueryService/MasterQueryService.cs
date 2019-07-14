@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
@@ -165,6 +166,25 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     else if (!string.IsNullOrEmpty(item.ToPortId))
                     {
                         item.PickUpDeliveryToTypeCode = "PORT";
+                    }
+                }
+
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(Tenant);
+                foreach (ShipmentReceivablePM item in temp.ShipmentReceivables)
+                {
+                    var chergeType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, Tenant);
+                    if (chergeType != null && !string.IsNullOrEmpty(chergeType.ReceivablesDefaultCurrencyId))
+                    {
+                        item.CurrencyId = chergeType.ReceivablesDefaultCurrencyId;
+                    }
+                }
+
+                foreach (ShipmentPayablePM item in temp.ShipmentPayables)
+                {
+                    var chergeType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, Tenant);
+                    if (chergeType != null && !string.IsNullOrEmpty(chergeType.PayablesDefaultCurrencyId))
+                    {
+                        item.CurrencyId = chergeType.PayablesDefaultCurrencyId;
                     }
                 }
 
