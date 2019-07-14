@@ -775,6 +775,11 @@ export class TenantManagementPM {
     public set IsTestTenant(newValue: boolean) { if (this.isTestTenant != newValue) { this.isTestTenant = newValue; this.MarkAsDirty("IsTestTenant"); } }
        
 	 
+    private mainAdditionalPackageApplied: boolean;
+    public get MainAdditionalPackageApplied() { return this.mainAdditionalPackageApplied; }
+    public set MainAdditionalPackageApplied(newValue: boolean) { if (this.mainAdditionalPackageApplied != newValue) { this.mainAdditionalPackageApplied = newValue; this.MarkAsDirty("MainAdditionalPackageApplied"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		
