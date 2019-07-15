@@ -1,4 +1,5 @@
 ﻿using CHAMP17;
+using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -283,7 +284,7 @@ namespace WebFreight.Web.WebServices
                             DocumentId = document.Id,
                             EntityReference = entityReference,
                             CreateDateUTC = DateTime.UtcNow,
-                            AWBNumber = myMaster,
+                            AWBNumber = myPrefix + "-" + myMaster,
                         };
 
                         if (IsDemoTenant)

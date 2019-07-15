@@ -151,6 +151,13 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
+
+    private ComputeVolume() {
+
+
+        this.Volume = AppTool.ComputePackageVolume(null, null, null, null, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
+    }
+
     SearchButtonClicked() {
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.OriginPortId)) {
@@ -166,14 +173,22 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
 
         if (AppTool.IsNullOrEmpty(this.Weight)) {
-            this.ValidationErrorsList.push("Weight is required");
+            this.ValidationErrorsList.push("Chargeable Weight is required");
         }
 
         if (AppTool.IsNullOrEmpty(this.WeightCode)) {
-            this.ValidationErrorsList.push("Weight unit is required");
+            this.ValidationErrorsList.push("Chargeable Weight unit is required");
         }
 
         if (this.ValidationErrorsList.length == 0) {
+            if (AppTool.IsNullOrEmpty(this.GrossWeight)) {
+                this.GrossWeight = this.Weight;
+            }
+
+            if (AppTool.IsNullOrEmpty(this.Volume)) {
+                this.ComputeVolume();
+            }
+
             this.CurrentSession.StartBusyIndicatorLoading();
             this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, this.Weight, this.WeightCode, this.GrossWeight, this.GrossWeightCode, this.Volume, this.VolumeUnitCode).subscribe(res => {
                 if (!res.HasError) {

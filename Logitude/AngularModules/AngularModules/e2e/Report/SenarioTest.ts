@@ -13,9 +13,17 @@ export class SenarioTest {
   //private page: OperationsComp = new OperationsComp();
   private searchPage: ReportSearch = new ReportSearch();
   private reportGenerator = new ReportGenerator();
-    private generalFun = new GeneralFunctions();
+  private generalFun = new GeneralFunctions();
+
+
     constructor() {
+
     }
+
+
+
+
+
     public ReportScienarios() {
 
         this.searchPage.QuickSearch('Automation Test Report');
@@ -24,7 +32,9 @@ export class SenarioTest {
      
     }
 
+
     public FailedScienarios() {
+
         this.reportGenerator.RunReportFailed('RunReportFailedDiv');
     }   
 
