@@ -258,6 +258,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return base.GetEntityPM(poco);
         }
 
+        public JournalPM GetByAccountingEntityIdAndAccountingEntityCode(string entityId, string accountingEntityCode, int tenant)
+        {
+            Journal poco = repository.GetByAccountingEntityId(entityId, accountingEntityCode, tenant);
+            return base.GetEntityPM(poco);
+        }
+
         public bool CheckIfExternalNoAndSystemExist(string externalNo, string externalSystem, out string journalNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(externalNo) || String.IsNullOrWhiteSpace(externalSystem))
