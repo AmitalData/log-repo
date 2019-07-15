@@ -2388,11 +2388,11 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
 
         if (computeNumberOfPackages) {
             var sum = 0;
-            if (this.EntityPM.PackageType1Quantity > 0) { sum = sum + this.EntityPM.PackageType1Quantity; }
-            if (this.EntityPM.PackageType2Quantity > 0) { sum = sum + this.EntityPM.PackageType2Quantity; }
-            if (this.EntityPM.PackageType3Quantity > 0) { sum = sum + this.EntityPM.PackageType3Quantity; }
-            if (this.EntityPM.PackageType4Quantity > 0) { sum = sum + this.EntityPM.PackageType4Quantity; }
-            if (this.EntityPM.PackageType5Quantity > 0) { sum = sum + this.EntityPM.PackageType5Quantity; }
+            if (this.EntityPM.PackageType1Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType1Quantity) ? 0 : this.PackageType1Quantity); }
+            if (this.EntityPM.PackageType2Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType2Quantity) ? 0 : this.PackageType2Quantity)}
+            if (this.EntityPM.PackageType3Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType3Quantity) ? 0 : this.PackageType3Quantity) }
+            if (this.EntityPM.PackageType4Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType4Quantity) ? 0 : this.PackageType4Quantity) }
+            if (this.EntityPM.PackageType5Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType5Quantity) ? 0 : this.PackageType5Quantity)}
 
             if (this.IsLCLEntity) {
                 this.EntityPM.NumberOfPackages = sum;
