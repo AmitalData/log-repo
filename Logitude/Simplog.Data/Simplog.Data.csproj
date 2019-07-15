@@ -586,6 +586,8 @@
     <Compile Include="QuoteModel\Mapping\QuoteSettingMap.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteSettingRepository.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\HarmonizeCode.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingStatus.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingTransStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRADocumentType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRASIStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRAStatus.cs" />
@@ -599,6 +601,8 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
     <Compile Include="ShipmentsModel\Mapping\HarmonizeCodeMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\INTTRABookingStatusMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\INTTRABookingTransStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRADocumentTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRASIStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRAStatusMap.cs" />
@@ -1003,6 +1007,8 @@
     <Compile Include="ShipmentsModel\Repositories\AccountingInformationIdentifierRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\AWBAdditionalHandlingInfoRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\HarmonizeCodeRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\INTTRABookingStatusRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\INTTRABookingTransStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\MessagingStockRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\MessagingStockUsageHistoryRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransmissionsStatusRepository.cs" />

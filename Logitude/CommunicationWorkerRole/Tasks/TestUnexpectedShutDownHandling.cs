@@ -20,8 +20,20 @@ namespace CommunicationWorkerRole.Tasks
             LogInfoToDB("Thread will sleep for 1 min. then it will terminate .. you can shut down the WR in this Min.  ..");
             Thread.Sleep(60000);
             LogInfoToDB("Start Aborting the thread ..");
-            Thread.CurrentThread.Abort();
-            LogInfoToDB("After Aborting the thread ..");
+            try
+            {
+                Thread.CurrentThread.Abort();
+            }
+            catch (ThreadAbortException e)
+            {
+                LogInfoToDB("After Aborting the thread ..");
+                //Thread.ResetAbort();
+            }
+            catch (Exception ex)
+            {
+                LogInfoToDB("After Aborting the thread .. 2");
+            }
+            
             //for (int i = 0; i <= 3; i++)
             //{ 
             //    Logwarning("Log warning # " + i + " , Be careful !!");

@@ -59,7 +59,7 @@ namespace WebFreight.Web.Monitoring
 
                 IsFaild = (from a in Context.QueueMessages
                                   where (a.QueueDefinitionCode.Contains("ImportersShipmentDocumentsQueue") || a.QueueDefinitionCode.Contains("ImporterShipmentDocumentsBatch")) && a.Status == -1 
-                                  && a.CreateDateTime >= DateTime.Now.Date select a).Count() > 50;
+                                  && a.CreateDateTime >= DateTime.Now select a).Count() > 50;
             }
 
             catch (Exception errorInfo)

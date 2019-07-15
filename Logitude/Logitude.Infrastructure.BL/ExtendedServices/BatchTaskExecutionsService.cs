@@ -1,12 +1,17 @@
 ﻿using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.Data;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Logitude.Infrastructure.BL.ExtendedServices
 {
@@ -107,6 +112,59 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
         public virtual void UpdateProcessMessage()
         {
 
+        }
+
+        public  string CreateQBatchTaskExecution<TServiceArg>(TServiceArg args4PrametersXml, int tenant, string Subject ,bool delay2Min)
+            where TServiceArg : class
+        {
+
+
+
+
+            var assemblyQualifiedName = this.GetType().AssemblyQualifiedName;
+            assemblyQualifiedName = string.Join(",", assemblyQualifiedName.Split(',').Take(2).ToList());
+
+
+
+            var stringwriter = new System.IO.StringWriter();
+            var serializer1 = new XmlSerializer(typeof(TServiceArg));
+            serializer1.Serialize(stringwriter, args4PrametersXml);
+            string xmlParameters = stringwriter.ToString();
+
+            BatchTaskExecutionPM taskExe = null;
+            taskExe = new BatchTaskExecutionPM()
+            {
+                Subject = Subject,//$"CreateBatchFunctionalTestTask({args4PrametersXml.MyState.ToString()})",
+                Tenant = tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ClassName = assemblyQualifiedName,//"Logitude.Accounting.BL.CoreBL.Batch.BatchAccFunctionalTestTask,Logitude.Accounting.BL",
+                CreateDate = DateTime.Now,
+                PrametersXml = xmlParameters,
+                StatusCode = "C",// wtf is "c" no alternative 
+
+            };
+
+
+
+            var MyContext = InfrastructureContext.GetContext(tenant);
+            var bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+            bteUpdateService.Update(taskExe, true);
+
+
+
+            // 2- Send to queue
+            var queueservice = new DbQueueService();
+            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+            TimeSpan? myTimeSpan = null;
+            if (delay2Min) { myTimeSpan = TimeSpan.FromMinutes(2); }
+
+            queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant", tenant.ToString() }
+                }, myTimeSpan);
+            LogMessagingUtil.Instance.AppendLine("CreateQBatchTaskExecution:taskExe.Id:" + taskExe.Id);
+            return taskExe.Id;
         }
     }
 }

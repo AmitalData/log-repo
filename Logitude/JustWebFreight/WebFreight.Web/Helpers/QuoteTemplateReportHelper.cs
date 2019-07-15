@@ -49,7 +49,7 @@ namespace Logitude.BL.Helpers
         string from = "";
         string replyTo = "";
         string cc = "";
-        public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null)
+        public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, QuotePM quotePM =null)
         {
 
 
@@ -67,13 +67,12 @@ namespace Logitude.BL.Helpers
             string headerHtmlString = null;
             string footerHtmlString = null;
             string bodyHtmlString = null;
-            QuotePM quotePM = null;
             string RequestArea = "Maintenance";
 
             QuoteTemplatePM template = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
 
 
-            if (!string.IsNullOrEmpty(quoteId))
+            if (!string.IsNullOrEmpty(quoteId) && quotePM == null)
             {
                 int tenantNumber = userTenant != null ? (int)userTenant : tenant;
                 quotePM = quoteQuery.GetSinglePM(quoteId, tenantNumber);
@@ -81,7 +80,7 @@ namespace Logitude.BL.Helpers
 
             if (quotePM == null) quotePM = BuildingQuotePM();
 
-
+      
 
             if (templateSections == null)
             {

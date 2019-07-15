@@ -291,7 +291,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(pagePM.Tenant);
             ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(pagePM.Tenant);
             ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(pagePM.PageNo, pagePM.BankAccountId, pagePM.Tenant);
-            bool isSamePage = prevPage.Id == pagePM.Id;
+            bool isSamePage = prevPage?.Id == pagePM.Id;
             if (prevPage != null && !isSamePage)
             {
                 //1

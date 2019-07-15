@@ -15,6 +15,8 @@ export class ChoosePortComponent extends BaseComponent {
     public DataContext: ChoosePortComponent = this;
     public UpdateClass: DestinationClass;
     public ObjectTableName = "Tariff";
+    public ForceFocus: any;
+
     public ValidationErrorsList: string[] = [];
     constructor() {
         super();
@@ -22,6 +24,13 @@ export class ChoosePortComponent extends BaseComponent {
 
     SetDataContext(dataContext: DestinationClass) {
         this.UpdateClass = dataContext;        
+    }
+
+
+    KeyDownEvent(event) {
+        if (event == 13 && (this.Port != null && this.PortId != null)) {
+            this.AddButtonClicked();
+        }
     }
 
     private portId: string;
@@ -80,6 +89,9 @@ export class ChoosePortComponent extends BaseComponent {
             else {
                 this.UpdateClass.fatherComponent.ToObsList.push(newItem);
             }
+
+            this.ForceFocus = this.PortId;
+
 
             this.Port = null;
             this.PortId = null;

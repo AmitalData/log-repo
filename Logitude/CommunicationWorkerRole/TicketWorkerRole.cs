@@ -63,8 +63,21 @@ namespace CommunicationWorkerRole
 
                             catch (Exception ex)
                             {
-                                ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "WorkerRole", "", null);
-                                queueservice.Complete();
+                                if (response.RetryNumber <= 2)
+                                {
+                                    queueservice.Delay(new TimeSpan(0, 0, 0, 5));
+                                }
+
+                                if (response.RetryNumber > 2 && response.RetryNumber <= 4)
+                                {
+                                    queueservice.Delay(new TimeSpan(0, 0, 0, 10));
+                                }
+                                if (response.RetryNumber >= 5)
+                                {
+                                    queueservice.CompleteAsFailed();
+                                    ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "WorkerRole", "", null);
+                                }
+                                //queueservice.Complete();
                                 Thread.Sleep(10000);
                             }
                         }
@@ -120,9 +133,9 @@ namespace CommunicationWorkerRole
                         //context.SaveChanges();
                         ticketEscalationRep.SubmitChanges();
                         // Check if there are another escalations for the same ticket !! 
-                        queueservice.Complete();
-                    }
 
+                    }
+                    queueservice.Complete();
                     CheckRemainingEscalations(myTicket, myCurrentTicketEscalation.EscalationFor);
                 }
 
@@ -151,9 +164,9 @@ namespace CommunicationWorkerRole
                         ticketEscalationRep.SubmitChanges();
                         //context.SaveChanges();
                         // Check if there are another escalations for the same ticket !! 
-                        queueservice.Complete();
-                    }
 
+                    }
+                    queueservice.Complete();
                     CheckRemainingEscalations(myTicket, myCurrentTicketEscalation.EscalationFor);
 
                 }
@@ -172,7 +185,11 @@ namespace CommunicationWorkerRole
 
         private void CheckRemainingEscalations(TicketPM myTicket, string type)
         {
-            IQueueService queueservice = QueueServiceManager.GetQueueService("ticketqueue", Tenant);
+            // IQueueService queueservice = QueueServiceManager.GetQueueService("ticketqueue", Tenant);
+
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ticketqueue", Tenant);
+
             ticketEscalationRep = new TicketEscalationRepository(myTicket.Tenant);
             List<TicketEscalation> myEscalations = ticketEscalationRep.GetTicketEscalations(myTicket.Id, myTicket.Tenant).ToList();
             TicketEscalation myTicketEscalation = myEscalations.Where(a => a.IsClose == false && a.EscalationFor == type).OrderBy(a => a.DueDate).FirstOrDefault();
@@ -418,7 +435,8 @@ namespace CommunicationWorkerRole
             try
             {
 
-                queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+                //queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+                queueservice = new DbQueueService(queueName, 0);
                 //queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
             }
             catch (Exception ex)

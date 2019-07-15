@@ -63,7 +63,7 @@
                                                         <td style="width:82px;">
                                                             <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
-                                                        <td style="width:180px;">
+                                                        <td style="width:220px;">
                                                             <LogLov [ObjectFieldName]="'DestinationPortId'"
                                                                     [ObjectTableName]="ObjectTableName"
                                                                     [LookUpTableName]="'Port'"
@@ -80,16 +80,14 @@
                                                             <LogLabel [ObjectFieldName]="'Date'" [NoObjectField]="true" [Text]="'Date'" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td style="width:155px">
+                                                        <td style="width:240px">
                                                             <table>
                                                                 <tr>
                                                                     <td>
                                                                         <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
 
                                                                     </td>
-                                                                    <td style="width:18px">
-                                                                        <div></div>
-                                                                    </td>
+                                                              
                                                                 </tr>
                                                             </table>
                                                         </td>
@@ -113,7 +111,7 @@
 
 
                                                       <td style="width:100px">
-                                                          <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Weight'" [HideColumns]="true"
+                                                          <LogTextBox [NoObjectField]="true" [InputType]="'sigdouble'"  [ObjectFieldName]="'Weight'" [Text]="Weight" [HideColumns]="true"
                                                                       (ValueChanged)="Weight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
 
                                                       </td>
@@ -138,13 +136,27 @@
                                                       <td style="width:4px">
                                                           <div></div>
                                                       </td>
-                                                      <td style="width:142px">
-                                                          <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Volume'" [HideColumns]="true"
+                                                      <td style="width:100px">
+                                                          <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [Text]="GrossWeight" [ObjectFieldName]="'GrossWeight'" [HideColumns]="true"
                                                                       (ValueChanged)="GrossWeight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
 
                                                       </td>
+                                                      <td style="width:4px">
+                                                          <div></div>
+                                                      </td>
+                                                      <td style="width:100px">
+                                                          <LogLov [ObjectFieldName]="'GrossWeightCode'"
+                                                                  [SelectedValue]="GrossWeightCode"
+                                                                  [NoObjectField]="true"
+                                                                  [DataContext]="DataContext"
+                                                                  [LookUpTableName]="'WeightUnit'"
+                                                                  [HideLastColumn]="true"
+                                                                  [RunToggleMode]="true">
+                                                          </LogLov>
 
-                                                      <td style="width:38px">
+                                                      </td>
+
+                                                      <td style="width:15px">
                                                           <div></div>
                                                       </td>
                                                       <td style="width:70px">
@@ -155,9 +167,19 @@
                                                       </td>
 
                                                       <td style="width:100px">
-                                                          <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Volume'" [HideColumns]="true"
+                                                          <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Volume'" [HideColumns]="true" [Text]="Volume"
                                                                       (ValueChanged)="Volume=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
 
+                                                      </td>
+                                                      <td style="width:4px"><div></div></td>
+                                                      <td style="width:100px">
+                                                          <LogLov [ObjectFieldName]="'VolumeUnitCode'"
+                                                                  [SelectedValue]="VolumeUnitCode"
+                                                                  [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"
+                                                                  [LookUpTableName]="'VolumeUnit'"
+                                                                  [HideColumns]="true">
+                                                          </LogLov>
                                                       </td>
 
                                                       <td></td>
@@ -242,10 +264,16 @@
                                                                                             </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td colspan="3">
+                                                                                            <td colspan="2">
                                                                                                 <div class="TextTrimming" style="max-width:300px">
                                                                                                     Remarks: {{item.Remarks}}
-                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                TotalSurcharge: {{item.TotalSurcharge}}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                WholePrice: {{item.WholePrice}}
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>

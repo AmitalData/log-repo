@@ -116,16 +116,15 @@ export class MiscPageComponent implements AfterViewInit {
                     });
                     break;
                 }
-
+                    
+                case "ACYTC":
+                    {
+                        this.YearTransferMethod(true);
+                        break;
+                    }
            case "ACYT":{
-                        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
-                        var logitudeWindow = new LogitudeWindow();
-                        logitudeWindow.Width = 500;
-                        logitudeWindow.Height = 300;
-                        logitudeWindow.Title = "Year Transfer";
-                        logitudeWindow.Show('./Accounting/Components/Maintenance/YearTransferComponent');
-                    });
-                   
+
+                    this.YearTransferMethod(false);
                        break;
 
                        }
@@ -149,7 +148,20 @@ export class MiscPageComponent implements AfterViewInit {
             });
         }
     }
+    YearTransferMethod(cancelYearTransfer: boolean) {
+        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Width = 500;
+            logitudeWindow.Height = 300;
 
+            logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.O.YearTransfer");
+            if (cancelYearTransfer) {
+                logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.O.CancelYearTransfer");
+            }
+            logitudeWindow.WindowArgs = { "CancelYearTransfer": cancelYearTransfer };
+            logitudeWindow.Show('./Accounting/Components/Maintenance/YearTransferComponent');
+        });
+    }
     Generate1000() {
 
 

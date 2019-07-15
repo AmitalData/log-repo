@@ -217,6 +217,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     errors += (rmsg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.TaxDeductionLocalAmount", tenant, useLocal))) + ";";
                 }
 
+                GLAccountPM glAccount = getGLAccount(entityPM.VendorId, tenant);
+                if (glAccount == null)
+                {
+
+                    string msg = TranslateTextsClass.Translate("APPayment.O.VendorGLAccount", tenant, useLocal);
+                    errors += msg + ";";
+                    //throw new ApplicationException(msg);
+                }
                 decimal? percentage = null;
                 IGLAccountWithholdingTaxQueryServiceExt gLAccountWithholdingTaxQueryService = ContainerAccessor.Container.Resolve(typeof(IGLAccountWithholdingTaxQueryServiceExt), "GLAccountWithholdingTaxQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountWithholdingTaxQueryServiceExt;
                 CardRepository cardRep = new CardRepository(tenant);
@@ -240,6 +248,21 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+
+        private static GLAccountPM getGLAccount(string vandorId, int tenant)
+        {
+            GLAccountPM glaAccount = null;
+            CardRepository cardRep = new CardRepository(tenant);
+            Card card = cardRep.GetSingleCard(vandorId, tenant);
+            if (card != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
+            }
+
+            return glaAccount;
+        }
+
         public static FullAccountingSettingPM GetFullAccountingSetting(APPaymentPM entityPM)
         {
             IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
