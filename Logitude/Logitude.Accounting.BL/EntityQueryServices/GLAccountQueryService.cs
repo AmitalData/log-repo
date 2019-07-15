@@ -79,7 +79,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return (from l in context.LedgerTransactions
                  
-                    where !glAccountIds.Contains(l.AccountId) && l.Tenant == tenant
+                    where glAccountIds.Contains(l.AccountId) && l.Tenant == tenant
                     select l.AccountId).ToList();
 
         }
