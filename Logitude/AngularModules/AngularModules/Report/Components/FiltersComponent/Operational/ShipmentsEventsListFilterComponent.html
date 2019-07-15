@@ -100,20 +100,21 @@
         <td>
             <table>
                 <tr>
-                 
+
                     <!-- From Date -->
-                    <td style="width: 70px; padding-right: 5px;" class="Label">From Date:</td>
+                    <td style="width: 70px; padding-right: 10px;" class="Label"><b>Shipment Create Date</b></td>
+                    <td style="width: 30px; padding-right: 5px;" class="Label">From:</td>
                     <td style="width: 180px;">
                         <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [SelectedDateValue]="FromDate" [DataContext]="DataContext"></LogDatePicker>
                     </td>
 
                     <!-- To Date -->
-                    <td style="width: 70px; padding-right: 5px;" class="Label">To Date:</td>
+                    <td style="width: 30px; padding-right: 5px;" class="Label">To:</td>
                     <td style="width: 180px;">
                         <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [SelectedDateValue]="ToDate" [DataContext]="DataContext"></LogDatePicker>
                     </td>
 
-               
+
                     <!-- User -->
                     <td style="width: 50px;" class="Label">User:</td>
                     <td style="width: 180px;">
