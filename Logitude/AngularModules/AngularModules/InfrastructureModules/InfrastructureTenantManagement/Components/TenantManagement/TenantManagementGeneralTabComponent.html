@@ -271,14 +271,14 @@
 
 
                                                                     <!--<tr class="FormFieldRow">
-                                    <td>
-                                        <label style="margin-left: 10px;color: rgb(110, 113, 114);">Document Share As Default</label>
-                                    </td>
+                                                                        <td>
+                                                                            <label style="margin-left: 10px;color: rgb(110, 113, 114);">Document Share As Default</label>
+                                                                        </td>
 
-                                    <td>
-                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'DocumentShareAsDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                    </td>
-                                </tr>-->
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'DocumentShareAsDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>-->
                                                                 </table>
                                                             </td>
 
@@ -475,228 +475,318 @@
                                                 <fieldset class="FieldSet">
                                                     <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Subscription Details</legend>
 
-                                                    <table style="margin:5px;">
+                                                    <table>
                                                         <tr>
+                                                            <td style="width: 5px;">
+                                                                <div></div>
+                                                            </td>
+
                                                             <td>
                                                                 <table>
-                                                                    <tr class="FormFieldRow">
-                                                                        <td style="width: 155px;">
-                                                                            <LogLabel [ObjectFieldName]="'IsMultiPackage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
 
+                                                                    <!-- RadioButton -->
+                                                                    <tr style="height: 1px;">
                                                                         <td>
-                                                                            <LogCheckBox [ObjectFieldName]="'IsMultiPackage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr class="FormFieldRow" *ngIf="!IsMultiPackage">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'NumberOfUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogTextBox [ObjectFieldName]="'NumberOfUsers'" [Text]="NumberOfUsers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'FreeUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogTextBox [ObjectFieldName]="'FreeUsers'" [Text]="FreeUsers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr class="FormFieldRow" *ngIf="!IsMultiPackage">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'PackageCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogLov [ObjectFieldName]="'PackageCode'"
-                                                                                    [ObjectTableName]="ObjectTableName"
-                                                                                    [DataContext]="DataContext"
-                                                                                    [LookUpTableName]="'Package'"
-                                                                                    [DependencyFilter1Value]="'PK'">
-                                                                            </LogLov>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr class="FormFieldRow" *ngIf="IsMultiPackage">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'PackageCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td style="padding-right:36px;">
                                                                             <table>
                                                                                 <tr>
                                                                                     <td>
-                                                                                        <div class="MultiPackageText" style="border:1px solid #ccc9c9;border-radius:3px;">
-                                                                                            <div style="padding-left:1px;display:inline-block;vertical-align:middle;">
-                                                                                                <span style="padding-left:5px;vertical-align:middle;">Multi-package</span>
-                                                                                            </div>
-                                                                                        </div>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width: 1px;">
+                                                                                                    <RadioButton [Name]="'PackageRadio'" [IsChecked]="MainAdditionalPackageApplied == false" (Checked)="MainAdditionalPackageApplied = false" [Text]="'Single/Multi Package'"></RadioButton>
+                                                                                                </td>
+
+                                                                                                <td style="width: 15px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+
+                                                                                                <td style="width: 1px;">
+                                                                                                    <RadioButton [Name]="'PackageRadio'" [IsChecked]="MainAdditionalPackageApplied == true" (Checked)="MainAdditionalPackageApplied = true" [Text]="'Main/Additional Package'"></RadioButton>
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
                                                                     </tr>
 
-                                                                    <tr style="height:10px;">
+                                                                    <tr style="height: 5px;">
                                                                         <td>
                                                                             <div></div>
                                                                         </td>
                                                                     </tr>
 
-                                                                    <!-- Packages-->
-                                                                    <tr>
-                                                                        <td colspan="2">
+                                                                    <!-- Fields -->
+                                                                    <tr style="height: 1px;">
+                                                                        <td>
                                                                             <table>
-                                                                                <tr>
+                                                                                <tr style="height: 1px;">
+                                                                                    <td style="width: 150px;">
+                                                                                        <LogLabel [ObjectFieldName]="'PackageCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [Text]="'Main Package'"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td style="width: 10px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td style="width: 120px;">
+                                                                                        <LogLabel [ObjectFieldName]="'NumberOfUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td style="width: 10px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td style="width: 120px;">
+                                                                                        <LogLabel [ObjectFieldName]="'FreeUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td style="width: 10px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td style="width: 120px;">
+                                                                                        <LogLabel [ObjectFieldName]="'LicensePrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
+                                                                                    </td>
+
                                                                                     <td>
-                                                                                        <div class="Box">
-                                                                                            <table>
-                                                                                                <tr class="BoxHeader">
-                                                                                                    <td>
-                                                                                                        <label>Packages</label>
-                                                                                                    </td>
-                                                                                                    <td style="width: 20px; padding: 3px;">
-                                                                                                        <IconButton [Name]="'Add'" [IsEnabled]="IsMultiPackage" [IsSmall]="true" (click)="AddPackageClicked('PK')"></IconButton>
-                                                                                                    </td>
-                                                                                                    <td style="width:5px;">
-                                                                                                        <div></div>
-                                                                                                    </td>
-                                                                                                </tr>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
 
-                                                                                                <tr style="height:150px;">
-                                                                                                    <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
-                                                                                                        <div class="MediaFill">
-                                                                                                            <div class="SimpleGridView">
-                                                                                                                <div class="SimpleGridViewHeader">
-                                                                                                                    <table>
-                                                                                                                        <tr>
-                                                                                                                            <td style="width: 210px; min-width: 210px; max-width: 210px;">Name</td>
-                                                                                                                            <td style="width: 120px; min-width: 120px; max-width: 120px;">Number Of Users</td>
-                                                                                                                            <td class="LastChild">
-                                                                                                                                <div></div>
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                    </table>
-                                                                                                                </div>
+                                                                                <tr style="height: 22px;">
+                                                                                    <td>
+                                                                                        <LogLov [ObjectFieldName]="'PackageCode'"
+                                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'Package'"
+                                                                                                [DependencyFilter1Value]="'PK'"
+                                                                                                [HideColumns]="true">
+                                                                                        </LogLov>
+                                                                                    </td>
 
-                                                                                                                <div class="SimpleGridViewBody">
-                                                                                                                    <table>
-                                                                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of PackagesList">
-                                                                                                                            <td class="CellStretched" style="width: 210px; min-width: 210px; max-width: 210px;">
-                                                                                                                                {{item.PackageName}}
-                                                                                                                            </td>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
 
-                                                                                                                            <td class="CellStretched" style="width: 120px; min-width: 120px; max-width: 120px;">
-                                                                                                                                {{item.NumberOfUsers}}
-                                                                                                                            </td>
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'NumberOfUsers'" [Text]="NumberOfUsers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
 
-                                                                                                                            <td class="CellTools">
-                                                                                                                                <span class="CellSeparator"></span>
-                                                                                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)" [disabled]="!IsEditable"></IconButton>
-                                                                                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)" [disabled]="!IsEditable"></IconButton>
-                                                                                                                            </td>
-                                                                                                                        </tr>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
 
-                                                                                                                        <tr>
-                                                                                                                            <td colspan="3">
-                                                                                                                                <div></div>
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                    </table>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </div>
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'FreeUsers'" [Text]="FreeUsers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'LicensePrice'" [Text]="LicensePrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div></div>
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
                                                                     </tr>
 
-                                                                    <tr style="height:10px;">
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <!--Add-Ons-->
                                                                     <tr>
-                                                                        <td colspan="2">
+                                                                        <td>
                                                                             <table>
+
+                                                                                <!-- Packages-->
                                                                                 <tr>
                                                                                     <td>
-                                                                                        <div class="Box">
-                                                                                            <table>
-                                                                                                <tr class="BoxHeader">
-                                                                                                    <td>
-                                                                                                        <label>Add-Ons</label>
-                                                                                                    </td>
-                                                                                                    <td style="width: 20px; padding: 3px;">
-                                                                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddPackageClicked('AD')"></IconButton>
-                                                                                                    </td>
-                                                                                                    <td style="width:5px;">
-                                                                                                        <div></div>
-                                                                                                    </td>
-                                                                                                </tr>
-
-                                                                                                <tr style="height:150px;">
-                                                                                                    <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
-                                                                                                        <div class="MediaFill">
-                                                                                                            <div class="SimpleGridView">
-                                                                                                                <div class="SimpleGridViewHeader">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <div class="Box">
+                                                                                                        <table>
+                                                                                                            <tr class="BoxHeader">
+                                                                                                                <td>
                                                                                                                     <table>
                                                                                                                         <tr>
-                                                                                                                            <td style="width: 330px; min-width: 330px; max-width: 330px;">Name</td>
-                                                                                                                            <td class="LastChild">
+                                                                                                                            <td>
+                                                                                                                                <label>Additional Packages</label>
+                                                                                                                            </td>
+
+                                                                                                                            <td style="width: 20px; padding: 3px;">
+                                                                                                                                <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddPackageClicked('PK')"></IconButton>
+                                                                                                                            </td>
+
+                                                                                                                            <td style="width:5px;">
                                                                                                                                 <div></div>
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                     </table>
-                                                                                                                </div>
+                                                                                                                </td>
+                                                                                                            </tr>
 
-                                                                                                                <div class="SimpleGridViewBody">
-                                                                                                                    <table>
-                                                                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of AddOnsList">
-                                                                                                                            <td class="CellStretched" style="width: 330px; min-width: 330px; max-width: 330px;">
-                                                                                                                                {{item.PackageName}}
-                                                                                                                            </td>
+                                                                                                            <tr style="height:150px;">
+                                                                                                                <td style="padding-left: 5px; padding-right: 5px;">
+                                                                                                                    <div class="MediaFill">
+                                                                                                                        <div class="SimpleGridView">
+                                                                                                                            <div class="SimpleGridViewHeader">
+                                                                                                                                <table>
+                                                                                                                                    <tr>
+                                                                                                                                        <td style="width: 210px; min-width: 210px; max-width: 210px;">Name</td>
+                                                                                                                                        <td style="width: 120px; min-width: 120px; max-width: 120px;">Number Of Users</td>
+                                                                                                                                        <td class="LastChild">
+                                                                                                                                            <div></div>
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+                                                                                                                                </table>
+                                                                                                                            </div>
 
-                                                                                                                            <td class="CellTools">
-                                                                                                                                <span class="CellSeparator"></span>
-                                                                                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditAddOn(item)"></IconButton>
-                                                                                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteAddOn(item)"></IconButton>
-                                                                                                                            </td>
-                                                                                                                        </tr>
+                                                                                                                            <div class="SimpleGridViewBody">
+                                                                                                                                <table>
+                                                                                                                                    <tr class="SimpleGridViewRow" *ngFor="let item of PackagesList">
+                                                                                                                                        <td class="GridViewCell" style="width: 210px; min-width: 210px; max-width: 210px;">
+                                                                                                                                            {{item.PackageName}}
+                                                                                                                                        </td>
 
-                                                                                                                        <tr>
-                                                                                                                            <td colspan="2">
-                                                                                                                                <div></div>
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                    </table>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </div>
+                                                                                                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                                                                                            {{item.NumberOfUsers}}
+                                                                                                                                        </td>
+
+                                                                                                                                        <td class="CellTools">
+                                                                                                                                            <span class="CellSeparator"></span>
+                                                                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)" [disabled]="!IsEditable"></IconButton>
+                                                                                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)" [disabled]="!IsEditable"></IconButton>
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+
+                                                                                                                                    <tr>
+                                                                                                                                        <td colspan="3">
+                                                                                                                                            <div></div>
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+                                                                                                                                </table>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </td>
+                                                                                                            </tr>
+
+                                                                                                            <tr style="height: 25px;">
+                                                                                                                <td>
+                                                                                                                    <div class="MediaFill" style="background: #E8F7FF; border: 1px solid #85CBED;">
+                                                                                                                        <table>
+                                                                                                                            <tr>
+                                                                                                                                <td style="width: 210px; padding-left: 4px;">Totals</td>
+                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">Totals</td>
+                                                                                                                            </tr>
+                                                                                                                        </table>
+                                                                                                                    </div>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr style="height:5px;">
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!--Add-Ons-->
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <div class="Box">
+                                                                                                        <table>
+                                                                                                            <tr class="BoxHeader">
+                                                                                                                <td>
+                                                                                                                    <label>Add-Ons</label>
+                                                                                                                </td>
+                                                                                                                <td style="width: 20px; padding: 3px;">
+                                                                                                                    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddPackageClicked('AD')"></IconButton>
+                                                                                                                </td>
+                                                                                                                <td style="width:5px;">
+                                                                                                                    <div></div>
+                                                                                                                </td>
+                                                                                                            </tr>
+
+                                                                                                            <tr style="height:150px;">
+                                                                                                                <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
+                                                                                                                    <div class="MediaFill">
+                                                                                                                        <div class="SimpleGridView">
+                                                                                                                            <div class="SimpleGridViewHeader">
+                                                                                                                                <table>
+                                                                                                                                    <tr>
+                                                                                                                                        <td style="width: 330px; min-width: 330px; max-width: 330px;">Name</td>
+                                                                                                                                        <td class="LastChild">
+                                                                                                                                            <div></div>
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+                                                                                                                                </table>
+                                                                                                                            </div>
+
+                                                                                                                            <div class="SimpleGridViewBody">
+                                                                                                                                <table>
+                                                                                                                                    <tr class="SimpleGridViewRow" *ngFor="let item of AddOnsList">
+                                                                                                                                        <td class="CellStretched" style="width: 330px; min-width: 330px; max-width: 330px;">
+                                                                                                                                            {{item.PackageName}}
+                                                                                                                                        </td>
+
+                                                                                                                                        <td class="CellTools">
+                                                                                                                                            <span class="CellSeparator"></span>
+                                                                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditAddOn(item)"></IconButton>
+                                                                                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteAddOn(item)"></IconButton>
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+
+                                                                                                                                    <tr>
+                                                                                                                                        <td colspan="2">
+                                                                                                                                            <div></div>
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+                                                                                                                                </table>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr style="height:5px;">
+                                                                                    <td>
+                                                                                        <div></div>
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
+                                                            </td>
+
+                                                            <td style="width: 5px;">
+                                                                <div></div>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -715,6 +805,7 @@
                                                 <table>
                                                     <tr>
                                                         <td style="vertical-align: top;">
+
                                                             <!-- Billing Details -->
                                                             <fieldset class="FieldSet">
                                                                 <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Billing Details</legend>
@@ -820,7 +911,7 @@
                                                                                     </td>
                                                                                 </tr>
 
-                                                                                <tr class="FormFieldRow">
+                                                                                <!--<tr class="FormFieldRow">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'LicensePrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                                     </td>
@@ -828,7 +919,7 @@
                                                                                     <td>
                                                                                         <LogTextBox [ObjectFieldName]="'LicensePrice'" [Text]="LicensePrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                                     </td>
-                                                                                </tr>
+                                                                                </tr>-->
 
 
 
