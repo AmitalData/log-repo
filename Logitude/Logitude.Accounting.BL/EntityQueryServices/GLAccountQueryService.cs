@@ -75,6 +75,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
+        public List<string> GetGLAccountsWithoutLedgerTransactions(List<string> glAccountIds, int tenant)
+        {
+            return (from l in context.LedgerTransactions
+                 
+                    where glAccountIds.Contains(l.AccountId) && l.Tenant == tenant
+                    select l.AccountId).ToList();
+
+        }
+
         public IQueryable<GLAccountAndMoreDTO> GetQAllRevenueExpenseCardsByIsControlAccount(int tenant, bool isControlAccount)
         {
             var pocoGLAccountAndMores = this.repository.GetQAllRevenueExpenseCardsByIsControlAccount(tenant, isControlAccount);//.ToList();

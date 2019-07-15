@@ -157,6 +157,9 @@
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span>{{item.OriginPortCode}}</span>
+                                                <div style="height: 100%; width: 100%;" *ngIf="item.IsFromAllOtherPorts">
+                                                    <img src="./Images/Icons/A-icon.png" width="16" height="16" title="From All Other Ports" />
+                                                </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -166,6 +169,9 @@
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span>{{item.DestinationPortCode}}</span>
+                                                <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
+                                                    <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
+                                                </div>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
