@@ -92,8 +92,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     if (list_ChargeTypes.Count > 0)
                     {
                         RatesTableQuery myQuery = new RatesTableQuery(tenant);
-                        LastRate freightChargeRate = myQuery.GetLastRecordByValueDate(tenant, loggedTenant.FreightCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
-                        LastRate othersChargeRate = myQuery.GetLastRecordByValueDate(tenant, loggedTenant.OtherChargesCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+                        List<CurrencyRate> AllRates = new List<CurrencyRate>();
+
+                        AllRates.Add(this.GetCurrencyRate(loggedTenant, loggedTenant.FreightCurrencyId, myQuery));
+                        AllRates.Add(this.GetCurrencyRate(loggedTenant, loggedTenant.OtherChargesCurrencyId, myQuery));
 
                         if (this.isLCLQuote)
                         {
@@ -153,41 +155,21 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     }
                                 }
 
-                                if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
+                                if (quoteChargePM.CostCurrencyId != null)
                                 {
-                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
+                                    CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == quoteChargePM.CostCurrencyId).FirstOrDefault();
+                                    if (iCurrencyRate == null)
                                     {
-                                        quoteChargePM.CostExchangeRate = null;
+                                        iCurrencyRate = this.GetCurrencyRate(loggedTenant, quoteChargePM.CostCurrencyId, myQuery);
+                                        AllRates.Add(iCurrencyRate);
                                     }
 
-                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
+                                    if (iCurrencyRate != null)
                                     {
-                                        quoteChargePM.CostExchangeRate = 1;
-                                    }
-
-                                    else if (freightChargeRate != null)
-                                    {
-                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
+                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
                                     }
                                 }
 
-                                else
-                                {
-                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
-                                    {
-                                        quoteChargePM.CostExchangeRate = null;
-                                    }
-
-                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
-                                    {
-                                        quoteChargePM.CostExchangeRate = 1;
-                                    }
-
-                                    else if (othersChargeRate != null)
-                                    {
-                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
-                                    }
-                                }
 
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
@@ -331,38 +313,18 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     }
                                 }
 
-                                if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
-                                { 
-                                    if (string.IsNullOrEmpty(itemPM.CostCurrencyId))
-                                    {
-                                        itemPM.CostExchangeRate = null;
-                                    }
-
-                                    else if (itemPM.CostCurrencyId == loggedTenant.CurrencyId)
-                                    {
-                                        itemPM.CostExchangeRate = 1;
-                                    }
-
-                                    else if (freightChargeRate != null)
-                                    {
-                                        itemPM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
-                                    }
-                                }
-
-                                else
+                                if (itemPM.CostCurrencyId != null)
                                 {
-                                    if (string.IsNullOrEmpty(itemPM.CostCurrencyId))
+                                    CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == itemPM.CostCurrencyId).FirstOrDefault();
+                                    if (iCurrencyRate == null)
                                     {
-                                        itemPM.CostExchangeRate = null;
-                                    }
-                                    else if (itemPM.CostCurrencyId == loggedTenant.CurrencyId)
-                                    {
-                                        itemPM.CostExchangeRate = 1;
+                                        iCurrencyRate = this.GetCurrencyRate(loggedTenant, itemPM.CostCurrencyId, myQuery);
+                                        AllRates.Add(iCurrencyRate);
                                     }
 
-                                    else if (othersChargeRate != null)
+                                    if (iCurrencyRate != null)
                                     {
-                                        itemPM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
+                                        itemPM.CostExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
                                     }
                                 }
 
@@ -855,5 +817,32 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
         }
+        private CurrencyRate GetCurrencyRate(Tenant loggedTenant, string iCurrencyId, RatesTableQuery myQuery)
+        {
+            CurrencyRate iResult = new CurrencyRate() { Id = iCurrencyId };
+
+            if (iCurrencyId == loggedTenant.CurrencyId)
+            {
+                iResult.Rate = 1;
+            }
+
+            else
+            {
+                LastRate iRate = myQuery.GetLastRecordByValueDate(tenant, iCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+                if (iRate != null)
+                {
+                    iResult.Rate = iRate.Rate;
+                }
+            }
+
+            return iResult;
+        }
+    }
+
+
+    public class CurrencyRate
+    {
+        public string Id { get; set; }
+        public double? Rate { get; set; }
     }
 }
