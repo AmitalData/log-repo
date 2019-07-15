@@ -303,15 +303,46 @@ namespace CommunicationWorkerRole
                 {
                     Logitude.XSD.Artemus.CommunicationLogSettings settingsData = JsonConvert.DeserializeObject<Logitude.XSD.Artemus.CommunicationLogSettings>(waitingCommLog.LogSettings);
                     if (settingsData != null)
-                    {   //ftp://192.116.221.106/temp1
-                        string hostIP = @"ftp://" + settingsData.host;
+                    {
+                        string ftpHostIP = @"ftp://" + settingsData.host;
+                        string ftpUserName = settingsData.username;
+                        string ftpPassword = settingsData.password;
+                        string ftpFolderName = settingsData.folder;
                         string fileName = (!string.IsNullOrEmpty(settingsData.filename) ? settingsData.filename : document.Id) + "." + document.Extension;
-                        FTPService ftpService = new FTPService(hostIP, settingsData.username, settingsData.password);
-						string p_message = "";
-						ftpService.Upload(fileName, settingsData.folder, filedata, out p_message);
-						waitingCommLog.Logs += Environment.NewLine + DateTime.Now.ToString() + " : " + p_message;
+                        string p_message = "";
+                        if (!settingsData.UseSFTP)
+                        {
 
-					}
+                            ////ftp://192.116.221.106/temp1
+                            //string hostIP = @"ftp://" + settingsData.host;
+
+                            FTPService ftpService = new FTPService(ftpHostIP, settingsData.username, settingsData.password);
+
+                            ftpService.Upload(fileName, settingsData.folder, filedata, out p_message);
+                            waitingCommLog.Logs += Environment.NewLine + DateTime.Now.ToString() + " : " + p_message;
+                        }
+                        else
+                        {
+                            ftpHostIP = settingsData.host;
+                            string p_status = "";
+
+                            SFTPService sftpService = new SFTPService();
+                            sftpService.Logon(ftpHostIP, ftpUserName, ftpPassword, "22", ftpFolderName, out p_status, out p_message);
+                            waitingCommLog.Logs += p_message;
+                            if (p_status == "0")
+                            {
+
+                                sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
+
+                                if (p_status == "-1")
+                                    throw new FTPServiceException("SFTP upload file failed: " + p_message);
+                            }
+                            else
+                                throw new FTPServiceException("SFTP Login failed: " + p_message);
+
+                            waitingCommLog.Logs += p_message;
+                        }
+                    }
                 }
 
                 waitingCommLog.CommunicationStatusTypeCode = "D";

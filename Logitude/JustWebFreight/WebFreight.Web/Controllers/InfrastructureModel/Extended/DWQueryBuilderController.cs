@@ -53,17 +53,26 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string tenantWhere = ".[Parent Tenant] = ";
+                var DWSettings = new DWHSettingRepository(authToken.Tenant);
+                var temp = DWSettings.GetSingleDWHSetting(authToken.Tenant);
+                if (temp != null && temp.Tenant != temp.ParentTenant)
+                {
+                    tenantWhere = ".[Source Tenant] = ";
+                }
+
+
                 if (SQL.Contains("where"))
                 {
-                    SQL = SQL.Replace("where", "where " + Table + ".[Parent Tenant] = " + authToken.Tenant + " and");
+                    SQL = SQL.Replace("where", "where " + Table + tenantWhere + authToken.Tenant + " and");
                 }
                 else if (SQL.Contains("group by"))
                 {
-                    SQL = SQL.Replace("group by", "where " + Table + ".[Parent Tenant] = " + authToken.Tenant + " group by");
+                    SQL = SQL.Replace("group by", "where " + Table + tenantWhere + authToken.Tenant + " group by");
                 }
                 else
                 {
-                    SQL = SQL + " where " + Table + ".[Parent Tenant] = " + authToken.Tenant;
+                    SQL = SQL + " where " + Table + tenantWhere + authToken.Tenant;
                 }
 
                 using (var scope = TransactionFactory.GetNewTransaction())
@@ -205,9 +214,17 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 
                 if (!IsClosed)
                 {
+                    string tenantWhere = ".[Parent Tenant] = ";
+                    var DWSettings = new DWHSettingRepository(authToken.Tenant);
+                    var isParentTenant = DWSettings.IsParentTenant(authToken.Tenant);
+                    if (!isParentTenant)
+                    {
+                        tenantWhere = ".[Source Tenant] = ";
+                    }
+
                     if (Tabel != "DIM_Tenants" && Tabel != "DIM_Dates")
                     {
-                        WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Parent Tenant] = " + authToken.Tenant); //authToken.Tenant
+                        WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + tenantWhere + authToken.Tenant); //authToken.Tenant
                     }
                     if (Tabel == "DIM_Dates")
                     {

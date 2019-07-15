@@ -83,14 +83,16 @@ export class ShipmentWorkSpace {
     }
     else if (ShipmentLevelCode == 'M') {
     this.shipHelper.CreateAndCloseNewShipment('NEWMASTER','MasterCancelbtn',Direction,TransportMode,ShipmentType);
-    // this.Helper.WaitBusyIndicator();
+    this.Helper.WaitBusyIndicator();
 
       var shipperRef1 = this.GeneralFunction.RandomNum();
-      this.MasterShipment.CreateMasterShipment(shipperRef1, ShipmentLevelCode, Direction, TransportMode, ShipmentType);// Create shipment 
-      this.Helper.WaitBusyIndicator();
-
-      // this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
-      // this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
+    this.MasterShipment.CreateMasterShipment(shipperRef1, ShipmentLevelCode, Direction, TransportMode, ShipmentType);// Create shipment 
+    //  this.Helper.WaitBusyIndicatorToShow();
+    // this.Helper.WaitWindowClosed();
+    this.Helper.WaitBusyIndicator();
+      
+       this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
+      this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
     }
 
   }

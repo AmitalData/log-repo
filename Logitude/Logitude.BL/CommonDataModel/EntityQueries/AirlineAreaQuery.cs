@@ -119,7 +119,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 AirlineAreaId = a.AirlineAreaId,
                                                 Name = a.Name,
                                                 Tenant = a.Tenant,
-                                                Description = a.Description,
                                                 AddedByUserId = a.AddedByUserId,
                                                 AddedDate = a.AddedDate,
                                                 PortId = a.PortId,

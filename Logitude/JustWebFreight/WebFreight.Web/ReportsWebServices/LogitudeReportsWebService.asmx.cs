@@ -76,6 +76,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.Resolvers;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -7359,9 +7360,11 @@ namespace WebFreight.Web.ReportsWebServices
 
             QueryFilterItem filterItem_FlightDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FlightDate").FirstOrDefault();
             QueryFilterItem filterItem_FlightNumber = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FlightNumber").FirstOrDefault();
+            QueryFilterItem filterItem_CustomAgent = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomAgentId").FirstOrDefault();
 
             DateTime? flightDate = null;
             string flightNumber = null;
+            string customAgentId = null;
             double totalWeight = 0;
             double totalPackagesQuantity = 0;
             double totalContainersQuantity = 0;
@@ -7379,6 +7382,14 @@ namespace WebFreight.Web.ReportsWebServices
                 if (filterItem_FlightNumber.FieldValue != null)
                 {
                     flightNumber = filterItem_FlightNumber.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CustomAgent != null)
+            {
+                if (filterItem_CustomAgent.FieldValue != null)
+                {
+                    customAgentId = filterItem_CustomAgent.FieldValue.ToString();
                 }
             }
 
@@ -7402,6 +7413,11 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(flightNumber))
             {
                 iQueryable = iQueryable.Where(d => (d.MainCarriageCarrierCode + d.MainCarriageCarrierNumber) == flightNumber);
+            }
+
+            if (!string.IsNullOrEmpty(customAgentId))
+            {
+                iQueryable = iQueryable.Where(d => d.CustomAgentImportId == customAgentId || d.CustomAgentExportId == customAgentId);
             }
 
             #endregion
@@ -7451,6 +7467,18 @@ namespace WebFreight.Web.ReportsWebServices
                     flightBookingRecord.ShipmentNumber = a.ShipmentNumber;
                     flightBookingRecord.House = a.House;
                     flightBookingRecord.ConsigneeName = a.ConsigneeName;
+                    flightBookingRecord.VolumetricWeight = a.VolumetricWeight;
+                    flightBookingRecord.VolumetricWeightUnit = a.ChargeableWeightUnitCode;
+                    flightBookingRecord.ShipmentCreateDate = a.CreateDateTime;
+                    flightBookingRecord.CustomAgentExport = a.CustomAgentExportName;
+                    flightBookingRecord.CustomAgentImport = a.CustomAgentImportName;
+                    flightBookingRecord.MoveType = a.MoveTypeName;
+                    flightBookingRecord.SCI = a.SCI;
+                    
+                    if(a.ShipmentLevelCode == "C")
+                    {
+                        flightBookingRecord.HAWBsNumbers = shipmentRepository.GetHouseShipmentsCountForMaster(a.Id, tenant);
+                    }
 
                     if (!string.IsNullOrEmpty(a.ShipperAddressId))
                     {
@@ -7461,7 +7489,6 @@ namespace WebFreight.Web.ReportsWebServices
                             flightBookingRecord.ShipperAddress = DataProviders.General.GetAddress(address);
                         }
                     }
-
 
                     if (!string.IsNullOrEmpty(a.ConsigneeAddressId))
                     {
@@ -7477,29 +7504,87 @@ namespace WebFreight.Web.ReportsWebServices
                     flightBookingRecord.ChargeableWeight = a.ChargeableWeight != null ? a.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", a.ChargeableWeight)) : "" : "";
                     totalWeight = totalWeight + (a.GrossWeight != null ? a.GrossWeight.Value : 0);
                     totalPackagesQuantity = totalPackagesQuantity + (a.NumberOfPackages != null ? a.NumberOfPackages.Value : 0);
-                    if(a.TransportModeId != "A")
+
+                    if (a.TransportModeId != "A")
                     {
                         totalContainersQuantity = totalContainersQuantity + (a.NumberOfContainers != null ? a.NumberOfContainers.Value : 0);
                     }
+
                     if (!string.IsNullOrEmpty(WeightUnit))
                     {
                         WeightUnit = a.GrossWeightUnitCode != null ? a.GrossWeightUnitCode : ""; // "KG";
                     }
+
                     if (packages != null && packages.Count() > 0)
                     {
-                        string str = "";
+                        string dim = "";
+                        string ref1 = "";
+                        string ref2 = "";
+                        string ref3 = "";
+                        string ref4 = "";
 
                         foreach (ShipmentPackage package in packages)
                         {
-                            if (!string.IsNullOrEmpty(str))
+                            if (!string.IsNullOrEmpty(dim))
                             {
-                                str = str + Environment.NewLine;
+                                dim = dim + Environment.NewLine;
                             }
 
-                            str = str + package.Quantity + " pc / " + package.Length + "x" + package.Width + "x" + package.Height + " Cm";
+                            dim = dim + package.Quantity + " pc / " + package.Length + "x" + package.Width + "x" + package.Height + " Cm";
+
+                            //Ref 1
+                            if (!string.IsNullOrEmpty(package.Reference1))
+                            {
+                                if (!string.IsNullOrEmpty(ref1))
+                                {
+                                    ref1 = ref1 + Environment.NewLine;
+                                }
+
+                                ref1 = ref1 + package.Reference1;
+                            }
+                            /////////////////
+
+                            //Ref 2
+                            if (!string.IsNullOrEmpty(package.Reference2))
+                            {
+                                if (!string.IsNullOrEmpty(ref2))
+                                {
+                                    ref2 = ref2 + Environment.NewLine;
+                                }
+
+                                ref2 = ref2 + package.Reference2;
+                            }
+                            /////////////////
+
+                            //Ref 3
+                            if (!string.IsNullOrEmpty(package.Reference3))
+                            {
+                                if (!string.IsNullOrEmpty(ref3))
+                                {
+                                    ref3 = ref3 + Environment.NewLine;
+                                }
+
+                                ref3 = ref3 + package.Reference3;
+                            }
+                            /////////////////
+
+                            //ref 4
+                            if (!string.IsNullOrEmpty(package.Reference4))
+                            {
+                                if (!string.IsNullOrEmpty(ref4))
+                                {
+                                    ref4 = ref4 + Environment.NewLine;
+                                }
+
+                                ref4 = ref4 + package.Reference4;
+                            }
                         }
 
-                        flightBookingRecord.Dimensions = str;
+                        flightBookingRecord.Dimensions = dim;
+                        flightBookingRecord.PackagesRef1 = ref1;
+                        flightBookingRecord.PackagesRef2 = ref2;
+                        flightBookingRecord.PackagesRef3 = ref3;
+                        flightBookingRecord.PackagesRef4 = ref4;
                     }
 
                     totalData.FlightBookingRecordList.Add(flightBookingRecord);
@@ -10805,6 +10890,7 @@ namespace WebFreight.Web.ReportsWebServices
                 StartBalanceForeignList = ledgerTransactionBalanceService.Response.StartBalanceForeignList,
                 StartBalanceLocal = ledgerTransactionBalanceService.Response.StartBalanceLocal,
                 TotalRowCount = ledgerTransactionBalanceService.Response.TotalRowCount,
+                YearTransferLedgerTransactionIds = ledgerTransactionBalanceService.Response.YearTransferLedgerTransactionIds,
                 SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionBalanceService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
 
             };
@@ -12686,21 +12772,28 @@ namespace WebFreight.Web.ReportsWebServices
                 List<string> valueOfGoodsCurrencyIds = Shipments.GroupBy(d => d.ValueOfGoodsCurrencyId).Select(d => d.FirstOrDefault().ValueOfGoodsCurrencyId).ToList();
                 List<string> departmentIdIds = Shipments.GroupBy(d => d.DepartmentId).Select(d => d.FirstOrDefault().DepartmentId).ToList();
                 List<string> shipmentdelevriesIds = Shipments.Select(d => d.Id).ToList();
-                List<string> FromPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromPartnerCardId).ToList();
-                List<string> FromAddressCountryIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromAddressCountryId).ToList();
-                List<string> ToPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.ToPartnerCardId).ToList();
+                List<string> FromPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where d.PickUpDeliveryTypeCode == "PICK" && shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromPartnerCardId).ToList();
+                List<string> FromAddressCountryIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where d.PickUpDeliveryTypeCode == "PICK" && shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromAddressCountryId).ToList();
+                List<string> ToPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where d.PickUpDeliveryTypeCode == "DELV" && shipmentdelevriesIds.Contains(d.ShipmentId) select d.ToPartnerCardId).ToList();
 
                 List<Currency> currencyLists = (from d in commonContext.Currencies where valueOfGoodsCurrencyIds.Contains(d.Id) select d).ToList();
                 List<Department> departmentLists = (from d in commonContext.Departments where departmentIdIds.Contains(d.Id) select d).ToList();
                 List<ShipmentPickUpDelivery> shipmentPickUpDeliveriesLists = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d).ToList();
-                List<Address> FromPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && FromPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
-                List<Country> FromAddressCountryLists = (from record in commonContext.Countries.Include("GlobalZone") where FromAddressCountryIds.Contains(record.Id) && record.Tenant == tenant select record).ToList();
-                List<Address> ToPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && ToPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
+                List<Address> FromPartnerAddressLists = (from a in commonContext.Addresses where a.Tenant == tenant && FromPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
+                List<Country> FromAddressCountryLists = (from record in commonContext.Countries where FromAddressCountryIds.Contains(record.Id) && record.Tenant == tenant select record).ToList();
+                List<Address> ToPartnerAddressLists = (from a in commonContext.Addresses where a.Tenant == tenant && ToPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
                 List<ShipmentPackage> ShipmentPackages = (from d in shipmentsContext.ShipmentPackages where shipmentdelevriesIds.Contains(d.ShipmentId) && d.Reference1 != null && d.Reference2 != null && d.Reference3 != null && d.Reference4 != null select d).ToList();
+                List<Card> CardList = commonContext.Cards.Where(d => d.Tenant == tenant).ToList();
+
+
+
+
 
                 totalData.Shipments = new List<ShipmentDetals>();
                 foreach (ShipmentDataView Item in Shipments)
                 {
+                    bool isInlandDomesticShipment = (Item.DirectionId == "D" && Item.TransportModeId == "I");
+
                     Currency ValueOfgoodsCurrency = currencyLists.Where(d => d.Id == Item.ValueOfGoodsCurrencyId).FirstOrDefault();
                     Department ShipmentDepartment = departmentLists.Where(d => d.Id == Item.DepartmentId).FirstOrDefault();
 
@@ -12772,16 +12865,164 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.CountofLegalisedDocuments = Item.AMSBL;
                     shipment.ShipperInvoiceValue = Item.ValueOfGoods;
                     shipment.CurrencyofShipperInvoice = ValueOfgoodsCurrency != null ? ValueOfgoodsCurrency.Code : null;
-                    if (!string.IsNullOrEmpty(Item.FinalDistenationPortId)){
-                        
-                            PortPM port = PortQuery.GetSinglePort(Item.Tenant, Item.FinalDistenationPortId, true);
-                            if (port != null)
+                    if (Item.ShipmentNumber == "E9069")
+                    {
+                        var test = "z";
+                    }
+                    if (Item.DirectionId == "D" && Item.TransportModeId == "I")
+                    {
+                        if (!string.IsNullOrEmpty(Item.MainCarriageToAddressId))
+                        {
+                            Address myPartnerAddress = addressRepository.GetSingleAddress(Item.MainCarriageToAddressId, tenant);
+                            if (myPartnerAddress != null)
                             {
-                            shipment.FinalPortofDestination = port.Code;
-                            shipment.FinalCountryofDestination = port.CountryName;
+                                shipment.FinalCountryofDestination = myPartnerAddress.Country != null ? myPartnerAddress.Country.EnglishName : null;
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        if (myLastDelivery != null)
+                        {
+                            switch (myLastDelivery.PickUpDeliveryToTypeCode)
+                            {
+                                case "PART":
+                                    {
+                                        if (!string.IsNullOrEmpty(myLastDelivery.ToAddressId))
+                                        {
+                                            Address myPartnerAddress = addressRepository.GetSingleAddress(myLastDelivery.ToAddressId, tenant);
+                                            if (myPartnerAddress != null)
+                                            {
+                                                shipment.FinalCountryofDestination = myPartnerAddress.Country != null ? myPartnerAddress.Country.EnglishName : null;
+                                            }
+                                        }
+
+                                        break;
+                                    }
+
+                                case "PORT":
+                                    {
+                                        if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
+                                        {
+                                            PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.ToPortId, true);
+                                            if (myPort != null)
+                                            {
+                                                shipment.FinalCountryofDestination = myPort.CountryName;
+                                                shipment.FinalPortofDestination = myPort.Code;
+
+
+                                            }
+                                        }
+
+                                        break;
+                                    }
+
+                                case "CASL":
+                                    {
+                                        string myCountry = myLastDelivery.ToAddressCountry != null ? myLastDelivery.ToAddressCountry.EnglishName : null;
+                                        if (!string.IsNullOrEmpty(myCountry))
+                                        {
+                                            shipment.FinalCountryofDestination = myCountry;
+                                            //shipment.FinalPortofDestination = myLastDelivery..Code;
+
+                                        }
+
+                                        break;
+                                    }
+                            }
+                        }
+
+                        else if (Item.DirectionId == "I" && !string.IsNullOrEmpty(Item.WarehouseLegWarehouseId))
+                        {
+                            Card warehouse = CardList.Where(p => p.Id == Item.WarehouseLegWarehouseId).FirstOrDefault();
+                            if (warehouse != null)
+                            {
+                                shipment.FinalCountryofDestination = warehouse.CountryName;
+                                //shipment.FinalPortofDestination = warehouse.Code;
 
                             }
+                        }
+
+                        else if (!string.IsNullOrEmpty(Item.OnCarriageToPortId))
+                        {
+                            PortPM onCarriageToPort = PortQuery.GetSinglePort(tenant, Item.OnCarriageToPortId, true);
+                            if (onCarriageToPort != null)
+                            {
+                                shipment.FinalCountryofDestination = onCarriageToPort.CountryName;
+                                shipment.FinalPortofDestination = onCarriageToPort.Code;
+
+                            }
+                        }
+
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(Item.Transshipment3ToPortId))
+                            {
+                                PortPM transshipment3ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment3ToPortId, true);
+                                if (transshipment3ToPort != null)
+                                {
+                                    shipment.FinalCountryofDestination = transshipment3ToPort.CountryName;
+                                    shipment.FinalPortofDestination = transshipment3ToPort.Code;
+
+                                }
+                            }
+
+                            else if (!string.IsNullOrEmpty(Item.Transshipment2ToPortId))
+                            {
+                                PortPM transshipment2ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment2ToPortId, true);
+                                if (transshipment2ToPort != null)
+                                {
+                                    shipment.FinalCountryofDestination = transshipment2ToPort.CountryName;
+                                    shipment.FinalPortofDestination = transshipment2ToPort.Code;
+
+                                }
+                            }
+
+                            else if (!string.IsNullOrEmpty(Item.Transshipment1ToPortId))
+                            {
+                                PortPM transshipment1ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment1ToPortId, true);
+                                if (transshipment1ToPort != null)
+                                {
+                                    shipment.FinalCountryofDestination = transshipment1ToPort.CountryName;
+                                    shipment.FinalPortofDestination = transshipment1ToPort.Code;
+
+                                }
+                            }
+
+                            else if (!string.IsNullOrEmpty(Item.MainCarriageToPortId))
+                            {
+                                PortPM mainCarriageToPort = PortQuery.GetSinglePort(tenant, Item.MainCarriageToPortId, true);
+                                if (mainCarriageToPort != null)
+                                {
+                                    shipment.FinalCountryofDestination = mainCarriageToPort.CountryName;
+                                    shipment.FinalPortofDestination = mainCarriageToPort.Code;
+                                }
+                            }
+                            else if (!string.IsNullOrEmpty(Item.ToPortId))
+                            {
+                                PortPM mainCarriageToPort = PortQuery.GetSinglePort(tenant, Item.ToPortId, true);
+                                if (mainCarriageToPort != null)
+                                {
+                                    shipment.FinalCountryofDestination = mainCarriageToPort.CountryName;
+                                    shipment.FinalPortofDestination = mainCarriageToPort.Code;
+                                }
+                            }
+                        }
                     }
+
+
+                    //  Item.FinalDistenationPortId = Item.Transshipment3ToPortId != null ? Item.Transshipment3ToPortId : Item.Transshipment2ToPortId != null ? Item.Transshipment2ToPortId : Item.Transshipment1ToPortId != null ? Item.Transshipment1ToPortId : Item.MainCarriageToPortId;
+                    //   shipment.FinalCountryofDestination = Item.LastFinalDestination;
+
+
+
+
+
+
+
+
+
                     if (!string.IsNullOrEmpty(Item.OnCarriageTransportModeId))
                     {
                         shipment.OnCarriageTransportMode = Item.OnCarriageTransportModeId == "I" ? "Inland" : Item.OnCarriageTransportModeId == "A" ? "Air" : "Ocean";
@@ -12820,7 +13061,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         if (!string.IsNullOrEmpty(Item.ConsigneeId))
                         {
-                            Card consignee = commonContext.Cards.Where(d => d.Id == Item.ConsigneeId).FirstOrDefault();
+                            Card consignee = CardList.Where(d => d.Id == Item.ConsigneeId).FirstOrDefault();
                             if (consignee != null)
                             {
                                 shipment.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
@@ -12831,23 +13072,22 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         if (!string.IsNullOrEmpty(Item.ShipperId))
                         {
-                            Card shipper = commonContext.Cards.Where(d => d.Id == Item.ShipperId).FirstOrDefault();
+                            Card shipper = CardList.Where(d => d.Id == Item.ShipperId).FirstOrDefault();
                             if (shipper != null)
                             {
                                 shipment.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
                             }
                         }
                     }
-                    
+
                     if (!string.IsNullOrEmpty(Item.OperationalClosedByUserId))
                     {
-                        ContactRepository contactRepository = new ContactRepository(commonContext);
-                        Contact contact = contactRepository.GetSingleContact(Item.OperationalClosedByUserId, tenant);
+                        Contact contact = ContactRepository.GetSingleContact(Item.OperationalClosedByUserId, tenant, true);
                         if (contact != null)
                         {
                             shipment.OperationalClosedby = contact.EnglishName;
                         }
-                    }                    
+                    }
 
                     if (firstShipmentPackage != null)
                     {
@@ -12910,7 +13150,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (!string.IsNullOrEmpty(myLastDelivery.CarrierId))
                         {
-                            Card truckerCard = CardRepository.GetSingleCard(myLastDelivery.CarrierId, tenant, true);
+                            Card truckerCard = CardList.Where(p => p.Id == myLastDelivery.CarrierId).First();
                             if (truckerCard != null)
                             {
                                 shipment.TruckerName = truckerCard.EnglishName;
@@ -12923,7 +13163,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 {
                                     if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
                                     {
-                                        Card myPartner = CardRepository.GetSingleCard(myLastDelivery.ToPartnerCardId, tenant, true);
+                                        Card myPartner = CardList.Where(p => p.Id == myLastDelivery.ToPartnerCardId).First();
                                         if (myPartner != null)
                                         {
                                             shipment.DeliveryToName = myPartner.EnglishName;
@@ -12964,10 +13204,10 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                         }
                     }
-                    
+
                     if (!string.IsNullOrEmpty(Item.CustomerId))
                     {
-                        Card customer = commonContext.Cards.Where(d => d.Id == Item.CustomerId).FirstOrDefault();
+                        Card customer = CardList.Where(d => d.Id == Item.CustomerId).FirstOrDefault();
                         if (customer != null)
                         {
                             shipment.CustomerExternalID = customer.ReceivablesAccountingCard;
@@ -12984,6 +13224,8 @@ namespace WebFreight.Web.ReportsWebServices
 
             return totalData;
         }
+
+
         #endregion
 
         #region License Management
@@ -13257,40 +13499,41 @@ namespace WebFreight.Web.ReportsWebServices
         private AutomationTestReportDataProvider GetAutomationTestReportDataProvider(byte[] xmlFilters, int tenant)
         {
             AutomationTestReportDataProvider automationTestReportDataProvider = new AutomationTestReportDataProvider();
-
-            bool isException = false;
-
+            
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
             QueryFilterItem filterItem_IsException = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsException").FirstOrDefault();
 
-
             if (filterItem_IsException != null)
             {
                 if (filterItem_IsException.FieldValue != null)
                 {
-                    isException = (bool)filterItem_IsException.FieldValue;
+                    automationTestReportDataProvider.IsException  = (bool)filterItem_IsException.FieldValue;
                 }
             }
 
-            if (isException)
+
+            if (automationTestReportDataProvider.IsException)
             {
                 throw new Exception("Exception Test");
             }
 
 
-            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
-            var tenantManagementPM =  tenantManagementQuery.GetSinglePM(tenant);
-            if (tenantManagementPM != null)
+            if (!automationTestReportDataProvider.IsException)
             {
-                automationTestReportDataProvider.TenantName = tenantManagementPM.Name;
-                automationTestReportDataProvider.PackageName = tenantManagementPM.PackageName;
-                automationTestReportDataProvider.CreateDate = tenantManagementPM.CreateDate;
-                automationTestReportDataProvider.UpdateDate = tenantManagementPM.UpdateDate;
-                automationTestReportDataProvider.Notes = tenantManagementPM.Notes;
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+                var tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
+                if (tenantManagementPM != null)
+                {
+                    automationTestReportDataProvider.TenantName = tenantManagementPM.Name;
+                    automationTestReportDataProvider.PackageName = tenantManagementPM.PackageName;
+                    automationTestReportDataProvider.CreateDate = tenantManagementPM.CreateDate;
+                    automationTestReportDataProvider.UpdateDate = tenantManagementPM.UpdateDate;
+                    automationTestReportDataProvider.Notes = tenantManagementPM.Notes;
+                }
             }
-            
+
             return automationTestReportDataProvider;
         }
 
@@ -13316,17 +13559,8 @@ namespace WebFreight.Web.ReportsWebServices
 
         private ContactPM GetLoggedContact(int tenant)
         {
-            //email
-            string email = "";
-            if (HttpContext.Current != null)
-                email = HttpContext.Current.User.Identity.Name;
-            else
-                email = "system@tenant" + tenant.ToString() + ".com";
-
-            //contact
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contactPM = contactQuery.GetContactByEmailOnly(email, tenant);
-            return contactPM;
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedContact;
         }
     }
 

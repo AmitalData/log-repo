@@ -116,7 +116,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             
             if (!ledgerListNotReconcile.Any())
             {
-                throw new Exception($"Does have any Ledger/ Already Reconcile!! .GetQByJournalIds({idList}, tenant).Where(r => r.AccountId == {glAccountBillTOId}).Where(r => !r.IsReconciled).Where(r => !r.InReconcileProgress)");
+              //  throw new Exception($"Does have any Ledger/ Already Reconcile!! .GetQByJournalIds({idList}, tenant).Where(r => r.AccountId == {glAccountBillTOId}).Where(r => !r.IsReconciled).Where(r => !r.InReconcileProgress)");
             }
 
             var lineCounter = 1;
@@ -197,18 +197,47 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                     .Where(r => r.AccountId == glAccountBillTOId);
                 var LedgerOfBilltoByJournalIdList = qLedgerOfBilltoByJournalId.ToList();
 
-                LedgerOfBilltoByJournalIdList.ForEach(
-                    l =>
+                foreach(var l in LedgerOfBilltoByJournalIdList)
+                {
+                    var ListLdgerPerJournal = autoReconcileRecordList.Where(r => r.JournalId == l.JournalId).Select(r => r.LedgerTransactionID).ToList();
+                    if (ListLdgerPerJournal.Count > 1)
                     {
-                        var ListLdgerPerJournal = autoReconcileRecordList.Where(r => r.JournalId == l.JournalId).Select(r => r.LedgerTransactionID).ToList();
-                        if (ListLdgerPerJournal.Count > 1)
-                        {
-                            throw new Exception("I DID NOT PLAN THAT I WILL FOUND FOR 1 JOURNAL MANY LEDGER FOR BILLTO - TODO add zero autoReconcileRecordList record !!!");
-                        }
+                        throw new Exception("I DID NOT PLAN THAT I WILL FOUND FOR 1 JOURNAL MANY LEDGER FOR BILLTO - TODO add zero autoReconcileRecordList record !!!");
+                    }
 
-                        var autoReconcileRecord = autoReconcileRecordList.First(r => r.JournalId == l.JournalId);
-                        autoReconcileRecord.LedgerTransactionID = l.Id;
-                    });
+                    var autoReconcileRecord = autoReconcileRecordList.First(r => r.JournalId == l.JournalId);
+                    autoReconcileRecord.LedgerTransactionID = l.Id;
+                    foreach (AutoReconcileRecord record in autoReconcileRecordList)
+                    {
+                        if (record.JournalId == l.JournalId)
+                        {
+                            record.LedgerTransactionID = l.Id;
+
+                        }
+                    }
+                }
+
+                //LedgerOfBilltoByJournalIdList.ForEach(
+                //    l =>
+                //    {
+                //        var ListLdgerPerJournal = autoReconcileRecordList.Where(r => r.JournalId == l.JournalId).Select(r => r.LedgerTransactionID).ToList();
+                //        if (ListLdgerPerJournal.Count > 1)
+                //        {
+                //            throw new Exception("I DID NOT PLAN THAT I WILL FOUND FOR 1 JOURNAL MANY LEDGER FOR BILLTO - TODO add zero autoReconcileRecordList record !!!");
+                //        }
+
+                //        var autoReconcileRecord = autoReconcileRecordList.First(r => r.JournalId == l.JournalId);
+                //        autoReconcileRecord.LedgerTransactionID = l.Id;
+                //        foreach(AutoReconcileRecord record in autoReconcileRecordList)
+                //        {
+                //            if (record.JournalId == l.JournalId)
+                //            {
+                //                record.LedgerTransactionID = l.Id;
+                             
+                //            }
+                //        }
+                        
+                //    });
                 if (autoReconcileRecordList.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionID)))
                 {
                     throw new Exception("not all autoReconcileRecordList  have  LedgerTransactionID /  After fetch LedgerTransaction from GetQByJournalIds ");

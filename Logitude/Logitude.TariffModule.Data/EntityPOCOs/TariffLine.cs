@@ -135,6 +135,10 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public int Index { get; set; }
         [Column("Notes")]
 	    public string Notes { get; set; }
+        [Column("IsFromAllOtherPorts")]
+	    public bool IsFromAllOtherPorts { get; set; }
+        [Column("IsToAllOtherPorts")]
+	    public bool IsToAllOtherPorts { get; set; }
     }
 }
 	 

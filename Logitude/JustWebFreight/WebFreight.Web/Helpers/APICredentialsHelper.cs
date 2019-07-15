@@ -34,8 +34,8 @@ namespace WebFreight.Web.Helpers
                     customerCare = true;
                 }
 
-                if (customerCare)
-                {
+                //if (customerCare)
+                //{
 
                     string ipstring = Partner.AllowedIPs;
                     string[] authenticatedIPs = ipstring.Split(',');
@@ -52,7 +52,7 @@ namespace WebFreight.Web.Helpers
                             userData.IpRestricted = true;
                         }
                     }
-                }
+                //}
             }
             else
             {

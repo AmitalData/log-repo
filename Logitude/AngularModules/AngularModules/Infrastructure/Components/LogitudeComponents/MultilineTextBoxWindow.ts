@@ -17,6 +17,9 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 export class MultilineTextBoxWindow implements OnInit {
     public DataContext: any;
     DisplayMode: boolean = false;
+    PreventNewLine: boolean = false;
+    IsTextBoxRTL: boolean = false;
+    RowsCount: number;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -27,6 +30,11 @@ export class MultilineTextBoxWindow implements OnInit {
         if (args.DisplayMode) {
             this.DisplayMode = args.DisplayMode;
         }
+        this.RowsCount = args.RowsCount;
+        this.IsTextBoxRTL = args.IsTextBoxRTL;
+
+        this.PreventNewLine = this.RowsCount == 1;
+
     }
 
     private text: string;
@@ -37,9 +45,19 @@ export class MultilineTextBoxWindow implements OnInit {
         }
     }
 
+    OnKeyDown(event) {
 
+        var ENTER = 13;
+        var key = event.keyCode;
+        var keyChar = event.key;
+
+        if (key == ENTER && this.PreventNewLine) {
+            event.preventDefault();
+            return;
+        }
+
+    }
     ngOnInit() {}
-
     OkButtonClicked(){
         this.CurrentSession.CloseCurrentWindowEmit(this.text);
     }

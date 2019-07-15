@@ -41,7 +41,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             return tariffsSummary;
         }
 
-        public List<TariffSearchSummary> GetTariffSearchSummary(string fromport, string toport, DateTime? BetweenDate, double weight, int tenant)
+        public List<TariffSearchSummary> GetTariffSearchSummary(string fromport, string toport, DateTime? BetweenDate, double weight, int tenant, string Weightcode, double? GrossWeight, string GrossWeightCode, double? Volume, string VolumeCode)
         {
             AirlineRepository airlineRepository = new AirlineRepository(tenant);
             AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
@@ -106,6 +106,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              price = g.Min(p => g.Key.Step1Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
+                             PriceIndex=1,
+
                          }).ToList();
             }
 
@@ -123,6 +125,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              price = g.Min(p => g.Key.Step2Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
+                             PriceIndex = 2,
+
                          }).ToList();
             }
 
@@ -140,6 +144,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              price = g.Min(p => g.Key.Step3Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
+                             PriceIndex = 3,
+
                          }).ToList();
             }
 
@@ -157,6 +163,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              price = g.Min(p => g.Key.Step4Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
+                             PriceIndex = 4,
+
                          }).ToList();
             }
 
@@ -174,6 +182,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              price = g.Min(p => g.Key.Step5Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
+                             PriceIndex = 5,
+
                          }).ToList();
             }
 
@@ -191,6 +201,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              price = g.Min(p => g.Key.Step6Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
+                             PriceIndex = 6,
+
                          }).ToList();
             }
 
@@ -208,6 +220,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              price = g.Min(p => g.Key.Step7Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
+                             PriceIndex = 7,
+
                          }).ToList();
             }
 
@@ -225,12 +239,45 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              price = g.Min(p => g.Key.Step8Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
+                             PriceIndex = 8,
+
                          }).ToList();
             }
 
             List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive).ToList();
             List<TariffVersion> TariffVersionList = this.repository.GetAllTariffVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), tenant).ToList();
             Dictionary<string, string> Currencies = myCommonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code);
+            List<TariffVersionAllInCharge> TariffVersionAllInChargesList = this.repository.GetAllTariffAllInOnVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), TariffVersionList.Select(p => p.Version).ToArray(), tenant).ToList();
+            List<Tariff> SurchargeTariffList = this.repository.GetSurchargeTariffsByAirline(TariffList.Select(p => p.SellerId).ToArray(), tenant).Where(p => !p.InActive).ToList();
+            List<Measurement> UsedMeasurements = myCommonContext.Measurements.Where(p => p.Tenant == tenant).ToList();
+            List<TariffVersion> TariffSurchargeVersionList = this.repository.GetAllTariffVersionsByTariffIds(SurchargeTariffList.Select(p => p.Id).ToArray(), tenant).ToList();
+            List<int> VersionsSurchargeIds = TariffSurchargeVersionList.Select(a => a.Version).ToList();
+            Dictionary<string,List<TariffLine>> SurchargeTariffLines = this.repository.GetAllTariffLinesByTariffIds(SurchargeTariffList.Select(p => p.Id).ToArray(), tenant).Where(p=> VersionsSurchargeIds.Contains(p.Version)).Where(p=> System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && p.ExpirationDate!=null?(System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate):true).GroupBy(p=>p.TariffId).ToDictionary(o=>o.Key,o=>o.ToList());
+            Dictionary<string, List<TariffLine>> SurchargeTariffLinesFiltered = new Dictionary<string, List<TariffLine>>();// this.repository.GetAllTariffLinesByTariffIds(SurchargeTariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionsSurchargeIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
+
+            foreach (KeyValuePair<string, List<TariffLine>> entry in SurchargeTariffLines)
+            {
+                List<TariffLine> filteredLines = new List<TariffLine>();
+                filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromport && p.DestinationPortId == toport).ToList();
+                if (filteredLines.Count() == 0)
+                {
+                    filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromport && p.IsToAllOtherPorts==true).ToList();
+
+                    if (filteredLines.Count() == 0)
+                    {
+                        filteredLines = entry.Value.ToList().Where(p => p.DestinationPortId == toport && p.IsFromAllOtherPorts == true).ToList();
+
+                        if (filteredLines.Count() == 0)
+                        {
+                            filteredLines = entry.Value.ToList().Where(p => p.IsToAllOtherPorts == true && p.IsFromAllOtherPorts == true).ToList();
+                        }
+                    }
+                }
+                SurchargeTariffLinesFiltered.Add(entry.Key, filteredLines);
+            }
+
+
+
 
             foreach (Tariff result in TariffList)
             {
@@ -238,14 +285,91 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 TariffResult item = resultItems.Where(x => x.price == resultItems.Min(y => y.price)).FirstOrDefault();
                 if (item != null)
                 {
+                    decimal? Sum = 0;
                     TariffSearchSummary tariffsSummary = new TariffSearchSummary() { Id = result.Id };
                     tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
+                    Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
+                    if (CurrentSurcharge != null)
+                    {
+                        if (SurchargeTariffLinesFiltered.ContainsKey(CurrentSurcharge.Id)) {
+                            TariffLine ChargesfilteredLines = SurchargeTariffLinesFiltered[CurrentSurcharge.Id].FirstOrDefault();
+
+                            if (ChargesfilteredLines!=null) {
+
+                                for (int i = 1; i <= 10; i++)
+                                {
+                                    
+                                    decimal? myQuantity=0;
+                                    string chargeId = (string)CurrentSurcharge.GetType().GetProperty("Surcharge" + i + "Id").GetValue(CurrentSurcharge);
+                                    if (TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion && p.ChargesTypeId == chargeId).FirstOrDefault() == null)
+                                    {
+                                        string measurementId = (string)CurrentSurcharge.GetType().GetProperty("Surcharge" + i + "UOM").GetValue(CurrentSurcharge);
+
+                                        if (!string.IsNullOrEmpty(measurementId))
+                                        {
+                                            Measurement UsedMesurment = UsedMeasurements.Where(p => p.Id == measurementId).FirstOrDefault();
+
+                                            if (UsedMesurment != null)
+                                            {
+                                                decimal? valueofSurcharge = (decimal?)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
+                                                //   TariffLine surchargeLine= SurchargeTariffLines.Min(p=>p.)
+
+                                                switch (UsedMesurment.Code)
+                                                {
+                                                    case "GRWT": { myQuantity = (decimal?)GrossWeight; break; }
+                                                    case "CHWT": { myQuantity = (decimal?)weight; break; }
+                                                    case "VOLU": { myQuantity = (decimal?)Volume; break; }
+                                                    case "BTEU": { myQuantity = 1; break; }
+                                                    case "FIXD": { myQuantity = 1; break; }
+                                                    case "PRVL": { myQuantity = 1; break; }
+                                                    case "PRFR": { myQuantity = 1; break; }
+                                                    case "GWTN": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(GrossWeight, GrossWeightCode, "ton"); break; }
+                                                    case "CWKG": { myQuantity = (decimal?)this.ComputeChargeableWeight_Kg(weight, Weightcode); break; }
+                                                    case "GWKG": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(GrossWeight, GrossWeightCode, "kg"); break; }
+                                                    case "QTY": { myQuantity = 1; break; }
+                                                    case "VCBM": { myQuantity = (decimal?)ComputeVolumeInCBM(Volume, VolumeCode); break; }
+                                                    default: { break; }
+                                                }
+                                                if (myQuantity == null)
+                                                    myQuantity = 1;
+
+                                                if (UsedMesurment.Code == "PRVL" || UsedMesurment.Code == "PRFR")
+                                                {
+                                                    Sum += ((valueofSurcharge * myQuantity * item.price) / 100);
+                                                }
+                                                else
+                                                {
+                                                    Sum += (valueofSurcharge * myQuantity);
+                                                }
+
+
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+
+                        }
+                        }
+
+
+                    }
+
 
                     AirlinePM airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
                     tariffsSummary.Name = airline.Card != null ? airline.Card.EnglishName : "";
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
                     tariffsSummary.Remarks = result.Description;
                     tariffsSummary.decimalprice = item.price;
+                    tariffsSummary.VersionId = item.TariffVersion+"";
+                    tariffsSummary.Id = item.tariffid;
+                    tariffsSummary.TotalSurcharge = Sum+"";
+                    tariffsSummary.WholePrice = (Sum + item.price )+ "";
+
                     byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
                     string resultImage = "";
                     if (filedata != null)
@@ -266,6 +390,125 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             tariffSearchSummaries = tariffSearchSummaries.OrderBy(p => p.decimalprice).ToList();
             return tariffSearchSummaries;
+        }
+
+        private double? ComputeChargeableWeight_Kg(double? ChargeableWeight, string ChargeableWeightUnitCode)
+        {
+            double? weigh_Kg = null;
+
+            if (ChargeableWeight != null)
+            {
+                double factorOfConvert = 1;
+
+                if (!String.IsNullOrEmpty(ChargeableWeightUnitCode))
+                {
+                    switch (ChargeableWeightUnitCode.ToUpper())
+                    {
+                        case "KG": { factorOfConvert = 1; break; }
+                        case "LB": { factorOfConvert = 0.45359237; break; }
+                        case "MT": { factorOfConvert = 1000; break; }
+                    }
+                }
+
+                weigh_Kg = ChargeableWeight * factorOfConvert;
+            }
+
+            if (weigh_Kg != null)
+            {
+                weigh_Kg = Round(weigh_Kg, 3);
+            }
+            return weigh_Kg;
+        }
+
+
+
+        private double? ComputeVolumeInCBM(double? Volume, string VolumeCode)
+        {
+            double? volumeInCBM = null;
+
+            if (Volume != null)
+            {
+                double factorOfConvert = 1;
+
+                if (!String.IsNullOrEmpty(VolumeCode))
+                {
+                    switch (VolumeCode.ToUpper())
+                    {
+                        case "CBM": { factorOfConvert = 1; break; }
+                        case "CBI": { factorOfConvert = 61024; break; }      // 1m³ = 61024in³
+                        case "CBF": { factorOfConvert = 35.315; break; }     // 1m³ = 35.315ft³
+                    }
+                }
+                volumeInCBM = Volume * factorOfConvert;
+            }
+
+            if (volumeInCBM != null)
+            {
+                volumeInCBM = Round(volumeInCBM, 3);
+            }
+            return volumeInCBM;
+        }
+          
+
+        private double? ComputeGrossWeigh_Kg_Ton(double? GrossWeight,string GrossWeightUnitCode,string type)
+        {
+            double? weigh_Kg = null;
+            double? weigh_Ton = null;
+
+            if (GrossWeight != null)
+            {
+                double factorOfConvert = 1;
+
+                if (!string.IsNullOrEmpty(GrossWeightUnitCode))
+                {
+                    switch (GrossWeightUnitCode.ToUpper())
+                    {
+                        case "KG": { factorOfConvert = 1; break; }
+                        case "LB": { factorOfConvert = 0.45359237; break; }
+                        case "MT": { factorOfConvert = 1000; break; }
+                    }
+                }
+
+                weigh_Kg = GrossWeight * factorOfConvert;
+            }
+
+            if (weigh_Kg != null)
+            {
+                weigh_Kg = Round(weigh_Kg, 3);
+
+                weigh_Ton = weigh_Kg / 1000;
+            }
+
+            if (weigh_Ton != null)
+            {
+                weigh_Ton = Round(weigh_Ton, 3);
+            }
+
+            if (type == "kg")
+                return weigh_Kg;
+            return weigh_Ton;
+        }
+
+
+        public double? Round(double? value, int digits)
+        {
+            double? myValue = null;
+
+            if (value != null)
+            {
+                myValue = Convert.ToDouble(value);
+            }
+
+            double? myResult = myValue;
+
+            if (myValue != null && digits >= 1 && digits <= 15)
+            {
+                string mySTR = String.Format("{0:N" + digits + "}", myValue);
+
+                myResult = Convert.ToDouble(mySTR);
+            }
+
+            return myResult;
         }
 
         private byte[] DownloadFile(string documentId, string type, int tenant, string fileLocation)
@@ -301,6 +544,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
         public string tariffid { get; set; }
         public int TariffVersion { get; set; }
         public decimal? price { get; set; }
+        public int PriceIndex { get; set; }
+
     }
 }
 	 

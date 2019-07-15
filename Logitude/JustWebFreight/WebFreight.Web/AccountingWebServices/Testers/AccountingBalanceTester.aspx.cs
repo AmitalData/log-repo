@@ -42,6 +42,7 @@ using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.BankAccountPages;
 using Logitude.Accounting.BL;
 using Logitude.Accounting.BL.CoreBL.FunctionalTests;
+using Logitude.Accounting.BL.CoreBL.Batch;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -81,6 +82,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonLoadBankPages_Click,
             _ButtonGetSystem1000_Click,
             _ButtonLoadSystem1000_Click,
+            _ButtonYearTransferCancel_Click,
         }
 
         //DateTime _MyDate;
@@ -93,6 +95,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //s.ClearDB(1148);
             try
             {
+
+               
 
 
                 //AuthenticationUtil.Impersonate(1, 
@@ -180,7 +184,12 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 var ac = new AccountBalanceByDateCodeService(null, param.Tenant, param.GLAccountId, null);
                 ac.ReSetAccountList(param.IncludeChildAccounts, param.IncludeRelatedCurrenciesAccount);
-                ac.CalculateBalance(GLAccountTotalDateTypeValues.Accountingdate, param.accoutingDate, param.includeAccoutingDateLTransaction, param.verbose);
+                
+                ac.CalculateBalance(param.OpenBalancePlease_ReCalcYearTransfer,  GLAccountTotalDateTypeValues.Accountingdate, param.accoutingDate,
+                    
+                    param.includeAccoutingDateLTransaction,
+                    
+                    param.verbose);
                 var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<CurrencySum>>(ac.AccountBalance.Totals);
                 //ac.AccountBalance.Totals
 
@@ -848,6 +857,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 HaveAccountingQueued = ledgerTransactionBalanceService.Response.HaveAccountingQueued,
                 StartBalanceLocal = ledgerTransactionBalanceService.Response.StartBalanceLocal,
                 TotalRowCount = ledgerTransactionBalanceService.Response.TotalRowCount,
+                YearTransferLedgerTransactionIds = ledgerTransactionBalanceService.Response.YearTransferLedgerTransactionIds,
                 SearchFields = ledgerTransactionBalanceService.Response.SearchFields,
                 OmitAllBalance = ledgerTransactionBalanceService.Response.OmitAllBalance,
                 //BeginOfYearLocalAmountBalance = ledgerTransactionBalanceService.Response.BeginOfYearLocalAmountBalance,
@@ -1337,6 +1347,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             {
                 Tenant = 989,
                 YY = 17,
+                Immediate =false
             };
             try
             {
@@ -1353,19 +1364,121 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
                 int YY = param.YY;
                 int tenant = param.Tenant;
+                bool Immediate = param.Immediate;
+                JournalPM journal = null;
+                if (Immediate)
+                {
+                    journal = ImmediateYearTransferthod(YY, tenant);
+                }
+                else
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        var accountingContext = AccountingContext.GetContext(tenant);
+
+                        ICheckAndQYearTransferService yearTransferService = new YearTransferService();
+                        string taskiD = yearTransferService.Check_CreateQBatchTaskYearTransfer(YY, tenant);
+
+                        scope.Complete();
+                    }
+                }
+                
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonYearTransfer_Click.ToString();
+                if (param == null)
+                {
+                    param = paramDefault;
+                }
+                var SerializeObjectByteParam = JsonConvert.SerializeObject(param);
+                _TextBoxParam.Text = SerializeObjectByteParam;
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+
+
+        }
+
+        private JournalPM ImmediateYearTransferthod(int YY, int tenant)
+        {
+            JournalPM journal;
+            using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
+            {
+                var accountingContext = AccountingContext.GetContext(tenant);
+
+                IYearTransferService yearTransferService = new YearTransferService();
+                journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant);
+                if (journal != null)
+                {
+                    //var parser = new JournalApproveParser(journal, false,
+                    //AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal)
+                    //);
+                    //parser.ParseIt();
+                    bool toComplete = false;
+                    if (!toComplete)
+                    {
+                        throw new Exception("ddd");
+                    }
+                    scope.Complete();
+                }
+
+
+            }
+            if (journal != null)
+            {
+                var journalJson = JsonConvert.SerializeObject(journal);
+                _LabelResult.Text = journalJson;
+            }
+            else
+            {
+                _LabelResult.Text = "No journal";
+            }
+
+            return journal;
+        }
+
+        protected void ButtonYearTransferCancel_Click(object sender, EventArgs e)
+        {
+            dynamic param = null;
+
+            var paramDefault = new
+            {
+                Tenant = 989,
+                YY = 17,
+            };
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonYearTransferCancel_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
+                int YY = param.YY;
+                int tenant = param.Tenant;
                 JournalPM journal = null;
                 using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
-                    IYearTransferService yearTransferService = new YearTransferService();
-                    journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant);
+                    ICancelYearTransferService yearTransferService = new YearTransferService();
+                    journal = yearTransferService.CancelYear(accountingContext, YY, tenant);
                     if (journal != null)
                     {
                         //var parser = new JournalApproveParser(journal, false,
                         //AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal)
                         //);
                         //parser.ParseIt();
-                        bool toComplete = false;
+                        bool toComplete = true;
                         if (!toComplete)
                         {
                             throw new Exception("ddd");
@@ -1392,7 +1505,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
             finally
             {
-                _MyLastAction.Value = MyLastAction._ButtonYearTransfer_Click.ToString();
+                _MyLastAction.Value = MyLastAction._ButtonYearTransferCancel_Click.ToString();
                 if (param == null)
                 {
                     param = paramDefault;

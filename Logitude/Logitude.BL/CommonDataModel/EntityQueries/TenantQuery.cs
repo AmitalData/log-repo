@@ -148,9 +148,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 NumberFormatCode = a.NumberFormatCode,
                                                 CAAT = a.CAAT,
                                                 CBSA = a.CBSA,
-                                                DefaultWarningPercentage = a.DefaultWarningPercentage,
                                                 IsTestTenant = a.IsTestTenant,
                                                 CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
+                                                ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -308,9 +308,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         EcommerceSupportEmail = tt.EcommerceSupportEmail,
                         CAAT = tt.CAAT,
                         CBSA = tt.CBSA,
-                        DefaultWarningPercentage = tt.DefaultWarningPercentage,
                         IsTestTenant = tt.IsTestTenant,
                         CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
+                        ApplyVATForAllPartners = tt.ApplyVATForAllPartners,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -474,9 +474,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EcommerceSupportEmail = tt.EcommerceSupportEmail,
                     CAAT = tt.CAAT,
                     CBSA = tt.CBSA,
-                    DefaultWarningPercentage = tt.DefaultWarningPercentage,
                     IsTestTenant = tt.IsTestTenant,
                     CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
+                    ApplyVATForAllPartners = tt.ApplyVATForAllPartners,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -622,10 +622,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
                                            CAAT = a.CAAT,
                                            CBSA = a.CBSA,
-                                           DefaultWarningPercentage = a.DefaultWarningPercentage,
                                            IsTestTenant = a.IsTestTenant,
                                            CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
+                                           ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -770,10 +769,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
                                        CAAT = a.CAAT,
                                        CBSA = a.CBSA,
-                                       DefaultWarningPercentage = a.DefaultWarningPercentage,
                                        IsTestTenant = a.IsTestTenant,
                                        CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
+                                       ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -922,10 +920,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EcommerceSupportEmail = a.EcommerceSupportEmail,
                                                CAAT = a.CAAT,
                                                CBSA = a.CBSA,
-                                               DefaultWarningPercentage = a.DefaultWarningPercentage,
                                                IsTestTenant = a.IsTestTenant,
                                                CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
+                                               ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1073,10 +1070,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
                                            CAAT = a.CAAT,
                                            CBSA = a.CBSA,
-                                           DefaultWarningPercentage = a.DefaultWarningPercentage,
                                            IsTestTenant = a.IsTestTenant,
                                            CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
+                                           ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1216,10 +1212,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
                                        CAAT = a.CAAT,
                                        CBSA = a.CBSA,
-                                       DefaultWarningPercentage = a.DefaultWarningPercentage,
                                        IsTestTenant = a.IsTestTenant,
                                        CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
+                                       ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1394,9 +1389,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EcommerceSupportEmail = myPOCO.EcommerceSupportEmail,
                     CAAT = myPOCO.CAAT,
                     CBSA = myPOCO.CBSA,
-                    DefaultWarningPercentage = myPOCO.DefaultWarningPercentage,
                     IsTestTenant = myPOCO.IsTestTenant,
                     CheckDigitControlAlgorithmCode = myPOCO.CheckDigitControlAlgorithmCode,
+                    ApplyVATForAllPartners = myPOCO.ApplyVATForAllPartners,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1527,10 +1522,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 NumberFormatCode = a.NumberFormatCode,
                                                 CAAT = a.CAAT,
                                                 CBSA = a.CBSA,
-                                                DefaultWarningPercentage = a.DefaultWarningPercentage,
                                                 IsTestTenant = a.IsTestTenant,
                                                 CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
                                             };
             return result;
         }

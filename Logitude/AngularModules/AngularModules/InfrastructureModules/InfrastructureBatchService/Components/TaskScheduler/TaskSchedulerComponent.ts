@@ -97,6 +97,22 @@ export class TaskSchedulerComponent implements OnInit  {
             this.ItemsSource.push(new TaskSchedulerItemClass(item, this));
             this.FixedItemsSource.push(new TaskSchedulerItemClass(item, this));
         });
+        if (this.filterTypeCode) {
+
+            if (this.filterTypeCode == "AL") {
+                this.ItemsSource = this.FixedItemsSource;
+            }
+            else if (this.filterTypeCode == "IN") {
+                this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == true);
+            }
+            else {
+                this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);;
+            }
+        }
+        else {
+            this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);
+        }
+        
 
         this.CurrentSession.StopBusyIndicator();
     }
@@ -111,7 +127,7 @@ export class TaskSchedulerComponent implements OnInit  {
         }
 
         else {
-            //this.LoadHistoryList();
+           // this.LoadHistoryList();
             this.LoadTaskHistories();
         }
     }
@@ -144,8 +160,8 @@ export class TaskSchedulerComponent implements OnInit  {
         
         newItem.Type = this.SchedulerType;
         var logWindow = new LogitudeWindow();
-        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 730 : 620;
-        logWindow.Width = 800;
+        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 820 : 750;
+        logWindow.Width = 900;
         logWindow.Title = this.SchedulerType + " Scheduler Details";
         logWindow.DataContext = new TaskSchedulerItemClass(newItem, this, true);
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
@@ -160,8 +176,8 @@ export class TaskSchedulerComponent implements OnInit  {
         var logWindow = new LogitudeWindow();
         logWindow.Title = this.SchedulerType  + " Scheduler Details";
         logWindow.DataContext = item;
-        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 730 : 620;
-        logWindow.Width = 800;
+        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 820 : 750;
+        logWindow.Width = 900;
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
@@ -286,12 +302,14 @@ export class TaskSchedulerComponent implements OnInit  {
        
         filters = new ApiQueryFilters();
         //filters.SortBy = "StatusDate";
-        //filters.SortDirection = "Descending";
+     // filters.SortDirection = "Desc";
+        sortingCol = "StartDateTimeUTC";
+        sortingDir = "descending"; 
         if (!this.SelectedRow) {
-            if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
-                filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
-            }
-            filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
+            //if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
+            //    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+            //}
+            //filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
         }
         else {
             if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
@@ -300,9 +318,8 @@ export class TaskSchedulerComponent implements OnInit  {
                 }
                 filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
             }
+            //return
         }
-         
-
 
         filters.GetCount = getCount;
         filters.PageIndex = skip;
@@ -379,7 +396,7 @@ export class TaskSchedulerComponent implements OnInit  {
         this.LoadTaskHistories();
     }
 
-    private filterTypeCode: string = "AL";
+    private filterTypeCode: string = "AC";
     public get FilterTypeCode() { return this.filterTypeCode; }
     public set FilterTypeCode(value: string) {
         if (this.filterTypeCode != value) {
@@ -390,7 +407,7 @@ export class TaskSchedulerComponent implements OnInit  {
             else if (value == "IN") {
                 this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == true);
             }
-            else {
+            else{
                 this.ItemsSource = this.FixedItemsSource;
             }
         }
@@ -401,6 +418,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     public EntityPM: TasksSchedulerPM;
     public ObjectTableName: string = "TasksScheduler";
     public IsNew: boolean = false;
+    private newValueinDateFormat: Date;
 
  
 
@@ -426,7 +444,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     get Status() { return this.EntityPM.Status; }
     get UpdatedBy() { return this.EntityPM.UpdatedBy; }
     get CreatedBy() { return this.EntityPM.CreatedBy; }
-    get Duration() { return this.EntityPM.Duration; }
+    get Duration() { return Math.abs(this.EntityPM.Duration); }
     get LastRunEndTime() { return this.EntityPM.LastRunEndTime; }
     get LastRunEndTimeUTC() { return this.EntityPM.LastRunEndTimeUTC; }
 
@@ -466,19 +484,25 @@ export class TaskSchedulerItemClass extends BaseComponent {
             this.EntityPM.TriggerType = newValue;
         }
     }
-
+   
     get StartDateTime() { return this.EntityPM.StartDateTime; }
     set StartDateTime(newValue: Date) {
+
         if (this.EntityPM.StartDateTime != newValue) {
             this.EntityPM.StartDateTime = newValue;
-            this.EntityPM.StartDateTimeUTC = new Date(newValue.getUTCFullYear(), newValue.getUTCMonth(), newValue.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds(), newValue.getUTCMilliseconds());
-        }
+            this.newValueinDateFormat = new Date(newValue);
+            this.EntityPM.StartDateTimeUTC = new Date(this.newValueinDateFormat.getUTCFullYear(), this.newValueinDateFormat.getUTCMonth(), this.newValueinDateFormat.getUTCDate(), this.newValueinDateFormat.getUTCHours(), this.newValueinDateFormat.getUTCMinutes(), this.newValueinDateFormat.getUTCSeconds(), this.newValueinDateFormat.getUTCMilliseconds());
+           
+        } 
     }
 
     get RepeatInMinutes() { return this.EntityPM.RepeatInMinutes; }
     set RepeatInMinutes(newValue: number) {
         if (this.EntityPM.RepeatInMinutes != newValue) {
-            this.EntityPM.RepeatInMinutes = newValue;
+            
+            
+                this.EntityPM.RepeatInMinutes = newValue;
+            
         }
     }
 

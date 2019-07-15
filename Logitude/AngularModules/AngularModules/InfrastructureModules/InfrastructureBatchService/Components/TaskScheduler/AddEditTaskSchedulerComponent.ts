@@ -138,13 +138,13 @@ export class AddEditTaskSchedulerComponent  {
     StartTimeTabTitle: string = "One Time";
    
 
-    private isOneTime: boolean; 
-    get IsOneTime() { return this.isOneTime; }
-    set IsOneTime(newValue: boolean) {
-        if (this.isOneTime != newValue) {
-            this.isOneTime = newValue;
-        }
-    }
+    //private isOneTime: boolean; 
+    //get IsOneTime() { return this.isOneTime; }
+    //set IsOneTime(newValue: boolean) {
+    //    if (this.isOneTime != newValue) {
+    //        this.isOneTime = newValue;
+    //    }
+    //}
 
     private isDaily: boolean;
     get IsDaily() { return this.isDaily; }
@@ -172,20 +172,20 @@ export class AddEditTaskSchedulerComponent  {
     
     SetTigger(triggerType: string) {
         switch (triggerType) {
-            case "O":
-                {
-                    this.IsOneTime = true;
-                    this.IsDaily = false; 
-                    this.IsWeekly = false;
-                    this.IsMonthly = false;
-                    this.DataContext.TriggerType = "O";             
-                    this.StartTimeTabTitle = "One Time";
-                    break;
-                }
+            //case "O":
+            //    {
+            //        this.IsOneTime = true;
+            //        this.IsDaily = false; 
+            //        this.IsWeekly = false;
+            //        this.IsMonthly = false;
+            //        this.DataContext.TriggerType = "O";             
+            //        this.StartTimeTabTitle = "One Time";
+            //        break;
+            //    }
 
             case "D":
                 {
-                    this.IsOneTime = false;
+                    //this.IsOneTime = false;
                     this.IsDaily = true;
                     this.IsWeekly = false;
                     this.IsMonthly = false;
@@ -196,7 +196,7 @@ export class AddEditTaskSchedulerComponent  {
 
             case "W":
                 {
-                    this.IsOneTime = false;
+                    //this.IsOneTime = false;
                     this.IsDaily = false;
                     this.IsWeekly = true;
                     this.IsMonthly = false;
@@ -207,7 +207,7 @@ export class AddEditTaskSchedulerComponent  {
 
             case "M":
                 {
-                    this.IsOneTime = false;
+                    //this.IsOneTime = false;
                     this.IsDaily = false;
                     this.IsWeekly = false;
                     this.IsMonthly = true;
@@ -217,12 +217,14 @@ export class AddEditTaskSchedulerComponent  {
                 }
 
             default: {
-                this.IsOneTime = true;
-                this.IsDaily = false;
+                //this.IsOneTime = true;
+                this.IsDaily = true;
                 this.IsWeekly = false;
                 this.IsMonthly = false;
-                this.DataContext.TriggerType = "O";
-                this.StartTimeTabTitle = "One Time";
+                //this.DataContext.TriggerType = "O";
+                //this.StartTimeTabTitle = "One Time";
+                this.DataContext.TriggerType = "D";
+                this.StartTimeTabTitle = "Daily";
                 break;
             }
         }
@@ -273,13 +275,19 @@ export class AddEditTaskSchedulerComponent  {
         if (AppTool.IsNullOrEmpty(this.DataContext.Name)) {
             errors.push(msg.replace("%FieldName", "Name"));
         }
+        if (this.DataContext.RepeatInMinutes  != null) {
+            if (this.DataContext.RepeatInMinutes < 5) {
 
+                errors.push("The lowest value you can add in Repeat in Minutes field is 5");
+            }
+        }
         //if (AppTool.IsNullOrEmpty(this.DataContext.Description)) {
         //    errors.push(msg.replace("%FieldName", "Description"));
         //}
         
         if (this.DataContext.StartDateTime == null) {
             errors.push(msg.replace("%FieldName", "Start Date Time"));
+            console.log("error");
         }
 
         if (AppTool.IsNullOrEmpty(this.DataContext.ServiceClassName)) {
@@ -318,10 +326,13 @@ export class AddEditTaskSchedulerComponent  {
         if (this.EntityPM.Status == "In progress") {
             errors.push("The task is in progress. You are not allowed to edit it");// the start time field
         }
-        if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
+  
     
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
+
+            if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
+
             this.CurrentSession.StartBusyIndicatorSaving();
           
 

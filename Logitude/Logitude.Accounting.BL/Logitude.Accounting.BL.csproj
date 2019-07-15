@@ -158,6 +158,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportLineTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VatReportStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\WithholdingTaxDeductionTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AccountingEntityStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ARPaymentChequeStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AutomaticReconcileStruct.Generated.cs" />
@@ -193,10 +194,12 @@
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchIntegrityCheckService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxReportService.cs" />
+    <Compile Include="CoreBL\Batch\BatchYearTransferService.cs" />
     <Compile Include="CoreBL\BuildTenant\ClearTenant.cs" />
     <Compile Include="CoreBL\BuildTenant\DummyTenantProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\FullAccountingProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
+    <Compile Include="CoreBL\GLAccountCounterService.cs" />
     <Compile Include="CoreBL\CreateJournalReconcileService.cs" />
     <Compile Include="CoreBL\CashbookService.cs" />
     <Compile Include="CoreBL\FunctionalTests\ClearAccountingDB.cs" />
@@ -320,6 +323,7 @@
     <Compile Include="EntityDataMappings\Generated\ExternalReconciliationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExternalReconciliationLineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FullAccountingSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GLAccountCounterDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountCurrencyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountMoreDataDataMapping.Generated.cs" />
@@ -364,6 +368,7 @@
     <Compile Include="EntityDataMappings\Generated\TestEntityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VatReportStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WithholdingTaxDeductionTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\GLAccountCounterDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountCurrencyDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountMoreDataDataMapping.cs" />
@@ -420,6 +425,7 @@
     <Compile Include="EntityQueryServiceExt\GLAccountWithholdingTaxQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\JournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\PaymentChequeQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\AccountingCompanyTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingEntityQueryService.cs" />
     <Compile Include="EntityQueryServices\ARPaymentChequeQueryService.cs" />
     <Compile Include="EntityQueryServices\AutomaticReconcileQueryService.cs" />
@@ -441,6 +447,7 @@
     <Compile Include="EntityQueryServices\Generated\BankPageEntryTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GLAccountCounterQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountMoreDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountTotalDateTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountWithholdingTaxQueryService.Generated.cs" />
@@ -468,6 +475,7 @@
     <Compile Include="EntityQueryServices\Generated\TaxWithholdingAssessOfficeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VatReportStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WithholdingTaxDeductionTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\GLAccountCounterQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
@@ -485,6 +493,7 @@
     <Compile Include="EntityQueryServices\RevenueExpenseTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\TaxReportQueryService.cs" />
     <Compile Include="EntityQueryServices\TaxWithholdingAssessOfficeQueryService.cs" />
+    <Compile Include="EntityQueryServices\WithholdingTaxDeductionTypeQueryService.cs" />
     <Compile Include="EntityUpdateServiceExt\ARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\BankCodeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\CashBookLineUpdateServiceExt.cs" />
@@ -513,6 +522,7 @@
     <Compile Include="EntityUpdateServices\Generated\BankPageEntryTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExternalReconciliationLineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExternalReconciliationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GLAccountCounterUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountMoreDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountTotalDateTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountWithholdingTaxUpdateService.Generated.cs" />

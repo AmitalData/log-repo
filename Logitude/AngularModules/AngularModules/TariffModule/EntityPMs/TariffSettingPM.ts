@@ -39,6 +39,11 @@ export class TariffSettingPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
+    private defaultWarningPercentage: number;
+    public get DefaultWarningPercentage() { return this.defaultWarningPercentage; }
+    public set DefaultWarningPercentage(newValue: number) { if (this.defaultWarningPercentage != newValue) { this.defaultWarningPercentage = newValue; this.MarkAsDirty("DefaultWarningPercentage"); } }
+       
+	 
 
     public OldEntityPM: TariffSettingPM;
 		

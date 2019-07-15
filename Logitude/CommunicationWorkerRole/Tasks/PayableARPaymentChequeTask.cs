@@ -34,31 +34,36 @@ namespace CommunicationWorkerRole.Tasks
                     tenantsAccountingActivated = tenantRepo.All().Where(r => r.AccountingActivated).Select(r => r.Id).ToList();
                 }
                 _SB.Append(DateTime.Now.ToString()).Append("tenantsAccountingActivated:").Append(String.Join(",", tenantsAccountingActivated)).AppendLine();
-
+                LogInfo(new StringBuilder().Append(DateTime.Now.ToString()).Append("tenantsAccountingActivated:").Append(String.Join(",", tenantsAccountingActivated)).AppendLine().ToString());
                 foreach (var tenant in tenantsAccountingActivated)
                 {
                     _SB.Append(DateTime.Now.ToString()).Append("tenant:").Append(tenant).AppendLine();
+                    LogInfo(new StringBuilder().Append(DateTime.Now.ToString()).Append("tenant:").Append(tenant).AppendLine().ToString());
                     try
-                    {
+                    { 
                         var myPostDatedChequesRedemptionBatch = new PostDatedChequesRedemptionBatch();
                         myPostDatedChequesRedemptionBatch.RunAllPayablePostDatedARPaymentCheques(tenant);
                         string responseText = myPostDatedChequesRedemptionBatch.ResponseText();
                         _SB.Append(DateTime.Now.ToString()).Append("responseText:").Append(responseText).AppendLine();
+                        LogInfo(new StringBuilder().Append(DateTime.Now.ToString()).Append("responseText:").Append(responseText).AppendLine().ToString());
                     }
                     catch (Exception ex)
                     {
                         failed = true;
                         _SB.Append(DateTime.Now.ToString()).Append("Exception:").Append(ex.Message).AppendLine();
+                        LogException(new StringBuilder().Append(DateTime.Now.ToString()).Append("Exception:").Append(ex.Message).AppendLine().ToString());
                         ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "WorkerRole", $"PayableARPaymentChequeTask({tenant})", null);
                     }
                     
                 }
+                
             }
             finally
             {
                 AccountingLogger.LogMe(_SB.ToString(),failed);
                 if (failed)
                 {
+                    LogException(_SB.ToString());
                     throw new Exception(_SB.ToString());
                 }
             }

@@ -563,7 +563,7 @@ namespace CommunicationWorkerRole
 			{
 				if (descrip.Length > 1)
 				{
-					string folioFiscal = descrip[1];
+                    string folioFiscal = descrip[descrip.Length - 1];
 					string rfcEmisor = currentTenant.VatNumber;
 					ResultadoConsulta resultadoConsulta = conector.ObtieneCFDI(rfcEmisor, folioFiscal);
 					Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
@@ -623,13 +623,16 @@ namespace CommunicationWorkerRole
 			}
 			else
 			{
-				Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
+                //Este CFDI ya ha sido timbrado con UUID: { 0}
+                //Este CFDI ya ha sido timbrado con UUID: 09acd5a4 - c544 - 45af - b897 - f64b13f60606
+
+                Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
 				descrip = resultadoTimbre.Descripcion.Split(':');
 				if (descrip.Length > 1)
 				{
 
-					string folioFiscal = descrip[1];
-					string rfcEmisor = currentTenant.VatNumber;
+                    string folioFiscal = descrip[descrip.Length - 1];
+                    string rfcEmisor = currentTenant.VatNumber;
 					ResultadoConsulta resultadoConsulta = conector.ObtieneCFDI(rfcEmisor, folioFiscal);
 					if (resultadoConsulta.Exitoso)
 					{

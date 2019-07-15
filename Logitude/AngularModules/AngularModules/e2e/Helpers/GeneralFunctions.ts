@@ -1,4 +1,4 @@
-﻿import { browser, by, element, WebDriver, protractor } from 'protractor';
+import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from './FieldsHelper';
 export class GeneralFunctions {
     private Helper: FieldsHelper;
@@ -18,7 +18,7 @@ export class GeneralFunctions {
         return randomNumber;
     }
     public RandomNumAcc() {
-        var randomNumber = Math.floor(Math.random() * 1000).toString();
+        var randomNumber = Math.floor(Math.random() * 100000).toString();
         return randomNumber;
     }
     UseSearchBox(searchFeildId: string, searchByRef: string) {

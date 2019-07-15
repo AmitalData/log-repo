@@ -109,6 +109,10 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.Id = setting.Id;
                 LogitudeSettings.ChampEnv = setting.ChampEnv;
                 LogitudeSettings.ChampURL = setting.ChampURL;
+                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
                 LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
                 LogitudeSettings.DeploymentStage = setting.DeploymentStage;
                 LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
@@ -217,8 +221,8 @@ namespace CommunicationWorkerRole
                 var batchTaskExecutionWR = new BatchTaskExecutionWR();
                 var dic = new Dictionary<string, string>();
 
-                dic.Add("BatchTaskExecutionId", "1-5565");
-                dic.Add("Tenant", "1148");
+                dic.Add("BatchTaskExecutionId", "1-5726");
+                dic.Add("Tenant", "1106");
                 batchTaskExecutionWR.SupressStartThread = true;
                 batchTaskExecutionWR.ExecuteQueue(new Logitude.Server.Tools.QueueService.QueueResponse() { MessageValues = dic });
                 //var myEmailsWorkerRole = new EmailsWorkerRole("EmailQueue","itzik");
@@ -267,10 +271,35 @@ namespace CommunicationWorkerRole
         List<BatchServicesDefinitionPM> BatchServicesDefinitions;
         private void UpdateRunningWR()
         {
-            
+            string SpecialBatchCode = null;
+            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+            if (iAppSettings != null)
+            {
+                if (iAppSettings["BatchCode"] != null)
+                {
+                    SpecialBatchCode = iAppSettings["BatchCode"].ToString();
+                }
+            }
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
             List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
+            if (!string.IsNullOrEmpty(SpecialBatchCode))
+            {
+                var temp = SpecialBatchCode.Split(',');
+                if (temp.Length > 0)
+                {
+                    var BatchCode = temp[0].ToLower();
+                    var IsActivate = temp[1].ToLower();
+                    if (IsActivate == "true")
+                    {
+                        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
+                    }
+                    else
+                    {
+                        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
+                    }
+                }
+            }
             if (BatchServicesDefinitions == null)
             {
                 BatchServicesDefinitions = BatchServicesDefinitionsTemp;
@@ -446,6 +475,10 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.Id = setting.Id;
                 LogitudeSettings.ChampEnv = setting.ChampEnv;
                 LogitudeSettings.ChampURL = setting.ChampURL;
+                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
                 LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
                 LogitudeSettings.DeploymentStage = setting.DeploymentStage;
                 LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;

@@ -178,5 +178,27 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             //                         }).Average(x => x.Duration);
         }
 
+        public TaskSchedulerHistoryPM GetLastTaskSchedulerHistoryPM(string TaskId)
+        {
+            return (from a in repository.context.TaskSchedulerHistories
+                    where a.TaskId == TaskId
+                    select new TaskSchedulerHistoryPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        EndDateTime = a.EndDateTime,
+                        IsError = a.IsError,
+                        RunResult = a.RunResult,
+                        StartDateTime = a.StartDateTime,
+                        TaskId = a.TaskId,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        EndDateTimeUTC = a.EndDateTimeUTC,
+                        LogFirstLine = a.LogFirstLine,
+                        LogType = a.LogType,
+                        Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
+
+                    }).OrderByDescending(a => a.StartDateTime).FirstOrDefault();
+        }
+
     }
 }

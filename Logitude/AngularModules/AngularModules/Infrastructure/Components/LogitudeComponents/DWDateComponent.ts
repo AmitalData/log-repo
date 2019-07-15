@@ -220,13 +220,13 @@ export class DWDateComponent extends BaseComponent {
                     selectedValue = this.GetDateFormats(myFormats);
                 }
             }
-
-
-            if (this.DataContext.TextValue != selectedValue) {
-                this.ValueChanged.emit(selectedValue);
-            }
-
         }
+
+        if (this.DataContext.TextValue != selectedValue) {
+            this.ValueChanged.emit(selectedValue);
+        }
+
+
     }
 
         InitializeComponent() {

@@ -230,9 +230,32 @@ export class DWAskUserFiltersComponent implements OnInit {
         MyFilter.FilterItems.forEach((field) => {
 
             if (field.FilterItems.length == 0) {
-                if (field.IsMandatoryFilter == true && AppTool.IsNullOrEmpty(field.TextValue)) {
-                    this.ValidationErrorsList.push(field.DisplayName.replace('[', '').replace(']', '') + " filter is required");
+
+                if (field.OperationCode != "Between") {
+                    if (field.IsMandatoryFilter == true && AppTool.IsNullOrEmpty(field.TextValue)) {
+                        this.ValidationErrorsList.push(field.DisplayName.replace('[', '').replace(']', '') + " filter is required");
+                    }
                 }
+                else {
+                    var messageError: string = "";
+                    if (field.TextValue) {
+                        var values: string = field.TextValue.split('^');
+                        var valueDate1: string = values[0];
+                        var valueDate2: string = values.length > 1 ? values[1] : "";
+                        if (!valueDate1 || !valueDate2) {
+                            messageError = "From/To is Required";
+                        }
+                    } else {
+                        messageError = "From/To is Required";
+                    }
+
+                    if (messageError) {
+                        this.ValidationErrorsList.push(field.DisplayName.replace('[', '').replace(']', '') + " " + messageError);
+                    }
+                    
+                }
+
+
             }
             else {
                 this.CheckFiltersValidationsFilters(field);

@@ -34,6 +34,7 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Simplog.Data.Helpers;
+using Logitude.Accounting.BL.CoreBL;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -64,8 +65,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
         protected override void OnCreating(GLAccountPM entityPM, EntityPM entityParentPM)
-
         {
+            if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4")
+                SetDisplayNumber(entityPM);
+
             AddAcitivityLog(entityPM, "N");
             entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName;
 
@@ -78,6 +81,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (!String.IsNullOrWhiteSpace(entityPM.ChartOfAccountsId) && (entityPM.ChartOfAccountsId.ToLower() == "bla" || entityPM.ChartOfAccountsId.ToLower() == "get")) entityPM.ChartOfAccountsId = null;
             if (!String.IsNullOrWhiteSpace(entityPM.ChartOfAccountsTypeCode) && (entityPM.ChartOfAccountsTypeCode.ToLower() == "bla" || entityPM.ChartOfAccountsTypeCode.ToLower() == "get")) entityPM.ChartOfAccountsTypeCode = null;
+            if (!String.IsNullOrWhiteSpace(entityPM.DeductionTypeId) && (entityPM.DeductionTypeId.ToLower() == "bla" || entityPM.DeductionTypeId.ToLower() == "get")) entityPM.DeductionTypeId = null;
+            if (!String.IsNullOrWhiteSpace(entityPM.AssessingOfficeCode) && (entityPM.AssessingOfficeCode.ToLower() == "bla" || entityPM.AssessingOfficeCode.ToLower() == "get")) entityPM.AssessingOfficeCode = null;
+            if (!String.IsNullOrWhiteSpace(entityPM.DeductionFileTypeId) && (entityPM.DeductionFileTypeId.ToLower() == "bla" || entityPM.DeductionFileTypeId.ToLower() == "get")) entityPM.DeductionFileTypeId = null;
 
 
             if (entityPM.AccountTypeCode == "4") // Job
@@ -248,6 +254,62 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
 
+            if (String.IsNullOrWhiteSpace(entityPM.DeductionTypeId) && !String.IsNullOrWhiteSpace(entityPM.DeductionTypeCode))
+            {
+                AccountingCompanyTypeQueryService queryService = new AccountingCompanyTypeQueryService(entityPM.Tenant);
+                AccountingCompanyTypePM ctype = queryService.GetByCode(entityPM.DeductionTypeCode, entityPM.Tenant);
+                if (ctype != null)
+                {
+                    entityPM.DeductionTypeId = ctype.Id;
+                    if (!String.IsNullOrWhiteSpace(ctype.LocalName))
+                    {
+                        entityPM.DeductionTypeName = ctype.LocalName;
+                    }
+                    {
+                        entityPM.DeductionTypeName = ctype.EnglishName;
+                    }
+                }
+            }
+
+
+
+            if (String.IsNullOrWhiteSpace(entityPM.AssessingOfficeCode) && !String.IsNullOrWhiteSpace(entityPM.AssessingOfficeNumber))
+            {
+                TaxWithholdingAssessOfficeQueryService queryService = new TaxWithholdingAssessOfficeQueryService(entityPM.Tenant);
+                TaxWithholdingAssessOfficePM office = queryService.GetByNumber(entityPM.AssessingOfficeNumber, entityPM.Tenant);
+                if (office != null)
+                {
+                    entityPM.AssessingOfficeCode = office.Id;
+                    if (!String.IsNullOrWhiteSpace(office.LocalName))
+                    {
+                        entityPM.AssessingOfficeName = office.LocalName;
+                    }
+                    {
+                        entityPM.AssessingOfficeName = office.Name;
+                    }
+                }
+            }
+
+            if (String.IsNullOrWhiteSpace(entityPM.DeductionFileTypeId) && !String.IsNullOrWhiteSpace(entityPM.DeductionFileTypeCode))
+            {
+                WithholdingTaxDeductionTypeQueryService queryService = new WithholdingTaxDeductionTypeQueryService(entityPM.Tenant);
+                WithholdingTaxDeductionTypePM ftype = queryService.GetByCode(entityPM.DeductionFileTypeCode, entityPM.Tenant);
+                if (ftype != null)
+                {
+                    entityPM.DeductionFileTypeId = ftype.Id;
+                    if (!String.IsNullOrWhiteSpace(ftype.LocalName))
+                    {
+                        entityPM.DeductionFileTypeName = ftype.LocalName;
+                    }
+                    {
+                        entityPM.DeductionFileTypeName = ftype.EnglishName;
+                    }
+                }
+            }
+
+
+
+
             if (entityPM.InternalNumber != null)
             {
                 GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
@@ -304,6 +366,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.OnCreating(entityPM, entityParentPM);
 
         }
+
+        private void SetDisplayNumber(GLAccountPM entityPM)
+        {
+            GLAccountCounterService gLAccountCounterService = new GLAccountCounterService(entityPM.Tenant);
+            string _displayNumber = gLAccountCounterService.GetNewDisplayNumber(entityPM);
+
+            //check exist
+            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(entityPM.Tenant);
+            GLAccountPM gla = gLAccountQuery.GetByDisplayNumber(_displayNumber, entityPM.Tenant).FirstOrDefault();
+            if(gla == null)
+            {
+                entityPM.DisplayNumber = _displayNumber;
+            }
+            else
+            {
+                //skip this counter, get next
+                SetDisplayNumber(entityPM);
+            }
+        }
+
         protected override void UpdateComposition(GLAccountPM entityPM)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -565,6 +647,59 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
 
+            if (String.IsNullOrWhiteSpace(entityPM.DeductionTypeId) && !String.IsNullOrWhiteSpace(entityPM.DeductionTypeCode))
+            {
+                AccountingCompanyTypeQueryService queryService = new AccountingCompanyTypeQueryService(entityPM.Tenant);
+                AccountingCompanyTypePM ctype = queryService.GetByCode(entityPM.DeductionTypeCode, entityPM.Tenant);
+                if (ctype != null)
+                {
+                    entityPM.DeductionTypeId = ctype.Id;
+                    if (!String.IsNullOrWhiteSpace(ctype.LocalName))
+                    {
+                        entityPM.DeductionTypeName = ctype.LocalName;
+                    }
+                    {
+                        entityPM.DeductionTypeName = ctype.EnglishName;
+                    }
+                }
+            }
+
+
+            if (String.IsNullOrWhiteSpace(entityPM.AssessingOfficeCode) && !String.IsNullOrWhiteSpace(entityPM.AssessingOfficeNumber))
+            {
+                TaxWithholdingAssessOfficeQueryService queryService = new TaxWithholdingAssessOfficeQueryService(entityPM.Tenant);
+                TaxWithholdingAssessOfficePM office = queryService.GetByNumber(entityPM.AssessingOfficeNumber, entityPM.Tenant);
+                if (office != null)
+                {
+                    entityPM.AssessingOfficeCode = office.Id;
+                    if (!String.IsNullOrWhiteSpace(office.LocalName))
+                    {
+                        entityPM.AssessingOfficeName = office.LocalName;
+                    }
+                    {
+                        entityPM.AssessingOfficeName = office.Name;
+                    }
+                }
+            }
+
+            if (String.IsNullOrWhiteSpace(entityPM.DeductionFileTypeId) && !String.IsNullOrWhiteSpace(entityPM.DeductionFileTypeCode))
+            {
+                WithholdingTaxDeductionTypeQueryService queryService = new WithholdingTaxDeductionTypeQueryService(entityPM.Tenant);
+                WithholdingTaxDeductionTypePM ftype = queryService.GetByCode(entityPM.DeductionFileTypeCode, entityPM.Tenant);
+                if (ftype != null)
+                {
+                    entityPM.DeductionFileTypeId = ftype.Id;
+                    if (!String.IsNullOrWhiteSpace(ftype.LocalName))
+                    {
+                        entityPM.DeductionFileTypeName = ftype.LocalName;
+                    }
+                    {
+                        entityPM.DeductionFileTypeName = ftype.EnglishName;
+                    }
+                }
+            }
+
+
             if (String.IsNullOrWhiteSpace(entityPM.CustomerGLAccountId) && !String.IsNullOrWhiteSpace(entityPM.CustomerGLAccountInternalNumber))
             {
                 GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
@@ -636,8 +771,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                const string RaiseEventAWBKConst = "RaiseEventAWBK";
-                const string RaiseEventAWDAConst = "RaiseEventAWDA";
 
                 ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
                 string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
@@ -647,10 +780,30 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     foreach (var line in entityPM.GLAccountWithholdingTaxes)
                     {
-                        if (line.Changed)
+                        if (line.ChangeSetOp == ChangeSetOperation.Insert)
                         {
                             var currentContextTag = line.CurrentContextTag ?? "";
-                            if (currentContextTag.ToString() == RaiseEventAWBKConst)
+                            if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventAWNCConst)
+                            {
+                                String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingLineCreated", entityPM.Tenant).Replace(":", line.LineNumber + ":");
+                                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                {
+                                    EntityId = entityPM.Id,
+                                    Tenant = entityPM.Tenant,
+                                    UserId = contact.Id,
+                                    ObjectTableName = "GLAccount",
+                                    IsAddedManually = false,
+                                    EventTypeCode = "AWNC",
+                                    Notes = notes,
+                                });
+                            }
+                        }
+
+
+                        else if (line.Changed)  
+                        {
+                            var currentContextTag = line.CurrentContextTag ?? "";
+                            if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventWBLKConst)
                             {
                                 String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingBlocked", entityPM.Tenant).Replace(":", line.LineNumber + ":");
                                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -664,7 +817,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                     Notes = notes,
                                 });
                             }
-                            else if (currentContextTag.ToString() == RaiseEventAWDAConst)
+                            else if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventWLDAConst)
                             {
                                 String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingLineDisabled", entityPM.Tenant).Replace(":", line.LineNumber + ":");
                                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -678,7 +831,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                     Notes = notes,
                                 });
                             }
-                            else if (line.Inactive)
+
+                            if (line.Inactive)
                             {
                                 string s = TranslateTextsClass.Translate("Accounting.O.LineDeactivated", entityPM.Tenant, true);
                                 string[] text = s.Split('-');

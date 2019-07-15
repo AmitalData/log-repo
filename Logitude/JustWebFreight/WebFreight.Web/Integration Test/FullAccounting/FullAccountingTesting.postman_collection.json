@@ -21,14 +21,24 @@
 							"    var id1exist = idvalue1 !== null;",
 							"    var id2exist = idvalue2 !== null;",
 							"    var id3exist = idvalue3 !== null;",
+							"    ",
+							"    var d = new Date();",
+							"    var month = d.getMonth();",
+							"    var day = d.getDate().toString();",
+							"    var year = d.getFullYear();",
+							"    var uy = year.toString().substr(-2);",
+							"    month = (month + 1).toString();",
+							"    var time= d.getTime();",
+							"    var tot=month + day + uy +time;",
 							"",
+							"   ",
 							"    pm.expect(id1exist);",
 							"    pm.expect(id2exist);",
 							"    pm.expect(id3exist);",
 							"    pm.environment.set(\"Token\",idvalue1);",
 							"    pm.environment.set(\"CurrentTenant\",idvalue2);",
 							"    pm.environment.set(\"LoggedUserId\",idvalue3);",
-							"   ",
+							"    pm.environment.set(\"tot\",tot);",
 							"   pm.environment.set(\"RandomNum\", _.random(1,50));",
 							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
 							"",
@@ -52,10 +62,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"khawla@log itudeworldglobal.com\",\"Password\":\"0597485181@kh\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1109} "
+					"raw": "{\"Email\":\"khawla@logitudeworldglobal.com\",\"Password\":\"0597485181@kh\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1095} "
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1109",
+					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1095",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -70,7 +80,7 @@
 					"query": [
 						{
 							"key": "tenant",
-							"value": "1109"
+							"value": "1095"
 						}
 					]
 				}
@@ -92,7 +102,7 @@
 							"    pm.expect(id1exist);",
 							"    pm.environment.set(\"JournalId\",idvalue1);",
 							"   tests[\"JournalIdSExist : \" + id1exist] = (id1exist);",
-							"    postman.setNextRequest(\"UpdateChartOFAccount\"); ",
+							"    postman.setNextRequest(\"UpdateGlACcount\"); ",
 							"});"
 						],
 						"type": "text/javascript"
@@ -137,6 +147,29 @@
 		},
 		{
 			"name": "UpdateGlACcount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6d2c311a-d75b-44ab-b678-cced72bd5a70",
+						"exec": [
+							"pm.test(\"Update GlACcount\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue =(pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"     tests[\"GlAccountUpdatedsuccessfully: \" + idexist ] = (idexist);",
+							"    postman.setNextRequest(\"UpdateChartOFAccount\"); ",
+							"    ",
+							"   ",
+							"    ",
+							"});",
+							"    "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -153,7 +186,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{  \r\n \"Id\":\"{{VendorGLAccountId}}\",\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"19786\",\r\n   \"LocalName\":\"VendGlAccountLocal\",\r\n   \"EnglishName\":\"VendGlAccountEnglggish\",\r\n   \"SearchFields\":\"VendGl,VendGlAccountEnglish,VendGlAccountLocal\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\",\r\n   \"InternalNumber\":\"{{InternalNumber}}\"\r\n}"
+					"raw": "{\"Id\": \"{{VendorGLAccountId}}\",\n            \"Tenant\": {{CurrentTenant}},\n            \"InternalNumber\": \"{{InternalNumber}}\",\n            \"AccountTypeCode\": \"3\",\n            \"DisplayNumber\": \"PMGLVend\",\n            \"LocalName\": \"VendGlAccountLocal{{RandomNum}}\",\n            \"EnglishName\": \"VendGlAccountEnglish\",\n            \"SearchFields\": \"PMGLVend,VendGlAccountEnglish,VendGlAccountLocal\",\n            \"IsMultiCurrency\": true,\n            \"CurrencyId\": null,\n            \"RevenueExpenseType\": \"3\",\n            \"IsControlAccount\": false,\n            \"ChartOfAccountsId\": \"1-2228\",\n            \"Inactive\": false,\n            \"AccountTypeName\": \"Vendor\",\n            \"CurrencyName\": null,\n            \"RevenueExpenseName\": \"Other\",\n            \"ChartOfAccountsName\": \"ספקים\",\n            \"ChartOfAccountsTypeCode\": \"4\",\n            \"ChartOfAccountsTypeName\": \"Vendors\",\n            \"CurrencyCode\": \"Multi\",\n            \"ReconcileMethodCode\": \"0\",\n            \"ReconcileMethodName\": \"Local Currency\",\n            \"ControlAccountId\": \"{{VendorControlAccountId}}\",\n            \"ActiveStatusName\": \"Active\",\n            \"AutomaticReconcileId\": null,\n            \"AutomaticReconcileName\": null,\n            \"PreviousEnglishName\": null,\n            \"PreviousEnglishNameChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousLocalName\": null,\n            \"PreviousLocalNameChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousNumber\": null,\n            \"PreviousNumberChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousChartOfAccountsId\": null,\n            \"PreviousChartOfAccountsChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"CustomerGLAccountId\": null,\n            \"CustomerGLAccountName\": null,\n            \"CustomerGLAccountNumber\": null,\n            \"BalanceInLocalCurrency\": 1200,\n            \"RevaluationEnabled\": null,\n            \"ParentAccountId\": null,\n            \"ParentAccountName\": null,\n            \"ParentAccountNumber\": null,\n            \"Category1Id\": null,\n            \"Category1Name\": null,\n            \"Category2Id\": null,\n            \"Category2Name\": null,\n            \"Category3Id\": null,\n            \"Category3Name\": null,\n            \"Category4Id\": null,\n            \"Category4Name\": null,\n            \"Category5Id\": null,\n            \"Category5Name\": null,\n            \"IsVATExempt\": null,\n            \"LastActivityDate\": null,\n            \"LastActivityTypeName\": null,\n            \"LastActivityByUserName\": null,\n            \"VatNumber\": null,\n            \"PaymentTermId\": null,\n            \"SalesmanUserId\": null,\n            \"NewGLAccountCardId\": null,\n            \"LocalBalanceInDue\": 1200,\n            \"NextDueDate\": null,\n            \"CurrencySign\": \"\",\n            \"DeductionFileTypeId\": null,\n            \"DeductionFileNumber\": null,\n            \"AssessingOfficeCode\": null,\n            \"Occupation\": null,\n            \"DeductionTypeId\": null,\n            \"ConsolidationVat\": null,\n            \"IsEquipmentVendor\": false,\n            \"ExcludeFromDeductionReport\": false,\n            \"DeductionTypeName\": null,\n            \"DeductionFileTypeCode\": null,\n            \"DeductionFileTypeName\": null,\n            \"AssessingOfficeName\": null,\n            \"DeductionTypeEnglishName\": null,\n            \"TotalOpenChequesInLocalCur\": null,\n            \"AutomaticReconcileLocalName\": null,\n            \"ReconcileMethodLocalName\": \"מטבע מקומי\",\n            \"TotFutureOpenChequesInLocalCur\": null,\n            \"CardId\": null,\n            \"CreatedByUserId\": null,\n            \"UpdatedByUserId\": null,\n            \"CreateDate\": \"2019-06-24T11:40:54.267\",\n            \"UpdateDate\": \"2019-06-24T11:40:54.507\",\n            \"CreatedByUserName\": \"khawla T0 \",\n            \"UpdatedByUserName\": \"khawla T0 \",\n            \"CreatedByLocalName\": \"עברית חוולה\",\n            \"UpdatedByLocalName\": \"עברית חוולה\"\n        }"
 				},
 				"url": {
 					"raw": "https://test.logitudeworld.com/TEST/api/glaccounts/",
@@ -183,12 +216,12 @@
 						"exec": [
 							"pm.test(\"UpdateChartOfAccountRev01\", function () {",
 							"   pm.response.to.have.status(200);",
-							"    var idvalue =(pm.response.json().EnglishName)=== \"PMVendorChartUpdated\" ;",
+							"    var idvalue =(pm.response.json().Id);",
 							" ",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
 							" ",
-							"     tests[\"ChartOfAccountUpdatedsuccessfully : \" + idvalue ] = (idvalue);",
+							"     tests[\"ChartOfAccountUpdatedsuccessfully : \" + idexist ] = (idexist);",
 							"    postman.setNextRequest(\"PostARinvoice\"); ",
 							"    ",
 							"   ",
@@ -223,7 +256,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\r\n    {\r\n   \"Id\":\"{{VendorChartOfAccountId}}\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Code\": \"PMCHV\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChartUpdated\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n\r\n \r\n\r\n      "
+					"raw": "\r\n    {\r\n   \"Id\":\"{{VendorChartOfAccountId}}\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Code\": \"PMCHV\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChart{{RandomNum}}\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n\r\n \r\n\r\n      "
 				},
 				"url": {
 					"raw": "https://test.logitudeworld.com/TESt/api/chartofaccounts",
@@ -282,7 +315,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"InvoiceNumber\":\"PMARIN{{RandomNum}}\",\r\n   \"ARInvoiceTypeCode\":\"IN\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n   \"BillToPartnerTypeId\":\"CS\",\r\n   \"InvoiceDate\":\"2019-05-31T00:00:00Z\",\r\n   \"DueDate\":\"2019-05-31T00:00:00Z\",\r\n   \"IssuedByUserId\":\"{{LoggedUserId}}\",\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"SubTotalInLocalCurrency\":4000.0,\r\n   \"SubTotalInInvoiceCurrency\":4000.0,\r\n   \"AmountInLocalCurrency\":4000.0,\r\n   \"AmountInInvoiceCurrency\":4000.0,\r\n   \"StatusCode\":\"AD\",\r\n   \"StatusName\":\"Unpaid\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"CreateDate\":\"2019-04-10T19:10:40.2580869Z\",\r\n   \"SearchFields\":\"1066,Accounting Customer 2 \",\r\n  \"IsGeneralInvoice\": true,\r\n   \"AmountDue\":4000.0,\r\n  \r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n\r\n   \"AmountDueInLocalCurrency\":4000.0,\r\n   \"AmountDueInProfitCurrency\":2000.0,\r\n   \r\n\r\n   \"BranchId\":\"{{BranchId}}\",\r\n\r\n   \"InvoiceLines\":[  \r\n      {  \r\n      \t\"Tenant\":\"{{CurrentTenant}}\",\r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n     \r\n         \"ForiegnCurrencyAmount\":4000.0,\r\n         \"LocalCurrencyAmount\":4000.0,\r\n         \"InvoiceCurrencyAmount\":4000.0,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatAmount\":null,\r\n         \"VatTypeName\":\"Exempt\",\r\n        \r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LineNumber\":1,\r\n        \r\n         \"Quantity\":20.0,\r\n         \"UnitPrice\":200.0,\r\n         \"ViewOrder\":0,\r\n         \"MeasurementId\":null,\r\n         \"IsExchangeRateFixed\":false,\r\n        \r\n         \"ProfitCurrencyAmount\":2000.0,\r\n         \"InvoiceLocalCurrencyCode\":null,\r\n         \"InvoiceCurrencyCode\":null,\r\n         \"ChangeSetOp\":1,\r\n         \"CreditAccount\":null,\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"Notes\":null,\r\n         \"DateForInterest\":null,\r\n         \"ValueDate\":null,\r\n         \"GLAccountId\":\"1-266389\",\r\n         \"LineActionCode\":\"1\"\r\n       \r\n      }\r\n   ]\r\n  ,\r\n  \r\n   \"SetApproved\":true,\r\n  \r\n   \"TotalAmountForTaxReport\":4000.0,\r\n   \"TotaVatableAmountForTaxReport\":0.0,\r\n   \"TotalVAT\":0.0,\r\n   \"IsFullAccounting\":true\r\n   \r\n}"
+					"raw": "{\r\n  \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"InvoiceNumber\":\"RN{{tot}}\",\r\n   \"ARInvoiceTypeCode\":\"IN\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n   \"BillToPartnerTypeId\":\"CS\",\r\n   \"InvoiceDate\":\"2019-05-31T00:00:00Z\",\r\n   \"DueDate\":\"2019-05-31T00:00:00Z\",\r\n   \"IssuedByUserId\":\"{{LoggedUserId}}\",\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"SubTotalInLocalCurrency\":4000.0,\r\n   \"SubTotalInInvoiceCurrency\":4000.0,\r\n   \"AmountInLocalCurrency\":4000.0,\r\n   \"AmountInInvoiceCurrency\":4000.0,\r\n   \"StatusCode\":\"AD\",\r\n   \"StatusName\":\"Unpaid\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"CreateDate\":\"2019-04-10T19:10:40.2580869Z\",\r\n   \"SearchFields\":\"1066,Accounting Customer 2 \",\r\n  \"IsGeneralInvoice\": true,\r\n   \"AmountDue\":4000.0,\r\n  \r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \"VATNumber\":\"5145599\",\r\n   \"AmountDueInLocalCurrency\":4000.0,\r\n   \"AmountDueInProfitCurrency\":2000.0,\r\n   \r\n\r\n   \"BranchId\":\"{{BranchId}}\",\r\n\r\n   \"InvoiceLines\":[  \r\n      {  \r\n      \t\"Tenant\":\"{{CurrentTenant}}\",\r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n     \r\n         \"ForiegnCurrencyAmount\":4000.0,\r\n         \"LocalCurrencyAmount\":4000.0,\r\n         \"InvoiceCurrencyAmount\":4000.0,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatAmount\":null,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LineNumber\":1,\r\n        \r\n         \"Quantity\":20.0,\r\n         \"UnitPrice\":200.0,\r\n         \"ViewOrder\":0,\r\n         \"MeasurementId\":null,\r\n         \"IsExchangeRateFixed\":false,\r\n        \r\n         \"ProfitCurrencyAmount\":2000.0,\r\n         \"InvoiceLocalCurrencyCode\":null,\r\n         \"InvoiceCurrencyCode\":null,\r\n         \"ChangeSetOp\":1,\r\n         \"CreditAccount\":\"{{CustomerGLAccountId}}\",\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"Notes\":null,\r\n         \"DateForInterest\":null,\r\n         \"ValueDate\":null,\r\n         \"GLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"LineActionCode\":\"1\"\r\n       \r\n      }\r\n   ]\r\n  ,\r\n  \r\n   \"SetApproved\":true,\r\n  \r\n   \"TotalAmountForTaxReport\":4000.0,\r\n   \"TotaVatableAmountForTaxReport\":0.0,\r\n   \"TotalVAT\":0.0,\r\n   \"IsFullAccounting\":true\r\n   \r\n}"
 				},
 				"url": {
 					"raw": "https://test.logitudeworld.com/TEST/api/arinvoices",
@@ -324,7 +357,9 @@
 							"     tests[\"ARinvoiceExsits : \" + true ] = (true);",
 							"    postman.setNextRequest(\"PostAPinvoice\");  ",
 							"    }",
-							"   ",
+							" let response = pm.response.json(),",
+							"    savedData = JSON.stringify(response);",
+							"pm.environment.set(\"savedData\", savedData);  ",
 							"    ",
 							"});",
 							"",
@@ -453,7 +488,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"InternalNumber\":\"Bill3005\",\r\n   \"InvoiceNumber\":\"PMAPIN{{RandomNum}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n  \r\n   \"InvoiceDate\":\"2019-05-31T00:00:00Z\",\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"DueDate\":\"2019-06-10T00:00:00Z\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n  \r\n   \"SubTotalInLocalCurrency\":200.0,\r\n   \"SubTotalInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency_Summary\":200.0,\r\n   \"AmountInLocalCurrency\":200.0,\r\n   \"AmountInLocalCurrency_Summary\":200.0,\r\n   \"AmountInProfitCurrency\":100.0,\r\n   \"AmountInProfitCurrency_Summary\":null,\r\n   \"StatusCode\":\"AD\",\r\n   \"CreateDate\":\"2019-06-10T20:46:10.1943336Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"IsClosed\":false,\r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \r\n   \"InvoiceExpectedAmount\":200.0,\r\n   \r\n   \"SearchFields\":\"1205,test\",\r\n  \r\n  \r\n   \"AmountDue\":200.0,\r\n   \"RefundAmount\":null,\r\n   \"AmountDueInLocalCurrency\":1200.0,\r\n   \"AmountDueInProfitCurrency\":600.0,\r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \r\n \r\n   \"VATNumber\":\"5145599\",\r\n   \"AccountingDate\":\"2019-05-31T00:00:00Z\",\r\n   \"IsExternalEntity\":false,\r\n   \"IsGeneralInvoice\":true,\r\n  \r\n   \"InvoiceLines\":[\r\n      {\r\n         \r\n         \"LineNumber\":1,\r\n         \"Tenant\":{{CurrentTenant}},\r\n         \"InvoiceCurrencyAmount\":200.0,\r\n      \r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"VatIsMultiPercentage\":false,\r\n      \r\n         \"OpenAmount\":null,\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForiegnCurrencyAmount\":200.0,\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LocalCurrencyAmount\":200.0,\r\n         \"ProfitCurrencyAmount\":100.0,\r\n       \r\n         \"CorrectionNote\":null,\r\n         \"CorrectionByUserId\":null,\r\n         \"CorrectionDate\":null,\r\n         \"AmountTypeCode\":\"NEXP\",\r\n         \"ForiegnCurrencyCode\":\"NIS\",\r\n         \"ChangeSetOp\":1,\r\n         \"DebitAccount\":null,\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"AuthorizedSignatory\":false,\r\n         \"PrepaidCollectId\":null\r\n      }\r\n   ],\r\n\r\n   \"TotalVATs\":[\r\n      {\r\n         \r\n       \"Tenant\":{{CurrentTenant}},\r\n         \"APInvoiceId\":null,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercent\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"VatTypeCell\":\"Exempt (0%)\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"InvoiceCurrencyVatableAmount\":200.0,\r\n         \"LocalVatableAmount\":200.0,\r\n         \"ProfitVatableAmount\":100.0,\r\n         \"InvoiceCurrencyVATAmount\":0.0,\r\n         \"LocalVATAmount\":0.0,\r\n         \"ProfitCurrencyVATAmount\":0.0,\r\n         \"ChangeSetOp\":1\r\n      }\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n\r\n   \"SetReSendQBO\":false,\r\n   \"JournalNumber\":\"1230\",\r\n   \"ShipmentConcurrencyGUID\":null,\r\n   \"ShipmentNewConcurrencyGUID\":null\r\n}"
+					"raw": "{\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"InternalNumber\":\"Bill3005\",\r\n   \"InvoiceNumber\":\"PN{{tot}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n  \r\n   \"InvoiceDate\":\"2019-05-31T00:00:00Z\",\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"DueDate\":\"2019-06-10T00:00:00Z\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n  \r\n   \"SubTotalInLocalCurrency\":200.0,\r\n   \"SubTotalInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency_Summary\":200.0,\r\n   \"AmountInLocalCurrency\":200.0,\r\n   \"AmountInLocalCurrency_Summary\":200.0,\r\n   \"AmountInProfitCurrency\":100.0,\r\n   \"AmountInProfitCurrency_Summary\":null,\r\n   \"StatusCode\":\"AD\",\r\n   \"CreateDate\":\"2019-06-10T20:46:10.1943336Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"IsClosed\":false,\r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \r\n   \"InvoiceExpectedAmount\":200.0,\r\n   \r\n   \"SearchFields\":\"1205,test\",\r\n  \r\n  \r\n   \"AmountDue\":200.0,\r\n   \"RefundAmount\":null,\r\n   \"AmountDueInLocalCurrency\":1200.0,\r\n   \"AmountDueInProfitCurrency\":600.0,\r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \r\n \r\n   \"VATNumber\":\"5145599\",\r\n   \"AccountingDate\":\"2019-05-31T00:00:00Z\",\r\n   \"IsExternalEntity\":false,\r\n   \"IsGeneralInvoice\":true,\r\n  \r\n   \"InvoiceLines\":[\r\n      {\r\n         \r\n         \"LineNumber\":1,\r\n         \"Tenant\":{{CurrentTenant}},\r\n         \"InvoiceCurrencyAmount\":200.0,\r\n      \r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"VatIsMultiPercentage\":false,\r\n      \r\n         \"OpenAmount\":null,\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForiegnCurrencyAmount\":200.0,\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LocalCurrencyAmount\":200.0,\r\n         \"ProfitCurrencyAmount\":100.0,\r\n       \r\n         \"CorrectionNote\":null,\r\n         \"CorrectionByUserId\":null,\r\n         \"CorrectionDate\":null,\r\n         \"AmountTypeCode\":\"NEXP\",\r\n         \"ForiegnCurrencyCode\":\"NIS\",\r\n         \"ChangeSetOp\":1,\r\n         \"DebitAccount\":null,\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"AuthorizedSignatory\":false,\r\n         \"PrepaidCollectId\":null\r\n      }\r\n   ],\r\n\r\n   \"TotalVATs\":[\r\n      {\r\n         \r\n       \"Tenant\":{{CurrentTenant}},\r\n         \"APInvoiceId\":null,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercent\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"VatTypeCell\":\"Exempt (0%)\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"InvoiceCurrencyVatableAmount\":200.0,\r\n         \"LocalVatableAmount\":200.0,\r\n         \"ProfitVatableAmount\":100.0,\r\n         \"InvoiceCurrencyVATAmount\":0.0,\r\n         \"LocalVATAmount\":0.0,\r\n         \"ProfitCurrencyVATAmount\":0.0,\r\n         \"ChangeSetOp\":1\r\n      }\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n\r\n   \"SetReSendQBO\":false,\r\n   \"JournalNumber\":\"1230\",\r\n   \"ShipmentConcurrencyGUID\":null,\r\n   \"ShipmentNewConcurrencyGUID\":null\r\n}"
 				},
 				"url": {
 					"raw": "https://test.logitudeworld.com/TEST/api/apinvoices",
@@ -616,7 +651,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"PaymentNo\":\"PMARP{{RandomNum}}\",\r\n   \"CreateDate\":\"2019-06-10T20:14:25.5894288Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n  \r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \"AmountInPaymentCurrency\":12000.0,\r\n   \"AmountInLocalCurrency\":12000.0,\r\n \r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n \r\n   \"StatusCode\":\"AD\",\r\n   \"IsClosed\":false,\r\n   \"PaymentCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"PaidBy\":null,\r\n   \"AccountingPaymentMethodId\":\"{{PaymentMethodId}}\",\r\n   \"AccountingPaymentMethodCode\":\"CA\",\r\n  \r\n   \"PaymentCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"BillToAddressId\":\"{{CustomerAddressId}}\",\r\n   \"RegisterDate\":\"2019-05-31T00:00:00Z\",\r\n   \"SearchFields\":\"ARP2059,AD,CA,Accounting Customer 2 ,NIS\",\r\n   \r\n   \r\n   \"OpenAmount\":12000.0,\r\n   \r\n   \"ValueDate\":\"2019-05-31T00:00:00Z\",\r\n  \r\n   \"UpdatedByUserId\":\"1-82355\",\r\n   \"CreditCardTypeId\":null,\r\n  \r\n   \"SetVoided\":false,\r\n   \"SetApproved\":true,\r\n  \r\n \r\n   \"BillToPartnerTypeId\":\"CS\",\r\n\r\n   \r\n   \"IsFullAccounting\":true\r\n\r\n  \r\n}"
+					"raw": "{\r\n \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"PaymentNo\":\"RP{{tot}}\",\r\n   \"CreateDate\":\"2019-06-10T20:14:25.5894288Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n  \r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \"AmountInPaymentCurrency\":12000.0,\r\n   \"AmountInLocalCurrency\":12000.0,\r\n \r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n \r\n   \"StatusCode\":\"AD\",\r\n   \"IsClosed\":false,\r\n   \"PaymentCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"PaidBy\":null,\r\n   \"AccountingPaymentMethodId\":\"{{PaymentMethodId}}\",\r\n   \"AccountingPaymentMethodCode\":\"CA\",\r\n  \r\n   \"PaymentCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"BillToAddressId\":\"{{CustomerAddressId}}\",\r\n   \"RegisterDate\":\"2019-05-31T00:00:00Z\",\r\n   \"SearchFields\":\"ARP2059,AD,CA,Accounting Customer 2 ,NIS\",\r\n   \r\n   \r\n   \"OpenAmount\":12000.0,\r\n   \r\n   \"ValueDate\":\"2019-05-31T00:00:00Z\",\r\n  \r\n   \"UpdatedByUserId\":\"1-82355\",\r\n   \"CreditCardTypeId\":null,\r\n  \r\n   \"SetVoided\":false,\r\n   \"SetApproved\":true,\r\n  \r\n \r\n   \"BillToPartnerTypeId\":\"CS\",\r\n\r\n   \r\n   \"IsFullAccounting\":true\r\n\r\n  \r\n}"
 				},
 				"url": {
 					"raw": "https://test.logitudeworld.com/TEST/api/arpayments",
@@ -784,7 +819,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":true,\r\n   \"PaymentNo\":\"PMAPP{{RandomNum}}\",\r\n   \"CreateDate\":\"2019-05-20T12:09:35.6\",\r\n   \"CreatedByUserId\":\"1-81443\",\r\n   \r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n   \"AmountInLocalCurrency\":100.0,\r\n   \r\n   \"AccountingPaymentMethodId\":\"{{PaymentMethodId}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n   \"StatusCode\":\"AD\",\r\n   \"IsClosed\":false,\r\n   \"PaymentMethodCode\":\"CA\",\r\n   \r\n   \"PaymentCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"AmountInPaymentCurrency\":100.0,\r\n   \"PaymentCurrencyExchangeRate\":1.0,\r\n   \"PaymentCurrencyExchangeRateDate\":null,\r\n   \"VendorAddressId\":\"{{VendorAddressId}}\",\r\n   \"RegisterDate\":\"2019-05-20T00:00:00\",\r\n   \"OpenAmount\":100.0,\r\n   \r\n   \"ValueDate\":\"2019-05-20T00:00:00\",\r\n   \"Bank\":null,\r\n   \"BankBranch\":null,\r\n   \"Account\":null,\r\n   \"SearchFields\":null,\r\n   \"CreatedByUserName\":null,\r\n   \"VendorName\":\"Clal Insurance Company\",\r\n   \"StatusName\":\"Approved\",\r\n   \r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \"UpdateDate\":\"2019-05-20T12:09:35.6\",\r\n   \"UpdatedByUserId\":\"1-81443\",\r\n   \"CreditCardTypeId\":null,\r\n   \"FirstApproveDate\":null,\r\n   \"PaymentInvoices\":[\r\n\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n   \"SetCancelApproval\":false,\r\n   \"HasInvoicesErrors\":false,\r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \"SetReSendQBO\":false,\r\n   \"TaxDeductionLocalAmount\":30.00,\r\n   \"TaxDeductionPercentage\":30,\r\n   \"ApprovedByUserId\":null,\r\n   \"ApprovedDateTime\":null,\r\n   \"BankAccountId\":null,\r\n   \"BranchName\":\"Petah Tikva\"\r\n}"
+					"raw": "{\r\n   \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":true,\r\n   \"PaymentNo\":\"PP{{tot}}\",\r\n   \"CreateDate\":\"2019-05-20T12:09:35.6\",\r\n   \"CreatedByUserId\":\"1-81443\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n   \"AmountInLocalCurrency\":100.0,\r\n   \r\n   \"AccountingPaymentMethodId\":\"{{PaymentMethodId}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n   \"StatusCode\":\"AD\",\r\n   \"IsClosed\":false,\r\n   \"PaymentMethodCode\":\"CA\",\r\n   \r\n   \"PaymentCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"AmountInPaymentCurrency\":100.0,\r\n   \"PaymentCurrencyExchangeRate\":1.0,\r\n   \"PaymentCurrencyExchangeRateDate\":null,\r\n   \"VendorAddressId\":\"{{VendorAddressId}}\",\r\n   \"RegisterDate\":\"2019-05-20T00:00:00\",\r\n   \"OpenAmount\":100.0,\r\n   \r\n   \"ValueDate\":\"2019-05-20T00:00:00\",\r\n   \"Bank\":null,\r\n   \"BankBranch\":null,\r\n   \"Account\":null,\r\n   \"SearchFields\":null,\r\n   \"CreatedByUserName\":null,\r\n   \"VendorName\":\"Clal Insurance Company\",\r\n   \"StatusName\":\"Approved\",\r\n   \r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \"UpdateDate\":\"2019-05-20T12:09:35.6\",\r\n   \"UpdatedByUserId\":\"1-81443\",\r\n   \"CreditCardTypeId\":null,\r\n   \"FirstApproveDate\":null,\r\n   \"PaymentInvoices\":[\r\n\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n   \"SetCancelApproval\":false,\r\n   \"HasInvoicesErrors\":false,\r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \"SetReSendQBO\":false,\r\n   \"TaxDeductionLocalAmount\":30.00,\r\n   \"TaxDeductionPercentage\":30,\r\n   \"ApprovedByUserId\":null,\r\n   \"ApprovedDateTime\":null,\r\n   \"BankAccountId\":null,\r\n   \"BranchName\":\"Petah Tikva\"\r\n}"
 				},
 				"url": {
 					"raw": "https://test.logitudeworld.com/TEST/api/appayments",

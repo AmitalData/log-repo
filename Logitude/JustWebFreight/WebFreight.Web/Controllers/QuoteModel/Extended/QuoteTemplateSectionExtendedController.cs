@@ -257,9 +257,9 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 }
                 else
                 {
-                    QuoteTemplateEntityService QuoteTemplateService = new QuoteTemplateEntityService();
-                    result = QuoteTemplateService.GetQuoteTemplatePdfReport(quoteId, quoteTemplateId, userId, tenant, null, authToken.Tenant);
 
+                    QuoteTemplateReportHelper quoteTemplateReportHelper = new QuoteTemplateReportHelper();
+                    result = quoteTemplateReportHelper.BuildQuoteTemplatePdfReport(quoteId, quoteTemplateId, userId, tenant, null, authToken.Tenant);
                 }
 
 

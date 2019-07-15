@@ -67,6 +67,10 @@ export class MaintenanceComponent {
             this.PagesMenu.push(new Menu("TKT", "Tickets"));
         }
 
+        if (FeatureLocator.HasFeaturePermession("General", "General.Occasion.OccasionType")) {
+            this.PagesMenu.push(new Menu("OCS", "Occasions"));
+        }
+
         if (FeatureLocator.HasFeaturePermession("General", "CUSTOMS")) {
             this.PagesMenu.push(new Menu("CSM", TextCodeTranslator.Translate("General.MC.Custom.Customs")));
         }
@@ -256,6 +260,14 @@ export class MaintenanceComponent {
                 item.Icon = "Settings"
                 item.Code = "CUSA";
                 item.ObjectTableName = "Customer Settings";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.VATSettings")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "VATS";
+                item.ObjectTableName = "VAT Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.SupportManagement")) {
@@ -513,7 +525,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "HybridPartner")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-
+       
         if (FeatureLocator.HasFeaturePermession("General", "SCHEDULERS")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "MNG";
@@ -524,7 +536,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TasksScheduler")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-        }
+        } 
 
         if (FeatureLocator.HasFeaturePermession("General", "MAINCUSTOMERS")) {
             var item = new MenusTablePM();
@@ -978,6 +990,18 @@ export class MaintenanceComponent {
                     });
                     break;
                 }
+                case "VATS": {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+                        var windowTitle = "VAT Settings";
+                        var logWindow = new LogitudeWindow();
+                        logWindow.Width = 800;
+                        logWindow.Height = 700;
+                        logWindow.Title = windowTitle;
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./Common/Components/Maintenance/VATSettingsComponent');
+                    });
+                    break;
+                }
                 case "CISE": {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = "Customs Settings";
@@ -1124,7 +1148,7 @@ export class MaintenanceComponent {
                         }
 
 
-                        logWindow.Title = "Schedulers";
+                        logWindow.Title = "Scheduler";
                         logWindow.IsShowCloseButton = true;
                         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/MainSchedulerComponent');
                     });
@@ -1485,6 +1509,10 @@ class MaintenanceMenuItem {
         }
 
         this.TranslatedName = myResult;
+        if (this.Code == "MASC") {
+
+            this.TranslatedName = "Scheduler";
+        }
         if (AppTool.IsNullOrEmpty(this.TranslatedName)) {
             this.TranslatedName = this.Code;
         }

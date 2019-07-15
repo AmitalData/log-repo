@@ -629,6 +629,7 @@
     <Content Include="bin\Microsoft.WindowsAzure.Diagnostics.dll" />
     <Content Include="bin\Simplog.Data.Global.dll" />
     <Content Include="bin\Simplog.Server.Infrastructure.dll" />
+    <Content Include="BluesnapPaymentLogitude.aspx" />
     <Content Include="ChampMessaging.aspx" />
     <Content Include="CustomWebServices\ClaimWebService.asmx" />
     <Content Include="ContainerPush.aspx" />
@@ -980,6 +981,13 @@
       <DependentUpon>AtlasRegistrationPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Azure\TopicQueues\SignalRHubMessageHandler.cs" />
+    <Compile Include="BluesnapPaymentLogitude.aspx.cs">
+      <DependentUpon>BluesnapPaymentLogitude.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BluesnapPaymentLogitude.aspx.designer.cs">
+      <DependentUpon>BluesnapPaymentLogitude.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ChampMessaging.aspx.cs">
       <DependentUpon>ChampMessaging.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1008,6 +1016,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingCompanyTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ExternalReconciliationLineViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ExternalReconciliationViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountCounterViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountWithholdingTaxViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\IntegrityCheckStatusViewsController.Generated.cs" />
@@ -1036,6 +1045,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\AccountingIntegrityCheckController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\AccountingNoteController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ExternalReconciliationController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountCounterController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountMoreDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountWithholdingTaxController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\OpenFormatReportController.Generated.cs" />
@@ -1802,6 +1812,8 @@
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentTestDataController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerFollowUpViewsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\HarmonizeCodeViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\INTTRABookingStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\INTTRABookingTransStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\INTTRADocumentTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\MessagingStockViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\OBLTypeViewsController.Generated.cs" />
@@ -2291,6 +2303,7 @@
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ConsolidationServiceBatch.cs" />
     <Compile Include="Helpers\APIHelpers\GenerateTariffsHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
@@ -2401,7 +2414,6 @@
     <Compile Include="MetaDataUpdate\DetailClasses\TaxWithholdingAssessOfficeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\WarehouseTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\UsoCFDIDetails.cs" />
-    <Compile Include="MetaDataUpdate\DetailClasses\WithholdingTaxDeductionTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\CommonDataModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingSystemUpdateClass.cs" />
@@ -2611,6 +2623,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FeatureToggleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FreightPaymentMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FullAccountingSettingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCounterUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountMoreDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountTotalDateTypeUpdateClass.cs" />
@@ -2652,6 +2665,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionAllInChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxDeductionReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxDeductionReportUpdateClass.cs" />
@@ -2794,6 +2808,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBCustomsInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\HarmonizeCodeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\INTTRABookingStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\INTTRABookingTransStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\MessagingStockUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBOCIUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBSpecialHandlingCodeUpdateClass.cs" />
@@ -2828,7 +2844,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\SpecialServicesTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\ShipmentsModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TariffModuleUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\TarrifUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TimeManagementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WarehouseLibUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
@@ -2885,6 +2900,7 @@
     <Content Include="Monitoring\MonitorServiceLastUpdate.aspx" />
     <Content Include="Monitoring\MonitorTechnicalFNA.aspx" />
     <Content Include="Monitoring\ProfactMonitoring.aspx" />
+    <Content Include="Monitoring\INTTRAMonitoring.aspx" />
     <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
@@ -4268,6 +4284,7 @@
     <Content Include="Silverlight.js" />
     <Content Include="Simplog.InfrastructureTestPage.aspx" />
     <Content Include="TaxesApprovalModel\TaxesApprovalWebService.asmx" />
+    <Content Include="BluesnapPaymentAmital.aspx" />
     <Content Include="TFSWebPage.aspx" />
     <Content Include="TrainingResourcesHTML\html\cancel-invoice.html" />
     <Content Include="TrainingResourcesHTML\html\change-measurements.html" />
@@ -5001,6 +5018,13 @@
     <Compile Include="Monitoring\ProfactMonitoring.aspx.designer.cs">
       <DependentUpon>ProfactMonitoring.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\INTTRAMonitoring.aspx.cs">
+      <DependentUpon>INTTRAMonitoring.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\INTTRAMonitoring.aspx.designer.cs">
+      <DependentUpon>INTTRAMonitoring.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Monitoring\QuickbooksOnlineQueue.aspx.cs">
       <DependentUpon>QuickbooksOnlineQueue.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5696,6 +5720,13 @@
     <Compile Include="TestCompression.aspx.designer.cs">
       <DependentUpon>TestCompression.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BluesnapPaymentAmital.aspx.cs">
+      <DependentUpon>BluesnapPaymentAmital.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BluesnapPaymentAmital.aspx.designer.cs">
+      <DependentUpon>BluesnapPaymentAmital.aspx</DependentUpon>
+    </Compile>
     <Compile Include="TFSWebPage.aspx.cs">
       <DependentUpon>TFSWebPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6241,6 +6272,7 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
+    <Folder Include="Integration Test\FullAccounting\" />
     <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />

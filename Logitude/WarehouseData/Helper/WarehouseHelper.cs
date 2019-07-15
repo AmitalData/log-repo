@@ -20,10 +20,13 @@ namespace WarehouseData.Helper
         string Mode = string.Empty;
         int CustomFieldsCount = 40;
         List<TableClass> tableLists = new List<TableClass>();
+        List<string> TableUsedCustomFields = new List<string>();
+
         public WarehouseHelper(string appName = "WarehouseData", string mode = "Debug")
         {
             this.AppName = appName;
             this.Mode = mode;
+            this.TableUsedCustomFields = new List<string> {"Shipment" };
         }
 
         public List<TableClass> FillTable()
@@ -34,7 +37,7 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Country", DBTableName = "Countries", Dw_TableName = "dw_Countries", KeyName = "Id", HasNotSpecifiedValue = true });
             tableNameLists.Add(new TableClass() { TableName = "State", DBTableName = "States", Dw_TableName = "dw_States", KeyName = "Id", HasNotSpecifiedValue = true });
             tableNameLists.Add(new TableClass() { TableName = "PartnerType", DBTableName = "PartnerTypes", Dw_TableName = "dw_PartnerTypes", KeyName = "Id", HasNotSpecifiedValue = true });
-            tableNameLists.Add(new TableClass() { TableName = "ObjectField", DBTableName = "ObjectFields", Dw_TableName = "dw_ObjectFields", KeyName = "Id" , FieldsDBName = "FieldName,DataTypeCode" });
+            tableNameLists.Add(new TableClass() { TableName = "ObjectField", DBTableName = "ObjectFields", Dw_TableName = "dw_ObjectFields", KeyName = "Id" , FieldsDBName = "FieldName,DataTypeCode,ObjectTableId,IsCustom" });
 
             tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "Direction", DBTableName = "Directions", Dw_TableName = "dw_Directions", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Directions", BuildScriptName = "BuildDirectionDimensionsTable", IncrementalScriptName = "UpdateDirectionDimensionTable" });
             tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "TransportMode", DBTableName = "TransportModes", Dw_TableName = "dw_TransportModes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_TransportModes", BuildScriptName = "BuildTransportModeDimensionTable", IncrementalScriptName = "UpdateTransportModeDimensionTable" });
@@ -43,7 +46,7 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Branch", DBTableName = "Branches", Dw_TableName = "dw_Branches", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Branches", BuildScriptName = "BuildBrancheDimensionTable", IncrementalScriptName = "UpdateBrancheDimensionTable" });
             tableNameLists.Add(new TableClass() { TableName = "EntityStatus", DBTableName = "EntityStatus", Dw_TableName = "dw_ShipmentStatuses", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_ShipmentStatuses", BuildScriptName = "BuildEntityStatusDimensionTable", IncrementalScriptName = "UpdateEntityStatusDimensionTable" });
             tableNameLists.Add(new TableClass() { TableName = "Rank", DBTableName = "Ranks", Dw_TableName = "dw_Ranks", KeyName = "Id", });
-            tableNameLists.Add(new TableClass() { TableName = "Shipment", DWObjectTableCode = "Fact_Shipments", FieldsDBName = "ToPortId,FromPortId", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant", DWObjectTableCode = "Fact_Shipments", FieldsDBName = "ToPortId,FromPortId", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "ShipmentMasterData", FieldsDBName = "MasterShipmentNumber", DBTableName = "ShipmentMasterDatas", Dw_TableName = "dw_ShipmentMasterDatas", KeyName = "Id", HasNotSpecifiedValue = true, HasConstraint = true, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Card", DBTableName = "Cards", Dw_TableName = "dw_Partners", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Partners", BuildScriptName = "BuildCardsDimensionTable", IncrementalScriptName = "UpdateCardDimensionTable", HasConstraint = true, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Port", DBTableName = "Ports", Dw_TableName = "dw_Ports", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Ports", BuildScriptName = "BuildPortsDimensionTable", IncrementalScriptName = "UpdatePortsDimensionTable", HasConstraint = true, DispayInScreen = true });
@@ -54,7 +57,7 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Department", DBTableName = "Departments", Dw_TableName = "dw_Departments", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Departments", BuildScriptName = "BuildDepartmentDimensionTable", IncrementalScriptName = "UpdateDepartmentDimensionTable", DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Incoterm", DBTableName = "Incoterms", Dw_TableName = "dw_Incoterms", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Incoterms", BuildScriptName = "BuildIncotermDimensionTable", IncrementalScriptName = "UpdateIncotermDimensionTable", DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Currency", DBTableName = "Currencies", Dw_TableName = "dw_Currencies", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Currencies", BuildScriptName = "BuildCurrencyDimensionTable", IncrementalScriptName = "UpdateCurrencyDimensionTable", DispayInScreen = true });
-            tableNameLists.Add(new TableClass() { TableName = "MoveType", DBTableName = "MoveTypes", Dw_TableName = "dw_MoveTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_MoveTypes", BuildScriptName = "BuildMoveTypeDimensionTable", IncrementalScriptName = "UpdateMoveTypeDimensionTable", HasConstraint = true  });
+            tableNameLists.Add(new TableClass() { TableName = "MoveType", DBTableName = "MoveTypes", Dw_TableName = "dw_MoveTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_MoveTypes", BuildScriptName = "BuildMoveTypeDimensionTable", IncrementalScriptName = "UpdateMoveTypeDimensionTable", HasConstraint = true });
             tableNameLists.Add(new TableClass() { TableName = "Vessel", DBTableName = "Vessels", Dw_TableName = "dw_Vessels", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Vessels", BuildScriptName = "BuildVesselDimensionTable", IncrementalScriptName = "UpdateVesselDimensionTable", HasConstraint = true });
             tableNameLists.Add(new TableClass() { TableName = "SpecialServicesType", DBTableName = "SpecialServicesTypes", Dw_TableName = "dw_SpecialServicesTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_SpecialServicesTypes", BuildScriptName = "BuildSpecialServicesTypeDimensionTable", IncrementalScriptName = "UpdateSpecialServicesTypeDimensionTable", HasConstraint = true });
             tableNameLists.Add(new TableClass() { TableName = "WaterMark", DBTableName = "WaterMarks", Dw_TableName = "dw_WaterMarks", KeyName = "TableName", FieldsDBName = "TableName,LastUpdateDate" });
@@ -140,6 +143,7 @@ namespace WarehouseData.Helper
         public void RunSqlFunctions(string connectionString)
         {
             ExecuteScript("Others", connectionString, "Day 06 [Abed]Add Function Date");
+            ExecuteScript("Others", connectionString, "Day 18[AbedAddFuncationSplitString]");
             ExecuteScript("Others", connectionString, "Day 17[AbedAddFuncationResolveCustomFieldDateValue]");
             ExecuteScript("Others", connectionString, "Day 14 [Abed]AddFunctionResolveCustomFieldValue");
         }
@@ -190,6 +194,14 @@ namespace WarehouseData.Helper
                              .ToList();
 
                     TableClass tableClass = tableNameLists.Where(d => d.TableName == tableName).FirstOrDefault();
+                    if (tableClass != null)
+                    {
+                        tableClass.ObjectTableId = tableId;
+                    }
+
+
+
+
                     if (result.Count > 0)
                     {
                         int count = 0;
@@ -240,7 +252,7 @@ namespace WarehouseData.Helper
 
         public void BuildAndExecuteDataWarehouseScript(string forderName, string connectionString, TableClass table)
         {
-            string scriptName =  forderName == "BuildWarehouse" ? table.BuildScriptName : table.IncrementalScriptName;
+            string scriptName = forderName == "BuildWarehouse" ? table.BuildScriptName : table.IncrementalScriptName;
 
             string path = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
             if (AppName != "Service")
@@ -260,21 +272,257 @@ namespace WarehouseData.Helper
                 {
                     cmd += (" " + RenameALLTables());
                     cmd += (" " + AddRelationsBetweenFactAndDim(table));
+                    cmd += AddIndexs(table);
                 }
             }
 
             if (table.HasFactTable && table.TableName == "Shipment") cmd = BuildCustomFields(cmd);
-      
+
             ExecuteSql(cmd, connectionString);
 
         }
 
+
+        private string AddIndexs(TableClass table)
+        {
+            string sql = string.Empty;
+            if (!string.IsNullOrEmpty(table.FieldIndexes))
+            {
+                string[] fieldNames = table.FieldIndexes.Split(',');
+                if (fieldNames.Length > 0)
+                {
+                    foreach (string fieldName in fieldNames)
+                    {
+                        sql += (" CREATE NONCLUSTERED INDEX [IX_" + table.DWObjectTableCode + "_" + fieldName + "] ON [dbo].[" + table.DWObjectTableCode + "]([" + fieldName + "]) \r\n ");
+                    }
+                }
+
+            }
+            return sql;
+        }
+
+
+
+        private string GetCustomFieldTenantsUpdated(string desconnectionString)
+        {
+            string result = string.Empty;
+            TableClass objectFieldTable = tableLists.Where(d => d.TableName == "ObjectField").FirstOrDefault();
+            TableClass tenantTable = tableLists.Where(d => d.TableName == "Tenant").FirstOrDefault();
+            if (string.IsNullOrEmpty(objectFieldTable.RefreshIds) && string.IsNullOrEmpty(tenantTable.RefreshIds)) return result;
+            List<string> tenantNumbersLists = !string.IsNullOrEmpty(tenantTable.RefreshIds) ? tenantTable.RefreshIds.Replace("(", "").Replace(")", "").Replace("'", "").Split(',').ToList() : new List<string>();
+            if (!string.IsNullOrEmpty(objectFieldTable.RefreshIds))
+            {
+                var customObjectFields = new DataTable();
+
+                using (SqlConnection sourceConnection = new SqlConnection(desconnectionString))
+                {
+                    sourceConnection.Open();
+                    string sql = "SELECT  Tenant from " + objectFieldTable.Dw_TableName + " where id in " + objectFieldTable.RefreshIds;
+                    SqlCommand commandSourceData = new SqlCommand(sql, sourceConnection);
+                    SqlDataReader reader = commandSourceData.ExecuteReader();
+                    customObjectFields.Load(reader);
+                    reader.Close();
+                }
+
+                var tenantLists = customObjectFields.AsEnumerable().GroupBy(row => row.Field<Int32>("Tenant").ToString()).Select(d => d.First().Field<Int32>("Tenant").ToString());
+                if (tenantLists.Count() > 0)
+                {
+
+                    foreach (var tenant in tenantLists)
+                    {
+                        if (!tenantNumbersLists.Contains(tenant)) tenantNumbersLists.Add(tenant);
+
+                    }
+
+                }
+
+            }
+
+            if (tenantNumbersLists.Count() > 0)
+            {
+                foreach (string item in tenantNumbersLists)
+                {
+                    result += item + ",";
+                }
+
+                result += "@";
+                result = result.Replace(",@", "");
+
+            }
+
+            return result;
+        }
+
+        #region CustomObjectField
+
+        #region BuildCustomObjectFieldsTable
+        public void BuildCustomObjectFieldsTable(string desconnectionString, bool isIncrementDataWarehouse = false)
+        {
+            string tenantUpdated = isIncrementDataWarehouse ? GetCustomFieldTenantsUpdated(desconnectionString) : null;
+            if (isIncrementDataWarehouse && string.IsNullOrEmpty(tenantUpdated)) return;
+
+            TableClass objectFieldTable = tableLists.Where(d => d.TableName == "ObjectField").FirstOrDefault();
+            TableClass tenantTable = tableLists.Where(d => d.TableName == "Tenant").FirstOrDefault();
+            string customFieldSql = !isIncrementDataWarehouse ? CreateCustomObjectFieldsTempTable(desconnectionString) + "\n" : null;
+            DataTable customObjectFields = GetCustomObjectFields(desconnectionString, tenantUpdated, objectFieldTable);
+
+            var tenantLists = new List<int>();
+            if (!isIncrementDataWarehouse)
+            {
+                tenantLists = GetCustomFieldTenantLists(desconnectionString);
+            }
+            else
+            {
+                DeleteRecordFromCustomObjectField(desconnectionString, tenantUpdated);
+                foreach (string id in tenantUpdated.Split(','))
+                {
+                    if (!string.IsNullOrEmpty(id)) tenantLists.Add(Int32.Parse(id));
+                }
+
+            }
+
+            foreach (int tenant in tenantLists)
+            {
+                customFieldSql += FillCustomObjectFieldsTempTable(tenant, customObjectFields, isIncrementDataWarehouse);
+            }
+
+            if (!isIncrementDataWarehouse)
+            {
+                string tableName = "dw_CustomObjectFields";
+                customFieldSql += "\n" + "If OBJECT_ID('" + tableName + "','U')  IS NOT NULL Begin  Drop Table " + tableName + " End \r\n";
+                customFieldSql += (" SELECT *  INTO " + tableName + " FROM #" + tableName + "Temp \r\n");
+                customFieldSql += (" If(OBJECT_ID('tempdb..#" + tableName + "Temp') Is Not Null) Begin  Drop Table #" + tableName + "Temp End \r\n\r\n");
+                customFieldSql += "  CREATE NONCLUSTERED INDEX [IX_" + tableName + "_" + "Tenant" + "] ON[dbo].[" + tableName + "]([" + "Tenant" + "])";
+                customFieldSql += "  CREATE NONCLUSTERED INDEX [IX_" + tableName + "_" + "ObjectTableName" + "] ON[dbo].[" + tableName + "]([" + "ObjectTableName" + "])";
+
+            }
+
+            ExecuteSql(customFieldSql, desconnectionString);
+        }
+
+
+        private  void DeleteRecordFromCustomObjectField(string desconnectionString, string tenantUpdated)
+        {
+            using (SqlConnection sourceConnection = new SqlConnection(desconnectionString))
+            {
+                sourceConnection.Open();
+                string sql = "delete dw_CustomObjectFields  where tenant in  (" + tenantUpdated + ")";
+                SqlCommand commandSourceData = new SqlCommand(sql, sourceConnection);
+                SqlDataReader reader = commandSourceData.ExecuteReader();
+                reader.Close();
+            }
+        }
+
+        private  List<int> GetCustomFieldTenantLists(string desconnectionString)
+        {
+            List<int> tenantLists;
+            var tenants = new DataTable();
+            using (SqlConnection sourceConnection = new SqlConnection(desconnectionString))
+            {
+                sourceConnection.Open();
+                SqlCommand commandSourceData = new SqlCommand("SELECT  Id from dw_Tenants", sourceConnection);
+                SqlDataReader reader = commandSourceData.ExecuteReader();
+                tenants.Load(reader);
+                reader.Close();
+            }
+            tenantLists = (from rowfield in tenants.AsEnumerable()
+                           select Int32.Parse(rowfield["Id"].ToString())).ToList();
+            return tenantLists;
+        }
+
+        private  DataTable GetCustomObjectFields(string desconnectionString, string tenantUpdated, TableClass objectFieldTable)
+        {
+            var customObjectFields = new DataTable();
+            using (SqlConnection sourceConnection = new SqlConnection(desconnectionString))
+            {
+                sourceConnection.Open();
+                string sql = "SELECT  FieldName,DataTypeCode,ObjectTableId,Tenant from " + objectFieldTable.Dw_TableName + " where IsCustom = 1";
+
+                if (!string.IsNullOrEmpty(tenantUpdated))
+                {
+                    sql += " and tenant in (" + tenantUpdated + ")";
+                }
+                SqlCommand commandSourceData = new SqlCommand(sql, sourceConnection);
+                SqlDataReader reader = commandSourceData.ExecuteReader();
+                customObjectFields.Load(reader);
+                reader.Close();
+            }
+
+            return customObjectFields;
+        }
+
+        private string CreateCustomObjectFieldsTempTable(string connectionString)
+        {
+            string tableName = "dw_CustomObjectFields";
+            string cmd = "If(OBJECT_ID('tempdb..#" + tableName + "Temp') Is Not Null) Begin  Drop Table #" + tableName + "Temp End ; CREATE TABLE #" + tableName + "Temp (Tenant int not null,ObjectTableName varchar(50),CustomFields  varchar(4000));";
+      
+            return cmd;
+        }
+
+        private string FillCustomObjectFieldsTempTable(int tenant, DataTable customObjectFieldsTable ,bool isIncrementDataWarehouse)
+        {
+            string result = "";
+            string customFields = "";
+            string customObjectFieldTableName = isIncrementDataWarehouse ? "dw_CustomObjectFields" : "#dw_CustomObjectFieldsTemp";
+            List<string> tablesAddedCustomField = new List<string>();
+
+            var customObjectFields = from rowfield in customObjectFieldsTable.AsEnumerable()
+                                     where rowfield.Field<Int32>("Tenant") == tenant
+                                     select rowfield;
+
+            var customObjectFieldsGroups = customObjectFields.AsEnumerable().GroupBy(row => row.Field<string>("ObjectTableId"));
+
+            foreach (var customObjectFieldsGroup in customObjectFieldsGroups)
+            {
+                
+
+                List<DataRow> fields = customObjectFieldsGroup.ToList();
+                string objectTableName = string.Empty;
+                foreach (DataRow row in fields)
+                {
+                    string fieldName = row["FieldName"].ToString();
+                    string dataTypeCode = row["DataTypeCode"].ToString();
+                    string objectTableId = row["ObjectTableId"].ToString();
+
+
+                    var table = tableLists.Where(d => d.ObjectTableId == objectTableId).FirstOrDefault();
+                    if (table != null)
+                    {
+                        objectTableName = table.TableName;
+                        tablesAddedCustomField.Add(objectTableName);
+                    }
+                    customFields += (fieldName + ":" + dataTypeCode + ",");
+                }
+
+                result += "insert into " + customObjectFieldTableName + " (Tenant, ObjectTableName , CustomFields) Values (" + tenant.ToString() + ", '" + objectTableName + "' , '" + customFields + "') \n";
+            }
+
+            foreach (string tableName in TableUsedCustomFields)
+            {
+                var table = tablesAddedCustomField.Where(d => d == tableName).FirstOrDefault();
+                if (table == null)
+                {
+                    result += "insert into " + customObjectFieldTableName + " (Tenant, ObjectTableName , CustomFields) Values (" + tenant.ToString() + ", '" + tableName + "' , null) \n";
+
+                }
+            }
+
+            return result;
+
+        }
+        #endregion
+
+
+
+
+
+
+        #region  ResolveCustomField
         private string BuildCustomFields(string sql)
         {
             if (!string.IsNullOrEmpty(sql))
             {
                 sql = ResolveDeclareCustomFieldsVariable(sql);
-                sql = ResolveCustomFieldDataTypeCodeVariable(sql);
                 sql = ResolveCustomFieldNamesVariable(sql);
                 sql = ResolveCustomFieldValuesVariable(sql);
                 sql = ResolveShipmentsCustomFieldsVariable(sql);
@@ -296,7 +544,7 @@ namespace WarehouseData.Helper
                 result = string.Empty;
                 while (i <= CustomFieldsCount)
                 {
-                    result += " if(@Field" + i + " is not null) begin   set @Field" + i + "DataTypeCode =( select DataTypeCode from #TempObjectFields where FieldName = 'Field" + i + "' and Tenant =@SourceTenant )end \r\n";
+                    result += "  set @Field" + i + "DataTypeCode =( select DataTypeCode from #TempObjectFields where FieldName = 'Field" + i + "' and Tenant =@SourceTenant ) \r\n";
                     i += 1;
                 }
 
@@ -319,6 +567,7 @@ namespace WarehouseData.Helper
                     result += "@Field" + i + ",";
                     i += 1;
                 }
+                result += "@CustomFields,";
                 result += "^";
                 result = result.Replace(",^", "");
                 sql = sql.Replace("@CursorCustomFieldsVariable", result);
@@ -339,6 +588,8 @@ namespace WarehouseData.Helper
                     result += "dw_Shipments.Field" + i + ",";
                     i += 1;
                 }
+                result += "dw_CustomObjectFields.CustomFields,";
+
                 result += "^";
                 result = result.Replace(",^", "");
                 sql = sql.Replace("@dw_Shipments.CustomFieldsVariable", result);
@@ -357,7 +608,8 @@ namespace WarehouseData.Helper
                 result = string.Empty;
                 while (i <= CustomFieldsCount)
                 {
-                    result += "dbo.ResolveCustomFieldValue(@Field" + i + ",@Field" + i + "DataTypeCode)" + (i < CustomFieldsCount ? "," : ""); ;
+                    result += "dbo.ResolveCustomFieldValue(@Field" + i + ",'Field" + i + "' ,@CustomFields)" + (i < CustomFieldsCount ? "," : "");
+
                     i += 1;
                 }
 
@@ -396,17 +648,33 @@ namespace WarehouseData.Helper
                 while (i <= CustomFieldsCount)
                 {
                     result += "   declare @Field" + i + " as varchar(2000) \r\n";
-                    result += "   declare @Field" + i + "DataTypeCode as varchar(100) \r\n";
+             
                     i += 1;
                 }
+                result += "   declare @CustomFields as varchar(4000) \r\n";
+
                 //DataTypeCode
                 sql = sql.Replace("--@[DeclareCustomFieldsVariable]", result);
             }
 
             return sql;
         }
+        #endregion
 
-        public void ExecuteScript(string forderName, string connectionString, string scriptName )
+        #endregion
+
+
+
+        public void RunOtherScripte(string connectionString, bool isIncrement = false)
+        {
+           
+            BuildCustomObjectFieldsTable(connectionString, isIncrement);
+          
+            RunSqlFunctions(connectionString);
+        }
+
+
+        public void ExecuteScript(string forderName, string connectionString, string scriptName)
         {
             string path = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
             if (AppName != "Service")
@@ -424,7 +692,7 @@ namespace WarehouseData.Helper
 
         public void ExecuteSql(string sqlString, string connectionString)
         {
-       
+
             if (!string.IsNullOrEmpty(sqlString))
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
@@ -499,7 +767,7 @@ namespace WarehouseData.Helper
                             values = field.FieldName == "[Tenant Number]" ? "-1" : "0";
                         }
 
-                         insertNullValue += (values + ",");
+                        insertNullValue += (values + ",");
                     }
                 }
             }
@@ -607,7 +875,7 @@ namespace WarehouseData.Helper
                 sql += (" ALTER TABLE " + table.DWObjectTableCode + " ADD CONSTRAINT PK_" + table.DWObjectTableCode + "_" + primaryfield.Replace(" ", "") + " PRIMARY KEY CLUSTERED([" + primaryfield + "]) \r\n");
             }
 
-            foreach (DWObjectFieldDB objectFieldDB in table.DWObjectFieldDBLists.Where(d => !string.IsNullOrWhiteSpace(d.DimensionTableCode) &&  d.DimensionTableCode!= "DIM_Dates"))
+            foreach (DWObjectFieldDB objectFieldDB in table.DWObjectFieldDBLists.Where(d => !string.IsNullOrWhiteSpace(d.DimensionTableCode) && d.DimensionTableCode != "DIM_Dates"))
             {
                 string field = objectFieldDB.FieldName.Replace("[", "").Replace("]", "");
                 TableClass orginalTable = tableLists.Where(d => d.DWObjectTableCode == objectFieldDB.DimensionTableCode).FirstOrDefault();
@@ -646,7 +914,7 @@ namespace WarehouseData.Helper
             return result;
         }
 
-     
+
 
         public string BuildConnectionString(string catalog, string userName, string password, string server)
         {
@@ -762,7 +1030,8 @@ namespace WarehouseData.Helper
             }
 
             ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
-            RunSqlFunctions(destinationConnectionString);
+
+            RunOtherScripte(destinationConnectionString);
 
             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
             {
@@ -947,7 +1216,7 @@ namespace WarehouseData.Helper
         public void InitializationDWTable(TableClass table, string sourceConnectionString, string destinationConnectionString)
         {
             ExecuteSql("IF OBJECT_ID ('" + table.Dw_TableName + "', 'U')  IS NOT NULL drop table " + table.Dw_TableName, destinationConnectionString);
-     
+
             var dwObjectTable = new DataTable();
             using (SqlConnection sourceConnection = new SqlConnection(sourceConnectionString))
             {
@@ -968,7 +1237,7 @@ namespace WarehouseData.Helper
         {
             string cmd = "CREATE NONCLUSTERED INDEX [IX_" + table.Dw_TableName + "_" + fieldName + "] ON[dbo].[" + table.Dw_TableName + "]([" + fieldName + "])";
 
-           if (table.DBTableName == "Shipments" && fieldName == "Id")
+            if (table.DBTableName == "Shipments" && fieldName == "Id")
             {
                 string customFieldindex = "";
                 int i = 1;
@@ -979,7 +1248,7 @@ namespace WarehouseData.Helper
                 }
 
                 cmd += "; CREATE NONCLUSTERED INDEX[dw_Shipments_AllColumnsIndexes]ON[dbo].[dw_Shipments]([AutomaticLastUpdateDate])INCLUDE([Id],[Tenant],[ShipmentNumber],[House],[BranchId],[IncotermId],[SalesmanUserId],[DepartmentId],[ShipmentTypeId],[ShipperId],[ConsigneeId],[TransportModeId],[DirectionId],[AgentId],[IsOperationalClosed],[ChargeableWeightInKG],[GrossWeightInKG],[VolumeInCBM],[NumberOfContainers],[NumberOfPackages],[StatusId],[IsAccountingClosed],[AccountedReceivablesInLocalCurrency],[ProfitInLocalCurrency],[CustomerId],[ProfitCurrencyId],[ProfitInProfitCurrency],[AccountedReceivablesInProfitCurrency],[MasterShipmentDataId],[FromPortId],[ToPortId],[ShipmentLevelCode],[AccountedPayablesInLocalCurrency],[AccountedPayablesInProfitCurrency],[FinalArrivalDate],[AccountManagerUserId],[StatusLocation],[CustomsClearanceDate],[ForwarderPartnerId] ,[CustomAgentExportId],[CustomAgentImportId],[ValueOfGoodsCurrencyId],[WarehouseLegWarehouseId] " +
-                    ", [IsCancelled] , [StatusDate] , [CustomsDeclarationNumber] ,[FirstOperationalCloseDate] , [EstimatedFinalArrivalDate] , [ActualFinalArrivalDate],[Routing],[DescriptionOfGoods],[PreCarriageETD],[MoveTypeId], "  + customFieldindex + "[SpecialServicesTypeId])";
+                    ", [IsCancelled] , [StatusDate] , [CustomsDeclarationNumber] ,[FirstOperationalCloseDate] , [EstimatedFinalArrivalDate] , [ActualFinalArrivalDate],[Routing],[DescriptionOfGoods],[PreCarriageETD],[MoveTypeId], " + customFieldindex + "[SpecialServicesTypeId],[ConsolidatorId],[Notify1Id],[Notify2Id],[ColoaderId],[ShipperNotExporterId],[ReleasingAgentId])";
             }
             ExecuteSql(cmd, connectionString);
         }
@@ -1017,8 +1286,13 @@ namespace WarehouseData.Helper
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ValueOfGoodsCurrencyId DEFAULT '-1' FOR ValueOfGoodsCurrencyId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MoveTypeId DEFAULT '-1' FOR MoveTypeId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SpecialServicesTypeId DEFAULT '-1' FOR SpecialServicesTypeId"
-                        +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AgentComputed DEFAULT '-1' FOR AgentComputed";
-                    
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "AgentComputed DEFAULT '-1' FOR AgentComputed"
+                        +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsolidatorId DEFAULT '-1' FOR ConsolidatorId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Notify1Id DEFAULT '-1' FOR Notify1Id"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Notify2Id DEFAULT '-1' FOR Notify2Id"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ColoaderId DEFAULT '-1' FOR ColoaderId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperNotExporterId DEFAULT '-1' FOR ShipperNotExporterId"
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ReleasingAgentId DEFAULT '-1' FOR ReleasingAgentId";
 
                     break;
                 case "Cards":
@@ -1150,15 +1424,16 @@ namespace WarehouseData.Helper
                     var value = reader["AutomaticLastUpdateDate"];
                     if (value != null)
                     {
-                        if (!string.IsNullOrEmpty(value.ToString())) {
+                        if (!string.IsNullOrEmpty(value.ToString()))
+                        {
                             datetime = (DateTime?)(value);
                             if (datetime != null) result = datetime.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
                         }
-             
+
                     }
-             
-                    
-               
+
+
+
 
                 }
             }
@@ -1173,7 +1448,7 @@ namespace WarehouseData.Helper
 
 
         #endregion
-         
+
         #region Incremental Data Base
 
         public void UpdateWarehouseData(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
@@ -1189,6 +1464,10 @@ namespace WarehouseData.Helper
 
                 }
             }
+
+
+            RunOtherScripte(destinationConnectionString, true);
+
 
             #region Update Dimensions Table
             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
@@ -1305,7 +1584,7 @@ namespace WarehouseData.Helper
                                     this.UpdateWareMarkTable(table, lastUpdateDate, sourceConnectionString);
 
                                     table.IsUpdated = true;
-                                    //table.RefreshIds = ids;
+                                    table.RefreshIds = ids;
 
                                 }
 

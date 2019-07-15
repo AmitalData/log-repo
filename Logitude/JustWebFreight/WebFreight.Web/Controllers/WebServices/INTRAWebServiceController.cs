@@ -327,6 +327,33 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetBookingMessageResultValidate(string myShipmentId)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+
+                    INTRABookingHelper myHelper = new INTRABookingHelper(myShipmentId, tenant);
+
+                    INTTRAResult myResult = myHelper.Result;
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
     public class INTTRASimulator

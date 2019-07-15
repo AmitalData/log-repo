@@ -104,7 +104,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CBSA { get; set; }
         public string CAAT { get; set; }
         public bool IsTestTenant { get; set; }
-        public double? DefaultWarningPercentage { get; set; }
         public string CheckDigitControlAlgorithmCode { get; set; }
     }
 }

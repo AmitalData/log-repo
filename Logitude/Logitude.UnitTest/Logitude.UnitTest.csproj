@@ -79,6 +79,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files (x86)\Microsoft SDKs\RIA Services\v1.0\Libraries\Server\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -117,6 +118,7 @@
     <Compile Include="Accounting\UniTests\Report\LedgerTransactionBalanceServiceUnderTest.DateTypeCode.cs" />
     <Compile Include="Accounting\UniTests\CreateAutoReconcileWhileStreamingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\YearTransferUnitTest.cs" />
+    <Compile Include="ItzikTest\TransactionUnitTest.cs" />
     <Compile Include="SimplogDataFakeFactory.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="TestingTestingUnitTest.cs" />

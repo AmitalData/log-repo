@@ -44,11 +44,11 @@ export class TariffDomainService {
         });
     }
 
-    GetAvailableAirlineFreightTariffs(FromPort: string, ToPort: string, BetweenDate: Date, Weight: number) {
+    GetAvailableAirlineFreightTariffs(FromPort: string, ToPort: string, BetweenDate: Date, Weight: number,Weightcode:string,GrossWeight:number,GrossWeightCode:string,Volume:number,VolumeCode:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetAvailableAirlineFreightTariffs?FromPort=' + FromPort + "&ToPort=" + ToPort + "&BetweenDate=" + ServiceHelper.GetDateString(BetweenDate) + "&Weight=" + Weight;
+        var url = this._apiUrl + '/GetAvailableAirlineFreightTariffs?FromPort=' + FromPort + "&ToPort=" + ToPort + "&BetweenDate=" + ServiceHelper.GetDateString(BetweenDate) + "&Weight=" + Weight + "&Weightcode=" + Weightcode + "&GrossWeight=" + GrossWeight + "&GrossWeightCode=" + GrossWeightCode + "&Volume=" + Volume + "&VolumeCode=" + VolumeCode;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
@@ -79,6 +79,25 @@ export class TariffDomainService {
         });
     }
 
+    GenerateTariffsFromExcel(filter: TariffFilterParameter) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + "/PostGenerateTariffsFromExcel", JSON.stringify(filter), {
+                headers: authHeader,
+            }).map(response => {
+                var result = response.json();
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
+    }
+
+    
     GetTenantTariffSetting() {
 
         var authHeader = new Headers();
@@ -273,6 +292,10 @@ export class TariffSearchSummary {
     ImageId: string;
     Name: string;
     Currency: string;
+    VersionId: string;
+    TotalSurcharge: string;
+    WholePrice: string;
+
 }
 
 export class ExcelTariffLines {
@@ -330,7 +353,8 @@ export class ExcelTariffLines {
     Surcharge10PriceText: string;
     Index: number;
     Notes: string;
-    IsUploaded: boolean;
+    StartDate: Date;
+    StartDateText: string;
 }
 
 export class UpdateSurchargeArgs {

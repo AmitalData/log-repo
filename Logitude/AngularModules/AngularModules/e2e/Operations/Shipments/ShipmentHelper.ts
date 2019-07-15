@@ -103,7 +103,7 @@ export class ShipmentHelper {
         else if (ShipmentType == 'LCL') {
           shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0LCLD'));  
         }
-        else
+        else if(ShipmentType == 'OG')
         shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0MyGO'));  
     
         browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
@@ -140,8 +140,8 @@ export class ShipmentHelper {
         else if (ShipmentType == 'LTL') {
           shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0LTL'));  
         }
-        else
-        shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0MyGO'));  
+        else if((ShipmentType == 'IG'))
+        shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0MyGI'));  
     
         browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
 

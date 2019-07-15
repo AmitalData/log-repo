@@ -125,7 +125,7 @@ export class ReportComponent {
         this.ItemsSourceTemp = [];
 
         this.groupList.forEach(item => {
-            var myItem: ReportsGrpupClass = new ReportsGrpupClass(item, this);
+            var myItem: ReportsGrpupClass = new ReportsGrpupClass(item, this, this.showLocal);
             this.ItemsSourceTemp.push(myItem);
         });
     }
@@ -232,9 +232,15 @@ export class ReportsGrpupClass {
     public ItemsSource: ReportList[] = [];
     public GroupList: ReportGroupList;
     public IsDataLoaded: boolean = false;
-    constructor(private list: ReportGroupList, private fatherComponent: ReportComponent) {
+    constructor(private list: ReportGroupList, private fatherComponent: ReportComponent, showLocal:boolean) {
         this.GroupList = list;
-        this.Name = list.EnglishName;
+        if (!showLocal) {
+            this.Name = list.EnglishName;
+        }
+        else {
+            this.Name = list.LocalName;
+        }
+     
 
         this.FillData();
     }

@@ -153,6 +153,11 @@ export class ConsoleShipmentPM {
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue; this.MarkAsDirty(); }
 
+    private volumeInCBM: number;
+    public get VolumeInCBM() { return this.volumeInCBM; }
+    public set VolumeInCBM(newValue: number) { this.volumeInCBM = newValue; this.MarkAsDirty(); }
+
+
     private fCLDataList: HouseContainerPackage[];
     get FCLDataList() {
         if (this.fCLDataList == null) {

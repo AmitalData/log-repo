@@ -1662,6 +1662,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
         public IDbSet<HarmonizeCode> HarmonizeCodes { get; }
 
+        public IDbSet<INTTRABookingStatus> INTTRABookingStatuses { get; }
+        public IDbSet<INTTRABookingTransStatus> INTTRABookingTransStatuses { get; }
+
         #endregion
 
         #region Invoice Context
@@ -3378,7 +3381,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks { get; set; }
         public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; set; }
         public IDbSet<AccountingNote> AccountingNotes { get; set; }
-   
+        public IDbSet<GLAccountCounter> GLAccountCounters { get; set; }
+
 
         #endregion
 
@@ -3535,6 +3539,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         }
 
         public IDbSet<TariffSetting> TariffSettings
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<TariffVersionAllInCharge> TariffVersionAllInCharges
         {
             get;
             set;
@@ -4300,6 +4311,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new OpenFormatReportMap());
         //    modelBuilder.Configurations.Add(new OpenFormatDateTypeMap());
             modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
+            modelBuilder.Configurations.Add(new GLAccountCounterMap());
             #endregion
 
             #region WareHouse
@@ -4331,6 +4343,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TariffTypeMap());
             modelBuilder.Configurations.Add(new TariffVersionMap());
             modelBuilder.Configurations.Add(new TariffSettingMap());
+            modelBuilder.Configurations.Add(new TariffVersionAllInChargeMap());
             #endregion
 
             #region Infrastructure Generated
@@ -4860,7 +4873,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DocumentFilingBackupSettingMap());
 
             modelBuilder.Configurations.Add(new INTTRADocumentTypeMap());
-           
+            modelBuilder.Configurations.Add(new INTTRABookingStatusMap());
+            modelBuilder.Configurations.Add(new INTTRABookingTransStatusMap());
+
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

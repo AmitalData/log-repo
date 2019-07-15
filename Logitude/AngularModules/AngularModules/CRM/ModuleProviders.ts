@@ -29,6 +29,9 @@ import {TicketSourceListService} from './Services/StandardLists/TicketSourceList
 import {TicketStageListService} from './Services/StandardLists/TicketStageListService';
 import {TicketTypeListService} from './Services/StandardLists/TicketTypeListService';
 import {TimeUnitListService} from './Services/StandardLists/TimeUnitListService';
+import { OccasionListService } from './Services/StandardLists/OccasionListService';
+import { OccasionTypeListService } from './Services/StandardLists/OccasionTypeListService';
+import { OccasionStatusListService } from './Services/StandardLists/OccasionStatusListService';
 
 import {ActivityOwnerHistoryPMService} from './Services/StandardPMs/ActivityOwnerHistoryPMService';
 import {ActivityPMService} from './Services/StandardPMs/ActivityPMService';
@@ -49,9 +52,9 @@ import {TicketPMService} from './Services/StandardPMs/TicketPMService';
 import {TicketSeverityPMService} from './Services/StandardPMs/TicketSeverityPMService';
 import {TicketStagePMService} from './Services/StandardPMs/TicketStagePMService';
 import { TicketTypePMService } from './Services/StandardPMs/TicketTypePMService';
-import { OccasionTypeListService } from './Services/StandardLists/OccasionTypeListService';
-import { OccasionStatusListService } from './Services/StandardLists/OccasionStatusListService';
 import { OccasionTypePMService } from './Services/StandardPMs/OccasionTypePMService';
+import { OccasionPMService } from './Services/StandardPMs/OccasionPMService';
+
 
 
 // Menu Buttons 
@@ -99,6 +102,9 @@ export class ModuleProviders {
             case "TicketStageListService": { myResult = new TicketStageListService(); break; }
             case "TicketTypeListService": { myResult = new TicketTypeListService(); break; }
             case "TimeUnitListService": { myResult = new TimeUnitListService(); break; }
+            case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
+            case "OccasionStatusListService": { myResult = new OccasionStatusListService(); break; }
+            case "OccasionListService": { myResult = new OccasionListService(); break; }
 
             // PM
             case "ActivityOwnerHistoryPMService": { myResult = new ActivityOwnerHistoryPMService(); break; }
@@ -120,16 +126,14 @@ export class ModuleProviders {
             case "TicketSeverityPMService": { myResult = new TicketSeverityPMService(); break; }
             case "TicketStagePMService": { myResult = new TicketStagePMService(); break; }
             case "TicketTypePMService": { myResult = new TicketTypePMService(); break; }
- 
-            case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
-            case "OccasionStatusListService": { myResult = new OccasionStatusListService(); break; }
             case "OccasionTypePMService": { myResult = new OccasionTypePMService(); break; }
+            case "OccasionPMService": { myResult = new OccasionPMService(); break; }
 
             //Menu Buttons
             case "TicketMenuButtonsHandler": { myResult = new TicketMenuButtonsHandler(); break; }
             case "ActivityMenuButtonsHandler": { myResult = new ActivityMenuButtonsHandler(); break; }
             case "OpportunityMenuButtonsHandler": { myResult = new OpportunityMenuButtonsHandler(); break; }
-
+            case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
                 
         }
 

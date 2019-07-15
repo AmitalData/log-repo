@@ -17,15 +17,15 @@ namespace CommunicationWorkerRole.Tasks
         }
         public override void StartTask()
         {
-            //for (int i = 0; i <= 3; i++)
-            //{
-
-            //    Logwarning("Log warning # " + i + " , Be careful !!");
-            //}
-            if (DateTime.Now.Minute % 5 == 0)
-            {
-                Thread.CurrentThread.Abort();
+            //Thread.CurrentThread.Abort();
+            for (int i = 0; i <= 3; i++)
+            { 
+                Logwarning("Log warning # " + i + " , Be careful !!");
             }
+            //if (DateTime.Now.Minute % 5 == 0)
+            //{
+            //    Thread.CurrentThread.Abort();
+            //}
             //Thread.Sleep(60000);
 
 

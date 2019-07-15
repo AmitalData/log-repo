@@ -68,6 +68,11 @@ export class AirlineAreasPortPM {
     public set AddedByUserId(newValue: string) { if (this.addedByUserId != newValue) { this.addedByUserId = newValue; this.MarkAsDirty("AddedByUserId"); } }
        
 	 
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+       
+	 
 
     public OldEntityPM: AirlineAreasPortPM;
 	    

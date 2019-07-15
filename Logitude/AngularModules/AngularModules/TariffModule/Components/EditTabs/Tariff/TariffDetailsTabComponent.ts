@@ -16,7 +16,6 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
-
         this.Listen();
     }
 
@@ -27,6 +26,7 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CurrentSession.FireEvent("LoadEventTabData");
                 }
             });
 

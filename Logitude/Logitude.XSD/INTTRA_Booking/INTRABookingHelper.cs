@@ -244,6 +244,7 @@ namespace Logitude.XSD.INTTRA_Booking
                         Username = fTPDetail.UserName,
                         Password = fTPDetail.Password,
                         Filename = filename,
+                        UseSFTP=  fTPDetail.UseSFTP,
                     };
 
                     myResult = JsonConvert.SerializeObject(settings);

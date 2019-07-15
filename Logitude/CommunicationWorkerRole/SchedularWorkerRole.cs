@@ -4,6 +4,7 @@ using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.Helpers;
@@ -46,7 +47,7 @@ namespace CommunicationWorkerRole
             //Thread thread = new Thread(CheckandRescheduleDeadThreads);
             System.Timers.Timer timer1 = new System.Timers.Timer()
             {
-                Interval = 300000//5 Mins
+                Interval = 60000//5 Mins
             };
             timer1.Enabled = true;
             timer1.Elapsed += Timer1_Elapsed; //+= new System.EventHandler(OnTimerEvent);
@@ -60,7 +61,7 @@ namespace CommunicationWorkerRole
         private void CheckandRescheduleDeadThreads()
         {
             var objectContext = WebFreightContext.GetContext(0);
-            TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext); 
+            TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
             TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
             List<TasksSchedulerPM> InprogressTasks = TasksSchedulerQuery.GetAllInprogressTasksSchedulerPMs();
             foreach (var Task in InprogressTasks)
@@ -71,13 +72,61 @@ namespace CommunicationWorkerRole
                 {
                     //TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
                     Task.Status = null;
-                    Task.Version = Task.Version + 1;
+                    Task.Version = Task.Version + 1; 
                     AddSchedulerQueue(Task);
+                    var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
+                    LogInfoToDB(Msg, Task);
                     //service.Update(Task);
                 }
 
             }
             //Thread.Sleep(new TimeSpan(0, 1, 0));
+        }
+
+        public void LogInfoToDB(string Message, TasksSchedulerPM Task)
+        {
+            var Tenant = Task.Tenant;
+            if (!string.IsNullOrEmpty(Message))
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
+                TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
+                SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
+                TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(Tenant);
+                SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
+                TaskSchedulerHistoryPM TaskSchedulerHistory = new TaskSchedulerHistoryPM() { Tenant = Tenant, TaskId = Task.Id };
+                TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
+                TaskSchedulerHistory.StartDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
+                TaskSchedulerHistory.EndDateTimeUTC = DateTime.UtcNow;
+                TaskSchedulerHistory.StartDateTimeUTC = DateTime.UtcNow;
+
+                //var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetLastTaskSchedulerHistoryPM(TaskId);
+                //if (TaskSchedulerHistory != null)
+                //{
+
+                TaskSchedulerHistory.LogType = "Warning";
+                TaskSchedulerHistory.RunResult = "Warning";
+                TaskSchedulerHistory.LogFirstLine = Message;
+                TaskSchedulerHistoryService.Create(TaskSchedulerHistory);
+
+                StringBuilder MyFinalLog = new StringBuilder();
+                MyFinalLog.AppendLine(Message.ToString());
+                SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskSchedulerHistory.Id);
+                if (SchedulerLog == null)
+                {
+                    SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskSchedulerHistory.Id };
+                    SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+                    SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
+                    SchedulerLogsService.Create(SchedulerLog);
+                }
+                else
+                {
+                    SchedulerLog.Log += StringHelper.TruncateLongString(Environment.NewLine + MyFinalLog.ToString(), 4000);
+                    SchedulerLogsService.Update(SchedulerLog);
+                }
+                 
+
+                //}
+            }
         }
 
         private void CheckandRescheduleMissingTasks()
@@ -90,6 +139,9 @@ namespace CommunicationWorkerRole
                 Task.Status = null;
                 Task.Version = Task.Version + 1;
                 AddSchedulerQueue(Task);
+                var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
+                LogInfoToDB(Msg, Task);
+               
             }
         }
 
@@ -152,15 +204,15 @@ namespace CommunicationWorkerRole
                                             if (CurThread != null)
                                             {
                                                 TasksThreads.Remove(CurThread);
-                                            } 
+                                            }
                                             thread.Start();
                                             TasksThreads.Add(thread);
                                             //queueservice.Complete();
                                             //AddSchedulerQueue(Task);// need to be Moved
                                         }
-                                      
-                                            queueservice.Complete();
-                                        
+
+                                        queueservice.Complete();
+
 
                                     }
 
@@ -312,7 +364,7 @@ namespace CommunicationWorkerRole
             TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
             service.Update(task);
 
-           //queueservice.Complete();
+            //queueservice.Complete();
         }
         private DateTime Next(DateTime from, DayOfWeek dayOfWeek)
         {

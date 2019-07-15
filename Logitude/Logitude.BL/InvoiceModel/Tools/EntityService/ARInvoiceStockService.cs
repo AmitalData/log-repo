@@ -5,6 +5,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.DataMapping;
 using Logitude.BL.InvoiceModel.Tools.TraceEvents;
 using Logitude.BL.InvoiceModel.Tools.Validating;
+using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.Helpers;
@@ -44,13 +45,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void GetLoggedData()
         {
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            this.loggedContact = contactQuery.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
+            this.loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
 
-            if (this.loggedContact == null)
-            {
-                loggedContact = contactQuery.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), tenant);
-            }
+            //ContactQuery contactQuery = new ContactQuery(tenant);
+            //this.loggedContact = contactQuery.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
+
+            //if (this.loggedContact == null)
+            //{
+            //    loggedContact = contactQuery.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), tenant);
+            //}
         }
 
         private List<ARInvoiceStockLinePM> aRInvoiceStockLinesChangeSet;

@@ -33,7 +33,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     // Filters
     dateFilter: FilterItem;
     searchFieldFilter: FilterItem;
-
+     preventSelect:boolean = false;
     // Services
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _entityListService: EntityListService = new EntityListService();
@@ -63,6 +63,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         this.FromDate = new Date(lastmonth);
         this.oldFromDate = new Date(lastmonth);
         //#endregion
+       
         this.Listen();
     }
 
@@ -87,6 +88,14 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
                 });
             }
         }
+
+        
+        this.CurrentSession.SessionEvent.subscribe((res) => {
+            if (res == "noselect") {
+                this.preventSelect = true;
+            }
+        });
+        
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
@@ -294,7 +303,16 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageListTemplate',
             IsCustomTemplate: true
         });
-
+        this.columns.push({
+            FieldName: 'Event',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("AccountingPeriod.TH.Events"),
+            Styles: { width: '140px' },
+            HtmlListComponentName: 'ReconcileExternalPageListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageListTemplate',
+            IsCustomTemplate: true
+        });
+       
         //this.CustomColumnsReady.emit(this.columns);
     }
 
@@ -340,6 +358,11 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     //#endregion
 
     //#region Buttons
+
+   
+
+    
+
     RefreshButtonClicked() {
         this.ReloadData();
     }
@@ -349,12 +372,16 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     //#endregion
 
     onRowSelected(item) {
-        if (!AppTool.IsNullOrEmpty(item)) {
-            var entity = item.rowData;
-            var entityId = entity.Id;
+        if (!this.preventSelect) {
+            if (!AppTool.IsNullOrEmpty(item)) {
+                var entity = item.rowData;
+                var entityId = entity.Id;
 
-            this.OpenWindow(entity);
+                this.OpenWindow(entity);
+            }
+           
         }
+        this.preventSelect = false;
     }
 
     OpenWindow(entity: any = null) {

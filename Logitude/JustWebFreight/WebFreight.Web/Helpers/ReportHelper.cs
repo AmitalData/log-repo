@@ -5,6 +5,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -673,53 +674,65 @@ namespace WebFreight.Web.Helpers
         #region StimualReport
 
 
-        public void BuildReport(ReportFliter reportFliter)
+        public BuildReportDataResult BuildReport(ReportFliter reportFliter)
         {
-            if (reportFliter != null)
+            BuildReportDataResult buildReportDataResult = new BuildReportDataResult();
+
+            try
             {
-                QueryOperations queryOperations = new QueryOperations();
-                queryOperations.QueryFilterItems = new System.Collections.Generic.List<QueryFilterItem>();
-
-                foreach (QueryFilterItem filterItem in reportFliter.QueryFilterItemLists)
+                if (reportFliter != null)
                 {
-                    if (filterItem.FieldDataType == "Date")
+                    byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
+
+                    Thread thread = new Thread(() => { DatabaseInitializer.RunOnSeconderyDB = true; buildReportDataResult = BuildReportDataProvider(reportFliter, filters); });
+                    thread.Start();
+                    thread.Join();
+
+                    if (buildReportDataResult.DataProvider == null && buildReportDataResult.Exception == null)
                     {
-                        if (filterItem.FieldValue != null)
-                            filterItem.FieldValue = DateTime.Parse(filterItem.FieldValue.ToString());
+                        buildReportDataResult.Exception = new Exception("Data Provider is missing");
+                        buildReportDataResult.IsInternalException = true;
                     }
-                    queryOperations.QueryFilterItems.Add(filterItem);
-                }
 
-                FilterSerializer filterSeriazlizer = new FilterSerializer();
-                byte[] filters = filterSeriazlizer.SerializeFilterItems(queryOperations);
-
-                //byte[] dataProvider = BuildReportDataProvider(reportFliter, filters);
-                byte[] dataProvider = null;
-                Thread thread = new Thread(() => { DatabaseInitializer.RunOnSeconderyDB = true; dataProvider = BuildReportDataProvider(reportFliter, filters); });
-                thread.Start();
-                thread.Join();
-                if (dataProvider == null)
-                {
-                    throw new Exception("Data Provider is missing");
-                }
-
-                else
-                {
-                    ReportsTemplatesWebService reportsTemplatesWebService = new ReportsTemplatesWebService();
-                    ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(reportFliter.tenant);
-                    string reportDocumentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(reportFliter.DefaultTemplateId, reportFliter.tenant);
-                    byte[] template = reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
-
-                    if (template == null)
-                    {
-                        throw new Exception("Report Template is missing");
-                    }
                     else
                     {
-                        GetReportStimulsoftViewer(dataProvider, template, reportFliter);
+                        if (buildReportDataResult.Exception == null)
+                        {
+                            if (reportFliter.ReportCode == "CUPA")
+                            {
+                                MemoryStream memorystream = new MemoryStream(buildReportDataResult.DataProvider);
+                                XmlSerializer serializer = new XmlSerializer(typeof(CustomerPotentialActualDataProvider));
+                                buildReportDataResult.myData = (CustomerPotentialActualDataProvider)serializer.Deserialize(memorystream);
+                            }
+                            else
+                            {
+                                ReportsTemplatesWebService reportsTemplatesWebService = new ReportsTemplatesWebService();
+                                ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(reportFliter.tenant);
+                                string reportDocumentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(reportFliter.DefaultTemplateId, reportFliter.tenant);
+                                byte[] template = reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
+
+                                if (template == null)
+                                {
+                                    buildReportDataResult.Exception = new Exception("Report Template is missing");
+                                    buildReportDataResult.IsInternalException = true;
+                                }
+                                else
+                                {
+                                    buildReportDataResult.UrlImage = GetReportStimulsoftViewer(buildReportDataResult.DataProvider, template, reportFliter);
+                                }
+                            }
+                        }
+
                     }
                 }
+                return buildReportDataResult;
             }
+            catch (Exception ex)
+            {
+                buildReportDataResult.Exception = ex;
+                return buildReportDataResult;
+            }
+          
         }
 
 
@@ -744,6 +757,9 @@ namespace WebFreight.Web.Helpers
             byte[] filters = filterSeriazlizer.SerializeFilterItems(queryOperations);
 
             return filters;
+
+
+
         }
 
 
@@ -1446,382 +1462,397 @@ namespace WebFreight.Web.Helpers
             return logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, tenant);
         }
 
-        public byte[] BuildReportDataProvider(ReportFliter reportFliter, byte[] filters)
+        public BuildReportDataResult BuildReportDataProvider(ReportFliter reportFliter, byte[] filters)
         {
-            LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
-            byte[] dataProvider = null;
-
-            switch (reportFliter.ReportCode)
+            BuildReportDataResult buildReportDataResult = new BuildReportDataResult();
+            try
             {
-                #region
+                LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
+                byte[] dataProvider = null;
+
+                switch (reportFliter.ReportCode)
+                {
+                    #region
 
 
-                case "ATRE":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadAutomationTestReportDataProvider(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "ATRE":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadAutomationTestReportDataProvider(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "SHEL":
-                    { 
-                        Thread thread = new Thread(() => { dataProvider = LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant); });
-                        thread.Start();
-                        thread.Join(); 
-                        break;
-                    }
+                    case "SHEL":
+                        {
+                            Thread thread = new Thread(() => { dataProvider = LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant); });
+                            thread.Start();
+                            thread.Join();
+                            break;
+                        }
 
-                case "SHST":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadShipmentsStocksData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "SHST":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadShipmentsStocksData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "UPTR":
-                    {               
-                        dataProvider = logitudeReportsWebService.LoadUsersByTenantData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "UPTR":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadUsersByTenantData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "INVN":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadInventoryData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "INVN":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadInventoryData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RACL":
-                    {
-                        AccountingLedgerManager myDataManager = new AccountingLedgerManager(filters, reportFliter.tenant);
-                        dataProvider = myDataManager.GetData();
-                        break;
-                    }
+                    case "RACL":
+                        {
+                            AccountingLedgerManager myDataManager = new AccountingLedgerManager(filters, reportFliter.tenant);
+                            dataProvider = myDataManager.GetData();
+                            break;
+                        }
 
-                case "ASDB":
-                    {
-                        DashBoardWebService dashBoardWebService = new DashBoardWebService();
-                        dataProvider = dashBoardWebService.LoadActivityStatusDetailsData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "ASDB":
+                        {
+                            DashBoardWebService dashBoardWebService = new DashBoardWebService();
+                            dataProvider = dashBoardWebService.LoadActivityStatusDetailsData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RAAR":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadAgedAccountsReceivableData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "RAAR":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadAgedAccountsReceivableData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "EBRP":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadBookingsData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "EBRP":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadBookingsData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RALS":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadAirlineStatisticsData(filters, reportFliter.IncludeOperationalyClosed, reportFliter.tenant);
-                        break;
-                    }
+                    case "RALS":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadAirlineStatisticsData(filters, reportFliter.IncludeOperationalyClosed, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RSLS":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadShippingLineStatisticsData(filters, reportFliter.IncludeOperationalyClosed, reportFliter.tenant);
-                        break;
-                    }
+                    case "RSLS":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadShippingLineStatisticsData(filters, reportFliter.IncludeOperationalyClosed, reportFliter.tenant);
+                            break;
+                        }
 
-                case "CODT":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadContainerDetailsVoyageData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "CODT":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadContainerDetailsVoyageData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "COTR":
-                    {
+                    case "COTR":
+                        {
 
-                        dataProvider = logitudeReportsWebService.LoadContainerTruckingData(filters, reportFliter.tenant);
-                        break;
-                    }
+                            dataProvider = logitudeReportsWebService.LoadContainerTruckingData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "CUAD":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadCustomerAdditionalServicesData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "CUAD":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadCustomerAdditionalServicesData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "CUPA":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadCustomerPotentialActualData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "CUPA":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadCustomerPotentialActualData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "EWRP":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadEAWBsData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "EWRP":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadEAWBsData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "EXIN":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadExpectedIncomeData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "EXIN":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadExpectedIncomeData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "FBRP":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadFlightBookingData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "FBRP":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadFlightBookingData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RITS":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadIATAStatisticsData(filters, reportFliter.IncludeOperationalyClosed, reportFliter.tenant);
-                        break;
-                    }
+                    case "RITS":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadIATAStatisticsData(filters, reportFliter.IncludeOperationalyClosed, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RIBP":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadInvoiceByPartnerData(filters, reportFliter.CurrentCurrencyCodeType, reportFliter.DateType, reportFliter.tenant);
-                        break;
-                    }
+                    case "RIBP":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadInvoiceByPartnerData(filters, reportFliter.CurrentCurrencyCodeType, reportFliter.DateType, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RINV":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadInvoicesData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "RINV":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadInvoicesData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RAPI":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadAPInvoicesData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "RAPI":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadAPInvoicesData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "MCOR":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadOpportunityMonthlyConversionData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "MCOR":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadOpportunityMonthlyConversionData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "OCRP":
-                    {
-                        RegisterShipmentPackageWebService registerShipmentPackageWebService = new RegisterShipmentPackageWebService();
-                        dataProvider = registerShipmentPackageWebService.RegisterShipments(filters, reportFliter.tenant, reportFliter.CustomerId);
-                        break;
-                    }
+                    case "OCRP":
+                        {
+                            RegisterShipmentPackageWebService registerShipmentPackageWebService = new RegisterShipmentPackageWebService();
+                            dataProvider = registerShipmentPackageWebService.RegisterShipments(filters, reportFliter.tenant, reportFliter.CustomerId);
+                            break;
+                        }
 
-                case "PUAC":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadParticipantsUsersActivitiesData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "PUAC":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadParticipantsUsersActivitiesData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RPRS":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadProfitByShipmentData(filters, reportFliter.CurrentCurrencyCodeType, reportFliter.IncludeOperationalyClosed, reportFliter.tenant);
-                        break;
-                    }
+                    case "RPRS":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadProfitByShipmentData(filters, reportFliter.CurrentCurrencyCodeType, reportFliter.IncludeOperationalyClosed, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RQUO":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadQuotesData(filters, reportFliter.QuoteCustomerTypeCode, reportFliter.tenant);
-                        break;
-                    }
+                    case "RQUO":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadQuotesData(filters, reportFliter.QuoteCustomerTypeCode, reportFliter.tenant);
+                            break;
+                        }
 
-                case "SCHT":
-                case "SCHA":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadShipmentChargesAnalysisData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "SCHT":
+                    case "SCHA":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadShipmentChargesAnalysisData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "OPSC":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadOpportunityStageChangingData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "OPSC":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadOpportunityStageChangingData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RSID":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadStatementByInvoiceDateData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "RSID":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadStatementByInvoiceDateData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RSTA":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadStatementData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "RSTA":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadStatementData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RSAS":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadStatementAgingData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "RSAS":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadStatementAgingData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "SBAG":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadStatisticsByAgentData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "SBAG":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadStatisticsByAgentData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "RCLS":
-                    {
-                        StatisticsByCustomerManager manager = new StatisticsByCustomerManager(filters, reportFliter.tenant);
-                        dataProvider = manager.GetData();
-                        //dataProvider = logitudeReportsWebService.LoadStatisticsByClientData(filters, reportFliter.CurrentCurrencyCodeType, reportFliter.IncludeOperationalyClosed, reportFliter.tenant);
-                        break;
-                    }
+                    case "RCLS":
+                        {
+                            StatisticsByCustomerManager manager = new StatisticsByCustomerManager(filters, reportFliter.tenant);
+                            dataProvider = manager.GetData();
+                            //dataProvider = logitudeReportsWebService.LoadStatisticsByClientData(filters, reportFliter.CurrentCurrencyCodeType, reportFliter.IncludeOperationalyClosed, reportFliter.tenant);
+                            break;
+                        }
 
-                case "ARID":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadARInvoicesDepositReportData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "ARID":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadARInvoicesDepositReportData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "CASS":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadCASSData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "CASS":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadCASSData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "SPQS":
-                    {
-                        ShipmentProfitVSQuoteEstimateManager myDataManager = new ShipmentProfitVSQuoteEstimateManager(filters, reportFliter.tenant);
-                        dataProvider = myDataManager.GetData();
-                        break;
-                    }
-                    
-                case "AREX":
-                    {
-                        ArchivoExportadoManager myDataManager = new ArchivoExportadoManager(filters, reportFliter.tenant);
-                        dataProvider = myDataManager.GetData();
-                        break;
-                    }
+                    case "SPQS":
+                        {
+                            ShipmentProfitVSQuoteEstimateManager myDataManager = new ShipmentProfitVSQuoteEstimateManager(filters, reportFliter.tenant);
+                            dataProvider = myDataManager.GetData();
+                            break;
+                        }
 
-                case "DSCA":
-                    {
-                        DetailedShipmentChargesManager myDataManager = new DetailedShipmentChargesManager(filters, reportFliter.tenant);
-                        dataProvider = myDataManager.GetData();
-                        break;
-                    }
+                    case "AREX":
+                        {
+                            ArchivoExportadoManager myDataManager = new ArchivoExportadoManager(filters, reportFliter.tenant);
+                            dataProvider = myDataManager.GetData();
+                            break;
+                        }
 
-                case "INVR":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadInvoicesVatAndRoutingData(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "DSCA":
+                        {
+                            DetailedShipmentChargesManager myDataManager = new DetailedShipmentChargesManager(filters, reportFliter.tenant);
+                            dataProvider = myDataManager.GetData();
+                            break;
+                        }
 
-                case "EMTS":
-                    {
-                        //dataProvider = logitudeReportsWebService.LoadEmployeeTimeSheetData(filters, reportFliter.tenant);
+                    case "INVR":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadInvoicesVatAndRoutingData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                        EmployeeTimeSheetManager myDataManager = new EmployeeTimeSheetManager(filters, reportFliter.tenant);
-                        dataProvider = myDataManager.GetData();
+                    case "EMTS":
+                        {
+                            //dataProvider = logitudeReportsWebService.LoadEmployeeTimeSheetData(filters, reportFliter.tenant);
 
-                        break;
-                    }
+                            EmployeeTimeSheetManager myDataManager = new EmployeeTimeSheetManager(filters, reportFliter.tenant);
+                            dataProvider = myDataManager.GetData();
 
-                case "WDTS":
-                    {
-                        WorkPerDaysProjectManager myDataManager = new WorkPerDaysProjectManager(filters, reportFliter.tenant);
-                        dataProvider = myDataManager.GetData();
+                            break;
+                        }
 
-                        //var isUsingNewCode = false;
-                        //if (isUsingNewCode)
-                        //{
-                        //    WorkPerDaysProjectManager myDataManager = new WorkPerDaysProjectManager(filters, reportFliter.tenant);
-                        //    dataProvider = myDataManager.GetData();
-                        //}
+                    case "WDTS":
+                        {
+                            WorkPerDaysProjectManager myDataManager = new WorkPerDaysProjectManager(filters, reportFliter.tenant);
+                            dataProvider = myDataManager.GetData();
 
-                        //else
-                        //{
-                        //    dataProvider = logitudeReportsWebService.LoadWorkPerDaysProjectData(filters, reportFliter.tenant);
-                        //}
+                            //var isUsingNewCode = false;
+                            //if (isUsingNewCode)
+                            //{
+                            //    WorkPerDaysProjectManager myDataManager = new WorkPerDaysProjectManager(filters, reportFliter.tenant);
+                            //    dataProvider = myDataManager.GetData();
+                            //}
 
-                        break;
-                    }
+                            //else
+                            //{
+                            //    dataProvider = logitudeReportsWebService.LoadWorkPerDaysProjectData(filters, reportFliter.tenant);
+                            //}
 
-                case "TPTS":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadTasksWithoutProjectsData(filters, reportFliter.tenant);
-                        break;
-                    }
+                            break;
+                        }
 
-                case "AGER":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadAccountingAgingDataProvider(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "TPTS":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadTasksWithoutProjectsData(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "OSBC":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadOpenShipmentsByCustomerDataProvider(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "AGER":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadAccountingAgingDataProvider(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "PTVC":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadParentVsChildTenantsDataProvider(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "OSBC":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadOpenShipmentsByCustomerDataProvider(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "REXR":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadRevenueExpenseDataProvider(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "PTVC":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadParentVsChildTenantsDataProvider(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "TRBR":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadTrailBalanceDataProvider(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "REXR":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadRevenueExpenseDataProvider(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "LICM":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadLicenseManagementDataProvider(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "TRBR":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadTrailBalanceDataProvider(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "SHID":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadShipmentDetailsDataProvider(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "LICM":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadLicenseManagementDataProvider(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "VDK":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadVDKDataProvider(filters, reportFliter.tenant);
-                        break;
-                    }
-                case "VEHI":
-                    {
-                        
-                        VehiclesManager myDataManager = new VehiclesManager(filters, reportFliter.tenant);
-                        dataProvider = myDataManager.GetData();
-                        break;
-                    }
-                case "VDCA":
-                    {
-                        VendorChargesAnalysisManager myDataManager = new VendorChargesAnalysisManager(filters, reportFliter.tenant);
-                        dataProvider = myDataManager.GetData();
-                        break;
-                    }
+                    case "SHID":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadShipmentDetailsDataProvider(filters, reportFliter.tenant);
+                            break;
+                        }
 
-                case "LTRP":
-                    {
-                        dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter.tenant);
-                        break;
-                    }
+                    case "VDK":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadVDKDataProvider(filters, reportFliter.tenant);
+                            break;
+                        }
+                    case "VEHI":
+                        {
 
-                case "UNER":
-                    {
-                        UnicargoExportManager myDataManager = new UnicargoExportManager(filters, reportFliter.tenant);
-                        dataProvider = myDataManager.GetData();
-                        break;
-                    }
+                            VehiclesManager myDataManager = new VehiclesManager(filters, reportFliter.tenant);
+                            dataProvider = myDataManager.GetData();
+                            break;
+                        }
+                    case "VDCA":
+                        {
+                            VendorChargesAnalysisManager myDataManager = new VendorChargesAnalysisManager(filters, reportFliter.tenant);
+                            dataProvider = myDataManager.GetData();
+                            break;
+                        }
 
-                    #endregion
+                    case "LTRP":
+                        {
+                            dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter.tenant);
+                            break;
+                        }
+
+                    case "UNER":
+                        {
+                            UnicargoExportManager myDataManager = new UnicargoExportManager(filters, reportFliter.tenant);
+                            dataProvider = myDataManager.GetData();
+                            break;
+                        }
+
+                        #endregion
+                }
+
+
+                buildReportDataResult.DataProvider = dataProvider;
+                return buildReportDataResult;
             }
-
-            return dataProvider;
+            catch (Exception ex)
+            {
+                buildReportDataResult.Exception = ex;
+                if (ex.Message == "Exception Test")
+                {
+                    buildReportDataResult.IsInternalException = true;
+                }
+                return buildReportDataResult;
+            }
         }
 
        
@@ -2025,6 +2056,45 @@ namespace WebFreight.Web.Helpers
 
         #endregion
 
+        public ReportFliter BuildReportDataViewWorkerRole(ReportFliter reportFliter)
+        {
 
+            ReportExecutionLogRepository reportExecutionLogRepository = new ReportExecutionLogRepository(reportFliter.tenant);
+            reportFliter.ReportKey = Guid.NewGuid().ToString();
+
+            ReportExecutionLog reportExecutionLog = new ReportExecutionLog()
+            {
+                Id = reportFliter.ReportKey,
+                CreateDate = DateTime.Now,
+                CreatedByUserId = reportFliter.UserId,
+                ReportFilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(reportFliter),
+                Tenant = reportFliter.tenant,
+                StatusCode = "W",
+                ReportId = reportFliter.ReportId,
+                ReportTemplateId = reportFliter.DefaultTemplateId,
+
+            };
+
+            reportExecutionLogRepository.Add(reportExecutionLog);
+            reportExecutionLogRepository.SubmitChanges();
+
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ReportExecutionLogQueue", reportExecutionLog.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "ReportExecutionLogId", reportExecutionLog.Id }, { "Tenant", reportExecutionLog.Tenant.ToString() } }, null, null, null, null);
+            return reportFliter;
+
+        }
+
+
+    }
+
+
+    public class BuildReportDataResult
+    {
+       public byte[] DataProvider { get; set; }
+       public Exception Exception { get; set; }
+       public CustomerPotentialActualDataProvider myData { get; set; }
+       public string UrlImage { get; set; }
+        public bool IsInternalException { get; set; }
     }
 }

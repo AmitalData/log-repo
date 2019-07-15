@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -38,8 +39,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             tenantRepository.SubmitChanges();
         }
 
-        protected override void OnUpdating(FullAccountingSettingPM entityPM)
+        protected override void OnUpdating(FullAccountingSettingPM entityPM, FullAccountingSetting entityPOCO)
         {
+
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update 
+                && entityPM.GLAccounterCounterLength != entityPOCO.GLAccounterCounterLength
+                && entityPOCO.GLAccounterCounterLength != null)
+            {
+                bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(EntityPM.Tenant);
+                string msg = TextCodesTranslator.TranslateText("FullAccountingSetting.O.CantChangeCounterLength", entityPM.Tenant, showLocal);
+                throw new ApplicationException(msg);
+            }
+
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant tenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
             tenant.PaymentTermId = entityPM.TenantPaymentTermId;
@@ -51,6 +63,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             string key = "FullAccountingSettingPM," + tenant.ToString();
             CacheManager.CacheWrapper.Invalidate(key);
         }
+
+        
+
+        protected override void Validate(FullAccountingSettingPM entityPM)
+        {
+
+            //validate GLAccounterCounterLength
+            if (entityPM.GLAccounterCounterLength != null && (entityPM.GLAccounterCounterLength < 8 || entityPM.GLAccounterCounterLength > 15))
+            {
+                bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                string msg = TextCodesTranslator.TranslateText("FullAccountingSetting.O.CounterLengthBetween8n15", entityPM.Tenant, useLocal);
+                throw new ApplicationException(msg);
+            }
+
+
+        }
+
 
         //protected override void Trace(FullAccountingSettingPM entityPM, FullAccountingSetting entityPOCO, string changesXml)
         //{

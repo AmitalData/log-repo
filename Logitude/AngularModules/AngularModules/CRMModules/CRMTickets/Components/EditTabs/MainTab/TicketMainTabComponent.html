@@ -33,6 +33,19 @@
         font-size: 12px;
     }
 
+    .ToolsButton {
+        display: none;
+    }
+
+    .borderlist:hover .ToolsButton {
+        display: block;
+    }
+
+    .borderlist:hover .ToolsButtonDisabled {
+        display: block;
+    }
+
+
 </style>
 
 <div class="TabHolder" style="overflow-x:auto;overflow-y:auto;height:100%;width:100%;">
@@ -340,22 +353,26 @@
                                                                                             </td>
 
                                                                                             <td>
-                                                                                                <table *ngIf="item.TextAlignRegionVisibility && TextAlignVisibility">
+                                                                                                <table *ngIf="item.TextAlignRegionVisibility && item.TextAlignVisibility">
                                                                                                     <tr>
                                                                                                         <td>
                                                                                                             <div></div>
                                                                                                         </td>
 
-                                                                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background:item.BackgroundAlignLeft}">
-                                                                                                            <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignLeftClicked()" />
+                                                                                                        <td style="width: 20px;height: 25px;">
+                                                                                                            <div class="ToolsButton" [title]="'RTL'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;" (click)="item.AlignRightClicked()">
+                                                                                                                <i class="fa fa-long-arrow-left"></i>
+                                                                                                            </div>
                                                                                                         </td>
 
                                                                                                         <td width="5px;">
                                                                                                             <div></div>
                                                                                                         </td>
 
-                                                                                                        <td style="width: 20px;" [ngStyle]="{background: item.BackgroundAlignRight}">
-                                                                                                            <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignRightClicked()" />
+                                                                                                        <td style="width: 20px;">
+                                                                                                            <div class="ToolsButton" [title]="'LTR'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;" (click)="item.AlignLeftClicked()">
+                                                                                                                <i class="fa fa-long-arrow-right"></i>
+                                                                                                            </div>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </table>

@@ -373,11 +373,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CAAT { get; set; }
         public bool IsTestTenant { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? DefaultWarningPercentage { get; set; }
-
+        
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CheckDigitControlAlgorithmCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool ApplyVATForAllPartners { get; set; }
     }
 }

@@ -1173,6 +1173,86 @@
     <Compile Include="Migrations\201906260608350_AdjustExternalProjectNumber_Maheera.Designer.cs">
       <DependentUpon>201906260608350_AdjustExternalProjectNumber_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906270832436_Khalid_AirlinePortArea_Delete_DescriptionColumn.cs" />
+    <Compile Include="Migrations\201906270832436_Khalid_AirlinePortArea_Delete_DescriptionColumn.Designer.cs">
+      <DependentUpon>201906270832436_Khalid_AirlinePortArea_Delete_DescriptionColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906271314519_AlterOccasionType_Maheera.cs" />
+    <Compile Include="Migrations\201906271314519_AlterOccasionType_Maheera.Designer.cs">
+      <DependentUpon>201906271314519_AlterOccasionType_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906290701479_AlterOccasionDates_Maheera.cs" />
+    <Compile Include="Migrations\201906290701479_AlterOccasionDates_Maheera.Designer.cs">
+      <DependentUpon>201906290701479_AlterOccasionDates_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906291109090_AddDefaultWarningPercentageToTariffSettings_Maheera.cs" />
+    <Compile Include="Migrations\201906291109090_AddDefaultWarningPercentageToTariffSettings_Maheera.Designer.cs">
+      <DependentUpon>201906291109090_AddDefaultWarningPercentageToTariffSettings_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906300649503_TaxReportReferenceMigration.cs" />
+    <Compile Include="Migrations\201906300649503_TaxReportReferenceMigration.Designer.cs">
+      <DependentUpon>201906300649503_TaxReportReferenceMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907010924063_NewField_FullAccountingSetting_GLAccountCounterLength.cs" />
+    <Compile Include="Migrations\201907010924063_NewField_FullAccountingSetting_GLAccountCounterLength.Designer.cs">
+      <DependentUpon>201907010924063_NewField_FullAccountingSetting_GLAccountCounterLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.cs" />
+    <Compile Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.Designer.cs">
+      <DependentUpon>201907010918213_WithholdingTaxDeductionTypeMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907060950563_AddVolumeInCBMToQuote_Maheera.cs" />
+    <Compile Include="Migrations\201907060950563_AddVolumeInCBMToQuote_Maheera.Designer.cs">
+      <DependentUpon>201907060950563_AddVolumeInCBMToQuote_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907040809015_AddApplyVATSettingsForAllPartners_Samar.cs" />
+    <Compile Include="Migrations\201907040809015_AddApplyVATSettingsForAllPartners_Samar.Designer.cs">
+      <DependentUpon>201907040809015_AddApplyVATSettingsForAllPartners_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs" />
+    <Compile Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.Designer.cs">
+      <DependentUpon>201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907031511508_NewTable_GLAccountCounters.cs" />
+    <Compile Include="Migrations\201907031511508_NewTable_GLAccountCounters.Designer.cs">
+      <DependentUpon>201907031511508_NewTable_GLAccountCounters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907040926273_AddConstraints_GLAccountCounters.cs" />
+    <Compile Include="Migrations\201907040926273_AddConstraints_GLAccountCounters.Designer.cs">
+      <DependentUpon>201907040926273_AddConstraints_GLAccountCounters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907062057504_CustomersTextCodesMigration.cs" />
+    <Compile Include="Migrations\201907062057504_CustomersTextCodesMigration.Designer.cs">
+      <DependentUpon>201907062057504_CustomersTextCodesMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907071201307_CustomerGLAccountDebetorsQueryFilterMigration.cs" />
+    <Compile Include="Migrations\201907071201307_CustomerGLAccountDebetorsQueryFilterMigration.Designer.cs">
+      <DependentUpon>201907071201307_CustomerGLAccountDebetorsQueryFilterMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907080652542_AddTariffVersionAllInChargesTable_Samar.cs" />
+    <Compile Include="Migrations\201907080652542_AddTariffVersionAllInChargesTable_Samar.Designer.cs">
+      <DependentUpon>201907080652542_AddTariffVersionAllInChargesTable_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907080808175_AddTariffIdToAllInChargesTable_Samar.cs" />
+    <Compile Include="Migrations\201907080808175_AddTariffIdToAllInChargesTable_Samar.Designer.cs">
+      <DependentUpon>201907080808175_AddTariffIdToAllInChargesTable_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907081048172_AddAllOtherPortsToTariffLine_Samar.cs" />
+    <Compile Include="Migrations\201907081048172_AddAllOtherPortsToTariffLine_Samar.Designer.cs">
+      <DependentUpon>201907081048172_AddAllOtherPortsToTariffLine_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907111224083_AddINTTRAStatusesTables_Maheera.cs" />
+    <Compile Include="Migrations\201907111224083_AddINTTRAStatusesTables_Maheera.Designer.cs">
+      <DependentUpon>201907111224083_AddINTTRAStatusesTables_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907140552486_AddINTTRAStatusesTables_Maheera1.cs" />
+    <Compile Include="Migrations\201907140552486_AddINTTRAStatusesTables_Maheera1.Designer.cs">
+      <DependentUpon>201907140552486_AddINTTRAStatusesTables_Maheera1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907111017086_AddAdditionalPackagesOnlyToUser_Samar.cs" />
+    <Compile Include="Migrations\201907111017086_AddAdditionalPackagesOnlyToUser_Samar.Designer.cs">
+      <DependentUpon>201907111017086_AddAdditionalPackagesOnlyToUser_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1994,6 +2074,66 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906241106069_ModifyTariffLineExpirationDate.resx">
       <DependentUpon>201906241106069_ModifyTariffLineExpirationDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906270832436_Khalid_AirlinePortArea_Delete_DescriptionColumn.resx">
+      <DependentUpon>201906270832436_Khalid_AirlinePortArea_Delete_DescriptionColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906271314519_AlterOccasionType_Maheera.resx">
+      <DependentUpon>201906271314519_AlterOccasionType_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906290701479_AlterOccasionDates_Maheera.resx">
+      <DependentUpon>201906290701479_AlterOccasionDates_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906291109090_AddDefaultWarningPercentageToTariffSettings_Maheera.resx">
+      <DependentUpon>201906291109090_AddDefaultWarningPercentageToTariffSettings_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906300649503_TaxReportReferenceMigration.resx">
+      <DependentUpon>201906300649503_TaxReportReferenceMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907010924063_NewField_FullAccountingSetting_GLAccountCounterLength.resx">
+      <DependentUpon>201907010924063_NewField_FullAccountingSetting_GLAccountCounterLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.resx">
+      <DependentUpon>201907010918213_WithholdingTaxDeductionTypeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907060950563_AddVolumeInCBMToQuote_Maheera.resx">
+      <DependentUpon>201907060950563_AddVolumeInCBMToQuote_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907040809015_AddApplyVATSettingsForAllPartners_Samar.resx">
+      <DependentUpon>201907040809015_AddApplyVATSettingsForAllPartners_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.resx">
+      <DependentUpon>201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907031511508_NewTable_GLAccountCounters.resx">
+      <DependentUpon>201907031511508_NewTable_GLAccountCounters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907040926273_AddConstraints_GLAccountCounters.resx">
+      <DependentUpon>201907040926273_AddConstraints_GLAccountCounters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907062057504_CustomersTextCodesMigration.resx">
+      <DependentUpon>201907062057504_CustomersTextCodesMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907071201307_CustomerGLAccountDebetorsQueryFilterMigration.resx">
+      <DependentUpon>201907071201307_CustomerGLAccountDebetorsQueryFilterMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907080652542_AddTariffVersionAllInChargesTable_Samar.resx">
+      <DependentUpon>201907080652542_AddTariffVersionAllInChargesTable_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907080808175_AddTariffIdToAllInChargesTable_Samar.resx">
+      <DependentUpon>201907080808175_AddTariffIdToAllInChargesTable_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907081048172_AddAllOtherPortsToTariffLine_Samar.resx">
+      <DependentUpon>201907081048172_AddAllOtherPortsToTariffLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907111224083_AddINTTRAStatusesTables_Maheera.resx">
+      <DependentUpon>201907111224083_AddINTTRAStatusesTables_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907140552486_AddINTTRAStatusesTables_Maheera1.resx">
+      <DependentUpon>201907140552486_AddINTTRAStatusesTables_Maheera1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907111017086_AddAdditionalPackagesOnlyToUser_Samar.resx">
+      <DependentUpon>201907111017086_AddAdditionalPackagesOnlyToUser_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

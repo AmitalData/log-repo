@@ -5,20 +5,21 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import { PortPM } from '../../../../Common/EntityPMs/PortPM';
 import { TariffDomainService, TariffFilterParameter, ExcelTariffLines } from '../../../Services/TariffDomainService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { TariffPM } from '../../../EntityPMs/TariffPM';
 import { TariffLinePM } from '../../../EntityPMs/TariffLinePM';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
-import { AppTool, FontTool, DateTool, FormatTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/TariffVersionExtendedPMService';
 import { DatePipe } from '@angular/common';
+import { TariffVersionAllInChargePM } from '../../../EntityPMs/TariffVersionAllInChargePM';
+import { AirCostTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
 declare var ResultAsArray: any;
 
 @Component({
@@ -30,76 +31,31 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public EntityPM: TariffPM;
     public ObjectTableName: string = "Tariff";
     public TariffsLinesSource: ObservableCollection;
-    public DeletedTariffsLines: TariffLineData [] = [];
+    public DeletedTariffsLines: AirCostTariffLineData [] = [];
     public DataContext = this;
-    private EntityArgs: EntityArgs;
     public IsResourcesReady: boolean = false;
     private TariffDomainService: TariffDomainService;
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
-    public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsFirstDraft = false;
+    public SelectedVersionNumber: number;
     constructor(public entityArgs: EntityArgs) {
         super();
-        this.EntityPM = entityArgs.EntityPM;
-        this.EntityArgs = entityArgs;
+        this.EntityPM = entityArgs.EntityPM;       
         this.Listen();        
     }
 
-    private SaveCompletedEvent: any = null;
-    private Listen() {
-        if (this.entityArgs.EditComponent != null) {
-            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.CurrentVersion.Version)[0];
-
-                    if (this.CurrentVersion == null) {
-                        // after creating new version
-                        this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
-                    }
-
-                    if (this.CurrentVersion.IsDraft) {
-                        this.FillTariffLines(this.CurrentVersion.TariffLines);
-                    }
-
-                    else {
-                        this.LoadTariffLines("currentVersion");
-                    }
-
-                    if (this.isApproveButtonClicked) {
-                        this.isApproveButtonClicked = false;
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    }
-
-                    if (this.isCopyButtonClicked) {
-                        this.isCopyButtonClicked = false;
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    }
-
-                    if (this.isUploadExcelFinished) {
-                        this.isUploadExcelFinished = false;
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    }
-                }
-            });
-        }
-    }
-    
-    ngOnDestroy() {
-        AppTool.KillEventEmitter(this.SaveCompletedEvent);
-    }
-    
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
-        this.EntityPM = this.EntityArgs.EntityPM;
         this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.TariffDomainService = new TariffDomainService();
 
         this.CurrentVersion = args['CurrentVersion'];
+        this.SelectedVersionNumber = args['SelectedVersionNumber'];
 
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
@@ -122,9 +78,78 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.LoadTariffLines("currentVersion");
         }
 
-        this.warningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
+        this.GetTariffSettings();
     }
 
+    private GetTariffSettings() {
+        this.TariffDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.warningPercentage = myResponse.Result.DefaultWarningPercentage;
+            }
+        });
+    }
+
+    private SaveCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent != null) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
+
+                    this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.SelectedVersionNumber)[0];
+
+                    if (this.CurrentVersion == null) {
+                        this.CurrentVersion = this.EntityPM.ActiveVersions.filter(d => d.Version == this.SelectedVersionNumber)[0];
+                    }
+
+                    if (this.CurrentVersion.IsDraft) {
+                        this.FillTariffLines(this.CurrentVersion.TariffLines);
+                    }
+                    else {
+                        this.LoadTariffLines("currentVersion");
+                    }
+                    
+                    if (this.isApproveButtonClicked) {
+                        this.isApproveButtonClicked = false;
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+
+                    if (this.isCopyButtonClicked) {
+                        this.isCopyButtonClicked = false;
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+
+                    if (this.isUploadExcelFinished) {
+                        this.isUploadExcelFinished = false;
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                }
+
+                else {
+                    this.StopAllFlags();
+                }
+            });
+        }
+    }
+
+    StopAllFlags() {
+        if (this.EntityPM.IsApprovingDraftVersion) {
+            this.EntityPM.IsApprovingDraftVersion = false;
+        }
+
+        this.isApproveButtonClicked = false;
+        this.isUploadExcelFinished = false;
+        this.isCopyButtonClicked = false;
+    }
+
+    KillEvents() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+    }
+
+    ngOnDestroy() {
+        this.KillEvents();
+    }
+    
     private loadedTariffLines: TariffLinePM[];
     private compareTariffLines: TariffLinePM[];
     private LoadTariffLines(type: string) {
@@ -218,7 +243,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
     }
 
-    private ItemsCollection: TariffLineData[] = [];
+    private ItemsCollection: AirCostTariffLineData[] = [];
     FillTariffLines(tariffLines: TariffLinePM[]) {
         if (this.TariffsLinesSource != null) {
             this.TariffsLinesSource.Clear();
@@ -228,7 +253,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         
 
         tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            this.ItemsCollection.push(new TariffLineData(item, this));
+            this.ItemsCollection.push(new AirCostTariffLineData(item, this));
         });
 
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
@@ -245,7 +270,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     ComaredLines() {
-        this.ItemsCollection.forEach((item: TariffLineData) => {
+        this.ItemsCollection.forEach((item: AirCostTariffLineData) => {
             var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line) {
                 item.ComparedEntity = line;
@@ -269,7 +294,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.compareTariffLines.sort(p => p.Index).forEach(item => {
             var line = lines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line == null) {
-                this.DeletedTariffsLines.push(new TariffLineData(item, this));// Deleted 
+                this.DeletedTariffsLines.push(new AirCostTariffLineData(item, this));// Deleted 
             }
         });
     }
@@ -281,6 +306,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     set IsComparToChecked(value: boolean) {
         if (this.isComparToChecked != value) {
             this.isComparToChecked = value;
+            this.UIProperties.SetEnabled("WarningPercentage", null, value);
             this.ComparingCalculations(false);
         }
     }
@@ -350,20 +376,20 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             }
         }
 
-        var itemComponent = new TariffLineData(itemPM, this, true);
-        logWindow.DataContext = itemComponent;
+        var itemComponent = new AirCostTariffLineData(itemPM, this, true);
+        logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "New Tariff Line";
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
-    EditTariffButtonClicked(item: TariffLineData) {
+    EditTariffButtonClicked(item: AirCostTariffLineData) {
         var logWindow = new LogitudeWindow();
-        logWindow.DataContext = item;
+        logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "Edit Tariff Line";
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
-    DeleteTariffButtonClicked(item: TariffLineData) {
+    DeleteTariffButtonClicked(item: AirCostTariffLineData) {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show("Delete this Tariff Line?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -394,6 +420,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         } 
     }
     UploadExcel(file: any) {
+        this.FileName = null;
         if (!AppTool.IsNullOrEmpty(file.name)) {
             var name = file.name.split('.');
             if (name.length == 2) {
@@ -437,12 +464,14 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             filter.TariffType = context.EntityPM.TypeCode;
             filter.FileName = context.FileName;
             context.SendExcelToServer(filter);
+
         };
 
         reader.onerror = function (e) {
             console.log(e);
         };
         reader.readAsArrayBuffer(file);
+        context.EntityPM.FileUploadedName = this.FileName;
     }
     SendExcelToServer(filter: any) {
         this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
@@ -505,7 +534,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 var fileName = myResponse.Result;
                 var tempDate = new Date();
                 var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + "Tariffs" + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007";
+                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + fileName;
                 {
                     window.open(url);
                 }
@@ -545,15 +574,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         //    }
         //}
     }
-
-    //private DoApprove() {
-    //    this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
-    //        if (!response.HasError) {
-    //            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-    //        }
-    //    });
-    //}
-
+    
     CopyVersionClicked() {
         if (this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0]) {
             var messageWindow: MessageWindow = new MessageWindow();
@@ -591,6 +612,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                     copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
                     copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
                     this.EntityPM.AddTariffVersion(copiedVersion);
+
                     this.loadedTariffLines.forEach(item => {
                         var tariffLine = new TariffLinePM(copiedVersion);
                         tariffLine.StartDate = this.StartDate;
@@ -615,6 +637,17 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                         tariffLine.Index = item.Index;
                         tariffLine.Notes = item.Notes;
                         copiedVersion.AddTariffLine(tariffLine);
+                    });
+
+                    this.CurrentVersion.TariffAllInCharges.forEach(item => {
+                        var allInCharge = new TariffVersionAllInChargePM(copiedVersion);
+                        allInCharge.ChargesTypeId = item.ChargesTypeId;
+                        allInCharge.TariffId = this.EntityPM.Id;
+                        allInCharge.Tenant = SessionLocator.Tenant;
+                        allInCharge.Version = copiedVersion.Version;
+                        allInCharge.AddDate = DateTool.GetCurrentDateAsUtc();
+                        allInCharge.AddedByUserId = SessionInfo.LoggedUserId;
+                        copiedVersion.AddTariffVersionAllInCharge(allInCharge);
                     });
 
                     this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
@@ -655,15 +688,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
 
-        if (this.SelectedVersion == null) {
+        if (this.VersionsList == null || (this.VersionsList != null && this.VersionsList.length == 0)) {
             this.isComparToChecked = false;
-            this.IsCompareEnabled = false;
+            this.IsFirstDraft = true;
         }
-        else {
-            this.IsCompareEnabled = true;
-        }
+        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsComparToChecked && !this.IsFirstDraft);
 
-        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsCompareEnabled);
     }
     
     private selectedVersion: VersionClass;
@@ -674,6 +704,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.ComparedToVersionPM = this.compareToVersions.filter(d => d.Version == this.SelectedVersion.Version)[0];
             this.ComparingCalculations(true);
         }
+
     }
 
     ComparingCalculations(load: boolean) {
@@ -691,746 +722,17 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             }
         }
     }
-}
 
-export class TariffLineData extends BaseComponent {
-    public EntityPM: TariffLinePM;
-    public DataContext: TariffLineData = this;
-    private ObjectTableName = "TariffLine";
-    public IsNewEntity: boolean = false;
-    public IsEditEnabled: boolean = false;
-    public ComparedEntity: TariffLinePM;
-    constructor(entity: TariffLinePM, public FatherComponent: VersionTabComponent, isNew: boolean = false) {
-        super();
-        this.EntityPM = entity;
-        this.IsNewEntity = isNew;
-        this.IsEditEnabled = FatherComponent.IsDraftVersion;
-        this.SetUIProperties();
-    }
-
-    public MinPriceComparingPrice: number;
-    public MinPriceComparingTextColor: string = null;
-    public Step1ComparingPrice: number;
-    public Step1ComparingTextColor: string = null;
-    public Step2ComparingPrice: number;
-    public Step2ComparingTextColor: string = null;
-    public Step3ComparingPrice: number;
-    public Step3ComparingTextColor: string = null;
-    public Step4ComparingPrice: number;
-    public Step4ComparingTextColor: string = null;
-    public Step5ComparingPrice: number;
-    public Step5ComparingTextColor: string = null;
-    public Step6ComparingPrice: number;
-    public Step6ComparingTextColor: string = null;
-    public Step7ComparingPrice: number;
-    public Step7ComparingTextColor: string = null;
-    public Step8ComparingPrice: number;
-    public Step8ComparingTextColor: string = null;
-    private DefaultColor = "blue";
-
-    SetCellsComparingText() {
-        if (this.ComparedEntity != null) {
-            var minPriceComparingValue = this.MinPrice - this.ComparedEntity.MinPrice;
-            if (!AppTool.IsNullOrZero(minPriceComparingValue)) {
-                this.MinPriceComparingPrice = AppTool.Round((minPriceComparingValue / this.ComparedEntity.MinPrice) * 100, 2);
-                this.MinPriceComparingTextColor = this.ComputeWarningPercentageColor(this.MinPriceComparingPrice);
+    AllInChargesClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { TariffPM: this.EntityPM, VersionPM: this.CurrentVersion, IsEditingEnabled: this.IsDraftVersion };
+        logWindow.Title = "All-In Charges";
+        logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditAllInChargesComponent");
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                
             }
-            else {
-                this.MinPriceComparingPrice = null;
-                this.MinPriceComparingTextColor = this.DefaultColor;
-            }
-            // step 1
-            var step1ComparingValue = this.Step1Price - this.ComparedEntity.Step1Price;
-            if (!AppTool.IsNullOrZero(step1ComparingValue)) {
-                this.Step1ComparingPrice = (step1ComparingValue / this.ComparedEntity.Step1Price) * 100;
-                this.Step1ComparingTextColor = this.ComputeWarningPercentageColor(this.Step1ComparingPrice);
-            }
-            else {
-                this.Step1ComparingPrice = null;
-                this.Step1ComparingTextColor = this.DefaultColor;
-            }
-           
-            var step2ComparingValue = this.Step2Price - this.ComparedEntity.Step2Price;
-            if (!AppTool.IsNullOrZero(step2ComparingValue)) {
-                this.Step2ComparingPrice = (step2ComparingValue / this.ComparedEntity.Step2Price) * 100;
-                this.Step2ComparingTextColor = this.ComputeWarningPercentageColor(this.Step2ComparingPrice );
-            }
-            else {
-                this.Step2ComparingPrice = null;
-                this.Step2ComparingTextColor = this.DefaultColor;
-            }
-
-            var step3ComparingValue = this.Step3Price - this.ComparedEntity.Step3Price;
-            if (!AppTool.IsNullOrZero(step3ComparingValue)) {
-                this.Step3ComparingPrice = (step3ComparingValue / this.ComparedEntity.Step3Price) * 100;
-                this.Step3ComparingTextColor = this.ComputeWarningPercentageColor(this.Step3ComparingPrice );
-            }
-            else {
-
-                this.Step3ComparingPrice = null;
-                this.Step3ComparingTextColor = this.DefaultColor;
-            }
-
-            var step4ComparingValue = this.Step4Price - this.ComparedEntity.Step4Price;
-            if (!AppTool.IsNullOrZero(step4ComparingValue)) {
-                this.Step4ComparingPrice = (step4ComparingValue / this.ComparedEntity.Step4Price) * 100;
-                this.Step4ComparingTextColor = this.ComputeWarningPercentageColor(this.Step4ComparingPrice);
-            }
-            else {
-                this.Step4ComparingPrice = null;
-                this.Step4ComparingTextColor = this.DefaultColor; 
-            }
-
-            var step5ComparingValue = this.Step5Price - this.ComparedEntity.Step5Price;
-            if (!AppTool.IsNullOrZero(step5ComparingValue)) {
-                this.Step5ComparingPrice = (step5ComparingValue / this.ComparedEntity.Step5Price) * 100;
-                this.Step5ComparingTextColor = this.ComputeWarningPercentageColor(this.Step5ComparingPrice);
-            }
-            else {
-                this.Step5ComparingPrice = null;
-                this.Step5ComparingTextColor = this.DefaultColor;
-            }
-
-            var step6ComparingValue = this.Step6Price - this.ComparedEntity.Step6Price;
-            if (!AppTool.IsNullOrZero(step6ComparingValue)) {
-                this.Step6ComparingPrice = (step6ComparingValue / this.ComparedEntity.Step6Price) * 100;
-                this.Step6ComparingTextColor = this.ComputeWarningPercentageColor(this.Step6ComparingPrice);
-            }
-            else {
-                this.Step6ComparingPrice = null;
-                this.Step6ComparingTextColor = this.DefaultColor;
-
-            }
-
-            var step7ComparingValue = this.Step7Price - this.ComparedEntity.Step7Price;
-            if (!AppTool.IsNullOrZero(step7ComparingValue)) {
-                this.Step7ComparingPrice = (step7ComparingValue / this.ComparedEntity.Step7Price) * 100;
-                this.Step7ComparingTextColor = this.ComputeWarningPercentageColor(this.Step7ComparingPrice);
-            }
-            else {
-
-                this.Step7ComparingPrice = null;
-                this.Step7ComparingTextColor = this.DefaultColor;
-            }
-
-            var step8ComparingValue = this.Step8Price - this.ComparedEntity.Step8Price;
-            if (!AppTool.IsNullOrZero(step8ComparingValue)) {
-                this.Step8ComparingPrice = (step8ComparingValue / this.ComparedEntity.Step8Price) * 100;
-                this.Step8ComparingTextColor = this.ComputeWarningPercentageColor(this.Step8ComparingPrice);
-            }
-            else {
-                this.Step8ComparingPrice = null;
-                this.Step8ComparingTextColor = this.DefaultColor;
-            }
-        }
-    }
-
-    ComputeWarningPercentageColor(price: number) {
-        var color = "blue";
-        if (this.FatherComponent.WarningPercentage == null) {
-            color = "blue";
-        }
-        else {
-          
-            var price_abs = Math.abs(price);
-            if (price_abs > this.FatherComponent.WarningPercentage) {
-                color = "red";
-            }
-        }
-        return color; 
-    }
-
-
-    get HasErrors() {
-        return this.EntityPM.HasErrors;
-    }
-    set HasErrors(value: boolean) {
-        if (this.EntityPM.HasErrors != value) {
-            this.EntityPM.HasErrors = value;
-        }
-    }
-
-    get ErrorText() {
-        return this.EntityPM.ErrorText;
-    }
-    set ErrorText(value: string) {
-        if (this.EntityPM.ErrorText != value) {
-            this.EntityPM.ErrorText = value;
-        }
-    }
-    
-    private CheckIfLineHasError() {
-        if (this.ErrorText != 'Line is a duplicate') {
-            var error: boolean = false;
-            var errorText: string;
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Port with code " + this.EntityPM.OriginPortText + " not found";
-                }
-
-                else {
-                    errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
-                }
-            }
-            else if (AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)){
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Missing Origin Port";
-                }
-
-                else {
-                    errorText = errorText + ", Missing Origin Port"
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Port with code " + this.EntityPM.DestinationPortText + " not found";
-                }
-
-                else {
-                    errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
-                }
-            }
-            else if (AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Missing Destination Port";
-                }
-
-                else {
-                    errorText = errorText + ", Missing Destination Port"
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.MinPriceText) && AppTool.IsNullOrZero(this.EntityPM.MinPrice)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Min price format is invalid";
-                }
-
-                else {
-                    errorText = errorText + ", Min price format is invalid"
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step1PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step1Price)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 1 price format is invalid";
-                }
-
-                else {
-                    errorText = errorText + ", Step 1 price format is invalid"
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step2PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step2Price)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 2 price format is invalid";
-                }
-
-                else {
-                    errorText = errorText + ", Step 2 price format is invalid"
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step3PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step3Price)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 3 price format is invalid";
-                }
-
-                else {
-                    errorText = errorText + ", Step 3 price format is invalid"
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step4PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step4Price)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 4 price format is invalid";
-                }
-
-                else {
-                    errorText = errorText + ", Step 4 price format is invalid"
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step5PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step5Price)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 5 price format is invalid";
-                }
-
-                else {
-                    errorText = errorText + ", Step 5 price format is invalid"
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step6PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step6Price)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 6 price format is invalid";
-                }
-
-                else {
-                    errorText = errorText + ", Step 6 price format is invalid"
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step7PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step7Price)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 7 price format is invalid";
-                }
-
-                else {
-                    errorText = errorText + ", Step 7 price format is invalid"
-                }
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step8PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step8Price)) {
-                error = true;
-
-                if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 8 price format is invalid";
-                }
-
-                else {
-                    errorText = errorText + ", Step 8 price format is invalid"
-                }
-            }
-
-            this.HasErrors = error;
-            this.ErrorText = errorText;
-        }
-    }
-
-    private SetUIProperties() {
-        this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
-        this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
-    }
-
-    // Origin Port
-    get OriginPortId() {
-        return this.EntityPM.OriginPortId;
-    }
-    set OriginPortId(value: string) {
-        if (this.EntityPM.OriginPortId != value) {
-            this.EntityPM.OriginPortId = value;
-            this.SetUIProperties();
-            this.CheckIfLineHasError();
-        }
-    }
-
-    get OriginPortCode() {
-        return this.EntityPM.OriginPortCode;
-    }
-    set OriginPortCode(value: string) {
-        if (this.EntityPM.OriginPortCode != value) {
-            this.EntityPM.OriginPortCode = value;
-        }
-    }
-
-    originPort: PortPM;
-    get OriginPort() { return this.originPort; }
-    set OriginPort(value: PortPM) {
-        if (this.originPort != value) {
-            this.originPort = value;
-        }
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.OriginPortCode = value.Code;
-        } else {
-            this.OriginPortCode = null;
-        }
-    }
-
-    get OriginPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
-            return this.EntityPM.OriginPortCode;
-        }
-
-        else {
-            return this.EntityPM.OriginPortText;
-        }
-    }
-
-    get OriginPortColor() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
-    }
-
-    // Destination Port
-    get DestinationPortId() {
-        return this.EntityPM.DestinationPortId;
-    }
-    set DestinationPortId(value: string) {
-        if (this.EntityPM.DestinationPortId != value) {
-            this.EntityPM.DestinationPortId = value;
-            this.SetUIProperties();
-            this.CheckIfLineHasError();
-        }
-    }
-
-    get DestinationPortCode() {
-        return this.EntityPM.DestinationPortCode;
-    }
-    set DestinationPortCode(value: string) {
-        if (this.EntityPM.DestinationPortCode != value) {
-            this.EntityPM.DestinationPortCode = value;
-        }
-    }
-
-    destinationPort: PortPM;
-    get DestinationPort() { return this.destinationPort; }
-    set DestinationPort(value: PortPM) {
-        if (this.destinationPort != value) {
-            this.destinationPort = value;
-        }
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.DestinationPortCode = value.Code;
-        } else {
-            this.DestinationPortCode = null;
-        }
-    }
-
-    get DestinationPortValue() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
-            return this.EntityPM.DestinationPortCode;
-        }
-
-        else {
-            return this.EntityPM.DestinationPortText;
-        }
-    }
-
-    get DestinationPortColor() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
-    }
-
-    get Notes() {
-        return this.EntityPM.Notes;
-    }
-    set Notes(value: string) {
-        if (this.EntityPM.Notes != value) {
-            this.EntityPM.Notes = value;
-        }
-    }
-
-    // Min Price
-    get MinPrice() {
-        return this.EntityPM.MinPrice;
-    }
-    set MinPrice(value: number) {
-        if (this.EntityPM.MinPrice != value) {
-            this.EntityPM.MinPrice = value;
-            this.CheckIfLineHasError();
-            this.SetCellsComparingText();
-        }
-    }
-
-    get MinPriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.MinPrice)) {
-            return FormatTool.FormatNumber(this.EntityPM.MinPrice, "N3");
-        }
-
-        else {
-            return this.EntityPM.MinPriceText;
-        }
-    }
-
-    get MinPriceColor() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.MinPrice)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
-    }
-
-    // Step 1
-    get Step1Price() {
-        return this.EntityPM.Step1Price;
-    }
-    set Step1Price(value: number) {
-        if (this.EntityPM.Step1Price != value) {
-            this.EntityPM.Step1Price = value;
-            this.CheckIfLineHasError();
-            this.SetCellsComparingText();
-        }
-    }
-
-    get Step1PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step1Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Step1Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Step1PriceText;
-        }
-    }
-
-    get Step1PriceColor() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step1Price)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
-    }
-
-    // Step 2
-    get Step2Price() {
-        return this.EntityPM.Step2Price;
-    }
-    set Step2Price(value: number) {
-        if (this.EntityPM.Step2Price != value) {
-            this.EntityPM.Step2Price = value;
-            this.CheckIfLineHasError();
-            this.SetCellsComparingText();
-        }
-    }
-
-    get Step2PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step2Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Step2Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Step2PriceText;
-        }
-    }
-
-    get Step2PriceColor() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step2Price)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
-    }
-
-    // Step 3
-    get Step3Price() {
-        return this.EntityPM.Step3Price;
-    }
-    set Step3Price(value: number) {
-        if (this.EntityPM.Step3Price != value) {
-            this.EntityPM.Step3Price = value;
-            this.CheckIfLineHasError();
-            this.SetCellsComparingText();
-        }
-    }
-
-    get Step3PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step3Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Step3Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Step3PriceText;
-        }
-    }
-
-    get Step3PriceColor() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step3Price)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
-    }
-
-    // Step 4
-    get Step4Price() {
-        return this.EntityPM.Step4Price;
-    }
-    set Step4Price(value: number) {
-        if (this.EntityPM.Step4Price != value) {
-            this.EntityPM.Step4Price = value;
-            this.CheckIfLineHasError();
-            this.SetCellsComparingText();
-        }
-    }
-
-    get Step4PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step4Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Step4Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Step4PriceText;
-        }
-    }
-
-    get Step4PriceColor() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step4Price)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
-    }
-
-    // Step 5
-    get Step5Price() {
-        return this.EntityPM.Step5Price;
-    }
-    set Step5Price(value: number) {
-        if (this.EntityPM.Step5Price != value) {
-            this.EntityPM.Step5Price = value;
-            this.CheckIfLineHasError();
-            this.SetCellsComparingText();
-        }
-    }
-
-    get Step5PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step5Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Step5Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Step5PriceText;
-        }
-    }
-
-    get Step5PriceColor() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step5Price)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
-    }
-
-    // Step 6
-    get Step6Price() {
-        return this.EntityPM.Step6Price;
-    }
-    set Step6Price(value: number) {
-        if (this.EntityPM.Step6Price != value) {
-            this.EntityPM.Step6Price = value;
-            this.CheckIfLineHasError();
-            this.SetCellsComparingText();
-        }
-    }
-
-    get Step6PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step6Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Step6Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Step6PriceText;
-        }
-    }
-
-    get Step6PriceColor() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step6Price)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
-    }
-
-    // Step 7
-    get Step7Price() {
-        return this.EntityPM.Step7Price;
-    }
-    set Step7Price(value: number) {
-        if (this.EntityPM.Step7Price != value) {
-            this.EntityPM.Step7Price = value;
-            this.CheckIfLineHasError();
-            this.SetCellsComparingText();
-        }
-    }
-
-    get Step7PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step7Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Step7Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Step7PriceText;
-        }
-    }
-
-    get Step7PriceColor() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step7Price)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
-    }
-
-    // Step 8
-    get Step8Price() {
-        return this.EntityPM.Step8Price;
-    }
-    set Step8Price(value: number) {
-        if (this.EntityPM.Step8Price != value) {
-            this.EntityPM.Step8Price = value;
-            this.CheckIfLineHasError();
-            this.SetCellsComparingText();
-        }
-    }
-
-    get Step8PriceValue() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step8Price)) {
-            return FormatTool.FormatNumber(this.EntityPM.Step8Price, "N3");
-        }
-
-        else {
-            return this.EntityPM.Step8PriceText;
-        }
-    }
-
-    get Step8PriceColor() {
-        if (!AppTool.IsNullOrZero(this.EntityPM.Step8Price)) {
-            return FontTool.Black;
-        }
-
-        else {
-            return FontTool.Red;
-        }
+        });
     }
 }
 

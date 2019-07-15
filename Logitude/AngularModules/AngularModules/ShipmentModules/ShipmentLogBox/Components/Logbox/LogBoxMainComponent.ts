@@ -35,6 +35,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public _ShipmentPMService: ShipmentPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     public ToggleIsExportShipments: boolean = false;
+    RefTemplateWidth: string = '220px';
     constructor(private _entityListService: EntityListService) {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
@@ -46,6 +47,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         }
     }
     ngOnInit() {
+        //!SessionLocator.PrivateLableSettings ? '250px' : '150px'
         this.DontShowLogboxToolTip = SessionLocator.LoggedUserPM.ShowLogBoxToolTip;
         if (SessionLocator.PrivateLableSettings) {
             this.isPrivateLabel = true;
@@ -53,6 +55,20 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.LogoURL = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.MainLogo;
             this.SelectedFilter = this.AgentShipmentsLabel;
             this.RequestedDocsLable = "Action Required";
+            if (this.ToggleIsExportShipments) {
+                this.RefTemplateWidth = '150px';
+            }
+            else {
+                this.RefTemplateWidth = '120px';
+            }
+        }
+        else {
+            if (this.ToggleIsExportShipments) { 
+                this.RefTemplateWidth = '250px';
+            }
+            else {
+                this.RefTemplateWidth = '220px';
+            }
         }
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
             if ($event.Name == "ReloadShipments") {
@@ -263,7 +279,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             FieldName: this.SelectedFilter,//"ShipmentNumber",
             DataTypeCode: 'String',
             Display: 'Shipment #',
-            Styles: { width: !SessionLocator.PrivateLableSettings ? '220px' : '120px' },
+            Styles: { width: this.RefTemplateWidth },
             HtmlListComponentName: 'ReferenceNumberCellDisplayListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/ReferenceNumberCellDisplayListTemplate',
             IsCustomTemplate: true,

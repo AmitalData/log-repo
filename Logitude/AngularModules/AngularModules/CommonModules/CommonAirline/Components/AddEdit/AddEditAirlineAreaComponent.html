@@ -36,16 +36,18 @@
                     <td>
                         <table>
                             <tr class="FormFieldRow">
-                                <td style="width: 110px;">
+                                <td style="width: 80px;">
                                     <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
                                 </td>
 
-                                <td style="width: 180px;">
-                                    <div style="width: 120px;">
+                                <td style="width: 200px;">
+                                    <div style="width: 200px;">
                                         <LogTextBox [ObjectFieldName]="'Description'" [IsMultiline]="true" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </td>
+
+                                <td></td>
 
                             </tr>                           
                         </table>
@@ -67,10 +69,27 @@
                                             <table>
                                                 <tr>
                                                     <td style="color:#1B90CB">
-                                                        Ports List
+                                                        Ports
                                                     </td>
                                                     <td style="width:50px"><div></div></td>
                                                     <td style="width:3px"><div></div></td>
+                                                    <td><div></div></td>
+                                                    <td style="width:60px">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 50px;">
+
+                                                                    <button style="height:20px;" class="Button" (click)="ChoosePort()">
+                                                                        <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                        Port
+                                                                    </button>
+                                                                </td>
+
+                                                                <td style="width:10px"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                   
 
                                                 </tr>
                                             </table>
@@ -85,7 +104,8 @@
                                                         <div class="SimpleGridViewHeader">
                                                             <table>
                                                                 <tr>
-                                                                    <td style="width: 250px; min-width: 250px;max-width:250px">Port</td>
+                                                                    <td style="width: 80px; min-width: 80px;max-width:80px">Code</td>
+                                                                    <td style="width: 170px; min-width: 170px;max-width:170px">Name</td>
                                                                     <td class="LastChild"></td>
 
 
@@ -97,26 +117,21 @@
                                                         <div class="SimpleGridViewBody" style="overflow-y:auto">
                                                             <table>
                                                                 <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemList" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
-                                                                    <td class="GridViewCell" style="width:250px; min-width: 250px;max-width:250px">
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width:80px">
+                                                                    <td class="GridViewCell" style="width:80px; min-width: 80px;max-width:80px">                         
                                                                                     <div>{{item.Code}}</div>
 
-                                                                                </td>
-                                                                                <td>
-                                                                                    <div>{{item.Name}}</div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
                                                                     </td>
 
-                                                                 
+                                                                    <td class="GridViewCell" style="width:170px; min-width: 170px;max-width:170px">
+                                                                        <div>{{item.Name}}</div>                                                                               
+                                                                    </td>
+
+
 
                                                                     <td class="GridViewCell">
                                                                         <div>
-                                                                            <IconButton [IsSmall]="true" 
-                                                                                        [Name]="'Delete'" ></IconButton>
+                                                                            <IconButton [IsSmall]="true"
+                                                                                        [Name]="'Delete'" (click)="DeletePort(item)"></IconButton>
                                                                         </div>
                                                                     </td>
 
@@ -151,10 +166,17 @@
                         <div></div>
                     </td>
 
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
-                    </td>
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>                    
                 </tr>
             </table>
         </td>

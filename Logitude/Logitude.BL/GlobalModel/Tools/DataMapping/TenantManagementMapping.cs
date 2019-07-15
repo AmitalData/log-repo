@@ -132,6 +132,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.PackageCodeSearchField = entityPM.PackageCodeSearchField;
             entityPOCO.IsINTTRAStockPrepaid = entityPM.IsINTTRAStockPrepaid;
             entityPOCO.IsINTTRAOnlyDemo = entityPM.IsINTTRAOnlyDemo;
+            entityPOCO.MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied;
 
             if (entityPM.IsMultiPackage)
             {
@@ -155,6 +156,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                         tenant.RegulatedAgentRegimeActivated = false;
 
                     }
+
                     tenant.IsTestTenant = entityPM.IsTestTenant;
 
                     tenantRepository.Update(tenant);

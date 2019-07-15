@@ -71,6 +71,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         CurrencyId = currencyIds[random.Next(currencyIds.Count)],
                         LastVersion = 50,
                         TypeCode = "AFC",
+                        ConcurrencyGUID = Guid.NewGuid().ToString(),
                         SearchFields = "Test Tariff " + i + "," + airline.EnglishName,
                     };
                     myCount++;

@@ -11,8 +11,43 @@
             <table>
                 <tr>
                     <td>
-                        <div>
+                        <div class="MediaFill">
+                            <div class="MediaFillRelative">
+                                <ScrollViewer>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <table>
 
+                                                    <!-- INTTRABookingStatusName -->
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width: 220px;">
+                                                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'INTTRABookingStatusCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td> <div>{{INTTRABookingStatusName}}</div></td>
+                                                    </tr>
+
+                                                    <!-- INTTRABookingTransStatusName -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'INTTRABookingTransStatusCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td> <div>{{INTTRABookingTransStatusName}}</div></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </ScrollViewer>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -29,7 +64,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="SimulateClicked()">Send</button>
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -37,15 +72,12 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelClicked()">Cancel</button>
-                    </td>
-
-                    <td style="width: 5px;">
-                        <div></div>
+                        <button class="RedButton" (click)="SendButtonClicked()">Send</button>
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
+
 </table>
 
