@@ -484,6 +484,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
             this.StopBusyIndicator();
             this.cd.detectChanges();
 
+            this.resample_light(this.canvas, this.canvas.width, this.canvas.height, true);
             this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
 
             setTimeout(() => {
@@ -585,6 +586,41 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         console.log("RESAMPLE: done");
 
     }
+
+    resample_light(canvas, width, height, resize_canvas) {
+        console.log("RESAMPLE: start");
+
+
+        var width_source = canvas.width;
+        var height_source = canvas.height;
+        width = Math.round(width);
+        height = Math.round(height);
+
+        width_source = width_source == 0 ? 1 : width_source;
+        height_source = height_source == 0 ? 1 : height_source;
+        width = width == 0 ? 1 : width;
+        height = height == 0 ? 1 : height;
+
+        var ratio_w = width_source / width;
+        var ratio_h = height_source / height;
+        var ratio_w_half = Math.ceil(ratio_w / 2);
+        var ratio_h_half = Math.ceil(ratio_h / 2);
+
+        var ctx = canvas.getContext("2d");
+        var img = ctx.getImageData(0, 0, width_source, height_source);
+        var img2 = ctx.createImageData(width, height);
+        var data = img.data;
+        var data2 = img2.data;
+
+
+        //draw
+        ctx.putImageData(img2, 0, 0);
+
+        console.log("RESAMPLE: done");
+
+    }
+
+
 
     rotateCW() {
         this.angleIndex++;     /// increment index of array
