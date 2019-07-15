@@ -123,6 +123,12 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
         if (index > -1) {
             this.ItemList.splice(index,1);
         }
+
+        var index = this.AddedAirlineAreas.indexOf(Item.EntityPM);
+        if (index > -1) {
+            this.AddedAirlineAreas.splice(index, 1);
+        }
+
         this.RemovedAirlineAreas.push(Item.EntityPM);
     }
    
@@ -133,7 +139,7 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
             this.ValidationErrorsList.push("Name is required");
         }
 
-        if (this.EntityPM.AirlineAreasPorts.filter(p => p.ChangeSetOp != "3")[0] == null) {
+        if (this.AddedAirlineAreas.filter(p => p.ChangeSetOp != "3")[0] == null) {
             this.ValidationErrorsList.push("At Least one port is required");
         }
        

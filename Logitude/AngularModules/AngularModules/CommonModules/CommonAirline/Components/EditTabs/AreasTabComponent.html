@@ -48,8 +48,8 @@
                                             <div class="SimpleGridViewBody">
                                                 <table>
                                                     <tr class="SimpleGridViewRow RowHover" *ngFor="let item of EntityPM.AirlineAreas" >
-                                                        <td class="GridViewCell" style="width: 150px;">{{item.Name}}</td>
-                                                        <td class="GridViewCell" style="width: 170px;">{{item.Description}}</td>
+                                                        <td class="GridViewCell" style="width: 150px;"><div class="TextTrimming" style="width: 150px;">{{item.Name}}</div></td>
+                                                        <td class="GridViewCell" style="width: 170px;"><div class="TextTrimming" style="width: 170px;">{{item.Description}}</div></td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.CreatedByUserName}}</td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.CreateDate | DateTimePipe:'SD'}}</td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.UpdatedByUserName}}</td>
