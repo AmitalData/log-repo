@@ -339,7 +339,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                 }
                                                 else
                                                 {
-                                                    Sum += (valueofSurcharge * myQuantity * item.price);
+                                                    Sum += (valueofSurcharge * myQuantity);
                                                 }
 
 
