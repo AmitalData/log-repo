@@ -601,8 +601,8 @@ namespace Logitude.Server.Tools.Helpers
             int sum = 0, d;
             for (int i = 0; i < number.Length; i++)
             {
-                d = Convert.ToInt32(number.Substring(i, 1));
-                if (i % 2 != 0)
+                d = Convert.ToInt32(number.Substring((number.Length - 1) - i, 1));
+                if ((i + 1) % 2 != 0)
                     d = d * 2;
                 if (d > 9)
                     d -= 9;
@@ -618,7 +618,6 @@ namespace Logitude.Server.Tools.Helpers
                 return 10 - (sum % 10);
             }
         }
-
     }
 
     public class DatesHelper

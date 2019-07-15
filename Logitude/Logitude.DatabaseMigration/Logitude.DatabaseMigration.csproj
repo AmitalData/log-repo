@@ -1241,6 +1241,14 @@
     <Compile Include="Migrations\201907081048172_AddAllOtherPortsToTariffLine_Samar.Designer.cs">
       <DependentUpon>201907081048172_AddAllOtherPortsToTariffLine_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907111224083_AddINTTRAStatusesTables_Maheera.cs" />
+    <Compile Include="Migrations\201907111224083_AddINTTRAStatusesTables_Maheera.Designer.cs">
+      <DependentUpon>201907111224083_AddINTTRAStatusesTables_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907140552486_AddINTTRAStatusesTables_Maheera1.cs" />
+    <Compile Include="Migrations\201907140552486_AddINTTRAStatusesTables_Maheera1.Designer.cs">
+      <DependentUpon>201907140552486_AddINTTRAStatusesTables_Maheera1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201907111017086_AddAdditionalPackagesOnlyToUser_Samar.cs" />
     <Compile Include="Migrations\201907111017086_AddAdditionalPackagesOnlyToUser_Samar.Designer.cs">
       <DependentUpon>201907111017086_AddAdditionalPackagesOnlyToUser_Samar.cs</DependentUpon>
@@ -2117,6 +2125,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907081048172_AddAllOtherPortsToTariffLine_Samar.resx">
       <DependentUpon>201907081048172_AddAllOtherPortsToTariffLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907111224083_AddINTTRAStatusesTables_Maheera.resx">
+      <DependentUpon>201907111224083_AddINTTRAStatusesTables_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907140552486_AddINTTRAStatusesTables_Maheera1.resx">
+      <DependentUpon>201907140552486_AddINTTRAStatusesTables_Maheera1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907111017086_AddAdditionalPackagesOnlyToUser_Samar.resx">
       <DependentUpon>201907111017086_AddAdditionalPackagesOnlyToUser_Samar.cs</DependentUpon>

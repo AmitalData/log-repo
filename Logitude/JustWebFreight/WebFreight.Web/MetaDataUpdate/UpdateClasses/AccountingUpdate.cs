@@ -1878,6 +1878,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ShipmentsAndMasters", DefaultText = "Shipments & Masters", LocalDefaultText = "תיקים וגו’בים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.YearTransfer", DefaultText = "Year Transfer", LocalDefaultText = "העברת שנה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.CancelYearTransfer", DefaultText = "Cancel Year Transfer", LocalDefaultText = "ביטול העברת שנה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TaxReport", DefaultText = "Tax Report", LocalDefaultText = "דוח מעמ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.APPaymentDueDate", DefaultText = "Due Date", LocalDefaultText = "תאריך פרעון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LoadBankPage", DefaultText = "Load Bank Page", LocalDefaultText = "טען דפי בנק מקובץ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -2000,6 +2002,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MustBeMultiCurrency", DefaultText = "Parent GLAccount must be multi currency", LocalDefaultText = "כרטיס אב חייב להיות רב מטבעי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CheckInvoiceDate", DefaultText = "Invoice Date can't be bigger than the Accounting Date", LocalDefaultText = "לא ניתן להקליד תאריך אסמכתא מאוחר מהתאריך החשבונאי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.VendorGLAccount", DefaultText = "The bill to doesn’t have GLAccount connected to it", LocalDefaultText = "הספק לא מקושר לכרטיס הנה''ח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
 

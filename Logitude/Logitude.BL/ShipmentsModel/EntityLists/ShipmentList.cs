@@ -481,6 +481,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool SIHasAttachList { get; set; }
         public bool INTTRAIsFreighted { get; set; }
         public string INTTRADocumentTypeCode { get; set; }
+        public string INTTRABookingTransStatusCode { get; set; }
+        public string INTTRABookingStatusCode { get; set; }
+        public string INTTRABookingTransStatusName { get; set; }
+        public string INTTRABookingStatusName { get; set; }
 
         public string From { get; set; }
         public string To { get; set; }

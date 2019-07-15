@@ -383,8 +383,29 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
     private isCopyButtonClicked: boolean = false;
     private DoCopy() {
-        this.isCopyButtonClicked = true;
+        if (this.EntityPM.TypeCode == "AFC") {
+            var windowTitle = "New Copy Version";
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 450;
+            logWindow.Height = 200;
+            logWindow.WindowArgs = this.VersionPM;
+            logWindow.Title = windowTitle;
+            logWindow.ComponentLoaded.subscribe(s => {
+                logWindow.WindowClosed.subscribe(d => {
+                    if (s && d == "ok") {
+                        this.CopyTariffVersion();
+                    }
+                });
+            });
 
+            logWindow.Show('./TariffModule/Components/EditTabs/Tariff/TariffDatesValidationComponent');
+        }
+        else {
+            this.CopyTariffVersion();
+        }
+    }
+    CopyTariffVersion() {
+        this.isCopyButtonClicked = true;
         this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
         this.EntityPM.LastStartDate = this.VersionPM.StartDate;
         this.EntityPM.LastExpirationDate = this.VersionPM.ExpirationDate;
@@ -456,7 +477,6 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
     }
-
     AllInChargesClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { TariffPM: this.EntityPM, VersionPM: this.VersionPM, IsEditingEnabled: false };

@@ -230,7 +230,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                           {
                                               StartDateTime = a.StartDateTime,
                                               EndDateTime = a.EndDateTime,
-                                              Duration = DbFunctions.DiffSeconds(a.StartDateTime, a.EndDateTime),
+                                              Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
                                           }).Where(x => x.StartDateTime != null && x.EndDateTime != null).Average(a => a.Duration);//.ToList();.OrderByDescending(x => x.StartDateTime).Take(10)
             //var Latest10Histories = Latest10HistoriesQuery.ToList();
             double? Duration = 0.0;
@@ -238,6 +238,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 Duration = Latest10HistoriesQuery;// Latest10Histories.Average(a => a.Duration);
             }
+
 
             return (double)Duration;
             //return (from a in repository.context.TaskSchedulerHistories
