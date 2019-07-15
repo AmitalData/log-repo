@@ -15,7 +15,7 @@ export class FieldsHelper {
 
     WaitByIdAndClick(Id: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.id(Id))), 1000000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.id(Id))), 100000000).then(a => {
             element(by.id(Id)).click();
 
         });

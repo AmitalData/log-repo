@@ -261,5 +261,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string UserRoles { get; set; }
+
+        [DataMember]
+        public bool AdditionalPackagesOnly { get; set; }
     }
 }
