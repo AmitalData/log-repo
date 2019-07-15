@@ -22,6 +22,8 @@
                                 [LookUpTableName]="'Port'"
                                 [DependencyFilter1Value]="'A'"
                                 [NoObjectField]="true"
+                                (KeyDownEvent)="KeyDownEvent($event)"
+                                [ForceFocus]="ForceFocus"
                                 (SelectedItemChanged)="Port = $event">
                         </LogLov>
                     </td>

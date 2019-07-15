@@ -29,6 +29,14 @@ namespace Logitude.TariffModule.Data.Repositories
                    select a;
         }
 
+
+        public IQueryable<TariffLine> GetAllTariffLinesByTariffIds(string[] Ids,int tenant)
+        {
+            return from a in context.TariffLines
+                   where a.Tenant == tenant && Ids.Contains(a.TariffId)
+                   select a;
+        }
+
         public IQueryable<Tariff> GetAllTariff(string[] Ids,int tenant)
         {
             return from a in context.Tariffs
@@ -36,10 +44,24 @@ namespace Logitude.TariffModule.Data.Repositories
                    select a;
         }
 
+        public IQueryable<Tariff> GetSurchargeTariffsByAirline(string[] AirlineIds, int tenant)
+        {
+            return from a in context.Tariffs
+                   where a.Tenant == tenant && AirlineIds.Contains(a.SellerId) && a.TypeCode== "ASC"
+                   select a;
+        }
+
         public IQueryable<TariffVersion> GetAllTariffVersionsByTariffIds(string[] Ids, int tenant)
         {
             return from a in context.TariffVersions
                    where a.Tenant == tenant && Ids.Contains(a.TariffId) && a.IsDraft==false 
+                   select a;
+        }
+
+        public IQueryable<TariffVersionAllInCharge> GetAllTariffAllInOnVersionsByTariffIds(string[] Ids,int[]VersionIds, int tenant)
+        {
+            return from a in context.TariffVersionAllInCharges
+                   where a.Tenant == tenant && Ids.Contains(a.TariffId) && VersionIds.Contains(a.Version)
                    select a;
         }
 

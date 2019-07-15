@@ -293,6 +293,9 @@ export class TariffSearchSummary {
     Name: string;
     Currency: string;
     VersionId: string;
+    TotalSurcharge: string;
+    WholePrice: string;
+
 }
 
 export class ExcelTariffLines {
