@@ -114,7 +114,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "QTCH") {
                     if (this.IsAdhoc) {
-                        if (this.ItemsSource.Collection.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null || d.SaleQuantity != null || d.CostQuantity != null).length > 0) {
+                        if (this.ItemsSource.Collection.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
                             this.CheckUpdateQuantities();
                         }
 
