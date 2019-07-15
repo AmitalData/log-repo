@@ -534,6 +534,11 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 includedGLAccounts = res1.Select(d => d.GLAccountId).ToList();
             }
+            List<string> accountsWithoutTransactions = new List<string>();
+
+            accountsWithoutTransactions = gLAccountQueryService.GetGLAccountsWithoutLedgerTransactions(includedGLAccounts, tenant);
+            exceptedGLAccounts.AddRange(accountsWithoutTransactions);
+            includedGLAccounts = includedGLAccounts.Except(accountsWithoutTransactions).ToList();
 
             IEnumerable< IGrouping<string,TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);
 
