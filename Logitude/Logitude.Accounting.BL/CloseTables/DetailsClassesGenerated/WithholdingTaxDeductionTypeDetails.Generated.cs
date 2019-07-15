@@ -615,7 +615,8 @@ namespace Logitude.Accounting.BL
 		    newPoco.Inactive = this.Inactive;  
 		    newPoco.EnglishName = this.EnglishName;  
 		    newPoco.LocalName = this.LocalName;
-            newPoco.Id = this.Id;
+            if(newPoco.Id == null) // by abdullah and alaa
+                newPoco.Id = this.Id;
             newPoco.Tenant = this.Tenant;
         }
 
