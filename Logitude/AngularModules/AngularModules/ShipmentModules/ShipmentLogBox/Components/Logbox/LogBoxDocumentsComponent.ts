@@ -116,7 +116,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 return;
             }
              
-            this.DisableAddDocumentButton = false;
+            this.DisableAddDocumentButton = true;
             this.StartBusyIndicator("Loading ...");
             var div = document.getElementById("DocsTab");
             this.Style = { "max-height": div.clientHeight };
@@ -133,6 +133,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
                         if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
                             this.DisableAddDocumentButton = true;
+                        }
+                        else {
+                            this.DisableAddDocumentButton = false;
                         }
                     });
                     this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe(theResult => {
@@ -512,6 +515,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
     IsDeleteClicked: boolean = false;
     DeleteDocumentClicked(item) {
+        if (this.DisableAddDocumentButton == true) {
+            return;
+        }
         this.IsDeleteClicked = true;
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Title = "Confirm Deletion";
@@ -542,6 +548,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         //alert(item.Id);
     }
     DeleteDocumentFile(item) {
+        if (this.DisableAddDocumentButton == true) {
+            return;
+        }
         this.IsDeleteClicked = true;
         if (item.IsCustomReference) {
             this.messageWindow.Width = 300;
