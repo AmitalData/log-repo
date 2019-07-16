@@ -255,6 +255,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                         DeclarationNumber = d.DeclarationNumber,
                                                         CustomerName = d.CustomerCard.LocalName != null ? d.CustomerCard.LocalName : d.CustomerCard.EnglishName,
                                                         SignedByUserId = a.SignedByUserId,
+                                                         SignedByUserName = a.User != null && a.User.Contact != null ? a.User.Contact.LocalName : null,
                                                      });
             return query;
 		}
