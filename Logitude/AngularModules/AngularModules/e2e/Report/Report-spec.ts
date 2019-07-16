@@ -14,7 +14,10 @@ describe('Report', () => {
 
         it('Run Report Sucssefuly', function () {
             Senarios.ReportScienarios();
-        });
+    });
+
+
+
         it('Run Report Faield', function () {
             Senarios.FailedScienarios();
         });

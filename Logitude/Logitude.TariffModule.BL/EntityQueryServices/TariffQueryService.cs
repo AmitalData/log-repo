@@ -244,7 +244,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                          }).ToList();
             }
 
-            List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive).ToList();
+            List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive && p.TypeCode== "AFC").ToList();
             List<TariffVersion> TariffVersionList = this.repository.GetAllTariffVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), tenant).ToList();
             Dictionary<string, string> Currencies = myCommonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code);
             List<TariffVersionAllInCharge> TariffVersionAllInChargesList = this.repository.GetAllTariffAllInOnVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), TariffVersionList.Select(p => p.Version).ToArray(), tenant).ToList();
@@ -313,33 +313,35 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                             {
                                                 decimal? valueofSurcharge = (decimal?)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
                                                 //   TariffLine surchargeLine= SurchargeTariffLines.Min(p=>p.)
+                                                if (valueofSurcharge != null)
+                                                {
+                                                    switch (UsedMesurment.Code)
+                                                    {
+                                                        case "GRWT": { myQuantity = (decimal?)GrossWeight; break; }
+                                                        case "CHWT": { myQuantity = (decimal?)weight; break; }
+                                                        case "VOLU": { myQuantity = (decimal?)Volume; break; }
+                                                        case "BTEU": { myQuantity = 1; break; }
+                                                        case "FIXD": { myQuantity = 1; break; }
+                                                        case "PRVL": { myQuantity = 1; break; }
+                                                        case "PRFR": { myQuantity = 1; break; }
+                                                        case "GWTN": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(GrossWeight, GrossWeightCode, "ton"); break; }
+                                                        case "CWKG": { myQuantity = (decimal?)this.ComputeChargeableWeight_Kg(weight, Weightcode); break; }
+                                                        case "GWKG": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(GrossWeight, GrossWeightCode, "kg"); break; }
+                                                        case "QTY": { myQuantity = 1; break; }
+                                                        case "VCBM": { myQuantity = (decimal?)ComputeVolumeInCBM(Volume, VolumeCode); break; }
+                                                        default: { break; }
+                                                    }
+                                                    if (myQuantity == null)
+                                                        myQuantity = 1;
 
-                                                switch (UsedMesurment.Code)
-                                                {
-                                                    case "GRWT": { myQuantity = (decimal?)GrossWeight; break; }
-                                                    case "CHWT": { myQuantity = (decimal?)weight; break; }
-                                                    case "VOLU": { myQuantity = (decimal?)Volume; break; }
-                                                    case "BTEU": { myQuantity = 1; break; }
-                                                    case "FIXD": { myQuantity = 1; break; }
-                                                    case "PRVL": { myQuantity = 1; break; }
-                                                    case "PRFR": { myQuantity = 1; break; }
-                                                    case "GWTN": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(GrossWeight, GrossWeightCode, "ton"); break; }
-                                                    case "CWKG": { myQuantity = (decimal?)this.ComputeChargeableWeight_Kg(weight, Weightcode); break; }
-                                                    case "GWKG": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(GrossWeight, GrossWeightCode, "kg"); break; }
-                                                    case "QTY": { myQuantity = 1; break; }
-                                                    case "VCBM": { myQuantity = (decimal?)ComputeVolumeInCBM(Volume, VolumeCode); break; }
-                                                    default: { break; }
-                                                }
-                                                if (myQuantity == null)
-                                                    myQuantity = 1;
-
-                                                if (UsedMesurment.Code == "PRVL" || UsedMesurment.Code == "PRFR")
-                                                {
-                                                    Sum += ((valueofSurcharge * myQuantity * item.price) / 100);
-                                                }
-                                                else
-                                                {
-                                                    Sum += (valueofSurcharge * myQuantity);
+                                                    if (UsedMesurment.Code == "PRVL" || UsedMesurment.Code == "PRFR")
+                                                    {
+                                                        Sum += ((valueofSurcharge * myQuantity * item.price) / 100);
+                                                    }
+                                                    else
+                                                    {
+                                                        Sum += (valueofSurcharge * myQuantity);
+                                                    }
                                                 }
 
 
