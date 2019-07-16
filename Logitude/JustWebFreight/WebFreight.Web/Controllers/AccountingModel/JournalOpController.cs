@@ -227,6 +227,32 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             }
         }
 
+        public HttpResponseMessage GetJournalByAccountingEntityId(string accountingEntityId, string accountingEntityCode)
+        {
+            try
+            {
+                //JournalPM journal = null;
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("Journal", "READ", authToken.Tenant);
+
+                    IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
+                    JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
+
+                    JournalPM journalPM = journalQueryService.GetByAccountingEntityIdAndAccountingEntityCode(accountingEntityId, accountingEntityCode, authToken.Tenant);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, journalPM);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
     }
 }

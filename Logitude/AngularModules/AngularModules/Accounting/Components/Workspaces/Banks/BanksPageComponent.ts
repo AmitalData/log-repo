@@ -355,7 +355,7 @@ export class BanksPageComponent {
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
-        logWindow.Height = 400;
+        logWindow.Height = 500;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());

@@ -24,7 +24,7 @@ set @CustomFieldsValues = dbo.SplitString(@CustomFieldsValues,@FieldName + '':''
 	-- if(@CustomFieldsValues is not null)
 	--begin
 	--set @DataTypeCode =( SELECT value  FROM STRING_SPLIT(@CustomFieldsValues, '':'')  WHERE RTRIM(value) <> @FieldName);
-	-- end
+--	 end
 
   end
 if(@DataTypeCode is not null)

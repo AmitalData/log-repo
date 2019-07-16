@@ -309,14 +309,14 @@ namespace Logitude.Accounting.BL.CoreBL
                     text_2 = TranslateTextsClassTranslate("System1000.O.VendorCode", 0, useLocal);
                     this.AddErrorRow($"{text}{count} {text_2} {text_44}");
                 }
-                if (vendorLine.LocatedDeductionFileNum.TrimStart('0') == "")
-                {
-                    text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
-                    text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
-                    text_2 = TranslateTextsClassTranslate("System1000.O.LocatedDeductionFile", 0, useLocal);
-                    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode}) {text_2} {text_44}");
-                }
-                if (vendorLine.LocatedVATNum.TrimStart('0') == "")
+                //if (vendorLine.LocatedDeductionFileNum.TrimStart('0') == "")
+                //{
+                //    text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
+                //    text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
+                //    text_2 = TranslateTextsClassTranslate("System1000.O.LocatedDeductionFile", 0, useLocal);
+                //    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode}) {text_2} {text_44}");
+                //}
+                if (vendorLine.LocatedVATNum.TrimStart('0') == "" && vendorLine.LocatedDeductionFileNum.TrimStart('0') == "")
                 {
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);

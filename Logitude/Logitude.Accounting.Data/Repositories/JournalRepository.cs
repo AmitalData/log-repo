@@ -316,11 +316,22 @@ namespace Logitude.Accounting.Data.Repositories
             return entity;
         }
 
+        public Journal GetByAccountingEntityId(string entityId,string accountingEntityCode, int tenant)
+        {
+            var entity = (from a in context.Journals
+                          where a.Tenant == tenant
+                          && a.AccountingEntityId == entityId
+                          && a.AccountingEntityCode == accountingEntityCode
+                          select a).FirstOrDefault();
+
+            return entity;
+        }
+
         public Journal GetByAccountingEntityId(string entityId, int tenant)
         {
             var entity = (from a in context.Journals
                           where a.Tenant == tenant
-                          where a.AccountingEntityId == entityId
+                          && a.AccountingEntityId == entityId
                           select a).FirstOrDefault();
 
             return entity;

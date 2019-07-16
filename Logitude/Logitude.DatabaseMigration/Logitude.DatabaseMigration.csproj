@@ -1249,6 +1249,18 @@
     <Compile Include="Migrations\201907140552486_AddINTTRAStatusesTables_Maheera1.Designer.cs">
       <DependentUpon>201907140552486_AddINTTRAStatusesTables_Maheera1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907111017086_AddAdditionalPackagesOnlyToUser_Samar.cs" />
+    <Compile Include="Migrations\201907111017086_AddAdditionalPackagesOnlyToUser_Samar.Designer.cs">
+      <DependentUpon>201907111017086_AddAdditionalPackagesOnlyToUser_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907160710229_FullAccountingSettingsLogoMigration.cs" />
+    <Compile Include="Migrations\201907160710229_FullAccountingSettingsLogoMigration.Designer.cs">
+      <DependentUpon>201907160710229_FullAccountingSettingsLogoMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907160928096_NewField_BankAccount_CurrencyID.cs" />
+    <Compile Include="Migrations\201907160928096_NewField_BankAccount_CurrencyID.Designer.cs">
+      <DependentUpon>201907160928096_NewField_BankAccount_CurrencyID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2127,6 +2139,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907140552486_AddINTTRAStatusesTables_Maheera1.resx">
       <DependentUpon>201907140552486_AddINTTRAStatusesTables_Maheera1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907111017086_AddAdditionalPackagesOnlyToUser_Samar.resx">
+      <DependentUpon>201907111017086_AddAdditionalPackagesOnlyToUser_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907160710229_FullAccountingSettingsLogoMigration.resx">
+      <DependentUpon>201907160710229_FullAccountingSettingsLogoMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907160928096_NewField_BankAccount_CurrencyID.resx">
+      <DependentUpon>201907160928096_NewField_BankAccount_CurrencyID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

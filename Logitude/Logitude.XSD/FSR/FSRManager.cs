@@ -261,6 +261,7 @@ namespace Logitude.XSD.FSR
                                 DocumentId = document.Id,
                                 EntityReference = shipmentPM.ShipmentNumber,
                                 CreateDateUTC = DateTime.UtcNow,
+                                AWBNumber = myPrefix + "-" + myMaster,
                             };
 
                             if (myResultClass.IsDemoTenant)

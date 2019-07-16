@@ -239,6 +239,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 Duration = Latest10HistoriesQuery;// Latest10Histories.Average(a => a.Duration);
             }
 
+
             return (double)Duration;
             //return (from a in repository.context.TaskSchedulerHistories
             //        where a.TaskId == taskId

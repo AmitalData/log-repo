@@ -68,6 +68,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.LastPageCloseBalance).HasColumnName("LastPageCloseBalance").HasPrecision(16, 2);
 
             this.Property(t => t.TransferGLAcccountId).HasColumnName("TransferGLAcccountId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

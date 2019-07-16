@@ -78,6 +78,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      TransferGLAcccountEnglishName = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.EnglishName,
                                                      TransferGLAcccountLocalName = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.LocalName,
 
+                                                     CurrencyCode = a.Currency == null ? null : a.Currency.Code,
+                                                     CurrencySign = a.Currency == null ? null : a.Currency.Sign,
+                                                     CurrencyId = a.CurrencyId,
 
                                                  });
             return query;

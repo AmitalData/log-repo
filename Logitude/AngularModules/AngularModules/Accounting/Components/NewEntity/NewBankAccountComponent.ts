@@ -137,6 +137,13 @@ public isRTL: boolean = false;
             this.EntityPM.EnglishName = value;
         }
     }
+
+    get CurrencyId() { return this.EntityPM.CurrencyId; }
+    set CurrencyId(value: string) {
+        if (this.EntityPM.CurrencyId != value) {
+            this.EntityPM.CurrencyId = value;
+        }
+    }
     //#endregion
 
     OkButtonClicked() {

@@ -524,6 +524,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
                             this.ContinueCreateShipmentProcess(); 
                         } 
                         else {
+                            this.IsCreateButtonClicked = false;
                             this.LoadImporterShipments(true);
                         }
                     });

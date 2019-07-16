@@ -512,6 +512,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 Suppress_DoNotShowCardWithoutActivity = false,
                 IsRevenueExpenseReport = false,
                 MyTrailReportLevel = ReportLevel.GLAccount,
+                
 
             };
 
@@ -533,6 +534,11 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 includedGLAccounts = res1.Select(d => d.GLAccountId).ToList();
             }
+            List<string> accountsWithoutTransactions = new List<string>();
+
+            includedGLAccounts = gLAccountQueryService.GetGLAccountsWithoutLedgerTransactions(includedGLAccounts, tenant);
+            //exceptedGLAccounts.AddRange(accountsWithoutTransactions);
+            //includedGLAccounts = includedGLAccounts.Where(d => !accountsWithoutTransactions.Contains(d)).ToList();
 
             IEnumerable< IGrouping<string,TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);
 
