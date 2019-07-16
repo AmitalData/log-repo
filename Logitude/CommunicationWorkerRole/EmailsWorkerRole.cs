@@ -162,12 +162,12 @@ namespace CommunicationWorkerRole
                                         {
                                             if (response.RetryNumber <= 1)
                                             {
-                                                queueservice.Delay(new TimeSpan(0, 0, 0, 4));
+                                                queueservice.Delay(new TimeSpan(0, 0, 0, 40));
                                             }
 
                                             if (response.RetryNumber >= 2 && response.RetryNumber < 3)
                                             {
-                                                queueservice.Delay(new TimeSpan(0, 0, 0, 8));
+                                                queueservice.Delay(new TimeSpan(0, 0, 1, 0));
                                             }
 
                                             //if (response.RetryNumber > 5 && response.RetryNumber <= 10)

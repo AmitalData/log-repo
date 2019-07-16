@@ -48,6 +48,7 @@ export class FullAccountingSettingList {
 	SoftwareVersion: string;
 	IsPaymentChequesActivated: boolean;
 	GLAccounterCounterLength: number;
+	PaymentChequesLogoId: string;
 	
 }
  

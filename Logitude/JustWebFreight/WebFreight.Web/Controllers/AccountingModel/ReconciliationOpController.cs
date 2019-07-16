@@ -170,7 +170,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             {
 
                 agg.OpenReconciliationDraft= qs.OpenReconciliationDraft(gLAccountId, tenant);
-                myQueryOperations.CallBack = qs.GetOpenReconciliationFilterCallBack(myQueryOperations, gLAccountId, 
+                myQueryOperations.CallBack = qs.GetReconciliationFilterCallBack(myQueryOperations, gLAccountId, 
 tenant);
             }
             var openReconciliation = qs.GetOpenReconciliationFilterList(myQueryOperations, myQueryOperations.CallBack, gLAccountId, tenant);
