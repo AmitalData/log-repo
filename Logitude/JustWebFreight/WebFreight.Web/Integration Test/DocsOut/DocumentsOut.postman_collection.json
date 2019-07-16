@@ -6,6 +6,87 @@
 	},
 	"item": [
 		{
+			"name": "AuthSuccessfull",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
+						"exec": [
+							"pm.test(\"AuthSuccessfullOnTenant1\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"   ",
+							"    var idvalue1 = (pm.response.json().Token);",
+							"    var idvalue2 = (pm.response.json().Tenant);",
+							"    var idvalue3 = (pm.response.json().UserId);",
+							"    var idvalue4 = (pm.response.json().DocumentDownloadToken);",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"    var id3exist = idvalue3 !== null;",
+							"    var id4exist = idvalue4 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    pm.expect(id3exist);",
+							"    pm.expect(id4exist);",
+							"    pm.globals.set(\"Token\",idvalue1);",
+							"    pm.globals.set(\"Tenant\",idvalue2);",
+							"    pm.globals.set(\"LoggedUserId\",idvalue3);",
+							"    pm.globals.set(\"DocumentDownloadToken\",idvalue4);",
+							"    ",
+							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"ahmadb@fnarsoft.com\",\"Password\":\"ahmed13!A15\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1}\n"
+				},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GetDocumentTypeId",
 			"event": [
 				{
@@ -95,16 +176,17 @@
 						"value": "{{Token}}"
 					}
 				],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
+				"body": {},
 				"url": {
-					"raw": "{{URL}}/api/documenttypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=true&Tenant={{Tenant}}",
+					"raw": "http://test.logitudeworld.com/test/api/documenttypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=true&Tenant={{Tenant}}",
+					"protocol": "http",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"documenttypeviews",
 						"getbyfilters"
@@ -208,16 +290,17 @@
 						"value": "{{Token}}"
 					}
 				],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
+				"body": {},
 				"url": {
-					"raw": "{{URL}}/api/DocumentOutExtended/getcreatedocumentout/?documentTypeId={{AirManifestId}}&entityId={{DirectShipmentAirExportId}}&childEntityId=&childReference=&objectTableId={{ObjectTableId}}&tenant={{Tenant}}",
+					"raw": "http://test.logitudeworld.com/test/api/DocumentOutExtended/getcreatedocumentout/?documentTypeId={{AirManifestId}}&entityId={{DirectShipmentAirExportId}}&childEntityId=&childReference=&objectTableId={{ObjectTableId}}&tenant={{Tenant}}",
+					"protocol": "http",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"DocumentOutExtended",
 						"getcreatedocumentout",
@@ -266,13 +349,13 @@
 							"    pm.response.to.have.status(200);",
 							"   ",
 							"    var id1value = (pm.response.json().Id);",
-							"   ",
+							"    var id2value = (pm.response.json().SecurityId);",
 							"    var id1exist = id1value !== null;",
-							"",
+							"    var id2exist = id2value !== null;",
 							"    pm.expect(id1exist);",
-							"",
+							"    pm.expect(id2exist);",
 							"    pm.environment.set(\"AirManifestId\",id1value);",
-							"",
+							"    pm.environment.set(\"DocumentSecurityId\",id2value);",
 							"    ",
 							"        if (id1exist)  {",
 							"    postman.setNextRequest(\"GetDocumentTypeTemplateId\");  ",
@@ -326,16 +409,17 @@
 						"value": "{{Token}}"
 					}
 				],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
+				"body": {},
 				"url": {
-					"raw": "{{URL}}/api/DocumentTypeExtended/GetSinglePMWithOutInclude/?id={{AirManifestId}}&tenant={{Tenant}}",
+					"raw": "http://test.logitudeworld.com/test/api/DocumentTypeExtended/GetSinglePMWithOutInclude/?id={{AirManifestId}}&tenant={{Tenant}}",
+					"protocol": "http",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"DocumentTypeExtended",
 						"GetSinglePMWithOutInclude",
@@ -428,16 +512,17 @@
 						"value": "{{Token}}"
 					}
 				],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
+				"body": {},
 				"url": {
-					"raw": "{{URL}}/api/DocumentTypeTemplateExtended/getdocumenttypetemplatelistsfordocumenttype/?documentTypeId={{AirManifestId}}&tenant={{Tenant}}",
+					"raw": "http://test.logitudeworld.com/test/api/DocumentTypeTemplateExtended/getdocumenttypetemplatelistsfordocumenttype/?documentTypeId={{AirManifestId}}&tenant={{Tenant}}",
+					"protocol": "http",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"DocumentTypeTemplateExtended",
 						"getdocumenttypetemplatelistsfordocumenttype",
@@ -528,16 +613,17 @@
 						"value": "{{Token}}"
 					}
 				],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
+				"body": {},
 				"url": {
-					"raw": "{{URL}}/api/DocumentTypeExtended/getsingledocumenttype/?id={{AirManifestId}}&documentOutId={{DocumentOutAirManifestId}}&tenant={{Tenant}}",
+					"raw": "http://test.logitudeworld.com/test/api/DocumentTypeExtended/getsingledocumenttype/?id={{AirManifestId}}&documentOutId={{DocumentOutAirManifestId}}&tenant={{Tenant}}",
+					"protocol": "http",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"DocumentTypeExtended",
 						"getsingledocumenttype",
@@ -635,16 +721,17 @@
 						"value": "{{Token}}"
 					}
 				],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
+				"body": {},
 				"url": {
-					"raw": "{{URL}}/api/ExportDocument?documentTypeId={{AirManifestId}}&entityId={{DirectShipmentAirExportId}}&entityObjectTableId={{ObjectTableId}}&childEntityId=&childObjectTableId=&documentOutId={{DocumentOutAirManifestId}}&tenant={{Tenant}}&documentTypeCopyId={{DocumentTypeCopyId}}&userId={{LoggedUserId}}",
+					"raw": "http://test.logitudeworld.com/test/api/ExportDocument?documentTypeId={{AirManifestId}}&entityId={{DirectShipmentAirExportId}}&entityObjectTableId={{ObjectTableId}}&childEntityId=&childObjectTableId=&documentOutId={{DocumentOutAirManifestId}}&tenant={{Tenant}}&documentTypeCopyId={{DocumentTypeCopyId}}&userId={{LoggedUserId}}",
+					"protocol": "http",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"ExportDocument"
 					],
@@ -698,27 +785,7 @@
 					"script": {
 						"id": "bd6634bd-e77c-41d5-9090-8977b1e144f7",
 						"exec": [
-							"pm.test(\"UpdateDocumentOutAirManifestId\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   ",
-							"    ",
-							"    var idvalue1 = (pm.response.json().Id);",
-							"    var idvalue2 = (pm.response.json().DocumentOutCopies);",
-							"    var idvalue3 = pm.environment.get(\"DocumentOutAirManifestId\");",
-							"    var idvalue4 = pm.environment.get(\"DocumentOutCopyId\");",
-							"",
-							"    var id1exist = idvalue1 !== null;",
-							"    var id2exist = idvalue2 !== null;",
-							"",
-							"",
-							"    pm.expect(id1exist);",
-							"    pm.expect(id2exist);",
-							"    ",
-							"      if (idvalue3 == idvalue1 && idvalue4 == idvalue2)  {",
-							"    postman.setNextRequest(\"UpdateDocumentOutAirManifestId\");  ",
-							"    } ",
-							"    ",
-							"});"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -772,44 +839,12 @@
 					"mode": "raw",
 					"raw": "{\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": true,\n  \"$id\": \"1\",\n  \"id\": \"{{DocumentOutAirManifestId}}\",\n  \"tenant\": \"{{Tenant}}\",\n  \"Note\": null,\n  \"issuedDate\": null,\n  \"entityId\": \"{{DirectShipmentAirExportId}}\",\n  \"objectTableId\": \"{{ObjectTableId}}\",\n  \"issuedByUserId\": \"{{LoggedUserId}}\",\n  \"documentTypeId\": \"{{AirManifestId}}\",\n  \"issued\": true,\n  \"followUpId\": null,\n  \"followUpCount\": 0,\n  \"issuedByUserName\": \"\",\n  \"extension\": null,\n  \"documentTypeName\": \"Air Manifest\",\n  \"reportTemplate\": null,\n  \"hasFollowUp\": false,\n  \"documentTypeCode\": \"785A\",\n  \"hTMLTemplate\": null,\n  \"templateType\": \"P\",\n  \"documentTypeSubject\": null,\n  \"editableFields\": null,\n  \"documentTemplateId\": \"{{documentTemplateId}}\",\n  \"emailTemplateId\": \"{{emailTemplateId}}\",\n  \"childEntityId\": null,\n  \"childEntityReference\": null,\n  \"xamlDocumentId\": null,\n  \"documentTemplateEditorTool\": \"S\",\n  \"documentTypeObjectTableId\": \"{{ObjectTableId}}\",\n  \"needsRebuild\": false,\n  \"isBlobExist\": false,\n  \"fileSize\": null,\n  \"fileName\": null,\n  \"name\": null,\n  \"isChangeIssuedDate\": true,\n  \"documentOutCopies\": [\n  \t    {\n      \"$id\": \"2\",\n      \"Id\": \"{{DocumentOutCopyId}}\",\n      \"Tenant\": \"{{Tenant}}\",\n      \"DocumentId\": \"{{DocumentOutCopyId}}\",\n      \"DocumentOutId\": \"{{DocumentOutAirManifestId}}\",\n      \"DocumentTypeCopyId\": \"{{DocumentTypeCopyId}}\",\n      \"DocoumentTypeCopyName\": \"Air Manifest\",\n      \"DocumentTypeCopyNameWithDocumentTypeName\": \"Air Manifest\",\n      \"LastPrintedByUserId\": null,\n      \"LastPrintDate\": null,\n      \"FileSize\": null,\n      \"FileName\": \"Air Manifest\",\n      \"LastPrintedByUserName\": null,\n      \"CalculatedFileName\": \"Air Manifest\",\n      \"changeOp\": 0\n    }\n  \t],\n  \"IsAgentView\": false,\n  \"IsCustomerView\": false\n}"
 				},
-				"url": "{{URL}}/api/DocumentOutExtended"
+				"url": "http://test.logitudeworld.com/test/api/DocumentOutExtended"
 			},
 			"response": []
 		},
 		{
 			"name": "GetDocumentDownloadToken",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "8e46774f-c1f7-438b-be91-4a200ae8bece",
-						"exec": [
-							"pm.test(\"GetDocumentDownloadToken\", function () {",
-							"    pm.response.to.have.status(200);",
-							"    ",
-							"   ",
-							"    var idvalue1 = (pm.response.json());",
-							"    var id1exist = idvalue1 !== null;",
-							"    var expected = pm.globals.get(\"DocumentDownloadToken\");",
-							"",
-							"    pm.expect(id1exist);",
-							"    ",
-							"        if (idvalue1 !== expected){",
-							"    tests[\"TokenExpired : \" + id1exist] = responseBody.has(expected);",
-							"    ",
-							"    } ",
-							"        else  {",
-							"    tests[\"TokenValid : \" + id1exist] = responseBody.has(expected);",
-							"    }",
-							"",
-							"",
-							"",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -849,16 +884,17 @@
 						"value": "{{Token}}"
 					}
 				],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
+				"body": {},
 				"url": {
-					"raw": "{{URL}}/api/Authentication/GetDocumentDownloadToken?documentToken={{DocumentDownloadToken}}",
+					"raw": "http://test.logitudeworld.com/test/api/Authentication/GetDocumentDownloadToken?documentToken={{DocumentDownloadToken}}",
+					"protocol": "http",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"Authentication",
 						"GetDocumentDownloadToken"
@@ -875,22 +911,6 @@
 		},
 		{
 			"name": "PrintDocument",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "4681226b-83b6-4e67-9277-50c7e21b1dac",
-						"exec": [
-							"pm.test(\"PrintDocument\", function () {",
-							"    pm.response.to.have.status(200);",
-							"    ",
-							"   ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -930,16 +950,17 @@
 						"value": "{{Token}}"
 					}
 				],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
+				"body": {},
 				"url": {
-					"raw": "{{URL}}/WebPages/DownloadPage.aspx?securityId={{DocumentSecurityId}}&tempId={{DocumentDownloadToken}}",
+					"raw": "http://test.logitudeworld.com/test/WebPages/DownloadPage.aspx?securityId={{DocumentSecurityId}}&tempId={{DocumentDownloadToken}}",
+					"protocol": "http",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"WebPages",
 						"DownloadPage.aspx"
 					],
@@ -959,33 +980,6 @@
 		},
 		{
 			"name": "SendEmailMessageTemplate",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ebc83573-ce47-4df3-a070-71dffd367d2e",
-						"exec": [
-							"pm.test(\"PrintDocument\", function () {",
-							"    pm.response.to.have.status(200);",
-							"    ",
-							"    var idvalue1 = (pm.response.json());",
-							"    var id1exist = idvalue1 === null;",
-							"    ",
-							"    pm.expect(id1exist);",
-							"    ",
-							"    if (idvalue1 !== null){",
-							"        tests[\"Email Sent Successfully \" ] = responseBody.has(idvalue1);",
-							"    }",
-							"    else {",
-							"        tests[\"Email Sent Fail \"] = responseBody.has(idvalue1);",
-							"    }",
-							"    ",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -1034,7 +1028,7 @@
 					"mode": "raw",
 					"raw": "{\"HtmlString\":\"<html><head><meta http- equiv='Content- Type' content= 'text/html; charset = iso-8859-1' > <style type='text/css' style= 'display: none; '></style></head><body><p style=\\\"font-size: 16px; overflow-wrap: break-word;\\\">Integration Test</p></body></html>\",\"InternalDocumentId\":\"{{DocumentOutAirManifestId}}\",\"ToEmail\":\"ahmadb@logitudeworld.com\",\"Tenant\":\"{{Tenant}}\",\"UserId\":\"{{LoggedUserId}}\",\"ObjectTableId\":\"{{ObjectTableId}}\",\"EntityReference\":\"\",\"EntityId\":\"{{DirectShipmentAirExportId}}\",\"Subject\":\"Air Manifest\",\"Cc\":\"\",\"Bcc\":\"\",\"Attachments\":\"{{DocumentOutCopyId}},\",\"ObjectTableName\":\"Shipment\",\"From\":\"\",\"ReplyTo\":\"\"}"
 				},
-				"url": "{{URL}}/api/HtmlEditor/postsendhtmldocument"
+				"url": "http://test.logitudeworld.com/test/api/HtmlEditor/postsendhtmldocument"
 			},
 			"response": []
 		}
