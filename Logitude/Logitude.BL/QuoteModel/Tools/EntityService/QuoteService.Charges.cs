@@ -92,8 +92,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     if (list_ChargeTypes.Count > 0)
                     {
                         RatesTableQuery myQuery = new RatesTableQuery(tenant);
-                        LastRate freightChargeRate = myQuery.GetLastRecordByValueDate(tenant, loggedTenant.FreightCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
-                        LastRate othersChargeRate = myQuery.GetLastRecordByValueDate(tenant, loggedTenant.OtherChargesCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+                        List<CurrencyRate> AllRates = new List<CurrencyRate>();
+
+                        AllRates.Add(this.GetCurrencyRate(loggedTenant, loggedTenant.FreightCurrencyId, myQuery));
+                        AllRates.Add(this.GetCurrencyRate(loggedTenant, loggedTenant.OtherChargesCurrencyId, myQuery));
 
                         if (this.isLCLQuote)
                         {
@@ -153,41 +155,21 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     }
                                 }
 
-                                if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
+                                if (quoteChargePM.CostCurrencyId != null)
                                 {
-                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
+                                    CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == quoteChargePM.CostCurrencyId).FirstOrDefault();
+                                    if (iCurrencyRate == null)
                                     {
-                                        quoteChargePM.CostExchangeRate = null;
+                                        iCurrencyRate = this.GetCurrencyRate(loggedTenant, quoteChargePM.CostCurrencyId, myQuery);
+                                        AllRates.Add(iCurrencyRate);
                                     }
 
-                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
+                                    if (iCurrencyRate != null)
                                     {
-                                        quoteChargePM.CostExchangeRate = 1;
-                                    }
-
-                                    else if (freightChargeRate != null)
-                                    {
-                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
+                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
                                     }
                                 }
 
-                                else
-                                {
-                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
-                                    {
-                                        quoteChargePM.CostExchangeRate = null;
-                                    }
-
-                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
-                                    {
-                                        quoteChargePM.CostExchangeRate = 1;
-                                    }
-
-                                    else if (othersChargeRate != null)
-                                    {
-                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
-                                    }
-                                }
 
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
@@ -203,7 +185,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { quoteChargePM.CostQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { quoteChargePM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { quoteChargePM.CostQuantity = entityPM.GrossWeightInKG; break; }
-                                        case "VCBM": { quoteChargePM.CostQuantity = entityPM.VolumeInCBM; break; }
+
                                         default: { break; }
                                     }
 
@@ -219,7 +201,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { quoteChargePM.SaleQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { quoteChargePM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { quoteChargePM.SaleQuantity = entityPM.GrossWeightInKG; break; }
-                                        case "VCBM": { quoteChargePM.SaleQuantity = entityPM.VolumeInCBM; break; }
                                         default: { break; }
                                     }
 
@@ -332,38 +313,18 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     }
                                 }
 
-                                if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
-                                { 
-                                    if (string.IsNullOrEmpty(itemPM.CostCurrencyId))
-                                    {
-                                        itemPM.CostExchangeRate = null;
-                                    }
-
-                                    else if (itemPM.CostCurrencyId == loggedTenant.CurrencyId)
-                                    {
-                                        itemPM.CostExchangeRate = 1;
-                                    }
-
-                                    else if (freightChargeRate != null)
-                                    {
-                                        itemPM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
-                                    }
-                                }
-
-                                else
+                                if (itemPM.CostCurrencyId != null)
                                 {
-                                    if (string.IsNullOrEmpty(itemPM.CostCurrencyId))
+                                    CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == itemPM.CostCurrencyId).FirstOrDefault();
+                                    if (iCurrencyRate == null)
                                     {
-                                        itemPM.CostExchangeRate = null;
-                                    }
-                                    else if (itemPM.CostCurrencyId == loggedTenant.CurrencyId)
-                                    {
-                                        itemPM.CostExchangeRate = 1;
+                                        iCurrencyRate = this.GetCurrencyRate(loggedTenant, itemPM.CostCurrencyId, myQuery);
+                                        AllRates.Add(iCurrencyRate);
                                     }
 
-                                    else if (othersChargeRate != null)
+                                    if (iCurrencyRate != null)
                                     {
-                                        itemPM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
+                                        itemPM.CostExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
                                     }
                                 }
 
@@ -381,7 +342,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { itemPM.CostQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { itemPM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { itemPM.CostQuantity = entityPM.GrossWeightInKG; break; }
-                                        case "VCBM": { itemPM.CostQuantity = entityPM.VolumeInCBM; break; }
                                         default: { break; }
                                     }
 
@@ -397,7 +357,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { itemPM.SaleQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { itemPM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { itemPM.SaleQuantity = entityPM.GrossWeightInKG; break; }
-                                        case "VCBM": { itemPM.SaleQuantity = entityPM.VolumeInCBM; break; }
                                         default: { break; }
                                     }
 
@@ -412,7 +371,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                             {
                                                 itemPM.VatTypeName = myVatType.EnglishName;
                                                 itemPM.VatIsMultiPercentage = myVatType.IsMultiPercentage;
-                                                
+
                                                 if (myVatType.IsMultiPercentage)
                                                 {
 
@@ -492,8 +451,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
                     case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
-                    case "VCBM": { myResult = entityPM.VolumeInCBM; break; }
-
                     default:
                         {
                             if (this.isFCLQuote)
@@ -541,7 +498,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
                     case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
-                    case "VCBM": { myResult = entityPM.VolumeInCBM; break; }
                     default:
                         {
                             if (this.isFCLQuote)
@@ -800,7 +756,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             double? mySaleAmountLocal = MethodHelper.Round(this.entityPM.QuoteCharges.Where(d => d.IsAllIN == false).Sum(s => s.SaleTotalAmountLocal), 2);
             double? mySaleProfitLocal = MethodHelper.Round(mySaleAmountLocal - myCostAmountLocal, 2);
 
-            if(this.entityPM.ExchangeRate == null)
+            if (this.entityPM.ExchangeRate == null)
             {
                 myResult = null;
             }
@@ -861,5 +817,32 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
         }
+        private CurrencyRate GetCurrencyRate(Tenant loggedTenant, string iCurrencyId, RatesTableQuery myQuery)
+        {
+            CurrencyRate iResult = new CurrencyRate() { Id = iCurrencyId };
+
+            if (iCurrencyId == loggedTenant.CurrencyId)
+            {
+                iResult.Rate = 1;
+            }
+
+            else
+            {
+                LastRate iRate = myQuery.GetLastRecordByValueDate(tenant, iCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+                if (iRate != null)
+                {
+                    iResult.Rate = iRate.Rate;
+                }
+            }
+
+            return iResult;
+        }
+    }
+
+
+    public class CurrencyRate
+    {
+        public string Id { get; set; }
+        public double? Rate { get; set; }
     }
 }
