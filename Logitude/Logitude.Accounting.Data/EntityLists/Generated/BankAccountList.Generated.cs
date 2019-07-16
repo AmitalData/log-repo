@@ -76,6 +76,14 @@ namespace Logitude.Accounting.Data.EntityLists
        public string DeferedGLAccountEnglishName  { get; set; }
        [DataMember]
        public string TransferGLAcccountEnglishName  { get; set; }
+       [DataMember]
+       public string CurrencyId  { get; set; }
+       [DataMember]
+       public string CurrencyName  { get; set; }
+       [DataMember]
+       public string CurrencyCode  { get; set; }
+       [DataMember]
+       public string CurrencySign  { get; set; }
    }
 
 }

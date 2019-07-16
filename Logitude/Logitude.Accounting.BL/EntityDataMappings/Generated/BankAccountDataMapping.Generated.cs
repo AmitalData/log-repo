@@ -44,7 +44,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LastPageNumber, 
 	         LastPageEndDate, 
 	         LastPageCloseBalance, 
-	         TransferGLAcccountId,
+	         TransferGLAcccountId, 
+	         CurrencyId,
 	      }
 
 
@@ -83,7 +84,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TransferGLAcccountLocalName, 
 	         DeferedGLAccountEnglishName, 
 	         TransferGLAcccountEnglishName, 
-	         IsBankPageEvent,
+	         IsBankPageEvent, 
+	         CurrencyId, 
+	         CurrencyName, 
+	         CurrencyCode, 
+	         CurrencySign,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -200,6 +205,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransferGLAcccountId))
             {
 				entityPOCO.TransferGLAcccountId = entityPM.TransferGLAcccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+				entityPOCO.CurrencyId = entityPM.CurrencyId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -323,6 +333,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.TransferGLAcccountId = entityPOCO.TransferGLAcccountId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
+            {
+					entityPM.CurrencyId = entityPOCO.CurrencyId;
+            }
+
 		}
 
 		public void PMToOldPM(BankAccountPM entityPM, BankAccountPM oldEntityPM)
@@ -437,6 +452,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransferGLAcccountId))
             {
                 oldEntityPM.TransferGLAcccountId = entityPM.TransferGLAcccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+                oldEntityPM.CurrencyId = entityPM.CurrencyId;
             }
 			
 		}

@@ -145,6 +145,26 @@
                                                 <td><div></div></td>
                                             </tr>
 
+                                            
+                                            <!-- CurrencyId -->
+                                            <tr class="FormFieldRow">
+                                                    <td style="width: 180px;">
+                                                            <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                        <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="CurrencyId"
+                                                            [LookUpTableName]="'Currency'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
                                             <!-- LocalName -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 180px;">

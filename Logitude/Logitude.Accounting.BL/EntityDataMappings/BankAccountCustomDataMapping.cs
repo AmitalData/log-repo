@@ -1,6 +1,9 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Resolvers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +39,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             // Get currency id of account to compare it when creating a new deposit in html version
             if (entityPOCO.GLAccountId != null)
             {
-                GLAccountPM gla = GetSingleGLAccountPM(entityPOCO.GLAccountId, entityPOCO.Tenant,false);
+                GLAccountPM gla = GetSingleGLAccountPM(entityPOCO.GLAccountId, entityPOCO.Tenant, false);
                 if (gla != null)
                 {
                     entityPM.GLAccountCurrencyId = gla.IsMultiCurrency == true ? "multi" : gla.CurrencyId;
@@ -61,6 +64,31 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.BankCode = bank.Code;
                 }
             }
+
+            FillCurrencyFields(entityPM, entityPOCO);
+        }
+
+        private static void FillCurrencyFields(BankAccountPM entityPM, BankAccount entityPOCO)
+        {
+            if (entityPOCO.CurrencyId != null)
+            {
+                CurrencyPM currencyPM = GetCurrency(entityPOCO);
+
+                if (currencyPM != null)
+                {
+                    bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPOCO.Tenant);
+                    entityPM.CurrencyName = useLocal ? currencyPM.LocalName : currencyPM.EnglishName;
+                    entityPM.CurrencyCode = currencyPM.Code;
+                    entityPM.CurrencySign = currencyPM.Sign;
+                }
+            }
+        }
+
+        private static CurrencyPM GetCurrency(BankAccount entityPOCO)
+        {
+            CurrencyQuery currencyQuery = new CurrencyQuery(entityPOCO.Tenant);
+            CurrencyPM currencyPM = currencyQuery.GetSinglePM(entityPOCO.CurrencyId, entityPOCO.Tenant);
+            return currencyPM;
         }
 
         public virtual GLAccountPM GetSingleGLAccountPM(string gLAccountId,int tenant,bool getFromCache)
