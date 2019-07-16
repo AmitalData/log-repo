@@ -1174,6 +1174,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature QuestionnairesFeature = tenantFeatures.Where(d => d.Code == "QUESTIONNAIRE" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature OpportunityTypeFeature = tenantFeatures.Where(d => d.Code == "OPPORTUNITYTYPES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature TicketTypeFeature = tenantFeatures.Where(d => d.Code == "TICKETTYPES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature OccasionTypeFeature = tenantFeatures.Where(d => d.Code == "General.Occasion.OccasionType" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             Feature TicketSeverityFeature = tenantFeatures.Where(d => d.Code == "TICKETSEVERITIES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature TicketStageFeature = tenantFeatures.Where(d => d.Code == "TICKETSTAGES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
@@ -1199,6 +1200,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTSV", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 4, CategoryTypeCode = "TKT", TextCode = "General.MC.TKT.SLAHeader", Icon = "OpportunityTypes.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "SLAHeader").FirstOrDefault().Id, FeatureId = SLAHeaderFeature.Id }, menusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTEG", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 5, CategoryTypeCode = "TKT", TextCode = "General.MC.TKT.EmployeeGroups", Icon = "EmployeeGroups.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "EmployeeGroup").FirstOrDefault().Id, FeatureId = EmployeeGroupFeature.Id }, menusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTBH", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 6, CategoryTypeCode = "TKT", TextCode = "General.MC.TKT.BusinessHour", Icon = "BusinessHour.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "BusinessHour").FirstOrDefault().Id, FeatureId = BusinessHourFeature.Id }, menusTablesRepository, tenantMenusTables);
+
+            // Occasion
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTOT", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 0, CategoryTypeCode = "OCS", TextCode = "General.MC.OCS.OccasionType", Icon = "OpportunityTypes.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "OccasionType").FirstOrDefault().Id, FeatureId = OccasionTypeFeature.Id }, menusTablesRepository, tenantMenusTables);
 
             menusTablesRepository.SubmitChanges(); 
         }

@@ -26,9 +26,9 @@ namespace WarehouseData
 {
     public partial class BuildWarehouseForm : Form
     {
-        string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
+        string dbSourceConnection = "2019R3_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
 
-        string dbDestinationConnection = "Logitude2-5_Global,sa,Saas256,.";
+        string dbDestinationConnection = "2019R3_Global,sa,Saas256,.";
     
         
         public BuildWarehouseForm()
@@ -237,14 +237,16 @@ namespace WarehouseData
 
                             #endregion
 
+
                             #region Create and Build Dimensions Table
 
 
-                            stepName = "BuildDateDimensionsTable";
+                              stepName = "BuildDateDimensionsTable";
                             warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
+                            stepName = "RunOtherScripte";
+                            warehouseHelper.RunOtherScripte(destinationConnectionString);
+               
 
-                            stepName = "RunSqlFunctions";
-                            warehouseHelper.RunSqlFunctions(destinationConnectionString);
 
 
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
@@ -336,7 +338,12 @@ namespace WarehouseData
                         catch (Exception ex)
                         {
                             IsBuildDataRunning = false;
-                            MessageBox.Show( ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : ""), stepName);
+
+                            string message = ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : "");
+                            if (message.Length > 1500)  message = message.Substring(0, 1500);
+
+
+                            MessageBox.Show(message, stepName);
                         }
                     }
 
@@ -347,7 +354,9 @@ namespace WarehouseData
             catch (Exception ex)
             {
                 IsBuildDataRunning = false;
-                MessageBox.Show(ex.Message, ex.Message + (ex.InnerException!=null? ex.InnerException.ToString():""));
+                string message = ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : "");
+                if (message.Length > 1500) message = message.Substring(0, 1500);
+                MessageBox.Show(message);
 
             }
 

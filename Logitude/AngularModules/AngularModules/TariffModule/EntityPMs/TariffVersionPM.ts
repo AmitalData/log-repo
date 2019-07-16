@@ -9,6 +9,7 @@
 
 import {TariffPM} from './TariffPM';
 import {TariffLinePM} from './TariffLinePM';
+import {TariffVersionAllInChargePM} from './TariffVersionAllInChargePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -122,7 +123,41 @@ export class TariffVersionPM {
     public set ParentVersionNumber(newValue: number) { if (this.parentVersionNumber != newValue) { this.parentVersionNumber = newValue; this.MarkAsDirty("ParentVersionNumber"); } }
        
 	 
+     
+	private tariffAllInCharges: TariffVersionAllInChargePM[];
+    get  TariffAllInCharges() {
+        if (this.tariffAllInCharges == null) {
+            this.tariffAllInCharges = [];
+        }
 
+        return this.tariffAllInCharges;
+    }
+    set  TariffAllInCharges(newValue: TariffVersionAllInChargePM[]) {
+        if (this.tariffAllInCharges != newValue) {
+            this.tariffAllInCharges = newValue;
+        }
+    }
+    public AddTariffVersionAllInCharge(item: TariffVersionAllInChargePM) {
+        if (item != null) {
+            var index = this. TariffAllInCharges.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. TariffAllInCharges.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveTariffVersionAllInCharge(item: TariffVersionAllInChargePM) {
+        if (item != null) {
+            var index = this. TariffAllInCharges.indexOf(item);
+            if (index > -1) {
+                this. TariffAllInCharges.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public TariffAllInCharges: Array<TariffVersionAllInChargePM>= [];
+ 
     public OldEntityPM: TariffVersionPM;
 	
     private entityParentPM: any;

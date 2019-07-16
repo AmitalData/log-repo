@@ -22,6 +22,7 @@ namespace Logitude.TariffModule.Data
 		 IDbSet<TariffSetting> TariffSettings { get; }
 		 IDbSet<TariffType> TariffTypes { get; }
 		 IDbSet<TariffVersion> TariffVersions { get; }
+		 IDbSet<TariffVersionAllInCharge> TariffVersionAllInCharges { get; }
 	 
          void SetAsModified(object entity);
          void DetectChanges();

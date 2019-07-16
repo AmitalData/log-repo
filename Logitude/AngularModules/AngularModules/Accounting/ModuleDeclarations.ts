@@ -42,7 +42,6 @@ import { Generate1000Component } from './Components/Maintenance/Generate1000Comp
 import { Receiving1000Component } from './Components/Maintenance/Receiving1000Component';
 import { AccountingFunctionalTestComponent } from './Components/Maintenance/AccountingFunctionalTestComponent';
 
-
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
 import {ManageReconciliationsTabComponent} from './Components/EditTabs/GLAccount/ManageReconciliationsTabComponent';
@@ -61,6 +60,7 @@ import {BankCodeGeneralTabComponent} from './Components/EditTabs/BankCode/BankCo
 import {ExternalRecoDetailsTabComponent} from './Components/EditTabs/ExternalReconciliation/ExternalRecoDetailsTabComponent';
 import { OpenFormatReportLogTabComponent } from './Components/EditTabs/OpenFormatReport/OpenFormatReportLogTabComponent';
 import { TaxDeductionReportGeneralTabComponent } from './Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabComponent';
+import { BankPageEventsComponent } from './Components/EditTabs/BankAccount/BankPageEventsComponent';
 
 import {GlAccountLedgerTransactionsListTemplate} from './Components/ListTemplates/GlAccountLedgerTransactionsListTemplate';
 import {ReconcileExternalPageListTemplate} from './Components/ListTemplates/ReconcileExternalPageListTemplate';
@@ -167,6 +167,7 @@ export const Components =
         TaxDeductionReportLogTabComponent,
         OpenFormatReportLogTabComponent,
         TaxDeductionReportGeneralTabComponent,
+        BankPageEventsComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -276,6 +277,7 @@ export class ModuleDeclarations {
             case "TaxDeductionReportLogTabComponent": { myResult = TaxDeductionReportLogTabComponent; break; }
             case "OpenFormatReportLogTabComponent": { myResult = OpenFormatReportLogTabComponent; break; }
             case "TaxDeductionReportGeneralTabComponent": { myResult = TaxDeductionReportGeneralTabComponent; break; }
+            case "BankPageEventsComponent": { myResult = BankPageEventsComponent; break; }
             //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }

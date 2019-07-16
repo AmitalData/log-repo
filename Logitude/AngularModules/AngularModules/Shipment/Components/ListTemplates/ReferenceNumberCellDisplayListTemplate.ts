@@ -44,7 +44,7 @@ export class ReferenceNumberCellDisplayListTemplate {
 
     //public Imgs: Logosdictionary[];
     private CurrentSession = SessionLocator.SelectedSession;
-    public ToggleIsExportShipments: boolean = true;
+    public ToggleIsExportShipments: boolean = false;
     constructor(private CD: ChangeDetectorRef) {
         if (!this.CurrentSession.Imgs) {
             this.CurrentSession.Imgs = [];

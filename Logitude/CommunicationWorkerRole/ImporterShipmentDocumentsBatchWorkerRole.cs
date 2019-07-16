@@ -67,9 +67,9 @@ namespace CommunicationWorkerRole
             SettingQuery SettingQuery = new SettingQuery(SettingRepository);
             URI = SettingQuery.GetSinglePM().CustomerTenantsURL.TrimEnd('/') + "/api/";
         }
-        private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
+        private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM, int tenant)
         {
-            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant))
+            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant,tenant))
             {
                 return false;
             }
@@ -211,10 +211,13 @@ namespace CommunicationWorkerRole
                                         var tenantQuery = new TenantQuery(ForwarderShipment.Tenant);
                                         var tenantPM = tenantQuery.GetSinglePM(ForwarderShipment.Tenant);
                                         TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
-                                        var customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(tenant, importerTenant);
-                                        if (customerTenantAccess != null)
+                                        if (customerTenantAccessInfo != null)
                                         {
-                                            LogPM.PartnerName = customerTenantAccess.CompanyName + " ( " + customerTenantAccess.CustomerTenant + " )";
+                                            var customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(tenant, importerTenant);
+                                            if (customerTenantAccess != null)
+                                            {
+                                                LogPM.PartnerName = customerTenantAccess.CompanyName + " ( " + customerTenantAccess.CustomerTenant + " )";
+                                            }
                                         }
                                         if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.IsCustomerTenantShare)// && (tenantPM.CustomerTenantShareImportFile ? ForwarderShipment.DirectionId.ToUpper() == "I" || ForwarderShipment.DirectionId.ToUpper() == "C" : ForwarderShipment.DirectionId.ToUpper() == "C"))
                                         {
@@ -225,7 +228,7 @@ namespace CommunicationWorkerRole
                                             string EntityNumber = "";
                                             if (ForwarderShipment != null)
                                             {
-                                                if (!IsImporterTenantHasExportFeatureForExportShipments(importerTenant, ForwarderShipment))
+                                                if (!IsImporterTenantHasExportFeatureForExportShipments(importerTenant, ForwarderShipment,tenant))
                                                 {
                                                     queueservice.Complete();
                                                 }

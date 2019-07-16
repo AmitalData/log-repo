@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -56,8 +57,8 @@ namespace CommunicationWorkerRole.Tasks
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
                     //TaskSchedulerHistoryRepository TaskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(Tenant);
-                    
-                    
+
+
 
                     Task.Status = null;
                     //queueservice.Complete();
@@ -69,6 +70,11 @@ namespace CommunicationWorkerRole.Tasks
 
                     scope.Complete();
                 }
+            }
+            catch (ThreadAbortException e)
+            {
+                //LogInfoToDB("After Aborting the thread ..");
+                //Thread.ResetAbort();
             }
             catch (Exception ex)
             {
@@ -84,7 +90,7 @@ namespace CommunicationWorkerRole.Tasks
 
                     if (RetryNumber > 1 && RetryNumber <= 2)
                     {
-                        queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 1,0), MessageId);
+                        queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 1, 0), MessageId);
                         //Task.Retries++;
                         //ReScheduleFaildTask(Task, 10);
                     }
@@ -98,10 +104,11 @@ namespace CommunicationWorkerRole.Tasks
                     }
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        string errorMessage = ex.Message + Environment.NewLine; 
-                        if (ex.InnerException != null) { 
+                        string errorMessage = ex.Message + Environment.NewLine;
+                        if (ex.InnerException != null)
+                        {
                             errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
-                        } 
+                        }
                         errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
                         LogException(errorMessage);
                         SubmitLogsData();
@@ -122,7 +129,7 @@ namespace CommunicationWorkerRole.Tasks
                         //ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "", null);
                         scope.Complete();
                     }
-                    
+
                 }
                 catch (Exception exc)
                 {
@@ -177,7 +184,8 @@ namespace CommunicationWorkerRole.Tasks
                 }
                 else
                 {
-                    SchedulerLog.Log += StringHelper.TruncateLongString(Environment.NewLine + MyFinalLog.ToString(), 4000);
+                    SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
+                    SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
                     SchedulerLogsService.Update(SchedulerLog);
                 }
 
@@ -201,6 +209,49 @@ namespace CommunicationWorkerRole.Tasks
                 this.Infos.AppendLine(Message);
         }
 
+        public void LogInfoToDB(string Message)
+        {
+            if (!string.IsNullOrEmpty(Message))
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
+                TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
+                SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
+                TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(Tenant);
+                SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
+                var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
+                if (TaskSchedulerHistory != null)
+                {
+
+                    TaskSchedulerHistory.LogType = "Info";
+                    TaskSchedulerHistory.RunResult = "Succeeded";
+                    TaskSchedulerHistory.LogFirstLine = StringHelper.TruncateLongString(Message.ToString(), 1000);
+
+                    StringBuilder MyFinalLog = new StringBuilder(); 
+                    MyFinalLog.AppendLine(Message.ToString());
+                    SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
+                    if (SchedulerLog == null)
+                    {
+                        SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
+                        SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+                        SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
+                        SchedulerLogsService.Create(SchedulerLog);
+                    }
+                    else
+                    {
+                        SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
+                        SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
+                        SchedulerLogsService.Update(SchedulerLog);
+                    }
+
+
+                    TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
+                    TaskSchedulerHistory.EndDateTimeUTC = DateTime.UtcNow;
+                    TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
+
+                }
+            }
+        }
+
         public void Logwarning(string Message)
         {
             if (!string.IsNullOrEmpty(Message))
@@ -218,7 +269,7 @@ namespace CommunicationWorkerRole.Tasks
             var queueservice = new DbQueueService();
             if (task.NextRunTime < DateTime.Now)
             {
-                task.NextRunTime = DateTime.Now;
+                task.NextRunTime = TenantServerConfigration.GetCurrentDateTime(task.Tenant);
                 task.NextRunTimeUTC = DateTime.UtcNow;
             }
             switch (task.TriggerType)
@@ -228,13 +279,13 @@ namespace CommunicationWorkerRole.Tasks
                         if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
                         {
                             task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
-                            task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0); 
+                            task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
                         }
                         else
                         {
                             task.NextRunTime = task.NextRunTime.Value.AddDays(1);
                             task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddDays(1);
-                        } 
+                        }
                         break;
                     }
                 case "W":
@@ -316,7 +367,7 @@ namespace CommunicationWorkerRole.Tasks
                     {
                         break;
                     }
-                   
+
             }
             if (task.TriggerType.ToUpper() != "O")
             {
@@ -332,7 +383,7 @@ namespace CommunicationWorkerRole.Tasks
             //queueservice.Complete();
         }
 
-        private void ReScheduleFaildTask(TasksSchedulerPM task,int DelaySeconds)
+        private void ReScheduleFaildTask(TasksSchedulerPM task, int DelaySeconds)
         {
             var queueservice = new DbQueueService();
             var NextRunTime = DateTime.Now.AddSeconds(DelaySeconds + 0.0);

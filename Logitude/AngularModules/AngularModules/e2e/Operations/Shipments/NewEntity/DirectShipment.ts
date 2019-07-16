@@ -47,10 +47,10 @@ export class DirectShipment {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       if (Direction == 'Domestic') {
-        this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'LAS');
+        this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'MIA');
+        this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'eze');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       } else {
         this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');

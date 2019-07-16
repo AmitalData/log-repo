@@ -28,6 +28,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.DefaultPriceSteps).HasColumnName("DefaultPriceSteps").IsRequired().HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.DefaultWarningPercentage).HasColumnName("DefaultWarningPercentage");
         }
     }
 }

@@ -5,7 +5,7 @@ import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
-
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 @Component({
     moduleId: module.id,
     templateUrl: './TariffGeneralTabComponent.html',
@@ -18,6 +18,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     public VisibileSurchargesArea: boolean = false;
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
+    public ChargeTypesQueryFilters: ApiQueryFilters;
     public ValidationErrorsList: string[] = [];
     private chargesTypePMService: ChargesTypeListService;
 
@@ -26,6 +27,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         this.EntityPM = entityArgs.EntityPM;
         this.chargesTypePMService = new ChargesTypeListService();
         this.FillChargesIDsAndUOMS();
+        this.BuildQueryFilters();
         if (this.EntityPM.TypeCode == "ASC") {
             this.VisibileSurchargesArea = true;
         }
@@ -33,6 +35,14 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.VisibileSurchargesArea = false;
         }
         this.Listen();
+    }
+
+
+    BuildQueryFilters() {
+        this.ChargeTypesQueryFilters = new ApiQueryFilters();
+        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("IsAir", true, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
     }
 
 

@@ -104,6 +104,36 @@ export class OccasionPM {
     public set OccasionStatusId(newValue: string) { if (this.occasionStatusId != newValue) { this.occasionStatusId = newValue; this.MarkAsDirty("OccasionStatusId"); } }
        
 	 
+    private createdByContactName: string;
+    public get CreatedByContactName() { return this.createdByContactName; }
+    public set CreatedByContactName(newValue: string) { if (this.createdByContactName != newValue) { this.createdByContactName = newValue; this.MarkAsDirty("CreatedByContactName"); } }
+       
+	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
+    private typeName: string;
+    public get TypeName() { return this.typeName; }
+    public set TypeName(newValue: string) { if (this.typeName != newValue) { this.typeName = newValue; this.MarkAsDirty("TypeName"); } }
+       
+	 
+    private ownerName: string;
+    public get OwnerName() { return this.ownerName; }
+    public set OwnerName(newValue: string) { if (this.ownerName != newValue) { this.ownerName = newValue; this.MarkAsDirty("OwnerName"); } }
+       
+	 
+    private occasionStatusName: string;
+    public get OccasionStatusName() { return this.occasionStatusName; }
+    public set OccasionStatusName(newValue: string) { if (this.occasionStatusName != newValue) { this.occasionStatusName = newValue; this.MarkAsDirty("OccasionStatusName"); } }
+       
+	 
+    private industryName: string;
+    public get IndustryName() { return this.industryName; }
+    public set IndustryName(newValue: string) { if (this.industryName != newValue) { this.industryName = newValue; this.MarkAsDirty("IndustryName"); } }
+       
+	 
 
     public OldEntityPM: OccasionPM;
 		

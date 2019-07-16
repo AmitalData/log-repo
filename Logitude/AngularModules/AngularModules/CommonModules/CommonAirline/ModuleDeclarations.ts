@@ -11,6 +11,7 @@ import { AirlineDocsInTabComponent } from './Components/EditTabs/AirlineDocsInTa
 import { AirlineGeneralTabComponent } from './Components/EditTabs/AirlineGeneralTabComponent';
 import { AreasTabComponent } from './Components/EditTabs/AreasTabComponent';
 import { AddEditAirlineAreaComponent } from './Components/AddEdit/AddEditAirlineAreaComponent';
+import { ChoosePortComponent } from './Components/AddEdit/ChoosePortComponent';
 
 
 
@@ -29,6 +30,7 @@ export const Components =
         AirlineGeneralTabComponent,
         AirlineSurchargeTabComponent,
         AddEditAirlineAreaComponent,
+        ChoosePortComponent
     ];
 
 export class ModuleDeclarations {
@@ -50,6 +52,7 @@ export class ModuleDeclarations {
             case "AirlineGeneralTabComponent": { myResult = AirlineGeneralTabComponent; break; }
             case "AirlineSurchargeTabComponent": { myResult = AirlineSurchargeTabComponent; break; }
             case "AddEditAirlineAreaComponent": { myResult = AddEditAirlineAreaComponent; break; }
+            case "ChoosePortComponent": { myResult = ChoosePortComponent; break; }
 
                 
                 

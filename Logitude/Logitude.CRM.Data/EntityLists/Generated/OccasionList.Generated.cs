@@ -46,6 +46,18 @@ namespace Logitude.CRM.Data.EntityLists
        public string OccasionTypeId  { get; set; }
        [DataMember]
        public string OccasionStatusId  { get; set; }
+       [DataMember]
+       public string CreatedByContactName  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public string TypeName  { get; set; }
+       [DataMember]
+       public string OwnerName  { get; set; }
+       [DataMember]
+       public string OccasionStatusName  { get; set; }
+       [DataMember]
+       public string IndustryName  { get; set; }
    }
 
 }

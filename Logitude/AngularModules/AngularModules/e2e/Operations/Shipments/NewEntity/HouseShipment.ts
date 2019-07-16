@@ -43,7 +43,7 @@ export class HouseShipment {
 
       if (ShipperRef != 'CreatedFromMaster') {
         if (Direction == 'Domestic' && TransportMode != 'I') {
-          this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'LAS');
+          this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'MIA');
           this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
           this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'MIA');

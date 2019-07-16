@@ -1031,6 +1031,14 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
 
+            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+
+
             if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
                 if (this.EntityPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods) || (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods)).length > 0) {
                     updateMessage = "You have updated the Value of Goods, apply the new values?";
@@ -1048,7 +1056,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
             this.UpdateQuantitiesMessage = updateMessage;
             this.UpdateQuantitiesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
-            this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+            this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;        
         }
     }
     UpdateQuantitiesClicked() {
@@ -1371,7 +1379,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "CHWT":
                 case "CWKG":
                 case "GWKG":
-                //case "VOLU":
+                case "VCBM":
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
@@ -1475,7 +1483,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "CHWT":
                 case "CWKG":
                 case "GWKG":
-                //case "VOLU":
+                case "VCBM":
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
@@ -1872,12 +1880,18 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.CostMeasurementId = !AppTool.IsNullOrEmpty(list.ContainerMeasurementId) ? list.ContainerMeasurementId : list.MeasurementId;
             this.EntityPM.IsBackToBack = list.IsBackToBack;
 
-            if (this.ChargesGroupCode == "FRT" || this.ChargesGroupCode == "SCH") {
-                this.CostCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-            }
 
+            if (!AppTool.IsNullOrEmpty(list.PayablesDefaultCurrencyId)) {
+                this.CostCurrencyId = list.PayablesDefaultCurrencyId;
+            }
             else {
-                this.CostCurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                if (this.ChargesGroupCode == "FRT" || this.ChargesGroupCode == "SCH") {
+                    this.CostCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                }
+
+                else {
+                    this.CostCurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                }
             }
         }
 
@@ -2433,6 +2447,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "QTY": { myResult = this.QuotePM.NumberOfContainers; break; }
                 case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
+                case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
 
                 default:
                     {
@@ -2846,6 +2861,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "QTY": { myResult = this.QuotePM.NumberOfContainers; break; }
                 case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
+                case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.SaleMeasurementId)) {

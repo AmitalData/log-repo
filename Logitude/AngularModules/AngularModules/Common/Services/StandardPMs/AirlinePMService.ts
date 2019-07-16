@@ -22,6 +22,8 @@ import {AirlinePM} from '../../EntityPMs/AirlinePM';
 
 import {CardExternalCodeByCurrencyPM} from '../../EntityPMs/CardExternalCodeByCurrencyPM';
 import {AirlineAreaPM} from '../../EntityPMs/AirlineAreaPM';
+
+import {AirlineAreasPortPM} from '../../EntityPMs/AirlineAreasPortPM';
 import {AirlinePMInitService} from '../../EntityPMInitServices/AirlinePMInitService';
 
 @Injectable()
@@ -237,6 +239,13 @@ export class AirlinePMService {
             var myAirlineAreaPM = entityPM.AirlineAreas[item];
             var newAirlineAreaPM: AirlineAreaPM = this.clone(myAirlineAreaPM);
 						
+                newAirlineAreaPM.AirlineAreasPorts = [];
+                for (var k in myAirlineAreaPM.AirlineAreasPorts) {
+				    var myAirlineAreasPortPM =myAirlineAreaPM.AirlineAreasPorts[k];
+				    var newAirlineAreasPortPM=this.clone(myAirlineAreaPM.AirlineAreasPorts[k]);
+                    newAirlineAreaPM.AirlineAreasPorts.push(newAirlineAreasPortPM);
+
+					                 }
 							 
             entityPM.OldEntityPM.AirlineAreas.push(newAirlineAreaPM);
             }
@@ -382,6 +391,14 @@ export class AirlinePMService {
                 newAirlineAreaPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newAirlineAreaPM.OldEntityPM = this.clone(newAirlineAreaPM);
+ 
+
+                this.MapAirlineAreasPorts(newAirlineAreaPM, jItem, mapParent);
+                newAirlineAreaPM.OldEntityPM.AirlineAreasPorts = [];
+                for (var k in newAirlineAreaPM.AirlineAreasPorts) {
+                    //var clonedInside = this.clone(newAirlineAreaPM.AirlineAreasPorts[k]);
+                    newAirlineAreaPM.OldEntityPM.AirlineAreasPorts.push(newAirlineAreaPM.AirlineAreasPorts[k].OldEntityPM); // clone old AirlineAreasPorts//
+                }
 
 				
             }
@@ -394,6 +411,9 @@ export class AirlinePMService {
                 else {
                         newAirlineAreaPM.ChangeSetOp = "Insert";
                 }
+ 
+
+                this.MapAirlineAreasPorts(newAirlineAreaPM, jItem, mapParent);
  
                 newAirlineAreaPM.OldEntityPM = null;
                 newAirlineAreaPM.EntityParentPM = null;
@@ -427,6 +447,9 @@ export class AirlinePMService {
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
+ 
+
+                        this.MapAirlineAreasPorts(deletedPM, oldItemJson, mapParent);
                         deletedPM.OldEntityPM = null;
                         entityPM.AirlineAreas.push(deletedPM);
                     }
@@ -434,6 +457,102 @@ export class AirlinePMService {
             }
         }
     }
+    MapAirlineAreasPorts(entityPM: AirlineAreaPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldAirlineAreasPorts: AirlineAreasPortPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldAirlineAreasPorts = entityPM.OldEntityPM.AirlineAreasPorts;
+        }
+
+        entityPM.AirlineAreasPorts = new Array<AirlineAreasPortPM>();
+        for (var item in jsonPM.AirlineAreasPorts) {
+            var jItem = jsonPM.AirlineAreasPorts[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newAirlineAreasPortPM: AirlineAreasPortPM;
+	  
+            if (mapParent) {
+                newAirlineAreasPortPM = new AirlineAreasPortPM(entityPM);
+            }
+            else
+            {
+                newAirlineAreasPortPM = new AirlineAreasPortPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newAirlineAreasPortPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newAirlineAreasPortPM.UniqueKey = Guid.newGuid();
+                newAirlineAreasPortPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newAirlineAreasPortPM.OldEntityPM = this.clone(newAirlineAreasPortPM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newAirlineAreasPortPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newAirlineAreasPortPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newAirlineAreasPortPM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newAirlineAreasPortPM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newAirlineAreasPortPM.OldEntityPM = null;
+                newAirlineAreasPortPM.EntityParentPM = null;
+            }
+			
+			 newAirlineAreasPortPM.IsDirty = false;
+            entityPM.AirlineAreasPorts.push(newAirlineAreasPortPM);
+        }
+        if (oldAirlineAreasPorts) {
+            
+            for (var itemKey in oldAirlineAreasPorts) {
+                if (entityPM.AirlineAreasPorts.filter(p=> p.UniqueKey === oldAirlineAreasPorts[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldAirlineAreasPorts[itemKey]) {
+                        //oldAirlineAreasPorts[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.AirlineAreasPorts.push(oldAirlineAreasPorts[itemKey]);
+						var oldItemJson = oldAirlineAreasPorts[itemKey];
+                        var deletedPM: AirlineAreasPortPM = new AirlineAreasPortPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.AirlineAreasPorts.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+ 
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

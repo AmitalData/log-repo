@@ -13,7 +13,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PortId { get; set; }
 
         public int Tenant { get; set; }
-        public string Description { get; set; }
         public string Name { get; set; }
         public DateTime? AddedDate { get; set; }       
         public string AddedByUserId { get; set; }

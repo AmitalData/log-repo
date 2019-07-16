@@ -386,21 +386,24 @@ using Simplog.Data.ShipmentsModel;
 					
 					temp.House = MyEntity.HouseNo;
 					temp.HAWBDate = MyEntity.HouseDate;
-					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
+					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods; 
+
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
 						AirPackageQueryService AirPackageService15 = new AirPackageQueryService(Tenant);
 						temp.ShipmentPackages = AirPackageService15.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 					}
 
-								 
+								  
+
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
 						OceanOrInlandPackageQueryService OceanOrInlandPackageService15 = new OceanOrInlandPackageQueryService(Tenant);
 						temp.ShipmentPackages = OceanOrInlandPackageService15.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 					}
 
-								 
+								  
+
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
 						ContainerQueryService ContainerService15 = new ContainerQueryService(Tenant);

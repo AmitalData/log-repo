@@ -73,7 +73,7 @@ export class EditComponent implements OnDestroy {
     @ViewChild('WindowLocation', { read: ViewContainerRef }) WindowLocationViewContainerRef: ViewContainerRef;
     @ViewChild('TabControlBody', { read: ViewContainerRef }) TabControlBodyViewContainerRef: ViewContainerRef;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    private CurrentSession = SessionLocator.SelectedSession;
+    public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
@@ -131,9 +131,10 @@ export class EditComponent implements OnDestroy {
         if (this.ObjectTableName == "CommunicationLog") {
             this.IsSaveBtnDisable = true;
         }
-
+        
+       
         this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible;
-
+        
         // Split Component
         var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
         if (!AppTool.IsNullOrEmpty(feature)) { // granted
@@ -152,7 +153,7 @@ export class EditComponent implements OnDestroy {
         if (this.EntityId || (this.EntityId && this.EntityPM.Id))
             isNewEntity = false;
 
-        if (this.ObjectTableName == "ARPayment" && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
+        if ((this.ObjectTableName == "ARPayment"  || this.ObjectTableName== "APPayment") && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
             this.IsSaveBtnVisible = false;
         }
         //
@@ -817,6 +818,11 @@ export class EditComponent implements OnDestroy {
             if (this.SingleDetailsTab) {
                 SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditTabComponent", this.TabControlBodyViewContainerRef)
                     .then(cmpRef => {
+
+                        if (this.PreSelectedTabCode != null) {
+                            this.entityArgs.PreSelectedTabCode = this.PreSelectedTabCode;
+                        }
+
                         cmpRef.instance.CurrentlySelected = true;
                         cmpRef.instance.Run(this.SingleDetailsTab.Code, this.SingleDetailsTab.HtmlComponentUrl);
                     });

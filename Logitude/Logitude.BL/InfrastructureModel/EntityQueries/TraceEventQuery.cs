@@ -102,7 +102,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 }
 
             }
-      
+           
             IQueryable<TraceEventPM> traceEvents = from a in repository.context.TraceEvent.Include("EventType").Include("User.Contact").Include("EventType.EventTypeCategory")
                                                    where a.Tenant == tenant && (a.EntityId == entityId || a.EntityId == masterId) && a.ObjectTableId == objectTableId && !a.Deleted
                                                    orderby a.LogDateTime descending
@@ -136,7 +136,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    };
 
 
-
+            List<TraceEventPM> list = traceEvents.ToList();
             return traceEvents;
         }
 

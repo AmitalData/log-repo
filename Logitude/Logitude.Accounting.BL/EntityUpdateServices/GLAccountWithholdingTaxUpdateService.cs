@@ -16,6 +16,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         public const string RaiseEventWBLKConst = "RaiseEventWBLK";
         public const string RaiseEventWLDAConst = "RaiseEventWLDA";
+        public const string RaiseEventAWNCConst = "RaiseEventAWNC";
 
 
         protected override void OnCreating(GLAccountWithholdingTaxPM entityPM, GLAccountPM entityParentPM)

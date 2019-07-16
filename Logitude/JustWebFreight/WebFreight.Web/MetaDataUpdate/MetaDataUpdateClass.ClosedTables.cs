@@ -613,7 +613,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "CSM", Name = "Customs" }, categoryTypeRep);
             AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "ACC", Name = "Accounting" }, categoryTypeRep);
             AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "BUP", Name = "Business Process" }, categoryTypeRep);
-
+            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "OCS", Name = "Occasions" }, categoryTypeRep);
+            
             //AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Ven", Name = "Vendors" }, categoryTypeRep);
             //AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Cli", Name = "Clients" }, categoryTypeRep);
             //AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Tab", Name = "Tables" }, categoryTypeRep);

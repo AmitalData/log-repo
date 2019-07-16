@@ -151,6 +151,7 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeReference2 { get; set; }
         public string TransportMode { get; set; }
         public string ShipmentSalesman { get; set; }
+        public string FinalDestinationCode { get; set; }
 
         public string Reference1 { get; set; }
         public string Reference2 { get; set; }

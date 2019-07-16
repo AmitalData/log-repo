@@ -391,7 +391,7 @@ module.exports = {
             "_Resources\\js\\Charts\\responsive.min.js",
             "_Resources\\js\\Charts\\chartscript.js",
 
-             "_Resources\\Froala\\js\\froala_editor.min.js",         
+             "_Resources\\Froala\\js\\froala_editor.min.js",
              "_Resources\\Froala\\js\\plugins\\align.min.js",
              "_Resources\\Froala\\js\\plugins\\char_counter.min.js",
              "_Resources\\Froala\\js\\plugins\\code_beautifier.min.js",

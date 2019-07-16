@@ -388,6 +388,144 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private string createdByContactName ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByContactName  
+	   {
+	    
+	     get
+		{
+		   return createdByContactName;
+		 }
+		 set
+		 {
+		   if(createdByContactName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByContactName",OldValue=createdByContactName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByContactName=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return updatedByUserName;
+		 }
+		 set
+		 {
+		   if(updatedByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=updatedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string typeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TypeName  
+	   {
+	    
+	     get
+		{
+		   return typeName;
+		 }
+		 set
+		 {
+		   if(typeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TypeName",OldValue=typeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   typeName=value;
+		   }
+			
+		 }
+	   }
+	  private string ownerName ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OwnerName  
+	   {
+	    
+	     get
+		{
+		   return ownerName;
+		 }
+		 set
+		 {
+		   if(ownerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OwnerName",OldValue=ownerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ownerName=value;
+		   }
+			
+		 }
+	   }
+	  private string occasionStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OccasionStatusName  
+	   {
+	    
+	     get
+		{
+		   return occasionStatusName;
+		 }
+		 set
+		 {
+		   if(occasionStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OccasionStatusName",OldValue=occasionStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   occasionStatusName=value;
+		   }
+			
+		 }
+	   }
+	  private string industryName ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IndustryName  
+	   {
+	    
+	     get
+		{
+		   return industryName;
+		 }
+		 set
+		 {
+		   if(industryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IndustryName",OldValue=industryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   industryName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

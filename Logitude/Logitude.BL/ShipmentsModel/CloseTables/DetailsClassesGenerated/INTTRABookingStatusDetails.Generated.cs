@@ -1,0 +1,96 @@
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel.EntityPMs; 
+using Simplog.Data.ShipmentsModel;
+
+namespace Logitude.BL.ShipmentsModel
+{
+   public class INTTRABookingStatusDetails : INTTRABookingStatus, ICloseTable<INTTRABookingStatus, INTTRABookingStatusDetails>
+   {
+       public List<INTTRABookingStatusDetails> GetAll()
+       {
+		    var all = new List<INTTRABookingStatusDetails>();  
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Code = "NS", 
+                Name = "Not Sent", 
+                SearchFields = "NS,Not Sent", 
+			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Code = "ST", 
+                Name = "Sent", 
+                SearchFields = "ST,Sent", 
+			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Code = "CD", 
+                Name = "Confirmed", 
+                SearchFields = "CD,Confirmed", 
+			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Code = "DC", 
+                Name = "Declined", 
+                SearchFields = "DC,Declined", 
+			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Code = "PG", 
+                Name = "Pending", 
+                SearchFields = "PG,Pending", 
+			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Code = "CA", 
+                Name = "Cancelled", 
+                SearchFields = "CA,Cancelled", 
+			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Code = "RD", 
+                Name = "Replaced", 
+                SearchFields = "RD,Replaced", 
+			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Code = "ER", 
+                Name = "Error", 
+                SearchFields = "ER,Error", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(INTTRABookingStatus newPoco)
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.Name = this.Name;  
+			newPoco.SearchFields = GetSearchFields(this);    
+        }
+
+		public string GetSearchFields(INTTRABookingStatus rec)
+        {   
+           return String.Concat(rec.Code,",",rec.Name,",");
+        }
+   }
+}
+

@@ -193,7 +193,9 @@
                         </div>
 
                         <!--Date-->
-                        <div *ngSwitchCase="'DateTime' || 'Date'">
+
+
+                        <div *ngSwitchCase="'Date'">
 
                             <div style="width:180px;">
 
@@ -207,6 +209,22 @@
                             </div>
                         </div>
 
+
+                        <div *ngSwitchCase="'DateTime'">
+
+                            <div style="width:180px;">
+
+                                <DWDate [ObjectFieldName]="item.Code"
+                                        [DataContext]="item"
+                                        [Operation]="item.Operation.Code"
+                                        [SelectedValue]="item.TextValue"
+                                        (ValueChanged)="item.onTextChange($event)">
+                                </DWDate>
+
+                            </div>
+                        </div>
+
+                     
 
                         <div *ngSwitchCase="'Dimension'">
                             <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>-->
@@ -352,7 +370,7 @@
 
 
                                 <!--Date-->
-                                <div *ngSwitchCase="'DateTime' || 'Date'">
+                                <div *ngSwitchCase="'Date'">
 
                                     <div style="width:180px;">
 
@@ -365,6 +383,21 @@
 
                                     </div>
                                 </div>
+                                <div *ngSwitchCase="'DateTime'">
+
+                                    <div style="width:180px;">
+
+                                        <DWDate [ObjectFieldName]="item.Code"
+                                                [DataContext]="item"
+                                                [Operation]="item.Operation.Code"
+                                                (ValueChanged)="item.onTextChange($event)"
+                                                [SelectedValue]="item.TextValue">
+                                        </DWDate>
+
+                                    </div>
+                                </div>
+
+
 
 
 

@@ -158,7 +158,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         {
                             field.DisplayName = objectFieldPM.FullNameTextCodeDefaultText;//TranslateTextsClass.Translate(objectFieldPM.FullNameTextCodeCode, tenant);
                             field.DataTypeCode = objectFieldPM.DataTypeCode;
-                            if (field.DataTypeCode == "Date" || field.DataTypeCode == "DateTime")
+                            if (field.DataTypeCode == "Date")
                             {
                                 field.DataTypeCode = "Dimension";
                                 field.DimensionTableCode = "DIM_Dates";

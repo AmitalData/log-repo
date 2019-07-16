@@ -14,5 +14,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         public DateTime? UpdateDate { get; set; }
         public string Notes { get; set; }
 
+        public bool IsException { get; set; }
+
     }
 }

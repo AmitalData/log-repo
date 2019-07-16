@@ -69,6 +69,21 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         }
                     }
+                    if (MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Count > 0)
+                    {
+                        string text = MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.FirstOrDefault();
+                        throw new Exception($"{text}");
+                    }
+                    if (MyResultLoadFlatFile.ErrorRowList.Count > 0)
+                    {
+                        string text = MyResultLoadFlatFile.ErrorRowList.FirstOrDefault();
+                        throw new Exception($"{text}");
+                    }
+                    if (MyResultLoadFlatFile.ExceptionVendorList.Count > 0)
+                    {
+                        string text = MyResultLoadFlatFile.ExceptionVendorList.FirstOrDefault();
+                        throw new Exception($"{text}");
+                    }
                     scope.Complete();
 
 
@@ -78,7 +93,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 string text = TranslateTextsClassTranslate("System1000.O.FailedWhilePerforming", 0, useLocal);
 
-                throw new Exception("LoadSystem1000FromFile(FileContent) {text} CreateVendorLinesDTOFromFile ", e);
+                throw new Exception($"{text} ", e);
             }
 
 
@@ -119,7 +134,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 string text_44 = TranslateTextsClassTranslate("System1000.O.NotFound", 0, useLocal);
                 string text_2 = TranslateTextsClassTranslate("System1000.O.VendorNo", 0, useLocal);
-                MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"{text_2} {vendorLineDTO.VendorCode} - GLAccount {text_44} ");
+                string text_acc = TranslateTextsClassTranslate("GLTransactionReport.O.GLAccountNo", 0, useLocal);
+                MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"{text_2} {vendorLineDTO.VendorCode} - {text_acc} {text_44} ");
                 return;
             }
 
@@ -170,7 +186,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                    GLAccountWithholdingTaxPM newLine = CreateNewLineFromDTO(vendorLineDTO, oneVendor); 
+                    GLAccountWithholdingTaxPM newLine = CreateNewLineFromDTO(vendorLineDTO, oneVendor);
+                    newLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventAWNCConst;
                     newLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                     gLAccountPM.GLAccountWithholdingTaxes.Add(newLine);
                     gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
@@ -282,7 +299,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
-            long count = 0;
+            long count = 1;
             foreach (VendorLineDTO vendorLine in _VendorLinesDTO)
             {
                 if (vendorLine.VendorCode.TrimStart('0') == "")
@@ -290,21 +307,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.VendorCode", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} {text_2} {text_44}");
+                    this.AddErrorRow($"{text}{count} {text_2} {text_44}");
                 }
-                if (vendorLine.LocatedDeductionFileNum.TrimStart('0') == "")
-                {
-                    text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
-                    text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
-                    text_2 = TranslateTextsClassTranslate("System1000.O.LocatedDeductionFile", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} {text_2} {text_44}");
-                }
-                if (vendorLine.LocatedVATNum.TrimStart('0') == "")
+                //if (vendorLine.LocatedDeductionFileNum.TrimStart('0') == "")
+                //{
+                //    text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
+                //    text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
+                //    text_2 = TranslateTextsClassTranslate("System1000.O.LocatedDeductionFile", 0, useLocal);
+                //    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode}) {text_2} {text_44}");
+                //}
+                if (vendorLine.LocatedVATNum.TrimStart('0') == "" && vendorLine.LocatedDeductionFileNum.TrimStart('0') == "")
                 {
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.LocatedVATNumber", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} {text_2} {text_44}");
+                    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode}) {text_2} {text_44}");
                 }
                 if (vendorLine.StartDateString == VendorLineDTO._EmptyDate && vendorLine.EndDateString != VendorLineDTO._EmptyDate)
 
@@ -312,7 +329,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.StartDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} {text_2} {text_44} ");
+                    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode}) {text_2} {text_44} ");
                 }
                 if (vendorLine.StartDateString != VendorLineDTO._EmptyDate && vendorLine.EndDateString == VendorLineDTO._EmptyDate)
 
@@ -320,21 +337,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.EndDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} {text_2} {text_44} ");
+                    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode}) {text_2} {text_44} ");
                 }
                 if (vendorLine.DeductionPercentage != 100m && vendorLine.StartDateString == VendorLineDTO._EmptyDate) // 100m = no deduction  
                 {
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.StartDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count}  {text_2} {text_44} ");
+                    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode})  {text_2} {text_44} ");
                 }
                 if (vendorLine.DeductionPercentage != 100m && vendorLine.EndDateString == VendorLineDTO._EmptyDate) // 100m = no deduction  
                 {
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.EndDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count}  {text_2} {text_44} ");
+                    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode})  {text_2} {text_44} ");
                 }
 
 
@@ -446,7 +463,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 string text_3 = TranslateTextsClassTranslate("System1000.O.VendorLineRowType", 0, useLocal);
                                 string text_44 = TranslateTextsClassTranslate("System1000.O.AppearsBefore", 0, useLocal);
                                 string text_2 = TranslateTextsClassTranslate("System1000.O.StartingRowType", 0, useLocal);
-                                throw new Exception($"{rawLine} {text_3} {VendorLineDTO.RowType} {text_44} {text_2} {StartingLineDTO.RowType} ");
+                                throw new Exception($"{text_3} {VendorLineDTO.RowType} {text_44} {text_2} {StartingLineDTO.RowType} ");
                             }
                             VendorLineDTO vendorLine = VendorLineDTO.Create(rawLine);
                             VendorLines.Add(vendorLine);
@@ -479,7 +496,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (date == DateTime.MinValue)
             {
                 throw new
-                    Exception($"{rawLine} {fieldname} should be  yyyyMMddHHmm  Substring({pos}) ={txtDateTime}  ");
+                    Exception($"{fieldname} should be  yyyyMMddHHmm  Substring({pos}) ={txtDateTime}  ");
             }
 
             return date;
@@ -517,7 +534,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!rawLine.StartsWith(RowType))
             {
                 string text = TranslateTextsClassTranslate("System1000.O.DoesntStartWithRowType", 0, useLocal);
-                throw new Exception($"{rawLine} {text} {RowType} ");
+                throw new Exception($"{text} {RowType} ");
             }
 
             var rec = new StartingLineDTO();
@@ -559,7 +576,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!rawLine.StartsWith(RowType))
             {
                 string text = TranslateTextsClassTranslate("System1000.O.DoesntStartWithRowType", 0, useLocal);
-                throw new Exception($"{rawLine} {text} {RowType} ");
+                throw new Exception($"{text} {RowType} ");
             }
 
             var rec = new FinishingLineDTO();
@@ -622,7 +639,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!rawLine.StartsWith(RowType))
             {
                 string text = TranslateTextsClassTranslate("System1000.O.DoesntStartWithRowType", 0, useLocal);
-                throw new Exception($"{rawLine} {text} {RowType} ");
+                throw new Exception($"{text} {RowType} ");
             }
 
             var rec = new VendorLineDTO();

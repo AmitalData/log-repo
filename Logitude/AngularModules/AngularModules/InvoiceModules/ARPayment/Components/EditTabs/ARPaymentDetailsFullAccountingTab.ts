@@ -1,3 +1,6 @@
+import { JournalPM } from './../../../../Accounting/EntityPMs/JournalPM';
+import { JournalExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/JournalExtendedPMService';
+import { ARPaymentEventManager } from './../../../../Accounting/Utilities/ARPaymentEventManager';
 import { ReconciliationExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { ReconcileEventManager } from './../../../../Accounting/Utilities/ReconcileEventManager';
@@ -59,7 +62,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public ObjectTableName = "ARPayment";
     public DataContext = this;
     public ItemsSource: ObservableCollection;
-    public FullAccounting: boolean = false;
+    public isFullAccounting: boolean = false;
     public DisplaySATSettings: boolean = false;
     public IsMultiCurrency: boolean = false;
     public TransferStatusVisibilityColumn: boolean = false;
@@ -67,6 +70,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public IsEditExchangeRateVisible: boolean = false;
     get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetARPayments == true && this.AccountingPaymentMethodCode == "FS" ? true : false; }
     public isRTL: boolean = false;
+    public showLocal: boolean = false;
     public ARPaymentChequeStatus = "";
     public ARPaymentChequeStatusColor = "black";
 
@@ -76,6 +80,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
+    _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
     private _glaService: GLAccountListService = new GLAccountListService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
@@ -86,8 +91,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         }
 
+        this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+
         this.EntityPM = entityArgs.EntityPM;
-        this.FullAccounting = SessionLocator.TenantPM.AccountingActivated;
+        this.isFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.originalPaymentOpenAmount = this.EntityPM.OpenAmount;
         this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
         this.TransactionsList = new ObservableCollection([]);
@@ -137,6 +144,66 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     ngOnInit() {
         this.LoadPaymentMethods();
+
+        this.subscribeEntityApproved();
+        if(this.isFullAccounting &&  this.EntityPM.StatusCode == 'AD'){ // Approved
+            this.IsDisplayOnly = true;
+            this.checkLedgerCreated();
+        }
+
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
+    _IsDisplayOnly = false;
+    public get IsDisplayOnly() : boolean {
+        return this._IsDisplayOnly;
+    }
+    public set IsDisplayOnly(v : boolean) {
+        this._IsDisplayOnly = v;
+    }
+
+    subscribeEntityApproved() {
+
+        if(this.isFullAccounting){
+            ARPaymentEventManager.ARPaymentApproved.subscribe((res: any) =>
+            {
+                this.IsDisplayOnly = true;
+                this.checkLedgerCreated();
+            });
+        }
+    }
+
+
+    checkLedgerCreated() {
+
+        if(this.EntityPM.Id){
+
+            this.CurrentSession.StartBusyIndicatorLoading();
+            this._JournalExtendedPMService.GetByAccountingEntityId(this.EntityPM.Id, '3').subscribe(myResult => // 3- ARPayment
+            {
+                console.log("_JournalExtendedPMService.GetByAccountingEntityId", myResult);
+                this.CurrentSession.StopBusyIndicator();
+                var res: ServiceResponse = myResult;
+                var createdJournal:JournalPM = res.Result;
+
+                if(createdJournal){
+                    this.IsDisplayOnly = !createdJournal.IsLedgerCreated;
+                    if(!this.IsDisplayOnly)
+                        this.GetData();
+                }else{
+                    console.log("[Check Ledger] no journal created");
+
+                }
+
+            });
+
+        }
+
+
     }
 
     //#region abdullah code
@@ -144,6 +211,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     paymentAmountTotal: number = 0;
     amount2reconcileTotal: number = 0;
     paymentReconciledAmountTotal: number = 0;
+
 
     // IsEntityValid: boolean = true;
 
@@ -437,10 +505,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             });
         }
     }
-    ngOnDestroy() {
-        AppTool.KillEventEmitter(this.SaveCompletedEvent);
-        AppTool.KillEventEmitter(this.LoadCompletedEvent);
-    }
 
     // UIProperties
     public RateIsEnabled: boolean = true;
@@ -477,7 +541,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.UIProperties.SetEnabled("Account", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CreditCardTypeId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false);
-            if (this.FullAccounting) {
+            if (this.isFullAccounting) {
                 this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, false);
             }
         }
@@ -502,7 +566,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (this.EntityPM.StatusCode == "VD") {
                 this.UIProperties.SetEnabled("PrintNotes", this.ObjectTableName, false);
             }
-            if (this.FullAccounting) {
+            if (this.isFullAccounting) {
                 this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, true);
             }
         }
@@ -563,7 +627,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled);
     }
     SetUIProperties_Cheque() {
-        if (this.FullAccounting && this.AccountingPaymentMethodCode == "CH") {
+        if (this.isFullAccounting && this.AccountingPaymentMethodCode == "CH") {
             this.UIProperties.SetRequired("BankBranch", this.ObjectTableName, AppTool.IsNullOrEmpty(this.BankBranch));
             this.UIProperties.SetRequired("Account", this.ObjectTableName, AppTool.IsNullOrEmpty(this.Account));
             var service: InvoiceDomainService = new InvoiceDomainService();
@@ -621,13 +685,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
     SetUIProperties_BankTransfer() {
         this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, false);
-        if (this.FullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
+        if (this.isFullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
             if (AppTool.IsNullOrEmpty(this.BankAccountId)) {
                 this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, true);
             }
 
             this.UIProperties.SetVisibility("BankAccountId", this.ObjectTableName, true);
-            if (!this.FullAccounting) {
+            if (!this.isFullAccounting) {
                 this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
                 this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
                 this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
@@ -914,7 +978,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                 }
 
                                 this.LoadAddress();
-                                if (this.FullAccounting) {
+                                if (this.isFullAccounting) {
                                     if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
                                         var myGLAccountPMService = new GLAccountPMService();
                                         myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
@@ -1018,7 +1082,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 item.InitExchangeRate();
             });
 
-            if (this.FullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
+            if (this.isFullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
                 this.CheckGLAccountCurrencyId();
             }
         }
@@ -1250,42 +1314,57 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     CheckARPaymentCashBook() {
         this.IsCashBookValid = false;
 
-        if (this.FullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH")) {
+        if (this.isFullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH")) {
             var service: InvoiceDomainService = new InvoiceDomainService();
+
             service.CheckARPaymentCashBook(this.AccountingPaymentMethodCode, this.PaymentCurrencyId, this.BranchId).subscribe((myResponse: ServiceResponse) => {
-                if (myResponse != null && !myResponse.HasError) {
-                    var cashbook: CashBookPM[] = myResponse.Result;
-                    if (cashbook != null && cashbook.length > 0) {
-                        if (cashbook.length == 1) {
-                            var data: CashBookPM = cashbook[0];
-                            this.CashBookName = data.EnglishName;
-                            this.BranchGLAccountNumber = data.AccountNumber;
-                            this.BranchGLAccountId = data.AccountId;
-                            this.IsCashBookValid = true;
+                if (myResponse != null && !myResponse.HasError)
+                {
+                    var cashbooks: CashBookPM[] = myResponse.Result;
+                    if (cashbooks != null && cashbooks.length > 0)
+                    {
+                        if (cashbooks.length == 1) {
+
+                            var _cashbook: CashBookPM = cashbooks[0];
+
+                            this.setCashbookFields(_cashbook);
+
                             if (AppTool.IsNullOrEmpty(this.EntityPM.CashbookId)) {
-                                this.EntityPM.CashbookId = data.Id;
+                                this.EntityPM.CashbookId = _cashbook.Id;
                             }
                             this.UIProperties.SetValidity("BranchId", this.ObjectTableName, true, "");
                         }
                         else {
-                            var branchesText = "";
-                            cashbook.forEach((item: CashBookPM) => {
-                                if (!AppTool.IsNullOrEmpty(item.EnglishName)) {
-                                    branchesText += item.EnglishName + ",";
-                                }
-                            });
-                            branchesText = branchesText.replace(/,\s*$/, "");
-                            var msg = "There is no cashbook for this branch, Cashbooks for branches: " + branchesText + "  was found, change the branch please";
-                            this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg);
+                            this.setBranchesText(cashbooks);
                         }
                     }
-                    else {
+                    else
+                    {
                         var msg = "There is no cashbook that compatible to this ARPayment, create one please";
                         this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg);
                     }
                 }
             });
         }
+    }
+
+    private setBranchesText(cashbooks: CashBookPM[]) {
+        var branchesText = "";
+        cashbooks.forEach((item: CashBookPM) => {
+            if (!AppTool.IsNullOrEmpty(item.EnglishName)) {
+                branchesText += item.EnglishName + ",";
+            }
+        });
+        branchesText = branchesText.replace(/,\s*$/, "");
+        var msg2 = "There is no cashbook for this branch, Cashbooks for branches: " + branchesText + "  was found, change the branch please";
+        this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg2);
+    }
+
+    private setCashbookFields(_cashbook: CashBookPM) {
+        this.CashBookName = this.showLocal ? _cashbook.LocalName : _cashbook.EnglishName;
+        this.BranchGLAccountNumber = _cashbook.AccountNumber;
+        this.BranchGLAccountId = _cashbook.AccountId;
+        this.IsCashBookValid = true;
     }
 
     //Payment Line Properties
@@ -1404,7 +1483,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (this.EntityPM.BankBranch != value) {
                 this.EntityPM.BankBranch = value;
 
-                if (this.FullAccounting && this.AccountingPaymentMethodCode == "CH") {
+                if (this.isFullAccounting && this.AccountingPaymentMethodCode == "CH") {
                     if (!AppTool.IsNullOrEmpty(value)) {
                         this.UIProperties.SetRequired("BankBranch", this.ObjectTableName, false);
                     }
@@ -1426,7 +1505,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM != null) {
             if (this.EntityPM.Account != value) {
                 this.EntityPM.Account = value;
-                if (this.FullAccounting && this.AccountingPaymentMethodCode == "CH") {
+                if (this.isFullAccounting && this.AccountingPaymentMethodCode == "CH") {
                     if (!AppTool.IsNullOrEmpty(value)) {
                         this.UIProperties.SetRequired("Account", this.ObjectTableName, false);
                     }

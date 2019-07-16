@@ -199,10 +199,10 @@ export class DocumentsFilingExtendedPMService {
     }
 
 
-    CreateDocumentShipmentEvent( entityId: string,objectTableName: string, Notes: string) {
+    CreateDocumentShipmentEvent(entityId: string, notes: string, eventCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetCreateDocumentShipmentEvent" + '?entityId=' + entityId + '&objectTableName=' + entityId + '&Notes=' + Notes, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetCreateDocumentShipmentEvent" + '?entityId=' + entityId + '&notes=' + notes + '&eventCode=' + eventCode, { headers: authHeader }).map(response => {
             var result = response.json();
 
             var entity: DocumentsFilingPM;

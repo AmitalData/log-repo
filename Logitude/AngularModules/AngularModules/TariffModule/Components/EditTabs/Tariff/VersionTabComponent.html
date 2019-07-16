@@ -44,11 +44,11 @@
                         </td>
 
                         <td style="width:90px;">
-                            <CheckBox [IsChecked]="IsComparToChecked" (Checked)="IsComparToChecked = $event" [Text]="'Compare to'" [IsEnabled]="IsCompareEnabled"></CheckBox>
+                            <CheckBox [IsChecked]="IsComparToChecked" (Checked)="IsComparToChecked = $event" [Text]="'Compare to'" [IsEnabled]="!IsFirstDraft"></CheckBox>
                         </td>
 
                         <td style="width:190px;">
-                            <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="!IsCompareEnabled" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
+                            <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="!IsComparToChecked" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
                         </td>
 
                         <td style="width:5px;">
@@ -107,6 +107,7 @@
                                     </div>
 
                                     <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
+                                    <button (click)="AllInChargesClicked()">All-In Charges</button>
                                 </div>
                             </div>
                         </td>
@@ -168,7 +169,8 @@
                                                         (SelectedItemChanged)="item.OriginPort = $event"
                                                         [DisplayMemberPath]="'Code'"
                                                         [FocusOnMe]="'true'"
-                                                        [SelectedValue]="item.OriginPortId">
+                                                        [SelectedValue]="item.OriginPortId"
+                                                        [DependencyFilter1Value]="'A'">
                                                 </LogLov>
 
                                             </div>
@@ -190,7 +192,8 @@
                                                         (SelectedItemChanged)="item.DestinationPort = $event"
                                                         [DisplayMemberPath]="'Code'"
                                                         [FocusOnMe]="'true'"
-                                                        [SelectedValue]="item.DestinationPortId">
+                                                        [SelectedValue]="item.DestinationPortId"
+                                                        [DependencyFilter1Value]="'A'">
                                                 </LogLov>
 
                                             </div>

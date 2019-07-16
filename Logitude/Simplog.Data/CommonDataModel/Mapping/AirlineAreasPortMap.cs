@@ -18,7 +18,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.ToTable("AirlineAreasPorts");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Name).HasColumnName("Name");
-            this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.AddedByUserId).HasColumnName("AddedByUserId");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.AddedDate).HasColumnName("AddedDate");

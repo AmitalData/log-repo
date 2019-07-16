@@ -89,6 +89,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private double? defaultWarningPercentage ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? DefaultWarningPercentage  
+	   {
+	    
+	     get
+		{
+		   return defaultWarningPercentage;
+		 }
+		 set
+		 {
+		   if(defaultWarningPercentage != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefaultWarningPercentage",OldValue=defaultWarningPercentage,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   defaultWarningPercentage=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -3,6 +3,7 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DestinationClass } from './UpdateSurchargesComponent';
 import { PortList } from '../../../../Common/EntityLists/PortList';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -11,15 +12,25 @@ import { PortList } from '../../../../Common/EntityLists/PortList';
 
 export class ChoosePortComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
-    public DataContext: DestinationClass;
+    public DataContext: ChoosePortComponent = this;
+    public UpdateClass: DestinationClass;
     public ObjectTableName = "Tariff";
+    public ForceFocus: any;
+
     public ValidationErrorsList: string[] = [];
     constructor() {
         super();
     }
 
     SetDataContext(dataContext: DestinationClass) {
-        this.DataContext = dataContext;        
+        this.UpdateClass = dataContext;        
+    }
+
+
+    KeyDownEvent(event) {
+        if (event == 13 && (this.Port != null && this.PortId != null)) {
+            this.AddButtonClicked();
+        }
     }
 
     private portId: string;
@@ -48,30 +59,42 @@ export class ChoosePortComponent extends BaseComponent {
     AddButtonClicked() {
         var errors: string[] = [];
 
-        if (this.DataContext.Type == "From") {
-            if (this.DataContext.fatherComponent.FromObsList.filter(d => d.Code == this.Port.Code).length > 0) {
-                errors.push("Port with the same code already added");
-            }
+        if (this.Port == null || AppTool.IsNullOrEmpty(this.PortId)) {
+            errors.push("Please Choose port");
         }
 
         else {
-            if (this.DataContext.fatherComponent.ToObsList.filter(d => d.Code == this.Port.Code).length > 0) {
-                errors.push("Port with the same code already added");
+            if (this.UpdateClass.Type == "From") {
+                if (this.UpdateClass.fatherComponent.FromObsList.filter(d => d.Code == this.Port.Code).length > 0) {
+                    errors.push("Port with the same code already added");
+                }
+            }
+
+            else {
+                if (this.UpdateClass.fatherComponent.ToObsList.filter(d => d.Code == this.Port.Code).length > 0) {
+                    errors.push("Port with the same code already added");
+                }
             }
         }
 
         this.ValidationErrorsList = errors;
         
         if (errors.length == 0) {
-            var newItem: DestinationClass = new DestinationClass(this.DataContext.fatherComponent, this.DataContext.Type, this.Port)
+            var newItem: DestinationClass = new DestinationClass(this.UpdateClass.fatherComponent, this.UpdateClass.Type, this.Port, null)
 
-            if (this.DataContext.Type == "From") {
-                this.DataContext.fatherComponent.FromObsList.push(newItem);
+            if (this.UpdateClass.Type == "From") {
+                this.UpdateClass.fatherComponent.FromObsList.push(newItem);
             }
 
             else {
-                this.DataContext.fatherComponent.ToObsList.push(newItem);
+                this.UpdateClass.fatherComponent.ToObsList.push(newItem);
             }
+
+            this.ForceFocus = this.PortId;
+
+
+            this.Port = null;
+            this.PortId = null;
         }
     }
 }

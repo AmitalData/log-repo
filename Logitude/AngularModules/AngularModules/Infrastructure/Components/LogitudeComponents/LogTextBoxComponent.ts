@@ -92,6 +92,21 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
     @Input() Max: number;
     @Input() Min: number;
     @Input() RowsCount: number;
+    @Input() ForceDisable: boolean = false;
+    // @Input() ForceDirection: string; // for now, its working only for multiline textbox,
+
+
+    private _ForceDirection : string;
+    @Input() public get ForceDirection() : string {
+        return this._ForceDirection;
+    }
+    public set ForceDirection(v : string) {
+        this._ForceDirection = v;
+        this.isRTL = this.ForceDirection == "rtl";
+
+    }
+
+
     private firstDigit: string = ",";
     private secondDigit: string = ".";
     isFirstTime: boolean = true;
@@ -194,6 +209,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
         this.setDigits();
         //this.CurrentSession.isShiftClicked = false;
         //this.CurrentSession.isTabWithShiftClicked = false;
+
     }
     keydown: boolean;
     isCtrlKeyDown: boolean = false;
@@ -270,7 +286,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                     });
         });
 
-        if (this.IsDisabled) {
+        if (this.IsDisabled || this.ForceDisable) {
             this.SetDisabled();
         }
         else {
@@ -291,30 +307,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
 
         }
 
-
-        //check rowscount
-        if (this.IsMultiline) {
-            setTimeout(() => {
-
-                if (this.RowsCount) {
-
-                    //calculate height: (rowcount * 18 row height) + 8 padding
-                    this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
-                } else {
-                    var _element = document.getElementById(this.InputId)
-                    var elHeight = _element.clientHeight;
-                    var calculatedRowsCount = (elHeight / 18);
-                    var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
-
-                    this.RowsCount = ___roundedCalculatedRowsCountHaha;
-                    this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
-
-                }
-
-            }, 100);
-        }
+        this.setRowsCount();
 
     }
+
 
     RunComponent() {
         var input = document.getElementById(this.InputId);
@@ -441,7 +437,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
 
         this.IsDisabled = !this.uiProperty.IsEnabled;
 
-        if (this.IsDisabled) {
+        if (this.IsDisabled || this.ForceDisable) {
             this.SetDisabled();
         }
         else {
@@ -1011,6 +1007,14 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                     }
 
                     else {
+
+                        if (!AppTool.IsNullOrEmpty(this.TextValue)) {
+                            var selection = window.getSelection().toString();
+                            if (selection == this.TextValue) {
+                                return key;
+                            }
+                        }
+
                         if (keyChar == "+") {
                             if (selectionStart(input) == 0) {
                                 if (!AppTool.IsNullOrEmpty(this.TextValue)) {
@@ -1111,7 +1115,6 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                             }
                         }
                     }
-
 
                     if (isOk) {
                         return key;
@@ -1716,6 +1719,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
         // windowArgs.ObjectTableName = this.ObjectTableName;
         // windowArgs.ObjectFieldName = this.ObjectFieldName;
         windowArgs.TextValue = this.TextValue;
+        windowArgs.RowsCount = this.RowsCount;
+        windowArgs.IsTextBoxRTL = this.isRTL;
 
         var wind = new LogitudeWindow();
         // wind.IsFullScreen = true;
@@ -1737,4 +1742,27 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
             }
         });
     }
+
+    setRowsCount() {
+        //check rowscount
+        // if (this.IsMultiline) { // commented due single line expand window
+
+        setTimeout(() => {
+            if (this.RowsCount) {
+                //calculate height: (rowcount * 18 row height) + 8 padding
+                this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+            }
+            else {
+                var _element = document.getElementById(this.InputId);
+                var elHeight = _element.clientHeight;
+                var calculatedRowsCount = (elHeight / 18);
+                var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
+                this.RowsCount = ___roundedCalculatedRowsCountHaha;
+                this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+            }
+        }, 100);
+    }
+
+
 }
+

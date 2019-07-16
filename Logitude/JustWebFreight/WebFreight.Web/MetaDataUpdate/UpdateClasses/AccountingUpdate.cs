@@ -25,6 +25,8 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.BL;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 {
@@ -1305,6 +1307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             LoadTextCodes_YearTransfer(textcodes);
             LoadTextCodes_AutomaticReconcileMethod(textcodes);
             LoadTextCodes_ReconcileExternalPage(textcodes);
+            LoadTextCodes_System1000(textcodes);
             #region ObjectTable
             ObjectTable ChartOfAccountTable = objectContext.ObjectTables.Where(f => f.Name == "ChartOfAccount" && f.Tenant == 0).FirstOrDefault();
             ObjectTable JournalTable = objectContext.ObjectTables.Where(f => f.Name == "Journal" && f.Tenant == 0).FirstOrDefault();
@@ -1726,8 +1729,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxDeduction", DefaultText = "Tax deduction details", LocalDefaultText = "פירוט ניכויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.WithholdingBlocked", DefaultText = "Line : The Vendor does not have a certificate according to the 1000 System", LocalDefaultText = "שורה מספר : לספק לא קיים אישור על פי מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.WithholdingLineDisabled", DefaultText = "Line : A new line was entered with the same date by the 1000 System", LocalDefaultText = "שורה מספר : נקלטה שורה חדשה עם תאריך זהה על ידי מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.WithholdingLineCreated", DefaultText = "Line : New Withholding tax line wtitten by the 1000 System", LocalDefaultText = "שורה מספר : הוגדרה שורת שיעור ניכוי מס חדשה על ידי מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.AccountingPeriodClosed", DefaultText = "The accounting period for recording the Journal is closed", LocalDefaultText = "התקופה החשבונאית לרישום פקודת היומן סגורה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.AccountingPeriodAlready", DefaultText = "The chosen year is transferred already, In order to transfer it again, you must void Journal ", LocalDefaultText = "השנה שנבחרה הועברה כבר, ע”מ להעביר אותה בשנית, יש לבטל את פקודת יומן ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.AccountingPeriodAlready", DefaultText = "The chosen year is transferred already, In order to transfer it again, you must void Journal ", LocalDefaultText = "השנה שנבחרה הועברה כבר, ע”מ להעביר אותה בשנית, יש לבטל את פקודת יומן ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.YearTransferredAlready", DefaultText = "The chosen year is transferred already, In order to transfer it again, you must void Journal ", LocalDefaultText = "השנה שנבחרה הועברה כבר, ע”מ להעביר אותה בשנית, יש לבטל את פקודת יומן ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.YearNotYetTransferred", DefaultText = "The chosen year is not yet transferred", LocalDefaultText = "השנה שנבחרה טרם הועברה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TheYearTransferJournal", DefaultText = "The Year Transfer Journal ", LocalDefaultText = "פקודת יומן ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.YearTransferCancelledAlready", DefaultText = " for chosen yead is cancelled already", LocalDefaultText = " להשנה שנבחרה כבר בוטלה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ReferenceDateIsRequired", DefaultText = "Reference date is required", LocalDefaultText = "שדה תאריך הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1870,15 +1878,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ShipmentsAndMasters", DefaultText = "Shipments & Masters", LocalDefaultText = "תיקים וגו’בים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.YearTransfer", DefaultText = "Year Transfer", LocalDefaultText = "העברת שנה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.CancelYearTransfer", DefaultText = "Cancel Year Transfer", LocalDefaultText = "ביטול העברת שנה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TaxReport", DefaultText = "Tax Report", LocalDefaultText = "דוח מעמ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.APPaymentDueDate", DefaultText = "Due Date", LocalDefaultText = "תאריך פרעון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LoadBankPage", DefaultText = "Load Bank Page", LocalDefaultText = "טען דפי בנק מקובץ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Customers", DefaultText = "Customers", LocalDefaultText = "לקוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Vendors", DefaultText = "Vendors", LocalDefaultText = "ספקים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentChequeOptions", DefaultText = "Internal Cheque \\ Manual entry", LocalDefaultText = " מערכת המחאות/המחאה ידנית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.YouDontHavePermission", DefaultText = "Sorry! you have no permission to do this operation on ", LocalDefaultText = " אין לך הרשאה להכנת המחאה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentChequeManualOption", DefaultText = "Manual entry", LocalDefaultText = "המחאה ידנית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentChequeAutomaticOption", DefaultText = "Internal Cheque", LocalDefaultText = "מערכת המחאות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
-            
+
 
             #region MainMenu
 
@@ -1991,6 +2002,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MustBeMultiCurrency", DefaultText = "Parent GLAccount must be multi currency", LocalDefaultText = "כרטיס אב חייב להיות רב מטבעי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CheckInvoiceDate", DefaultText = "Invoice Date can't be bigger than the Accounting Date", LocalDefaultText = "לא ניתן להקליד תאריך אסמכתא מאוחר מהתאריך החשבונאי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.VendorGLAccount", DefaultText = "The bill to doesn’t have GLAccount connected to it", LocalDefaultText = "הספק לא מקושר לכרטיס הנה''ח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
 
@@ -2040,7 +2052,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Document", LocalDefaultText = "אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_due", DefaultText = "Due", LocalDefaultText = "פרעון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditDetails", DefaultText = "Credit Details", LocalDefaultText = "נתוני אשראי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditLimit", DefaultText = "Credit Limit", LocalDefaultText = "מצב אשראי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditLimit", DefaultText = "Credit Limit", LocalDefaultText = "מסגרת אשראי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountingBalance", DefaultText = "Accounting Balance", LocalDefaultText = "יתרה חשבונאית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CardIndex", DefaultText = "Card Index", LocalDefaultText = "הצג תנועות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureChequesToday", DefaultText = "Open Cheques", LocalDefaultText = "המחאות שלא נפרעו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -3840,6 +3852,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
                 EventTypeCategoryCode = "LOG",
             }, eventTypesRepository, tenantEventTypes);
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "AWNC",
+                EnglishName = "New Withholding tax line",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "הוגדרה שורת שיעור ניכוי מס חדשה",
+                ObjectTableId = gLAccountObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+            }, eventTypesRepository, tenantEventTypes);
+
+
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
@@ -4107,33 +4132,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         public void FillWithholdingTaxDeductionTypes()
         {
 
-            WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository = new WithholdingTaxDeductionTypeRepository(0);
-            Dictionary<string, WithholdingTaxDeductionType> TenantWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+          
+                var repo = new WithholdingTaxDeductionTypeRepository(0);
+                var dic = repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
+                new FillCloseTables().FillCloseTable<
+                                    WithholdingTaxDeductionType,
+                                    WithholdingTaxDeductionTypeDetails,
+                                    WithholdingTaxDeductionTypeRepository>(repo, dic);
+            
 
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "01", EnglishName = "Interest", LocalName = "ריבית", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "02", EnglishName = "Insurance Commision", LocalName = "עמלת ביטוח", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository = new WithholdingTaxDeductionTypeRepository(0);
+            //Dictionary<string, WithholdingTaxDeductionType> TenantWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
 
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "03", EnglishName = "Wage", LocalName = "שכר", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "01", EnglishName = "Interest", LocalName = "ריבית", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "02", EnglishName = "Insurance Commision", LocalName = "עמלת ביטוח", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
 
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "05", EnglishName = "Services", LocalName = "שירותים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "06", EnglishName = "Construction Payment", LocalName = "תשלומי בניה", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "07", EnglishName = "Payment for foreigner(Deduction by the businesss)", LocalName = "תשלום לתושב זר(נוכה ע\"י העסק)", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "08", EnglishName = "Payment for foreigner(Deduction by the bank)", LocalName = "תשלום לתושב זר(נוכה ע\"י הבנק)", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "11", EnglishName = "Illegal fund payment", LocalName = "תשלום שלא כדין מקופת גמל", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "12", EnglishName = "Refud", LocalName = "החזר תשלום למעביד מקופת גמל לפיצויים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "13", EnglishName = "", LocalName = "תשלומים בעד שכיורת מקרקעין שניתן לתבוע כהוצאה", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "14", EnglishName = "", LocalName = "תשלום מקרן השתלמות לעצמאי", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "15", EnglishName = "Payout Payment or profit derived from gambling", LocalName = "תשלומים מהשתכרות או רווח שמקורם בהימורים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "18", EnglishName = "Dividend Payment", LocalName = "תשלום דיבידנד", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "19", EnglishName = "", LocalName = "רווח הון מפדיון מניות/אופציות", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "20", EnglishName = "", LocalName = "סעיף מיוחד לביטוח לאומי", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "21", EnglishName = "", LocalName = "הכנסה מהפקת חשמל במסלול פטור", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "22", EnglishName = "", LocalName = "הכנסה מהפקת חשמל במסלול מס מופחת", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-        
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "03", EnglishName = "Wage", LocalName = "שכר", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "05", EnglishName = "Services", LocalName = "שירותים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "06", EnglishName = "Construction Payment", LocalName = "תשלומי בניה", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "07", EnglishName = "Payment for foreigner(Deduction by the businesss)", LocalName = "תשלום לתושב זר(נוכה ע\"י העסק)", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "08", EnglishName = "Payment for foreigner(Deduction by the bank)", LocalName = "תשלום לתושב זר(נוכה ע\"י הבנק)", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "11", EnglishName = "Illegal fund payment", LocalName = "תשלום שלא כדין מקופת גמל", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "12", EnglishName = "Refud", LocalName = "החזר תשלום למעביד מקופת גמל לפיצויים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "13", EnglishName = "", LocalName = "תשלומים בעד שכיורת מקרקעין שניתן לתבוע כהוצאה", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "14", EnglishName = "", LocalName = "תשלום מקרן השתלמות לעצמאי", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "15", EnglishName = "Payout Payment or profit derived from gambling", LocalName = "תשלומים מהשתכרות או רווח שמקורם בהימורים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "18", EnglishName = "Dividend Payment", LocalName = "תשלום דיבידנד", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "19", EnglishName = "", LocalName = "רווח הון מפדיון מניות/אופציות", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "20", EnglishName = "", LocalName = "סעיף מיוחד לביטוח לאומי", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "21", EnglishName = "", LocalName = "הכנסה מהפקת חשמל במסלול פטור", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "22", EnglishName = "", LocalName = "הכנסה מהפקת חשמל במסלול מס מופחת", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
 
 
 
-            withholdingTaxDeductionTypeRepository.SubmitChanges();
+
+            //withholdingTaxDeductionTypeRepository.SubmitChanges();
 
         }
 
@@ -4142,7 +4176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         #endregion
 
 
-     
+
 
         public void CreateCounters(int tenant)
         {

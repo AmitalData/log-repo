@@ -1,3 +1,4 @@
+import { CacheLogComponent } from './Components/Maintenance/CacheLogComponent';
 // Directives
 import {FocusMeDirective} from './Utilities/FocusMeDirective';
 import {LocationDirective} from './Utilities/LocationDirective';
@@ -9,7 +10,7 @@ import { FloatEndDirective } from './Utilities/RTLDirectives/FloatEndDirective';
 import { TextAlignStart } from './Utilities/RTLDirectives/TextAlignStart';
 import { TextAlignEnd } from './Utilities/RTLDirectives/TextAlignEnd';
 
-// Pipes
+// Pipes.
 import {DateTimeToColorPipe} from './Pipes/DateTimePipes/DateTimeToColorPipe';
 import {NumbersPipe} from './Pipes/NumbersPipe';
 import {PaddingPipe} from './Pipes/PaddingPipe';
@@ -244,6 +245,7 @@ export const ControlsComponents =
         LogFooterTemplateComponent,
         LogFooterComponent,
         TipsComponent,
+        CacheLogComponent,
         ImageComponent,
         LogTabsComponent,
         LogBooleanComponent,
@@ -394,6 +396,7 @@ export class ModuleDeclarations {
             case 'DWLogSearchWindowComponent': { myResult = DWLogSearchWindowComponent; break; }
             case 'StimulsoftViewerComponent': { myResult = StimulsoftViewerComponent; break; }
             case 'TipsComponent': { myResult = TipsComponent; break; }
+            case 'CacheLogComponent': { myResult = CacheLogComponent; break; }
             case 'ChooseUserComponent': { myResult = ChooseUserComponent; break; }
 
             case 'ChooseDatesComponent': { myResult = ChooseDatesComponent; break; }

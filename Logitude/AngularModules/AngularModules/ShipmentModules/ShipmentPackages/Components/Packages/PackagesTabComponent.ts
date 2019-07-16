@@ -556,9 +556,32 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
             this.EntityPM.Volume = AppTool.Round(newValue, 3);
+            this.ComputeVolume_CBM();
         }
     }
 
+    private ComputeVolume_CBM() {
+        var volume_CBM: number = null;
+
+        if (this.Volume != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.VolumeUnitCode)) {
+                switch (this.EntityPM.VolumeUnitCode.toUpperCase()) {
+                    case "CBM": { factorOfConvert = 1; break; }
+                    case "CBI": { factorOfConvert = 61024; break; }      // 1m³ = 61024in³
+                    case "CBF": { factorOfConvert = 35.315; break; }     // 1m³ = 35.315ft³
+                }
+            }
+
+            volume_CBM = this.Volume / factorOfConvert;
+        }
+
+        if (volume_CBM != null) {
+            volume_CBM = AppTool.Round(volume_CBM, 3);
+        }
+        this.EntityPM.VolumeInCBM = volume_CBM;
+    }
     get VolumetricWeight() { return this.EntityPM.VolumetricWeight == null ? 0 : this.EntityPM.VolumetricWeight; }
     set VolumetricWeight(newValue: number) {
         if (this.EntityPM.VolumetricWeight != newValue) {
@@ -1676,13 +1699,16 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 this.packages = response.Result;
 
                 if (this.packages.filter(d => d.HasErrors).length > 0) {
-                    var window: MessageWindow = new MessageWindow();
-                    window.Show("File contains errors, please validate the data and try again");
                     this.CurrentSession.StopBusyIndicator();
+
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("File contains errors, please validate the data and try again");                    
                 }
 
                 else {
                     if (this.EntityPM.ShipmentPackages.length > 0) {
+                        this.CurrentSession.StopBusyIndicator();
+
                         var confirmWindow = new ConfirmWindow();
                         confirmWindow.Show("Uploading packages will result in deleting existing packages and all its data");
                         confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -1695,9 +1721,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     }
 
                     else {
-                        this.saveAfterDeletePackages = true;
-                        this.StartDelete();
-                        this.CurrentSession.CurrentEditComponent.SaveChanges();
+                        this.CreatePackagesFromExcel();
                     }
                 }
             }

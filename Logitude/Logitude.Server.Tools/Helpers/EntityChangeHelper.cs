@@ -29,7 +29,7 @@ namespace Logitude.Server.Tools.Helpers
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("entitychangequeue", tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", entityChangeId }, { "Tenant", tenant.ToString() }, { "Type", type } , { "IsDelayAutomation", IsDelayAutomation.ToString().ToLower() } }, null, null, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "EntityChangeId", entityChangeId }, { "Tenant", tenant.ToString() }, { "Type", type }, { "IsDelayAutomation", IsDelayAutomation.ToString().ToLower() } }, null, null, null, null);
         }
         #endregion
 
@@ -54,7 +54,7 @@ namespace Logitude.Server.Tools.Helpers
 
         List<c> Changefields = new List<c>();
         bool IsDelayAutomation = false;
-        public  bool IsChangeSLA = false;
+        public bool IsChangeSLA = false;
         public void AddEntityChange(Object entityPM, Object oldentityPM, string processtype, string entityChangeFieldXml, string tableName, DateTime? startDate = null)
         {
             DateTime dateBefore = DateTime.Now;
@@ -343,7 +343,7 @@ namespace Logitude.Server.Tools.Helpers
             else
             {
                 string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
-                var contact  = contactRepository.GetSingleContactByEmail(systemContactEmail, tenant);
+                var contact = contactRepository.GetSingleContactByEmail(systemContactEmail, tenant);
                 if (contact != null) loggedContactId = contact.Id;
 
             }
@@ -538,7 +538,7 @@ namespace Logitude.Server.Tools.Helpers
             return customObjectFieldLists;
         }
 
-        private List<ObjectField> BuildAutomationObjectFieldLists(List<ObjectField> customObjectFieldLists, List<Automation> automations, string objectTableId, string lastUpdateDate, int tenant,string processtype, string otherObjectTableId = null)
+        private List<ObjectField> BuildAutomationObjectFieldLists(List<ObjectField> customObjectFieldLists, List<Automation> automations, string objectTableId, string lastUpdateDate, int tenant, string processtype, string otherObjectTableId = null)
         {
             string tableId = !string.IsNullOrEmpty(otherObjectTableId) ? otherObjectTableId : objectTableId;
 
@@ -566,14 +566,14 @@ namespace Logitude.Server.Tools.Helpers
             }
             return customObjectFieldLists;
         }
-        
+
         #endregion
 
         #region Apply Set  SLA Value Automation
         public void ApplySetSLAValueAutomation(Object entityPM, List<Automation> automationsList, EntityChange entityChange, List<Field> automationFieldLists, string lastupdateautomation, Object oldentityPM, string processtype, string entityId, string otherLastupdateautomation)
         {
             int tenant = entityChange.Tenant;
-            
+
             foreach (Automation automation in automationsList)
             {
                 DateTime dateBefore = DateTime.Now;
@@ -586,7 +586,7 @@ namespace Logitude.Server.Tools.Helpers
 
                 if (validateResult.IsAutomationValid)
                 {
-                     SetSLAValue(entityPM, entityChange, automationFieldLists, lastUpdate, EntityChangesAutomationsSsucceedList, Changefields, automation, entityChangesAutomation, dateBefore);
+                    SetSLAValue(entityPM, entityChange, automationFieldLists, lastUpdate, EntityChangesAutomationsSsucceedList, Changefields, automation, entityChangesAutomation, dateBefore);
                 }
 
                 else
@@ -625,7 +625,7 @@ namespace Logitude.Server.Tools.Helpers
                     AutomatedBackup AutomatedBackup = LogitudeXmlSerializer.DeserializeObject<AutomatedBackup>(automation.AutomationXML);
                     AutomationSetSLAValue = AutomatedBackup.AutomationSetSLAValue;
                 }
-            }         
+            }
 
             #region Set SLA Value
 
@@ -638,7 +638,7 @@ namespace Logitude.Server.Tools.Helpers
             {
                 oldValue = propInfo.GetValue(entityPM);
                 newValue = AutomationSetSLAValue.SLAId;
-                
+
                 if (oldValue == null) oldValue = "";
                 if (newValue == null) newValue = "";
 
@@ -656,7 +656,7 @@ namespace Logitude.Server.Tools.Helpers
                     fields.Add(fieldc);
                 }
             }
-            
+
             #endregion
 
             entityChange.HasExecutedRecord = true;
@@ -672,7 +672,7 @@ namespace Logitude.Server.Tools.Helpers
         public void ApplySetValueAutomation(Object entityPM, List<Automation> automationsList, EntityChange entityChange, List<Field> automationFieldLists, string lastupdateautomation, Object oldentityPM, string processtype, string entityId, string otherLastupdateautomation)
         {
             int tenant = entityChange.Tenant;
-            
+
             foreach (Automation automation in automationsList)
             {
                 DateTime dateBefore = DateTime.Now;
@@ -707,7 +707,7 @@ namespace Logitude.Server.Tools.Helpers
                 }
             }
         }
-        
+
         public void SetValue(Object entityPM, EntityChange entityChange, List<Field> automationFieldLists, string lastupdateautomation, List<EntityChangeAutomation> EntityChangesAutomationsSsucceedList, List<c> fields, Automation automation, EntityChangeAutomation entityChangesAutomation, DateTime dateBefore)
         {
             List<AutomationSetValue> AutomationSetValueLists = null;
@@ -737,7 +737,7 @@ namespace Logitude.Server.Tools.Helpers
                     AutomationSetValueLists = AutomatedBackup.AutomationSetValueLists;
                 }
             }
-            
+
             #region Set Field Value
 
             object oldValue;
@@ -807,7 +807,7 @@ namespace Logitude.Server.Tools.Helpers
         #endregion
 
         #region Validate Automation And Condition
-        private bool ValidateCondition(List<Field> automationConditionFieldLists, AutomationCondition automationCondition ,  EntityChange entityChange)
+        private bool ValidateCondition(List<Field> automationConditionFieldLists, AutomationCondition automationCondition, EntityChange entityChange)
         {
             bool isValid = true;
 
@@ -872,7 +872,7 @@ namespace Logitude.Server.Tools.Helpers
                     if (!string.IsNullOrEmpty(automationConditionvalue)) automationConditionvalue = automationConditionvalue.ToLower();
                 }
 
-    
+
                 if (automationCondition.ObjectFieldType == "Boolean")
                 {
                     if (string.IsNullOrEmpty(automationConditionvalue)) automationConditionvalue = "false";
@@ -964,7 +964,7 @@ namespace Logitude.Server.Tools.Helpers
                 else if (automationCondition.OperatorCode == "EqualSystemVariable" && automationCondition.Value == "SystemUser")
                 {
                     string userId = GetSystemContactIdByTenant(entityChange.Tenant);
-                    if (userId != entityChange.CreateByUserId) isValid = false;
+                    if (userId != automationConditionFieldValue) isValid = false;
 
                     return isValid;
                 }
@@ -979,11 +979,15 @@ namespace Logitude.Server.Tools.Helpers
         }
 
 
-        private  string GetSystemContactIdByTenant(int tenant)
+        private string GetSystemContactIdByTenant(int tenant)
         {
+            string loggedContactId = string.Empty;
             ContactRepository contactRepository = new ContactRepository(tenant);
-            string userId = contactRepository.GetContactIdByUserTypeAndTenant("S", tenant);
-            return userId;
+            string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
+            var contact = contactRepository.GetSingleContactByEmail(systemContactEmail, tenant);
+            if (contact != null) loggedContactId = contact.Id;
+
+            return loggedContactId;
         }
 
         public ValidateAutomationResultClass ValidateAutomation(Automation automation, EntityChange entityChange, List<Field> automationConditionFields, string lastupdateautomation, string typeConditionValidate)
@@ -1063,7 +1067,7 @@ namespace Logitude.Server.Tools.Helpers
                 {
                     foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "Or"))
                     {
-                        validconditionOr = ValidateCondition(automationConditionFields, automationCondition , entityChange);
+                        validconditionOr = ValidateCondition(automationConditionFields, automationCondition, entityChange);
                         if (validconditionOr) break;
                     }
                 }
@@ -1086,7 +1090,7 @@ namespace Logitude.Server.Tools.Helpers
         #endregion
 
         #region  Apply FollowUp Automation
-        public void ApplyFollowUpAutomation(Object entityPM,  List<Automation> automations, EntityChange entityChange, List<Field> automationFieldLists, string lastupdateautomation, Object oldentityPM, string processtype, string entityId, string otherLastupdateautomation)
+        public void ApplyFollowUpAutomation(Object entityPM, List<Automation> automations, EntityChange entityChange, List<Field> automationFieldLists, string lastupdateautomation, Object oldentityPM, string processtype, string entityId, string otherLastupdateautomation)
         {
             if (automations.Count > 0)
             {
@@ -1124,7 +1128,7 @@ namespace Logitude.Server.Tools.Helpers
                 }
             }
         }
-     
+
         private EntityChangeAutomation CreateEntityChangeAutomation(Automation automation)
         {
             return new EntityChangeAutomation()
@@ -1178,7 +1182,7 @@ namespace Logitude.Server.Tools.Helpers
             {
                 #region Fill Data
                 string userId = GetSystemContactIdByTenant(entityChange.Tenant);
-    
+
                 string ownerId = automationFollowUp.OwnerValue;
                 string note = automationFollowUp.NoteValue;
                 string eventTypeId = automationFollowUp.EventTypeId;
@@ -1249,7 +1253,7 @@ namespace Logitude.Server.Tools.Helpers
                         bool isFollowUpExist = followUpRepository.CheckIfFollowUpExist(entityChange.EntityId, automationFollowUp.ObjectTableName, automationFollowUp.EventTypeId, entityChange.Tenant);
                         if (!isFollowUpExist)
                         {
-                            AddFollowUp(automation.Id, entityChange, automationFollowUp, ownerId, note, eventTypeId, date, followUpRepository, followUpDateFieldName,userId);
+                            AddFollowUp(automation.Id, entityChange, automationFollowUp, ownerId, note, eventTypeId, date, followUpRepository, followUpDateFieldName, userId);
                             isAddFollowUp = true;
                         }
                     }
@@ -1276,7 +1280,7 @@ namespace Logitude.Server.Tools.Helpers
             }
         }
 
-        private void AddFollowUp(string automationId, EntityChange entityChange, AutomationFollowUp automationFollowUp, string ownerId, string note, string eventTypeId, DateTime? date, FollowUpRepository followUpRepository, string followUpDateFieldName, string userId,string documentTypeId = null, string area = null)
+        private void AddFollowUp(string automationId, EntityChange entityChange, AutomationFollowUp automationFollowUp, string ownerId, string note, string eventTypeId, DateTime? date, FollowUpRepository followUpRepository, string followUpDateFieldName, string userId, string documentTypeId = null, string area = null)
         {
             int tenant = entityChange.Tenant;
             FollowUp followUp = new FollowUp();
@@ -1299,7 +1303,7 @@ namespace Logitude.Server.Tools.Helpers
 
             followUp.Tenant = tenant;
             followUpRepository.Add(followUp);
-    
+
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = tenant,
@@ -1308,7 +1312,7 @@ namespace Logitude.Server.Tools.Helpers
                 EntityId = entityChange.EntityId,
                 ObjectTableName = "Shipment",
                 Notes = automationFollowUp.FollowUpEnglishName + "\n" + "Resulted from Automation",
-               
+
             });
 
 
@@ -1317,7 +1321,7 @@ namespace Logitude.Server.Tools.Helpers
         #endregion
 
         #region Apply Queued Task Automation
-        public void  ApplyQueuedTaskAutomation(Object entityPM, List<Automation> automations, EntityChange entityChange, List<Field> automationFieldLists, string lastupdateautomation, Object oldentityPM, string processtype, string entityId, string otherLastupdateautomation)
+        public void ApplyQueuedTaskAutomation(Object entityPM, List<Automation> automations, EntityChange entityChange, List<Field> automationFieldLists, string lastupdateautomation, Object oldentityPM, string processtype, string entityId, string otherLastupdateautomation)
         {
             if (automations.Count > 0)
             {
@@ -1443,7 +1447,7 @@ namespace Logitude.Server.Tools.Helpers
                         {
                             loggedUserBranchId = loggedUser.BranchId;
                             loggedUserBusinessUnitId = loggedUser.BusinessUnitId;
-                        }                        
+                        }
 
                         if (string.IsNullOrEmpty(ownerId))
                         {
@@ -1467,7 +1471,7 @@ namespace Logitude.Server.Tools.Helpers
                                 }
                             }
                         }
-                        
+
                         Type type = entityPM.GetType();
                         string entityId = string.Empty;
                         Object value = GetPropertyValue(entityPM, type, "Id");
@@ -1526,13 +1530,13 @@ namespace Logitude.Server.Tools.Helpers
                                 activity.DueDateOffset = myOffset;
                             }
                         }
-                        
+
                         if (!string.IsNullOrEmpty(dueDateFieldName))
                         {
                             activity.DueDateDateField = dueDateFieldName;
 
                             Type dateType = entityPM.GetType();
-                            if(dateType != null)
+                            if (dateType != null)
                             {
                                 PropertyInfo propInfo = dateType.GetProperty(dueDateFieldName);
 
@@ -1573,7 +1577,7 @@ namespace Logitude.Server.Tools.Helpers
                             ObjectTableName = "Activity",
                         });
                     }
-                }             
+                }
 
                 entityChange.HasExecutedRecord = true;
                 entityChangesAutomation.IsConditionTrue = true;
@@ -1682,7 +1686,7 @@ namespace Logitude.Server.Tools.Helpers
 
             return result;
         }
-        
+
         private string GetLastUpdateDate(string lastupdateautomation, string otherLastupdateautomation, Automation automation)
         {
             string lastUpdate = lastupdateautomation;

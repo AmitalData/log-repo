@@ -234,6 +234,11 @@ export class FullAccountingSettingPM {
     public set IsPaymentChequesActivated(newValue: boolean) { if (this.isPaymentChequesActivated != newValue) { this.isPaymentChequesActivated = newValue; this.MarkAsDirty("IsPaymentChequesActivated"); } }
        
 	 
+    private gLAccounterCounterLength: number;
+    public get GLAccounterCounterLength() { return this.gLAccounterCounterLength; }
+    public set GLAccounterCounterLength(newValue: number) { if (this.gLAccounterCounterLength != newValue) { this.gLAccounterCounterLength = newValue; this.MarkAsDirty("GLAccounterCounterLength"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

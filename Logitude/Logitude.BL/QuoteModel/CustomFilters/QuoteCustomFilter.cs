@@ -307,6 +307,26 @@ namespace Logitude.BL.QuoteModel
                         }
                     }
 
+                    if (item.FieldName == "IsShowingUsedSpotRateQuotes")
+                    {
+                        bool isShowingUsedQuotes = false;
+
+                        if (item.FieldValue != null)
+                        {
+                            isShowingUsedQuotes = Convert.ToBoolean(item.FieldValue);
+                        }
+
+                        if (isShowingUsedQuotes)
+                        {
+                            
+                        }
+
+                        else
+                        {
+                            queryableData = queryableData.Where(d => d.QuoteTypeCode == "P" || (d.QuoteTypeCode == "A" && (d.UsageCount == 0 || d.UsageCount == null)));
+                        }
+                    }
+
                     //if (item.FieldName == "MyFollowUps")
                     //{
                     //    string email = SecurityUtility.GetAuthenticatedUser();

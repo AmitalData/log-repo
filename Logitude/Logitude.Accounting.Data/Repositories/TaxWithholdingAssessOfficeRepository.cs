@@ -37,6 +37,14 @@ namespace Logitude.Accounting.Data.Repositories
             return taxWithholdingAssessOffice;
         }
 
+        public TaxWithholdingAssessOffice GetSingleTaxWithholdingAssessOfficeByCode(string Code, int tenant)
+        {
+            return (from a in context.TaxWithholdingAssessOffices
+                    where a.Code == Code && a.Tenant == tenant
+
+                    select a).FirstOrDefault();
+        }
+
     }
 
 }

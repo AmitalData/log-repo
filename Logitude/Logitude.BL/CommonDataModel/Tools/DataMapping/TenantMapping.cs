@@ -115,9 +115,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
             poco.CBSA = entityPM.CBSA;
             poco.CAAT = entityPM.CAAT;
-            poco.DefaultWarningPercentage = entityPM.DefaultWarningPercentage;
+            poco.ApplyVATForAllPartners = entityPM.ApplyVATForAllPartners;
 
-            if(entityPM.CheckDigitControlAlgorithmCode == null)
+            if (entityPM.CheckDigitControlAlgorithmCode == null)
             {
                 entityPM.CheckDigitControlAlgorithmCode = "NONE";
             }

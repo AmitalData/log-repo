@@ -486,7 +486,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
 
-        return this.entityListService.getOpenReconciliationsByFilter("LedgerTransaction", this.BankAccountPM.GLAccountId, filters);
+        return this.entityListService.getReconciliationsByFilter("LedgerTransaction", this.BankAccountPM.GLAccountId, filters);
     }
 
     PushLine(row, RowIndex) {

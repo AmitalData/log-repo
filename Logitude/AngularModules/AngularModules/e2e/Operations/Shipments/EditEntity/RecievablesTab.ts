@@ -38,7 +38,7 @@ export class ReceivablesTabComponent {
             // this.Helper.WaitByIdAndFill('Shipment_EstimateProfitInSelectedCurrency', '44');
 
             this.AddReceivables('A', '5', '10', 'USD');
-            // this.AddReceivables('Order', '10', '20');
+             //this.AddReceivables('Order', '10', '20');
             // InvoiceAmount = this.amount1 + this.amount2
             // this.AddARInvoice();
         }

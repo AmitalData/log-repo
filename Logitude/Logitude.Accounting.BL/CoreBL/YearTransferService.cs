@@ -1,9 +1,11 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using System;
@@ -15,9 +17,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
-    public class YearTransferService : IYearTransferService
+    public class YearTransferService : IYearTransferService, ICancelYearTransferService, ICheckAndQYearTransferService
     {
-        StringBuilder _sb= new StringBuilder();
+        StringBuilder _sb = new StringBuilder();
         public const string RevenueType = "1";
         public const string ExpenseType = "2";
         private IQueryable<GLAccountAndMoreDTO> _AllRevenueExpenseCards;
@@ -33,7 +35,56 @@ namespace Logitude.Accounting.BL.CoreBL
         {
 
         }
-        public JournalPM ProccessJournal(IAccountingContext accountingContext,int YYyear,int tenant)
+        
+        public string Check_CreateQBatchTaskYearTransfer(int YYyear, int tenant)
+        {
+            var accountingContext = AccountingContext.GetContext(tenant);
+            CheckThrowExceptionIfNeeded(accountingContext, YYyear, tenant);
+            var myBatchYearTransferService = new BatchYearTransferService(null);
+            return myBatchYearTransferService.CreateQBatchTaskExecution<BatchYearTransferParams>(new BatchYearTransferParams() { Tenant = tenant, YYyear = YYyear }, tenant, $"YearTransfer({YYyear})", false);
+        }
+
+
+        public JournalPM ProccessJournal(IAccountingContext accountingContext, int YYyear, int tenant)
+        {
+            CheckThrowExceptionIfNeeded(accountingContext, YYyear, tenant);
+
+            _sb.AppendLine($"GetRevenueExpenseGLAccountFromAccSetting({tenant})");
+            _FullAccountingSettingPM = GetRevenueExpenseGLAccountFromAccSetting(accountingContext, tenant);
+            _AllRevenueExpenseCards = GetQAllRevenueExpenseCards(accountingContext, tenant);
+
+
+
+            var listOfAccountId = _AllRevenueExpenseCards.Select(r => r.Id).AsQueryable<string>();//.ToList();
+
+            var item = listOfAccountId.FirstOrDefault(id => id == _FullAccountingSettingPM.RevenueExpenseGLAccountId);
+            if (item != null)
+            {
+                //listOfAccountId.Remove(item);
+                listOfAccountId = listOfAccountId.Where(r => r != item);
+            }
+            _TotalBalance = GetBalance(accountingContext, _EndOfYearUserInput, tenant, listOfAccountId);
+
+
+            if (_TotalBalance.Count == 0)
+            {
+                return null;
+            }
+            var usrid = AuthenticationUtil.ResolveUserId(tenant);
+            DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
+            var journalPM = CreateJournal(
+                _EndOfYearUserInput,
+                _AllRevenueExpenseCards,
+                _TotalBalance,
+                _FullAccountingSettingPM.RevenueExpenseGLAccountId,
+                usrid, @now,
+                tenant);
+            var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+            JournalUP.Update(journalPM, true);
+            return journalPM;
+        }
+
+        public void CheckThrowExceptionIfNeeded(IAccountingContext accountingContext, int YYyear, int tenant)
         {
             _sb.AppendLine($"CheckYear({YYyear})");
             _EndOfYearUserInput = CheckYear(YYyear);
@@ -59,24 +110,24 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
-                List<JournalPM> journalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j =>!j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
-                if (journalPMs != null)
+                List<JournalPM> notVoidedJournalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j => !j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
+                if (notVoidedJournalPMs != null)
                 {
                     bool problem = false;
                     string journalNo = "";
-                    JournalPM jPM = journalPMs.Where(j => String.IsNullOrEmpty(j.OriginalJournalId)).FirstOrDefault();  
+                    JournalPM jPM = notVoidedJournalPMs.Where(j => String.IsNullOrEmpty(j.OriginalJournalId)).FirstOrDefault();
                     if (jPM != null) // at least one journal without OriginalJournalId
                     {
                         problem = true;
                         journalNo = jPM.JournalNumber;
                     }
                     else
-                    { 
-                        List<String> originalJournalIds = journalPMs.Select(j => j.OriginalJournalId).ToList();
+                    {
+                        List<String> originalJournalIds = notVoidedJournalPMs.Select(j => j.OriginalJournalId).ToList();
                         List<JournalPM> notVoidedOriginalJournals = journalQueryService.GetJournalPMsByIds(originalJournalIds, tenant).Where(originalJournal => !originalJournal.IsVoided.HasValue || !originalJournal.IsVoided.Value).ToList();
                         List<String> notVoidedOriginalIds = notVoidedOriginalJournals.Select(k => k.Id).ToList();
-                        List<JournalPM> realJournals = journalPMs.Where(j => notVoidedOriginalIds.Contains(j.OriginalJournalId)).ToList();
-                        if (realJournals != null)
+                        List<JournalPM> realJournals = notVoidedJournalPMs.Where(j => notVoidedOriginalIds.Contains(j.OriginalJournalId)).ToList();
+                        if (realJournals != null && realJournals.Count > 0)
                         {
                             jPM = realJournals.FirstOrDefault();
                             if (jPM != null) // at least one journal where OriginalJournalId is not voided
@@ -90,7 +141,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         string transText = "";
                         bool useLocal = true;
-                        transText = TranslateTextsClassTranslate("Accounting.O.AccountingPeriodAlready", 0, useLocal) + journalNo;
+                        transText = TranslateTextsClassTranslate("Accounting.O.YearTransferredAlready", 0, useLocal) + journalNo;
                         if (String.IsNullOrWhiteSpace(transText))
                         {
                             transText = "The chosen year is transferred already, In order to transfer it again, you must void Journal " + journalNo;
@@ -101,46 +152,155 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
             }
-
-
-
-
-            _sb.AppendLine($"GetRevenueExpenseGLAccountFromAccSetting({tenant})");
-            _FullAccountingSettingPM = GetRevenueExpenseGLAccountFromAccSetting(accountingContext,tenant);
-            _AllRevenueExpenseCards = GetQAllRevenueExpenseCards(accountingContext,tenant);
-
-
-
-            var listOfAccountId = _AllRevenueExpenseCards.Select(r => r.Id).AsQueryable<string>();//.ToList();
-            
-            var item =listOfAccountId.FirstOrDefault(id => id == _FullAccountingSettingPM.RevenueExpenseGLAccountId);
-            if (item != null)
-            {
-                //listOfAccountId.Remove(item);
-                listOfAccountId = listOfAccountId.Where(r => r != item);
-            }
-            _TotalBalance = GetBalance(accountingContext,_EndOfYearUserInput,tenant, listOfAccountId);
-
-            
-            if (_TotalBalance.Count == 0)
-            {
-                return null;
-            }
-            var usrid = AuthenticationUtil.ResolveUserId(tenant);
-            DateTime @now= TenantServerConfigration.GetCurrentDateTime(tenant);
-            var journalPM =CreateJournal(
-                _EndOfYearUserInput, 
-                _AllRevenueExpenseCards,
-                _TotalBalance, 
-                _FullAccountingSettingPM.RevenueExpenseGLAccountId,
-                usrid, @now,
-                tenant);
-            var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-            JournalUP.Update(journalPM, true);
-
-            return journalPM;
         }
-        
+
+        public JournalPM CancelYear(IAccountingContext accountingContext, int YYyear, int tenant)
+        {
+            JournalPM originalPM = CheckCancelYear(accountingContext, YYyear, tenant);
+            JournalPM stornoJournalPM = DoCancelYear(accountingContext, originalPM, tenant);
+            return stornoJournalPM;
+        }
+
+        public JournalPM DoCancelYear(IAccountingContext accountingContext, JournalPM origPM, int tenant)
+        {
+            JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
+            JournalPM stornoPM = null;
+            if (origPM != null)
+
+            {
+                try
+                {
+                    var service = new JournalVoidUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+
+                    var stornoOverrideM = new StornoOverrideM()
+                    {
+                        AccountingEntityCode = "11",
+                        AccountingEntityId = origPM.Id,
+                        AccountingEntityReference = origPM.JournalNumber,
+                    };
+                    JournalPM jPM = service.VoidJournal(origPM.Id, tenant, stornoOverrideM);
+             //       JournalPM savedPM = journalQueryService.GetSinglePM(origPM.Id, tenant);
+
+                    stornoPM = journalQueryService.GetSinglePMByOriginal(origPM.Id, tenant);
+                }
+                catch (Exception e)
+                {
+                    string text = $"Journal {origPM.JournalNumber} Storno issue failed";
+                    throw new Exception($"{text} ", e);
+                }
+            }
+            else
+            {
+                throw new Exception("Original Journal not found");
+            }
+
+            return stornoPM;
+        }
+        public JournalPM CheckCancelYear(IAccountingContext accountingContext, int YYyear, int tenant)
+        {
+            _sb.AppendLine($"CheckYear({YYyear})");
+            _EndOfYearUserInput = CheckYear(YYyear);
+            DateTime accountingDate = _EndOfYearUserInput.AddDays(1);//1.1.(yyyy+1)
+            JournalPM origPM = null;
+            JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
+
+            if (accountingDate != null)
+            {
+                AccountingPeriodQueryService accountingPeriodQueryService = new AccountingPeriodQueryService(accountingContext);
+                List<AccountingPeriodPM> accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodsByTenantAndType("1", tenant);
+                if (accountingPeriodsByTypeRegular != null)
+                {
+                    if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), accountingDate))
+                    {
+                        string transText = "";
+                        bool useLocal = true;
+                        transText = TranslateTextsClassTranslate("Accounting.O.AccountingPeriodClosed", 0, useLocal);
+                        if (String.IsNullOrWhiteSpace(transText))
+                        {
+                            transText = "Closed Month";
+                        }
+                        throw new Exception(transText);
+                    }
+                }
+                List<JournalPM> notVoidedJournalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j => !j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
+                if (notVoidedJournalPMs == null)
+                {
+                    string transText = "";
+                    bool useLocal = true;
+                    transText = TranslateTextsClassTranslate("Accounting.O.AccountingPeriodYet", 0, useLocal);
+                    if (String.IsNullOrWhiteSpace(transText))
+                    {
+                        transText = "The chosen year is not yet transferred";
+                    }
+
+                    throw new Exception(transText);
+
+                }
+
+                else //if (notVoidedJournalPMs != null)
+                {
+                    JournalPM jPM = notVoidedJournalPMs.Where(j => String.IsNullOrEmpty(j.OriginalJournalId)).FirstOrDefault();
+                    if (jPM != null) // at least one journal without OriginalJournalId
+                    {
+                        origPM = jPM; // that's the one to void it
+                    }
+                    else
+                    {
+                        string journalNo = "";
+                        List<String> originalJournalIds = notVoidedJournalPMs.Select(j => j.OriginalJournalId).ToList();
+                        List<JournalPM> formerTransfers = journalQueryService.GetJournalPMsByIds(originalJournalIds, tenant).ToList();
+                        if (formerTransfers != null && formerTransfers.Count > 0)
+                        {
+                            jPM = formerTransfers.OrderByDescending(j => j.JournalNumber).FirstOrDefault();
+                            if (jPM != null) // at least one journal where OriginalJournalId is not voided
+                            {
+                                journalNo = jPM.JournalNumber;
+                            }
+                        }
+                        else //OUR problem: OriginalJournalId is not a voided journal; 
+                             // so the question is: 
+                             // can the notVoidedJournalPMs.FirstOrDefault()  serve as the journal to void id? 
+                        {
+                            JournalPM nvjPM = notVoidedJournalPMs.OrderByDescending(j => j.JournalNumber).Where(j => String.IsNullOrEmpty(j.OriginalJournalId)).FirstOrDefault();
+
+                            if (nvjPM != null)
+                            {
+                                journalNo = nvjPM.Id; // cannot be there because OriginalJournalId IS NOT NULL  <==> the journal is s storno of the OriginalJournalId  
+                            }
+                            else
+                            {
+                                journalNo = "0";
+                            }
+                        }
+
+
+                        string transText = "";
+                        string transText_1 = "";
+                        string transText_22 = "";
+                        bool useLocal = true;
+                        transText_1 = TranslateTextsClassTranslate("Accounting.O.TheYearTransferJournal", 0, useLocal);
+                        if (String.IsNullOrWhiteSpace(transText_1))
+                        {
+                            transText_1 = "The Year Transfer Journal ";
+                        }
+                        transText_22 = TranslateTextsClassTranslate("Accounting.O.YearTransferCancelledAlready", 0, useLocal);
+                        if (String.IsNullOrWhiteSpace(transText_22))
+                        {
+                            transText_22 = " for chosen yead is cancelled already";
+                        }
+                        transText = $"{transText_1}{journalNo}{transText_22}";
+
+                        throw new Exception(transText);
+                    }
+                }
+
+            }
+            return origPM;
+ 
+        }
+
+
+
         public virtual JournalPM CreateJournal(DateTime endOfYearUserInput,  IQueryable<GLAccountAndMoreDTO> allRevenueExpenseCards, List<CurrencySum> totalBalance,string RevenueExpenseGLAccountId, string usrid,DateTime @now, int tenant)
         {
 
@@ -316,7 +476,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 );
 
             var CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1 = endOfYearUserInput.AddDays(1);
-            endAccountBalanceService.CalculateBalance(GLAccountTotalDateTypeValues.Accountingdate,CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1, false, true);
+            bool openBalancePlease_ReCalcYearTransfer = true;//yaron :irrlavant end of year
+
+            endAccountBalanceService.CalculateBalance(
+openBalancePlease_ReCalcYearTransfer, 
+GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1, false, true);
 
             var totals = (from rec in endAccountBalanceService.AccountBalance.verbose.CurrencySumUntillMounth.Union(endAccountBalanceService.AccountBalance.verbose.TheMounthCurrencySum)
                           group rec by new

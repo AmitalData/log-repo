@@ -2,27 +2,31 @@ import { LoginComp } from '../../Login/Login.po';
 import { browser, by, element } from 'protractor';
 import { DocsOutTabComponent } from './EditEntity/DocsOutTab';
 import { OperationsComp } from './NewEntity/Operations.po';
-
 import { SendMailPopup } from '../SendMailPopup/SendMailPopup';
 import { PrintDocOut } from '../PrintDocOut/PrintDocOut';
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
-import { send } from 'q';
+
+import { DocOutSenario } from './DocOutSenario';
+
+
+
 
 describe('DocsOut', () => {
 
-  let login: LoginComp = new LoginComp();
-  let docsOutTab: DocsOutTabComponent = new DocsOutTabComponent();
-  let sendMailPopup: SendMailPopup = new SendMailPopup();
-  let NewDirectShipment: OperationsComp = new OperationsComp();
-  let printDocOut: PrintDocOut = new PrintDocOut();
-  let helper = new FieldsHelper();
+  // let login: LoginComp = new LoginComp();
+  //let docsOutTab: DocsOutTabComponent = new DocsOutTabComponent();
+  //let sendMailPopup: SendMailPopup = new SendMailPopup();
+  //let NewDirectShipment: OperationsComp = new OperationsComp();
+  //let printDocOut: PrintDocOut = new PrintDocOut();
+  //let helper = new FieldsHelper();
+
+  let DocOutSenarios: DocOutSenario = new DocOutSenario();
 
 
   beforeEach(() => {
-    browser.driver.manage().window().maximize();
-    browser.ignoreSynchronization = true;
-  });
 
+  });
+  browser.ignoreSynchronization = true;
 
   /*it('Send Docs Out of Shipment To A User Successfully', function () {
 
@@ -42,16 +46,20 @@ describe('DocsOut', () => {
   });*/
 
   it('Successfully Printing Document', function () {
-    NewDirectShipment.DoOperations();
-    helper.WaitBusyIndicator();
-    docsOutTab.DocsOutTab();
-    docsOutTab.QuickSearchDocOut('ETO-P-DocsOut', 'ETO-L-DocsOut', 'Export Trucking Order');
-     printDocOut.isPrintingCompleted('BuildDocumentSucceededDiv', true);
-   });
+    DocOutSenarios.SuccessfullyPrintingDocument();
+    //NewDirectShipment.DoOperations();
+    //helper.WaitBusyIndicator();
+    //docsOutTab.DocsOutTab();
+    //docsOutTab.QuickSearchDocOut('ETO-P-DocsOut', 'ETO-L-DocsOut', 'Export Trucking Order');
+    // printDocOut.isPrintingCompleted('BuildDocumentSucceededDiv', true);
+  });
 
   it('Failing Printing Document', function () {
-    docsOutTab.QuickSearchDocOut('FTDT-P-DocsOut', 'FTDT-L-DocsOut', 'Failure Test Document');
-    printDocOut.isPrintingCompleted('BuildDocumentFailedDiv', false);
+    DocOutSenarios.FailingPrintingDocument();
+
+
+    // docsOutTab.QuickSearchDocOut('FTDT-P-DocsOut', 'FTDT-L-DocsOut', 'Failure Test Document');
+    // printDocOut.isPrintingCompleted('BuildDocumentFailedDiv', false);
 
   });
 });

@@ -107,7 +107,7 @@ namespace WebFreight.Web.Helpers.TicketAnalyzer
                 bool check = HasInbounEmailAnalyzeQueueId();
                 if (!check)
                 {
-                    inboundWebhook = new InboundParseWebhook(EmailDetails, myAnalyzeQueue.Id);
+                    inboundWebhook = new InboundParseWebhook(EmailDetails, myAnalyzeQueue);
                 }
 
                 myAnalyzeQueue.Status = "D";
