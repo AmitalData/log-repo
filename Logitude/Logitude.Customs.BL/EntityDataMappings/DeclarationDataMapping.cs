@@ -209,7 +209,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (client != null)
                 {
                    
-                    entityPM.CalculatedImporterName = client.FullName;
+                    entityPM.CalculatedImporterName = client.FullName.Substring(0, Math.Min(35, client.FullName.Length));
                     FacilitationTypeQueryService FacilitationTypeQueryService = new FacilitationTypeQueryService(entityPOCO.Tenant);
                     FacilitationTypePM FacilitationType = FacilitationTypeQueryService.GetSingle(client.FacilitationTypeCode, false, true);
                     entityPM.FacilityTypeName = FacilitationType !=null? FacilitationType.LocalName: null;
