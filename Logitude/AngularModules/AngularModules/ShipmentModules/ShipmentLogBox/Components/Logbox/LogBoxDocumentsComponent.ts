@@ -943,6 +943,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
 
     }
     DisableAddDocumentButton: boolean = false;
+
     ShareDocumentsClick() {
         if (this.SharedDocs.length > 0) {
             var window = new ConfirmWindow();
