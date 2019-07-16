@@ -1042,7 +1042,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 IsActive = true,
                 LabelTextCodeCode = "Customs.Declaration.B.CourierPendingReason",
                 LabelTextCodeDefaultText = "Courier Pending Reason",
-                LocalDefaultText = "הזנת Pending",
+                LocalDefaultText = "Pending",
                 ObjectTableId = declarationTableId,
                 Tenant = tenant,
                 MenuButtonGroupId = declarationMenuButtonGroup.Id,
@@ -1050,7 +1050,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 FeatureId = declarationFeature_CourierPendingReason.Id,
                 MenuButtonType = "menuitem",
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
-
+            /*
             MenuButton CourierPendingReasonDelButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
             {
                 EventCode = "CourierPendingReasonDel",
@@ -1066,6 +1066,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 FeatureId = declarationFeature_CourierPendingReason.Id,
                 MenuButtonType = "menuitem",
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            */
             #endregion
 
             #region Declaration Closure
