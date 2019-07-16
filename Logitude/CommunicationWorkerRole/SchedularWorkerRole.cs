@@ -253,7 +253,7 @@ namespace CommunicationWorkerRole
             var queueservice = new DbQueueService();
             if (task.NextRunTime < DateTime.Now)
             {
-                task.NextRunTime = DateTime.Now;
+                task.NextRunTime = TenantServerConfigration.GetCurrentDateTime(task.Tenant); 
                 task.NextRunTimeUTC = DateTime.UtcNow;
             }
             switch (task.TriggerType)
