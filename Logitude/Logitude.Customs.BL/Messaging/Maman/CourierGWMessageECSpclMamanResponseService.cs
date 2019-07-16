@@ -84,7 +84,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         {
                             var myDeclarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
                             var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(settings.Tenant);
-                            DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(settings.DeclarationId, false, false);
+                            DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(settings.DeclarationId, true, false);
                             myDeclarationCourierStatusPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                             myDeclarationCourierStatusPM.FastIndividualProcessCode = "I";
                             myDeclarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);

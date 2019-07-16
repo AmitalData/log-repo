@@ -26,7 +26,7 @@ namespace Logitude.Customs.BL.BL
         {
             var customContext = CustomContext.GetContext(Tenant);
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
-            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(DeclarationId, false, false);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(DeclarationId, true, false);
             if (currentDeclarationCourierStatusPM != null)
             {
                 string prevVal = null;
@@ -49,7 +49,7 @@ namespace Logitude.Customs.BL.BL
         {
             var customContext = CustomContext.GetContext(Tenant);
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
-            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(DeclarationId, false, false);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(DeclarationId, true, false);
             if (currentDeclarationCourierStatusPM != null)
             {
                 string prevVal = null;
@@ -86,7 +86,7 @@ namespace Logitude.Customs.BL.BL
         {
             var context = CustomContext.GetContext(this.declarationPM.Tenant);
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(this.declarationPM.Id, false, false);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(this.declarationPM.Id, true, false);
             if (currentDeclarationCourierStatusPM != null)
             {
 
@@ -105,7 +105,7 @@ namespace Logitude.Customs.BL.BL
             {
                 var context = CustomContext.GetContext(declarationPM.Tenant);
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, false, false);
+                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
                 if (myDeclarationCourierStatusPM == null)
                 {
                     myDeclarationCourierStatusPM = new DeclarationCourierStatusPM()

@@ -370,7 +370,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (myEventContextTagModel.EventCode == "MNC")//MNC its success !
                 {
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                    DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, false, false);
+                    DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, true, false);
                     if (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == "V")
                     {
                         if (_MyDeclarationPM.TaxationDateTime < DateTime.Now.Date)

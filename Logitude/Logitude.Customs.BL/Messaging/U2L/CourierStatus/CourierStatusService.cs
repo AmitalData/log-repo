@@ -95,7 +95,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
             }
 
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-            DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
+            DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
             if(newDeclarationCourierStatusPM != null)
             {
                 DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);

@@ -444,7 +444,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
 
-                        DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id,false,false);
+                        DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id,true,false);
                         declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         declarationCourierStatusPM.CourierDeclarationStatusCode = null;
                         declarationCourierStatusPM.CourierPaymentStatusCode = null;

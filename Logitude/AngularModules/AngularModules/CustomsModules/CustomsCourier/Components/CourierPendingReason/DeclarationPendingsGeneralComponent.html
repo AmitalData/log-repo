@@ -60,9 +60,9 @@
                                                     [LookUpTableName]="'Customs.CourierPendingReason'"
                                                     (SelectedItemChanged)="item.SetLocalName($event, 'CourierPendingReasonName')"
                                                     [FocusOnMe]="'true'"
-                                                    [HideColumns]="true"
-                                                    (LostFocus)="item.OnCourierPendingReasonLostFocus(logcelltemplate,CourierPendingReasonLovBox)"
-                                                    (KeyUp)="item.CourierPendingReasonKeyUp($event,logcelltemplate,CourierPendingReasonLovBox)">
+                                                    [HideColumns]="true">
+                                                    <!--(LostFocus)="item.OnCourierPendingReasonLostFocus(logcelltemplate,CourierPendingReasonLovBox)"
+                                                    (KeyUp)="item.CourierPendingReasonKeyUp($event,logcelltemplate,CourierPendingReasonLovBox)"-->
                                             </LogLov>
 
                                         </div>
@@ -87,12 +87,12 @@
                                 <log-column [header]="'Customs.DeclarationPending.F.Status' | TextCodeTranslationPipe" [binding]="'Status'" [width]="'70'" [Editable]="true" [Alignment]="'right'">
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{item.Status}}</span>
+                                            <span>{{item.SelectedItemStatus.Value}}</span>
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Status'" [DataContext]="item"
-                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-
+                                            <!--<LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Status'" [DataContext]="item"
+                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>-->
+                                            <ComboBox [ItemsSource]="item._StatusItems" [Binding]="'Value'" [SelectedItem]="item.SelectedItemStatus" (SelectedItemChanged)="item.StatusChanged($event)"></ComboBox>
                                         </div>
                                     </log-cell-template>
                                 </log-column>
@@ -101,7 +101,7 @@
                                 <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
                                     <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                         <div style="width: 30px; float: right; height:20px;padding-top:3px">
-                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteButtonClicked(item)" [IsEnabled]="!IsDisplayOnly"></IconButton>
                                         </div>
                                     </log-cell-template>
                                 </log-column>

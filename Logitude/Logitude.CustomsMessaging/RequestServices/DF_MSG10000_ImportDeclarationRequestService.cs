@@ -207,7 +207,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 
                 DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(this._context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(this._context);
-                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_DeclarationPM.Id, false, false);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_DeclarationPM.Id, true, false);
                 if (currentDeclarationCourierStatusPM == null)
                 {
                     currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()

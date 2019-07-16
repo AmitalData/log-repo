@@ -195,7 +195,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(ResponseStatusCode={responeGWMessageECTHRData.ResponseStatusCode},{responeGWMessageECTHRData.ResponseStatusMsg})");
             var context = CustomContext.GetContext(settings.Tenant);
             var myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-            var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(settings.DeclarationId, false, false);
+            var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(settings.DeclarationId, true, false);
             declarationCourierStatusQueryServicePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
             switch (responeGWMessageECTHRData.ResponseStatusCode)

@@ -83,7 +83,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
                 if (!String.IsNullOrWhiteSpace(_LogitudeCourierXML.DeclarationId))
                 {
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-                    _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_LogitudeCourierXML.DeclarationId, false, false);
+                    _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_LogitudeCourierXML.DeclarationId, true, false);
                     if (_MyDeclarationCourierStatusPM == null)
                     {
                         throw new BusinessErrorException("Declaration with ID " + _LogitudeCourierXML.DeclarationId + " Doesn't exist");
@@ -186,7 +186,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
 
             MyGenericResponseObj.Stage = "GetSingle";
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-            _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(existId, false, false);
+            _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(existId, true, false);
             if (this._MyDeclarationCourierStatusPM == null)
             {
                 throw new BusinessErrorException("LOGITUDE FILE is " + existId + " but not found");

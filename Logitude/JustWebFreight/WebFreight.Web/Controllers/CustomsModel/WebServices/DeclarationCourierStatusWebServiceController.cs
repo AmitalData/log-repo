@@ -32,7 +32,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(tenant);
                 DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), tenant);
 
-                DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationId, false, false);
+                DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationId, true, false);
 
                 declarationCourierStatusPM.ManualProcessCode = manualProcessCode;
                 declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;

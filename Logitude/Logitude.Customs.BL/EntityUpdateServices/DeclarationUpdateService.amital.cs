@@ -712,7 +712,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (dirtyDeclarationPM != null && dirtyDeclarationPM.IsCourierDeclaration)
                     {
                         DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(dirtyDeclarationPM.Tenant);
-                        DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(dirtyDeclarationPM.Id, false, false);
+                        DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(dirtyDeclarationPM.Id, true, false);
                         if (currentDeclarationCourierStatusPM != null && taskType == "LP2U" && string.IsNullOrWhiteSpace(dirtyDeclarationPM.PaymentOrderNumber) && dirtyDeclarationPM.TotalTax > 5)
                         {
                             if (raiseStatus == true)
