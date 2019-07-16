@@ -468,8 +468,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         EventTracer.CreateTraceEvent(new EventTracerArgs() { EntityId = entityPM.Id, ObjectTableName = "Customs.Declaration", Tenant = entityPM.Tenant, UserId = contact.Id, EventTypeCode = "VATC", Notes = "Old VAT: " + declaration.ImporterCode + " New VAT: " + entityPM.ImporterCode });
                     }
                 }
-                entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, Math.Min(35, entityPM.CalculatedImporterName.Length));
-                entityPM.ImporterName = entityPM.ImporterName.Substring(0, Math.Min(35, entityPM.ImporterName.Length));
+                if (!string.IsNullOrEmpty(entityPM.CalculatedImporterName) && entityPM.CalculatedImporterName.Length > 35) entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, 35);
+                if (!string.IsNullOrEmpty(entityPM.ImporterName) && entityPM.ImporterName.Length > 35) entityPM.ImporterName = entityPM.ImporterName.Substring(0, 35);
             }
             finally
             {
@@ -761,8 +761,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.FacilityTypeName = null;
                 }
             }
-            entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, Math.Min(35, entityPM.CalculatedImporterName.Length));
-            entityPM.ImporterName = entityPM.ImporterName.Substring(0, Math.Min(35, entityPM.ImporterName.Length));
+            if (!string.IsNullOrEmpty(entityPM.CalculatedImporterName) && entityPM.CalculatedImporterName.Length > 35) entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, 35);
+            if (!string.IsNullOrEmpty(entityPM.ImporterName) && entityPM.ImporterName.Length > 35) entityPM.ImporterName = entityPM.ImporterName.Substring(0, 35);
 
             bool isSubmitChanges = false;
             //----- consignment 
