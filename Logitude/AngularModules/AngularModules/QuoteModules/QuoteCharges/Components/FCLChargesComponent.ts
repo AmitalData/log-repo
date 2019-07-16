@@ -1031,6 +1031,14 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
 
+            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+
+
             if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
                 if (this.EntityPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods) || (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods)).length > 0) {
                     updateMessage = "You have updated the Value of Goods, apply the new values?";
@@ -1048,7 +1056,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
             this.UpdateQuantitiesMessage = updateMessage;
             this.UpdateQuantitiesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
-            this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+            this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;        
         }
     }
     UpdateQuantitiesClicked() {
