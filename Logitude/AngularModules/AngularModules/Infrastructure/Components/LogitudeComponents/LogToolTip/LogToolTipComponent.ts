@@ -18,7 +18,7 @@ export class LogToolTipComponent implements AfterViewInit {
     @Input() public title: string;
     @Input() public name: string = 'no1';
     @Input() public direction: string = 'bottomright';
-    @Input() public mode: string = 'info';
+    @Input() public mode: string = 'Info';
 
     constructor() {
 

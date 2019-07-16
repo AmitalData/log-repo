@@ -74,6 +74,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set WeightCode(value: string) {
         if (this.weightCode != value) {
             this.weightCode = value;
+            this.ComputeVolume();
             this.ComputeVolumetricWeight();
        }
     }
@@ -85,6 +86,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set GrossWeightCode(value: string) {
         if (this.grossWeightCode != value) {
             this.grossWeightCode = value;
+            this.ComputeVolume();
             this.ComputeVolumetricWeight();
         }
     }
@@ -98,6 +100,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set VolumeUnitCode(value: string) {
         if (this.volumeUnitCode != value) {
             this.volumeUnitCode = value;
+            this.ComputeVolume();
             this.ComputeVolumetricWeight();
         }
     }
@@ -107,7 +110,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
 
     private ComputeVolumetricWeight() {
-
         this.Weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
     }
 
