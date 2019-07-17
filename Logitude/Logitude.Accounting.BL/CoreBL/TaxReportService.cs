@@ -9,6 +9,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.CloseTables;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -198,46 +199,32 @@ namespace Logitude.Accounting.BL.CoreBL
                     Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
 
                    
-                    if (a.AccountingEntity == "4")
+                    if (a.AccountingEntity == AccountingEntityValues.APInvoice)
                     {
-
                         aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
-
-                   
-
                         if (aPInvoice != null)
                         {
                             aPInvoice.TotalVATs = totalvats.Where(d => d.APInvoiceId == aPInvoice.Id).ToList();
                             VatNumber = aPInvoice.VATNumber;
                             InputVatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVATAmount);
-                            InputInvoiceAmount = aPInvoice.AmountInLocalCurrency != null ? (decimal?)aPInvoice.AmountInLocalCurrency : 0;
+                            InputInvoiceAmount = (decimal?)aPInvoice.SubTotalInLocalCurrency ?? 0;
                         }
-
-
-
-
                     }
                     else
                     {
                         InputVatAmount = a.LocalAmountDebit;
 
-                        if (card != null)
-                        {
+                        if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
                             VatNumber = card.VatNumber;
-                        }
                         else
-                        {
-
                             VatNumber = "000000000";
-                        }
 
-                        InputInvoiceAmount = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
+                        var transactionSum = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
+                        InputInvoiceAmount = transactionSum - InputVatAmount;
                     }
 
                     if (VatNumber == null)
-                    {
                         VatNumber = "000000000";
-                    }
 
                     GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();
                     if (gLAccountPM != null)
