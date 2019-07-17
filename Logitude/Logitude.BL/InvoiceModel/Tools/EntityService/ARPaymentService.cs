@@ -114,7 +114,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARPaymentValidator.Validate(_arpaymentPM, cashBook);
             ARPaymentTracing.Trace(_arpaymentPM, newPayment, isNewEntity);
 
-            SubmitPaymentInvoices(_arpaymentPM);
 
             InitializeTransferComponents();
 
@@ -127,6 +126,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             paymentRepository.Add(newPayment);
             paymentRepository.SubmitChanges();
+            SubmitPaymentInvoices(_arpaymentPM);
 
             UpdatePaymentOpenAmount();
 
