@@ -317,6 +317,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     }
             }
         }
+
         private void ConnectAnalyzeQueue()
         {
 
@@ -355,11 +356,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         case "FNA":
                         case "FMA":
                             {
-                                //if (mySenderID != "REUBCSP")
-                                //{
-                                //    AnalyzeMessageQueue();
-                                //}
-
                                 if (mySenderID != "BCSSYS03AWBCPY")
                                 {
                                     AnalyzeMessageQueue();
