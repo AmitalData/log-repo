@@ -64,8 +64,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                 List<QueueTask> tasks = new List<QueueTask>();
                 tasks.Add(new QueueTask() { Action = "StatusUpdate", Parameters = new List<Logitude.Server.Tools.Parameter>() {
-                new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = Data.ShipmentNumber},    
-                new Logitude.Server.Tools.Parameter { Name = "Code", Value = Data.Code}
+                new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = Data.ShipmentNumber}, 
+                new Logitude.Server.Tools.Parameter { Name = "Code", Value = Data.Code},
+                new Logitude.Server.Tools.Parameter { Name = "Date", Value = Data.Date},
+                new Logitude.Server.Tools.Parameter { Name = "Time", Value = Data.Time},
+                new Logitude.Server.Tools.Parameter { Name = "Remarks", Value = Data.Remarks},
+                new Logitude.Server.Tools.Parameter { Name = "Direction", Value = Data.Direction} 
                 } });
                 var ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
                 Document document = new Document()

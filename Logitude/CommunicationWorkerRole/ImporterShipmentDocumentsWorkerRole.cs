@@ -217,11 +217,15 @@ namespace CommunicationWorkerRole
                                         var tenantQuery = new TenantQuery(ForwarderShipment.Tenant);
                                         var tenantPM = tenantQuery.GetSinglePM(ForwarderShipment.Tenant);
                                         TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
-                                        var customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(tenant, importerTenant);
-                                        if (customerTenantAccess != null)
+                                        if (customerTenantAccessInfo != null)
                                         {
-                                            LogPM.PartnerName = customerTenantAccess.CompanyName + " ( " + customerTenantAccess.CustomerTenant + " )";
+                                            var customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(tenant, importerTenant);
+                                            if (customerTenantAccess != null)
+                                            {
+                                                LogPM.PartnerName = customerTenantAccess.CompanyName + " ( " + customerTenantAccess.CustomerTenant + " )";
+                                            }
                                         }
+                                        
                                         if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.IsCustomerTenantShare)// && (tenantPM.CustomerTenantShareImportFile ? ForwarderShipment.DirectionId.ToUpper() == "I" || ForwarderShipment.DirectionId.ToUpper() == "C" : ForwarderShipment.DirectionId.ToUpper() == "C"))
                                         {
                                             importerTenant = customerTenantAccessInfo.CustomerTenant;
