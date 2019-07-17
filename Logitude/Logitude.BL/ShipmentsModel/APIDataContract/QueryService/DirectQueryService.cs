@@ -300,19 +300,25 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(Tenant);
                 foreach (ShipmentReceivablePM item in temp.ShipmentReceivables)
                 {
-                    var chergeType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, Tenant);
-                    if (chergeType != null && !string.IsNullOrEmpty(chergeType.ReceivablesDefaultCurrencyId))
+                    if(string.IsNullOrEmpty(item.CurrencyId))
                     {
-                        item.CurrencyId = chergeType.ReceivablesDefaultCurrencyId;
+                        var chergeType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, Tenant);
+                        if (chergeType != null && !string.IsNullOrEmpty(chergeType.ReceivablesDefaultCurrencyId))
+                        {
+                            item.CurrencyId = chergeType.ReceivablesDefaultCurrencyId;
+                        }
                     }
                 }
 
                 foreach (ShipmentPayablePM item in temp.ShipmentPayables)
                 {
-                    var chergeType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, Tenant);
-                    if (chergeType != null && !string.IsNullOrEmpty(chergeType.PayablesDefaultCurrencyId))
+                    if (string.IsNullOrEmpty(item.CurrencyId))
                     {
-                        item.CurrencyId = chergeType.PayablesDefaultCurrencyId;
+                        var chergeType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, Tenant);
+                        if (chergeType != null && !string.IsNullOrEmpty(chergeType.PayablesDefaultCurrencyId))
+                        {
+                            item.CurrencyId = chergeType.PayablesDefaultCurrencyId;
+                        }
                     }
                 }
 
