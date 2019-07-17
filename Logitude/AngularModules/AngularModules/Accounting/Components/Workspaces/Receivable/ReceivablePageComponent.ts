@@ -82,7 +82,11 @@ export class ReceivablePageComponent {
         this._entityResourceService.getEntityResourceByTableName("ARPayment").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => {
                 this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
-                    this.isReady = true;
+                    this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
+                        this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => {
+                            this.isReady = true;
+                        });
+                    });
                 });
             });
         });
