@@ -60,7 +60,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         super();
        // this.CurrentSession.StartBusyIndicatorLoading();
 
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");    
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
         this.IsManifest = this.EntityPM.ARInvoiceTypeCode == "MN" ? true : false;
         this.IsCustomsInvoice = (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") ? true : false;
@@ -78,7 +78,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;  
+    private LoadCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
 
@@ -191,7 +191,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public PaymentTermDisplayInLOV: boolean = true;
     SetUIProperties() {
         var isEditingEnabled = InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
-                
+
         if (!AppTool.IsNullOrEmpty(this.BillToAddressId)) {
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, isEditingEnabled);
         }
@@ -350,6 +350,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.VatNumber = null;
                 this.BillToName = null;
+                this.BillToLocalName = null;
                 this.BillToAddressId = null;
                 this.InvoiceCurrencyId = SessionLocator.AccountingCurrencyId;
                 this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
@@ -362,6 +363,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         if (this.cardList != null) {
                             this.VatNumber = this.cardList.VatNumber;
                             this.BillToName = this.cardList.EnglishName;
+                            this.BillToLocalName = this.cardList.LocalName;
                             this.EntityPM.SalesmanUserId = this.cardList.SalesmanUserId;
 
                             if (!AppTool.IsNullOrEmpty(this.cardList.GLAccountId)) {
@@ -402,6 +404,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     set BillToName(newValue: string) {
         if (this.EntityPM.BillToName != newValue) {
             this.EntityPM.BillToName = newValue;
+        }
+    }
+
+
+    get BillToLocalName() { return this.EntityPM.BillToLocalName; }
+    set BillToLocalName(newValue: string) {
+        if (this.EntityPM.BillToLocalName != newValue) {
+            this.EntityPM.BillToLocalName = newValue;
         }
     }
 
@@ -645,7 +655,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     this.ItemsSource.forEach(item => {
                         item.VatTypeId = vatType;
                     });
-                   
+
                     this.SetGridColumnsWidth();
                 }
             });
@@ -706,7 +716,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.ComputeTotals();
     }
 
-    // Load Date 
+    // Load Date
     public LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     private myCurrencyRatesService: CurrencyRatesService;
@@ -1365,7 +1375,7 @@ export class ARInvoiceLineItem extends BaseComponent {
                 }
             }
         }
-        
+
         this.IsRateEnabled = isFieldEnabled;
         this.UIProperties.SetEnabled("ForiegnExchangeRate", this.ObjectTableName, isFieldEnabled);
     }
