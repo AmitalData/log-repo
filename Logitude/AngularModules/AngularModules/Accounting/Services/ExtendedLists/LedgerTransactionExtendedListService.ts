@@ -198,6 +198,62 @@ export class LedgerTransactionExtendedListService {
         });
     }
 
+
+    getReconciliationsByFilter(accountId: string, filters: ApiQueryFilters) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        var url = this._reconciliationUrl + "/GetReconciliationsByFilter";
+
+        var urlparameters = '?gLAccountId='
+            + accountId + '&tenant=' + SessionInfo.LoggedUserTenant; // Get Open Transaction by Itzik service , the get is inside post method
+
+        // Parse Filters into URI
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        var callTime = new Date();
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+
+
+        }
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+        // End Parse
+
+
+        var callUrl = url.concat(urlparameters);
+
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+
+                var serviceResponse: ServiceResponse;
+                //serviceResponse.CallTime = callTime;
+                serviceResponse = response.json();
+                console.log("serviceResponse: ", serviceResponse);
+
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     getAutomaticReconcileByFilter(method1: string, method2: string, method3: string, accountId: string, filters: ApiQueryFilters) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
