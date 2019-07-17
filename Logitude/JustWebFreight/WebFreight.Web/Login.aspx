@@ -1423,12 +1423,12 @@
 
                                         if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
                                         else if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                                        else if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
-                                        else errorMessage = "Login failed! invalid user name or password." + "<br/>";
-
-                                        if (userdata.InValidCaptcha && userdata.CaptchaImage) errorMessage = "Please re-enter the characters you see in the image above";
-
-
+                                        else if (userdata.Unlicensed) errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
+                                        else if (userdata.InValidMailOrPassword) errorMessage = "Login failed! invalid user name or password.";
+                                       else if (userdata.InValidCaptcha && userdata.CaptchaImage)  errorMessage = "Please re-enter the characters you see in the image above";
+                                       else errorMessage = "Login failed! invalid user name or password." + "<br/>";
+                                    
+                       
 
 
                                     document.getElementById("errorsList").innerHTML = errorMessage;
