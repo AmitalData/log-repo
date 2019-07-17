@@ -9,6 +9,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.CloseTables;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -221,13 +222,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         InputVatAmount = a.LocalAmountDebit;
 
-                        if (card != null)
+                        if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
                         {
                             VatNumber = card.VatNumber;
                         }
                         else
                         {
-
                             VatNumber = "000000000";
                         }
 
