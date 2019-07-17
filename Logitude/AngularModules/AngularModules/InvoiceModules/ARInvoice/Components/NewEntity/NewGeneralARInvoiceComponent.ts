@@ -270,6 +270,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.VatNumber = null;
                 this.BillToName = null;
+                this.BillToLocalName = null;
                 this.BillToAddressId = null;
                 this.SATPaymentMethodCode = null;
                 this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
@@ -284,6 +285,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
                         if (list != null) {
                             this.VatNumber = list.VatNumber;
                             this.BillToName = list.EnglishName;
+                            this.BillToLocalName = list.LocalName;
                             if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
                                 this.SATPaymentMethodCode = list.SATPaymentMethodCode;
                             }
@@ -355,6 +357,14 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     set BillToName(newValue: string) {
         if (this.EntityPM.BillToName != newValue) {
             this.EntityPM.BillToName = newValue;
+        }
+    }
+
+
+    get BillToLocalName() { return this.EntityPM.BillToLocalName; }
+    set BillToLocalName(newValue: string) {
+        if (this.EntityPM.BillToLocalName != newValue) {
+            this.EntityPM.BillToLocalName = newValue;
         }
     }
 
