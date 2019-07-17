@@ -249,6 +249,7 @@ export class QuoteUtilities {
         //entityPM.ToPortName = copiedEntityPM.ToPortName;
 
         entityPM.MainCarriageCarrierId = copiedEntityPM.MainCarriageCarrierId;
+        entityPM.TransitTime = copiedEntityPM.TransitTime;
     }
     public static CopyQuotePackages(entityPM: QuotePM, copiedEntityPM: QuotePM) {
         copiedEntityPM.QuotePackages.forEach(item => {
