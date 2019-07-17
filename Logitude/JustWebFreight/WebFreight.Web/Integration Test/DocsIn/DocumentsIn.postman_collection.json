@@ -943,7 +943,7 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{URL}}/api/DocumentsFilingExtended/GetCreateDocumentShipmentEvent?entityId={{DirectShipmentAirExportId}}&objectTableName=1-1937776&Notes=shipment%20invoice%20Created%20By%20IntegrationTest.pdf",
+					"raw": "{{URL}}/api/DocumentsFilingExtended/GetCreateDocumentShipmentEvent?entityId={{DirectShipmentAirExportId}}&Notes=shipment%20invoice%20Created%20By%20IntegrationTest.pdf&eventCode=DOUP",
 					"host": [
 						"{{URL}}"
 					],
@@ -958,12 +958,12 @@
 							"value": "{{DirectShipmentAirExportId}}"
 						},
 						{
-							"key": "objectTableName",
-							"value": "1-1937776"
-						},
-						{
 							"key": "Notes",
 							"value": "shipment%20invoice%20Created%20By%20IntegrationTest.pdf"
+						},
+						{
+							"key": "eventCode",
+							"value": "DOUP"
 						}
 					]
 				}
