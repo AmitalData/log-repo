@@ -181,12 +181,9 @@ export class ReceivablePageComponent {
 
     //#region ARPayments
     NewARPaymentMethod() {
-        var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
-        var ChangedText = GeneralText.split('%')[0];
-        var NewText = TextCodeTranslator.TranslateTable("ARPayment");
+         var FinalText = TextCodeTranslator.Translate("ARPayment.O.New");
 
-        var showlocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-        var FinalText = showlocal ? (NewText + " " + ChangedText) : (ChangedText + " " + NewText);
+        // var FinalText = this.getAutoNewName();
 
 
         var logWindow = new LogitudeWindow();
@@ -203,6 +200,15 @@ export class ReceivablePageComponent {
 
     }
     filterAgrs: ApiQueryFilters;
+    private getAutoNewName() {
+        var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+        var ChangedText = GeneralText.split('%')[0];
+        var NewText = TextCodeTranslator.TranslateTable("ARPayment");
+        var showlocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        var FinalText = showlocal ? (NewText + " " + ChangedText) : (ChangedText + " " + NewText);
+        return FinalText;
+    }
+
     ViewInvoiceQuery(args: string) {
         if (args != null) {
 
