@@ -42,7 +42,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     public TenantPM: TenantPM;
     public EntityPM: FullAccountingSettingPM;
     public isRTL: boolean = false;
-
+    ImageId: string;
+    EntityId: string;
     fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();;
     fullAccountingSettingListService: FullAccountingSettingListService;
     tenantPMService: TenantPMService;
@@ -52,7 +53,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.CurrentSession.StartBusyIndicatorLoading();
-
+       
         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
         });
@@ -60,6 +61,9 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.CurrentSession.StopBusyIndicator();
 
             this.EntityPM = myResult.Result;
+            this.ImageId = this.EntityPM.PaymentChequesLogoId;
+            this.EntityId = this.EntityPM.Id;
+
             if (this.EntityPM == null || this.EntityPM == undefined) {
                 console.log("There is no F. Accounting setting found for tenant: " + SessionLocator.Tenant);
             } else {
@@ -279,7 +283,16 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     if (this.EntityPM.CustomsGLAccountId != value) {
       this.EntityPM.CustomsGLAccountId = value;
     }
-  }
+    }
+
+    get PaymentChequesLogoId() { return this.EntityPM.PaymentChequesLogoId; }
+    set PaymentChequesLogoId(value: string) {
+        if (this.EntityPM.PaymentChequesLogoId != value) {
+            this.EntityPM.PaymentChequesLogoId = value;
+
+
+        }
+    }
 
     get AirImportJobControlAccountId() { return this.EntityPM.AirImportJobControlAccountId; }
     set AirImportJobControlAccountId(value: string) {
@@ -377,6 +390,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     //#endregion
 
     //Commands
+
+    ImageUploadedCompleted(code) {
+        this.ImageId = code;
+        this.EntityPM.PaymentChequesLogoId = code;
+    }
+
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -469,6 +489,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.SelectedTab = "FullAccoutingSetting";
         this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
+        this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
+
     }
     SelectionChanged(tab: any) {
 

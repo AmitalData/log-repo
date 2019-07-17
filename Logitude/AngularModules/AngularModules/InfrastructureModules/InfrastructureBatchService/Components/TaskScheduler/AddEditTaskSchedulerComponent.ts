@@ -262,10 +262,10 @@ export class AddEditTaskSchedulerComponent  {
             if (AppTool.IsNullOrEmpty(this.DataContext.From)) errors.push(msg.replace("%FieldName", "From"));
 
             if (AppTool.IsNullOrEmpty(this.DataContext.Host)) errors.push(msg.replace("%FieldName", "Host"));
-            else {
-                var isValid = this.ValidateHost();
-                if (!isValid) errors.push("Invalid Host");
-            }
+           // else {
+               // var isValid = this.ValidateHost();
+               // if (!isValid) errors.push("Invalid Host");
+            //}
 
         }
 
