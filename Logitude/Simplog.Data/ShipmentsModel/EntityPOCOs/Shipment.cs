@@ -770,5 +770,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public bool HasContainerException { get; set; }
         public string ARInvoices { get; set; }
+        public string Commodity { get; set; }
+        public string FirstPickupLocation { get; set; }
+        public string ContainersNumbers { get; set; }
+
+
+
+
     }
 }

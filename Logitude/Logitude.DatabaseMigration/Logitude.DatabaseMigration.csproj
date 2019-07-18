@@ -1213,6 +1213,10 @@
     <Compile Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.Designer.cs">
       <DependentUpon>201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907171756412_Add_Shipment_Facts_Fields_Khalid.cs" />
+    <Compile Include="Migrations\201907171756412_Add_Shipment_Facts_Fields_Khalid.Designer.cs">
+      <DependentUpon>201907171756412_Add_Shipment_Facts_Fields_Khalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2064,6 +2068,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.resx">
       <DependentUpon>201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907171756412_Add_Shipment_Facts_Fields_Khalid.resx">
+      <DependentUpon>201907171756412_Add_Shipment_Facts_Fields_Khalid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
