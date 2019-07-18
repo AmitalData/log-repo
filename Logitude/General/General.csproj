@@ -207,6 +207,7 @@
     <Content Include="2019.R2\05 - 2019\Day 9 [Abed] UpdateMeasuremntsLocalName.sql" />
     <Content Include="2019.R3\07 - 2019\Day 03 [Samar] Add new help resources.sql" />
     <Content Include="2019.R3\07 - 2019\Day 06 [Maheera] Add new UOM Volume in CBM.sql" />
+    <Content Include="2019.R3\07 - 2019\Day 17 [Islam] fix users without roles.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
@@ -1817,6 +1818,7 @@
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments NumberOfHouses.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments TEU.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] ShipmentPayablesReceivablesFields.sql" />
+    <Content Include="Usefull Scripts\Islam\bulk update shipments_new.sql" />
     <Content Include="Usefull Scripts\Islam\contact computed Key.sql" />
     <Content Include="Usefull Scripts\Islam\duplicated contacts issue script fix.sql" />
     <Content Include="Usefull Scripts\Islam\duplicated Global Contacts Fix.sql" />
