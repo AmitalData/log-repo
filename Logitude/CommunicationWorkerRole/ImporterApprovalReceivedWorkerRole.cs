@@ -194,7 +194,7 @@ namespace CommunicationWorkerRole
                                     HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository); 
                                     HybridPartnerPM Partner = HybridPartnerQuerey.GetSinglePM(ForwarderShipment.ForwarderPartnerId);
                                     //var Shipment = shipmentQuery.GetSinglePM(ShipmentId, tenant);
-                                    var Data = Repo.GetSingleShipmentAdditionalCloudData(Id, tenant);
+                                    var Data = Repo.GetSingleShipmentAdditionalCloudData(ShipmentId, tenant);
                                     if (Data != null)
                                     {
                                         var Objecttable = objectTabelRepository.GetObjectTableByName("Shipment", tenant, true);
