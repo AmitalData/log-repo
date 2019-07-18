@@ -49,6 +49,10 @@
                                                             [HideColumns]="true" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
                                             </td>
 
+                                            <td style="width: 120px;vertical-align: bottom; padding-right: 10px;">
+                                                <custom-send-options [CustomSendOptionsButtonCanForcePersonalSign]="'false'"
+                                                                     (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
+                                            </td>
                                             <td><div></div></td>
 
                                         </tr>

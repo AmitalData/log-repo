@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnifreightIIG.Common.ClientSdk;
 using UnifreightIIG.Common.ContinuousRequestOnClaimFileServiceReference;
+using UnifreightIIG.Common.TheGateway;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -20,11 +22,46 @@ namespace Logitude.CustomsMessaging.MessagingServices
         CLAIM_5013_ContinuousResponseOnClaimFileResponseService,
         RequestHeader>
     {
-        public override string MainInterfaceCode => throw new NotImplementedException();
+        public override string MainInterfaceCode
+        {
+            get { return "5005"; }
+        }
 
         protected override CLAIM_MSG13_ContinuousResponseOnClaimFile CallWS(CLAIM_MSG9_ContinuousRequestOnClaimFile customRequest, ContinuousRequestOnClaimFileRequestParams requestParams, out string exceptionMessage)
         {
-            throw new NotImplementedException();
+            exceptionMessage = null;
+            var response = new CLAIM_MSG13_ContinuousResponseOnClaimFile();
+
+            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            {
+                _ResponseHeader = uifreightSdkGateway.GetChannel<IContinuousRequestOnClaimFileOperation>()
+                    .ContinuousRequestOnClaimFile(
+                    this.RequestsSheetExternalId,
+                    base.CustomsSetting.CustomsAgentId,
+                    customRequest,
+                    ref this._IIGGatewayMoreParams,
+                    out response);
+
+            }
+            return response;
+        }
+
+        protected override CLAIM_MSG13_ContinuousResponseOnClaimFile CallWSSigned(byte[] customRequestSignedByteArry, ContinuousRequestOnClaimFileRequestParams requestParams, out string exceptionMessage)
+        {
+            exceptionMessage = null;
+            var response = new CLAIM_MSG13_ContinuousResponseOnClaimFile();
+
+            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            {
+                _ResponseHeader = uifreightSdkGateway.GetChannel<IContinuousRequestOnClaimFileOperation>()
+                    .ContinuousRequestOnClaimFileSign(
+                    this.RequestsSheetExternalId,
+                    base.CustomsSetting.CustomsAgentId,
+                    new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry },
+                    ref this._IIGGatewayMoreParams,
+                    out response);
+            }
+            return response;
         }
     }
 }

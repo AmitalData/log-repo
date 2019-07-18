@@ -327,16 +327,15 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             //Get Claims Attachments
             var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = this._MyVehicle.Id, ParentEntityCode = "Vehicle" }, this._MyVehicle.Tenant);
+            int counter = 1;
             foreach (CustomsDocumentPM customsDocumentPM in customsDocumentPMList)
             {
+                if (counter > 5) break;
                 if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
                 {
                     vehicleAttachmentList.Add(customsDocumentPM.ExternalAttachmentId);
                 }
-            }
-            if (vehicleAttachmentList.Count > 5)
-            {
-                vehicleAttachmentList.Take(5);
+                counter++;
             }
 
             return vehicleAttachmentList.ToArray();

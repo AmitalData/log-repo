@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
+import { AppTool } from '../../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { ClaimPM } from '../../../../../Customs/EntityPMs/ClaimPM';
 import { ClaimsRelatedEntityPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntityPM';
-import { ClaimsRelatedEntitiesSeizurePM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntitiesSeizurePM';
-import { ClaimsRelatedEntitiesRefundPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntitiesRefundPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { ContinuousRequestOnClaimFileRequestParams } from '../../../../../Customs/DataContract/RequestParams/ContinuousRequestOnClaimFileRequestParams';
+import { CustomSendOptionsArgs } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { ClaimsRelatedEntityExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/ClaimsRelatedEntityExtendedPMService';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 
 
 @Component({
@@ -23,8 +26,10 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent extends BaseCompone
 
     public CurrentEditComponentId: string;
     public IsControlEnabled: boolean = true;
+    public IsNewEntity: boolean = false;
 
     ValidationErrors: string[] = [];
+    _ClaimsRelatedEntityExtendedPMService: ClaimsRelatedEntityExtendedPMService = new ClaimsRelatedEntityExtendedPMService()
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -57,10 +62,11 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent extends BaseCompone
         }
     }
 
-    InitTab(entityPM: ClaimsRelatedEntityPM, claimPM: ClaimPM, isEnable: boolean) {
+    InitTab(entityPM: ClaimsRelatedEntityPM, claimPM: ClaimPM, isEnable: boolean, isNew: boolean) {
 
         this.EntityPM = entityPM;
         this.ClaimPM = claimPM;
+        this.IsNewEntity = isNew;
 
         this.UIProperties.SetEnabled("ContinuousMessagesTypeCode", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("Note", this.ObjectTableName, false);
@@ -98,5 +104,78 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent extends BaseCompone
     public set ClaimRequestNumber(newValue: string) { this.EntityPM.ClaimRequestNumber = newValue; }
 
     //#endregion
+
+    FillErrors() {
+
+        var errors: string[] = [];
+        this.ValidationErrors = errors;
+
+        if (AppTool.IsNullOrEmpty(this.ContinuousRequestTypeCode)) {
+            this.ValidationErrors.push("חובה להזין סוג פנייה");
+            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.OriginSiteCodeMandatory"));
+        }
+        if (AppTool.IsNullOrEmpty(this.Explanation)) {
+            this.ValidationErrors.push("חובה להזין הסבר");
+            //this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.GatepassRequest.O.DesignateSiteCodeMandatory"));
+        }
+
+    }
+
+    OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
+
+        this.FillErrors();
+        if (this.ValidationErrors.length > 0) {
+            return;
+        }
+
+        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.EntityPM.ContinuousRequestTypeCode = this.ContinuousRequestTypeCode;
+        this.EntityPM.Explanation = this.Explanation;
+        if (this.IsNewEntity) {
+            this._ClaimsRelatedEntityExtendedPMService.insert(this.EntityPM).subscribe(res => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.SendContinuousRequestOnClaimMessage(customSendOptionsArgs);
+            });
+        }
+        else {
+            this._ClaimsRelatedEntityExtendedPMService.update(this.EntityPM).subscribe(res => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.SendContinuousRequestOnClaimMessage(customSendOptionsArgs);
+            });
+        }
+    }
+
+    SendContinuousRequestOnClaimMessage(customSendOptionsArgs: CustomSendOptionsArgs) {
+
+        SessionLocator.CurrentSession.StartBusyIndicator("");
+        var currRequestParams = new ContinuousRequestOnClaimFileRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
+        currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+
+        currRequestParams.AppicationId = this.EntityPM.ClaimId;
+        currRequestParams.ClaimRelatedEntityCounterKey = this.EntityPM.EntityCounterKey.toString();
+
+        CustomMessageProgressComponent
+            .ShowProgressBar(currRequestParams.PBId,
+                "שליחת בקשה ביטול/ערר תביעה", true)
+            .then((res) => {
+                //this._ClaimsRelatedEntityExtendedPMService.get(this.CourierMasterPM.Id).subscribe(rsptPMget => {
+                //    let entityPMResult = rsptPMget.Result;
+                //    if (entityPMResult != null) {
+                //        this.IsNew = false;
+                //        this.EntityPM = entityPMResult;
+            }
+            ).catch((err) => {
+                this.ValidationErrors.push(err);
+            });
+
+
+        //this._CourierMasterService.PostGatepassRequestMessage(currRequestParams)
+        //    .subscribe((myServiceResponse: ServiceResponse) => {
+        //    });
+    }
 }
 
