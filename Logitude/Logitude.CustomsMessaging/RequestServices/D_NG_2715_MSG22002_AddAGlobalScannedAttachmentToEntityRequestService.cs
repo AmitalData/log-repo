@@ -263,6 +263,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                         }
                     }
                 }
+                else if (customsDocumentPointerPM.ParentEntityCode == "Vehicle")
+                {
+                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Vehicle");
+                    this.MyRequestSheetParam.EntityId1 = customsDocumentPointerPM.ParentEntityId;
+                }
             }
 
             return relatedEntity;
