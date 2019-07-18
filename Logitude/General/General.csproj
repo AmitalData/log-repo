@@ -1817,6 +1817,7 @@
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments NumberOfHouses.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments TEU.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] ShipmentPayablesReceivablesFields.sql" />
+    <Content Include="Usefull Scripts\Islam\bulk update shipments_new.sql" />
     <Content Include="Usefull Scripts\Islam\contact computed Key.sql" />
     <Content Include="Usefull Scripts\Islam\duplicated contacts issue script fix.sql" />
     <Content Include="Usefull Scripts\Islam\duplicated Global Contacts Fix.sql" />
