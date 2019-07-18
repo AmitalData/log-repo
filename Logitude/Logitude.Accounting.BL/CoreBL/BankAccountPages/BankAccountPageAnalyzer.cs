@@ -344,7 +344,7 @@ s             b                   a
                     MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
                         new MyDTO()
                         {
-                            Message = "חשבון בנק {ACCNUMBER} דף מספר {newPageOfBankAccount.MyBankAccountM.PageNo} יתרת פתיחה לא תואמת ",
+                            Message = $"חשבון בנק {ACCNUMBER} דף מספר {newPageOfBankAccount.MyBankAccountM.PageNo} יתרת פתיחה לא תואמת ",
                              RawLine=""
                         });
                         
@@ -467,7 +467,7 @@ s             b                   a
             string b = $"{newPageOfBankAccount.BankCode}-{newPageOfBankAccount.MyBankAccountM.AccountNumber}";
             this.MyResultLoadBankPage.DBSuccessPageList.Add(
                 new MyDTO() {
-                    Message = "דף {entityPM.PageNo} בנק {b} נטען בהצלחה ",
+                    Message = $"דף {entityPM.PageNo} בנק {b} נטען בהצלחה ",
                     Verbose =
                 $"Success insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/{newPageOfBankAccount.MyBankAccountM.PageNo} =new DbId:{entityPM.Id}/DBPageNo:{entityPM.PageNo}  "
                 });
