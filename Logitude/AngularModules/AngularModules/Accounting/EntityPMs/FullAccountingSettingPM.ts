@@ -239,6 +239,11 @@ export class FullAccountingSettingPM {
     public set GLAccounterCounterLength(newValue: number) { if (this.gLAccounterCounterLength != newValue) { this.gLAccounterCounterLength = newValue; this.MarkAsDirty("GLAccounterCounterLength"); } }
        
 	 
+    private paymentChequesLogoId: string;
+    public get PaymentChequesLogoId() { return this.paymentChequesLogoId; }
+    public set PaymentChequesLogoId(newValue: string) { if (this.paymentChequesLogoId != newValue) { this.paymentChequesLogoId = newValue; this.MarkAsDirty("PaymentChequesLogoId"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

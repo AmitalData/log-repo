@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Data;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
@@ -32,20 +33,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             _MainContext = mainContext;
         }
 
-        public override void Validate(BankAccountPM entityPM)
+        public override void Validate(BankAccountPM bankAccountPM)
         {
-            bool useLocal = true;
-            ContactPM currenctUser = GetLoggedContact(entityPM.Tenant);
-            if (currenctUser != null)
-                useLocal = !currenctUser.DontShowLocal;
+            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(bankAccountPM.Tenant);
 
 
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            if (bankAccountPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                CheckBankAccountExists(entityPM);
+                CheckBankAccountExists(bankAccountPM);
                 if (ErrorsList.Count == 0)
                 {
-                    CheckGLAccountAlreadyConnectedToBankAccountOnInsert(entityPM, useLocal);
+                    CheckGLAccountAlreadyConnectedToBankAccountOnInsert(bankAccountPM, useLocal);
                 }
                 else
                 {
@@ -53,7 +51,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 if (ErrorsList.Count == 0)
                 {
-                    CheckDeferredGLAccountAlreadyConnectedToBankAccountOnInsert(entityPM);
+                    CheckDeferredGLAccountAlreadyConnectedToBankAccountOnInsert(bankAccountPM);
                 }
                 else
                 {
@@ -61,14 +59,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
 
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            if (bankAccountPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                BankAccount poco = GetSingleBankAccount(entityPM.Id, entityPM.Tenant);
+                BankAccount poco = GetSingleBankAccount(bankAccountPM.Id, bankAccountPM.Tenant);
 
-                CheckGLAccountAlreadyConnectedToBankAccountOnUpdate(entityPM, poco, useLocal);
+                CheckGLAccountAlreadyConnectedToBankAccountOnUpdate(bankAccountPM, poco, useLocal);
                 if (ErrorsList.Count == 0)
                 {
-                    CheckDeferredGLAccountAlreadyConnectedToBankAccountOnUpdate(entityPM, poco);
+                    CheckDeferredGLAccountAlreadyConnectedToBankAccountOnUpdate(bankAccountPM, poco);
                 }
                 else
                 {
@@ -76,7 +74,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 if (ErrorsList.Count == 0)
                 {
-                    CheckGLAccountHasTransactionsOnUpdate(entityPM, poco, useLocal);
+                    CheckGLAccountHasTransactionsOnUpdate(bankAccountPM, poco, useLocal);
                 }
                 else
                 {
@@ -84,14 +82,33 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 if (ErrorsList.Count == 0)
                 {
-                    CheckDefferedGLAccountTransactionsOnUpdate(entityPM, poco, useLocal);
+                    CheckDefferedGLAccountTransactionsOnUpdate(bankAccountPM, poco, useLocal);
                 }
                 else
                 {
                     return;
                 }
             }
-           
+
+            CheckBankAndGLAccountsCurrency(bankAccountPM, useLocal);
+
+        }
+
+        private static void CheckBankAndGLAccountsCurrency(BankAccountPM bankAccountPM, bool useLocal)
+        {
+            //get glaccounts
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(bankAccountPM.Tenant);
+            GLAccountPM _GLAccount = gLAccountQueryService.GetSinglePM(bankAccountPM.GLAccountId, bankAccountPM.Tenant);
+            GLAccountPM _DeferredGLAccount = gLAccountQueryService.GetSinglePM(bankAccountPM.DeferredGLAccountId, bankAccountPM.Tenant);
+            GLAccountPM _TransferGLAcccount = gLAccountQueryService.GetSinglePM(bankAccountPM.TransferGLAcccountId, bankAccountPM.Tenant);
+
+            if (bankAccountPM.CurrencyId != _GLAccount?.CurrencyId
+                || bankAccountPM.CurrencyId != _DeferredGLAccount?.CurrencyId
+                || bankAccountPM.CurrencyId != _TransferGLAcccount?.CurrencyId)
+            {
+                string msg = TextCodesTranslator.TranslateText("BankAccount.O.Bank_and_GL_Account_must_be_same_currency", bankAccountPM.Tenant, useLocal);
+                throw new ApplicationException(msg);
+            }
         }
 
         public virtual void CheckBankAccountExists(BankAccountPM entityPM)

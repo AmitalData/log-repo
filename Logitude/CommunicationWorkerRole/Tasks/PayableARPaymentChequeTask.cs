@@ -27,6 +27,7 @@ namespace CommunicationWorkerRole.Tasks
 
 
                 _SB.Append(DateTime.Now.ToString()).AppendLine("PayableARPaymentChequeTask:Start");
+                LogInfo(new StringBuilder().Append(DateTime.Now.ToString()).AppendLine("PayableARPaymentChequeTask:Start").ToString());
                 var tenantsAccountingActivated = new List<int>();
                 using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
                 {

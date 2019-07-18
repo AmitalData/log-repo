@@ -26,7 +26,7 @@ export class ServiceHelper {
             //var mm = error.json();
             if (error.status == 400) {
                 var apiException = error.json();
-                if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType =="ApplicationException") {
+                if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException" || apiException.ErrorType == "EntityCommandExecutionException" || apiException.ErrorType == "NullReferenceException") {
 
                     var errorMessage:string = apiException.ShortErrorMessage;
                     if (apiException.ShortErrorMessage) {

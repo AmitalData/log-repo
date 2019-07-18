@@ -5948,6 +5948,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARPaymentTextCode_ARPaymentOPaymentInProcesscantModified = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.PaymentInProcess-cantModified", DefaultText = "Payment in process - can't be modified",LocalDefaultText = @"הקבלה בתהליך בניה - לא ניתן לבצע שינויים", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode ARPaymentTextCode_ARPaymentORefresh = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.Refresh", DefaultText = "Refresh",LocalDefaultText = @"רענן", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentONew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.New", DefaultText = "New AR Payment",LocalDefaultText = @"קבלה חדשה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

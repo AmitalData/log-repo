@@ -1009,6 +1009,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string paymentChequesLogoId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PaymentChequesLogoId  
+	   {
+	    
+	     get
+		{
+		   return paymentChequesLogoId;
+		 }
+		 set
+		 {
+		   if(paymentChequesLogoId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentChequesLogoId",OldValue=paymentChequesLogoId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   paymentChequesLogoId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

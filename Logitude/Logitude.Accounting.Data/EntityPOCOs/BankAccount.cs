@@ -83,6 +83,11 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string TransferGLAcccountId { get; set; }
 	      
         public virtual GLAccount TransferGLAcccount { get; set; }
+        [ForeignKey("Currency")]
+        [Column("CurrencyId")]
+	    public string CurrencyId { get; set; }
+	      
+        public virtual Currency Currency { get; set; }
     }
 }
 	 

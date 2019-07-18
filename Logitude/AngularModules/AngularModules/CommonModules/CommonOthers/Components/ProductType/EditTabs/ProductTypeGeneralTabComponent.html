@@ -1,4 +1,4 @@
-﻿<div class="TabHolder">
+<div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
             <td>{{'ProductType.TH.General' | TextCodeTranslationPipe}}</td>
@@ -23,7 +23,7 @@
 
                                 <tr class="FormFieldRow">
                                     <td style="width: 170px;">
-                                        <LogLabel  [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
                                     <td>
@@ -49,17 +49,20 @@
 
                                     <td>
                                         <CheckBox [IsChecked]="InActive" (Checked)="InActive = $event"></CheckBox>
-                                    
-                                        
+
+
                                     </td>
                                 </tr>
 
 
 
+                                <tr class="TabTitleRow">
+                                    <td>Quotation Default Template</td>
+                                </tr>
 
                                 <tr class="FormFieldRow">
                                     <td style="width: 170px;">
-                                        <LogLabel [attr.title]="'Spot Rate Quotation Default Template'" [ObjectFieldName]="'QuotationDefaultTemplateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [Text]="'Spot Rate Template'" [ObjectFieldName]="'QuotationDefaultTemplateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
                                     <td>
@@ -75,9 +78,9 @@
 
                                 <tr class="FormFieldRow">
                                     <td style="width: 170px;">
-                                        <LogLabel [attr.title]="'Routing Rates Quotation Default Template'" [ObjectFieldName]="'RoutingRQuoteDefaultTemplateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [Text]="'Routing Rates Template'" [ObjectFieldName]="'RoutingRQuoteDefaultTemplateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">Routing Rates Template</LogLabel>
                                     </td>
-
+                                    <!--[attr.title]="'Routing Rates Template'"-->
                                     <td>
                                         <LogLov [ObjectFieldName]="'RoutingRQuoteDefaultTemplateId'"
                                                 [SelectedValue]="RoutingRQuoteDefaultTemplateId"
