@@ -979,8 +979,17 @@ namespace WebFreight.Web.WebServices
                     HasExternalContainer = true,
 
                 };
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                theDatainByte = storageservice.Read(fileInfo);
+                if (LogitudeSettings.DeploymentStage.ToLower() == "test2")
+                {
+                    IBlobService storageservice = new AzureBlobService();
+                    theDatainByte = storageservice.Read(fileInfo);
+                }
+                else
+                {
+                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    theDatainByte = storageservice.Read(fileInfo);
+                }
+                
                  
 
                 return theDatainByte;
