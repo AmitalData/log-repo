@@ -47,7 +47,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DefaultExternalDiffGLAccountId, 
 	         SoftwareVersion, 
 	         IsPaymentChequesActivated, 
-	         GLAccounterCounterLength,
+	         GLAccounterCounterLength, 
+	         PaymentChequesLogoId,
 	      }
 
 
@@ -96,7 +97,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DefaultExternalDiffGLAccountId, 
 	         SoftwareVersion, 
 	         IsPaymentChequesActivated, 
-	         GLAccounterCounterLength,
+	         GLAccounterCounterLength, 
+	         PaymentChequesLogoId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -228,6 +230,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccounterCounterLength))
             {
 				entityPOCO.GLAccounterCounterLength = entityPM.GLAccounterCounterLength;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentChequesLogoId))
+            {
+				entityPOCO.PaymentChequesLogoId = entityPM.PaymentChequesLogoId;
 			}
 			}
 
@@ -364,6 +371,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.GLAccounterCounterLength = entityPOCO.GLAccounterCounterLength;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PaymentChequesLogoId))
+            {
+					entityPM.PaymentChequesLogoId = entityPOCO.PaymentChequesLogoId;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -493,6 +505,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccounterCounterLength))
             {
                 oldEntityPM.GLAccounterCounterLength = entityPM.GLAccounterCounterLength;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentChequesLogoId))
+            {
+                oldEntityPM.PaymentChequesLogoId = entityPM.PaymentChequesLogoId;
             }
 			
 		}

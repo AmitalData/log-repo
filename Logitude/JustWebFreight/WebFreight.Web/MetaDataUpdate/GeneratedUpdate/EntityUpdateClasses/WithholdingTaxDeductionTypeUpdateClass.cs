@@ -99,7 +99,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LookUp2 =  "LocalName",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
+			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Withholding Tax Deduction Type",
-			      				    Code =  "5f78",
+			      				    Code =  "c0cd",
 			      				    Name =  "WithholdingTaxDeductionType Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -454,7 +454,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable WithholdingTaxDeductionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WithholdingTaxDeductionType" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature WithholdingTaxDeductionTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = WithholdingTaxDeductionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "WithholdingTaxDeductionType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature WithholdingTaxDeductionTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = WithholdingTaxDeductionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "WithholdingTaxDeductionType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature WithholdingTaxDeductionTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = WithholdingTaxDeductionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "WithholdingTaxDeductionType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature WithholdingTaxDeductionTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = WithholdingTaxDeductionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "WithholdingTaxDeductionType.Features.PackageFeature", NameTextCodeDefaultText = "WithholdingTaxDeductionType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
