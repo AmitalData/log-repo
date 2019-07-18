@@ -255,6 +255,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         {
                             ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
                             myRecord.ShipmentNumber = myShipment.ShipmentNumber;
+                            myRecord.OriginCode = myShipment.MainCarriageFromPortCode;
+                            myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;
+
                             myRecord.LineTypeCode = "EFC";
                             myRecord.Payables = this.IsLocalCurrency ? myShipment.OpenPayablesInLocalCurrency : myShipment.OpenPayablesInProfitCurrency;
                             myRecord.LongMaster = longMaster;
@@ -290,6 +293,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
                         myRecord.LineTypeCode = "FC";
                         myRecord.ShipmentNumber = myShipment.ShipmentNumber;
+                        myRecord.OriginCode = myShipment.MainCarriageFromPortCode;
+                        myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;
                         myRecord.LongMaster = longMaster;
                         myRecord.DirectionPartner = myDirectionPartner;
                         myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
@@ -350,6 +355,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
                         myRecord.LineTypeCode = invoice.StatusCode == "DR" ? "FX" : "FC";
                         myRecord.ShipmentNumber = myShipment.ShipmentNumber;
+                        myRecord.OriginCode = myShipment.MainCarriageFromPortCode;
+                        myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;
                         myRecord.LongMaster = longMaster;
                         myRecord.DirectionPartner = myDirectionPartner;
                         myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
@@ -610,6 +617,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 {
                                     ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
                                     myRecord.ShipmentNumber = myShipment.ShipmentNumber;
+                                    myRecord.OriginCode = myShipment.MainCarriageFromPortCode;
+                                    myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;
                                     myRecord.LineTypeCode = "EFC";
                                     myRecord.LongMaster = longMaster;
                                     myRecord.DirectionPartner = myDirectionPartner;
@@ -682,6 +691,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 {
                                     ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
                                     myRecord.ShipmentNumber = myShipment.ShipmentNumber;
+                                    myRecord.OriginCode = myShipment.MainCarriageFromPortCode;
+                                    myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;
                                     myRecord.LineTypeCode = "EFC";
                                     myRecord.LongMaster = longMaster;
                                     myRecord.DirectionPartner = myDirectionPartner;
@@ -755,6 +766,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
                                 myRecord.LineTypeCode = "FC";
                                 myRecord.ShipmentNumber = myShipment.ShipmentNumber;
+                                myRecord.OriginCode = myShipment.MainCarriageFromPortCode;
+                                myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;
                                 myRecord.LongMaster = longMaster;
                                 myRecord.DirectionPartner = myDirectionPartner;
                                 myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
@@ -879,6 +892,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
                                 myRecord.LineTypeCode = invoice.StatusCode == "DR" ? "FX" : "FC";
                                 myRecord.ShipmentNumber = myShipment.ShipmentNumber;
+                                myRecord.OriginCode = myShipment.MainCarriageFromPortCode;
+                                myRecord.DestinationCode = myShipment.MainCarriageFinalDestinationPortCode;
                                 myRecord.LongMaster = longMaster;
                                 myRecord.DirectionPartner = myDirectionPartner;
                                 myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;

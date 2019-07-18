@@ -1,4 +1,4 @@
-﻿import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ReportsPreviewComponent } from '../../../Components/ReportsPreviewComponent';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { ReportFliter } from '../../../Components/Filters/ReportFliter';
@@ -97,6 +97,7 @@ export class ShipmentsEventsListFilterComponent extends BaseComponent {
     }
 
     UserId: string;
+    EventTypeId: string;
     RunReport(isloading: boolean) {
 
         this.Validate();
@@ -129,6 +130,16 @@ export class ShipmentsEventsListFilterComponent extends BaseComponent {
                 this.queryFilterItem.DisplayInList = false;
                 this.queryFilterItem.FieldName = "UserId";
                 this.queryFilterItem.FieldValue = this.UserId;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            if (this.EventTypeId) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "EventTypeId";
+                this.queryFilterItem.FieldValue = this.EventTypeId;
+                this.queryFilterItem.FieldDataType = "string";
                 this.queryFilterItem.Operator = "Equals";
                 this.queryFilterItems.push(this.queryFilterItem);
             }
