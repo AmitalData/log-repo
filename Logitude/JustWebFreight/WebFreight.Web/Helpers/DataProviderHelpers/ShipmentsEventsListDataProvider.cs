@@ -17,6 +17,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         public string EventCode { get; set; }
         public string EventName { get; set; }
         public DateTime EventDate { get; set; }
+        //public string EventDate1 { get; set; }
+        //public string EventDate2 { get; set; }
         public DateTime LogDate { get; set; }
         public string UserName { get; set; }
         public string Notes { get; set; }

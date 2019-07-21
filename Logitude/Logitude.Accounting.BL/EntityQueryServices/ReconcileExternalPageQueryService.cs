@@ -116,7 +116,24 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 return 0;
 
         }
+        public bool CheckLastApprovedBankPage(ReconcileExternalPagePM page, int tenant)
+        {
+            //
+            ReconcileExternalPagePM reconcileExternalPage = GetLastApprovedBankPage(page.BankAccountId, tenant); 
 
+            if (reconcileExternalPage != null && (reconcileExternalPage.Id == page.Id))
+            { return true; }
+            else return false;
+        }
+
+        public ReconcileExternalPagePM GetLastApprovedBankPage(string bankAccountId, int tenant)
+        {
+            ReconcileExternalPage reconcileExternalPage = (from a in context.ReconcileExternalPages
+                                                           where a.BankAccountId == bankAccountId && a.Tenant == tenant && a.StatusCode == "2"
+                                                           orderby a.PageNo descending
+                                                           select a).FirstOrDefault();
+            return GetEntityPM(reconcileExternalPage); ;
+        }
     }
 
 }

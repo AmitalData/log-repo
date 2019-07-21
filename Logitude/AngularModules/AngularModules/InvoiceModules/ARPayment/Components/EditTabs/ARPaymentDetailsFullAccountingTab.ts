@@ -172,8 +172,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             ARPaymentEventManager.ARPaymentApproved.subscribe((res: any) =>
             {
                 this.IsDisplayOnly = true;
-                this.checkLedgerCreated();
-            });
+                // this.checkLedgerCreated(); // check after load
+             });
         }
     }
 
@@ -182,11 +182,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         if(this.EntityPM.Id){
 
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.StartBusyIndicator('checkLedgerCreated');
             this._JournalExtendedPMService.GetByAccountingEntityId(this.EntityPM.Id, '3').subscribe(myResult => // 3- ARPayment
             {
                 console.log("_JournalExtendedPMService.GetByAccountingEntityId", myResult);
-                this.CurrentSession.StopBusyIndicator();
+                this.StopBusyIndicator('checkLedgerCreated');
                 var res: ServiceResponse = myResult;
                 var createdJournal:JournalPM = res.Result;
 
@@ -212,6 +212,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     amount2reconcileTotal: number = 0;
     paymentReconciledAmountTotal: number = 0;
 
+
+    StartBusyIndicator(msg: string= '') {
+        console.log("[Busy Indicator] start: ", msg);
+        this.CurrentSession.StartBusyIndicatorLoading();
+    }
+    StopBusyIndicator(msg: string= '') {
+        console.log("[Busy Indicator] stop: ", msg);
+        this.CurrentSession.StopBusyIndicator();
+    }
 
     // IsEntityValid: boolean = true;
 
@@ -314,7 +323,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return new Promise((resolve, reject) => {
 
             var _glaId = this.billtoCard.GLAccountId;
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.StartBusyIndicator('fetchGLAccount');
             this._glaService.getSingle(_glaId)
                 .subscribe(response => {
 
@@ -323,13 +332,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                         var glaccount = res.Result;
 
                         resolve(glaccount);
-                        this.CurrentSession.StopBusyIndicator();
+                        this.StopBusyIndicator('fetchGLAccount');
                     }
                     else {
                         reject();
 
                         console.error(res.ErrorsArray);
-                        this.CurrentSession.StopBusyIndicator();
+                        this.StopBusyIndicator('fetchGLAccount');
                     }
                 });
 
@@ -410,11 +419,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     OpenReco(recoNumber) {
         if (!AppTool.IsNullOrEmpty(recoNumber)) {
 
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.StartBusyIndicator('OpenReco');
 
             this._ReconciliationExtendedPMService.getByNumber(recoNumber)
                 .subscribe(myResult => {
-                    this.CurrentSession.StopBusyIndicator();
+                    this.StopBusyIndicator('OpenReco');
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
@@ -482,11 +491,18 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.entityArgs.EditComponent != null) {
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                console.log('[EVENT] SaveCompleted', isSaveSuccess );
+
                 if (isSaveSuccess) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.GetData();
+                }
+
+                if(this.isFullAccounting &&  this.EntityPM.StatusCode == 'AD'){ // Approved
+                    this.IsDisplayOnly = true;
+                    this.checkLedgerCreated();
                 }
 
                 // if (this.RequestedCommandCode) {
@@ -495,6 +511,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                console.log('[EVENT] LoadCompleted', isLoadSuccess );
                 if (isLoadSuccess) {
 
 
@@ -954,7 +971,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.LoadData();
 
                 if (value)
+                {
+                    console.log('[!] BillTo changed, reload GLAccount.  ', value);
                     this.ReloadGLAccount();
+                }
 
 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {

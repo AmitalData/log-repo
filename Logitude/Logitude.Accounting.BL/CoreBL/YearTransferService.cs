@@ -108,8 +108,20 @@ namespace Logitude.Accounting.BL.CoreBL
                         throw new Exception(transText);
                     }
                 }
+                DateTime accountingDateFrom = accountingDate.AddYears(-1);//1.1.yyyy
+                DateTime accountingDateTo = _EndOfYearUserInput;//31.12.yyyy
 
                 JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
+                List<JournalPM> journalsNotLT = journalQueryService.GetJournalsNotLTByAccDate(accountingDateFrom, accountingDateTo, tenant).ToList();
+                if (journalsNotLT != null)
+                {
+                    JournalPM journalNotLT = journalsNotLT.FirstOrDefault();
+                    if (journalNotLT != null)
+                    {
+                        throw new Exception(NotLTMessage(journalNotLT.JournalNumber));
+                    }
+                }
+
                 List<JournalPM> notVoidedJournalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j => !j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
                 if (notVoidedJournalPMs != null)
                 {
@@ -153,6 +165,25 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
         }
+
+        private string NotLTMessage(string jNo)
+        {
+            string transText = "";
+            bool useLocal = true;
+            string transText1 = TranslateTextsClassTranslate("Accounting.O.JournalNumber", 0, useLocal) + jNo;
+            if (String.IsNullOrWhiteSpace(transText1))
+            {
+                transText1 = $"Journal No. {jNo}";
+            }
+            string transText2 = TranslateTextsClassTranslate("Accounting.O.YearTransferJournalNotLT", 0, useLocal);
+            if (String.IsNullOrWhiteSpace(transText2))
+            {
+                transText2 = $" is not registered. Can not complete the year transfer process, please contact Support Center.";
+            }
+            transText = transText1 + transText2;
+            return (transText);
+        }
+
 
         public JournalPM CancelYear(IAccountingContext accountingContext, int YYyear, int tenant)
         {

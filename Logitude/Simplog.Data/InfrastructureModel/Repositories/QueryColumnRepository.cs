@@ -116,5 +116,24 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             return Cols;
         }
+
+
+        public List<QueryColumn> GetQueryColumnsByQueryId(int tenant, string queryId)
+        {
+            IQueryable<QueryColumn> columns = from a in webFreightContext.QueryColumns
+                                              where a.Tenant == tenant  && a.QueryId == queryId && a.ObjectField.DisplayInList == true
+                                              select a;
+
+            List<QueryColumn> Cols = new List<QueryColumn>();
+            foreach (var item in columns)
+            {
+                if (!Cols.Contains(item))
+                {
+                    Cols.Add(item);
+                }
+            }
+
+            return Cols;
+        }
     }
 }

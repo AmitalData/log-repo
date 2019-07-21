@@ -480,12 +480,12 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
 
 
-                 where
-                 //string.IsNullOrWhiteSpace(j.VoidedByJournalId)
-                 (j.VoidedByJournalId == null || j.VoidedByJournalId.Trim() == string.Empty)
-                 where
-                 //string.IsNullOrWhiteSpace(j.OriginalJournalId)
-                 (j.OriginalJournalId == null || j.OriginalJournalId.Trim() == string.Empty)
+                 //where
+                 ////string.IsNullOrWhiteSpace(j.VoidedByJournalId)
+                 //(j.VoidedByJournalId == null || j.VoidedByJournalId.Trim() == string.Empty)
+                 //where
+                 ////string.IsNullOrWhiteSpace(j.OriginalJournalId)
+                 //(j.OriginalJournalId == null || j.OriginalJournalId.Trim() == string.Empty)
                  select j
                 );
             DateTime beginOfYear = new DateTime(year, 1, 1);

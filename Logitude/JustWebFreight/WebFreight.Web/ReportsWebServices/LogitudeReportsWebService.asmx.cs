@@ -6088,7 +6088,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             BusinessUnitRepository unitRep = new BusinessUnitRepository(tenant);
             UserRepository userRep = new UserRepository(tenant);
-            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant);
+            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant,true);
             allServices = myBusinessUnitFilter.RunFilter(allServices);
 
             if (!string.IsNullOrEmpty(businessUnitId))
@@ -6189,8 +6189,8 @@ namespace WebFreight.Web.ReportsWebServices
 
         private CustomerPotentialActualDataProvider LoadCustomerPotentialActualDataProvider(byte[] xmlFilters, int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
+           // SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
 
             CustomerPotentialActualDataProvider myResult = new CustomerPotentialActualDataProvider();
             myResult.Customers = new List<CustomersData>();
@@ -6274,7 +6274,7 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             #region Base Data Filtered
-            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant);
+            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant, true);
 
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
 
@@ -13506,7 +13506,7 @@ namespace WebFreight.Web.ReportsWebServices
             DateTime toDate = DateTime.Now;
             bool manuallyAddedEventsOnly = false;
             string userId = string.Empty;
-
+            string EventTypeId = string.Empty;
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
@@ -13514,6 +13514,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
             QueryFilterItem filterItem_ManuallyAddedEventsOnly = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ManuallyAddedEventsOnly").FirstOrDefault();
+            QueryFilterItem filterItem_EventTypeId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EventTypeId").FirstOrDefault();
 
 
             if (filterItem_ManuallyAddedEventsOnly != null)
@@ -13538,6 +13539,14 @@ namespace WebFreight.Web.ReportsWebServices
                     userId = filterItem_UserId.FieldValue.ToString();
                 }
             }
+
+            if (filterItem_EventTypeId != null)
+            {
+                if (filterItem_EventTypeId.FieldValue != null)
+                {
+                    EventTypeId = filterItem_EventTypeId.FieldValue.ToString();
+                }
+            }
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             List<ShipmentList> shipmentlists = shipmentQuery.GetShipmentListsByFromCreateDateAndToCreateDate(fromDate, toDate, tenant).ToList();
             if (shipmentlists.Count > 0)
@@ -13550,11 +13559,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                 ObjectTablePM table = objectTableQuery.GetObjectTableByName("Shipment", 0);
                 IQueryable<TraceEventPM> traceEventPMs = traceEventQuery.GetTraceEventPMsByEntityIdsAndObjectTableId(shipmentIds, table.Id, tenant);
-                List<TraceEventPM> traceEvenList = FilterTraceEvenList(manuallyAddedEventsOnly, userId, traceEventPMs);
+                List<TraceEventPM> traceEvenList = FilterTraceEvenList(manuallyAddedEventsOnly, userId, EventTypeId, traceEventPMs);
 
                 FillShipmentNumberToTraceEventList(shipmentlists, traceEvenList);
                 List<ShipmentEventsList> shipmentEventsLists = new List<ShipmentEventsList>();
                 GroupTraceEvenListByShipmentNumberAndOrderByEventDate(traceEvenList, shipmentEventsLists);
+                
                 shipmentsEventsListDataProvider.ShipmentEventsLists = shipmentEventsLists;
             }
             return shipmentsEventsListDataProvider;
@@ -13567,7 +13577,10 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 foreach (TraceEventPM item in traceEventgroup.OrderBy(d => d.EventDateTime).ToList())
                 {
+                    //item.EventDateTime1 = item.EventDateTime.ToString("yyyy-MM-dd");
+                    //item.EventDateTime2 = item.EventDateTime.ToString("HH: mm:ss");
                     ShipmentEventsList shipmentEventsList = CreateNewShipmentEventsList(item);
+                    
                     shipmentEventsLists.Add(shipmentEventsList);
                 }
             }
@@ -13581,6 +13594,8 @@ namespace WebFreight.Web.ReportsWebServices
                 EventCode = item.EventTypeCode,
                 EventName = item.EventTypeEnglishName,
                 EventDate = item.EventDateTime,
+                //EventDate1 = item.EventDateTime.ToString("yyyy-MM-dd"),
+                //EventDate2 = item.EventDateTime.ToString("HH: mm:ss"),
                 LogDate = item.LogDateTime,
                 UserName = item.ContactEnglishFirstName,
                 Notes = item.Notes,
@@ -13600,11 +13615,15 @@ namespace WebFreight.Web.ReportsWebServices
         }
 
 
-        private  List<TraceEventPM> FilterTraceEvenList(bool manuallyAddedEventsOnly, string userId,  IQueryable<TraceEventPM> traceEventPMs)
+        private  List<TraceEventPM> FilterTraceEvenList(bool manuallyAddedEventsOnly, string userId, string EventTypeId, IQueryable<TraceEventPM> traceEventPMs)
         {
             if (!string.IsNullOrEmpty(userId))
             {
                 traceEventPMs = traceEventPMs.Where(d => d.UserId == userId);
+            }
+            if (!string.IsNullOrEmpty(EventTypeId))
+            {
+                traceEventPMs = traceEventPMs.Where(d => d.EventTypeId == EventTypeId);
             }
 
             if (manuallyAddedEventsOnly)
