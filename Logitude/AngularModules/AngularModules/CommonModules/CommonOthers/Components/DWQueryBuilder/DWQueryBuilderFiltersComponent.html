@@ -86,6 +86,10 @@
     .DeleteButton {
         display: none;
     }
+    ComboBox {
+        width: 170px;
+        display: table-cell;
+    }
 </style>
 
 <div *ngFor="let item of SelectedFiltersDataSource; let i=index;">
@@ -96,8 +100,8 @@
                     <td style="width: 16px;">
                         <img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="onDeleteFilterClick(item)" />
                     </td>
-                    <td style="width:190px;">
-                        <ComboBox style="width:170px;" [ItemsSource]="item.MyParentClass.AllFieldsWithChildrenDataSource" [SelectedItem]="item" [Binding]="'DisplayName'" (SelectedItemChanged)="item.FieldValueChanged($event)"></ComboBox>
+                    <td style="width:170px;">
+                        <ComboBox style="width:170px;display:table-cell;" [ItemsSource]="item.MyParentClass.AllFieldsWithChildrenDataSource" [SelectedItem]="item" [Binding]="'DisplayName'" (SelectedItemChanged)="item.FieldValueChanged($event)"></ComboBox>
                     </td>
                     <td style="width:7px;">
                         <div style="width:7px;"></div>

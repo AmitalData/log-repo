@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.InfrastructureModel.EntityPMs
+namespace Logitude.BL.InfrastructureModel.EntityLists
 {
-    public class SchedulerProcedurePM
+    public class SchedulerProcedureList
     {
         [Key]
         public string Code { get; set; }

@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.InfrastructureModel.EntityPMs
 {
-    public class SchedulerProcedurePM
+    public class SchedulerLogsPM
     {
         [Key]
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public string SearchFields { get; set; }
-        public string Description { get; set; }
+        public string Id { get; set; }
+        public int Tenant { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string Log { get; set; }
+        public string HistoryId { get; set; }
     }
 }

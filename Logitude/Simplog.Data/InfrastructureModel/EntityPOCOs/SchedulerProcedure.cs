@@ -7,14 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.BL.InfrastructureModel.EntityPMs
+namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
-    public class SchedulerProcedurePM
+    public class SchedulerProcedure
+
     {
         [Key]
         public string Code { get; set; }
         public string Name { get; set; }
         public string SearchFields { get; set; }
         public string Description { get; set; }
+
+       
+
     }
 }
