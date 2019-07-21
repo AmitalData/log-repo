@@ -26,11 +26,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.Description)
-                .IsRequired()
+                .IsOptional()
                 .HasMaxLength(1000)
                 .IsUnicode(false);
             this.Property(t => t.SearchFields)
-               .IsRequired()
+               .IsOptional()
                .HasMaxLength(1000)
                .IsUnicode(false);
 
