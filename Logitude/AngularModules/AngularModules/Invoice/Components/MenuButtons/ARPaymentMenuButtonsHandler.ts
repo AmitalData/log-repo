@@ -1,3 +1,4 @@
+import { ARPaymentEventManager } from './../../../Accounting/Utilities/ARPaymentEventManager';
 declare var window: any;
 import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -521,6 +522,7 @@ export class ARPaymentMenuButtonsHandler {
                 //CommonContext.SubmitChanges();
             }
             this.entityArgs.EditComponent.SaveChanges();
+            ARPaymentEventManager.ARPaymentApproved.emit();
         }
         else {
             errors.forEach(item => {

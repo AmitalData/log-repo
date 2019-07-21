@@ -114,19 +114,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARPaymentValidator.Validate(_arpaymentPM, cashBook);
             ARPaymentTracing.Trace(_arpaymentPM, newPayment, isNewEntity);
 
-            SubmitPaymentInvoices(_arpaymentPM);
 
             InitializeTransferComponents();
+
+            //will reset in mapentity()
+            var setApproved = _arpaymentPM.SetApproved;
+            var setCancelApproved = _arpaymentPM.SetCancelApproval;
+            var setVoided = _arpaymentPM.SetVoided;
 
             ARPaymentMapping.MapEntity(_arpaymentPM, newPayment, isNewEntity);
 
             paymentRepository.Add(newPayment);
             paymentRepository.SubmitChanges();
+            SubmitPaymentInvoices(_arpaymentPM);
 
             UpdatePaymentOpenAmount();
 
             ARPaymentHelper service = new ARPaymentHelper();
-            service.ARPaymentQuickbooksValidating(_arpaymentPM, _arpaymentPM.SetApproved, false, newPayment, objectContext, myCommonContext, isVoidingInvoice, _arpaymentPM.SetCancelApproval, _arpaymentPM.SetReSendQBO);
+            service.ARPaymentQuickbooksValidating(_arpaymentPM, setApproved, false, newPayment, objectContext, myCommonContext, isVoidingInvoice, setCancelApproved, _arpaymentPM.SetReSendQBO);
 
             BuildSearchFields();
 
@@ -147,16 +152,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
             // PaymentCheque And CashBook
-            AddARPaymentChequeAndCashBook(_arpaymentPM, _arpaymentPM.SetApproved);
+            AddARPaymentChequeAndCashBook(_arpaymentPM, setApproved);
 
             GetPaymentForeignFields();
 
             BuildEntitiesNumbers();
 
-            VoidARPaymentInFullAccounting(_arpaymentPM, _arpaymentPM.SetVoided);
+            VoidARPaymentInFullAccounting(_arpaymentPM, setVoided);
 
             // DropBox
-            CreateARInvoiceMessage(_arpaymentPM.SetApproved);
+            CreateARInvoiceMessage(setApproved);
 
             //// Full Accounting => Reconciliation
             //if (theEntityPm.IsFullAccounting == true)

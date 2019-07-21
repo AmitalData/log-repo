@@ -170,7 +170,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             {
 
                 agg.OpenReconciliationDraft= qs.OpenReconciliationDraft(gLAccountId, tenant);
-                myQueryOperations.CallBack = qs.GetOpenReconciliationFilterCallBack(myQueryOperations, gLAccountId, 
+                myQueryOperations.CallBack = qs.GetReconciliationFilterCallBack(myQueryOperations, gLAccountId, 
 tenant);
             }
             var openReconciliation = qs.GetOpenReconciliationFilterList(myQueryOperations, myQueryOperations.CallBack, gLAccountId, tenant);
@@ -248,7 +248,7 @@ tenant);
 
                 LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
 
-                GenericCallBack callback = transactionQuery.GetOpenReconciliationFilterCallBack(queryOperations, gLAccountId, tenant);
+                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant);
 
                 List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
 

@@ -22,7 +22,7 @@ export class JournalExtendedPMService {
     VoidJournal(tenant, JournalId, AccountingEntityCode, AccountingEntityId, AccountingEntityReference) {
         //http://localhost:9996/api/JournalOp?JournalOp=void&JournalId=1-93808&tenant=1071&AccountingEntityCode=7&AccountingEntityId=Deposit1212&AccountingEntityReference=Cash%20Deposit%207
 
-      
+
 
         let url = this._apiUrl + '?JournalOp=void&JournalId=' + JournalId + '&tenant=' + tenant + '&AccountingEntityCode=' + AccountingEntityCode + '&AccountingEntityId=' + AccountingEntityId + '&AccountingEntityReference=' + AccountingEntityReference;
 
@@ -37,7 +37,7 @@ export class JournalExtendedPMService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            
+
             // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
             return this._http.delete(url, { headers: authHeader }).map(response => {
@@ -79,6 +79,30 @@ export class JournalExtendedPMService {
     //        }).catch(ServiceHelper.HandleServiceError);
     //    });
     //}
+
+    GetByAccountingEntityId(accountingEntityId: string, accountingEntityCode:string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetJournalByAccountingEntityId?accountingEntityId=' + accountingEntityId + '&accountingEntityCode=' + accountingEntityCode, {
+                headers: authHeader
+            }).map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+
+                var result = response.json();
+                var entity: JournalPM;
+                if (result) {
+                    entity = this.MapJsonToEntityPM(result);
+                }
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+                return serviceResponse;
+            });
+        });
+
+    }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: JournalPM = null) {
 
