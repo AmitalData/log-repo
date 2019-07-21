@@ -47,7 +47,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(StatusCode={courierOVSHAWBResponse.StatusCode},{courierOVSHAWBResponse.ErrorDescription})");
             var context = CustomContext.GetContext(settings.Tenant);
             var myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-            var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(settings.DeclarationId, false, false);
+            var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(settings.DeclarationId, true, false);
             declarationCourierStatusQueryServicePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
             switch (courierOVSHAWBResponse.StatusCode)

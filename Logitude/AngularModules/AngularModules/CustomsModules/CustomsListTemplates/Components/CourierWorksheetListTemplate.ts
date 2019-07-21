@@ -41,7 +41,7 @@ import { DeclarationMamanSpecialActionList } from "../../../Customs/EntityLists/
 import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 import { CourierPendingReasonListService } from '../../../Customs/Services/StandardLists/CourierPendingReasonListService';
 import { CourierPendingReasonList } from '../../../Customs/EntityLists/CourierPendingReasonList';
-import { DeclarationPendingPMService } from '../../../Customs/Services/StandardPMs/DeclarationPendingPMService';
+//import { DeclarationPendingPMService } from '../../../Customs/Services/StandardPMs/DeclarationPendingPMService';
 import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
@@ -85,7 +85,7 @@ export class CourierWorksheetListTemplate {
     IsMamanEnabled: boolean = false;
     
     private _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
-    private declarationPendingPMService: DeclarationPendingPMService = new DeclarationPendingPMService();
+    //private declarationPendingPMService: DeclarationPendingPMService = new DeclarationPendingPMService();
     private _CourierMasterService: CourierMasterService = new CourierMasterService();
     private _DeclarationMamanSpecialActionListService: DeclarationMamanSpecialActionListService = new DeclarationMamanSpecialActionListService();
     private _DeclarationMamanSpecialActionPMService: DeclarationMamanSpecialActionPMService = new DeclarationMamanSpecialActionPMService;
@@ -604,20 +604,21 @@ export class CourierWorksheetListTemplate {
         var windowArgs: any = {};
         var declarationIdList = [];
         
-        //this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
+        this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
         //this.declarationPendingPMService.get(declarationId, "").subscribe((response: ServiceResponse) => {
-        this._DeclarationExtendedListService.GetDeclarationPendingListPMByDeclarationId(declarationId).subscribe((response: ServiceResponse) => {
+        //this._DeclarationExtendedListService.GetDeclarationPendingListPMByDeclarationId(declarationId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                declarationIdList.push(response.Result);
-                windowArgs.DeclarationIdList = declarationIdList;
+                //declarationIdList.push(response.Result);
+                //windowArgs.DeclarationIdList = declarationIdList;
+                windowArgs.DeclarationCourierStatus = response.Result
                 windowArgs.CourierHawb = this._CourierWorksheet.CourierHawb;
                 windowArgs.Mode = mode;
                 windowArgs.DeclarationId = declarationId;
 
                 if (mode == "Delete") {
                     var confirm = new ConfirmWindow();
-                    confirm.Width = 350;
-                    confirm.Height = 200;
+                    confirm.Width = 380;
+                    confirm.Height = 280;
                     confirm.Title = "מחיקת Pending";
                     confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                     confirm.ShowNoButton = true;
@@ -631,11 +632,11 @@ export class CourierWorksheetListTemplate {
                 }
                 else {
                     //if (mode == "Update") {
-                        windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
+                    windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
                         //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
                     //}
-                    logitudeWindow.Width = 750;
-                    logitudeWindow.Height = 580;
+                    logitudeWindow.Width = 470;
+                    logitudeWindow.Height = 300;
                     logitudeWindow.IsShowCloseButton = false;
                     logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
                     logitudeWindow.WindowArgs = windowArgs;

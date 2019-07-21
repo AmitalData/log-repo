@@ -25,6 +25,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class DeclarationCourierStatusUpdateService //: EntityUpdateService<DeclarationCourierStatus, DeclarationCourierStatusPM, DeclarationPM>
     {
+        //public bool IsAfterUpdatingUpdate { get; set; }
         protected override void OnCreating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
             //if (entityParentPM != null)
@@ -39,8 +40,31 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(entityPM.Tenant);
             declarationCourierStatusRepository.Lock_forUpdateNOWAIT(entityPM.DeclarationId);
 
-
             UpdateUnifreight(entityPM);
+
+            ICustomContext context = MainContext as CustomContext;
+            if (entityPM != null)
+            {
+                var prevCourierPendingReasonList = entityPM.CourierPendingReasonList;
+                entityPM.CourierPendingReasonList = null;
+                foreach (var declarationPending in entityPM.DeclarationPendings)
+                {
+                    if (declarationPending.ChangeSetOp != ChangeSetOperation.Delete)
+                    {
+                        if (declarationPending.Status == "A")
+                        {
+                            if (entityPM.CourierPendingReasonList == null)
+                            {
+                                entityPM.CourierPendingReasonList = declarationPending.CourierPendingReasonCode;
+                            }
+                            else
+                            {
+                                entityPM.CourierPendingReasonList = string.Concat(entityPM.CourierPendingReasonList, ",", declarationPending.CourierPendingReasonCode);
+                            }
+                        }
+                    }
+                }
+            }
 
             base.OnUpdating(entityPM, entityPOCO);
         }
@@ -48,6 +72,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void UpdateComposition(DeclarationCourierStatusPM entityPM)
         {
+            DeclarationPendingUpdateService declarationPendingUpdateService = new DeclarationPendingUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            declarationPendingUpdateService.IsUpdateComposition = true;
+            declarationPendingUpdateService.UpdateMulti(entityPM.DeclarationPendings, entityPM.DeletedDeclarationPendings, entityPM, true);
+
             base.UpdateComposition(entityPM);
         }
 

@@ -28,7 +28,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var context = CustomContext.GetContext(entityPM.Tenant);
 
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.DeclarationId, false, false);
+                DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.DeclarationId, true, false);
                 string specialActionStatus = myDeclarationCourierStatusPM.SpecialActionStatus;
                 CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, null, entityPM.Tenant);
                 calculateDeclarationCourierStatus.CalcSpecialActionStatus(myDeclarationCourierStatusPM);

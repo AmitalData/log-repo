@@ -193,7 +193,7 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsClaim/Components/EditTabs/RelatedEntity/ClaimRelatedEntityCancelOrObjectionTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.CancelOrObjection = cmpRef.instance;
-                                    this.CancelOrObjection.InitTab(this.ClaimPM.ClaimsRelatedEntities.filter(d => d.EntityCounterKey == this.EntityCounterKey)[0], this.ClaimPM, !this.IsDisplayOnly);
+                                    this.CancelOrObjection.InitTab(this.ClaimPM.ClaimsRelatedEntities.filter(d => d.EntityCounterKey == this.EntityCounterKey)[0], this.ClaimPM, !this.IsDisplayOnly, this.IsNewEntity);
                                 });
                         }
                         break;

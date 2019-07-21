@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -17,7 +19,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
     {
 
 
+        public override void GetComposition(EntityKeyFields entityKeys, DeclarationCourierStatusPM entityPM)
+        {
+            ICustomContext context = MainContext as CustomContext;
+            DeclarationCourierStatusKeys DeclarationCourierStatusKeys = entityKeys as DeclarationCourierStatusKeys;
+            DeclarationPendingQueryService declarationPendingQueryService = new DeclarationPendingQueryService(context);
 
+            entityPM.DeclarationPendings = declarationPendingQueryService.GetMulti(DeclarationCourierStatusKeys, true);
+
+            base.GetComposition(entityKeys, entityPM);
+        }
 
 #if false
           public List<DeclarationCourierStatusPM> GetByMasterIDCourierDeclarationStatusCode(

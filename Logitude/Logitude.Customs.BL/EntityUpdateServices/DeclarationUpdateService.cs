@@ -444,7 +444,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
 
-                        DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id,false,false);
+                        DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id,true,false);
                         declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         declarationCourierStatusPM.CourierDeclarationStatusCode = null;
                         declarationCourierStatusPM.CourierPaymentStatusCode = null;
@@ -468,6 +468,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         EventTracer.CreateTraceEvent(new EventTracerArgs() { EntityId = entityPM.Id, ObjectTableName = "Customs.Declaration", Tenant = entityPM.Tenant, UserId = contact.Id, EventTypeCode = "VATC", Notes = "Old VAT: " + declaration.ImporterCode + " New VAT: " + entityPM.ImporterCode });
                     }
                 }
+                if (!string.IsNullOrEmpty(entityPM.CalculatedImporterName) && entityPM.CalculatedImporterName.Length > 35) entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, 35);
+                if (!string.IsNullOrEmpty(entityPM.ImporterName) && entityPM.ImporterName.Length > 35) entityPM.ImporterName = entityPM.ImporterName.Substring(0, 35);
             }
             finally
             {
@@ -759,7 +761,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.FacilityTypeName = null;
                 }
             }
-
+            if (!string.IsNullOrEmpty(entityPM.CalculatedImporterName) && entityPM.CalculatedImporterName.Length > 35) entityPM.CalculatedImporterName = entityPM.CalculatedImporterName.Substring(0, 35);
+            if (!string.IsNullOrEmpty(entityPM.ImporterName) && entityPM.ImporterName.Length > 35) entityPM.ImporterName = entityPM.ImporterName.Substring(0, 35);
 
             bool isSubmitChanges = false;
             //----- consignment 

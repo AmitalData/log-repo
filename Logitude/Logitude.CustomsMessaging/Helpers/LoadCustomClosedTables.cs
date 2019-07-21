@@ -929,6 +929,16 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(continuousRequestType, continuousRequestTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(continuousRequestType);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData requestType = closedSystemTables.Where(d => d.id == "1653").FirstOrDefault();
+            ObjectTable requestTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.RequestType", 0, false);
+            InsertClosedTableRecord(requestType, requestTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(requestType);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData approvedProfession = closedSystemTables.Where(d => d.id == "1644").FirstOrDefault();
+            ObjectTable approvedProfessionObjectTable = objectTableRepository.GetObjectTableByName("Customs.ApprovedProfession", 0, false);
+            InsertClosedTableRecord(approvedProfession, approvedProfessionObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(approvedProfession);
+
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);

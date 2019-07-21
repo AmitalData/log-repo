@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {DeclarationPendingPM} from './DeclarationPendingPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -294,7 +295,41 @@ export class DeclarationCourierStatusPM {
     public set CourierPendingReasonList(newValue: string) { if (this.courierPendingReasonList != newValue) { this.courierPendingReasonList = newValue; this.MarkAsDirty("CourierPendingReasonList"); } }
        
 	 
+     
+	private declarationPendings: DeclarationPendingPM[];
+    get  DeclarationPendings() {
+        if (this.declarationPendings == null) {
+            this.declarationPendings = [];
+        }
 
+        return this.declarationPendings;
+    }
+    set  DeclarationPendings(newValue: DeclarationPendingPM[]) {
+        if (this.declarationPendings != newValue) {
+            this.declarationPendings = newValue;
+        }
+    }
+    public AddDeclarationPending(item: DeclarationPendingPM) {
+        if (item != null) {
+            var index = this. DeclarationPendings.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DeclarationPendings.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDeclarationPending(item: DeclarationPendingPM) {
+        if (item != null) {
+            var index = this. DeclarationPendings.indexOf(item);
+            if (index > -1) {
+                this. DeclarationPendings.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DeclarationPendings: Array<DeclarationPendingPM>= [];
+ 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
     public IsDirty: boolean;

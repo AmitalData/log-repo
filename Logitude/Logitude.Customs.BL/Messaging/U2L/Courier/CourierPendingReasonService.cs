@@ -83,7 +83,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
                 if (!String.IsNullOrWhiteSpace(_LogitudeCourierXML.DeclarationId))
                 {
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-                    _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_LogitudeCourierXML.DeclarationId, false, false);
+                    _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_LogitudeCourierXML.DeclarationId, true, false);
                     if (_MyDeclarationCourierStatusPM == null)
                     {
                         throw new BusinessErrorException("Declaration with ID " + _LogitudeCourierXML.DeclarationId + " Doesn't exist");
@@ -105,6 +105,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
                 //if (_MyDeclarationCourierStatusPM != null && _MyDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
                 if (_MyDeclarationCourierStatusPM != null)
                 {
+                    /*
                     DeclarationPendingQueryService myCourierPendingReasonQueryService = new DeclarationPendingQueryService(_context);
                     DeclarationPendingPM declarationPendingPM = myCourierPendingReasonQueryService.GetSingle(_MyDeclarationCourierStatusPM.DeclarationId,"900", false, false);
                     if (declarationPendingPM != null && declarationPendingPM.Status == "A")
@@ -114,7 +115,25 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
                         DeclarationPendingUpdateService declarationPendingUpdateService = new DeclarationPendingUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationCourierStatusPM.Tenant);
                         declarationPendingUpdateService.Update(declarationPendingPM, true);
                     }
-                    
+                    */
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
+
+                    DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
+                    declarationPendingPM = _MyDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == _MyDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == "900").FirstOrDefault();
+                    if (declarationPendingPM != null)
+                    {
+                        if (declarationPendingPM.Status != "S")
+                        {
+                            declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+                            declarationPendingPM.Status = "S";
+                            if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
+                    }
+
+                    if (_MyDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                    {
+                        declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
+                    }
                     LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900 as Solved");
                     AppendLogLine("Set Courier Pending Reason Code 900 as Solved" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 }
@@ -186,7 +205,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
 
             MyGenericResponseObj.Stage = "GetSingle";
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-            _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(existId, false, false);
+            _MyDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(existId, true, false);
             if (this._MyDeclarationCourierStatusPM == null)
             {
                 throw new BusinessErrorException("LOGITUDE FILE is " + existId + " but not found");

@@ -166,7 +166,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         {
             var customContext = CustomContext.GetContext(_CommunicationLog.Tenant);
             var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_CommunicationLog.Tenant);
-            var currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(theDecId, false, false);
+            var currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(theDecId, true, false);
             var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
             currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
             currentDeclarationCourierStatusPM.TerminalSuspentionNumber = mySTBMessage.FormNo;
@@ -198,7 +198,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             declarationUpdateService.Update(_DeclarationPM, true);
 
             var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_CommunicationLog.Tenant);
-            var currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(theDecId, false, false);
+            var currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(theDecId, true, false);
             LogMessagingUtil.Instance.AppendLine("Declaration Payment Date " + _DeclarationPM.PaymentDate + " Declaration Total Tax " + _DeclarationPM.TotalTax);
             if (_DeclarationPM.PaymentDate.HasValue && (_DeclarationPM.TotalTax == null || _DeclarationPM.TotalTax == 0))//48446//50807
             {

@@ -169,6 +169,7 @@
     <Content Include="CustomsModules\CustomsClaim\Components\NewEntity\NewClaimComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\SendClaim\SendClaimComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsGeneralComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetStorageSiteCodeComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\GatepassRequest\GatepassRequestComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\AddEditMamanStickerComponent.html" />
@@ -446,6 +447,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsControls\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddCourierPendingToUnifreightStatusComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\AddEditCourierPendingReasonComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\DeclarationPendingsGeneralComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetStorageSiteCodeComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\GatepassRequest\GatepassRequestComponent.ts" />
@@ -547,6 +549,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\CustomsPartnerFtpList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DecisionTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationMamanSpecialActionList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\DeclarationPendingList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassRequestList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassReturnCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingByKeywordList.ts" />
@@ -568,6 +571,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsPackDetPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecisionTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationMamanSpecialActionPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\DeclarationPendingPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassReturnCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingByKeywordPM.ts" />
@@ -589,6 +593,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPartnerFtpListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DecisionTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationMamanSpecialActionListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationPendingListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassReturnCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingByKeywordListService.ts" />
@@ -604,6 +609,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsCountryPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsPartnerFtpPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationPendingPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\PendingByKeywordPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />

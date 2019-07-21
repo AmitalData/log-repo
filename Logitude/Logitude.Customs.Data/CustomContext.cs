@@ -80,6 +80,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new AmendmentRequestStatusMap());
 	
+            modelBuilder.Configurations.Add(new ApprovedProfessionMap());
+	
             modelBuilder.Configurations.Add(new AssigneeNotificationTypeMap());
 	
             modelBuilder.Configurations.Add(new AttachmentTypeMap());
@@ -348,6 +350,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeficitConnFileParagraphTypeMap());
 	
+            modelBuilder.Configurations.Add(new DeficitDecisionMap());
+	
             modelBuilder.Configurations.Add(new DeliverySiteTypeMap());
 	
             modelBuilder.Configurations.Add(new DemanderTypeMap());
@@ -525,6 +529,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
 	
             modelBuilder.Configurations.Add(new RequestStatusMap());
+	
+            modelBuilder.Configurations.Add(new RequestTypeMap());
 	
             modelBuilder.Configurations.Add(new RequiredGuaranteeTypeMap());
 	
@@ -714,6 +720,16 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<DeclarationTax>().Property(x => x.TaxBaseAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<DeficitConnFileParagraphType>().Property(x => x.Amount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<DeficitDecision>().Property(x => x.TotalComponentAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<DeficitDecision>().Property(x => x.TotalEstimatedAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<DeficitDecision>().Property(x => x.TotalFinancialPenaltyAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<DeficitDecision>().Property(x => x.TotalInterestAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<DeficitDecision>().Property(x => x.TotalLinkingAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<Deposit>().Property(x => x.DepositAmount).HasPrecision(16, 2);
 				
@@ -1116,6 +1132,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ApprovedProfession> ApprovedProfessions 
 	 {
 	      get; set;
 	 
@@ -1925,6 +1947,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<DeficitDecision> DeficitDecisions 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<DeliverySiteType> DeliverySiteTypes 
 	 {
 	      get; set;
@@ -2454,6 +2482,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<RequestStatus> RequestStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RequestType> RequestTypes 
 	 {
 	      get; set;
 	 

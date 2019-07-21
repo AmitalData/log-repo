@@ -1142,19 +1142,24 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         var logitudeWindow = new LogitudeWindow();
         var windowArgs: any = {};
-        windowArgs.Mode = "FromDeclaration";
-        windowArgs.DeclarationId = this.EntityPM.Id;
-        windowArgs.CourierHawb = this.EntityPM.MAWBCourierMaster;
+        this.declarationCourierStatusPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                windowArgs.DeclarationCourierStatus = response.Result
+                windowArgs.Mode = "FromDeclaration";
+                windowArgs.DeclarationId = this.EntityPM.Id;
+                windowArgs.CourierHawb = this.EntityPM.MAWBCourierMaster;
 
-        logitudeWindow.Width = 750;
-        logitudeWindow.Height = 580;
-        logitudeWindow.IsShowCloseButton = false;
-        logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("Customs.CourierMaster.O.MarkPending");
-        logitudeWindow.WindowArgs = windowArgs;
-        //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
-        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/DeclarationPendingsGeneralComponent');
-        logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+                logitudeWindow.Width = 470;
+                logitudeWindow.Height = 300;
+                logitudeWindow.IsShowCloseButton = false;
+                logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("Customs.CourierMaster.O.MarkPending");
+                logitudeWindow.WindowArgs = windowArgs;
+                //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+                logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/DeclarationPendingsGeneralComponent');
+                logitudeWindow.WindowClosed.subscribe(($event: any) => {
+                    //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+                });
+            }
         });
     }
 

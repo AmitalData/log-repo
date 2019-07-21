@@ -338,6 +338,7 @@ using Logitude.Customs.BL.Messaging.Customs;
         private DecCargoSplitConsPackDetQueryService decCargoSplitConsPackDetQueryService;
         private DecCargoSplitCargoIdentifierQueryService decCargoSplitCargoIdentifierQueryService;
         private PendingByKeywordQueryService pendingByKeywordQuery;
+        private DeclarationPendingQueryService declarationPendingQueryService;
 
         // private CustomsHouse
         protected override bool PersistChangeSet()

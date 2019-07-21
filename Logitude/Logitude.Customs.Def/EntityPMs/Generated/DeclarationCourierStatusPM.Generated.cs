@@ -1262,7 +1262,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<DeclarationPendingPM> declarationPendings;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DeclarationCourierStatusDeclarationPending", "DeclarationId","DeclarationID")]
+	   [DataMember]
+	   public virtual List<DeclarationPendingPM> DeclarationPendings  
+	   {
+	        get
+             {
+                 if (declarationPendings == null)
+                 {
+                     declarationPendings = new List<DeclarationPendingPM>();
+                 }
+                 return declarationPendings;
+              }
+             set { declarationPendings = value; }
+	    }
+		   
+	   private List<DeclarationPendingPM>  deletedDeclarationPendings;
+	   public virtual List<DeclarationPendingPM> DeletedDeclarationPendings  
+	   {
+	        get
+             {
+                 if ( deletedDeclarationPendings == null)
+                 {
+                      deletedDeclarationPendings = new List<DeclarationPendingPM>();
+                 }
+                 return  deletedDeclarationPendings;
+              }
+             set {  deletedDeclarationPendings = value; }
+	    }
+	     }
    
 }
 	 

@@ -104,7 +104,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 LogMessagingUtil.Instance.AppendLine("Update DeclarationCourierStatusPM: IsClosedForFollowUp=true");
                                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(requestParams.Tenant);
                                 DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                                DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id,false,true);
+                                DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id,true,true);
                                 declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                                 declarationCourierStatusPM.IsClosedForFollowUp = true;
                                 declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);

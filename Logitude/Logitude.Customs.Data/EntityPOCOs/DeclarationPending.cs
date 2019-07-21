@@ -21,11 +21,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
            [Column("Tenant")]
 	    public int Tenant { get; set; }
      [Key]
-        [ForeignKey("Declaration")]
+        [ForeignKey("DeclarationCourierStatus")]
         [Column("DeclarationID" ,Order = 1)]
 	    public string DeclarationID { get; set; }
 	      
-        public virtual Declaration Declaration { get; set; }
+        public virtual DeclarationCourierStatus DeclarationCourierStatus { get; set; }
      [Key]
         [ForeignKey("CourierPendingReason")]
         [Column("CourierPendingReasonCode")]
