@@ -96,7 +96,7 @@ export class AddEditTaskSchedulerComponent  {
         if (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") {
             this.GeneralAreaHeight = "310px";
             if (this.EntityPM.SchedulerDetailsData) {
-                this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
+                //this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
             }
             else if (this.EntityPM.Id) {
                 this.LoadSchedulerDetailsData();
@@ -331,7 +331,7 @@ export class AddEditTaskSchedulerComponent  {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
 
-            if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
+            //if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
 
             this.CurrentSession.StartBusyIndicatorSaving();
           
