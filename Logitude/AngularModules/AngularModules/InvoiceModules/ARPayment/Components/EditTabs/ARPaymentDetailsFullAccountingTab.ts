@@ -148,7 +148,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.subscribeEntityApproved();
         if(this.isFullAccounting &&  this.EntityPM.StatusCode == 'AD'){ // Approved
             this.IsDisplayOnly = true;
-            this.checkLedgerCreated();
+            // this.checkLedgerCreated();
         }
 
     }
