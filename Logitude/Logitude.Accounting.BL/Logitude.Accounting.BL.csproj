@@ -756,6 +756,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="CoreBL\Reports\TRailReport Ver2 %28YearTRansfer - CardWithoutActivity%29.xlsx" />
     <None Include="CoreBL\Reports\TrailReportBase - Spreadsheet4.xlsx" />
     <None Include="packages.config" />
   </ItemGroup>
