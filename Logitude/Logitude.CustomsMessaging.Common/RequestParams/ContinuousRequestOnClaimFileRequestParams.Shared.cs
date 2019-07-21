@@ -8,7 +8,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
 {
     public class ContinuousRequestOnClaimFileRequestParams : RequestParamsBase
     {
-        public string ClassificationCode { get; set; }
-        public string CustomsBookType { get; set; }
+        public string AppicationId { get; set; }
+        public string ClaimRelatedEntityCounterKey { get; set; }
     }
 }
