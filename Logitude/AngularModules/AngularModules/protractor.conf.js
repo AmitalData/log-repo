@@ -62,6 +62,11 @@ exports.config = {
             browser.params.Login.Email = "protractor@test.com";
             browser.params.Login.Password = "!P123t456";
         }
+        else if (browser.params.Env == "test_staging") {
+            browser.params.Link = "https://test.logitudeworld.com/staging";
+            browser.params.Login.Email = "protractor@test.com";
+            browser.params.Login.Password = "!P123t456";
+        }
         else if (browser.params.Env == "logboxtest") {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "ahmadb@logbox.com";

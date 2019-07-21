@@ -126,5 +126,8 @@ namespace WebFreight.Web.DataProviders
         public DateTime? ETD { get; set; }
         public string CustomerRef1 { get; set; }
         public string CustomerRef2 { get; set; }
+
+        public string OriginCode { get; set; }
+        public string DestinationCode { get; set; }
     }
 }

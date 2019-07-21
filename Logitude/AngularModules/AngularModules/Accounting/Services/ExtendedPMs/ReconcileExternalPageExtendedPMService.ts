@@ -43,6 +43,7 @@ export class ReconcileExternalPageExtendedPMService {
 
 
     }
+    
 
     GetPrevPageByPageNo(pageNumber: number, bankAccountId: string) {
 
@@ -90,6 +91,28 @@ export class ReconcileExternalPageExtendedPMService {
     }
 
 
+    GetTrueIfLastApprovedBankPageWithReconciledLine(reconcileExternalPageId: string) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+            return Observable.defer(() => {
+                return this._http.get(this._apiUrl + '/GetTrueIfLastApprovedBankPageWithReconciledLine?reconcileExternalPageId=' + reconcileExternalPageId, { headers: authHeader })
+                    .map(response => {
+                        var res = response.json();
+
+                        return res;
+                    }).catch(ServiceHelper.HandleServiceError);
+            });
+        });
+
+
+    }
+
     GetDraftPage(bankAccountId: string) {
 
         return Observable.defer(() => {
@@ -111,8 +134,6 @@ export class ReconcileExternalPageExtendedPMService {
 
 
     }
-
-
     //MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReconcileExternalPagePM = null) {
 
 
