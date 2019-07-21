@@ -59,10 +59,17 @@ namespace WebFreight.Web.ExternalAPIs.V1
             catch (Exception ex)
               {
                 //ExceptionHandler.HandleException
-                ExceptionHandler.HandleException(ex, DateTime.Now, authToken.Tenant , authToken.Email , "", "AuthenticationController : PostLoginData", null);
+                //ExceptionHandler.HandleException(ex, DateTime.Now, authToken.Tenant , authToken.Email , "", "AuthenticationController : PostLoginData", null);
 
-                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                //var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                string exceptionMessage = ex.Message+ Environment.NewLine+ex.StackTrace;
+                if (ex.InnerException != null)
+                {
+                    exceptionMessage += Environment.NewLine + "inner1: " + ex.InnerException.Message + Environment.NewLine + ex.InnerException.StackTrace;
+                }
+                    
+                    
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, exceptionMessage);//(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
 

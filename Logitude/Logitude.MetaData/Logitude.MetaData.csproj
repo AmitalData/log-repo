@@ -463,6 +463,7 @@
     <None Include="EntityFiles\InfrastructureModel\ObjectTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\RatesTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\SchedulerLogs.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\SchedulerProcedure.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TaskSchedulerHistory.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TasksScheduler.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TransportMode.lxml" />
