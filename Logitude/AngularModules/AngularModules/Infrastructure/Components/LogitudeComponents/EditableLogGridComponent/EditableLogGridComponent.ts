@@ -1728,7 +1728,16 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         return 0;
     }
     OrigionalSortingData: any[];
+    ServerSortTimer: any;
     ServerSort(colDef, i, LogGridId) {
+        if (this.ServerSortTimer) {
+            clearTimeout(this.ServerSortTimer);
+        }
+        this.ServerSortTimer = setTimeout(() => this.DoServerSort(colDef, i, LogGridId), 200);
+       
+    }
+
+    DoServerSort(colDef, i, LogGridId) {
         if (colDef.SortFieldName) {
             this.OrigionalSortingData = this.ItemSource.Collection;
             if (colDef.SortFieldName != this.sortingCol) {
