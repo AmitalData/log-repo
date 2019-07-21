@@ -155,7 +155,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         taxLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         taxLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventWBLKConst;
                         this.AddSuccessUpdateVendorLine(taxLine, vendorLineDTO);
-                     }
+                        gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    }
                 });
                 gLAccountUpdateService.Update(gLAccountPM, true);
            }
