@@ -102,6 +102,7 @@
     <Compile Include="EntityPMs\Generated\AgentTalkBackTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentFieldReasonTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendmentRequestStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ApprovedProfessionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AssigneeNotificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AttachmentTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AuthorityPM.Generated.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="EntityPMs\Generated\DeclarationStatusTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationTaxPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeficitConnFileParagraphTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeficitDecisionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeficitPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeliverySiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DemanderTypePM.Generated.cs" />
@@ -325,6 +327,7 @@
     <Compile Include="EntityPMs\Generated\RefundCustomerActivityTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RegisteredWarehouseSiteTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\RequestTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequiredGuaranteeTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReturnConditionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SalesTaxExemptionTypePM.Generated.cs" />

@@ -23,6 +23,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; }
 		 IDbSet<AmendmentFieldReasonType> AmendmentFieldReasonTypes { get; }
 		 IDbSet<AmendmentRequestStatus> AmendmentRequestStatuses { get; }
+		 IDbSet<ApprovedProfession> ApprovedProfessions { get; }
 		 IDbSet<AssigneeNotificationType> AssigneeNotificationTypes { get; }
 		 IDbSet<AttachmentType> AttachmentTypes { get; }
 		 IDbSet<Authority> Authorities { get; }
@@ -157,6 +158,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DeclarationTax> DeclarationTaxes { get; }
 		 IDbSet<Deficit> Deficits { get; }
 		 IDbSet<DeficitConnFileParagraphType> DeficitConnFileParagraphTypes { get; }
+		 IDbSet<DeficitDecision> DeficitDecisions { get; }
 		 IDbSet<DeliverySiteType> DeliverySiteTypes { get; }
 		 IDbSet<DemanderType> DemanderTypes { get; }
 		 IDbSet<Deposit> Deposits { get; }
@@ -246,6 +248,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }
+		 IDbSet<RequestType> RequestTypes { get; }
 		 IDbSet<RequiredGuaranteeType> RequiredGuaranteeTypes { get; }
 		 IDbSet<ReturnCondition> ReturnConditions { get; }
 		 IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes { get; }
