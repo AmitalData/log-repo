@@ -141,5 +141,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipperAddressId { get; set; }
         public string ConsigneeAddressId { get; set; }
         public double? Volume { get; set; }
+
+        public double? PackageVolume { get; set; }
+        public string MainCarriageCarrierId { get; set; }
     }
 }
