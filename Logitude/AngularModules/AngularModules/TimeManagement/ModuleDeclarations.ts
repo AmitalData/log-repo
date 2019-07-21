@@ -29,6 +29,7 @@ import {NewOfficeHourComponent} from  './Components/NewEntity/NewOfficeHourCompo
 import {NewSprintComponent} from  './Components/NewEntity/NewSprintComponent';
 import { NewProjectCategoryComponent } from './Components/NewEntity/NewProjectCategoryComponent';
 import { NewGetProjectComponent } from './Components/NewEntity/NewGetProjectComponent';
+import { NewMoveHBProjectsComponent } from './Components/NewEntity/NewMoveHBProjectsComponent';
 
 export const Components =
     [
@@ -59,6 +60,8 @@ export const Components =
         NewSprintComponent,
         NewProjectCategoryComponent,
         NewGetProjectComponent,
+        NewMoveHBProjectsComponent,
+
     ];
 
 export class ModuleDeclarations {
@@ -97,6 +100,7 @@ export class ModuleDeclarations {
             case "NewSprintComponent": { myResult = NewSprintComponent; break; }
             case "NewProjectCategoryComponent": { myResult = NewProjectCategoryComponent; break; }
             case "NewGetProjectComponent": { myResult = NewGetProjectComponent; break; }
+            case "NewMoveHBProjectsComponent": { myResult = NewMoveHBProjectsComponent; break; }
 
         }
 
