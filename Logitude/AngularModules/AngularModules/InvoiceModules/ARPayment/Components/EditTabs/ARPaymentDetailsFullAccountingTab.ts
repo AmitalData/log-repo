@@ -172,8 +172,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             ARPaymentEventManager.ARPaymentApproved.subscribe((res: any) =>
             {
                 this.IsDisplayOnly = true;
-                this.checkLedgerCreated();
-            });
+                // this.checkLedgerCreated(); // check after load
+             });
         }
     }
 
@@ -498,6 +498,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.GetData();
+                }
+
+                if(this.isFullAccounting &&  this.EntityPM.StatusCode == 'AD'){ // Approved
+                    this.IsDisplayOnly = true;
+                    this.checkLedgerCreated();
                 }
 
                 // if (this.RequestedCommandCode) {

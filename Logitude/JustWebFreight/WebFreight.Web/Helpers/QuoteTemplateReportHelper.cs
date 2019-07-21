@@ -210,7 +210,6 @@ namespace Logitude.BL.Helpers
             pdfConverter.PdfDocumentOptions.PdfPageOrientation = PdfPageOrientation.Portrait;
             pdfConverter.PdfDocumentOptions.ShowHeader = true;
             pdfConverter.PdfDocumentOptions.ShowFooter = true;
-
             // set the header HTML area
             ObjectTableRepository objectTabelRepository = null;
             ObjectTable objectTable = null;
@@ -662,8 +661,8 @@ namespace Logitude.BL.Helpers
             }
 
 
-            
-           QuoteTemplateTableDesignPM quotetemplatetableDesignPM = null;
+
+            QuoteTemplateTableDesignPM quotetemplatetableDesignPM = null;
             QuoteTemplateTextDesignPM quotetemplateTextDesignPMPricingTitle = null;
             QuoteTemplateTextDesignPM quotetemplateTextDesignPMHeader = null;
             QuoteTemplateTextDesignPM quoteTemplateTextDesignLines = null;
@@ -699,6 +698,12 @@ namespace Logitude.BL.Helpers
             if (quotePM == null) quotePM = BuildingQuotePM();
 
 
+
+
+            var isRoutingRates = quotePM != null  ? quotePM.QuoteTypeCode == "P" ? true : false : false;
+
+            if (setting != null && isRoutingRates) setting.ShowUnitsPackages = false;
+   
             if (setting.ShowFixedPriceContainers)
             {
                 ViewFixedPrice = IsShowFixedPriceContainer(quotePM.QuoteSaleCharges);
@@ -876,7 +881,8 @@ namespace Logitude.BL.Helpers
                 //HtmlTemplate.Append("<div style='height:5px ;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</p>");
                 #endregion
 
-                if (!isShowPerContainers)
+
+                if (!isShowPerContainers && !isRoutingRates)
                 {
 
                     #region Total
