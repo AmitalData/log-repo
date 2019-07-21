@@ -1207,11 +1207,25 @@ namespace WebFreight.Web.ReportsWebServices
                 List<StatementDataProvider.StatementRecord> Due61_90 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 60) && (((todayDate - d.DueDate).TotalDays) <= 90)).ToList();
                 List<StatementDataProvider.StatementRecord> Due90 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays > 90).ToList();
 
+                List<StatementDataProvider.StatementRecord> Due1_15 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays >= 1 && (todayDate - d.DueDate).TotalDays <= 15).ToList();
+                List<StatementDataProvider.StatementRecord> Due16_30 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 15) && (((todayDate - d.DueDate).TotalDays) <= 30)).ToList();
+                List<StatementDataProvider.StatementRecord> Due91_120 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 90) && (((todayDate - d.DueDate).TotalDays) <= 120)).ToList();
+                List<StatementDataProvider.StatementRecord> Due120 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays > 120).ToList();
+
+
+
                 double? currentResult = (currentDue.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
                 double? due1_30Result = (Due1_30.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
                 double? due31_60Result = (Due31_60.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
                 double? due61_90Result = (Due61_90.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
                 double? due90Result = (Due90.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+
+               
+                double? due1_15Result = (Due1_15.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+                double? due16_30Result = (Due16_30.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+                double? due91_120Result = (Due91_120.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+                double? due120Result = (Due120.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+
 
                 StatementDataProvider.StatmentAging agingRecord = new StatementDataProvider.StatmentAging()
                 {
@@ -1221,6 +1235,10 @@ namespace WebFreight.Web.ReportsWebServices
                     Due31_60 = due31_60Result,
                     Due61_90 = due61_90Result,
                     Due90 = due90Result,
+                    Due1_15 = due1_15Result,
+                    Due16_30 = due16_30Result,
+                    Due91_120 = due91_120Result,
+                    Due120 = due120Result,
                 };
 
                 dataProvider.StatementAgingSummaryRecordList.Add(agingRecord);
@@ -3887,11 +3905,38 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         statementRecord.PastAmount_90 = a.AmountDue;
                     }
-
                     else if ((todayDate - a.DueDate.Value).TotalDays > 90)
                     {
                         statementRecord.PastAmountOver_90 = a.AmountDue;
                     }
+                    //////////////////////////////
+                     if (((todayDate - a.DueDate.Value).TotalDays >= 1) && ((todayDate - a.DueDate.Value).TotalDays <= 15))
+                    {
+                        statementRecord.PastAmount1_15 = a.AmountDue;
+                    }
+                    else if (((todayDate - a.DueDate.Value).TotalDays >= 16) && ((todayDate - a.DueDate.Value).TotalDays <= 30))
+                    {
+                        statementRecord.PastAmount16_30 = a.AmountDue;
+                    }
+                    else if (((todayDate - a.DueDate.Value).TotalDays >= 31) && ((todayDate - a.DueDate.Value).TotalDays <= 60))
+                    {
+                        statementRecord.PastAmount31_60 = a.AmountDue;
+                    }
+                    else if (((todayDate - a.DueDate.Value).TotalDays >= 61) && ((todayDate - a.DueDate.Value).TotalDays <= 90))
+                    {
+                        statementRecord.PastAmount61_90 = a.AmountDue;
+                    }
+                    else if (((todayDate - a.DueDate.Value).TotalDays >= 91) && ((todayDate - a.DueDate.Value).TotalDays <= 120))
+                    {
+                        statementRecord.PastAmount91_120 = a.AmountDue;
+                    }
+                    else if ((todayDate - a.DueDate.Value).TotalDays > 120)
+                    {
+                        statementRecord.PastAmountOver_120 = a.AmountDue;
+                    }
+                    /////////////////////////////////
+
+                   
 
                     totalData.RecordList.Add(statementRecord);
                 }
@@ -3968,6 +4013,34 @@ namespace WebFreight.Web.ReportsWebServices
                         statementRecord.PastAmountOver_90 = a.AmountDue * -1;
                     }
 
+
+                    //////////////////////////////////////////////
+                     if (((todayDate - a.DueDate.Value).TotalDays >= 1) && ((todayDate - a.DueDate.Value).TotalDays <= 15))
+                    {
+                        statementRecord.PastAmount1_15 = a.AmountDue * -1;
+                    }
+                    else if (((todayDate - a.DueDate.Value).TotalDays >= 16) && ((todayDate - a.DueDate.Value).TotalDays <= 30))
+                    {
+                        statementRecord.PastAmount16_30 = a.AmountDue * -1;
+                    }
+                    else if (((todayDate - a.DueDate.Value).TotalDays >= 31) && ((todayDate - a.DueDate.Value).TotalDays <= 60))
+                    {
+                        statementRecord.PastAmount31_60 = a.AmountDue * -1;
+                    }
+                    else if (((todayDate - a.DueDate.Value).TotalDays >= 61) && ((todayDate - a.DueDate.Value).TotalDays <= 90))
+                    {
+                        statementRecord.PastAmount61_90 = a.AmountDue * -1;
+                    }
+                    else if (((todayDate - a.DueDate.Value).TotalDays >= 91) && ((todayDate - a.DueDate.Value).TotalDays <= 120))
+                    {
+                        statementRecord.PastAmount91_120 = a.AmountDue * -1;
+                    }
+                    else if ((todayDate - a.DueDate.Value).TotalDays > 120)
+                    {
+                        statementRecord.PastAmountOver_120 = a.AmountDue * -1;
+                    }
+
+                    /////////////////////////////////////////////
                     totalData.RecordList.Add(statementRecord);
                 }
             }
@@ -4043,6 +4116,36 @@ namespace WebFreight.Web.ReportsWebServices
                         statementRecord.PastAmountOver_90 = a.OpenAmount * -1;
                     }
 
+
+
+
+                    //////////////////////////////////////////////
+                     if (((todayDate - a.ValueDate.Value).TotalDays >= 1) && ((todayDate - a.ValueDate.Value).TotalDays <= 15))
+                    {
+                        statementRecord.PastAmount1_15 = a.OpenAmount * -1;
+                    }
+                    else if (((todayDate - a.ValueDate.Value).TotalDays >= 16) && ((todayDate - a.ValueDate.Value).TotalDays <= 30))
+                    {
+                        statementRecord.PastAmount16_30 = a.OpenAmount * -1;
+                    }
+                    else if (((todayDate - a.ValueDate.Value).TotalDays >= 31) && ((todayDate - a.ValueDate.Value).TotalDays <= 60))
+                    {
+                        statementRecord.PastAmount31_60 = a.OpenAmount * -1;
+                    }
+                    else if (((todayDate - a.ValueDate.Value).TotalDays >= 61) && ((todayDate - a.ValueDate.Value).TotalDays <= 90))
+                    {
+                        statementRecord.PastAmount61_90 = a.OpenAmount * -1;
+                    }
+                    else if (((todayDate - a.ValueDate.Value).TotalDays >= 91) && ((todayDate - a.ValueDate.Value).TotalDays <= 120))
+                    {
+                        statementRecord.PastAmount91_120 = a.OpenAmount * -1;
+                    }
+                    else if ((todayDate - a.ValueDate.Value).TotalDays > 120)
+                    {
+                        statementRecord.PastAmountOver_120 = a.OpenAmount * -1;
+                    }
+
+                    /////////////////////////////////////////////
                     totalData.RecordList.Add(statementRecord);
                 }
             }
@@ -4117,7 +4220,33 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         statementRecord.PastAmountOver_90 = a.OpenAmount;
                     }
+                    //////////////////////////////////////////////
+                     if (((todayDate - a.ValueDate.Value).TotalDays >= 1) && ((todayDate - a.ValueDate.Value).TotalDays <= 15))
+                    {
+                        statementRecord.PastAmount1_15 = a.OpenAmount ;
+                    }
+                    else if (((todayDate - a.ValueDate.Value).TotalDays >= 16) && ((todayDate - a.ValueDate.Value).TotalDays <= 30))
+                    {
+                        statementRecord.PastAmount16_30 = a.OpenAmount ;
+                    }
+                    else if (((todayDate - a.ValueDate.Value).TotalDays >= 31) && ((todayDate - a.ValueDate.Value).TotalDays <= 60))
+                    {
+                        statementRecord.PastAmount31_60 = a.OpenAmount ;
+                    }
+                    else if (((todayDate - a.ValueDate.Value).TotalDays >= 61) && ((todayDate - a.ValueDate.Value).TotalDays <= 90))
+                    {
+                        statementRecord.PastAmount61_90 = a.OpenAmount ;
+                    }
+                    else if (((todayDate - a.ValueDate.Value).TotalDays >= 91) && ((todayDate - a.ValueDate.Value).TotalDays <= 120))
+                    {
+                        statementRecord.PastAmount91_120 = a.OpenAmount ;
+                    }
+                    else if ((todayDate - a.ValueDate.Value).TotalDays > 120)
+                    {
+                        statementRecord.PastAmountOver_120 = a.OpenAmount ;
+                    }
 
+                    /////////////////////////////////////////////
                     totalData.RecordList.Add(statementRecord);
                 }
             }
@@ -4143,6 +4272,14 @@ namespace WebFreight.Web.ReportsWebServices
                 item.TotalPastAmount_60 = item.StatementRecordList.Sum(d => d.PastAmount_60);
                 item.TotalPastAmount_90 = item.StatementRecordList.Sum(d => d.PastAmount_90);
                 item.TotalPastAmountOver_90 = item.StatementRecordList.Sum(d => d.PastAmountOver_90);
+                ////////////////////////////
+                item.TotalPastAmount1_15 = item.StatementRecordList.Sum(d => d.PastAmount1_15);
+                item.TotalPastAmount16_30 = item.StatementRecordList.Sum(d => d.PastAmount16_30);
+                item.TotalPastAmount31_60 = item.StatementRecordList.Sum(d => d.PastAmount31_60);
+                item.TotalPastAmount61_90 = item.StatementRecordList.Sum(d => d.PastAmount61_90);
+                item.TotalPastAmount91_120 = item.StatementRecordList.Sum(d => d.PastAmount91_120);
+                item.TotalPastAmountOver_120 = item.StatementRecordList.Sum(d => d.PastAmountOver_120);
+                /////////////////////////////
                 item.TotalAmount = item.StatementRecordList.Sum(d => d.PastTotalAmount);
             }
 
@@ -13369,7 +13506,7 @@ namespace WebFreight.Web.ReportsWebServices
             DateTime toDate = DateTime.Now;
             bool manuallyAddedEventsOnly = false;
             string userId = string.Empty;
-
+            string EventTypeId = string.Empty;
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
@@ -13377,6 +13514,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
             QueryFilterItem filterItem_ManuallyAddedEventsOnly = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ManuallyAddedEventsOnly").FirstOrDefault();
+            QueryFilterItem filterItem_EventTypeId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EventTypeId").FirstOrDefault();
 
 
             if (filterItem_ManuallyAddedEventsOnly != null)
@@ -13401,6 +13539,14 @@ namespace WebFreight.Web.ReportsWebServices
                     userId = filterItem_UserId.FieldValue.ToString();
                 }
             }
+
+            if (filterItem_EventTypeId != null)
+            {
+                if (filterItem_EventTypeId.FieldValue != null)
+                {
+                    EventTypeId = filterItem_EventTypeId.FieldValue.ToString();
+                }
+            }
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             List<ShipmentList> shipmentlists = shipmentQuery.GetShipmentListsByFromCreateDateAndToCreateDate(fromDate, toDate, tenant).ToList();
             if (shipmentlists.Count > 0)
@@ -13413,11 +13559,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                 ObjectTablePM table = objectTableQuery.GetObjectTableByName("Shipment", 0);
                 IQueryable<TraceEventPM> traceEventPMs = traceEventQuery.GetTraceEventPMsByEntityIdsAndObjectTableId(shipmentIds, table.Id, tenant);
-                List<TraceEventPM> traceEvenList = FilterTraceEvenList(manuallyAddedEventsOnly, userId, traceEventPMs);
+                List<TraceEventPM> traceEvenList = FilterTraceEvenList(manuallyAddedEventsOnly, userId, EventTypeId, traceEventPMs);
 
                 FillShipmentNumberToTraceEventList(shipmentlists, traceEvenList);
                 List<ShipmentEventsList> shipmentEventsLists = new List<ShipmentEventsList>();
                 GroupTraceEvenListByShipmentNumberAndOrderByEventDate(traceEvenList, shipmentEventsLists);
+                
                 shipmentsEventsListDataProvider.ShipmentEventsLists = shipmentEventsLists;
             }
             return shipmentsEventsListDataProvider;
@@ -13430,7 +13577,10 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 foreach (TraceEventPM item in traceEventgroup.OrderBy(d => d.EventDateTime).ToList())
                 {
+                    //item.EventDateTime1 = item.EventDateTime.ToString("yyyy-MM-dd");
+                    //item.EventDateTime2 = item.EventDateTime.ToString("HH: mm:ss");
                     ShipmentEventsList shipmentEventsList = CreateNewShipmentEventsList(item);
+                    
                     shipmentEventsLists.Add(shipmentEventsList);
                 }
             }
@@ -13444,6 +13594,8 @@ namespace WebFreight.Web.ReportsWebServices
                 EventCode = item.EventTypeCode,
                 EventName = item.EventTypeEnglishName,
                 EventDate = item.EventDateTime,
+                //EventDate1 = item.EventDateTime.ToString("yyyy-MM-dd"),
+                //EventDate2 = item.EventDateTime.ToString("HH: mm:ss"),
                 LogDate = item.LogDateTime,
                 UserName = item.ContactEnglishFirstName,
                 Notes = item.Notes,
@@ -13463,11 +13615,15 @@ namespace WebFreight.Web.ReportsWebServices
         }
 
 
-        private  List<TraceEventPM> FilterTraceEvenList(bool manuallyAddedEventsOnly, string userId,  IQueryable<TraceEventPM> traceEventPMs)
+        private  List<TraceEventPM> FilterTraceEvenList(bool manuallyAddedEventsOnly, string userId, string EventTypeId, IQueryable<TraceEventPM> traceEventPMs)
         {
             if (!string.IsNullOrEmpty(userId))
             {
                 traceEventPMs = traceEventPMs.Where(d => d.UserId == userId);
+            }
+            if (!string.IsNullOrEmpty(EventTypeId))
+            {
+                traceEventPMs = traceEventPMs.Where(d => d.EventTypeId == EventTypeId);
             }
 
             if (manuallyAddedEventsOnly)

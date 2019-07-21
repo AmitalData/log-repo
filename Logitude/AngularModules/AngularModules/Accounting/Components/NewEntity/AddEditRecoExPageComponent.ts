@@ -68,11 +68,14 @@ export class AddEditRecoExPageComponent extends BaseComponent{
 
         this.SetUIProperties();
     }
-
+    IsEditButtonDisabled: boolean = false;
+    EditWindowToolTip: string = "";
     SetWindowArgs(args) {
         if (args != null) {
             var prevPageNo;
             this.BankAccountPM = args.BankAccount;
+            this.IsEditButtonDisabled = !args.EnableReconcileEditButton;
+            this.EditWindowToolTip = args.message;
             this.GetDefaultValues();
             if (args.entity)
             {
@@ -265,7 +268,13 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+    EditButtonClicked() {
+        this.ReconcileExternalPagePM.StatusCode = "1";
 
+
+
+
+    }
     //* grid handlers in seperate region
 
     //#endregion

@@ -44,6 +44,8 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using WebFreight.Web.DataContracts;
 using System.Web.Script.Serialization;
 using Logitude.Accounting.BL.CoreBL.BankAccountPages;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -286,8 +288,48 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
+        [HttpGet]
+        public HttpResponseMessage GetTrueIfLastApprovedBankPageWithReconciledLine(string reconcileExternalPageId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
 
-        
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                ReconcileExternalPageQueryService reconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
+                ReconcileExternalPagePM reconcileExternalPage = reconcileExternalPageQueryService.GetSingle(reconcileExternalPageId, false, false);
+                bool islastAppprovedPage = reconcileExternalPageQueryService.CheckLastApprovedBankPage(reconcileExternalPage, tenant);
+                ServiceResponse response = new ServiceResponse();
+                ContactPM loggedContact = GetLoggedContact(authToken.Email, tenant);
+                bool showlocal = !loggedContact.DontShowLocal;
+                if (islastAppprovedPage)
+                {
+                    ReconcileExternalPageLineQueryService externalPageLineQueryService = new ReconcileExternalPageLineQueryService(tenant);
+                    ReconcileExternalPageLine ReconcileExternalPageLine= externalPageLineQueryService.GetReconcileExternalPageLine(reconcileExternalPage.Id, tenant);
+                    if (ReconcileExternalPageLine == null)
+                    {
+                        response.Result = null;
+                    }
+                    else
+                    {
+                        response.Result = TextCodesTranslator.TranslateText("Accounting.General.O.ReconciledLinesExist", tenant, showlocal);
+                    }
+                }
+                else
+                {
+
+                    response.Result = TextCodesTranslator.TranslateText("Accounting.General.O.LastBankPage", tenant, showlocal );
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, response );
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage PostLoadBankPages(ImageParameter fileUploadParamerter)
         {
             try
@@ -326,6 +368,20 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private ContactPM GetLoggedContact(string loggedUserEmail, int tenant)
+        {
+           
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            ContactPM loggedContactPM = contactQuery.GetContactByNameAndTenant(loggedUserEmail, tenant, true);
+            if (loggedContactPM == null)
+            {
+                loggedContactPM = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+            }
+
+
+            return loggedContactPM;
         }
     }
 }

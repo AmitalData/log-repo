@@ -35,6 +35,8 @@ using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.BL.CoreBL;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -47,30 +49,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 : base(mainContext)
             { }
         }
-        protected override void AddContext(GLAccountPM myTEntityPM)
-        {
-            base.AddContext(myTEntityPM);
-            SetPriv();
-        }
-
-        private void SetPriv()
-        {
-            this.Repository = (this.Repository as GLAccountRepositoryPriv) ?? new GLAccountRepositoryPriv((IAccountingContext)this.MainContext);
-        }
-
-        public void AddPocoFromBuildTenant(GLAccount poco)
-        {
-            SetPriv();
-            this.Repository.Add(poco);
-
-        }
         protected override void OnCreating(GLAccountPM entityPM, EntityPM entityParentPM)
         {
             if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4")
                 SetDisplayNumber(entityPM);
 
             AddAcitivityLog(entityPM, "N");
-            entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName;
+
+            FillSearchFields(entityPM);
+
 
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             entityPM.CreatedByUserId = loggedUser?.Id;
@@ -367,68 +354,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
-        private void SetDisplayNumber(GLAccountPM entityPM)
-        {
-            GLAccountCounterService gLAccountCounterService = new GLAccountCounterService(entityPM.Tenant);
-            string _displayNumber = gLAccountCounterService.GetNewDisplayNumber(entityPM);
-
-            //check exist
-            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(entityPM.Tenant);
-            GLAccountPM gla = gLAccountQuery.GetByDisplayNumber(_displayNumber, entityPM.Tenant).FirstOrDefault();
-            if(gla == null)
-            {
-                entityPM.DisplayNumber = _displayNumber;
-            }
-            else
-            {
-                //skip this counter, get next
-                SetDisplayNumber(entityPM);
-            }
-        }
-
-        protected override void UpdateComposition(GLAccountPM entityPM)
-        {
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                InsertGLAccountMoreData(entityPM);
-            }
-
-            var gLAccountWithholdingTaxUpdateService = new GLAccountWithholdingTaxUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            gLAccountWithholdingTaxUpdateService.UpdateMulti(entityPM.GLAccountWithholdingTaxes, entityPM.DeletedGLAccountWithholdingTaxes, entityPM, true);
-
-
-            base.UpdateComposition(entityPM);
-        }
-        private void InsertGLAccountMoreData(GLAccountPM entityPM)
-        {
-            var myGLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            myGLAccountMoreDataUpdateService.Update(new GLAccountMoreDataPM()
-            {
-                AccountId = entityPM.Id,
-                Tenant = entityPM.Tenant,
-                ChangeSetOp = ChangeSetOperation.Insert
-
-            }, false);
-        }
-
-        private static string GetLoggedContactId(GLAccountPM entityPM)
-        {
-            string contactId = null;
-
-            if (entityPM.PassedFromAPI)
-            {
-                UserQuery userQuery = new UserQuery(entityPM.Tenant);
-                UserPM MyUserPM = userQuery.GetSingleUserPMByEmail("system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant, false);
-            }
-
-            else
-            {
-                contactId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-            }
-
-            return contactId;
-        }
-
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
 
@@ -570,62 +495,81 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             ValidateCurrency(entityPM, entityPOCO);
         }
-
-        protected virtual void OnUpdatingCheckBalance(GLAccountPM entityPM, GLAccount entityPOCO)
-        {
-#if GLAccMoreData
-
-
-            var messnoprivtochangeBalanceInLocalCurrency = "no priv to change BalanceInLocalCurrency";
-            if (entityPOCO == null)
-            {
-                return;
-            }
-            var delta = entityPM.BalanceInLocalCurrency.GetValueOrDefault() - entityPOCO.BalanceInLocalCurrency.GetValueOrDefault();
-            if (delta!=0)
-            {
-                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
-            }
-            delta = entityPM.LocalBalanceInDue.GetValueOrDefault() - entityPOCO.LocalBalanceInDue.GetValueOrDefault();
-            if (delta != 0)
-            {
-                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
-            }
-            if (entityPM.NextDueDate.GetValueOrDefault() != entityPOCO.NextDueDate.GetValueOrDefault())
-            {
-                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
-            }
-#endif
-        }
-
-        protected virtual void OnUpdatingCheckReconcileMethod(GLAccountPM entityPM, GLAccount entityPOCO)
-        {
-            // Task 45932: GLAccounts: new validation for the field reconcile method
-
-            // GET logged contact, RTL
-            IAccountingContext accountingContext = AccountingContext.GetContext(entityPOCO.Tenant);
-            ContactPM contact = GetLoggedContact(entityPOCO.Tenant);
-            bool showLocals = !contact.DontShowLocal;
-
-
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-            {
-                if (entityPM.ReconcileMethodCode != entityPOCO.ReconcileMethodCode && entityPM.IsMultiCurrency == false)
-                {
-                    //check glaccount transactions
-                    LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(accountingContext);
-                    LedgerTransactionPM trans = transQuery.GetFirstLedgerTransaction(entityPM.Id, entityPM.Tenant);
-                    if(trans != null)
-                        throw new Exception(TextCodesTranslator.TranslateText("GLAccounts.O.ReconcileMethodcantUpdated",0,showLocals));
-                }
-            }
-            
-        }
-
         protected override void OnUpdating(GLAccountPM entityPM)
         {
-            AddAcitivityLog(entityPM,"U");
+            AddAcitivityLog(entityPM, "U");
 
+            FillForeignFields(entityPM);
+            FillSearchFields(entityPM);
+            SendHybridTask(entityPM);
+
+        }
+
+        private void SendHybridTask(GLAccountPM glaccounPM)
+        {
+            if(glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5")
+            {
+                CommunicationsParams comParams = CreateCommunicationParamsForGLAccount(glaccounPM);
+
+                List<QueueTask> queueTasks = CreateQueueTasks(glaccounPM);
+                comParams.ByteData = LogitudeXmlSerializer.SerializeObject(queueTasks);
+
+                Communications.AddCommunicationLog(comParams);
+            }
+
+        }
+
+        private List<QueueTask> CreateQueueTasks(GLAccountPM glaccounPM)
+        {
+            string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(glaccounPM);
+
+            List<QueueTask> queue1Tasks = new List<QueueTask>
+                {
+                    new QueueTask()
+                    {
+                        Action = "GLAccount.Upsert",
+                        Parameters = new List<Parameter>()
+                        {
+                            new Parameter{ Name = "GLAccountData", Order = 1, Value = xmlstring }
+                        }
+                    }
+                };
+            return queue1Tasks;
+        }
+
+        private CommunicationsParams CreateCommunicationParamsForGLAccount(GLAccountPM glaccounPM)
+        {
+            int tenant = glaccounPM.Tenant;
+            ContactPM loggedUser = GetLoggedContact(tenant);
+            ObjectTablePM table = ObjectTableQuery.GetObjectTableByCode("GLAccount", 0);
+
+
+
+
+            CommunicationsParams comParams = new CommunicationsParams()
+            {
+                Tenant = tenant,
+                CommunicationLogTypeCode = "Q",
+                QueueName = "externaltasksqueue" + tenant + 1,
+                Priority = 1,
+                InOut = "O",
+                Status = "W",
+                LoggingUserId = loggedUser?.Id,
+                LoggingObjectTableId = table?.Id,
+                LoggingEntityId = glaccounPM.Id,
+                Subject = "GLAccount Updated",
+                FolderName = "ExternalTasksQueue",
+            };
+            return comParams;
+        }
+
+        private void FillSearchFields(GLAccountPM entityPM)
+        {
+            entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName;
+        }
+
+        private void FillForeignFields(GLAccountPM entityPM)
+        {
             if (!String.IsNullOrWhiteSpace(entityPM.CurrencyCode) && String.IsNullOrWhiteSpace(entityPM.CurrencyId))
             {
                 CurrencyQuery queryService = new CurrencyQuery(entityPM.Tenant);
@@ -709,25 +653,54 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     entityPM.CustomerGLAccountId = acc.Id;
                 }
             }
-
-            entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName;
-            base.OnUpdating(entityPM);
         }
 
-        public virtual void AddAcitivityLog(GLAccountPM entityPM, string activityTypeCode)
+        protected override void AddContext(GLAccountPM myTEntityPM)
         {
-            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("GLAccount", 0, true);
-
-            var loggedContactId = GetLoggedContactId(entityPM);
-            if (loggedContactId != null)
-            {
-                ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, activityTypeCode, loggedContactId);
-            }
+            base.AddContext(myTEntityPM);
+            SetPriv();
         }
+        protected override void UpdateComposition(GLAccountPM entityPM)
+        {
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                InsertGLAccountMoreData(entityPM);
+            }
 
+            var gLAccountWithholdingTaxUpdateService = new GLAccountWithholdingTaxUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            gLAccountWithholdingTaxUpdateService.UpdateMulti(entityPM.GLAccountWithholdingTaxes, entityPM.DeletedGLAccountWithholdingTaxes, entityPM, true);
 
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update && entityPM.GLAccountWithholdingTaxes.Count > 0)
+            {
 
+                ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+
+                foreach (var line in entityPM.GLAccountWithholdingTaxes)
+                {
+                    if (line.ChangeSetOp == ChangeSetOperation.Insert)
+                    {
+                        var currentContextTag = line.CurrentContextTag ?? "";
+                        if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventAWNCConst)
+                        {
+                            String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingLineCreated", entityPM.Tenant).Replace(":", line.LineNumber + ":");
+                            EventTracer.CreateTraceEvent(new EventTracerArgs()
+                            {
+                                EntityId = entityPM.Id,
+                                Tenant = entityPM.Tenant,
+                                UserId = contact.Id,
+                                ObjectTableName = "GLAccount",
+                                IsAddedManually = false,
+                                EventTypeCode = "AWNC",
+                                Notes = notes,
+                            });
+                        }
+                    }
+                }
+            }
+            base.UpdateComposition(entityPM);
+        }
         protected override void Trace(GLAccountPM entityPM, GLAccount entityPOCO, string changesXml)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -780,27 +753,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     foreach (var line in entityPM.GLAccountWithholdingTaxes)
                     {
-                        if (line.ChangeSetOp == ChangeSetOperation.Insert)
-                        {
-                            var currentContextTag = line.CurrentContextTag ?? "";
-                            if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventAWNCConst)
-                            {
-                                String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingLineCreated", entityPM.Tenant).Replace(":", line.LineNumber + ":");
-                                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                {
-                                    EntityId = entityPM.Id,
-                                    Tenant = entityPM.Tenant,
-                                    UserId = contact.Id,
-                                    ObjectTableName = "GLAccount",
-                                    IsAddedManually = false,
-                                    EventTypeCode = "AWNC",
-                                    Notes = notes,
-                                });
-                            }
-                        }
+                        //if (line.ChangeSetOp == ChangeSetOperation.Insert)
+                        //{
+                        //    var currentContextTag = line.CurrentContextTag ?? "";
+                        //    if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventAWNCConst)
+                        //    {
+                        //        String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingLineCreated", entityPM.Tenant).Replace(":", line.LineNumber + ":");
+                        //        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        //        {
+                        //            EntityId = entityPM.Id,
+                        //            Tenant = entityPM.Tenant,
+                        //            UserId = contact.Id,
+                        //            ObjectTableName = "GLAccount",
+                        //            IsAddedManually = false,
+                        //            EventTypeCode = "AWNC",
+                        //            Notes = notes,
+                        //        });
+                        //    }
+                        //}
 
 
-                        else if (line.Changed)  
+                        if (line.Changed)  
                         {
                             var currentContextTag = line.CurrentContextTag ?? "";
                             if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventWBLKConst)
@@ -1289,6 +1262,154 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             base.Trace(entityPM, entityPOCO, changesXml);
         }
+        protected override void AfterUpdating(GLAccountPM entityPM, EntityPM entityParentPM)
+        {
+            base.AfterUpdating(entityPM, entityParentPM);
+            // Update Card GLAccountId [Maheera]
+            UpdateCardGLAccountId(entityPM.Tenant, entityPM.NewGLAccountCardId, entityPM.Id);
+        }
+        protected override void Validate(GLAccountPM entityPM)
+        {
+            ValidationResult result = GLAccountValidator.IsGLAccountValid(entityPM);
+            if (result != null)
+            {
+                throw new ApplicationException(result.ErrorMessage);
+            }
+            base.Validate(entityPM);
+        }
+
+
+
+        // PRIVATE METHODS
+
+        private void SetPriv()
+        {
+            this.Repository = (this.Repository as GLAccountRepositoryPriv) ?? new GLAccountRepositoryPriv((IAccountingContext)this.MainContext);
+        }
+
+        public void AddPocoFromBuildTenant(GLAccount poco)
+        {
+            SetPriv();
+            this.Repository.Add(poco);
+
+        }
+
+        private void SetDisplayNumber(GLAccountPM entityPM)
+        {
+            GLAccountCounterService gLAccountCounterService = new GLAccountCounterService(entityPM.Tenant);
+            string _displayNumber = gLAccountCounterService.GetNewDisplayNumber(entityPM);
+
+            //check exist
+            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(entityPM.Tenant);
+            GLAccountPM gla = gLAccountQuery.GetByDisplayNumber(_displayNumber, entityPM.Tenant).FirstOrDefault();
+            if(gla == null)
+            {
+                entityPM.DisplayNumber = _displayNumber;
+            }
+            else
+            {
+                //skip this counter, get next
+                SetDisplayNumber(entityPM);
+            }
+        }
+
+        private void InsertGLAccountMoreData(GLAccountPM entityPM)
+        {
+            var myGLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            myGLAccountMoreDataUpdateService.Update(new GLAccountMoreDataPM()
+            {
+                AccountId = entityPM.Id,
+                Tenant = entityPM.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert
+
+            }, false);
+        }
+
+        private static string GetLoggedContactId(GLAccountPM entityPM)
+        {
+            string contactId = null;
+
+            if (entityPM.PassedFromAPI)
+            {
+                UserQuery userQuery = new UserQuery(entityPM.Tenant);
+                UserPM MyUserPM = userQuery.GetSingleUserPMByEmail("system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant, false);
+            }
+
+            else
+            {
+                contactId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+            }
+
+            return contactId;
+        }
+
+
+        protected virtual void OnUpdatingCheckBalance(GLAccountPM entityPM, GLAccount entityPOCO)
+        {
+#if GLAccMoreData
+
+
+            var messnoprivtochangeBalanceInLocalCurrency = "no priv to change BalanceInLocalCurrency";
+            if (entityPOCO == null)
+            {
+                return;
+            }
+            var delta = entityPM.BalanceInLocalCurrency.GetValueOrDefault() - entityPOCO.BalanceInLocalCurrency.GetValueOrDefault();
+            if (delta!=0)
+            {
+                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
+            }
+            delta = entityPM.LocalBalanceInDue.GetValueOrDefault() - entityPOCO.LocalBalanceInDue.GetValueOrDefault();
+            if (delta != 0)
+            {
+                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
+            }
+            if (entityPM.NextDueDate.GetValueOrDefault() != entityPOCO.NextDueDate.GetValueOrDefault())
+            {
+                throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
+            }
+#endif
+        }
+
+        protected virtual void OnUpdatingCheckReconcileMethod(GLAccountPM entityPM, GLAccount entityPOCO)
+        {
+            // Task 45932: GLAccounts: new validation for the field reconcile method
+
+            // GET logged contact, RTL
+            IAccountingContext accountingContext = AccountingContext.GetContext(entityPOCO.Tenant);
+            ContactPM contact = GetLoggedContact(entityPOCO.Tenant);
+            bool showLocals = !contact.DontShowLocal;
+
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                if (entityPM.ReconcileMethodCode != entityPOCO.ReconcileMethodCode && entityPM.IsMultiCurrency == false)
+                {
+                    //check glaccount transactions
+                    LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(accountingContext);
+                    LedgerTransactionPM trans = transQuery.GetFirstLedgerTransaction(entityPM.Id, entityPM.Tenant);
+                    if(trans != null)
+                        throw new Exception(TextCodesTranslator.TranslateText("GLAccounts.O.ReconcileMethodcantUpdated",0,showLocals));
+                }
+            }
+            
+        }
+
+
+        public virtual void AddAcitivityLog(GLAccountPM entityPM, string activityTypeCode)
+        {
+            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("GLAccount", 0, true);
+
+            var loggedContactId = GetLoggedContactId(entityPM);
+            if (loggedContactId != null)
+            {
+                ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, activityTypeCode, loggedContactId);
+            }
+        }
+
+
+
 
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
@@ -1311,16 +1432,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
-        protected override void Validate(GLAccountPM entityPM)
-        {
-            ValidationResult result = GLAccountValidator.IsGLAccountValid(entityPM);
-            if (result != null)
-            {
-                throw new ApplicationException(result.ErrorMessage);
-            }
-            base.Validate(entityPM);
-        }
-
         private void UpdateCardGLAccountId(int tenant, string cardId, string glAccountId)
         {
             if (!string.IsNullOrEmpty(cardId))
@@ -1333,12 +1444,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-        protected override void AfterUpdating(GLAccountPM entityPM, EntityPM entityParentPM)
-        {
-            base.AfterUpdating(entityPM, entityParentPM);
-            // Update Card GLAccountId [Maheera]
-            UpdateCardGLAccountId(entityPM.Tenant, entityPM.NewGLAccountCardId, entityPM.Id);
-        }
 
         private void ValidateCurrency(GLAccountPM entityPM, GLAccount entityPOCO)
         {
