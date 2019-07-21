@@ -45,11 +45,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 { 
 
     
-    public partial class TaskSchedulerHistoryViewsController : ApiController
+    public partial class SchedulerProcedureViewsController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string code)
         {
 		  try
             {
@@ -57,21 +57,20 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("TaskSchedulerHistory", "READ", authToken.Tenant);
 				
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
-				TaskSchedulerHistoryRepository  taskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(MyContext);
-				TaskSchedulerHistoryList entityList = null;
-				TaskSchedulerHistory entityPoco = taskSchedulerHistoryRepository.GetSingleTaskSchedulerHistory(id , authToken.Tenant);
+				SchedulerProcedureRepository  schedulerProcedureRepository = new SchedulerProcedureRepository(MyContext);
+				SchedulerProcedureList entityList = null;
+				SchedulerProcedure entityPoco = schedulerProcedureRepository.GetSingleSchedulerProcedure(code );
 
 				if (entityPoco != null)
 				{
-									List<TaskSchedulerHistory> singleEntityList = new List<TaskSchedulerHistory>();
+									List<SchedulerProcedure> singleEntityList = new List<SchedulerProcedure>();
 					singleEntityList.Add(entityPoco);
 
-					TaskSchedulerHistoryQuery taskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(taskSchedulerHistoryRepository);
-					IQueryable<TaskSchedulerHistory> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<TaskSchedulerHistoryList> iQueryableEntityList = taskSchedulerHistoryQuery.GetIQueryableEntityList(iQueryable);
+					SchedulerProcedureQuery schedulerProcedureQuery = new SchedulerProcedureQuery(schedulerProcedureRepository);
+					IQueryable<SchedulerProcedure> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<SchedulerProcedureList> iQueryableEntityList = schedulerProcedureQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
@@ -95,17 +94,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("TaskSchedulerHistory", "READ", authToken.Tenant);
 
 
 				IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
-				TaskSchedulerHistoryRepository  taskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(MyContext);
-				IQueryable<TaskSchedulerHistory> entityPocos = taskSchedulerHistoryRepository.GetTaskSchedulerHistory(authToken.Tenant);
+				SchedulerProcedureRepository  schedulerProcedureRepository = new SchedulerProcedureRepository(MyContext);
+				IQueryable<SchedulerProcedure> entityPocos = schedulerProcedureRepository.GetSchedulerProcedures();
 
-				TaskSchedulerHistoryQuery taskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(taskSchedulerHistoryRepository);
-			    IQueryable<TaskSchedulerHistoryList> entityLists = taskSchedulerHistoryQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Id);
-				List<TaskSchedulerHistoryList> listResult = entityLists.ToList();
+				SchedulerProcedureQuery schedulerProcedureQuery = new SchedulerProcedureQuery(schedulerProcedureRepository);
+			    IQueryable<SchedulerProcedureList> entityLists = schedulerProcedureQuery.GetIQueryableEntityList(entityPocos);
+				entityLists = entityLists.OrderBy(d => d.Code);
+				List<SchedulerProcedureList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -126,21 +124,19 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				                
-				SecurityUtility.CheckContactFeature("TaskSchedulerHistory", "READ", authToken.Tenant);
-	
+				
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "TaskSchedulerHistory",
+                    ObjectTableName = "SchedulerProcedure",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "TaskSchedulerHistory",
+                    QuerySection = "SchedulerProcedures",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
-				List<ObjectField> TaskSchedulerHistoryObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("TaskSchedulerHistory",tenant);
+				List<ObjectField> SchedulerProcedureObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("SchedulerProcedure",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -163,7 +159,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = TaskSchedulerHistoryObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = SchedulerProcedureObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -189,7 +185,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = TaskSchedulerHistoryObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = SchedulerProcedureObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -214,29 +210,29 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 GenericSort sortClass = new GenericSort();
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
-                TaskSchedulerHistoryRepository  taskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(MyContext);
-                IQueryable<TaskSchedulerHistory> entityPocos = taskSchedulerHistoryRepository.GetTaskSchedulerHistory(tenant);
+                SchedulerProcedureRepository  schedulerProcedureRepository = new SchedulerProcedureRepository(MyContext);
+                IQueryable<SchedulerProcedure> entityPocos = schedulerProcedureRepository.GetSchedulerProcedures();
 
-                TaskSchedulerHistoryQuery taskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(taskSchedulerHistoryRepository);
+                SchedulerProcedureQuery schedulerProcedureQuery = new SchedulerProcedureQuery(schedulerProcedureRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 				
-                entityPocos = genericFilter.GetFilteredQuery<TaskSchedulerHistory>(nonListQueryOperation, entityPocos);
+                entityPocos = genericFilter.GetFilteredQuery<SchedulerProcedure>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<TaskSchedulerHistoryList> entityLists = taskSchedulerHistoryQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<SchedulerProcedureList> entityLists = schedulerProcedureQuery.GetIQueryableEntityList(entityPocos);
 
-                entityLists = genericFilter.GetFilteredQuery<TaskSchedulerHistoryList>(listQueryOperation, entityLists);
+                entityLists = genericFilter.GetFilteredQuery<SchedulerProcedureList>(listQueryOperation, entityLists);
 
 		 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
-                   PropertyInfo propInfo = typeof(TaskSchedulerHistoryList).GetProperty(queryOperations.SortByColumnName);
+                   PropertyInfo propInfo = typeof(SchedulerProcedureList).GetProperty(queryOperations.SortByColumnName);
                    
 
-                   ObjectField objectField = (from a in TaskSchedulerHistoryObjectFields
+                   ObjectField objectField = (from a in SchedulerProcedureObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -244,7 +240,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                    {
                     if (objectField.IsCustom)
                     {
-                        entityLists = sortClass.GetSorterQuery<TaskSchedulerHistoryList, string>(queryOperations, entityLists);
+                        entityLists = sortClass.GetSorterQuery<SchedulerProcedureList, string>(queryOperations, entityLists);
                     }
                     else
                     {
@@ -254,41 +250,41 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                         case "text":
 						case "lookup":
                             {
-                                entityLists = sortClass.GetSorterQuery<TaskSchedulerHistoryList, string>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SchedulerProcedureList, string>(queryOperations, entityLists);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                entityLists = sortClass.GetSorterQuery<TaskSchedulerHistoryList, double>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SchedulerProcedureList, double>(queryOperations, entityLists);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                entityLists = sortClass.GetSorterQuery<TaskSchedulerHistoryList, DateTime>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SchedulerProcedureList, DateTime>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                entityLists = sortClass.GetSorterQuery<TaskSchedulerHistoryList, int>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SchedulerProcedureList, int>(queryOperations, entityLists);
                                 break;
                             }
                         case "boolean":
                             {
-                                entityLists = sortClass.GetSorterQuery<TaskSchedulerHistoryList, bool>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SchedulerProcedureList, bool>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                entityLists = sortClass.GetSorterQuery<TaskSchedulerHistoryList, decimal>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<SchedulerProcedureList, decimal>(queryOperations, entityLists);
                                 break;
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Id);
+                                entityLists = entityLists.OrderBy(d => d.Code);
                                 break;
                             }
                     }
@@ -297,7 +293,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
             }
 		    else
             {
-                entityLists = entityLists.OrderBy(d => d.Id);
+                entityLists = entityLists.OrderBy(d => d.Code);
             }
 
 			ServiceResponse response = new ServiceResponse();
@@ -313,7 +309,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
-			   List<TaskSchedulerHistoryList> listResult = entityLists.ToList();
+			   List<SchedulerProcedureList> listResult = entityLists.ToList();
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

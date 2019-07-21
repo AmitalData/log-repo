@@ -175,17 +175,20 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
 
         public static BankCodePM GetBankCodeByPayToGLAccount(PaymentChequePM paymentCheque)
         {
-            GLAccountPM gLAccount = GetPayToGLAccount(paymentCheque);
-            BankAccountPM bankAccount = GetBankAccountByGLAccount(gLAccount);
-            return GetBankCodePM(bankAccount);
+            // GLAccountPM gLAccount = GetPayToGLAccount(paymentCheque);
+            BankAccountPM bankAccount = GetBankAccountByPaymentChequet(paymentCheque.BankAccountId, paymentCheque.Tenant);
 
+
+            return GetBankCodePM(bankAccount);
+            
+           
 
         }
 
-        public static BankAccountPM GetBankAccountByGLAccount(GLAccountPM glAccount)
+        public static BankAccountPM GetBankAccountByPaymentChequet(string  bankAccountId, int tenant)
         {
-            BankAccountQueryService bankAccountQuery = new BankAccountQueryService(glAccount.Tenant);
-            return bankAccountQuery.GetByGLAccountId(glAccount.Id, glAccount.Tenant);
+            BankAccountQueryService bankAccountQuery = new BankAccountQueryService(tenant);
+            return bankAccountQuery.GetSingle(bankAccountId, false, false);
         }
 
         public static BankCodePM GetBankCodePM(BankAccountPM bankAccount)
@@ -194,12 +197,12 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             return bankCodeQuery.GetSingleByCode(bankAccount.BankCode, bankAccount.Tenant);
         }
 
-        public static GLAccountPM GetPayToGLAccount(PaymentChequePM paymentCheque)
-        {
-            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(paymentCheque.Tenant);
-            return gLAccountQueryService.GetSinglePM(paymentCheque.PayToGLAccountId, paymentCheque.Tenant);
+        //public static GLAccountPM GetPayToGLAccount(PaymentChequePM paymentCheque)
+        //{
+        //    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(paymentCheque.Tenant);
+        //    return gLAccountQueryService.GetSinglePM(paymentCheque.PayToGLAccountId, paymentCheque.Tenant);
 
-        }
+        //}
         public static byte[] GetLogo(string id,int tenant)
         {
            
