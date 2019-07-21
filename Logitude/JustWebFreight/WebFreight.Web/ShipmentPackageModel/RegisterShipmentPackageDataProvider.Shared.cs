@@ -130,6 +130,10 @@ namespace WebFreight.Web.ShipmentPackageModel
             public DateTime? PickupATA { get; set; }
             public DateTime? DeliveryATD { get; set; }
             public DateTime? DeliveryATA { get; set; }
+
+            public double? ContainerVolume { get; set; }
+            public string ShippingLineSCAC { get; set; }
+            public string IncotermCode { get; set; }
         }
     }
 }
