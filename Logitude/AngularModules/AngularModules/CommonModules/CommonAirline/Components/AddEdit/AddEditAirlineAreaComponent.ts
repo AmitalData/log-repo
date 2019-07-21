@@ -84,6 +84,8 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
             this.Clone();
 
             this.EntityPM.AirlineAreasPorts.forEach(item => {
+                this.AddedAirlineAreas.push(item);
+
                 this.myCloner.AddEntity(item);
 
                 this.portListService.getSingleFromCache(item.PortId).subscribe(p => {
