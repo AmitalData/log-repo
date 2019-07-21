@@ -82,7 +82,7 @@
                                 </tr>
 
                                 <!-- StartDate -->
-                                <tr class="FormFieldRow">
+                                <tr *ngIf="!VisibileSurchargesArea" class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -98,7 +98,7 @@
                                 </tr>
 
                                 <!-- ExpirationDate -->
-                                <tr class="FormFieldRow">
+                                <tr *ngIf="!VisibileSurchargesArea" class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
