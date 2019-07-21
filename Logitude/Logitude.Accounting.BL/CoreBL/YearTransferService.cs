@@ -122,6 +122,18 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                 }
 
+
+                List<JournalPM> yearTransferJournalsNotLT = journalQueryService.GetJournalsNotLTByAccDateAccEntity(_EndOfYearUserInput, DateTime.Today, "11", tenant).ToList();
+                if (yearTransferJournalsNotLT != null)
+                {
+                    JournalPM yearTransferjournalNotLT = yearTransferJournalsNotLT.FirstOrDefault();
+                    if (yearTransferjournalNotLT != null)
+                    {
+                        throw new Exception(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
+                    }
+                }
+
+
                 List<JournalPM> notVoidedJournalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j => !j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
                 if (notVoidedJournalPMs != null)
                 {
@@ -253,6 +265,19 @@ namespace Logitude.Accounting.BL.CoreBL
                         throw new Exception(transText);
                     }
                 }
+
+
+                List<JournalPM> yearTransferJournalsNotLT = journalQueryService.GetJournalsNotLTByAccDateAccEntity(_EndOfYearUserInput, DateTime.Today, "11", tenant).ToList();
+                if (yearTransferJournalsNotLT != null)
+                {
+                    JournalPM yearTransferjournalNotLT = yearTransferJournalsNotLT.FirstOrDefault();
+                    if (yearTransferjournalNotLT != null)
+                    {
+                        throw new Exception(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
+                    }
+                }
+
+
                 List<JournalPM> notVoidedJournalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j => !j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
                 if (notVoidedJournalPMs == null)
                 {
