@@ -1,5 +1,5 @@
-update Shipments 
-set Commodity = (select Top 1 CommodityNumber from ShipmentCommodities where ShipmentId = Shipments.Id)
+update ShipmentComputedFields 
+set Commodity = (select Top 1 CommodityNumber from ShipmentCommodities where ShipmentId = ShipmentComputedFields.Id)
 
 declare @ContainersNumber as varchar(1000)
 declare @ContainerNumber as varchar(100)
@@ -23,24 +23,6 @@ DECLARE ShipmentsCursor CURSOR READ_ONLY
 	WHILE @@FETCH_STATUS = 0
 		BEGIN	
 
-DECLARE ShipmentsCursor CURSOR READ_ONLY
-	FOR
-	SELECT ContainerNumber
-	FROM ShipmentPackages where tenant=@Tenant and ShipmentId=@ShipmentId	
-	OPEN ShipmentsPackagesCursor FETCH NEXT FROM ShipmentsPackagesCursor INTO @ContainerNumber
-	WHILE @@FETCH_STATUS = 0
-		BEGIN		
-		if(@ContainersNumber is not null)
-		set @ContainersNumber=@ContainersNumber+','
-			if(@ContainerNumber is not null)		
-		set @ContainersNumber=@ContainersNumber+@ContainerNumber		
-
-		FETCH NEXT FROM ShipmentsPackagesCursor INTO @ContainerNumber
-		CLOSE ShipmentsPackagesCursor
-	DEALLOCATE ShipmentsPackagesCursor
-	end
-	print @ContainersNumber
-	print ('nextline')
 	if(@Direction != 'D' and @TransportMode != 'I')
 	begin
 set @FirstPickupId = (select top 1 Id from ShipmentPickUpDeliveries where ShipmentId = @ShipmentId and PickUpDeliveryTypeCode = 'PICK' order by PickUpDeliveryNumber)
@@ -72,7 +54,7 @@ if @FirstPickupId is not null
 						set @Origin = @FirstPickupFromAddressCity
 					end
 			
-					--update shipments set FirstPickupLocation=@Origin where tenant=@tenant and Id=@ShipmentId
+					update ShipmentComputedFields set FirstPickupLocation=@Origin where tenant=@tenant and Id=@ShipmentId
 				end
 end
 
@@ -82,4 +64,5 @@ end
 	DEALLOCATE ShipmentsCursor
 	
 
-	end
+	
+	

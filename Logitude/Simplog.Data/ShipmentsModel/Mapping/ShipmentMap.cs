@@ -265,10 +265,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ValueOfGoodsCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OriginShipmentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReleasingAgentId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ReleasingAgentAddressId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ContainersNumbers).HasMaxLength(1000).IsUnicode(true);
-            this.Property(t => t.Commodity).HasMaxLength(15).IsUnicode(true);
-            this.Property(t => t.FirstPickupLocation).HasMaxLength(100).IsUnicode(true);
+            this.Property(t => t.ReleasingAgentAddressId).HasMaxLength(15).IsUnicode(false);           
 
             this.Property(t => t.ReleasingAgentContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReleasingAgentReference1).HasMaxLength(50).IsUnicode(false);
@@ -631,9 +628,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OperationalDate).HasColumnName("OperationalDate");
             this.Property(t => t.ReleasingAgentId).HasColumnName("ReleasingAgentId");
             this.Property(t => t.ReleasingAgentAddressId).HasColumnName("ReleasingAgentAddressId");
-            this.Property(t => t.FirstPickupLocation).HasColumnName("FirstPickupLocation");
-            this.Property(t => t.Commodity).HasColumnName("Commodity");
-            this.Property(t => t.ContainersNumbers).HasColumnName("ContainersNumbers");
+           
 
             this.Property(t => t.ReleasingAgentContactId).HasColumnName("ReleasingAgentContactId");
             this.Property(t => t.ReleasingAgentReference1).HasColumnName("ReleasingAgentReference1");

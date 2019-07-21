@@ -534,11 +534,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (entityComputedFields != null)
             {
+                MapComputedFields(entityComputedFields, entityPM);             
                 shipmentComputedFieldsRepository.Update(entityComputedFields);
             }
 
             entityPM.IsShipmentComputedFieldChange = false;
 
+        }
+
+        private void MapComputedFields(ShipmentComputedFields entityComputedFields, ShipmentPM entityPM)
+        {
+            entityComputedFields.ContainersNumbers = entityPM.ContainersNumbers;
+            entityComputedFields.FirstPickupLocation = entityPM.FirstPickupLocation;
+            entityComputedFields.Commodity = entityPM.AWBCommodityItemNumber;
         }
 
         private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
