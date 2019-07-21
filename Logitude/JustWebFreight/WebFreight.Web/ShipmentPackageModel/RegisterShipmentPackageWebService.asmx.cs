@@ -197,6 +197,16 @@ namespace WebFreight.Web.ShipmentPackageModel
                 provider.Ramp = shipment.OnCarriageToPortCode;
                 provider.BookingConfirmationNumber = shipment.BookingConfirmationNumber;
                 provider.Volume = shipment.Volume;
+                provider.ContainerVolume = shipment.PackageVolume;
+
+                if (!string.IsNullOrEmpty(shipment.MainCarriageCarrierId))
+                {
+                    ShippingLine myShippingLine = (from d in commonContext.ShippingLines where d.Id == shipment.MainCarriageCarrierId select d).FirstOrDefault();
+                    if (myShippingLine != null)
+                    {
+                        provider.ShippingLineSCAC = myShippingLine.SCACCode;
+                    }
+                }
 
                 if (!string.IsNullOrEmpty(shipment.IncotermId))
                 {
@@ -204,6 +214,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                     if (myIncoterm != null)
                     {
                         provider.Incoterm = myIncoterm.Name;
+                        provider.IncotermCode = myIncoterm.Code;
                     }
                 }
 

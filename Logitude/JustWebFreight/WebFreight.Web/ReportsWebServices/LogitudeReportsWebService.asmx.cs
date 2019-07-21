@@ -6088,7 +6088,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             BusinessUnitRepository unitRep = new BusinessUnitRepository(tenant);
             UserRepository userRep = new UserRepository(tenant);
-            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant);
+            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant,true);
             allServices = myBusinessUnitFilter.RunFilter(allServices);
 
             if (!string.IsNullOrEmpty(businessUnitId))
@@ -6189,8 +6189,8 @@ namespace WebFreight.Web.ReportsWebServices
 
         private CustomerPotentialActualDataProvider LoadCustomerPotentialActualDataProvider(byte[] xmlFilters, int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
+           // SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
 
             CustomerPotentialActualDataProvider myResult = new CustomerPotentialActualDataProvider();
             myResult.Customers = new List<CustomersData>();
@@ -6274,7 +6274,7 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             #region Base Data Filtered
-            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant);
+            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant, true);
 
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
 
