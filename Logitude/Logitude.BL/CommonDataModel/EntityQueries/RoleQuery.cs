@@ -167,7 +167,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 ContactTenant contacttenant = (from a in repository.context.ContactTenants
                                                where a.ContactId == contactid && (a.TenantId == tenant)
                                                select a).FirstOrDefault();
-
+                if (contacttenant == null)
+                {
+                    throw new Exception($"contacttenant not exist in DB ({contactid})");
+                }
                 List<ContactTenantRole> contactTenantRoles = (from a in repository.context.ContactTenantRoles
                                                               where a.ContactTenantId == contacttenant.Id && a.Tenant == tenant
                                                               select a).ToList();
