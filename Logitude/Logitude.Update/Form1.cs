@@ -69,6 +69,10 @@ using Logitude.Server.Tools.QueueService;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Simplog.Data.InvoiceModel;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 
 namespace Logitude.Update
 {
@@ -3775,9 +3779,9 @@ User/Pass",
 
         private void button44_Click(object sender, EventArgs e)
         {
-
-            APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository();
-            APInvoice invoice = aPInvoiceRepository.GetSingleAPInvoice("1-18", 1);
+            IInvoiceContext context = InvoiceContext.GetContext(1);
+            APInvoiceQuery service = new APInvoiceQuery(1);
+                APInvoicePM invoice = service.GetSinglePM("1-18", 1);
             byte[] serialized = LogitudeXmlSerializer.SerializeObject(invoice);
             using (MemoryStream ms = new MemoryStream(serialized))
             {
