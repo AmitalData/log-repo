@@ -10190,7 +10190,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      MainCarriageFromPortName = m.MainCarriageFromPort.EnglishName,
                      MainCarriageFinalDestinationPortName = m.MainCarriageFinalDestinationPort != null ? m.MainCarriageFinalDestinationPort.EnglishName : null,
                      ShipperName = shipment.ShipperCard != null ? shipment.ShipperCard.EnglishName : null,
-                     MainCarriageCarrierName = m.MainCarriageCarrierCard != null ? m.MainCarriageCarrierCard.EnglishName : null,
+                     MainCarriageCarrierName = m.MainCarriageCarrierCard != null ? m.MainCarriageCarrierCard.EnglishName : null,                    
                      ContainerNumber = jd.ContainerNumber,
                      ShipmentTypeId = shipment.ShipmentTypeId,
                      ShipmentTypeName = shipment.ShipmentType != null ? shipment.ShipmentType.Name : null,
@@ -10302,6 +10302,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      ShipperAddressId = shipment.ShipperAddressId,
                      ConsigneeAddressId = shipment.ConsigneeAddressId,
                      Volume = shipment.Volume,
+                     PackageVolume = jd.Volume,
+                     MainCarriageCarrierId = m.MainCarriageCarrierId,
                  });
 
             return dataList;
