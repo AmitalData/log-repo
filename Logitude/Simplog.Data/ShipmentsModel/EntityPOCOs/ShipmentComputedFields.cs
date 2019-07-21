@@ -25,5 +25,14 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public bool IsDepositionRequired { get; set; }
         public string ImporterDepositionRequestDetails { get; set; }
+
+        public DateTime? FirstPickupATD { get; set; }
+        public DateTime? FirstPickupATA { get; set; }
+        public DateTime? FinalDeliveryETD { get; set; }
+        public DateTime? FinalDeliveryETA { get; set; }
+        public DateTime? FinalDeliveryATD { get; set; }
+        public DateTime? FinalDeliveryATA { get; set; }
+
+
     }
 }

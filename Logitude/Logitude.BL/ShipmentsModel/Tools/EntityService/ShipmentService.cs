@@ -6635,6 +6635,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentDeliveryPM myLastDelivery = deliveries.FirstOrDefault();
             ShipmentPickUpPM myFirstPickup = pickups.FirstOrDefault();
 
+            ComputeShipmentPickupDeliveryFields(myLastDelivery, myFirstPickup);
+
+
             this.CountryForStatisticsId(myLastDelivery);
             this.ComputeOrigin(myFirstPickup);
 
@@ -6766,6 +6769,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        private void ComputeShipmentPickupDeliveryFields(ShipmentDeliveryPM myLastDelivery, ShipmentPickUpPM myFirstPickup)
+        {
+            if (entityComputedFields != null)
+            {
+                if (myFirstPickup != null)
+                {
+                    entityComputedFields.FirstPickupATA = myFirstPickup.ATA;
+                    entityComputedFields.FirstPickupATD = myFirstPickup.ATD;
+                }
+
+                if (myLastDelivery != null)
+                {
+                    entityComputedFields.FinalDeliveryATA = myLastDelivery.ATA;
+                    entityComputedFields.FinalDeliveryATD = myLastDelivery.ATD;
+                    entityComputedFields.FinalDeliveryETA = myLastDelivery.ETA;
+                    entityComputedFields.FinalDeliveryETD = myLastDelivery.ETD;
+
+                }
+            }
+
         }
 
         private void CountryForStatisticsId(ShipmentDeliveryPM myLastDelivery)

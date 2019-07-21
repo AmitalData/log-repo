@@ -17,7 +17,14 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MissingDocumentsNames).IsMaxLength();
             this.Property(t => t.IsDigitalSignRequired).IsRequired();
             this.Property(t => t.ImporterDepositionRequestDetails).HasMaxLength(100).IsUnicode(false);
-    
+
+            this.Property(t => t.FirstPickupATD).IsOptional();
+            this.Property(t => t.FirstPickupATA).IsOptional();
+            this.Property(t => t.FinalDeliveryETD).IsOptional();
+            this.Property(t => t.FinalDeliveryETA).IsOptional();
+            this.Property(t => t.FinalDeliveryATD).IsOptional();
+            this.Property(t => t.FinalDeliveryATA).IsOptional();
+
             // Table & Column Mappings
             this.ToTable("ShipmentComputedFields");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -33,6 +40,16 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.IsDigitalSignRequired).HasColumnName("IsDigitalSignRequired");
             this.Property(t => t.IsDepositionRequired).HasColumnName("IsDepositionRequired");
             this.Property(t => t.ImporterDepositionRequestDetails).HasColumnName("ImporterDepositionRequestDetails");
+
+
+            this.Property(t => t.FirstPickupATD).HasColumnName("FirstPickupATD");
+            this.Property(t => t.FirstPickupATA).HasColumnName("FirstPickupATA");
+            this.Property(t => t.FinalDeliveryETD).HasColumnName("FinalDeliveryETD");
+            this.Property(t => t.FinalDeliveryETA).HasColumnName("FinalDeliveryETA");
+            this.Property(t => t.FinalDeliveryATD).HasColumnName("FinalDeliveryATD");
+            this.Property(t => t.FinalDeliveryATA).HasColumnName("FinalDeliveryATA");
+
+
 
             this.HasRequired(t => t.Shipment);
         }
