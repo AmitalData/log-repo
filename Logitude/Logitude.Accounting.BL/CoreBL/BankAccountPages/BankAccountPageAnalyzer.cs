@@ -662,7 +662,7 @@ s             b                   a
             if (line1 != null) {
                 my1stRefDate = line1.ReferenceDate;
             }
-            return $"בעל ת פתיחה {my1stRefDate.ToString("dd.MM.yyyy")}";
+            return $"תאריך:{my1stRefDate.ToString("dd.MM.yyyy")}";
         }
     }
     class BankAccountDTO
