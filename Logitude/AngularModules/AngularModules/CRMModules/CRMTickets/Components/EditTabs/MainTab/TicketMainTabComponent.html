@@ -33,6 +33,10 @@
         font-size: 12px;
     }
 
+        .CorrespondenceTextArea:focus, input:focus {
+            outline: none;
+        }
+
     .ToolsButton {
         display: none;
     }
@@ -238,7 +242,7 @@
                                                                                             </td>
 
                                                                                             <td>
-                                                                                                <div class="MediaFill">
+                                                                                                <!--<div class="MediaFill">-->
                                                                                                     <table style="table-layout: fixed;">
                                                                                                         <tr style="height:1px;">
                                                                                                             <td style="word-wrap: break-word;font-size:12px;text-align:left;float:left;">
@@ -272,18 +276,18 @@
 
                                                                                                         <tr>
                                                                                                             <td>
-                                                                                                                <div class="MediaFill">
+                                                                                                                <!--<div class="MediaFill">-->
                                                                                                                     <textarea [attr.id]="item._TextAreaId"
                                                                                                                               class="CorrespondenceTextArea"
                                                                                                                               [ngStyle]="{direction: item.FlowDirection,'background': item.LineBoxBackground}"
                                                                                                                               [ngModel]="item.Description"
                                                                                                                               [readonly]="true"></textarea>
-                                                                                                                </div>
+                                                                                                                <!--</div>-->
                                                                                                             </td>                                                                                                            
                                                                                                         </tr>
 
                                                                                                     </table>
-                                                                                                </div>
+                                                                                                <!--</div>-->
                                                                                             </td>
 
                                                                                             <td style="width:3px;">
