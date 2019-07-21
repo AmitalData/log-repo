@@ -448,7 +448,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     get Status() { return this.EntityPM.Status; }
     get UpdatedBy() { return this.EntityPM.UpdatedBy; }
     get CreatedBy() { return this.EntityPM.CreatedBy; }
-    get Duration() { return this.EntityPM.Duration; }
+    get Duration() { return Math.abs(this.EntityPM.Duration); }
     get LastRunEndTime() { return this.EntityPM.LastRunEndTime; }
     get LastRunEndTimeUTC() { return this.EntityPM.LastRunEndTimeUTC; }
 
