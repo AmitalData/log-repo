@@ -244,7 +244,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
             windowArgs.QuoteTemplateSettingPM = this.QuoteTemplateSettingPM;
             windowArgs.QuoteTemplateSectionViewModel = item;
             windowArgs.QuoteId = this.QuotePM != null ? this.QuotePM.Id : "";
-
+            windowArgs.QuotePM = this.QuotePM;
             //Pricing Setting
             if (item.QuoteTemplateSectionTypeCode == "PP" || item.QuoteTemplateSectionTypeCode == "PC") {
                 windowArgs.QuoteTemplateSectionTypeName = item.QuoteTemplateSectionTypeCode == "PP" ? "Packages" : "Containers";
