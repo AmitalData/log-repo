@@ -289,6 +289,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeAgentComputed(entityPM, entityPoco);
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
+                UpdateShipmentComputedFields();
 
                 foreach (ConsoleShipmentPM itemPM in entityPM.ShipmentConsoleShipments)
                 {
