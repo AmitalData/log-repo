@@ -49,5 +49,11 @@ export class ShipmentView {
 
     }
 
+  EditNewView(){
+
+
+
+
+}
 
 }
