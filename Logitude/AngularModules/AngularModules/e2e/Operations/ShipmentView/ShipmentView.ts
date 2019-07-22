@@ -39,8 +39,8 @@ export class ShipmentView {
         this.helper.WaitByIdAndClick("NewTab.View.Filters");
         this.helper.WaitByIdAndFill("NewViewFiltersSearchFieldsId_0_0",'Agent');
         this.helper.WaitByIdAndClick("CheckBox_0_627_LBL");
-        this.helper.WaitByIdAndFill("Shipment_TextValue",'Raghad')
-        this.helper.WaitByCssAndClick_FromTagInsideList(".DropDownList", 0);
+       this.helper.WaitByIdAndFill("Shipment_TextValue",'Raghad')
+       this.helper.WaitByCssAndClick_FromTagInsideList(".DropDownList", 0);
 
 
 

@@ -196,7 +196,7 @@
             </td>
 
             <td *ngIf="RTL == true" style="float: right;width: 305px;">
-                <input id="{{'NewTab.View.Name ' | IdGeneratorPipe}}"  type="text" style="float:left;width:190px;" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled"/>
+                <input [id]="ViewNameId"  type="text" style="float:left;width:190px;" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled"/>
                 <label style="float:left;width:80px;">{{'General.O.ViewName' | TextCodeTranslationPipe}}:</label>
                 <img style="float:left;" src="./Images/Icons/Validation.png" />
 
