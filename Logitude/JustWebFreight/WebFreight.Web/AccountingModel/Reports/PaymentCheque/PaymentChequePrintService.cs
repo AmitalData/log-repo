@@ -84,14 +84,15 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
 
             PaymentChequeDP.CompanyLogo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
             FullAccountingSettingPM setting=   GetAccountingSettingPM(tenant);
+            byte[] byteImage = null;
+          
+                 byteImage = GetLogo(setting.PaymentChequesLogoId, tenant);
+                if (byteImage != null)
+                {
+                    PaymentChequeDP.AccountingLogo = Image.FromStream(new MemoryStream(byteImage));
+                }
 
-
-            var byteImage = GetLogo(setting.PaymentChequesLogoId, tenant);
-            if (byteImage != null) {
-                PaymentChequeDP.AccountingLogo = Image.FromStream(new MemoryStream(byteImage)); 
-            }
-       
-
+            
 
 
             PaymentChequeQueryService PaymentChequeQuery = new PaymentChequeQueryService(tenant);
@@ -102,6 +103,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             PaymentChequePM paymentChequePM = PaymentChequeQuery.GetSingle(entityId, true, false);
             BankCodePM bankCode = GetBankCodeByPayToGLAccount(paymentChequePM);
             if (bankCode != null) {
+             
                 byteImage = GetLogo(bankCode.LogoId, tenant);
                 if(byteImage != null)
                 {
@@ -207,8 +209,11 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         {
            
             ImageDetail imageDetail=   GetImageDetail(id,tenant);
-            
-            return  GetFile(imageDetail.Id, imageDetail.Extension, "images", tenant);
+            if (imageDetail != null)
+            {
+                return GetFile(imageDetail.Id, imageDetail.Extension, "images", tenant);
+            }
+            else return null;
         }
 
         public static ImageDetail GetImageDetail(string id, int tenant)
