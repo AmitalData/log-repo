@@ -15,6 +15,9 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
         {
             TenantRepository tenantRepository = new TenantRepository(myContext);
             Tenant myTenant = tenantRepository.GetSingleTenantOnly(entityPM.Tenant);
+            CardValidating.ValidateCode_Unique(Card, myContext);
+
+            
 
             if (myTenant.ApplyVATForAllPartners)
             {

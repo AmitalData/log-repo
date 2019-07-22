@@ -2063,5 +2063,9 @@ namespace Simplog.Data.InfrastructureModel
         {
             get { throw new NotImplementedException(); }
         }
+        public IDbSet<SchedulerProcedure> SchedulerProcedures
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

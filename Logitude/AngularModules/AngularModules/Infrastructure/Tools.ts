@@ -2792,6 +2792,9 @@ export class FileLoader {
                 this.AllFroalaResources.push(new ResourceFile(++i, "_Resources/Froala/js/plugins/save.min.js"));
                 this.AllFroalaResources.push(new ResourceFile(++i, "_Resources/Froala/js/plugins/url.min.js"));
                 this.AllFroalaResources.push(new ResourceFile(++i, "_Resources/Froala/js/plugins/video.min.js"));
+                this.AllFroalaResources.push(new ResourceFile(++i, "_Resources/Froala/js/plugins/line_height.min.js"));
+
+               
                 this.AllFroalaResources.push(new ResourceFile(++i, "_Resources/Froala/css/font-awesome.min.css"));
                 this.AllFroalaResources.push(new ResourceFile(++i, "_Resources/Froala/css/froala_editor.css"));
                 this.AllFroalaResources.push(new ResourceFile(++i, "_Resources/Froala/css/froala_style.css"));
