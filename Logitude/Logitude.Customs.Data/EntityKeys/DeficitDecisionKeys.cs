@@ -12,7 +12,7 @@ namespace Logitude.Customs.Data.EntityKeys
 {
    public partial class DeficitDecisionKeys : EntityKeyFields
    {
-   	  public string TapagId  { get; set; }
+   	  public string DeficitId  { get; set; }
 	  
 				 
 	    			   
@@ -24,7 +24,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return TapagId+'_'+DeclarationId;
+          return DeficitId+'_'+DeclarationId;
       }
 
       public override string GetEntityPMName()

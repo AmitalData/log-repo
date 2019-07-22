@@ -18,27 +18,27 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class DeficitDecisionPM : EntityPM
    {
-   	  private string tapagId ;
+   	  private string deficitId ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string TapagId  
+       public string DeficitId  
 	   {
 	    
 	     get
 		{
-		   return tapagId;
+		   return deficitId;
 		 }
 		 set
 		 {
-		   if(tapagId != value)
+		   if(deficitId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TapagId",OldValue=tapagId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeficitId",OldValue=deficitId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   tapagId=value;
+		   deficitId=value;
 		   }
 			
 		 }

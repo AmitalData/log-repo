@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class DeficitDecisionQueryService: EntityQueryService<DeficitDecision,DeficitDecisionKeys,DeficitDecisionPM,object,DeficitDecisionKeys>
+   public partial class DeficitDecisionQueryService: EntityQueryService<DeficitDecision,DeficitDecisionKeys,DeficitDecisionPM,DeficitPM,DeficitKeys>
    {
    
         DeficitDecisionRepository repository;
@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new DeficitDecisionDataMapping();
         }
 		 
-		public  DeficitDecisionPM GetSingle(string tapagid, string declarationid,bool getComposition, bool getFromCache)
+		public  DeficitDecisionPM GetSingle(string deficitid, string declarationid,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new DeficitDecisionKeys(){ TapagId = tapagid, DeclarationId = declarationid };
+             EntityKeys = new DeficitDecisionKeys(){ DeficitId = deficitid, DeclarationId = declarationid };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(DeficitDecision entityPOCO)
         {
-            DeficitDecisionKeys entityKeys = new DeficitDecisionKeys() { TapagId = entityPOCO.TapagId, DeclarationId = entityPOCO.DeclarationId,  };
+            DeficitDecisionKeys entityKeys = new DeficitDecisionKeys() { DeficitId = entityPOCO.DeficitId, DeclarationId = entityPOCO.DeclarationId,  };
             return entityKeys;
         }
      

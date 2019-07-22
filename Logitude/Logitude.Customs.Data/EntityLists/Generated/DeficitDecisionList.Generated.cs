@@ -15,7 +15,7 @@ namespace Logitude.Customs.Data.EntityLists
    
        [Key]
        [DataMember]
-       public string TapagId  { get; set; }
+       public string DeficitId  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]

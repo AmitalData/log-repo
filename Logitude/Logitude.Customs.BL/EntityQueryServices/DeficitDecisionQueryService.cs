@@ -11,25 +11,25 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
-    public partial  class DeficitDecisionQueryService: EntityQueryService<DeficitDecision,DeficitDecisionKeys,DeficitDecisionPM,object,DeficitDecisionKeys>
+    public partial  class DeficitDecisionQueryService: EntityQueryService<DeficitDecision, DeficitDecisionKeys, DeficitDecisionPM, DeficitPM, DeficitKeys>
     {
       
-      public List<DeficitDecisionPM> GetDeficitDecisionByTapagId(string tapagId, int tenant)
-      {
-          List<DeficitDecisionPM> DeficitDecisionPMList = null;
-          if (string.IsNullOrEmpty(tapagId)) return DeficitDecisionPMList;
-          List<DeficitDecision> DeficitDecision = repository.GetDeficitDecisionByTapagId(tapagId, tenant);
+      //public List<DeficitDecisionPM> GetDeficitDecisionByTapagId(string tapagId, int tenant)
+      //{
+      //    List<DeficitDecisionPM> DeficitDecisionPMList = null;
+      //    if (string.IsNullOrEmpty(tapagId)) return DeficitDecisionPMList;
+      //    List<DeficitDecision> DeficitDecision = repository.GetDeficitDecisionByTapagId(tapagId, tenant);
 
-          if (DeficitDecision != null)
-          {
-              DeficitDecisionPMList = new List<DeficitDecisionPM>();
-              foreach (var DeficitDecisionItem in DeficitDecision)
-              {
-                  DeficitDecisionPMList.Add(this.GetEntityPM(DeficitDecisionItem));
-              }
-          }
-          return DeficitDecisionPMList;
-      }
+      //    if (DeficitDecision != null)
+      //    {
+      //        DeficitDecisionPMList = new List<DeficitDecisionPM>();
+      //        foreach (var DeficitDecisionItem in DeficitDecision)
+      //        {
+      //            DeficitDecisionPMList.Add(this.GetEntityPM(DeficitDecisionItem));
+      //        }
+      //    }
+      //    return DeficitDecisionPMList;
+      //}
         
     }
 }

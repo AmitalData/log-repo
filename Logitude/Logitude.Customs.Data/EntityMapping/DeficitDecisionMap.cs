@@ -21,9 +21,9 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("DeficitDecisions", "Customs");
 		
-		    this.HasKey(t => new { t.TapagId, t.DeclarationId });
+		    this.HasKey(t => new { t.DeficitId, t.DeclarationId });
 	 
-            this.Property(t => t.TapagId).HasColumnName("TapagId").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.DeficitId).HasColumnName("DeficitId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 

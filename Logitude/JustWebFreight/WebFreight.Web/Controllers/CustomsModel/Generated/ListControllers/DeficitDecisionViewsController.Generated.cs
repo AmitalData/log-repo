@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string tapagid, string declarationid)
+        public HttpResponseMessage GetSingle(string deficitid, string declarationid)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 DeficitDecisionListQueryService deficitDecisionQuery = new DeficitDecisionListQueryService(MyContext);
-                DeficitDecisionList deficitDecisionList = deficitDecisionQuery.GetSingle(tapagid, declarationid);
+                DeficitDecisionList deficitDecisionList = deficitDecisionQuery.GetSingle(deficitid, declarationid);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  deficitDecisionList);

@@ -21,12 +21,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPMToPOCO(DeficitDecisionPM entityPM, DeficitDecision entityPOCO)
         {
             AddPOCOPropertyName(POCOPropertyNames.DeclarationId);
-            AddPOCOPropertyName(POCOPropertyNames.TapagId);
+            AddPOCOPropertyName(POCOPropertyNames.DeficitId);
             AddPOCOPropertyName(POCOPropertyNames.Tenant);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 entityPOCO.DeclarationId = entityPM.DeclarationId;
-                entityPOCO.TapagId = entityPM.TapagId;
+                entityPOCO.DeficitId = entityPM.DeficitId;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
         }
