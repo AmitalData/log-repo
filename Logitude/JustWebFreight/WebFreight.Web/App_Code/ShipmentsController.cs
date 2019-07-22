@@ -1149,6 +1149,23 @@ namespace WebFreight.Web
 
             ShipmentPM pm = shipmentQuery.GetSinglePMBySecurityKey(securitykey, id, tenant);
 
+            SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
+            SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
+            if (sharedLogisticsSetting != null)
+            {
+                pm.IsSharedLogisticsMoneyTabEnabled = sharedLogisticsSetting.IsMoneyTabEnabled;
+                pm.IsSharedLogisticsMainCarrierVisible = sharedLogisticsSetting.IsMainCarrierShared;
+                pm.IsSharedLogisticsPickDelvCarrierVisible = sharedLogisticsSetting.IsPickDelivCarriesShared;
+                pm.IsSharedLogisticsAgentVisible = sharedLogisticsSetting.IsAgentShared;
+                pm.IsSharedLogisticsShipperVisible = sharedLogisticsSetting.IsShipperShared;
+                pm.IsSharedLogisticsConsigneeVisible = sharedLogisticsSetting.IsConsigneeShared;
+            }
+
+
+
+
+
+
             return pm;
         }
 
