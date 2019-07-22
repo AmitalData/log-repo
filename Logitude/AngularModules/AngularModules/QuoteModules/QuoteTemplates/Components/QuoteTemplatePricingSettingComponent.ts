@@ -17,6 +17,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 @Component({
     selector: 'QuoteTemplatePricingSettingComponent',
     moduleId: module.id,
@@ -75,15 +76,28 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
     }
 
+    QuotePM: QuotePM;
     SelectedTabCode: string;
+    IsRoutingRates: boolean = false;
     SetWindowArgs(args: any) {
         this.SelectedTabCode = "PRT";
         this.QuoteTemplatePM = args.QuoteTemplatePM;
         this.QuoteTemplateSectionTypeName = args.QuoteTemplateSectionTypeName;
         this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
+        this.QuotePM = args.QuotePM;
+
+        this.IsRoutingRates = this.QuotePM != null ? this.QuotePM.QuoteTypeCode == "P" ? true : false : false;
+
+
         this.Alignment.push("Left"); this.Alignment.push("Center"); this.Alignment.push("Right");
+
+
         if (args.QuoteTemplateTextCodePMList) {
             this.QuoteTemplateTextCodePMList = args.QuoteTemplateTextCodePMList.filter(d => d.Area == this.QuoteTemplateSectionTypeName);
+            if (this.IsRoutingRates) {
+                this.QuoteTemplateTextCodePMList = this.QuoteTemplateTextCodePMList.filter(d => d.TextCode != "UNITSPACKAGES" && d.TextCode != "TOTALAMOUNTS");
+            }
+
             this.AllQuoteTemplateTextCodePMList = args.QuoteTemplateTextCodePMList;
 
             this.BuildItemsSource();

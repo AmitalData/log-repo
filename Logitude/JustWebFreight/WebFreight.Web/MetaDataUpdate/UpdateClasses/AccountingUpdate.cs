@@ -1429,6 +1429,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RefDate", DefaultText = "Ref. Date", LocalDefaultText = "תאריך אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.JournalNo", DefaultText = "Journal No.", LocalDefaultText = "מספר פקודה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.JournalNumber", DefaultText = " is not registered. Can not complete the year transfer process, please contact Support Center.", LocalDefaultText = "פקודת יומן מספר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.YearTransferJournalNotLT", DefaultText = "Journal No.", LocalDefaultText = " לא נרשמה בספרים לכן לא ניתן להשלים את תהליך העברת השנה, נא לפנות למוקד התמיכה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TransactionNo", DefaultText = "Transaction No.", LocalDefaultText = "מספר תנועה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountingDate", DefaultText = "Accounting Date", LocalDefaultText = "תאריך חשבונאי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OriginalAmount", DefaultText = "Original Amount", LocalDefaultText = "סכום מקורי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1894,6 +1896,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Cheques", DefaultText = "Cheques", LocalDefaultText = "שקים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LastBankPage", DefaultText = "This is not the last bank page", LocalDefaultText = "רק דף אחרון ניתן לעריכה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ReconciledLinesExist", DefaultText = "There are reconciled lines", LocalDefaultText = "לא ניתן לבטל כי חלק מהשורות הותאמו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Edit", DefaultText = "Edit", LocalDefaultText = "עריכה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             #region MainMenu

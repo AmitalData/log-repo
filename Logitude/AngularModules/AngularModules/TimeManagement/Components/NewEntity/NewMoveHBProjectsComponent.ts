@@ -94,7 +94,7 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-    private batchEntity: BatchTaskExecutionPM;
+  //  private batchEntity: BatchTaskExecutionPM;
     public IsResponseProgressVisible: boolean = false;
     MoveHoursClicked() {
 
@@ -120,12 +120,12 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
                 }
 
                 else {
-                    this.batchEntity = myResponse.Result;
+                  //  this.batchEntity = myResponse.Result;
 
-                    if (this.batchEntity != null) {
-                        this.IsResponseProgressVisible = true;
-                        this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
-                    }
+                    //if (this.batchEntity != null) {
+                    //    this.IsResponseProgressVisible = true;
+                    //    this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
+                    //}
                 }
             });
         }
@@ -167,7 +167,7 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
     }
     private RunTimerFunction() {
         this.Retries++;
-        this.MoveHours();
+        //this.MoveHours();
 
     }
     public StopTimer() {
@@ -180,37 +180,37 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
         this.StopTimer();
     }
 
-    private bteList: BatchTaskExecutionList;
-    MoveHours() {
-        var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe((myResponse: ServiceResponse) => {
+    //private bteList: BatchTaskExecutionList;
+    //MoveHours() {
+    //    var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+    //    batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe((myResponse: ServiceResponse) => {
 
-            if (myResponse.HasError) {
-                this.StopTimer();
-                this.ValidationErrorsList = myResponse.ErrorsArray;
-            }
+    //        if (myResponse.HasError) {
+    //            this.StopTimer();
+    //            this.ValidationErrorsList = myResponse.ErrorsArray;
+    //        }
 
-            else {
-                this.bteList = myResponse.Result;
+    //        else {
+    //            this.bteList = myResponse.Result;
 
-                if (this.bteList.StatusCode == "D") // D- Done
-                {
-                    this.StopTimer();
-                    var window: MessageWindow = new MessageWindow();
-                    window.Show("Moving Hours Between Projects Completed Succesfully");
-                }
+    //            if (this.bteList.StatusCode == "D") // D- Done
+    //            {
+    //                this.StopTimer();
+    //                var window: MessageWindow = new MessageWindow();
+    //                window.Show("Moving Hours Between Projects Completed Succesfully");
+    //            }
 
-                else if (this.bteList.StatusCode == "F") // F- Failed
-                {
-                    this.StopTimer();
-                    var window: MessageWindow = new MessageWindow();
-                    window.Show("Faild: " + this.bteList.ErrorLog);
-                }
+    //            else if (this.bteList.StatusCode == "F") // F- Failed
+    //            {
+    //                this.StopTimer();
+    //                var window: MessageWindow = new MessageWindow();
+    //                window.Show("Faild: " + this.bteList.ErrorLog);
+    //            }
 
-                this.AdjustTimerSpeed();
-            }
-        });
-    }
+    //            this.AdjustTimerSpeed();
+    //        }
+    //    });
+    //}
 
     CloseResponseProgressClicked() {
         this.StopTimer();

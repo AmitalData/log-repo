@@ -164,7 +164,7 @@
 
 
                                                                                                     <!--Price 1-->
-                                                                                                    <tr style="height:22px">
+                                                                                                    <tr *ngIf="(!IsRoutingRates && QuoteTemplateSectionTypeName == 'Packages') || QuoteTemplateSectionTypeName != 'Packages'" style="height:22px">
                                                                                                         <td style="width:8px"></td>
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
@@ -334,7 +334,7 @@
                                                 </tr>
 
                                                 <!--Totals-->
-                                                <tr style="height:80px">
+                                                <tr *ngIf="!IsRoutingRates" style="height:80px">
                                                     <td style="vertical-align:top;height:90px">
                                                         <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
                                                             <table style="border :none;">

@@ -329,7 +329,7 @@ s             b                   a
                     MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
                         new MyDTO()
                         {
-                            Message = $"חשבון בנק {ACCNUMBER} דף מספר {newPageOfBankAccount.MyBankAccountM.PageNo} מכיל תנעות ישנות ",
+                            Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} - מכיל תנעות ישנות ",
                              RawLine= newBankPageLines.First().RawLine
 
                         });
@@ -344,7 +344,7 @@ s             b                   a
                     MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
                         new MyDTO()
                         {
-                            Message = $"חשבון בנק {ACCNUMBER} דף מספר {newPageOfBankAccount.MyBankAccountM.PageNo} יתרת פתיחה לא תואמת ",
+                            Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} יתרת פתיחה לא תואמת ",
                              RawLine=""
                         });
                         
@@ -456,7 +456,7 @@ s             b                   a
                 .Add(new MyDTO()
                 {
 
-                    Message = $"כשלון בקליטת דף {newPageOfBankAccount.MyBankAccountM.PageNo} לחשבון בנק {bank} - {ex.Message}",
+                    Message = $"כשלון בקליטת דף {newPageOfBankAccount.PageNo()} לחשבון בנק {bank} - {ex.Message}",
                     Verbose = ex.ToString(),
                     RawLine = dataXml
                 });
@@ -469,7 +469,8 @@ s             b                   a
                 new MyDTO() {
                     Message = $"דף {entityPM.PageNo} בנק {b} נטען בהצלחה ",
                     Verbose =
-                $"Success insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/{newPageOfBankAccount.MyBankAccountM.PageNo} =new DbId:{entityPM.Id}/DBPageNo:{entityPM.PageNo}  "
+                    ///{newPageOfBankAccount.MyBankAccountM.PageNo} =
+                $"Success insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/new DbId:{entityPM.Id}/DBPageNo:{entityPM.PageNo}  "
                 });
         }
 
@@ -652,6 +653,16 @@ s             b                   a
                 ///throw new Exception($"{rawLine} AddBankPageLineM (totAmountIncludeCurrPage!= myBankPageLineM.BalanceAfter)");
             }
             MyBankPageLines.Add(myBankPageLineM);
+        }
+
+        internal String PageNo()
+        {
+            DateTime my1stRefDate = DateTime.MinValue;
+            var line1= MyBankPageLines.FirstOrDefault();
+            if (line1 != null) {
+                my1stRefDate = line1.ReferenceDate;
+            }
+            return $"תאריך:{my1stRefDate.ToString("dd.MM.yyyy")}";
         }
     }
     class BankAccountDTO
