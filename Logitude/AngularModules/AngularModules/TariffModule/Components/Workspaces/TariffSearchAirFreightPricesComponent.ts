@@ -74,8 +74,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set WeightCode(value: string) {
         if (this.weightCode != value) {
             this.weightCode = value;
-            this.ComputeVolume();
-            this.ComputeVolumetricWeight();
+            this.ComputeChargeableWeight_Kg();
+           // this.ComputeVolume();
        }
     }
 
@@ -107,6 +107,29 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
 
 
+    private ComputeChargeableWeight_Kg() {
+        var weigh_Kg: number = null;
+        var weigh_Ton: number = null;
+
+        if (this.Weight != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.WeightCode)) {
+                switch (this.WeightCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.Weight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+        }
+        this.Weight = weigh_Kg;
+    }
 
 
     private ComputeVolumetricWeight() {
