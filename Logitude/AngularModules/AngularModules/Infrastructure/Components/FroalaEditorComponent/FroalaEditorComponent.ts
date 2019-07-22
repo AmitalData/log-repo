@@ -67,16 +67,16 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
         var froalakey: string = ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "cloud" ? "8A-9pwkamE5f1kG4ok==" : "ubd1wxffppaxjuE-11A2C-9rs==";
 
-
+        
         if (HtmlID.data('froala.editor')) HtmlID.froalaEditor('destroy');
 
         HtmlID.froalaEditor({
             allowedImageTypes: ["jpeg", "jpg", "png"],
-            toolbarButtons: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'rightToLeft', 'leftToRight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'insertLink', 'rightToLeft', 'leftToRight', 'PageBreak'],
+            toolbarButtons: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'insertLink', 'rightToLeft', 'leftToRight', 'PageBreak','lineHeight'],
 
-            toolbarButtonsMD: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'rightToLeft', 'leftToRight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'insertLink', 'rightToLeft', 'leftToRight', 'PageBreak'],
-            toolbarButtonsSM: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'rightToLeft', 'leftToRight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'rightToLeft', 'leftToRight', 'PageBreak'],
-            toolbarButtonsXS: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'rightToLeft', 'leftToRight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'rightToLeft', 'leftToRight', 'PageBreak'],
+            toolbarButtonsMD: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'insertLink', 'rightToLeft', 'leftToRight', 'PageBreak','lineHeight'],
+            toolbarButtonsSM: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'rightToLeft', 'leftToRight', 'PageBreak','lineHeight'],
+            toolbarButtonsXS: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'rightToLeft', 'leftToRight', 'PageBreak','lineHeight'],
             lineBreakerTags: ['table', 'hr', 'form'],
             pluginsEnabled: null,
             height: height,
@@ -120,7 +120,15 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
             },
 
 
-
+            lineHeights: {
+                Default: '',
+                '0.2': '0.2',
+                '0.5': '0.5',
+                Single: '1',
+                '1.15': '1.15',
+                '1.5': '1.5',
+                Double: '2'
+            },
 
         });
 
