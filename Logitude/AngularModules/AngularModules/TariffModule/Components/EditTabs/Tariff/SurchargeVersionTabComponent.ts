@@ -513,9 +513,24 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         confirmWindow.Show("Delete this Tariff Line?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.CurrentVersion.RemoveTariffLine(item.EntityPM);
-                this.TariffsLinesSource.Remove(item);
-                this.FillTariffLines(this.CurrentVersion.TariffLines);
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 450;
+                logWindow.Height = 200;
+                logWindow.WindowArgs = { CurrentLine: item.EntityPM, TariffType: this.EntityPM.TypeCode };
+                logWindow.Title = "Expiration Date";
+
+                logWindow.ComponentLoaded.subscribe(s => {
+                    logWindow.WindowClosed.subscribe(d => {
+                        if (s && d == "ok") {
+                            //this.EntityPM.DeletedLinesExpirationDates.push(item.EntityPM.Id + "," + item.EntityPM.ExpirationDate.getUTCFullYear() + "," + item.EntityPM.ExpirationDate.getUTCMonth() + "," + item.EntityPM.ExpirationDate.getUTCDay());
+                            this.CurrentVersion.RemoveTariffLine(item.EntityPM);
+                            this.TariffsLinesSource.Remove(item);
+                            this.FillTariffLines(this.CurrentVersion.TariffLines);
+                        }
+                    });
+                });
+
+                logWindow.Show('./TariffModule/Components/EditTabs/Tariff/TariffDatesValidationComponent');
             }
         });
     }

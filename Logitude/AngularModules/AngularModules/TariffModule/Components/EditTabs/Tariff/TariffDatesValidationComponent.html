@@ -5,7 +5,7 @@
         </td>
     </tr>
 
-    <tr>
+    <tr *ngIf="TariffType == 'AFC'">
         <td>
             <table>
                 <!-- StartDate -->
@@ -49,6 +49,36 @@
             </table>
         </td>
     </tr>
+
+    <tr *ngIf="TariffType == 'ASC'">
+        <td>
+            <table>
+                <!-- ExpirationDate -->
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'LineExpirationDate'" [ObjectTableName]="'TariffLine'" [DataContext]="DataContext" [Text]="'Expiration Date'"></LogLabel>
+                    </td>
+
+                    <td style="width:180px;">
+                        <LogDatePicker [ObjectFieldName]="'LineExpirationDate'" [SelectedDateValue]="LineExpirationDate" [ObjectTableName]="'TariffLine'" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
     <tr style="height: 32px;">
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
