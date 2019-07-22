@@ -100,11 +100,28 @@ namespace Logitude.Server.Tools.QueueService
         }
         public void SafeAbandon()
         {
-
-            //if (CurrentCustomQueueResponse.Retries > 15)
-            //{
-            //    this.SafeComplete();
-            //}
+            bool safcomplete = false;
+            if (CurrentCustomQueueResponse.Retries > 10)
+            {
+                this.SafeComplete();
+                safcomplete = true;
+            }
+            else
+            {
+                if (CurrentCustomQueueResponse.MessageCreatedServerTime.HasValue)
+                {
+                    if (DateTime.UtcNow.Subtract(CurrentCustomQueueResponse.MessageCreatedServerTime.GetValueOrDefault()) > TimeSpan.FromHours(12))
+                    {
+                        this.SafeComplete();
+                        safcomplete = true;
+                    }
+                }
+            }
+            if (!safcomplete)
+            {
+                this.Delay(TimeSpan.FromMinutes(10));
+            }
+            
             //else if (CurrentCustomQueueResponse.Retries > 10)
             //{
             //    this.Delay(TimeSpan.FromMinutes(60));
@@ -113,7 +130,7 @@ namespace Logitude.Server.Tools.QueueService
             //{
             //    this.Delay(TimeSpan.FromMinutes(10));
             //}
-            this.SafeComplete();
+            //this.SafeComplete();
 
             CurrentCustomQueueResponse.QueueStatus = QueueStatusEnum.DeadLetter;
             LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:SafeAbandon:DbQueueName=" + CustomDbQueueParams.QueueCode + "QMId=" + base.CurrentMessageId);
