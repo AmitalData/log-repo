@@ -32,6 +32,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
 
 
+
+
+
     private originPortId: string;
     get OriginPortId() {
         return this.originPortId;
@@ -74,8 +77,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set WeightCode(value: string) {
         if (this.weightCode != value) {
             this.weightCode = value;
-            this.ComputeChargeableWeight_Kg();
+          //  this.ComputeChargeableWeight_Kg();
            // this.ComputeVolume();
+            this.ComputeVolumetricWeight();
        }
     }
 
@@ -133,11 +137,26 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
 
     private ComputeVolumetricWeight() {
+        this.Volume = AppTool.ComputePackageVolume(null, null, null, null, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
+
         this.Weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
     }
 
 
     
+
+    private chargeableWeight: number;
+    get ChargeableWeight() {
+        return this.weight;
+    }
+    set ChargeableWeight(value: number) {
+        if (this.chargeableWeight != value) {
+            this.chargeableWeight = value;
+            this.SetUIProperties();
+        }
+    }
+
+
 
     private weight: number;
     get Weight() {
