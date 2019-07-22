@@ -21,19 +21,19 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public List<DeficitDecision> GetDeficitDecisionByTapagId(string tapagId, int tenant)
-        {
+        //public List<DeficitDecision> GetDeficitDecisionByTapagId(string tapagId, int tenant)
+        //{
 
-            if (string.IsNullOrEmpty(tapagId)) return null;
-            return
-                  (
-                  from rec in context.DeficitDecisions
-                  where rec.TapagId == tapagId && rec.Tenant == tenant
-                  select rec
-                  )
-                  .ToList();
+        //    if (string.IsNullOrEmpty(tapagId)) return null;
+        //    return
+        //          (
+        //          from rec in context.DeficitDecisions
+        //          where rec.TapagId == tapagId && rec.Tenant == tenant
+        //          select rec
+        //          )
+        //          .ToList();
 
-        }
+        //}
     }
 
 }

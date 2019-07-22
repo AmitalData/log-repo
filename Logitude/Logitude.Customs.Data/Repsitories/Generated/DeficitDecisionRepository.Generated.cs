@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  DeficitDecision GetSingle(string tapagid, string declarationid, int tenant)
+		public  DeficitDecision GetSingle(string deficitid, string declarationid, int tenant)
         {
             return (from a in context.DeficitDecisions
-                    where a.TapagId == tapagid && a.DeclarationId == declarationid && a.Tenant == tenant
+                    where a.DeficitId == deficitid && a.DeclarationId == declarationid && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             DeficitDecisionKeys keys = entityKeys as DeficitDecisionKeys;
             return (from a in context.DeficitDecisions
-                    where a.TapagId == keys.TapagId && a.DeclarationId == keys.DeclarationId
+                    where a.DeficitId == keys.DeficitId && a.DeclarationId == keys.DeclarationId
                     select a).FirstOrDefault();
         }
 		         

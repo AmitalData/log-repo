@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class DeficitDecisionUpdateService:EntityUpdateService<DeficitDecision,DeficitDecisionPM,EntityPM>
+   public partial class DeficitDecisionUpdateService:EntityUpdateService<DeficitDecision,DeficitDecisionPM,DeficitPM>
    {
    
         DeficitDecisionRepository entityRepository;
@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(DeficitDecisionPM entityPM)
         {
-            DeficitDecisionKeys entityKeys = new DeficitDecisionKeys() { TapagId = entityPM.TapagId, DeclarationId = entityPM.DeclarationId };
+            DeficitDecisionKeys entityKeys = new DeficitDecisionKeys() { DeficitId = entityPM.DeficitId, DeclarationId = entityPM.DeclarationId };
             return entityKeys;
         }
 
