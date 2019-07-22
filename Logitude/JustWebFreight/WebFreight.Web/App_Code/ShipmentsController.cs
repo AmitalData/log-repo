@@ -2730,7 +2730,28 @@ namespace WebFreight.Web
 
             if (shipment != null && shipment.SecurityKey == securitykey)
             {
-                if (!string.IsNullOrEmpty(shipment.ShipperId))
+                SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(shipment.Tenant);
+                SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(shipment.Tenant.ToString(), shipment.Tenant);
+                bool isShipperShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsShipperShared;
+                bool isConsigneeShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsigneeShared;
+                bool isAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsAgentShared;
+                bool isColoaderShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsColoaderShared;
+                bool isConsigneeNotImporterShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsigneeNotImporterShared;
+                bool isFreightForwarderShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsFreightForwarderShared;
+                bool isNotify1Shared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsNotify1Shared;
+                bool isNotify2Shared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsNotify2Shared;
+                bool isShipperNotExporterShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsShipperNotExporterShared;
+                bool isCustomsAgentExportShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomsAgentExportShared;
+                bool isCustomsAgentImportShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomsAgentImportShared;
+                bool isCustomClearancePoinShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomClearancePoinShared;
+                bool isConsolidatorShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsolidatorShared;
+                bool isReleasingAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsReleasingAgentShared;
+                bool isIssuingCarrierAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsIssuingCarrierAgentShared;
+
+
+
+
+                if (!string.IsNullOrEmpty(shipment.ShipperId) && isShipperShared)
                 {
                     #region Shipper
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
@@ -2779,7 +2800,7 @@ namespace WebFreight.Web
                     #endregion
                 }
 
-                if (!string.IsNullOrEmpty(shipment.ConsigneeId))
+                if (!string.IsNullOrEmpty(shipment.ConsigneeId) && isConsigneeShared)
                 {
                     #region Consignee
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
@@ -2828,7 +2849,7 @@ namespace WebFreight.Web
                     #endregion
                 }
 
-                if (!string.IsNullOrEmpty(shipment.AgentId))
+                if (!string.IsNullOrEmpty(shipment.AgentId) && isAgentShared)
                 {
                     #region Agent
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
@@ -2877,7 +2898,7 @@ namespace WebFreight.Web
                     #endregion
                 }
 
-                if (!string.IsNullOrEmpty(shipment.CustomAgentExportId))
+                if (!string.IsNullOrEmpty(shipment.CustomAgentExportId) && isCustomsAgentExportShared)
                 {
                     #region CustomAgentExport
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
@@ -2925,7 +2946,7 @@ namespace WebFreight.Web
                     #endregion
                 }
 
-                if (!string.IsNullOrEmpty(shipment.CustomAgentImportId))
+                if (!string.IsNullOrEmpty(shipment.CustomAgentImportId) && isCustomsAgentImportShared)
                 {
                     #region CustomAgentImport
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
