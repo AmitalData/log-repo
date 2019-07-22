@@ -38,6 +38,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DF_NG_8251_Web02_DeclarationStatus_Response customResponse,
             DeclarationStatusRequestParams requestParams)
         {
+            
+            
+            if (!String.IsNullOrWhiteSpace(requestParams.TesterSendOption))
+            {
+                TesterSendOption(requestParams);
+                return;
+
+            }
+
+
             this.MyResponseData = new DeclarationStatusResponseData();
             string declarationStatusCodeName = "";
             string declarationStatusCode = "";
@@ -468,6 +478,37 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+        private static void TesterSendOption(DeclarationStatusRequestParams requestParams)
+        {
+            string testerSendOption = requestParams.TesterSendOption??"";
+            testerSendOption = testerSendOption.ToUpper();
+            
+            switch (testerSendOption)
+            {
+                case "NOTHING"://this._SendOptionList.push(new KeyValuePair
+                    {
+
+                    }
+                    break;
+                case "READ"://this._SendOptionList.push(new KeyValuePair("Read".toUpperCase(), "Read"));
+                    {
+
+                    }
+                    break;
+                case "UPDATE"://this._SendOptionList.push(new KeyValuePair("Update".toUpperCase(), "Update"));
+                    {
+
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            var context = CustomContext.GetContext(requestParams.Tenant);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+        }
 
         public static void RaiseStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string statusId)
         {

@@ -1281,6 +1281,21 @@ export class MaintenanceComponent {
     }
     DoJoker(text: string) {
         switch (text) {
+            case "jokermasterstatus":
+                {
+
+                    this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus")
+                        .subscribe(response => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 750;
+                        logitudeWindow.Height = 500;
+                        logitudeWindow.Title = "בקשת סטטוס הצהרה לטיסה";
+                            logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CourierSendStatusComponent');
+
+                    });
+
+                }
+                break;
             case "jokeraccloadtest": {
 
 

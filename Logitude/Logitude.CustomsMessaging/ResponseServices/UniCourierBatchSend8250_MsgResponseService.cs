@@ -48,7 +48,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 List<DeclarationCourierStatus> ServerSplitDeclarationsList
                     = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
-                CreateCRS8250(requestParams, mess, myDeclarationQueryService, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList);
+                CreateCRS8250(requestParams, mess, myDeclarationQueryService, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList, customResponse.TesterSendOption);
             }
             else
             {
@@ -81,7 +81,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
         }
 
-        private static void CreateCRS8250(GenericRequestParams requestParams, StringBuilder mess, DeclarationQueryService myDeclarationQueryService, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPoco)
+        private static void CreateCRS8250(GenericRequestParams requestParams, StringBuilder mess, DeclarationQueryService myDeclarationQueryService, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPoco, string testerSendOption)
         {
             foreach (DeclarationCourierStatus itemPoco in listPoco)
             {
@@ -107,6 +107,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 RequestVIA = SendRequestVIA.WebServiceBatch,
                                 DeclarationNumber = declarationPM.DeclarationNumber,
                                 DeclarationRadio = true,
+                                TesterSendOption= testerSendOption
                             };
 
                             SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams8250, false);
