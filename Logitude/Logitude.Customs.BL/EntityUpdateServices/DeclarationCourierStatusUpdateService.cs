@@ -40,8 +40,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(entityPM.Tenant);
             declarationCourierStatusRepository.Lock_forUpdateNOWAIT(entityPM.DeclarationId);
 
-            UpdateUnifreight(entityPM);
-
             ICustomContext context = MainContext as CustomContext;
             if (entityPM != null)
             {
@@ -65,6 +63,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
             }
+
+            UpdateUnifreight(entityPM);
 
             base.OnUpdating(entityPM, entityPOCO);
         }

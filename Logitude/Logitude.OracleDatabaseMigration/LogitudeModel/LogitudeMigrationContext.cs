@@ -4026,8 +4026,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ContinuousRequestTypeMap());
             modelBuilder.Configurations.Add(new RequestTypeMap());
             modelBuilder.Configurations.Add(new DeficitDecisionMap());
-            modelBuilder.Configurations.Add(new RequestTypeMap());
-
+            
             #endregion
 
             #region Accounting
