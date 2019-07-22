@@ -628,7 +628,19 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
 
-    
+    get SpaceLinesBeforeTable() {
+        var spaceLinesBeforeTable: number = 1;
+        if (this.QuoteTemplateSettingPM) spaceLinesBeforeTable = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.SpaceLinesBeforePackages : this.QuoteTemplateSettingPM.SpaceLinesBeforeContainers;
+        return spaceLinesBeforeTable;
+    }
+    set SpaceLinesBefore(value: number) {
+        if (this.QuoteTemplateSettingPM != null) {
+            if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.SpaceLinesBeforePackages = value;
+            else this.QuoteTemplateSettingPM.SpaceLinesBeforeContainers = value;
+        }
+    }
+
+
 
 
 
