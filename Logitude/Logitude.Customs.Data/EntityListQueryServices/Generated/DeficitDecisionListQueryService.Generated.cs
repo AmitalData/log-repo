@@ -104,7 +104,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.TapagId);
+                                query2 = query2.OrderBy(d => d.DeficitId);
                                 break;
                             }
                     }
@@ -113,7 +113,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.TapagId);
+                query2 = query2.OrderBy(d => d.DeficitId);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public DeficitDecisionList GetSingle(string tapagid, string declarationid)
+        public DeficitDecisionList GetSingle(string deficitid, string declarationid)
         {
             IQueryable<DeficitDecision> DeficitDecisionQuery = (from a in context.DeficitDecisions
-                                                       where a.TapagId == tapagid && a.DeclarationId == declarationid
+                                                       where a.DeficitId == deficitid && a.DeclarationId == declarationid
                                                        select a);
 
              

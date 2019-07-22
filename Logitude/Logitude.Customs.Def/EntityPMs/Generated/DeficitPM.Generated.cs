@@ -687,7 +687,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<DeficitDecisionPM> deficitDecisions;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DeficitDeficitDecisions", "Id","DeficitId")]
+	   [DataMember]
+	   public virtual List<DeficitDecisionPM> DeficitDecisions  
+	   {
+	        get
+             {
+                 if (deficitDecisions == null)
+                 {
+                     deficitDecisions = new List<DeficitDecisionPM>();
+                 }
+                 return deficitDecisions;
+              }
+             set { deficitDecisions = value; }
+	    }
+		   
+	   private List<DeficitDecisionPM>  deletedDeficitDecisions;
+	   public virtual List<DeficitDecisionPM> DeletedDeficitDecisions  
+	   {
+	        get
+             {
+                 if ( deletedDeficitDecisions == null)
+                 {
+                      deletedDeficitDecisions = new List<DeficitDecisionPM>();
+                 }
+                 return  deletedDeficitDecisions;
+              }
+             set {  deletedDeficitDecisions = value; }
+	    }
+	     }
    
 }
 	 

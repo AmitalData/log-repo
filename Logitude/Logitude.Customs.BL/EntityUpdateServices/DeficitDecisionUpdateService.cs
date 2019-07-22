@@ -7,19 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
-    public partial class DeficitDecisionUpdateService : EntityUpdateService<DeficitDecision, DeficitDecisionPM, EntityPM>
+    public partial class DeficitDecisionUpdateService : EntityUpdateService<DeficitDecision, DeficitDecisionPM, DeficitPM>
     {
-        protected override void OnUpdating(DeficitDecisionPM entityPM)
-        {
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-            DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
-            if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
-            {
-                //UpdateUnifreight(entityPM);
-            }
-        }
     }
 }

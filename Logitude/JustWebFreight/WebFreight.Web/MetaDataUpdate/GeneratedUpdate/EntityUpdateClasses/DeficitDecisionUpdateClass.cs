@@ -72,8 +72,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsNew =  true,
 			      				    DBTableName =  "Customs.DeficitDecisions",
 			      				    OldDBTableName =  "Customs.DeficitDecisions",
-			      				    ObjectTableSingular =  "Deficit Decision",
-			      				    ObjectTablePlural =  "Deficit Decisions",
+			      				    ObjectTableSingular =  "DeficitDecision",
+			      				    ObjectTablePlural =  "DeficitDecisions",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -81,7 +81,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    KeyPropertyPath =  "TapagId",
+			      				    KeyPropertyPath =  "DeficitId",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
@@ -89,20 +89,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "TapagId",
+			      				    SortingByObjectField =  "DeficitId",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
+			      				    IsComposition =  true,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Deficit Decision",
-			      				    Code =  "27f9",
+			      				    Code =  "81e3",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "TapagId",
+					 						FieldName =  "DeficitId",
 					  						OldFieldName =  "TapagId",
 					  						IsNew =  false,
 					  						IsChecked =  true,
@@ -149,8 +149,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TapagId",
-					  						ListPropertyPath =  "TapagId",
+					  						PMPropertyPath =  "DeficitId",
+					  						ListPropertyPath =  "DeficitId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -168,9 +168,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TapagId",
-					  						DefaultText =  "Tapag",
-					  						ListFieldLable =  "TapagIdListLable",
+					  						FullFieldLable =  "DeficitId",
+					  						DefaultText =  "Deficit",
+					  						ListFieldLable =  "DeficitIdListLable",
 					  						ListLableDefaultText =  "Tapag",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1244,12 +1244,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable DeficitDecisionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeficitDecision" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature DeficitDecisionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DeficitDecisionObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeficitDecision.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeficitDecisionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DeficitDecisionObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeficitDecision.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeficitDecisionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DeficitDecisionObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeficitDecision.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DeficitDecisionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = DeficitDecisionObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeficitDecision.Features.PackageFeature", NameTextCodeDefaultText = "DeficitDecision Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+	    {     
 	    
 		}
 

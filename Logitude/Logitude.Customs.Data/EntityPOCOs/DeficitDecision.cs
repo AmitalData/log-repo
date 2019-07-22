@@ -19,11 +19,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	 string dbms;
 
         [Key]
-        [ForeignKey("Tapag")]
-        [Column("TapagId" ,Order = 1)]
-	    public string TapagId { get; set; }
+        [ForeignKey("Deficit")]
+        [Column("DeficitId" ,Order = 1)]
+	    public string DeficitId { get; set; }
 	      
-        public virtual Tapag Tapag { get; set; }
+        public virtual Deficit Deficit { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("RequestDate")]

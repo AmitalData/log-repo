@@ -22,7 +22,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         TapagId, 
+	         DeficitId, 
 	         Tenant, 
 	         RequestDate, 
 	         DeclarationId, 
@@ -42,7 +42,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         TapagId, 
+	         DeficitId, 
 	         Tenant, 
 	         RequestDate, 
 	         DeclarationId, 
@@ -131,9 +131,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		public void POCOToPM(DeficitDecisionPM entityPM, DeficitDecision entityPOCO)
         {
 			 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TapagId))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeficitId))
             {
-					entityPM.TapagId = entityPOCO.TapagId;
+					entityPM.DeficitId = entityPOCO.DeficitId;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))

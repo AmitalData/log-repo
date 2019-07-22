@@ -25,7 +25,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  select new DeficitDecisionList()
 											{
                                                 DeclarationId = a.DeclarationId,
-                                                TapagId = a.TapagId,
+                                                DeficitId = a.DeficitId,
                                                 Tenant = a.Tenant,
                                                 RequestDate = a.RequestDate,
                                                 ApprovedProfessionCode = a.ApprovedProfessionCode,
@@ -50,7 +50,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             return iQueryable;
         }
-			}
+	}
 
 
 }

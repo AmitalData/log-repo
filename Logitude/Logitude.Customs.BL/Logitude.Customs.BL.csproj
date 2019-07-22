@@ -1323,6 +1323,7 @@
     <Compile Include="EntityUpdateServices\Generated\DeclarationMamanSpecialActionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationPendingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeficitDecisionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DeficitUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DocumentTypeCustomsDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FacilitationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FreightPaymentMethodUpdateService.Generated.cs" />
@@ -1495,7 +1496,6 @@
     <Compile Include="EntityUpdateServices\Generated\DeclarationTaxUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeficitConnFileParagraphTypeUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\DeficitsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeliverySiteTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DemanderTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DepositConditionUpdateService.Generated.cs" />
