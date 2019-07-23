@@ -51,7 +51,8 @@ export class QuoteHelperComponent implements OnDestroy {
                 this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.CurrentSession.FireEvent("CustomerSalesNotesChanged");
+                    
+                        this.GetSingleCustomer();
                     }
                 });
             }
