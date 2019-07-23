@@ -36,7 +36,7 @@ export class SalesNotes implements OnInit, OnDestroy {
     }
 
     public IsEnabled: boolean = true;
-    public IsFromQuote: boolean = false;
+    pun
     public IconCode: string;
     public IconPath: string;
     public IconOpacity: number = 1;
@@ -230,13 +230,13 @@ export class SalesNotes implements OnInit, OnDestroy {
 
         var list: SalesNoteItem[] = [];
 
-        if (this.EntityPM) {
+        if (this.EntityPM && this.EntityPM.SalesNotes != null) {
             this.EntityPM.SalesNotes.forEach((item: CustomerSalesNotePM) => {
                 list.push(new SalesNoteItem(item));
             });
         }
 
-        if (this.CustomerPM) {
+        if (this.CustomerPM && this.CustomerPM.SalesNotes != null) {
             this.CustomerPM.SalesNotes.forEach((item: CustomerSalesNotePM) => {
                 list.push(new SalesNoteItem(item));
             });
