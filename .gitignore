@@ -405,3 +405,4 @@ __pycache__/
 /Logitude/update report to all tenants.sql
 /Logitude/Logitude.IntegrationTests/DownloadedFiles
 /Logitude/AngularModules/AngularModules/--protractor-html-reporter-2
+/Logitude/AngularModules/AngularModules/webpack.config-prod.js

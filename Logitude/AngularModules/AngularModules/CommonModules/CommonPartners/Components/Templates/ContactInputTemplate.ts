@@ -9,6 +9,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import { CardContactProductPM } from '../../../../Common/EntityPMs/CardContactProductPM';
 //import { CardContactProductPM } from '../../../../Common/EntityPMs/CardContactProductPM';
 
 @Component({
@@ -32,6 +33,7 @@ export class ContactInputTemplate extends BaseComponent {
     public ShowSecondPartOfWindow: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
     public ProductsList: Array<ProductItem> = [];
+    public IsProductsAreaVisible: boolean = false;
     constructor() {
         super();
         this.EntityPM = new ContactPM();
@@ -99,6 +101,16 @@ export class ContactInputTemplate extends BaseComponent {
             this.ShowSecondPartOfWindow = true;
         }
 
+        var isProductsAreaVisible = false;
+
+        if (FeatureLocator.HasFeaturePermession("Contact", "ViewContactProducts")) {
+            if (!AppTool.IsNullOrEmpty(this.CardId) && !this.IsNewEntity) {
+                isProductsAreaVisible = true;
+            }
+        }
+
+        this.IsProductsAreaVisible = isProductsAreaVisible;
+
         this.SetUIProperties();
         this.BuildProductsList();
     }
@@ -153,14 +165,13 @@ export class ContactInputTemplate extends BaseComponent {
     private BuildProductsList() {
         this.ProductsList = [];
 
-        //var _productTypeListService: ProductTypeListService = new ProductTypeListService();
-        //_productTypeListService.getAllFromCache().subscribe(result => {
-        //    var fullProductsList = result.Result;
+        this.DomainService.GetCardContactProducts(this.CardId, this.EntityPM.Id).subscribe(result => {
+            var products: CardContactProductPM[] = result.Result;
 
-        //    fullProductsList.filter(i => i.InActive == false).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 }).forEach(item => {
-        //        this.ProductsList.push(new ProductItem(item));
-        //    });
-        //});
+            products.forEach(item => {
+                this.ProductsList.push(new ProductItem(item));
+            });
+        });
     }
 
     SelectEmailClicked() {
@@ -478,14 +489,14 @@ export class ContactInputTemplateArgs {
 }
 
 export class ProductItem {
-    //private entityList: ProductTypeList;
-    //public get Name() { return this.entityList.Name; }
-    //public get Code() { return this.entityList.Code; }
-    //public get Foreground() { return "#282E30"; }
-    //public get DirectionId() { return this.entityList.Code.substr(1, 1); }
-    //public get TransportModeId() { return this.entityList.Code.substr(0, 1); }
+    private entityList: CardContactProductPM;
+    public get Name() { return this.entityList.ProductTypeName; }
+    public get Code() { return this.entityList.ProductTypeCode; }
+    public get Foreground() { return "#282E30"; }
+    public get DirectionId() { return this.entityList.ProductTypeCode.substr(1, 1); }
+    public get TransportModeId() { return this.entityList.ProductTypeCode.substr(0, 1); }
 
-    //constructor(itemList: ProductTypeList) {
-    //    this.entityList = itemList;        
-    //}
+    constructor(itemList: CardContactProductPM) {
+        this.entityList = itemList;        
+    }
 }

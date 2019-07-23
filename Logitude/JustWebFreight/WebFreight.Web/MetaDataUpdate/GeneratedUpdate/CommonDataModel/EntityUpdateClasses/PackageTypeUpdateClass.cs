@@ -98,6 +98,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Code",
 			      				    LookUp2 =  "EnglishName",
+			      				    CodeField =  "Code",
+			      				    NameField =  "EnglishName",
 			      				    DependencyFilter1 =  "TransportModeId",
 			      				    DependencyFilter2 =  "IsContainer",
 			      				    KeyPropertyPath =  "Id",
@@ -131,6 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "PackageType,PackageTypes,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);

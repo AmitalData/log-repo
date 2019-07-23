@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Package",
-			      				    Code =  "8641",
+			      				    Code =  "df82",
 			      				    Name =  "ShipmentPackage",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  true,
@@ -125,6 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "ShipmentPackage,ShipmentPackages,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);

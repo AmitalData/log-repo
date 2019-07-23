@@ -69,6 +69,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Run Report Via WorkerRole", 
                 SearchFields = "RRW,Run Report Via WorkerRole", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "FPG", 
+                Name = "ARPayment Fetcha Pago", 
+                SearchFields = "FPG,ARPayment Fetcha Pago", 
+			});
 			
             return all;
        }
