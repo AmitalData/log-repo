@@ -21,6 +21,8 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string VersionId { get; set; }
         public string TotalSurcharge { get; set; }
         public string WholePrice { get; set; }
+        public string AllIn { get; set; }
+        public List<SurchargeSummary> Surcharges { get; set; }
 
 
     }
