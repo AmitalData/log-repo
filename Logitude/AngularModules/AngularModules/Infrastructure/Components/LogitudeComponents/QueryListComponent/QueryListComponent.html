@@ -209,7 +209,7 @@
                     <div  id="{{'DeleteButton' | IdGeneratorPipe}}" class="Button ActionButtons" (click)="DeleteButtonClicked(item)" style="width:18px;height:18px;margin-right:2px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
                         <img src="./Images/Buttons/Delete.over.png" class="CenterCenter" style="margin-left:3px;margin-top:1px;" />
                     </div>
-                    <div  id="{{'NewTab.View.Filters ' | IdGeneratorPipe}}"  class="Button ActionButtons" (click)="EditButtonClicked(item)" style="width:18px;height:18px; margin-right:2px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+                    <div  id="{{'ViewFiltersButton' | IdGeneratorPipe}}"  class="Button ActionButtons" (click)="EditButtonClicked(item)" style="width:18px;height:18px; margin-right:2px;margin-top:1px;" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
                         <img src="./Images/Buttons/Edit.over.png" class="CenterCenter" style="margin-left:3px;margin-top:1px;" />
                     </div>
                 </div>
@@ -237,9 +237,9 @@
             </div>
         </li>
 
-        <li id="{{'NewViewTab' | IdGeneratorPipe}}"  [attr.id]="NewViewId" class="dropcontent" style="background-color:#DFECF7;height:30px;border-top:1px solid #AAAAAA;margin-top:3px;margin: -2px;border-radius: 0px 0px 4px 5px;" (click)="IgnoreMouseDown()">
-            <div style="margin:4px;background-color:transparent;" class="dropcontent">
-                <span class="NewView" (click)="NewViewClicked()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">{{'General.O.NewView' | TextCodeTranslationPipe}}</span>
+        <li [attr.id]="NewViewId" class="dropcontent" style="background-color:#DFECF7;height:30px;border-top:1px solid #AAAAAA;margin-top:3px;margin: -2px;border-radius: 0px 0px 4px 5px;" (click)="IgnoreMouseDown()">
+            <div id="{{'NewViewTab' | IdGeneratorPipe}}" style="margin:4px;background-color:transparent;" class="dropcontent">
+                <span id="{{'NewViewTabchoose' | IdGeneratorPipe}}" class="NewView" (click)="NewViewClicked()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">{{'General.O.NewView' | TextCodeTranslationPipe}}</span>
             </div>
         </li>
     </ul>
