@@ -81,7 +81,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-
+                    this.GetAllChargesTypes();
                     if (this.isCopyButtonClicked) {
                         this.isCopyButtonClicked = false;
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();

@@ -72,9 +72,9 @@ using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.CLoseTable;
 
-namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
-   public class SchedulerProcedureUpdateClass
+   public class CardContactProductUpdateClass
    {  
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -82,47 +82,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "SchedulerProcedure",
+	             				    ObjectTableName =  "CardContactProduct",
 			      				    IsNew =  true,
-			      				    DBTableName =  "SchedulerProcedures",
-			      				    OldDBTableName =  "SchedulerProcedures",
-			      				    ObjectTableSingular =  "SchedulerProcedure",
-			      				    ObjectTablePlural =  "SchedulerProcedures",
+			      				    DBTableName =  "CardContactProducts",
+			      				    OldDBTableName =  "CardContactProducts",
+			      				    ObjectTableSingular =  "Card Contact Product",
+			      				    ObjectTablePlural =  "Card Contact Products",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "SearchFields",
-			      				    KeyPropertyPath =  "Code",
+			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
+			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
-			      				    IsAutoComplete =  true,
+			      				    IsMain =  true,
+			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Code",
+			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
+			      				    IsComposition =  true,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Scheduler Procedure",
-			      				    Code =  "242c",
+			      				    DefaultText =  "Card Contact Product",
+			      				    Code =  "0082",
 			      				    Name =  " Query Group",
-			      				    CloseTableCode =  "Code",
-			      				    CloseTableName =  "Name",
-			      				    GenerateDomainService =  true,
-			      				    ClientModuleName =  "Infrastructure",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -141,27 +138,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
-					  						ObjectTableName =  "SchedulerProcedure",
-					  						FieldsDataType =  "nText",
+					 						FieldName =  "CardContactId",
+					  						OldFieldName =  "CardContactId",
+					  						ObjectTableName =  "CardContactProduct",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  100,
-					  						IsRequired =  false,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  100,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						PMPropertyPath =  "Code",
-					  						ListPropertyPath =  "Code",
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CardContactId",
+					  						ListPropertyPath =  "CardContactId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -170,7 +167,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "SchedulerProcedure",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -179,10 +175,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
+					  						FullFieldLable =  "CardContactId",
+					  						DefaultText =  "Card Contact",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -200,36 +194,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
-					  						ObjectTableName =  "SchedulerProcedure",
-					  						FieldsDataType =  "nText",
+					 						FieldName =  "ProductTypeCode",
+					  						OldFieldName =  "ProductTypeCode",
+					  						ObjectTableName =  "CardContactProduct",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "ProductType",
 					  						MinLength =  0,
-					  						MaxLength =  100,
-					  						IsRequired =  false,
+					  						MaxLength =  2,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  100,
+					  						SystemMaxLength =  2,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						PMPropertyPath =  "Name",
-					  						ListPropertyPath =  "Name",
-					  						DisplayInLookUpIndex =  1,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ProductTypeCode",
+					  						ListPropertyPath =  "ProductTypeCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
+					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "SchedulerProcedure",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -238,10 +232,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						FullFieldLable =  "ProductTypeCode",
+					  						DefaultText =  "Product Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -259,12 +251,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
-					  						ObjectTableName =  "SchedulerProcedure",
-					  						FieldsDataType =  "nText",
+					 						FieldName =  "ProductTypeName",
+					  						OldFieldName =  "ProductTypeName",
+					  						ObjectTableName =  "CardContactProduct",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  1000,
+					  						MaxLength =  60,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -272,73 +264,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  1000,
+					  						SystemMaxLength =  60,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "SearchFields",
-					  						ListPropertyPath =  "SearchFields",
-					  						DisplayInLookUpIndex =  1,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "SchedulerProcedure",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search ...",
-					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search ...",
-					  						IsMaxLength =  true,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
-					  						ObjectTableName =  "SchedulerProcedure",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  1000,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  1000,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Description",
-					  						ListPropertyPath =  "Description",
+					  						PMPropertyPath =  "ProductTypeName",
+					  						ListPropertyPath =  "ProductTypeName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -347,7 +280,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "SchedulerProcedure",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -356,10 +288,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Description",
-					  						DefaultText =  "Description",
-					  						ListFieldLable =  "DescriptionListLable",
-					  						ListLableDefaultText =  "Description",
+					  						FullFieldLable =  "ProductTypeName",
+					  						DefaultText =  "Product Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -395,7 +325,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable SchedulerProcedureObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SchedulerProcedure" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable CardContactProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CardContactProduct" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -409,7 +339,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = SchedulerProcedureObjectTable.Id,
+                ObjectTableId = CardContactProductObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -427,7 +357,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = SchedulerProcedureObjectTable.Id,
+                ObjectTableId = CardContactProductObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -443,18 +373,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    
 }
 
-
-	    public void FillSchedulerProcedure()
-        { 
-            var repo = new SchedulerProcedureRepository(0);
-            var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
-            new FillCloseTables().FillCloseTable<
-                                SchedulerProcedure,
-                                Logitude.BL.InfrastructureModel.SchedulerProcedureDetails,
-                                SchedulerProcedureRepository>(repo, dic);
-        }
-
-	    
+    
 
    }
     

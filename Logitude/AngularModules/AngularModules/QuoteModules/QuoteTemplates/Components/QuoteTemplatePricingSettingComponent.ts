@@ -86,7 +86,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
         this.QuotePM = args.QuotePM;
 
-        this.IsRoutingRates = this.QuotePM != null ? this.QuotePM.QuoteTypeCode == "P" ? true : false : false;
+        this.IsRoutingRates = this.QuoteTemplatePM != null ? this.QuoteTemplatePM.TemplateTypeCode == "P" ? true : false : false;
 
 
         this.Alignment.push("Left"); this.Alignment.push("Center"); this.Alignment.push("Right");
