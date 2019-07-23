@@ -179,7 +179,7 @@
                         </td>
 
                         <td style="float:left;width:190px;">
-                            <input type="text" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled" />
+                            <input id="{{'ViewNameId' | IdGeneratorPipe}}"  type="text" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled" />
                         </td>
 
                         <td style="width:10px;">

@@ -32,6 +32,8 @@ export class ShipmentView {
         //this.helper.WaitByIdAndFill("NewTab.View.Name ",'Raghads View')
         this.helper.WaitByIdAndFill('NewViewSearchFields_0_0', "Agent");
         this.helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
+        this.helper.WaitByIdAndFill('NewViewSearchFields_0_0', "shipper");
+        this.helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
         this.helper.WaitByIdAndClick("NewButton.View.Add");
         //this.helper.WaitByIdAndClick("NewButton.View.Create");
 
@@ -41,10 +43,17 @@ export class ShipmentView {
         this.helper.WaitByIdAndClick("CheckBox_0_627_LBL");
        this.helper.WaitByIdAndFill("Shipment_TextValue",'Raghad')
        this.helper.WaitByCssAndClick_FromTagInsideList(".DropDownList", 0);
+       this.helper.WaitByIdAndClick("NewButton.View.Create");
 
 
 
     }
 
+  EditNewView(){
+
+
+
+
+}
 
 }

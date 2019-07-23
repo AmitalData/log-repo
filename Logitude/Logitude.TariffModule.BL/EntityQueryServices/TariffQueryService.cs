@@ -1,5 +1,7 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Logitude.TariffModule.BL.DataContracts;
@@ -12,6 +14,9 @@ using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using System;
@@ -41,7 +46,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             return tariffsSummary;
         }
 
-        public List<TariffSearchSummary> GetTariffSearchSummary(string fromport, string toport, DateTime? BetweenDate, double weight, int tenant, string Weightcode, double? GrossWeight, string GrossWeightCode, double? Volume, string VolumeCode)
+        public List<TariffSearchSummary> GetTariffSearchSummary(string fromport, string toport, DateTime? BetweenDate, double weight, int tenant, string Weightcode, double? GrossWeight, string GrossWeightCode, double? Volume, string VolumeCode, string currencyId)
         {
             AirlineRepository airlineRepository = new AirlineRepository(tenant);
             AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
@@ -52,6 +57,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             List<TariffSetting> setting = tariffSettingRepository.GetAll(tenant).ToList();
             List<string> Steps = new List<string>();
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+            this.GetRates(tenant);
 
             int propIndex = -1;
             if (setting != null)
@@ -287,7 +293,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 {
                     decimal? Sum = 0;
                     TariffSearchSummary tariffsSummary = new TariffSearchSummary() { Id = result.Id };
-                    tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
+                    //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
+                    tariffsSummary.price = Math.Round((double)CalculateLocalAmount(item.price.Value, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
+                    
                     Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
                     if (CurrentSurcharge != null)
                     {
@@ -381,9 +389,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                     tariffsSummary.ImageId = resultImage;
 
-                    if (!string.IsNullOrEmpty(result.CurrencyId))
+                    if (!string.IsNullOrEmpty(currencyId))
                     {
-                        tariffsSummary.Currency = Currencies.Keys.Contains(result.CurrencyId) ? Currencies[result.CurrencyId] : null;
+                        tariffsSummary.Currency = Currencies.Keys.Contains(currencyId) ? Currencies[currencyId] : null;
                     }
 
                     tariffSearchSummaries.Add(tariffsSummary);
@@ -392,6 +400,56 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             tariffSearchSummaries = tariffSearchSummaries.OrderBy(p => p.decimalprice).ToList();
             return tariffSearchSummaries;
+        }
+
+        private decimal CalculateLocalAmount(decimal amount, string convertedCurrencyId, string currencyId, int tenant)
+        {
+            var tenantCurrency = GetTenantCurrency(tenant);
+            decimal amountInTariffCurr, amountInConvertedCurr;
+
+            if (tenantCurrency == currencyId)
+                amountInTariffCurr = amount;
+            else
+            {
+                RatesTableList rateList = RatesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == currencyId);
+                var rate = rateList == null ? 0 : rateList.Rate;
+                amountInTariffCurr = amount * (decimal)rate;
+
+            }
+
+            if (tenantCurrency == convertedCurrencyId)
+                amountInConvertedCurr = amountInTariffCurr;
+
+            else
+            {
+                RatesTableList rateList = RatesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == convertedCurrencyId);
+                var rate = rateList == null ? 0 : rateList.Rate;
+                amountInTariffCurr = amount / (decimal)rate;
+            }
+
+            return amountInTariffCurr;
+        }
+
+        private string GetTenantCurrency(int tenant)
+        {
+            TenantRepository tRepo = new TenantRepository(tenant);
+            Tenant t = tRepo.GetSingleByTenant(tenant);
+            var tenantCurrency = (t == null ? null : t.CurrencyId);
+            return tenantCurrency;
+        }
+
+        List<RatesTableList> RatesList;
+        private void GetRates(int tenant)
+        {
+            IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
+            RatesTableRepository ratesTableRepository = new RatesTableRepository(MyContext);
+            IQueryable<RatesTable> entityPocos = ratesTableRepository.GetRatesTables(tenant);
+
+            RatesTableQuery ratesTableQuery = new RatesTableQuery(ratesTableRepository);
+            IQueryable<RatesTableList> entityLists = ratesTableQuery.GetIQueryableEntityList(entityPocos);
+            entityLists = entityLists.OrderByDescending(r => r.ValueDate);
+
+            this.RatesList = entityLists.ToList();
         }
 
         private double? ComputeChargeableWeight_Kg(double? ChargeableWeight, string ChargeableWeightUnitCode)

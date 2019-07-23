@@ -342,6 +342,13 @@ namespace WebFreight.Web.Helpers
                 ShowSaleMaxMinAmountPackages = true,
                 ShowHeaderLabelsContainers = true,
                 ShowHeaderLabelsPackages = true,
+                SpaceLinesBeforeContainers =1,
+                SpaceLinesBeforeFooters = 1,
+                SpaceLinesBeforeHeaders =1,
+                SpaceLinesBeforePackages =1,
+                SpaceLinesBeforeQuoteDetails =1,
+                SpaceLinesBeforeQuoteHeaders =1,
+                SpaceLinesBeforePerContainers=1,
 
             };
 
@@ -778,6 +785,14 @@ namespace WebFreight.Web.Helpers
                     ShowTotalPerChargeGroupPackages = setting.ShowTotalPerChargeGroupPackages,
                     ShowHeaderLabelsContainers = setting.ShowHeaderLabelsContainers,
                     ShowHeaderLabelsPackages = setting.ShowHeaderLabelsPackages,
+                    SpaceLinesBeforeContainers = setting.SpaceLinesBeforeContainers,
+                    SpaceLinesBeforeFooters = setting.SpaceLinesBeforeFooters,
+                    SpaceLinesBeforeHeaders = setting.SpaceLinesBeforeHeaders,
+                    SpaceLinesBeforePackages = setting.SpaceLinesBeforePackages,
+                    SpaceLinesBeforeQuoteDetails = setting.SpaceLinesBeforeQuoteDetails,
+                    SpaceLinesBeforeQuoteHeaders = setting.SpaceLinesBeforeQuoteHeaders,
+                    SpaceLinesBeforePerContainers = setting.SpaceLinesBeforePerContainers,
+
                 };
 
                 if (string.IsNullOrEmpty(copySetting.TotalPerContainersTableDesignId))

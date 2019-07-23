@@ -86,7 +86,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
         this.QuotePM = args.QuotePM;
 
-        this.IsRoutingRates = this.QuotePM != null ? this.QuotePM.QuoteTypeCode == "P" ? true : false : false;
+        this.IsRoutingRates = this.QuoteTemplatePM != null ? this.QuoteTemplatePM.TemplateTypeCode == "P" ? true : false : false;
 
 
         this.Alignment.push("Left"); this.Alignment.push("Center"); this.Alignment.push("Right");
@@ -628,7 +628,19 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
 
-    
+    get SpaceLinesBeforeTable() {
+        var spaceLinesBeforeTable: number = 1;
+        if (this.QuoteTemplateSettingPM) spaceLinesBeforeTable = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.SpaceLinesBeforePackages : this.QuoteTemplateSettingPM.SpaceLinesBeforeContainers;
+        return spaceLinesBeforeTable;
+    }
+    set SpaceLinesBefore(value: number) {
+        if (this.QuoteTemplateSettingPM != null) {
+            if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.SpaceLinesBeforePackages = value;
+            else this.QuoteTemplateSettingPM.SpaceLinesBeforeContainers = value;
+        }
+    }
+
+
 
 
 
