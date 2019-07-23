@@ -187,9 +187,9 @@ namespace CustomsWorkerRole
                 //    WorkUntilQEmpty();
                 //}
                 //else
-                {
-                    WorkUntilQEmpty_Db();
-                }
+                //{
+                WorkUntilQEmpty_Db();
+                //}
 
             }
             catch (Exception e)
