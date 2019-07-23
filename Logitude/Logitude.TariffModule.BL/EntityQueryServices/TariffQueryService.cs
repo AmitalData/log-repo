@@ -92,12 +92,34 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     }
                     else if (propIndex == 0)
                     {
-                        propIndex = 1;
+                       // propIndex = 1;
                     }
                 }
             }
 
             List<TariffResult> items = new List<TariffResult>();
+
+
+            if (propIndex == 0)
+            {
+                items = (from item in iQueryable
+                         group iQueryable by new
+                         {
+                             item.TariffId,
+                             item.MinPrice,
+                             item.Version,
+                         } into g
+                         select new TariffResult()
+                         {
+                             price = g.Min(p => g.Key.MinPrice),
+                             tariffid = g.Key.TariffId,
+                             TariffVersion = g.Key.Version,
+                             PriceIndex = 0,
+
+                         }).ToList();
+            }
+
+
             if (propIndex == 1)
             {
                 items = (from item in iQueryable
@@ -112,6 +134,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              price = g.Min(p => g.Key.Step1Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
+                             PriceIndex = 1,
 
                          }).ToList();
             }
@@ -299,23 +322,41 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
                     decimal? minprice = 1;
                     TariffLine SelectedLine = null;
-                    if (TariffLines.ContainsKey(result.Id))
-                    {
-                        List <TariffLine>Temp = TariffLines[result.Id].Where(p => p.Version == item.TariffVersion).ToList();// && (decimal?)(p.GetType().GetProperty("Step"+item.PriceIndex+"Price").GetValue(p))==item.price).FirstOrDefault();
-                        SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("Step" + (item.PriceIndex) + "Price").GetValue(p)) == item.price).FirstOrDefault();
+                    
+                        if (TariffLines.ContainsKey(result.Id))
+                        {
+                            List<TariffLine> Temp = TariffLines[result.Id].Where(p => p.Version == item.TariffVersion).ToList();// && (decimal?)(p.GetType().GetProperty("Step"+item.PriceIndex+"Price").GetValue(p))==item.price).FirstOrDefault();
+                        if (item.PriceIndex != 0)
+                        {
+                            SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("Step" + (item.PriceIndex) + "Price").GetValue(p)) == item.price).FirstOrDefault();
+                        }
+                        else
+                        {
+                            SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("MinPrice").GetValue(p)) == item.price).FirstOrDefault();
+                        }
                     }
-                    if (SelectedLine != null)
+                        if (SelectedLine != null)
+                        {
+                            minprice = SelectedLine.MinPrice;
+                        }
+                    if (item.PriceIndex != 0)
                     {
-                        minprice = SelectedLine.MinPrice;
-                    }
-                    if ((item.price*(decimal)weight)< minprice)
-                    {
-                        item.price = minprice;
+                        if ((item.price * (decimal)weight) < minprice)
+                        {
+                            item.price = minprice;
+
+                        }
+                        else
+                        {
+                            item.price = item.price * (decimal)weight;
+                        }
                     }
                     else
                     {
-                        item.price = item.price * (decimal)weight;
+                        item.price = minprice!=null?minprice:0;
+
                     }
+                
                     tariffsSummary.price = Math.Round((double)CalculateLocalAmount(item.price.Value, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
                     
                     Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
