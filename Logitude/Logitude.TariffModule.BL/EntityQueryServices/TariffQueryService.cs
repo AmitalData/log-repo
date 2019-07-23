@@ -112,7 +112,6 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              price = g.Min(p => g.Key.Step1Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
-                             PriceIndex=1,
 
                          }).ToList();
             }
@@ -252,6 +251,10 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive && p.TypeCode== "AFC").ToList();
             List<TariffVersion> TariffVersionList = this.repository.GetAllTariffVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), tenant).ToList();
+            List<int> VersionIds = TariffVersionList.Select(a => a.Version).ToList();
+
+            Dictionary<string, List<TariffLine>> TariffLines = this.repository.GetAllTariffLinesByTariffIds(TariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
+
             Dictionary<string, string> Currencies = myCommonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code);
             List<TariffVersionAllInCharge> TariffVersionAllInChargesList = this.repository.GetAllTariffAllInOnVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), TariffVersionList.Select(p => p.Version).ToArray(), tenant).ToList();
             List<Tariff> SurchargeTariffList = this.repository.GetSurchargeTariffsByAirline(TariffList.Select(p => p.SellerId).ToArray(), tenant).Where(p => !p.InActive).ToList();
@@ -294,6 +297,25 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     decimal? Sum = 0;
                     TariffSearchSummary tariffsSummary = new TariffSearchSummary() { Id = result.Id };
                     //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
+                    decimal? minprice = 1;
+                    TariffLine SelectedLine = null;
+                    if (TariffLines.ContainsKey(result.Id))
+                    {
+                        List <TariffLine>Temp = TariffLines[result.Id].Where(p => p.Version == item.TariffVersion).ToList();// && (decimal?)(p.GetType().GetProperty("Step"+item.PriceIndex+"Price").GetValue(p))==item.price).FirstOrDefault();
+                        SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("Step" + (item.PriceIndex) + "Price").GetValue(p)) == item.price).FirstOrDefault();
+                    }
+                    if (SelectedLine != null)
+                    {
+                        minprice = SelectedLine.MinPrice;
+                    }
+                    if ((item.price*(decimal)weight)< minprice)
+                    {
+                        item.price = minprice;
+                    }
+                    else
+                    {
+                        item.price = item.price * (decimal)weight;
+                    }
                     tariffsSummary.price = Math.Round((double)CalculateLocalAmount(item.price.Value, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
                     
                     Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
