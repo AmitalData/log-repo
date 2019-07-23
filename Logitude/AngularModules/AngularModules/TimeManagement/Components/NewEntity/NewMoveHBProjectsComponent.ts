@@ -106,7 +106,7 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
             errors.push("To Project field is required");
         }
         if (this.FromProject == this.ToProject) {
-            errors.push("Can't Move Hours: From Project and To Project Are The Same");
+            errors.push("Can't Move Hours: From Project, To Project Are The Same");
         }
         this.ValidationErrorsList = errors;
 
