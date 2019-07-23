@@ -63,6 +63,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     }
 
+
+
+
     private originPortId: string;
     get OriginPortId() {
         return this.originPortId;
@@ -105,7 +108,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set WeightCode(value: string) {
         if (this.weightCode != value) {
             this.weightCode = value;
-            this.ComputeVolume();
+          //  this.ComputeChargeableWeight_Kg();
+           // this.ComputeVolume();
             this.ComputeVolumetricWeight();
        }
     }
@@ -136,9 +140,53 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
+
+
+    private ComputeChargeableWeight_Kg() {
+        var weigh_Kg: number = null;
+        var weigh_Ton: number = null;
+
+        if (this.Weight != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.WeightCode)) {
+                switch (this.WeightCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.Weight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+        }
+        this.Weight = weigh_Kg;
+    }
+
+
     private ComputeVolumetricWeight() {
+        this.Volume = AppTool.ComputePackageVolume(null, null, null, null, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
+
         this.Weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
     }
+
+
+    
+
+    private chargeableWeight: number;
+    get ChargeableWeight() {
+        return this.weight;
+    }
+    set ChargeableWeight(value: number) {
+        if (this.chargeableWeight != value) {
+            this.chargeableWeight = value;
+            this.SetUIProperties();
+        }
+    }
+
 
 
     private weight: number;

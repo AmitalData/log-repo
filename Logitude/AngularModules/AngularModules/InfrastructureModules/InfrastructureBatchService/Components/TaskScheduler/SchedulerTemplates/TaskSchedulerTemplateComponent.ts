@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -13,6 +13,7 @@ import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionL
 
 export class TaskSchedulerTemplateComponent {
     DataContext: any;
+
     public ObjectTableName: string = "TasksScheduler";
     constructor() {
 
@@ -24,4 +25,5 @@ export class TaskSchedulerTemplateComponent {
 
     }
 
+   
 }

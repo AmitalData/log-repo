@@ -33,6 +33,8 @@ export class VersionHistoryTabComponent implements OnDestroy {
     private TariffDomainService: TariffDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsActionsEnabled: boolean = false;
+    public IsDownloadExcelTemplateVisible: boolean = false;
+
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.VersionLinesSource = new ObservableCollection([]);
@@ -40,9 +42,11 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
         if (this.EntityPM.TypeCode == "AFC") {
             this.SetStepsLabelsAndVisibility();
+            this.IsDownloadExcelTemplateVisible = true;
         }
 
         else if (this.EntityPM.TypeCode == "ASC") {
+            this.IsDownloadExcelTemplateVisible = false;
             this.GetAllChargesTypes();
         }
         
@@ -77,7 +81,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-
+                    this.GetAllChargesTypes();
                     if (this.isCopyButtonClicked) {
                         this.isCopyButtonClicked = false;
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();

@@ -27,6 +27,7 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                        where a.Tenant == entity.Tenant
                        && (a.PartnerTypeId == entity.PartnerTypeId)
                        && a.Code == entity.Code
+                       && a.Id != entity.Id
                        select a).ToList();
 
                 if (allMatchedCards != null && allMatchedCards.Count>0)

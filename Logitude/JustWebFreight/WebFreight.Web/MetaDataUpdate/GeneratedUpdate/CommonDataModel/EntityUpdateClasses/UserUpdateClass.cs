@@ -97,6 +97,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsEditable =  true,
 			      				    IsNewWizard =  true,
 			      				    LookUp1 =  "EnglishName",
+			      				    CodeField =  "Code",
+			      				    NameField =  "EnglishName",
 			      				    DependencyFilter1 =  "BusinessUnitId",
 			      				    DependencyFilter2 =  "EmployeeGroupCustomFilter",
 			      				    DependencyFilter3 =  "IsSalesman",

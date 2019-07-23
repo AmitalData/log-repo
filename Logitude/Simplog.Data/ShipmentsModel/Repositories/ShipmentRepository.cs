@@ -394,6 +394,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             IShipmentFollowUpDataViewContext dataViewEntities = ShipmentFollowUpDataViewContext.GetContext(tenant);
             IQueryable<ShipmentFollowUpDataView> result = (from a in dataViewEntities.ShipmentFollowUpDataViews where a.Tenant == tenant && a.IsCancelled == false select a);
+            var test = result.ToList();
             return result;
         }
 
