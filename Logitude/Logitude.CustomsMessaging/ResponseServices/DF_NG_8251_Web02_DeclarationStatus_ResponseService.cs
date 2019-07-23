@@ -40,15 +40,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             
             
+            
+
+
+            this.MyResponseData = new DeclarationStatusResponseData();
             if (!String.IsNullOrWhiteSpace(requestParams.TesterSendOption))
             {
                 TesterSendOption(requestParams);
                 return;
 
             }
-
-
-            this.MyResponseData = new DeclarationStatusResponseData();
             string declarationStatusCodeName = "";
             string declarationStatusCode = "";
             string warningMess = "";
