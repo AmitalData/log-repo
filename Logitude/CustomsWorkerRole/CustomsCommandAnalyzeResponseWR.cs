@@ -96,64 +96,6 @@ namespace CustomsWorkerRole
 
         }
 
-        protected override bool ProcessMessage(BrokeredMessage message, OverrideControllerModel controller = null)
-        {
-
-            var dcaAnalyzeAggregateKey = "";
-            bool success = false;
-            try
-            {
-                dcaAnalyzeAggregateKey = message.GetProperty<string>(QueueExt.QueuePropertyNames.DcaAnalyzeAggregateKey, "");//, 
-                if (String.IsNullOrWhiteSpace(dcaAnalyzeAggregateKey))
-                {
-                    return base.ProcessMessage(message, controller);
-                }
-                 
-            }
-            catch (Exception)
-            {
-                
-                throw;
-            }
-            try
-            {
-                
-
-                //var SerialAnalyzeDcaResponseByAggregateKey = new SerialAnalyzeDcaResponseByAggregateKey(message);
-                var SerialAnalyzeDcaResponseByAggregateKey = new SerialAnalyzeDcaResponseByAggregateKey(
-                    message.GetProperty<int>(QueueExt.QueuePropertyNames.Tenant, -1), dcaAnalyzeAggregateKey);
-                success = SerialAnalyzeDcaResponseByAggregateKey.DoSerialAnalyze();
-                
-                message.SafeComplete();
-                return success;
-
-            }
-            catch (CustomsRequestsSheetDomainModelServiceException customsRequestsSheetServiceException)
-            {
-
-                //ExceptionHandler.HandleException(customsRequestsSheetServiceException, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method/CustomsRequestsSheetServiceException ", null);
-                if (customsRequestsSheetServiceException.What2Do == CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue)
-                {
-                    message.SafeComplete();
-                    return true;
-                }
-                else
-                {
-                    message.SetProperty<DateTime>(QueueExt.QueuePropertyNames.LastExecAt, DateTime.UtcNow);
-                    message.SafeAbandon();
-                    return false;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method", null);
-                return false;
-                
-            }
-
-
-
-        }
+       
     }
 }

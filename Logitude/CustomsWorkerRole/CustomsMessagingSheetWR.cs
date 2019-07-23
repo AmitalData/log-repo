@@ -33,11 +33,7 @@ namespace CustomsWorkerRole
         {
 
         }
-        protected override bool ProcessMessage(BrokeredMessage message, OverrideControllerModel controller = null)
-        {
-            ProcessMessage(message );
-            return true;
-        }
+       
         protected override bool ProcessMessage_Db(CustomDBQueueMessage msgResponse)
         {
             ProcessMessage_DbOverride(msgResponse);
