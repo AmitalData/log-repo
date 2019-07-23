@@ -1213,6 +1213,10 @@
     <Compile Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.Designer.cs">
       <DependentUpon>201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907210505358_ARPayment_FechaPago.cs" />
+    <Compile Include="Migrations\201907210505358_ARPayment_FechaPago.Designer.cs">
+      <DependentUpon>201907210505358_ARPayment_FechaPago.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs" />
     <Compile Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.Designer.cs">
       <DependentUpon>201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs</DependentUpon>
@@ -2068,6 +2072,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.resx">
       <DependentUpon>201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907210505358_ARPayment_FechaPago.resx">
+      <DependentUpon>201907210505358_ARPayment_FechaPago.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.resx">
       <DependentUpon>201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs</DependentUpon>
