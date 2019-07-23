@@ -3,6 +3,7 @@ import { TariffSettingComponent } from './Components/Workspaces/TariffSettingCom
 import { NewAirFreightCostComponent } from './Components/NewEntity/NewAirFreightCostComponent';
 import { FieldTemplateComponent } from './Components/Templates/FieldTemplateComponent';
 import { TariffSearchAirFreightPricesComponent } from './Components/Workspaces/TariffSearchAirFreightPricesComponent';
+import { TariffPriceStepsComponent } from './Components/NewEntity/TariffPriceStepsComponent';
 
 // Tabs
 import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
@@ -35,6 +36,7 @@ export const Components =
         UpdateSurchargesComponent,
         ChoosePortComponent,
         AddEditAllInChargesComponent,
+        TariffPriceStepsComponent,
     ];
 
 export const ControlsComponents =
@@ -63,6 +65,7 @@ export class ModuleDeclarations {
             case "UpdateSurchargesComponent": { myResult = UpdateSurchargesComponent; break; }
             case "ChoosePortComponent": { myResult = ChoosePortComponent; break; }
             case "AddEditAllInChargesComponent": { myResult = AddEditAllInChargesComponent; break; }
+            case "TariffPriceStepsComponent": { myResult = TariffPriceStepsComponent; break; }
         }
 
         return myResult;
