@@ -109,7 +109,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (this.weightCode != value) {
             this.weightCode = value;
           //  this.ComputeChargeableWeight_Kg();
-           // this.ComputeVolume();
+            this.ComputeVolume();
             this.ComputeVolumetricWeight();
        }
     }
@@ -168,7 +168,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
 
     private ComputeVolumetricWeight() {
-        this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
+        //this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
 
         this.weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
     }
@@ -224,9 +224,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
     private ComputeVolume() {
-
-
-        this.Volume = AppTool.ComputePackageVolume(null, null, null, null, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
+        this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
     }
 
     SearchButtonClicked() {
