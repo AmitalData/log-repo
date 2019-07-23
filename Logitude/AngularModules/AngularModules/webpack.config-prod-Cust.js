@@ -552,10 +552,10 @@ module.exports = {
 
 
           ///jenkins !!
-         "outputTemplate": "D:\\Customs\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
+         ///"outputTemplate": "D:\\Customs\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
 
             ///itzik
-          ///"outputTemplate": "c:\\log\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
+          "outputTemplate": "c:\\lg1\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
 ///Eitan
           //"outputTemplate": "C:\\GIT\\log-repo\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
           ///moran 

@@ -181,7 +181,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string CourierMasterId { get; set; }
         public string MyMoreParams { get; set; }
         public List<string> ServerSplitDeclarationsList { get; set; }
-        public string TesterSendOption { get; internal set; }
+        public string TesterSendOption { get;  set; }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }

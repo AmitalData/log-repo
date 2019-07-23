@@ -77,7 +77,7 @@ export class CourierSendStatusComponent extends BaseComponent {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
-                //this.RefreshButtonClicked();
+                this.CancelButtonClicked();
             });
 
     }
