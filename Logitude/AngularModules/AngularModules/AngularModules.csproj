@@ -492,6 +492,8 @@
     <Content Include="dist\out-tsc\InfrastructureModules\InfrastructureUser\Components\ViewModel\UsersWorkspaceRecentItem.js" />
     <Content Include="dist\out-tsc\InfrastructureModules\InfrastructureUser\ModuleDeclarations.js" />
     <Content Include="dist\out-tsc\InfrastructureModules\InfrastructureUser\ModuleInfrastructureUser.js" />
+    <Content Include="Images\Buttons\downarrow.png" />
+    <Content Include="Images\Buttons\uparrow.png" />
     <Content Include="Images\Error.png" />
     <Content Include="e2e\.vscode\protractor.conf.js" />
     <Content Include="Images\ArrowLeft.png" />
