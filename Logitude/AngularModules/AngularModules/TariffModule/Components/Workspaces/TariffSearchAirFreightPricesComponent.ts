@@ -8,6 +8,11 @@ import { TariffDomainService } from '../../../TariffModule/Services/TariffDomain
 import { TariffSearchSummary } from '../../../TariffModule/Services/TariffDomainService';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
+import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
+import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
+
+
 @Component({
     moduleId: module.id,
     templateUrl: './TariffSearchAirFreightPricesComponent.html',
@@ -23,14 +28,40 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     public AvailableTariffs: Array<TariffSearchSummary>= [];
     constructor(private entityResourceService: EntityResourceService) {
         super();
-
         this.myDomainService = new TariffDomainService();
         this.SetUIProperties();
         this.Date = DateTool.GetCurrentDateAsUtc();
+        this.CalculateDefaultCurrency(); 
     }
 
+    private CalculateDefaultCurrency() {
+        var CurrencyList: CurrencyList[] = [];
+        var myService: CurrencyListService = new CurrencyListService();
+        myService.getAllFromCache().subscribe((myResult: ServiceResponse) => {
+            if (myResult) {
+                CurrencyList = myResult.Result;
+                var usdCurrency = CurrencyList.filter(c => c.Code == "USD" && c.Tenant == SessionLocator.Tenant)[0];
+                if (usdCurrency != null) {
+                    this.CurrencyId = usdCurrency.Id;
+                }
+                else {
+                    this.CurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
+                }
+            }
+        });
+    }
 
+    private currencyId: string;
+    get CurrencyId() { return this.currencyId; }
+    set CurrencyId(newValue: string) {
+        if (this.currencyId != newValue) {
+            this.currencyId = newValue;
+            this.CalculatePriceByCurrency();
+        }
+    }
+    private CalculatePriceByCurrency() {
 
+    }
 
 
 
@@ -169,7 +200,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
-
     private volume: number;
     get Volume() {
         return this.volume;
@@ -182,8 +212,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
 
-
-
     private grossWeight: number;
     get GrossWeight() {
         return this.grossWeight;
@@ -194,7 +222,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.ComputeVolumetricWeight();
         }
     }
-
 
     private ComputeVolume() {
 
@@ -234,7 +261,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
 
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, this.Weight, this.WeightCode, this.GrossWeight, this.GrossWeightCode, this.Volume, this.VolumeUnitCode).subscribe(res => {
+            this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, this.Weight, this.WeightCode, this.GrossWeight, this.GrossWeightCode, this.Volume, this.VolumeUnitCode, this.CurrencyId).subscribe(res => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.AvailableTariffs = res.Result;
@@ -244,9 +271,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             });
         }
     }
-
-
-
 
     private ComputeWeightInKG(weight: number) {
         var weigh_Kg: number = null;
@@ -285,7 +309,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
 
-
     private SetUIProperties() {
         this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
         this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
@@ -295,13 +318,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     }
 
-
-
-    
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-
 }
 
 

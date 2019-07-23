@@ -1242,9 +1242,14 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
 
             case "SNE":
             case "CNI":
-            case "CSD":
                 {
                     this.CustomerDependencyProperty1 = "AG,CS";
+                    this.CustomerDependencyProperty1IsList = true;
+                    break;
+                }
+            case "CSD":
+                {
+                    this.CustomerDependencyProperty1 = "AG,CS,SG";
                     this.CustomerDependencyProperty1IsList = true;
                     break;
                 }

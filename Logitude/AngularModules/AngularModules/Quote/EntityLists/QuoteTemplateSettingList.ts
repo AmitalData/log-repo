@@ -177,5 +177,15 @@ export class QuoteTemplateSettingList {
         ShowHeaderLabelsContainers: boolean;
 
 
+        SpaceLinesBeforeContainers: number;
+        SpaceLinesBeforePackages: number;
+        SpaceLinesBeforeQuoteHeaders: number;
+        SpaceLinesBeforeQuoteDetails: number;
+        SpaceLinesBeforeHeaders: number;
+        SpaceLinesBeforeFooters: number;
+        SpaceLinesBeforePerContainers:number;
+
+
+
 
 }     

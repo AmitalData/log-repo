@@ -592,7 +592,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 450;
         logWindow.Height = 200;
-        logWindow.WindowArgs = this.CurrentVersion;
+        logWindow.WindowArgs = { CurrentVersion: this.CurrentVersion, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = windowTitle;
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {

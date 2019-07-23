@@ -186,6 +186,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<CardContactProduct> CardContactProducts
+        {
+            get;
+            set;
+        }
         public IDbSet<PartnerType> PartnerTypes
         {
             get;
@@ -4542,6 +4547,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CardExternalCodeByCurrencyMap());
             modelBuilder.Configurations.Add(new BranchMap());
             modelBuilder.Configurations.Add(new CardContactMap());
+            modelBuilder.Configurations.Add(new CardContactProductMap());
             modelBuilder.Configurations.Add(new CardMap());
             modelBuilder.Configurations.Add(new CategoryTypeMap());
             modelBuilder.Configurations.Add(new ChargesGroupMap());
