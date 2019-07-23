@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {ContactPM} from '../../../../Common/EntityPMs/ContactPM';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ContactDatePicker} from '../../../../Controls/ContactDatePicker';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool, FormatTool} from '../../../../Infrastructure/Tools';
 import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
@@ -10,6 +9,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+//import { CardContactProductPM } from '../../../../Common/EntityPMs/CardContactProductPM';
 
 @Component({
     moduleId: module.id,
@@ -31,6 +31,7 @@ export class ContactInputTemplate extends BaseComponent {
     public ShowSearchContacts: boolean = false;
     public ShowSecondPartOfWindow: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
+    public ProductsList: Array<ProductItem> = [];
     constructor() {
         super();
         this.EntityPM = new ContactPM();
@@ -38,7 +39,6 @@ export class ContactInputTemplate extends BaseComponent {
 
         this.Listen();
     }
-
 
     private LoadEntityCompletedEvent: any = null;
     Listen() {
@@ -50,14 +50,11 @@ export class ContactInputTemplate extends BaseComponent {
                     }
                 });
             }
-
         }
     }
 
-
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.LoadEntityCompletedEvent);
-
     }
 
     CopyDomain() {
@@ -81,8 +78,7 @@ export class ContactInputTemplate extends BaseComponent {
         this.IsCustomerVisible = args.IsCustomerVisible;
         this.CardId = args.CardId;
         this.ShowSearchContacts = args.ShowSearchContacts;
-
-       
+               
         if (!AppTool.IsNullOrEmpty(args.CustomerId)) {
             this.CustomerId = args.CustomerId;
         }
@@ -104,6 +100,7 @@ export class ContactInputTemplate extends BaseComponent {
         }
 
         this.SetUIProperties();
+        this.BuildProductsList();
     }
 
     public IsEditingEnabled: boolean = false;
@@ -119,9 +116,7 @@ export class ContactInputTemplate extends BaseComponent {
                 this.IsEditingEmailEnabled = false;
             }
         }
-
-        //this.IsBlockingUnifreightCustomer = this.fatherComponent.IsBlockingUnifreightCustomer;
-
+        
         this.UIProperties.SetEnabled("Email", this.ObjectTableName, this.IsEditingEmailEnabled);
         this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, this.IsEditingEnabled);
@@ -135,14 +130,6 @@ export class ContactInputTemplate extends BaseComponent {
 
         this.UIProperties.SetEnabled("InActive", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetVisibility("InActive", this.ObjectTableName, !this.IsNewEntity);
-
-        //this.UIProperties.SetEnabled("IsAll", this.ObjectTableName, this.IsEditingEnabled);
-        //this.UIProperties.SetEnabled("IsAirExport", this.ObjectTableName, this.IsEditingEnabled);
-        //this.UIProperties.SetEnabled("IsAirImport", this.ObjectTableName, this.IsEditingEnabled);
-        //this.UIProperties.SetEnabled("IsOceanExport", this.ObjectTableName, this.IsEditingEnabled);
-        //this.UIProperties.SetEnabled("IsOceanImport", this.ObjectTableName, this.IsEditingEnabled);
-        //this.UIProperties.SetEnabled("IsInlandDomestic", this.ObjectTableName, this.IsEditingEnabled);
-        //this.UIProperties.SetEnabled("IsCustomsImport", this.ObjectTableName, this.IsEditingEnabled);
 
         this.SetUIProperties_Dates();
     }
@@ -161,6 +148,19 @@ export class ContactInputTemplate extends BaseComponent {
 
         this.UIProperties.SetEnabled("BirthdayReminder", this.ObjectTableName, isBirthdayReminderEnabled);
         this.UIProperties.SetEnabled("AnniversaryReminder", this.ObjectTableName, isAnniversaryReminderEnabled);
+    }
+
+    private BuildProductsList() {
+        this.ProductsList = [];
+
+        //var _productTypeListService: ProductTypeListService = new ProductTypeListService();
+        //_productTypeListService.getAllFromCache().subscribe(result => {
+        //    var fullProductsList = result.Result;
+
+        //    fullProductsList.filter(i => i.InActive == false).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 }).forEach(item => {
+        //        this.ProductsList.push(new ProductItem(item));
+        //    });
+        //});
     }
 
     SelectEmailClicked() {
@@ -475,4 +475,17 @@ export class ContactInputTemplateArgs {
     public BlockEditingEmail: boolean = false;
     public ShowSearchContacts: boolean = false;
     public ShowSecondPartOfWindow: string = null;
+}
+
+export class ProductItem {
+    //private entityList: ProductTypeList;
+    //public get Name() { return this.entityList.Name; }
+    //public get Code() { return this.entityList.Code; }
+    //public get Foreground() { return "#282E30"; }
+    //public get DirectionId() { return this.entityList.Code.substr(1, 1); }
+    //public get TransportModeId() { return this.entityList.Code.substr(0, 1); }
+
+    //constructor(itemList: ProductTypeList) {
+    //    this.entityList = itemList;        
+    //}
 }
