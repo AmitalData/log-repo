@@ -68,6 +68,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string SelloPago { get; set; }
         public DateTime? SATApprovalDate { get; set; }
 
+        public DateTime? FechaPago { get; set; }
+
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }
 

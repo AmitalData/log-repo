@@ -326,13 +326,13 @@ namespace WebFreight.Web.WebServices
                     //message.Properties["CommunicationLogId"] = communicationLogId;
                     //message.Properties["Tenant"] = tenant;
                     //// message.TimeToLive = new TimeSpan(0, 15, 0);
-                    string emailqueueName = "champmessageoutqueue";//WebFreightEntryPoint.GetQueueByEnviroment("champmessageoutqueue");
+                    string queueName = "champmessageoutqueue";//WebFreightEntryPoint.GetQueueByEnviroment("champmessageoutqueue");
                                                                    //QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
 
                     //client.Send(message);
                     if (commlog.CommunicationLogTypeCode == "E")
                     {
-                        emailqueueName = "EmailQueue";
+                        queueName = "EmailQueue";
                     }
 
                     if (commlog.QueueName == "SATInterface")
@@ -350,9 +350,9 @@ namespace WebFreight.Web.WebServices
                         //queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
                         if (!string.IsNullOrEmpty(commlog.QueueName))
                         {
-                            emailqueueName = commlog.QueueName;
+                            queueName = commlog.QueueName;
                         }
-						DbQueueService queueservice = new DbQueueService(commlog.QueueName, tenant);
+						DbQueueService queueservice = new DbQueueService(queueName, tenant);
 						queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
 					}
 
