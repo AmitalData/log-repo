@@ -86,13 +86,6 @@ namespace Logitude.BL.InfrastructureModel
 			 
             all.Add(new SchedulerProcedureDetails()
             {    
-                Code = "ITaskManager", 
-                Name = "ITaskManager", 
-                SearchFields = "ITaskManager,ITaskManager", 
-			});
-			 
-            all.Add(new SchedulerProcedureDetails()
-            {    
                 Code = "PayableARPaymentChequeTask", 
                 Name = "PayableARPaymentChequeTask", 
                 SearchFields = "PayableARPaymentChequeTask,PayableARPaymentChequeTask", 
@@ -110,13 +103,6 @@ namespace Logitude.BL.InfrastructureModel
                 Code = "SFTPSchedulerTask", 
                 Name = "SFTPSchedulerTask", 
                 SearchFields = "SFTPSchedulerTask,SFTPSchedulerTask", 
-			});
-			 
-            all.Add(new SchedulerProcedureDetails()
-            {    
-                Code = "TaskManagerBase", 
-                Name = "TaskManagerBase", 
-                SearchFields = "TaskManagerBase,TaskManagerBase", 
 			});
 			 
             all.Add(new SchedulerProcedureDetails()

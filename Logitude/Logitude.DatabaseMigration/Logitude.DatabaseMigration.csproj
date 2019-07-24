@@ -1261,6 +1261,22 @@
     <Compile Include="Migrations\201907160928096_NewField_BankAccount_CurrencyID.Designer.cs">
       <DependentUpon>201907160928096_NewField_BankAccount_CurrencyID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907171756412_Add_Shipment_Facts_Fields_Khalid.cs" />
+    <Compile Include="Migrations\201907171756412_Add_Shipment_Facts_Fields_Khalid.Designer.cs">
+      <DependentUpon>201907171756412_Add_Shipment_Facts_Fields_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907210505358_ARPayment_FechaPago.cs" />
+    <Compile Include="Migrations\201907210505358_ARPayment_FechaPago.Designer.cs">
+      <DependentUpon>201907210505358_ARPayment_FechaPago.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907210738114_ShipmentFields_To_ComputedShipmentTable.cs" />
+    <Compile Include="Migrations\201907210738114_ShipmentFields_To_ComputedShipmentTable.Designer.cs">
+      <DependentUpon>201907210738114_ShipmentFields_To_ComputedShipmentTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs" />
+    <Compile Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.Designer.cs">
+      <DependentUpon>201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201907211148087_SchedulerProcedure_Nawras.cs" />
     <Compile Include="Migrations\201907211148087_SchedulerProcedure_Nawras.Designer.cs">
       <DependentUpon>201907211148087_SchedulerProcedure_Nawras.cs</DependentUpon>
@@ -1292,6 +1308,10 @@
     <Compile Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.cs" />
     <Compile Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.Designer.cs">
       <DependentUpon>201907231226064_ObjectTable_CodeField_NameField_60.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.cs" />
+    <Compile Include="Migrations\201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.Designer.cs">
+      <DependentUpon>201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2216,6 +2236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.resx">
       <DependentUpon>201907231226064_ObjectTable_CodeField_NameField_60.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.resx">
+      <DependentUpon>201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
