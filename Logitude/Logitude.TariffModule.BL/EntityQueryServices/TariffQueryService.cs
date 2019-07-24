@@ -443,7 +443,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                             Sum += CurrentSurchargePriceCalculation;
                                                         }
 
-                                                        SurchargeItem.Price = CurrentSurchargePriceCalculation;
+                                                        SurchargeItem.Price = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrentSurcharge.CurrencyId, tenant);
                                                         tariffsSummary.Surcharges.Add(SurchargeItem);
                                                     }
 
@@ -469,11 +469,11 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                         tariffsSummary.Name = airline.Card != null ? airline.Card.EnglishName : "";
                         tariffsSummary.EffictiveDate = result.ExpirationDate;
                         tariffsSummary.Remarks = result.Description;
-                        tariffsSummary.decimalprice = Sum + item.price;
+                        tariffsSummary.decimalprice = CalculateLocalAmount((Sum + item.price).Value, currencyId, result.CurrencyId, tenant);
                         tariffsSummary.VersionId = item.TariffVersion + "";
                         tariffsSummary.Id = item.tariffid;
                         tariffsSummary.TotalSurcharge = Sum + "";
-                        tariffsSummary.WholePrice = (Sum + item.price) + "";
+                        tariffsSummary.WholePrice = CalculateLocalAmount((Sum + item.price).Value, currencyId, result.CurrencyId, tenant) + "";
 
                         byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
                         string resultImage = "";
@@ -503,24 +503,32 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             var tenantCurrency = GetTenantCurrency(tenant);
             decimal amountInTariffCurr, amountInConvertedCurr;
 
-            if (tenantCurrency == currencyId)
-                amountInTariffCurr = amount;
-            else
+            if (convertedCurrencyId == currencyId)
             {
-                RatesTableList rateList = RatesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == currencyId);
-                var rate = rateList == null ? 0 : rateList.Rate;
-                amountInTariffCurr = amount * (decimal)rate;
-
+                amountInTariffCurr = amount;
             }
 
-            if (tenantCurrency == convertedCurrencyId)
-                amountInConvertedCurr = amountInTariffCurr;
-
             else
             {
-                RatesTableList rateList = RatesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == convertedCurrencyId);
-                var rate = rateList == null ? 0 : rateList.Rate;
-                amountInTariffCurr = amount / (decimal)rate;
+                if (tenantCurrency == currencyId)
+                    amountInTariffCurr = amount;
+                else
+                {
+                    RatesTableList rateList = RatesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == currencyId);
+                    var rate = rateList == null ? 0 : rateList.Rate;
+                    amountInTariffCurr = amount * (decimal)rate;
+
+                }
+
+                if (tenantCurrency == convertedCurrencyId)
+                    amountInConvertedCurr = amountInTariffCurr;
+
+                else
+                {
+                    RatesTableList rateList = RatesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == convertedCurrencyId);
+                    var rate = rateList == null ? 0 : rateList.Rate;
+                    amountInTariffCurr = amount / (decimal)rate;
+                }
             }
 
             return amountInTariffCurr;
