@@ -1,4 +1,5 @@
-import {Component, OnDestroy}  from '@angular/core';
+declare var window: any;
+import { Component, OnDestroy } from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {AppTool, DateTool, ArrayTool} from '../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -96,6 +97,8 @@ export class OverviewTabComponent implements OnDestroy {
     get MainCarriageCarrierName() { return this.EntityPM.MainCarriageCarrierName; }
     get MainCarriageCarrierNumber() { return this.EntityPM.MainCarriageCarrierNumber; }
     get MasterDepartureDate() { return this.EntityPM.MainCarriageATD != null ? this.EntityPM.MainCarriageATD : this.EntityPM.MainCarriageETD; }
+    get ConnectedHousesCount() { return this.EntityPM.ShipmentConsoleShipments.length; }
+
     public MasterLabel: string = "";
     public CarrierLabel: string = "";
     public CarrierNoLabel: string = "";
@@ -315,6 +318,12 @@ export class OverviewTabComponent implements OnDestroy {
         }
 
         this.BuildMoneyData();
+    }
+
+    ConnectedHousesClicked() {
+        if (this.CurrentSession.CurrentEditComponent.TabsItemsSource.filter(p => p.Code == "SHCO")[0] != null) {
+            this.CurrentSession.CurrentEditComponent.SelectionChanged(this.CurrentSession.CurrentEditComponent.TabsItemsSource.filter(p => p.Code == "SHCO")[0]);
+        }
     }
 }
 class Container {
