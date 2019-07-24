@@ -641,4 +641,24 @@ export class CourierMasterService {
 
         });
     }
+
+    GetPending(CourierMasterId) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetPending?' + 'CourierMasterId=' + CourierMasterId, {
+                headers: authHeader
+            }).map(response => {
+                var KeyValuePairList = response.json();
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = KeyValuePairList;
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }

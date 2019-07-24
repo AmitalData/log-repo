@@ -16,7 +16,8 @@ namespace Logitude.Customs.Data.Repsitories
    public partial class DeclarationCourierStatusRepository:IRepository<DeclarationCourierStatus>
    {
         
-		public List<DeclarationCourierStatus> GetMulti(EntityKeyFields entityKeys)
+
+        public List<DeclarationCourierStatus> GetMulti(EntityKeyFields entityKeys)
         {
 
             DeclarationKeys declarationKeys = entityKeys as DeclarationKeys;
@@ -87,6 +88,21 @@ namespace Logitude.Customs.Data.Repsitories
 
 
         }
+        public List<string> GetPendingByMasterID(int tenant, string CourierMasterId)
+        {
+            IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);
+            var list = q
+                .Where( r=> r.CourierPendingReasonList!=null &&  r.CourierPendingReasonList!="")
+                .Select(r=>r.CourierPendingReasonList)
+                .ToList();
+            var myList = list
+                .Select(p => p.Split(',').ToList()).ToList()
+                .SelectMany(l => l)
+                .Distinct()
+                .ToList();
+            return myList;
+        }
+
         public List<DeclarationCourierStatus> GetByMasterIDDeclarationCourierStatus(int tenant, string CourierMasterId)
         {
             IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);

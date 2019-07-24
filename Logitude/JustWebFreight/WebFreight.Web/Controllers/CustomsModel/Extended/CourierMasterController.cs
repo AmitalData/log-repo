@@ -23,6 +23,8 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Customs.Data.EntityListQueryServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -54,6 +56,27 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+
+        public HttpResponseMessage GetPending(string CourierMasterId)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(MyContext);
+                List<string> result = declarationCourierStatusRepository.GetPendingByMasterID(authToken.Tenant, CourierMasterId);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetStatistic(string CourierMasterId)
         {
             try
