@@ -2878,6 +2878,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CancelledByAPPayment",
+					  						OldFieldName =  "CancelledByAPPayment",
 					  						ObjectTableName =  "PaymentCheque",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2897,6 +2898,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CancelledByAPPayment",
 					  						ListPropertyPath =  "CancelledByAPPayment",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3144,7 +3146,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = PaymentChequeFeature_MB0.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "שמור כטיוטה",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3161,7 +3163,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = PaymentChequeFeature_MB1.Id,
 						Style = "ApproveButtonStyle",
-						LocalDefaultText = null,
+						LocalDefaultText = "אישור",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    

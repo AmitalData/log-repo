@@ -92,18 +92,24 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
     @Input() Max: number;
     @Input() Min: number;
     @Input() RowsCount: number;
-    @Input() ForceDisable: boolean = false;
     // @Input() ForceDirection: string; // for now, its working only for multiline textbox,
 
 
     private _ForceDirection : string;
-    @Input() public get ForceDirection() : string {
-        return this._ForceDirection;
-    }
+    @Input() public get ForceDirection(): string { return this._ForceDirection; }
     public set ForceDirection(v : string) {
         this._ForceDirection = v;
         this.isRTL = this.ForceDirection == "rtl";
+    }
 
+    private _ForceDisable : boolean;
+    @Input() public get ForceDisable(): boolean { return this._ForceDisable; }
+    public set ForceDisable(v : boolean) {
+        this._ForceDisable = v;
+        if(v == true)
+            this.SetDisabled();
+        else
+            this.SetEnabled();
     }
 
 
