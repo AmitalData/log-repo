@@ -288,7 +288,7 @@
                         <tr style="height: 1px;" *ngIf="IsProductsAreaVisible">
                             <td style="vertical-align: top">
                                 <ul>
-                                    <li class="ListItem" *ngFor="let item of ProductsList">
+                                    <li class="ListItem" *ngFor="let item of ProductsList" style="margin-top:10px">
                                         <table>
                                             <tr>
                                                 <td style="width:20px">
@@ -309,6 +309,9 @@
 
                                             </tr>
                                         </table>
+                                    </li>
+                                    <li *ngIf="ProductsList.length==0" style="color:gray;font-size:small">
+                                        No Connected Products
                                     </li>
                                 </ul>
                             </td>

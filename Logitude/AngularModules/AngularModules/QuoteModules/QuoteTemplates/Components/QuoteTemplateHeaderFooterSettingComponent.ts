@@ -436,8 +436,18 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     set SpaceLinesBefore(value: number) {
         if (this.QuoteTemplateSettingPM) {
 
-            if (this.QuoteTemplateSectionTypeName == "Header") this.QuoteTemplateSettingPM.SpaceLinesBeforeHeaders = value;
-            else if (this.QuoteTemplateSectionTypeName == "Footer") this.QuoteTemplateSettingPM.SpaceLinesBeforeFooters = value;
+            if (this.QuoteTemplateSectionTypeName == "Header") {
+                if (this.QuoteTemplateSettingPM.SpaceLinesBeforeHeaders != value) {
+                    this.QuoteTemplateSettingPM.SpaceLinesBeforeHeaders = value;
+                    this.SaveChanges();
+                }
+            }
+            else if (this.QuoteTemplateSectionTypeName == "Footer") {
+                if (this.QuoteTemplateSettingPM.SpaceLinesBeforeFooters != value) {
+                    this.QuoteTemplateSettingPM.SpaceLinesBeforeFooters = value;
+                    this.SaveChanges();
+                }
+            }
            
         }
 

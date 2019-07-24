@@ -18,6 +18,8 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
     public DataContext: ARPaymentGeneralTabComponent = this;
     private ScreenCode: string = "ARPayment.GeneralTabScreen";
     public DisplaySATSettings: boolean = false;
+    public DisplayFechaPago: boolean = false;
+
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -27,6 +29,11 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
             this.DisplaySATSettings = true;
             if (this.EntityPM.PaymentInvoices.length > 0 && !AppTool.IsNullOrEmpty(this.EntityPM.MetodoPagoCode)) {
                 this.EntityPM.UIProperties.SetEnabled("MetodoPagoCode", this.ObjectTableName, false);
+            }
+
+            var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FPG" && d.TenantNumber == SessionLocator.Tenant)[0];
+            if (featureToggle) {
+                this.DisplayFechaPago = true;
             }
 
         }
@@ -211,6 +218,20 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM.SelloPago != newValue) {
             this.EntityPM.SelloPago = newValue;
             this.ValidateTipoCadenaPagoFields();
+        }
+    }
+
+    get FechaPago() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.FechaPago;
+        }
+        else
+            return null;
+    }
+    set FechaPago(newValue: Date) {
+        if (this.EntityPM.FechaPago != newValue) {
+            this.EntityPM.FechaPago = newValue;
+             
         }
     }
 
