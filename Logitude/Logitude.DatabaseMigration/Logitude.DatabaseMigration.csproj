@@ -2156,6 +2156,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.resx">
       <DependentUpon>201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907031511508_NewTable_GLAccountCounters.resx">
       <DependentUpon>201907031511508_NewTable_GLAccountCounters.cs</DependentUpon>
     </EmbeddedResource>
