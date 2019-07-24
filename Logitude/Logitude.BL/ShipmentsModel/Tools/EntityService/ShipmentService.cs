@@ -290,6 +290,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
 
+                if(!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
+                {
+                    Shipment houseShipment = entityRepository.GetSingleShipment(entityPM.MasterCreatedFromHouseId, tenant);
+
+                    if (houseShipment != null)
+                    {
+                        houseShipment.MasterShipmentDataId = entityPM.Id;
+                        houseShipment.ComputedShipmentNumber = entityPM.ShipmentNumber;
+                        entityRepository.Update(houseShipment);
+                        entityRepository.SubmitChanges();
+
+                        this.RunRegistryDateProcedure(houseShipment.Id);
+
+                        calculateProfit = true;
+                        calculatePayables = true;
+                        calculateReceivables = true;
+                    }
+                }
+
                 foreach (ConsoleShipmentPM itemPM in entityPM.ShipmentConsoleShipments)
                 {
                     itemPM.MasterShipmentDataId = this.entityPM.Id;
@@ -301,7 +320,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentPickUpDeliveryRepository.SubmitChanges();
 
                 this.InitializeBookingData();
-
 
                 GetForeignFields();
                 BuildActivityLog();
@@ -568,11 +586,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
-
-
-
-
+        
         private void UpdateWareHouseEntry()
         {
             List<WarehouseEntry> warehouseEntryLists = null;
