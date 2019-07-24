@@ -4,7 +4,7 @@ import { BaseComponent } from '../../../Infrastructure/Components/LogitudeCompon
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { TariffDomainService } from '../../../TariffModule/Services/TariffDomainService';
+import { TariffDomainService, SurchargeSummary, TariffSummery } from '../../../TariffModule/Services/TariffDomainService';
 import { TariffSearchSummary } from '../../../TariffModule/Services/TariffDomainService';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
@@ -225,6 +225,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     private ComputeVolume() {
         this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
+    }
+
+    ShowTariffclicked(item: TariffSearchSummary) {
+        item.IsShown = !item.IsShown;
     }
 
     SearchButtonClicked() {

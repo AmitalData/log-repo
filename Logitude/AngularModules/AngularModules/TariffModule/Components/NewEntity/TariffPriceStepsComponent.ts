@@ -80,6 +80,10 @@ export class TariffPriceStepsComponent extends BaseComponent {
 
         var errors: string[] = [];
 
+        if (AppTool.IsNullOrEmpty(this.DefaultPriceSteps)) {
+            errors.push("Price steps Field is Required");
+        }
+
         var isValidSort: boolean = true;
         var SortedItemStep: number = 0;
 
