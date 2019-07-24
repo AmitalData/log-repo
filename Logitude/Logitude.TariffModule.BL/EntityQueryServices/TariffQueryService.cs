@@ -660,16 +660,15 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                         if (UsedMesurment.Code == "PRVL" || UsedMesurment.Code == "PRFR")
                                                         {
                                                             CurrentSurchargePriceCalculation = ((valueofSurcharge * myQuantity * item.price) / 100);
-                                                            Sum += CurrentSurchargePriceCalculation;
                                                         }
                                                         else
                                                         {
                                                             CurrentSurchargePriceCalculation = (valueofSurcharge * myQuantity);
-                                                            Sum += CurrentSurchargePriceCalculation;
                                                         }
 
                                                         SurchargeItem.Price = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrentSurcharge.CurrencyId, tenant);
-                                                        tariffsSummary.Surcharges.Add(SurchargeItem);
+                                                    Sum += SurchargeItem.Price;
+                                                    tariffsSummary.Surcharges.Add(SurchargeItem);
                                                     }
 
 
@@ -694,13 +693,13 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                         tariffsSummary.Name = airline.Card != null ? airline.Card.EnglishName : "";
                         tariffsSummary.EffictiveDate = result.ExpirationDate;
                         tariffsSummary.Remarks = result.Description;
-                        tariffsSummary.decimalprice = CalculateLocalAmount((Sum + item.price).Value, currencyId, result.CurrencyId, tenant);
+                        tariffsSummary.decimalprice = (decimal?)Sum+CalculateLocalAmount((item.price).Value, currencyId, result.CurrencyId, tenant);
                         tariffsSummary.VersionId = item.TariffVersion + "";
                         tariffsSummary.Id = item.tariffid;
                         tariffsSummary.TotalSurcharge = Sum + "";
-                        tariffsSummary.WholePrice = CalculateLocalAmount((Sum + item.price).Value, currencyId, result.CurrencyId, tenant) + "";
+                    tariffsSummary.WholePrice = (decimal?)Sum + CalculateLocalAmount((item.price).Value, currencyId, result.CurrencyId, tenant) + "";
 
-                        byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
+                    byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
                         string resultImage = "";
                         if (filedata != null)
                         {
