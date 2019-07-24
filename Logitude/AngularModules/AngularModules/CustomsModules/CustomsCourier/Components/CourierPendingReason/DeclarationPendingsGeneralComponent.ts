@@ -393,7 +393,7 @@ export class DeclarationPendingLine extends BaseComponent {
         this.entityPM = EntityPM;
         
         this._StatusItems.push({ 'Key': "A", 'Value': "Active" });
-        this._StatusItems.push({ 'Key': "S", 'Value': "Solve" });
+        this._StatusItems.push({ 'Key': "S", 'Value': "Solved" });
         this.parent = Parent;
     }
 
