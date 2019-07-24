@@ -1445,8 +1445,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
             var MyTable = this.MyParentClass.AllTables.filter(a => a.Code == this.DimensionTableCode);
             if (MyTable && MyTable.length > 0) {
                 this.Code = MyTable[0].DefaultFilterBy;
-                if (this.code && this.MyParentClass && this.MyParentClass.AllFieldsDataSource) {
-                    var field = this.MyParentClass.AllFieldsDataSource.filter(d => d.Code == this.code && d.DWObjectTableCode == this.DimensionTableCode)[0];
+                if (this.code && this.MyParentClass && this.MyParentClass.AllFieldsObsList) {
+                    var field = this.MyParentClass.AllFieldsObsList.filter(d => d.Code == this.code && d.DWObjectTableCode == this.DimensionTableCode)[0];
                     if (field) {
                         this.LOVAdditionalColumns = field.LOVAdditionalColumns;
                     }
