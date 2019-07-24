@@ -1293,6 +1293,10 @@
     <Compile Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.Designer.cs">
       <DependentUpon>201907231226064_ObjectTable_CodeField_NameField_60.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.cs" />
+    <Compile Include="Migrations\201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.Designer.cs">
+      <DependentUpon>201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2216,6 +2220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.resx">
       <DependentUpon>201907231226064_ObjectTable_CodeField_NameField_60.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.resx">
+      <DependentUpon>201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
