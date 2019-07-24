@@ -1289,6 +1289,10 @@
     <Compile Include="Migrations\201907231351418_missing_migrations.Designer.cs">
       <DependentUpon>201907231351418_missing_migrations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.cs" />
+    <Compile Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.Designer.cs">
+      <DependentUpon>201907231226064_ObjectTable_CodeField_NameField_60.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2141,6 +2145,17 @@
     <EmbeddedResource Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.resx">
       <DependentUpon>201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907171756412_Add_Shipment_Facts_Fields_Khalid.resx">
+      <DependentUpon>201907171756412_Add_Shipment_Facts_Fields_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907210505358_ARPayment_FechaPago.resx">
+      <DependentUpon>201907210505358_ARPayment_FechaPago.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907210738114_ShipmentFields_To_ComputedShipmentTable.resx">
+      <DependentUpon>201907210738114_ShipmentFields_To_ComputedShipmentTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.resx">
+      <DependentUpon>201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs</DependentUpon>
     <EmbeddedResource Include="Migrations\201907031511508_NewTable_GLAccountCounters.resx">
       <DependentUpon>201907031511508_NewTable_GLAccountCounters.cs</DependentUpon>
     </EmbeddedResource>
@@ -2197,6 +2212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907231351418_missing_migrations.resx">
       <DependentUpon>201907231351418_missing_migrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.resx">
+      <DependentUpon>201907231226064_ObjectTable_CodeField_NameField_60.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
