@@ -32,6 +32,7 @@ using Logitude.Customs.Def.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {  // moran 6.10.14 - Task 8066 -->
@@ -48,6 +49,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
         {
+            var declarationNumber = customResponse?.MessageToAgent?.RelatedEntity?.entityIdKey1;
+            
+            string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
+            using (var disposableToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5101ResponseService.Update"))
+            {
+                UpdateIt(customResponse, requestParams);
+            }
+
+        }
+        public void UpdateIt(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
+        { 
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myQueryService = new DeclarationQueryService(context);
 
