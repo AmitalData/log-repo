@@ -1261,6 +1261,22 @@
     <Compile Include="Migrations\201907160928096_NewField_BankAccount_CurrencyID.Designer.cs">
       <DependentUpon>201907160928096_NewField_BankAccount_CurrencyID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907171756412_Add_Shipment_Facts_Fields_Khalid.cs" />
+    <Compile Include="Migrations\201907171756412_Add_Shipment_Facts_Fields_Khalid.Designer.cs">
+      <DependentUpon>201907171756412_Add_Shipment_Facts_Fields_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907210505358_ARPayment_FechaPago.cs" />
+    <Compile Include="Migrations\201907210505358_ARPayment_FechaPago.Designer.cs">
+      <DependentUpon>201907210505358_ARPayment_FechaPago.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907210738114_ShipmentFields_To_ComputedShipmentTable.cs" />
+    <Compile Include="Migrations\201907210738114_ShipmentFields_To_ComputedShipmentTable.Designer.cs">
+      <DependentUpon>201907210738114_ShipmentFields_To_ComputedShipmentTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs" />
+    <Compile Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.Designer.cs">
+      <DependentUpon>201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201907211148087_SchedulerProcedure_Nawras.cs" />
     <Compile Include="Migrations\201907211148087_SchedulerProcedure_Nawras.Designer.cs">
       <DependentUpon>201907211148087_SchedulerProcedure_Nawras.cs</DependentUpon>
