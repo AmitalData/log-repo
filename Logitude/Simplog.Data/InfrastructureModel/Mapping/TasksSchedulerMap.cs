@@ -44,7 +44,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(150)
                 .IsUnicode(false);
 
-            this.Property(t => t.ServiceClassName)
+            this.Property(t => t.ProcedureCode)
            .HasMaxLength(100)
            .IsUnicode(false);
 
@@ -86,7 +86,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.RepeatInMinutes).HasColumnName("RepeatInMinutes");
             this.Property(t => t.Satarday).HasColumnName("Satarday");
 
-            this.Property(t => t.ServiceClassName).HasColumnName("ServiceClassName");
+            this.Property(t => t.ProcedureCode).HasColumnName("ProcedureCode");
             this.Property(t => t.StartDateTime).HasColumnName("StartDateTime");
             this.Property(t => t.Sunday).HasColumnName("Sunday");
             this.Property(t => t.Thursday).HasColumnName("Thursday");

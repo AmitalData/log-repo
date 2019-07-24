@@ -99,8 +99,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             _arpaymentPM.IsFullAccounting = IsFullAccActivated();
 
-            ValidateFullAccounting(_arpaymentPM);
-
 
             isNewEntity = true;
             entityPM = _arpaymentPM;
@@ -149,6 +147,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             TraceConnected();
 
             FillFullAccountingPaymentInvoices(_arpaymentPM);
+
+            ValidateFullAccounting(_arpaymentPM); // depends on Payment.PaymentInvoices
 
 
             // PaymentCheque And CashBook
@@ -1790,9 +1790,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void ValidateFullAccounting(ARPaymentPM _payment)
         {
-            if (!_payment.IsFullAccounting)
-                return;
+            if (_payment.IsFullAccounting)
+            {
+                CheckLinesAmountToReconcileLimit(_payment);
+                CheckLinesAmountToReconcileTotal(_payment);
+            }
 
+        }
+
+        private void CheckLinesAmountToReconcileLimit(ARPaymentPM _payment)
+        {
             ContactPM loggedContact = GetLoggedContactPM(_payment.Tenant);
             bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
 
@@ -1802,20 +1809,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     d.AmountToReconcile > CalculateInvoiceAmount(d, _payment.GLAccountRecoMethodCode == "0")
                 ))
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Reconciliations.O.ErrorsInSelectedLines", _payment.Tenant, showLocal));
+        }
+
+        private void CheckLinesAmountToReconcileTotal(ARPaymentPM _payment)
+        {
+
+            ContactPM loggedContact = GetLoggedContactPM(_payment.Tenant);
+            bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
 
 
-            // Validate sum of line's amount to reconcile
-            decimal amount2reconcile = _payment.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);
+            decimal amount2reconcile = GetAmountToReconcileTotalFromPaymentInvoices(_payment);
+
+            //decimal amount2reconcile = _payment.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);
             if (_payment.OpenAmount == null)
             {
                 _payment.OpenAmount = 0;
             }
-               
+
             if (amount2reconcile > (decimal)_payment.OpenAmount)
                 throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
+        }
 
+        private static decimal GetAmountToReconcileTotalFromPaymentInvoices(ARPaymentPM _payment)
+        {
+            bool useLocalRecoMethod = _payment.GLAccountRecoMethodCode == "0";
+            decimal amount2reconcile = 0;
 
-
+            if (useLocalRecoMethod)
+                amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.LocalAmount);   // amount to reconcile = Local Amount
+            else
+                amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.ForeignAmount); // amount to reconcile = Foreign Amount
+            return amount2reconcile;
         }
 
         void UpdateFullAccountPaymentAmount(ARPaymentPM paymentPM, bool useLocalRecoMethod)
