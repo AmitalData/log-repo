@@ -118,6 +118,7 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
             {
                 if (_OnStartDone) return true;
                 _OnStartDone = true;
+                DoneItemsInRange = new Dictionary<DateTime, int>();
 
 
 
@@ -195,9 +196,10 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
                         break;
                     }
 
-
+                    LastActivity = DateTime.UtcNow;
                     ProccessReceivedMessage();
                     scope.Complete();
+                    LogDoneItemInMemory();
                 }
             }
         }
@@ -259,7 +261,7 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
                         {
                             AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
                             var from = @interface.Partner + "," + @interface.Code;
-                            
+
                             LastActivity = DateTime.UtcNow;
                             while (true)
                             {
@@ -269,6 +271,7 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
                                 {
                                     break;
                                 }
+                                LastActivity = DateTime.UtcNow;
                                 Exec(customsPartnerFtpDetails, @interface, analyzeQueueRepository, analyzeQueue,1);
                                 LogDoneItemInMemory();
                             }
@@ -280,7 +283,7 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
                         }
                         catch (Exception e)
                         {
-                            ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "ArtemusAnalyzerWorkerRole : Run() Method", null);
+                            ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "CustomsAnalyzeQueueWR : Run() Method", null);
                             Thread.Sleep(5000);
                         }
                     }

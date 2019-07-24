@@ -12,6 +12,7 @@ import { SendALLCorrectRequestParams } from '../../DataContract/RequestParams/Se
 import { GatepassRequestMessageRequestParams } from '../../DataContract/RequestParams/GatepassRequestMessageRequestParams';
 import { SendALLStorageSiteRequestParams } from '../../DataContract/RequestParams/SendALLStorageSiteRequestParams';
 import { SendUnCorrectDocumentsRequestParams } from '../../DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
+import { AppTool } from '../../../Infrastructure/Tools';
 
 
 @Injectable()
@@ -536,12 +537,17 @@ export class CourierMasterService {
 
     }
 
-    GetSendALLDeclarationsStatusRequest(CourierMasterId) {
+    GetSendALLDeclarationsStatusRequest(CourierMasterId, testerSendOption: string = null) {
+        let sTesterSendOption = '';
+        if (!AppTool.IsNullOrEmpty(testerSendOption)){
+            sTesterSendOption =   testerSendOption
+        }
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId, {
+            return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId +
+                '&testerSendOption=' +  sTesterSendOption, {
                 headers: authHeader
             }).map(response => {
                 var messString = response.json();

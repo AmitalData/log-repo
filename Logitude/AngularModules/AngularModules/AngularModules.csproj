@@ -178,6 +178,7 @@
     <Content Include="CustomsModules\CustomsMaintenance\Components\AddEditCustomsAirlineComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\AddEditInterfaceManagementComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\ClosedTableNotExistedComponent.html" />
+    <Content Include="CustomsModules\CustomsMaintenance\Components\CourierSendStatusComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsClosedTablesComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsDocumentsDefinitionComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsPartnerFtpListComponent.html" />
@@ -481,6 +482,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\AddEditCustomsAirlineComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\AddEditInterfaceManagementComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\ClosedTableNotExistedComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CourierSendStatusComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsClosedTablesComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsDocumentsDefinitionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsPartnerFtpListComponent.ts" />
