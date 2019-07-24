@@ -117,7 +117,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             }
 
 
-
+            entity.FechaPago = entityPM.FechaPago;
 
 
             if (entityPM.StatusCode == "AD" && entityPM.OpenAmount == 0)

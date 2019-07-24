@@ -21,7 +21,7 @@
                                 <img src="./Images/ToggleIcon.png" />
 
                                 <div class="ToggleButtonMenu">
-                                    <button (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
+                                    <button *ngIf="IsDownloadExcelTemplateVisible" (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
                                     <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
                                     <button (click)="CopyVersionClicked()">Copy into new Version</button>
                                     <button *ngIf="EntityPM.TypeCode == 'AFC'" (click)="AllInChargesClicked()">All-In Charges</button>

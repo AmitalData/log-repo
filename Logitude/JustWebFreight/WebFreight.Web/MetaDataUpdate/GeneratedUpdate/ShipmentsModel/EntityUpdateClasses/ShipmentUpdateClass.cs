@@ -128,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  true,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Shipment,Shipments,Simplog.ShipmentLib.NewShipmentCommand,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -38422,6 +38423,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "INTTRABookingTransStatusName",
+					  						OldFieldName =  "INTTRABookingTransStatusName",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -38441,6 +38443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "INTTRABookingTransStatusName",
 					  						ListPropertyPath =  "INTTRABookingTransStatusName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -38480,6 +38483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "INTTRABookingStatusName",
+					  						OldFieldName =  "INTTRABookingStatusName",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -38499,6 +38503,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "INTTRABookingStatusName",
 					  						ListPropertyPath =  "INTTRABookingStatusName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -39494,6 +39499,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature ShipmentFeature_DOWNUPLPACAKGES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOWNUPLPACAKGES", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.DOWNUPLPACAKGES", NameTextCodeDefaultText = @"Download/Upload Packages" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ShipmentFeature_INTTRABookingSimulator = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTTRABookingSimulator", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.INTTRABookingSimulator", NameTextCodeDefaultText = @"Send INTTRA Booking" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_NEWMASTERFROMHOUSE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWMASTERFROMHOUSE", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.NEWMASTERFROMHOUSE", NameTextCodeDefaultText = @"New Master From House" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
@@ -42973,6 +42980,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentBPackagesDownloadPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.DownloadPackages", DefaultText = "Download",LocalDefaultText = @"Download", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentBPackagesUploadPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.UploadPackages", DefaultText = "Upload",LocalDefaultText = @"Upload", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBMasterNewMaster = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Master.NewMaster", DefaultText = "New Master",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

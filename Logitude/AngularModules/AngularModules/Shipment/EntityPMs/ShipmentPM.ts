@@ -4235,6 +4235,15 @@ export class ShipmentPM {
         }
     }
 
+    private masterCreatedFromHouseId: string;
+    public get MasterCreatedFromHouseId() { return this.masterCreatedFromHouseId; }
+    public set MasterCreatedFromHouseId(newValue: string) {
+        if (this.masterCreatedFromHouseId != newValue) {
+            this.masterCreatedFromHouseId = newValue;
+            this.MarkAsDirty("MasterCreatedFromHouseId");
+        }
+    }
+
     private convertShipmentToLCL: boolean;
     public get ConvertShipmentToLCL() { return this.convertShipmentToLCL; }
     public set ConvertShipmentToLCL(newValue: boolean) { if (this.convertShipmentToLCL != newValue) { this.convertShipmentToLCL = newValue; this.MarkAsDirty("ConvertShipmentToLCL"); } }

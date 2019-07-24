@@ -424,6 +424,35 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     }
 
 
+    get SpaceLinesBefore() {
+        var spaceLinesBefore: number = 1;
+        if (this.QuoteTemplateSettingPM) {
+            if (this.QuoteTemplateSectionTypeName == "Header") spaceLinesBefore = this.QuoteTemplateSettingPM.SpaceLinesBeforeHeaders;
+            else if (this.QuoteTemplateSectionTypeName == "Footer") spaceLinesBefore = this.QuoteTemplateSettingPM.SpaceLinesBeforeFooters;
+           
+        }
+        return spaceLinesBefore;
+    }
+    set SpaceLinesBefore(value: number) {
+        if (this.QuoteTemplateSettingPM) {
+
+            if (this.QuoteTemplateSectionTypeName == "Header") {
+                if (this.QuoteTemplateSettingPM.SpaceLinesBeforeHeaders != value) {
+                    this.QuoteTemplateSettingPM.SpaceLinesBeforeHeaders = value;
+                    this.SaveChanges();
+                }
+            }
+            else if (this.QuoteTemplateSectionTypeName == "Footer") {
+                if (this.QuoteTemplateSettingPM.SpaceLinesBeforeFooters != value) {
+                    this.QuoteTemplateSettingPM.SpaceLinesBeforeFooters = value;
+                    this.SaveChanges();
+                }
+            }
+           
+        }
+
+    }
+    //SpaceLinesBefore
     
     SaveButtonClicked() {
        this.ValidateFields();

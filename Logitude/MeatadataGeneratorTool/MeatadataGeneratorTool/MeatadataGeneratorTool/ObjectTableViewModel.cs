@@ -1366,6 +1366,20 @@ namespace MeatadataGeneratorTool
             set { lookUp2 = value; FirePropertyChanged("LookUp2"); }
         }
 
+        string codeField;
+        public string CodeField
+        {
+            get { return codeField; }
+            set { codeField = value; FirePropertyChanged("CodeField"); }
+        }
+
+        string nameField;
+        public string NameField
+        {
+            get { return nameField; }
+            set { nameField = value; FirePropertyChanged("NameField"); }
+        }
+
         string dependencyFilter1;
         public string DependencyFilter1
         {

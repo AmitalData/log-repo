@@ -333,6 +333,20 @@ export class TariffPM {
     public set IsSurchargeUpdate(newValue: boolean) { if (this.isSurchargeUpdate != newValue) { this.isSurchargeUpdate = newValue; this.MarkAsDirty("IsSurchargeUpdate"); } }
        
 	 
+     
+	private deletedLinesExpirationDates: string[];
+    get  DeletedLinesExpirationDates() {
+        if (this.deletedLinesExpirationDates == null) {
+            this.deletedLinesExpirationDates = [];
+        }
+
+        return this.deletedLinesExpirationDates;
+    }
+    set  DeletedLinesExpirationDates(newValue: string[]) {
+        if (this.deletedLinesExpirationDates != newValue) {
+            this.deletedLinesExpirationDates = newValue;
+        }
+    }
 
     public OldEntityPM: TariffPM;
 		

@@ -384,6 +384,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                             var result: ServiceResponse = myResult;
                             if (!result.HasError) {
                                 this.ReconcileExternalPagePM = result.Result;
+                                this.FillGridsData();
                             }
                             this.CurrentSession.StopBusyIndicator();
 

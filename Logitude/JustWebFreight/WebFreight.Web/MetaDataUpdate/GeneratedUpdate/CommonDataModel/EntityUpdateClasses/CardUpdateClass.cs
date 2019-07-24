@@ -97,6 +97,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Code",
 			      				    LookUp2 =  "EnglishName",
+			      				    CodeField =  "Code",
+			      				    NameField =  "EnglishName",
 			      				    LovDisplayMemberPath =  "CalculatedEnglishName",
 			      				    LovDisplayMemberPathLocal =  "CalculatedLocalName",
 			      				    DependencyFilter1 =  "PartnerTypeId",
@@ -122,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Card",
-			      				    Code =  "cc0c",
+			      				    Code =  "b70a",
 			      				    Name =  "Card",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -133,6 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Card,Cards,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
