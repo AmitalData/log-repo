@@ -109,7 +109,7 @@
                                 <div *ngIf="menuItem.LabelTextCodeCode!=null">{{menuItem.LabelTextCodeCode | TextCodeTranslationPipe}}</div>
                                 <div *ngIf="menuItem.LabelTextCodeCode==null">{{menuItem.DisplayText}}</div>
                             </button>
-                            <div *ngIf="menuItem.MenuButtonType=='separator'" class="ToggleButtonSeparator">
+                            <div *ngIf="menuItem.MenuButtonType=='separator' && !menuItem.IsHidden" class="ToggleButtonSeparator">
                             </div>
                         </div>
                     </div>
