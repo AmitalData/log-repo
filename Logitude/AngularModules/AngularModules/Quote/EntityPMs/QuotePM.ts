@@ -513,6 +513,11 @@ export class QuotePM {
     public set ExpirationDate(newValue: Date) { if (this.expirationDate != newValue) { this.expirationDate = newValue; this.MarkAsDirty("ExpirationDate"); } }
        
 	 
+    private startDate: Date;
+    public get StartDate() { return this.startDate; }
+    public set StartDate(newValue: Date) { if (this.startDate != newValue) { this.startDate = newValue; this.MarkAsDirty("StartDate"); } }
+       
+	 
     private isFreightBySteps: boolean;
     public get IsFreightBySteps() { return this.isFreightBySteps; }
     public set IsFreightBySteps(newValue: boolean) { if (this.isFreightBySteps != newValue) { this.isFreightBySteps = newValue; this.MarkAsDirty("IsFreightBySteps"); } }
