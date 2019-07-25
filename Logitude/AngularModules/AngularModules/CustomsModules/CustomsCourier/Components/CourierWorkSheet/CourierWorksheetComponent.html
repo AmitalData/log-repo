@@ -524,6 +524,20 @@
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
+                                                                <!-- HOLD -->
+                                                                <table *ngIf="_SelectedTabFilter.Code=='HOLD' ">
+                                                                    <tr>
+                                                                        <td class="col1Label" style="width:80px; font-size: 13px; font-weight:bold; padding-right: 10px;">
+                                                                            {{'Pending'}}
+                                                                        </td>
+
+                                                                        <td style="width:100px">
+                                                                            <ComboBox [ItemsSource]="_PendingCodes" [Binding]="'Value'" [SelectedItem]="SelectedPendingCodeFilter" (SelectedItemChanged)="HOLDFilterClicked($event)"></ComboBox>
+                                                                        </td>
+
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
                                                             </td>
 
                                                             <td></td>
