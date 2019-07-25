@@ -1171,55 +1171,64 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             DocumentsFilingPM mappedPM = DocumentsFilingHybridMapping.MapEntityToHybrid(extDocPM);
 
                             string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedPM);
-                            List<QueueTask> queue1Tasks = new List<QueueTask>();
 
-
-                            queue1Tasks.Add(new QueueTask()
+                            if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))//DeclarationPrint
                             {
-                                Action = "DocumentsFiling.Upsert",
-                                Parameters = new List<Parameter>()
+                                Send2UServer(mappedPM, loggedUserId, extDocPM.Id);
+                            }
+                            else
+                            {
+
+                                List<QueueTask> queue1Tasks = new List<QueueTask>();
+
+
+                                queue1Tasks.Add(new QueueTask()
+                                {
+                                    Action = "DocumentsFiling.Upsert",
+                                    Parameters = new List<Parameter>()
                                              {
                                                 new Parameter{ Name = "DocumentMetaData", Order = 1, Value = xmlstring }
                                              }
-                            });
+                                });
 
-                            logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue1Tasks);
-                            Communications.AddCommunicationLog(logParams);
+                                logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue1Tasks);
+                                Communications.AddCommunicationLog(logParams);
 
-                            if (!sendOnlyMetaData)
-                            {
-
-                                CommunicationsParams task2logParams = new CommunicationsParams()
+                                if (!sendOnlyMetaData)
                                 {
-                                    Tenant = tenant,
-                                    CommunicationLogTypeCode = "Q",
-                                    QueueName = "externaltasksqueue" + tenant + 2,
-                                    Priority = 1,
-                                    InOut = "O",
-                                    Status = "W",
-                                    LoggingUserId = loggedUserId,
-                                    LoggingObjectTableId = table.Id,
-                                    LoggingEntityId = extDocPM.Id,
-                                    Subject = "Documents Filing Uploading binary file",
-                                    FolderName = "ExternalTasksQueue",
-                                };
 
-                                // adding file data task
-                                List<QueueTask> queue2Tasks = new List<QueueTask>();
-                                string base64String = System.Convert.ToBase64String(fileData, 0, fileData.Length);
-                                queue2Tasks.Add(
-                                    new QueueTask()
+                                    CommunicationsParams task2logParams = new CommunicationsParams()
                                     {
-                                        Action = "DocumentsFiling.UploadBinaryData",
-                                        Parameters = new List<Parameter>()
-                                    {
+                                        Tenant = tenant,
+                                        CommunicationLogTypeCode = "Q",
+                                        QueueName = "externaltasksqueue" + tenant + 2,
+                                        Priority = 1,
+                                        InOut = "O",
+                                        Status = "W",
+                                        LoggingUserId = loggedUserId,
+                                        LoggingObjectTableId = table.Id,
+                                        LoggingEntityId = extDocPM.Id,
+                                        Subject = "Documents Filing Uploading binary file",
+                                        FolderName = "ExternalTasksQueue",
+                                    };
+
+                                    // adding file data task
+                                    List<QueueTask> queue2Tasks = new List<QueueTask>();
+                                    string base64String = System.Convert.ToBase64String(fileData, 0, fileData.Length);
+                                    queue2Tasks.Add(
+                                        new QueueTask()
+                                        {
+                                            Action = "DocumentsFiling.UploadBinaryData",
+                                            Parameters = new List<Parameter>()
+                                        {
                                          new Parameter{ Name = "DocumentMetaData", Order = 1,Value =  xmlstring},
                                          new Parameter{ Name = "FileBinaryData",Order = 2,Value =  base64String},
-                                    }
-                                    });
+                                        }
+                                        });
 
-                                task2logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
-                                Communications.AddCommunicationLog(task2logParams);
+                                    task2logParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
+                                    Communications.AddCommunicationLog(task2logParams);
+                                }
                             }
                             LogMessagingUtil.Instance.AppendLine("AddToTasksQueue (DocumentsFilingService)");
                             
@@ -1234,7 +1243,29 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
+        public void Send2UServer(DocumentsFilingPM myDocumentsFilingPM, string loggingUserId, string extDocPMId)
+        {
+            var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
+               Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
+               "GGGHQHYBRID", "LogitudeTaskByUrouter")
+            {
+                Tenant = myDocumentsFilingPM.Tenant,
+                objectTableName = "DocumentsFiling",
+                CommunicationLoggingEntityReference = myDocumentsFilingPM.Id,
+                EntityId = extDocPMId,
+                UserId = loggingUserId,
+                CommunicationSubject = "Documents Filing Data-HYBRID VIA USERVER",
 
+                //LogitudeFile = myFile,
+            };
+
+
+            var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService
+                <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, DocumentsFilingPM>(
+                amitalCustomFileCommunicationModel, myDocumentsFilingPM);
+            bool pImmediately = true;
+            var info = myUServerCommunicationService.Send(pImmediately);
+        }
 
         private List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet;
         public void SetChangeSet(List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet)
