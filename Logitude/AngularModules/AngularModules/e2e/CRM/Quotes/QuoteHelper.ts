@@ -10,13 +10,118 @@ export class QuoteHelper {
 
   }
 
-  SelectDicrctionTransportMode( Direction: string, TransportMode: string) {
+  SelectDicrctionTransportMode( Direction: string, TransportMode: string, QuoteType: string) {
+    var directionBtn: any;
+    var transportModeBtn: any;
+    var shipmentTypeBtn: any;
+    var EC = protractor.ExpectedConditions;
+    var directionID: string;
+    var shipmentTypeID: string;
 
+    if (TransportMode == 'A' && QuoteType == '') {
+
+      var EC = protractor.ExpectedConditions;
+      browser.wait(EC.elementToBeClickable(element(by.css('.RadioButton'))), 20000).then(a => {
+        if(Direction == 'Export'){
+          directionBtn = element(by.id('DirectionRadio_0E'));
+  
+        }
+        else if(Direction == 'Import'){
+          directionBtn = element(by.id('DirectionRadio_0I'));
+  
+        }
+        else if(Direction == 'Domestic'){
+          directionBtn = element(by.id('DirectionRadio_0D'));
+
+        }
+        else if(Direction == 'Drop'){
+          directionBtn = element(by.id('DirectionRadio_0R'));
+        }
+        browser.executeScript("arguments[0].click();", directionBtn.getWebElement());
+
+        transportModeBtn = element(by.id('TransportModeRadio_0A'));
+        browser.executeScript("arguments[0].click();", transportModeBtn.getWebElement());
+      });
+    }
+    else if (TransportMode == 'O' && QuoteType != '') {
+
+      var EC = protractor.ExpectedConditions;
+      browser.wait(EC.elementToBeClickable(element(by.css('.RadioButton'))), 20000).then(a => {
+        if(Direction == 'Export'){
+          directionBtn = element(by.id('DirectionRadio_0E'));
+  
+        }
+        else if(Direction == 'Import'){
+          directionBtn = element(by.id('DirectionRadio_0I'));
+  
+        }
+        else if(Direction == 'Domestic'){
+          directionBtn = element(by.id('DirectionRadio_0D'));
+
+        }
+        else if(Direction == 'Drop'){
+          directionBtn = element(by.id('DirectionRadio_0R'));
+        }
+        browser.executeScript("arguments[0].click();", directionBtn.getWebElement());
+        
+        transportModeBtn = element(by.id('TransportModeRadio_0O'));
+        browser.executeScript("arguments[0].click();", transportModeBtn.getWebElement());
+
+        if(QuoteType == 'FCL'){
+          shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0FCLD'));  
+        }
+        else if (QuoteType == 'LCL') {
+          shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0LCLD'));  
+        }
+        else if(QuoteType == 'OG')
+        shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0MyGO'));  
+    
+        browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
+
+      });
+    }
+    else if (TransportMode == 'I' && QuoteType != '') {
+
+      var EC = protractor.ExpectedConditions;
+      browser.wait(EC.elementToBeClickable(element(by.css('.RadioButton'))), 20000).then(a => {
+        if(Direction == 'Export'){
+          directionBtn = element(by.id('DirectionRadio_0E'));
+  
+        }
+        else if(Direction == 'Import'){
+          directionBtn = element(by.id('DirectionRadio_0I'));
+  
+        }
+        else if(Direction == 'Domestic'){
+          directionBtn = element(by.id('DirectionRadio_0D'));
+
+        }
+        else if(Direction == 'Drop'){
+          directionBtn = element(by.id('DirectionRadio_0R'));
+        }
+        browser.executeScript("arguments[0].click();", directionBtn.getWebElement());
+        
+        transportModeBtn = element(by.id('TransportModeRadio_0I'));
+        browser.executeScript("arguments[0].click();", transportModeBtn.getWebElement());
+
+        if (QuoteType == 'FTL') {
+          shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0FTL'));  
+        }
+        else if (QuoteType == 'LTL') {
+          shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0LTL'));  
+        }
+        else if((QuoteType == 'IG'))
+        shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0MyGI'));  
+    
+        browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
+
+      });
+    }
   }
 
-  CreateAndCloseNewQuote(MasterDirectType: string, CancelBtnId: string,Direction:string,TransportMode:string) {
+  CreateAndCloseNewQuote(Direction:string,TransportMode:string, QuoteType:string) {
     this.Helper.WaitByIdAndClick('NewQuote');
-    this.SelectDicrctionTransportMode( Direction,TransportMode);
+    this.SelectDicrctionTransportMode( Direction,TransportMode,QuoteType);
 
     this.Helper.WaitByIdAndClick("CancelQuote");
   }

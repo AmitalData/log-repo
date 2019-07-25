@@ -11,11 +11,11 @@ export class NewQuote {
 
 
   constructor() {
-    this.Helper = new FieldsHelper();
+   this.Helper = new FieldsHelper();
     this.Quotes = new GeneralFunctions();
     this.QuoteHepler = new QuoteHelper();
-   
   }
+
   DoOperations() {
     this.Quotes.GoToMainMenu('General.MH.CRM');
     this.Quotes.SelectMenuWorkSpaceTabs('CRMQUT');
@@ -24,22 +24,22 @@ export class NewQuote {
   
   }
 
-  CreateQuote(Direction: string, TransportMode: string, ShipmentType: string) {
-    this.QuoteHepler.CreateAndCloseNewQuote(Direction,TransportMode,ShipmentType);
+  CreateQuote(Direction: string, TransportMode: string, QuoteType: string) {
+    this.QuoteHepler.CreateAndCloseNewQuote(Direction,TransportMode,QuoteType);
     if (TransportMode == 'A') {
         
       var QuoteNumber = this.Quotes.RandomNum();
-      this.FillQuoteFields(QuoteNumber,  TransportMode ,Direction, ShipmentType);
+      this.FillQuoteFields(QuoteNumber,  TransportMode ,Direction, QuoteType);
       this.Helper.WaitBusyIndicator();
 
       
      // this.GeneralFunction.UseSearchBox('Shipment_Search', QuoteNumber);
-      //this.EditShipmentTabs.EditTabs(QuoteNumber, ShipmentLevelCode, ShipmentType,Direction);
+      //this.EditShipmentTabs.EditTabs(QuoteNumber, ShipmentLevelCode, QuoteType,Direction);
 
     }
-    else if ((TransportMode == 'O' || TransportMode == 'I') && ShipmentType != '') {
+    else if ((TransportMode == 'O' || TransportMode == 'I') && QuoteType != '') {
       var QuoteNumber = this.Quotes.RandomNum();
-      this.FillQuoteFields(QuoteNumber,  TransportMode ,Direction, ShipmentType);
+      this.FillQuoteFields(QuoteNumber,  TransportMode ,Direction, QuoteType);
       this.Helper.WaitBusyIndicator();
 
       //this.GeneralFunction.UseSearchBox('Shipment_Search', QuoteNumber);
@@ -48,7 +48,7 @@ export class NewQuote {
 
   }
 
-  FillQuoteFields(QuoteNumber: string, TransportMode: string, Direction: string, ShipmentType: string) {
+  FillQuoteFields(QuoteNumber: string, TransportMode: string, Direction: string, QuoteType: string) {
 
   }
 
