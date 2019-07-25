@@ -248,3 +248,12 @@ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_
          SET @SQLObjectFields ='CREATE TRIGGER Trigger_AutomaticLastUpdateDateObjectFields ON ObjectFields AFTER UPDATE  AS  BEGIN UPDATE ObjectFields SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;'
          EXEC (@SQLObjectFields);
  end
+
+
+   --CustomPickLists
+ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_AutomaticLastUpdateDateCustomPickLists'))
+ Begin
+ declare @SQLCustomPickLists  as varchar(8000)
+         SET @SQLCustomPickLists ='CREATE TRIGGER Trigger_AutomaticLastUpdateDateCustomPickLists ON CustomPickLists AFTER UPDATE  AS  BEGIN UPDATE CustomPickLists SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;'
+         EXEC (@SQLCustomPickLists);
+ end

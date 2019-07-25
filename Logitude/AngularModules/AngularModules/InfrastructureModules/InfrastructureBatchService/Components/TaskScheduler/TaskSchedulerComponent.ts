@@ -459,10 +459,10 @@ export class TaskSchedulerItemClass extends BaseComponent {
         }
     }
 
-    get ServiceClassName() { return this.EntityPM.ServiceClassName; }
-    set ServiceClassName(newValue: string) {
-        if (this.EntityPM.ServiceClassName != newValue) {
-            this.EntityPM.ServiceClassName = newValue;
+    get ProcedureCode() { return this.EntityPM.ProcedureCode; }
+    set ProcedureCode(newValue: string) {
+        if (this.EntityPM.ProcedureCode != newValue) {
+            this.EntityPM.ProcedureCode = newValue;
         }
     }
 

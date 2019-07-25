@@ -2629,7 +2629,19 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
-        public IDbSet<CardContactProduct> CardContactProducts { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<CardContactProduct> CardContactProducts
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
 
 
         //public IDbSet<UsersReleaseNotesDisplay>  { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

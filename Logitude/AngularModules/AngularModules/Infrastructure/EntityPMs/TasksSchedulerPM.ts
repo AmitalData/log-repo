@@ -80,9 +80,9 @@ export class TasksSchedulerPM {
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
-    private serviceClassName: string;
-    public get ServiceClassName() { return this.serviceClassName; }
-    public set ServiceClassName(newValue: string) { if (this.serviceClassName != newValue) { this.serviceClassName = newValue; this.MarkAsDirty("ServiceClassName"); } }
+    private procedureCode: string;
+    public get ProcedureCode() { return this.procedureCode; }
+    public set ProcedureCode(newValue: string) { if (this.procedureCode != newValue) { this.procedureCode = newValue; this.MarkAsDirty("ProcedureCode"); } }
        
 	 
     private triggerType: string;

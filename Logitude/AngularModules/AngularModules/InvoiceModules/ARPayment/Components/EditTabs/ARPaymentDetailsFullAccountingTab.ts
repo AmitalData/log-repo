@@ -145,12 +145,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     ngOnInit() {
         this.LoadPaymentMethods();
 
-        this.subscribeEntityApproved();
-        if(this.isFullAccounting &&  this.EntityPM.StatusCode == 'AD'){ // Approved
-            this.IsDisplayOnly = true;
-            this.checkLedgerCreated();
-        }
-
+        this.checkLedgerCreated();
     }
 
     ngOnDestroy() {
@@ -166,43 +161,34 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this._IsDisplayOnly = v;
     }
 
-    subscribeEntityApproved() {
-
-        if(this.isFullAccounting){
-            ARPaymentEventManager.ARPaymentApproved.subscribe((res: any) =>
-            {
-                this.IsDisplayOnly = true;
-                // this.checkLedgerCreated(); // check after load
-             });
-        }
-    }
-
-
     checkLedgerCreated() {
 
-        if(this.EntityPM.Id){
+        if (this.EntityPM.Id && this.isFullAccounting && this.EntityPM.StatusCode == 'AD')
+        {
 
             this.StartBusyIndicator('checkLedgerCreated');
             this._JournalExtendedPMService.GetByAccountingEntityId(this.EntityPM.Id, '3').subscribe(myResult => // 3- ARPayment
             {
                 console.log("_JournalExtendedPMService.GetByAccountingEntityId", myResult);
                 this.StopBusyIndicator('checkLedgerCreated');
+
                 var res: ServiceResponse = myResult;
-                var createdJournal:JournalPM = res.Result;
+                var createdJournal: JournalPM = res.Result;
 
-                if(createdJournal){
+                if (createdJournal)
+                {
                     this.IsDisplayOnly = !createdJournal.IsLedgerCreated;
-                    if(!this.IsDisplayOnly)
+                    if (!this.IsDisplayOnly)
                         this.GetData();
-                }else{
+                }
+                else
+                {
                     console.log("[Check Ledger] no journal created");
-
                 }
 
             });
 
         }
-
 
     }
 
@@ -499,10 +485,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     this.SetUIProperties();
                     this.GetData();
 
-                    if(this.isFullAccounting &&  this.EntityPM.StatusCode == 'AD'){ // Approved
-                        this.IsDisplayOnly = true;
-                        this.checkLedgerCreated();
-                    }
+                    this.checkLedgerCreated();
                 }
 
 
