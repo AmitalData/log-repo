@@ -48,7 +48,7 @@ export class EditTabsComponent {
     // this.QuickSearch.UseQuickSearch('SR1545342');
   }
 
-  EditTabs(shipperRef1:string,LogitudeShipType:string,ShipmentType: string) {
+  EditTabs(shipperRef1:string,LogitudeShipType:string,ShipmentType: string,Direction: string) {
 
 
     this.Helper.WaitByIdAndClick('Shipment.TH.Overview');

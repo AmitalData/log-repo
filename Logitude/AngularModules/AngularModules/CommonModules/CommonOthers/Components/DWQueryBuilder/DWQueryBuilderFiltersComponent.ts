@@ -92,7 +92,7 @@ export class DWQueryBuilderFiltersComponent implements OnInit {
         var tempData = item.FilterItems;
         tempData.push(DWObjectField);
         item.FilterItems = tempData;
-        item.width = "190px";
+       
     }
     AddGroup(item) {
         var DWObjectField = new DWObjectFieldsDetails(null, item.MyParentClass);
