@@ -8,8 +8,9 @@ namespace Logitude.DatabaseMigration.Migrations
         public override void Up()
         {
             AddColumn("dbo.Quotes", "StartDate", c => c.DateTime(nullable: true));
+            Sql("Update Quotes set StartDate = dateadd(d,- ExpirationDays, ExpirationDate)");
         }
-        
+
         public override void Down()
         {
             DropColumn("dbo.Quotes", "StartDate");
