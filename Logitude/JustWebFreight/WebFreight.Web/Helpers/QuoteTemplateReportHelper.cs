@@ -223,7 +223,7 @@ namespace Logitude.BL.Helpers
             pdfConverter.PdfHeaderOptions.HeaderHeight = 1;
             if (!headerSection.IsExcluded)
             {
-                pdfConverter.PdfHeaderOptions.HeaderHeight = setting.PageHeaderAreaHeight * 28;
+                pdfConverter.PdfHeaderOptions.HeaderHeight = setting.PageHeaderAreaHeight * 29;
                 if (setting.SpaceLinesBeforeHeaders > 0)
                 {
                     //4 * 7 = 28;
@@ -246,7 +246,7 @@ namespace Logitude.BL.Helpers
 
 
             double footerTopMargin = (double)setting.SpaceLinesBeforeFooters * 21;
-            float heightFooter = (setting.PageFooterAreaHeight * 28) + (float)footerTopMargin;
+            float heightFooter = (setting.PageFooterAreaHeight * 29) + (float)footerTopMargin;
             if (!footerSection.IsExcluded)
             {
                 pdfConverter.PdfFooterOptions.FooterHeight = (heightFooter + 10);
@@ -369,7 +369,7 @@ namespace Logitude.BL.Helpers
             if (type != "Header" || !quoteTemplateBuildArges.IsResultPDF)
             {
                 var perc = isPdf ? 2.2 : 1;
-                var spaceLinesBefore = type == "Header" ? GetHtmlStringLine(setting.SpaceLinesBeforeHeaders, perc) : GetHtmlStringLine(setting.SpaceLinesBeforeFooters, perc);
+                var spaceLinesBefore = type == "Header" ? GetHtmlStringLine(setting.SpaceLinesBeforeHeaders, false,perc) : GetHtmlStringLine(setting.SpaceLinesBeforeFooters, false, perc);
                 HtmlTemplate.Append(spaceLinesBefore);
             }
      
@@ -549,15 +549,21 @@ namespace Logitude.BL.Helpers
         #endregion
 
 
-        public string GetHtmlStringLine(int line , double per=1)
+        public string GetHtmlStringLine(int line, bool firstSectionInBody  , double per=1)
         {
            string result = string.Empty;
-       
+            string firstSectionInBodyId = string.Empty;
             if (line > 0)
             {
                 double lineheight = (double)line * (double)30;
                 lineheight = per * (double)lineheight;
-                result = "<div  style='height:" + lineheight.ToString() + "px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>";
+                if (firstSectionInBody)
+                {
+                    lineheight = lineheight - 10;
+                    firstSectionInBodyId = "FirstSectionInBody";
+                }
+
+                result = "<div id='" + firstSectionInBodyId + "'  style='height:" + lineheight.ToString() + "px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>";
             }
             return result;
         }
@@ -604,17 +610,20 @@ namespace Logitude.BL.Helpers
                 }
             }
 
+            quoteTemplateBuildArges.FirstSectionInBody =true;
             foreach (QuoteTemplateSectionPM section in templateSections.Where(s => s.QuoteTemplateSectionTypeCode != "PF" && s.QuoteTemplateSectionTypeCode != "PH" && !s.IsExcluded).OrderBy(x => x.Order).ToList())
             {
+             
                 if (section.QuoteTemplateSectionTypeCode == "PP" || section.QuoteTemplateSectionTypeCode == "PC")
                 {
                     SetSectionTypeCode(quoteTemplateBuildArges, section.QuoteTemplateSectionTypeCode);
                     byte[] pricingdata = GetQuoteTemplatePricingHtmlData(quoteTemplateBuildArges);
 
-                    if (pricingdata != null)
+                    if (pricingdata != null && pricingdata.Length>0)
                     {
                         htmlString += GetBodyString(pricingdata);
                     }
+                    
                 }
                 else if (section.QuoteTemplateSectionTypeCode == "QD" || section.QuoteTemplateSectionTypeCode == "QH")
                 {
@@ -645,23 +654,18 @@ namespace Logitude.BL.Helpers
                     }
 
                 }
-                else if (section.QuoteTemplateSectionTypeCode == "PB")
-                {
-
-                    htmlString += "<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>";
-                }
+                else if (section.QuoteTemplateSectionTypeCode == "PB") htmlString += "<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>";
                 else
                 {
-
                     byte[] sectiondata = DownloadQuoteTemplateSectionDataFile(section.SectionDocId, tenant);
-
                     if (sectiondata != null)
                     {
                         htmlString += GetBodyString(sectiondata);
-
-
                     }
                 }
+
+                if (quoteTemplateBuildArges.FirstSectionInBody == true && (htmlString.Contains("FirstSectionInBody") || section.QuoteTemplateSectionTypeCode == "S" || section.QuoteTemplateSectionTypeCode == "PB")) quoteTemplateBuildArges.FirstSectionInBody = false;
+
             }
 
 
@@ -770,7 +774,7 @@ namespace Logitude.BL.Helpers
             {
                 // Space Line
                 var line = pricingSectionType == "PP" ? setting.SpaceLinesBeforePackages : setting.SpaceLinesBeforeContainers;
-                HtmlTemplate.Append(GetHtmlStringLine(line));
+                HtmlTemplate.Append(GetHtmlStringLine(line,quoteTemplateBuildArges.FirstSectionInBody));
 
                 if (pricingSectionType == "PP")
                 {
@@ -1008,7 +1012,7 @@ namespace Logitude.BL.Helpers
                         HtmlTemplate.Append("<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>");
                     }
 
-                    HtmlTemplate.Append(GetHtmlStringLine(setting.SpaceLinesBeforePerContainers));
+                    HtmlTemplate.Append(GetHtmlStringLine(setting.SpaceLinesBeforePerContainers, quoteTemplateBuildArges.FirstSectionInBody));
 
                     //HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
@@ -1309,7 +1313,7 @@ namespace Logitude.BL.Helpers
             {
                 if (quoteTemplateBuildArges.RequestArea != "Header")
                 {
-                    HtmlTemplate.Append(GetHtmlStringLine(setting.SpaceLinesBeforeQuoteHeaders));
+                    HtmlTemplate.Append(GetHtmlStringLine(setting.SpaceLinesBeforeQuoteHeaders, quoteTemplateBuildArges.FirstSectionInBody));
                 }
 
 
@@ -1611,7 +1615,7 @@ namespace Logitude.BL.Helpers
             if (QuoteTemplaetDetailsFieldList.Count() > 0)
             {
 
-                HtmlTemplate.Append(GetHtmlStringLine(setting.SpaceLinesBeforeQuoteDetails));
+                HtmlTemplate.Append(GetHtmlStringLine(setting.SpaceLinesBeforeQuoteDetails, quoteTemplateBuildArges.FirstSectionInBody));
                 List<QuoteTemplateDetailsFieldPM> QuoteTemplaetDetailsColum0;
                 List<QuoteTemplateDetailsFieldPM> QuoteTemplaetDetailsColum1;
 
@@ -3537,7 +3541,7 @@ namespace Logitude.BL.Helpers
         public List<QuoteTemplateSectionPM> QuoteTemplateSectionPMLists { get; set; }
         public bool HideQuoteHeaderFromPdf { get; set; }
         public string RequestArea { get; set; }
-
+        public bool FirstSectionInBody { get; set; }
     }
 
 
