@@ -191,7 +191,7 @@ namespace CommunicationWorkerRole
 
 
                                             object[] ArrArgs = args.ToArray();
-                                            var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ServiceClassName), ArrArgs) as TaskManagerBase;
+                                            var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ProcedureCode), ArrArgs) as TaskManagerBase;
                                             Task.Status = "In progress";
                                             WRItem.Task = Task;
                                             WRItem.queueservice = queueservice;

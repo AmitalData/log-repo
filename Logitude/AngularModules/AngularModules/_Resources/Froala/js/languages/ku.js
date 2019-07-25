@@ -1,7 +1,7 @@
 /*!
- * froala_editor v2.9.3 (https://www.froala.com/wysiwyg-editor)
+ * froala_editor v2.9.0 (https://www.froala.com/wysiwyg-editor)
  * License https://froala.com/wysiwyg-editor/terms/
- * Copyright 2014-2019 Froala Labs
+ * Copyright 2014-2018 Froala Labs
  */
 
 (function (factory) {
@@ -88,22 +88,7 @@ $.FE.LANGUAGE['ku'] = {
 
     // Lists
     "Ordered List": "لیستی داواکراو",
-    "Default": "Destçûnî",
-    "Lower Alpha": "Alpha kêm",
-    "Lower Greek": "Grek",
-    "Lower Roman": "Roman",
-    "Upper Alpha": "Alpha",
-    "Upper Roman": "Rûsî",
-
     "Unordered List": "لیستی داوانەکراو",
-    "Circle": "Çember",
-    "Disc": "Disc",
-    "Square": "Meydan",
-
-    // Line height
-    "Line Height": "Hewayê",
-    "Single": "Yekoyek",
-    "Double": "Dûcar",
 
     // Indent
     "Decrease Indent": "کەمکردنەوەی بۆشایی بەجێهێشتن",
@@ -253,7 +238,7 @@ $.FE.LANGUAGE['ku'] = {
     "Clear Formatting": "سڕینەوەی شێواز",
 
     // Save
-    "Save": "Rizgarkirin",
+    "Save": "",
 
     // Undo, redo
     "Undo": "گەڕانەوە",

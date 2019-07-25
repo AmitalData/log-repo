@@ -96,7 +96,7 @@ export class AddEditTaskSchedulerComponent  {
         if (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") {
             this.GeneralAreaHeight = "310px";
             if (this.EntityPM.SchedulerDetailsData) {
-                this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
+                //this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
             }
             else if (this.EntityPM.Id) {
                 this.LoadSchedulerDetailsData();
@@ -253,7 +253,7 @@ export class AddEditTaskSchedulerComponent  {
 
 
         if (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") {
-            this.DataContext.ServiceClassName = (this.DataContext.Type == "FTP" ? "FTPSchedulerTask" : "SFTPSchedulerTask");
+            this.DataContext.ProcedureCode = (this.DataContext.Type == "FTP" ? "FTPSchedulerTask" : "SFTPSchedulerTask");
 
 
             if (AppTool.IsNullOrEmpty(this.DataContext.UserName)) errors.push(msg.replace("%FieldName", "UserName"));
@@ -290,8 +290,8 @@ export class AddEditTaskSchedulerComponent  {
             console.log("error");
         }
 
-        if (AppTool.IsNullOrEmpty(this.DataContext.ServiceClassName)) {
-            errors.push(msg.replace("%FieldName", "Service Class Name"));
+        if (AppTool.IsNullOrEmpty(this.DataContext.ProcedureCode)) {
+            errors.push(msg.replace("%FieldName", "Procedure Code"));
         }
 
         if (AppTool.IsNullOrEmpty(this.DataContext.TriggerType)) {
@@ -331,7 +331,7 @@ export class AddEditTaskSchedulerComponent  {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
 
-            if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
+            //if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
 
             this.CurrentSession.StartBusyIndicatorSaving();
           
@@ -393,7 +393,7 @@ export class AddEditTaskSchedulerComponent  {
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('Name');
-        this.myCloner.AddField('ServiceClassName');
+        this.myCloner.AddField('ProcedureCode');
         this.myCloner.AddField('Description');
         this.myCloner.AddField('InActive');
         this.myCloner.AddField('StartDateTime');

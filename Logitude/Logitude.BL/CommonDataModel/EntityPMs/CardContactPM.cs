@@ -44,5 +44,30 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsCustomsImport { get; set; }
         [DataMember]
         public bool IsInlandDomestic { get; set; }
+
+        private List<CardContactProductPM> cardContactProducts;
+        [Include]
+        [Association("CardContactProductCardContact", "Id", "CardContactId")]
+        [Composition]
+        [DataMember]
+        public virtual List<CardContactProductPM> CardContactProducts
+        {
+            get
+            {
+
+                if (this.cardContactProducts == null)
+                {
+                    cardContactProducts = new List<CardContactProductPM>();
+                }
+                return this.cardContactProducts;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    cardContactProducts = value;
+                }
+            }
+        }
     }
 }

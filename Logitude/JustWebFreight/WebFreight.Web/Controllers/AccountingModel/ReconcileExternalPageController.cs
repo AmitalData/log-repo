@@ -304,10 +304,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ServiceResponse response = new ServiceResponse();
                 ContactPM loggedContact = GetLoggedContact(authToken.Email, tenant);
                 bool showlocal = !loggedContact.DontShowLocal;
+
                 if (islastAppprovedPage)
                 {
-                    ReconcileExternalPageLineQueryService externalPageLineQueryService = new ReconcileExternalPageLineQueryService(tenant);
-                    ReconcileExternalPageLine ReconcileExternalPageLine= externalPageLineQueryService.GetReconcileExternalPageLine(reconcileExternalPage.Id, tenant);
+                    ReconcileExternalPageLine ReconcileExternalPageLine= GetReconciledPageLine(reconcileExternalPage, tenant);
+                 
                     if (ReconcileExternalPageLine == null)
                     {
                         response.Result = null;
@@ -382,6 +383,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
 
             return loggedContactPM;
+        }
+
+        private ReconcileExternalPageLine GetReconciledPageLine(ReconcileExternalPagePM reconcileExternalPage , int tenant)
+        {
+            ReconcileExternalPageLineQueryService externalPageLineQueryService = new ReconcileExternalPageLineQueryService(tenant);
+            return externalPageLineQueryService.GetReconcileExternalPageLine(reconcileExternalPage.Id, tenant);
+
         }
     }
 }

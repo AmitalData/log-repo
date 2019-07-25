@@ -1,4 +1,4 @@
-﻿export class AWBWizardArgs {
+export class AWBWizardArgs {
     EntityPM: any;
     ShipmentLevelCode: string;
     IsNewEntity: boolean;
@@ -15,6 +15,7 @@ export class NewShipmentComponentArgs {
     public IsCopyFromShipment: boolean = false;
     public IsCreatedFromMasterHouses: boolean = false;
     public IsCreatedFromCustomerOverview: boolean = false;
+    public IsMasterCreatedFromHouse: boolean = false;
 }
 export class FSRWizardArgs {
     EntityPM: any;
