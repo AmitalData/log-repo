@@ -684,10 +684,11 @@ namespace WebFreight.Web.Helpers
                 {
                     byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
 
-                    Thread thread = new Thread(() => { DatabaseInitializer.RunOnSeconderyDB = true; buildReportDataResult = BuildReportDataProvider(reportFliter, filters); });
-                    thread.Start();
-                    thread.Join();
-
+                    //Thread thread = new Thread(() => { DatabaseInitializer.RunOnSeconderyDB = true; buildReportDataResult = BuildReportDataProvider(reportFliter, filters); });
+                    ////thread.Abort()
+                    //thread.Start();
+                    //thread.Join();
+                    buildReportDataResult = BuildReportDataProvider(reportFliter, filters);
                     if (buildReportDataResult.DataProvider == null && buildReportDataResult.Exception == null)
                     {
                         buildReportDataResult.Exception = new Exception("Data Provider is missing");

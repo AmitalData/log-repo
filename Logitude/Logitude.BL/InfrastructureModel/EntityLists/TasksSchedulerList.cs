@@ -23,7 +23,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public DateTime? NextRunTime { get; set; }
          public string LastRunResult { get; set; }
         public bool InActive  { get; set; }
-        public string ServiceClassName { get; set; }
+        public string ProcedureCode { get; set; }
         public string TriggerType { get; set; } // Daily,mounthly … 
         public bool Satarday  { get; set; }
         public bool Sunday { get; set; }

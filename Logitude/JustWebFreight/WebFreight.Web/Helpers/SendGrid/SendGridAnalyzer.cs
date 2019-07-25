@@ -102,6 +102,13 @@ namespace WebFreight.Web.Helpers.SendGrid
 
                 if (emailsList != null)
                 {
+                    if (emailsList.Count == 0)
+                    {
+                        myAnalyzeQueue.Status = "D";
+                        myAnalyzeQueue.ErrorMessage = null;
+                        analyzeQueueRepository.Update(myAnalyzeQueue);
+                        analyzeQueueRepository.SubmitChanges();
+                    }
                     foreach (var item in emailsList)
                     {
                         if (item.CommunicationLogCreateDate != null)

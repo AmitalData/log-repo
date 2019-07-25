@@ -289,6 +289,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeAgentComputed(entityPM, entityPoco);
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
+                UpdateShipmentComputedFields();
+
+                if(!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
+                {
+                    Shipment houseShipment = entityRepository.GetSingleShipment(entityPM.MasterCreatedFromHouseId, tenant);
+
+                    if (houseShipment != null)
+                    {
+                        houseShipment.MasterShipmentDataId = entityPM.Id;
+                        houseShipment.ComputedShipmentNumber = entityPM.ShipmentNumber;
+                        entityRepository.Update(houseShipment);
+                        entityRepository.SubmitChanges();
+
+                        this.RunRegistryDateProcedure(houseShipment.Id);
+
+                        calculateProfit = true;
+                        calculatePayables = true;
+                        calculateReceivables = true;
+                    }
+                }
 
                 foreach (ConsoleShipmentPM itemPM in entityPM.ShipmentConsoleShipments)
                 {
@@ -301,7 +321,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentPickUpDeliveryRepository.SubmitChanges();
 
                 this.InitializeBookingData();
-
 
                 GetForeignFields();
                 BuildActivityLog();
@@ -534,6 +553,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (entityComputedFields != null)
             {
+                MapComputedFields(entityComputedFields, entityPM);             
                 shipmentComputedFieldsRepository.Update(entityComputedFields);
             }
 
@@ -541,7 +561,39 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         }
 
-        private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
+        private void MapComputedFields(ShipmentComputedFields entityComputedFields, ShipmentPM entityPM)
+        {
+            entityComputedFields.FirstPickupLocation = entityPM.FirstPickupLocation;
+            entityComputedFields.Commodity = entityPM.AWBCommodityItemNumber;
+
+            string myContainersNumbers = null;
+
+            if (entityPM.ShipmentPackages != null)
+            {
+                foreach (ShipmentPackagePM packagePM in entityPM.ShipmentPackages.Where(p=>p.ChangeSetOp != ChangeSetOperation.Delete))
+                {
+                    if (string.IsNullOrEmpty(myContainersNumbers))
+                    {
+                        myContainersNumbers = packagePM.ContainerNumber;
+                    }
+                    else
+                    {
+                        myContainersNumbers += ", " + packagePM.ContainerNumber;
+                    }
+                }
+                
+                if (!string.IsNullOrEmpty(myContainersNumbers) && myContainersNumbers.Length > 1000)
+                {
+                    myContainersNumbers = myContainersNumbers.Substring(0, 1000);
+                }
+            }
+
+            entityComputedFields.ContainersNumbers = myContainersNumbers;
+
+
+            }
+
+            private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
         {
             if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
             {
@@ -568,11 +620,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-
-
-
-
-
+        
         private void UpdateWareHouseEntry()
         {
             List<WarehouseEntry> warehouseEntryLists = null;
@@ -6637,6 +6685,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentDeliveryPM myLastDelivery = deliveries.FirstOrDefault();
             ShipmentPickUpPM myFirstPickup = pickups.FirstOrDefault();
 
+            ComputeShipmentPickupDeliveryFields(myLastDelivery, myFirstPickup);
+
+
             this.CountryForStatisticsId(myLastDelivery);
             this.ComputeOrigin(myFirstPickup);
 
@@ -6768,6 +6819,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        private void ComputeShipmentPickupDeliveryFields(ShipmentDeliveryPM myLastDelivery, ShipmentPickUpPM myFirstPickup)
+        {
+            if (entityComputedFields != null)
+            {
+                if (myFirstPickup != null)
+                {
+                    entityComputedFields.FirstPickupATA = myFirstPickup.ATA;
+                    entityComputedFields.FirstPickupATD = myFirstPickup.ATD;
+                }
+
+                if (myLastDelivery != null)
+                {
+                    entityComputedFields.FinalDeliveryATA = myLastDelivery.ATA;
+                    entityComputedFields.FinalDeliveryATD = myLastDelivery.ATD;
+                    entityComputedFields.FinalDeliveryETA = myLastDelivery.ETA;
+                    entityComputedFields.FinalDeliveryETD = myLastDelivery.ETD;
+
+                }
+            }
+
         }
 
         private void CountryForStatisticsId(ShipmentDeliveryPM myLastDelivery)
@@ -7034,6 +7107,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             else
             {
+                this.entityPM.FirstPickupLocation = null;
                 if (myFirstPickup != null)
                 {
                     switch (myFirstPickup.PickUpDeliveryFromTypeCode)
@@ -7046,6 +7120,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                     if (myPartnerAddress != null)
                                     {
                                         this.entityPM.Origin = myPartnerAddress.City;
+                                        this.entityPM.FirstPickupLocation = myPartnerAddress.City;
+
                                     }
                                 }
 
@@ -7060,6 +7136,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                     if (myPort != null)
                                     {
                                         this.entityPM.Origin = myPort.EnglishName;
+                                        this.entityPM.FirstPickupLocation = myPort.EnglishName;
+
                                     }
                                 }
 
@@ -7072,6 +7150,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 if (!string.IsNullOrEmpty(myCity))
                                 {
                                     this.entityPM.Origin = myCity;
+                                    this.entityPM.FirstPickupLocation = myCity;
+
                                 }
 
                                 break;

@@ -295,7 +295,16 @@ export class TariffSearchSummary {
     VersionId: string;
     TotalSurcharge: string;
     WholePrice: string;
+    Surcharges: Array<SurchargeSummary>;
+    AllIn: string;
+    IsShown: boolean = false;
+}
 
+
+export class SurchargeSummary {
+    Code: string;
+    Name: string;
+    Price: number;  
 }
 
 export class ExcelTariffLines {

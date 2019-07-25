@@ -60,6 +60,29 @@ declare @DIM_CurrenciesParentTenantNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_CurrenciesParentTenantNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_CurrenciesParentTenantNewId,0,'DIM_Currencies','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_CustomPickListsNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CustomPickListsNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy) Values(@DIM_CustomPickListsNewId,0,'DIM_CustomPickLists','DIM_CustomPickLists','Dimension','false','[Value]')  
+--Fields --
+declare @DIM_CustomPickListsIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CustomPickListsIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_CustomPickListsIdNewId,0,'DIM_CustomPickLists','[Id]','Id','Text','true',0,15,'true','false','false','false','false','false')  
+declare @DIM_CustomPickListsCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CustomPickListsCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_CustomPickListsCodeNewId,0,'DIM_CustomPickLists','[Code]','Code','nText','true',0,100,'false','false','true','false','false','false')  
+declare @DIM_CustomPickListsValueNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CustomPickListsValueNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom) Values(@DIM_CustomPickListsValueNewId,0,'DIM_CustomPickLists','[Value]','Value','nText','true',0,1000,'false','false','true','[Code],[Is Multiple Choice]','false','false','false')  
+declare @DIM_CustomPickListsIsMultipleChoiceNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CustomPickListsIsMultipleChoiceNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_CustomPickListsIsMultipleChoiceNewId,0,'DIM_CustomPickLists','[Is Multiple Choice]','Is Multiple Choice','Boolean','false',0,0,'false','false','true','false','false','false')  
+declare @DIM_CustomPickListsSourceTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CustomPickListsSourceTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_CustomPickListsSourceTenantNewId,0,'DIM_CustomPickLists','[Source Tenant]','Source Tenant','Integer','true',0,0,'false','false','false','false','false','false')  
+declare @DIM_CustomPickListsParentTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_CustomPickListsParentTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_CustomPickListsParentTenantNewId,0,'DIM_CustomPickLists','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','false','false','false','false')  
+------------------------------------------------------------------------------------
 declare @DIM_DatesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy) Values(@DIM_DatesNewId,0,'DIM_Dates','DIM_Dates','Dimension','false','[Full Date]')  

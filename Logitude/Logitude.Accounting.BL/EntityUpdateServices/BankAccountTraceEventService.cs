@@ -17,6 +17,7 @@ using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -35,6 +36,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             // get the logged contact.
             ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
+            string eventNotes = "";
+            //Type bankAccountTypePM = entityPM.GetType();
+         
+            //PropertyInfo[] properties = bankAccountTypePM.GetProperties();
+            //PropertyInfo[] pocoProperties = entityPOCO.GetType().GetProperties();
+            //foreach (PropertyInfo pi in properties)
+            //{
+            //    var pmPropertyName = pi.Name;
+            //    var pmPropertyValue = pi.GetValue(entityPM, null);
+               
+            //    var pocoProperty = pocoProperties.Where(d => d.Name == pmPropertyName).FirstOrDefault();
+            //    var pocoPropertyValue = pocoProperty.GetValue(entityPOCO);
+            //    if(pocoPropertyValue != pmPropertyValue)
+            //    {
+            //        eventNotes = pmPropertyName + " updated new value:" + pmPropertyValue + " old value: " + pocoPropertyValue;
+            //    }
+
+
+
+            //}
 
             //create trace event with created type.
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -46,7 +67,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 // Get the Event notes
-                string eventNotes = "";
+              
                 eventNotes = this.GetEventNotes(entityPM, entityPOCO);
                 
                 // in case the inactive field changed

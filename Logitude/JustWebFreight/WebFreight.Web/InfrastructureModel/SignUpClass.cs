@@ -3332,9 +3332,11 @@ namespace WebFreight.Web.InfrastructureModel
             TypeRepository.SubmitChanges();
         }
 
-        public static void AddSLAHeaders(int theTenant, SLAHeaderRepository TypeRepository, List<SLAHeader> tenantZeroTypes)
+        public static void AddSLAHeaders(int theTenant, SLAHeaderRepository repository, List<SLAHeader> tenantZeroTypes)
         {
             List<SLAHeader> SLAHeadersList = tenantZeroTypes.Where(d => d.Tenant == 0).ToList();
+            TenantRepository tenantRepository;
+            Tenant tenantPoco;
             foreach (SLAHeader item in SLAHeadersList)
             {
                 SLAHeader newSLAHeader = new SLAHeader()
@@ -3349,18 +3351,17 @@ namespace WebFreight.Web.InfrastructureModel
                     Description = item.Description,
                 };
 
-                TypeRepository.Add(newSLAHeader);
-            }
+                repository.Add(newSLAHeader);
+                repository.SubmitChanges();
 
-            TypeRepository.SubmitChanges();
-
-            if (SLAHeadersList != null && SLAHeadersList.Count() > 0)
-            {
-                TenantRepository tenantRepository = new TenantRepository(tenant);
-                Tenant tenantPoco = tenantRepository.GetSingleByTenant(tenant);
-                tenantPoco.DefaultSLAId = SLAHeadersList.FirstOrDefault().Id;
-                tenantRepository.Update(tenantPoco);
-                tenantRepository.SubmitChanges();
+                tenantRepository = new TenantRepository(theTenant);
+                tenantPoco = tenantRepository.GetSingleByTenant(theTenant);
+                if (tenantPoco != null)
+                {
+                    tenantPoco.DefaultSLAId = newSLAHeader.Id;
+                    tenantRepository.Update(tenantPoco);
+                    tenantRepository.SubmitChanges();
+                }
             }
         }
 

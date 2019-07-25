@@ -253,7 +253,7 @@ export class AddEditTaskSchedulerComponent  {
 
 
         if (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") {
-            this.DataContext.ServiceClassName = (this.DataContext.Type == "FTP" ? "FTPSchedulerTask" : "SFTPSchedulerTask");
+            this.DataContext.ProcedureCode = (this.DataContext.Type == "FTP" ? "FTPSchedulerTask" : "SFTPSchedulerTask");
 
 
             if (AppTool.IsNullOrEmpty(this.DataContext.UserName)) errors.push(msg.replace("%FieldName", "UserName"));
@@ -290,8 +290,8 @@ export class AddEditTaskSchedulerComponent  {
             console.log("error");
         }
 
-        if (AppTool.IsNullOrEmpty(this.DataContext.ServiceClassName)) {
-            errors.push(msg.replace("%FieldName", "Service Class Name"));
+        if (AppTool.IsNullOrEmpty(this.DataContext.ProcedureCode)) {
+            errors.push(msg.replace("%FieldName", "Procedure Code"));
         }
 
         if (AppTool.IsNullOrEmpty(this.DataContext.TriggerType)) {
@@ -393,7 +393,7 @@ export class AddEditTaskSchedulerComponent  {
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('Name');
-        this.myCloner.AddField('ServiceClassName');
+        this.myCloner.AddField('ProcedureCode');
         this.myCloner.AddField('Description');
         this.myCloner.AddField('InActive');
         this.myCloner.AddField('StartDateTime');
