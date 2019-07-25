@@ -331,7 +331,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
 
-                if (customResponse.MessageToAgent.msgCode == 14 || customResponse.MessageToAgent.msgCode == 13)
+                if (this._MyDeclarationPM.IsCourierDeclaration == true && this._MyDeclarationPM.HatraDate.HasValue)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Declaration has already been released (" + this._MyDeclarationPM.CustomFileNo + ")");
+                    MyResponseData = new INF_MSG_GenericResponseData() { Succeeded = true, HasException = false, UserMessage = "Declaration has already been released (" + this._MyDeclarationPM.CustomFileNo + ")" };
+                    return;
+                }
+
+                    if (customResponse.MessageToAgent.msgCode == 14 || customResponse.MessageToAgent.msgCode == 13)
                 {
                     var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                     this._MyDeclarationPM.StorageStatusCode = "3";
@@ -368,7 +375,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this._MyDeclarationPM.CourierCustomStatusCode = "2";
                             this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
                             declarationUpdateService.Update(this._MyDeclarationPM, true);
-                            SendDeclarationStatusRequest(this._MyDeclarationPM);
+                            //SendDeclarationStatusRequest(this._MyDeclarationPM);
                             notificationDefinitionCode = null;
                             break;
                         case 17:
