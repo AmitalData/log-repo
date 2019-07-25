@@ -43,8 +43,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 TMProjectRepository iTMProjectRepository = new TMProjectRepository(myContext);
                 IQueryable<TMEmployeeTime> iQueryable = iTMEmployeeTimeRepository.GetAll(args.Tenant).Where(d=>d.ProjectId == args.FromProject) ;
                 List<TMEmployeeTime> employeeTimes = this.GetFilteredList(iQueryable, args).ToList();
-
-
                 if (employeeTimes.Count > 0)
                 {
                     int count = 0;
@@ -54,14 +52,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         item.NeedsProrating = true;
                         iTMEmployeeTimeRepository.Update(item);
                         count += 1;
-
-                        if(count == 20 || (count == employeeTimes.Count()) || (employeeTimes.IndexOf(item)== employeeTimes.IndexOf(employeeTimes.Last())))
+                        if(count == 100 || (employeeTimes.IndexOf(item)== employeeTimes.IndexOf(employeeTimes.Last())))
                         {
                             iTMEmployeeTimeRepository.SubmitChanges();
                             count = 0;
                         }
                     }
-
                 }
 
                     
@@ -78,16 +74,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 iQueryable = iQueryable.Where(d => (d.DateOfWork >= args.FromDate) && (d.DateOfWork <= args.ToDate));
             }
-            else if (args.FromDate != null) {
-                iQueryable = iQueryable.Where(d => (d.DateOfWork >= args.FromDate));
-            }
-
-            else if (args.ToDate != null)
-            {
-                iQueryable = iQueryable.Where(d => (d.DateOfWork <= args.ToDate));
-            }
-
-
+  
             return iQueryable;
         }
     }
