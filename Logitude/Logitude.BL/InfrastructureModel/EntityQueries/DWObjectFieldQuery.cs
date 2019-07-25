@@ -136,13 +136,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             foreach (var parent in Parents)
             {
                 var tempInnerList = new List<DWObjectFieldPM>();
-                foreach (DWObjectFieldPM item in DWObjectFieldPMDimensionGroups.Single(d => d.Key == parent.DimensionTableCode).ToList())
+                var dWObjectFieldPMDimensionGroup = DWObjectFieldPMDimensionGroups.Where(d => d.Key == parent.DimensionTableCode).FirstOrDefault();
+                if (dWObjectFieldPMDimensionGroup != null)
                 {
-                    DWObjectFieldPM dWObjectFieldPM = GetNewInstanceFromDWObjectFieldPM(parent, item);
+                    foreach (DWObjectFieldPM item in dWObjectFieldPMDimensionGroup.ToList())
+                    {
+                        DWObjectFieldPM dWObjectFieldPM = GetNewInstanceFromDWObjectFieldPM(parent, item);
+                        tempInnerList.Add(dWObjectFieldPM);
+                    }
 
-                    tempInnerList.Add(dWObjectFieldPM);
+                    FinalList = FinalList.Concat(tempInnerList).OrderBy(a => a.DisplayName).ToList();
                 }
-                FinalList = FinalList.Concat(tempInnerList).OrderBy(a => a.DisplayName).ToList();
             }
 
             return FinalList;
