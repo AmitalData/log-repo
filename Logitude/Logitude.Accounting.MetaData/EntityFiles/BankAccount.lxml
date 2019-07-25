@@ -62,6 +62,14 @@
       <ScreenField Column="1" Row="4" ObjectFieldName="&quot;Inactive&quot;" ScreenName="GeneralTabScreen" />
     </ScreenFields>
   </Screen>
+  <Screen Name="&quot;HeaderScreen&quot;" ObjectTableName="&quot;BankAccount&quot;" NumberOfColumns="4" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true">
+    <ScreenFields>
+      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;AccountNumber&quot;" ScreenName="HeaderScreen" />
+      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;BankId&quot;" ScreenName="HeaderScreen" />
+      <ScreenField Column="2" Row="0" ObjectFieldName="&quot;GLAccountNumber&quot;" ScreenName="HeaderScreen" />
+      <ScreenField Column="3" Row="0" ObjectFieldName="&quot;DeferedGLAccountNumber&quot;" ScreenName="HeaderScreen" />
+    </ScreenFields>
+  </Screen>
   <Tab TabName="&quot;General&quot;" TabLocalName="&quot;כללי&quot;" ObjectTableName="&quot;BankAccount&quot;" Code="&quot;BAGN&quot;" ControlPath="&quot;./Accounting/Components/EditTabs/BankAccount/BankAccountGeneralTabComponent&quot;" TextCode="&quot;BankAccount.TH.General&quot;" IsPackagable="true" IndexOrder="0" HtmlComponentURL="&quot;./Accounting/Components/EditTabs/BankAccount/BankAccountGeneralTabComponent&quot;" HtmlComponentName="&quot;BankAccountGeneralTabComponent&quot;" FeatureCode="&quot;BankAccount.Tab.General&quot;" FeatureTextCodeCode="&quot;BankAccount.Features.General&quot;" FeatureDefaultText="&quot;General&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
   <Tab TabName="&quot;Bank Pages&quot;" TabLocalName="&quot;דף בנק&quot;" ObjectTableName="&quot;BankAccount&quot;" Code="&quot;BABP&quot;" ControlPath="&quot;./Accounting/Components/EditTabs/BankAccount/BankPagesTabComponent&quot;" TextCode="&quot;BankAccount.TH.BankPages&quot;" IsPackagable="true" IndexOrder="1" HtmlComponentURL="&quot;./Accounting/Components/EditTabs/BankAccount/BankPagesTabComponent&quot;" HtmlComponentName="&quot;BankPagesTabComponent&quot;" FeatureCode="&quot;BankAccount.Tab.BankPages&quot;" FeatureTextCodeCode="&quot;BankAccount.Features.BankPages&quot;" FeatureDefaultText="&quot;Bank Pages&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
   <Tab TabName="&quot;Manage Reco&quot;" TabLocalName="&quot;ניהול התאמות &quot;" ObjectTableName="&quot;BankAccount&quot;" Code="&quot;BAMR&quot;" ControlPath="&quot;./Accounting/Components/EditTabs/BankAccount/ManageRecoTabComponent&quot;" TextCode="&quot;BankAccount.TH.ManageReco&quot;" IsPackagable="true" IndexOrder="2" HtmlComponentURL="&quot;./Accounting/Components/EditTabs/BankAccount/ManageRecoTabComponent&quot;" HtmlComponentName="&quot;ManageRecoTabComponent&quot;" FeatureCode="&quot;BankAccount.Tab.ManageReco&quot;" FeatureTextCodeCode="&quot;BankAccount.Features.ManageReco&quot;" FeatureDefaultText="&quot;Manage Reco&quot;" IsSpellChecked="false" HasGeneralFeature="false" />

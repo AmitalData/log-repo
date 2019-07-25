@@ -96,6 +96,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  true,
 			      				    LookUp1 =  "Name",
+			      				    CodeField =  "Name",
+			      				    NameField =  "Name",
 			      				    DependencyFilter1 =  "IsCompleted",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
