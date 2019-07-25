@@ -74,7 +74,17 @@ namespace WebFreight.Web.Helpers.APIHelpers
             {
                 iQueryable = iQueryable.Where(d => (d.DateOfWork >= args.FromDate) && (d.DateOfWork <= args.ToDate));
             }
-  
+            else if (args.FromDate != null)
+            {
+                iQueryable = iQueryable.Where(d => (d.DateOfWork >= args.FromDate));
+            }
+
+            else if (args.ToDate != null)
+            {
+                iQueryable = iQueryable.Where(d => (d.DateOfWork <= args.ToDate));
+            }
+
+
             return iQueryable;
         }
     }
