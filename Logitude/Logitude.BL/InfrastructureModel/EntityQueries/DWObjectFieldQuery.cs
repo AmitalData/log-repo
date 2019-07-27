@@ -6,6 +6,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Collections.Generic;
+using System;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -123,6 +124,36 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public List<DWObjectFieldPM> GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(int tenant, string dwotCode)
         {
+            IQueryable<DWObjectFieldPM> TempList = GetDWObjectFieldByDWObjectTableCode(tenant, dwotCode);
+
+            var FinalList = TempList.Where(a => a.DimensionTableCode == null).ToList();
+            var Parents = TempList.Where(a => a.DimensionTableCode != null).ToList();
+            List<string> dimensionTable = Parents.GroupBy(d => d.DimensionTableCode).Select(d => d.First().DimensionTableCode).ToList();
+            dimensionTable.Add("DIM_CustomPickLists");
+            Parents.Add(new DWObjectFieldPM() { DimensionTableCode = "DIM_CustomPickLists", Id = "123" });
+            IEnumerable<IGrouping<string, DWObjectFieldPM>> DWObjectFieldPMDimensionGroups = GetDWObjectFieldPMDimensionListsGroups(tenant, dimensionTable);
+
+            foreach (var parent in Parents)
+            {
+                var tempInnerList = new List<DWObjectFieldPM>();
+                var dWObjectFieldPMDimensionGroup = DWObjectFieldPMDimensionGroups.Where(d => d.Key == parent.DimensionTableCode).FirstOrDefault();
+                if (dWObjectFieldPMDimensionGroup != null)
+                {
+                    foreach (DWObjectFieldPM item in dWObjectFieldPMDimensionGroup.ToList())
+                    {
+                        DWObjectFieldPM dWObjectFieldPM = GetNewInstanceFromDWObjectFieldPM(parent, item);
+                        tempInnerList.Add(dWObjectFieldPM);
+                    }
+
+                    FinalList = FinalList.Concat(tempInnerList).OrderBy(a => a.DisplayName).ToList();
+                }
+            }
+
+            return FinalList;
+        }
+
+        private IQueryable<DWObjectFieldPM> GetDWObjectFieldByDWObjectTableCode(int tenant, string dwotCode)
+        {
             var TempList = (from a in repository.webFreightContext.DWObjectFields
                             where a.Tenant == tenant && a.DWObjectTableCode == dwotCode && a.DisplayInQueryBuilder == true && a.CannotFilter == false
                             select new DWObjectFieldPM()
@@ -152,42 +183,67 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                             }
                   );
-            var Parents = TempList.Where(a => a.DimensionTableCode != null).ToList();
-            var FinalList = TempList.Where(a => a.DimensionTableCode == null).ToList();
-            foreach (var item in Parents)
+            return TempList;
+        }
+
+        private static DWObjectFieldPM GetNewInstanceFromDWObjectFieldPM(DWObjectFieldPM parent, DWObjectFieldPM item)
+        {
+            return new DWObjectFieldPM()
             {
-                var TempInnerList = (from a in repository.webFreightContext.DWObjectFields
-                                     where a.Tenant == tenant && a.DWObjectTableCode == item.DimensionTableCode && a.DisplayInQueryBuilder == true && a.CannotFilter == false
-                                     select new DWObjectFieldPM()
-                                     {
-                                         Id = a.Id,
-                                         Tenant = a.Tenant,
-                                         Name = a.Name,
-                                         Code = a.Code,
-                                         DimensionTableCode = a.DimensionTableCode,
-                                         DataTypeCode = a.DataTypeCode,
-                                         DWObjectTableCode = a.DWObjectTableCode,
-                                         IsRequiered = a.IsRequired,
-                                         MaxLength = a.MaxLength,
-                                         MinLength = a.MinLength,
-                                         IsPrimaryKey = a.IsPrimaryKey,
-                                         IsMeasurement = a.IsMeasurement,
-                                         AggregationTypeCode = a.AggregationTypeCode,
-                                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
-                                         DisplayName = item.Name + " " + a.Name,
-                                         DimensionTableDisplayName = item.Name,
-                                         //Category1 = a.Category1,
-                                         //Category2 = a.Category2,
-                                         LOVAdditionalColumns = a.LOVAdditionalColumns,
-                                         HideTree = a.HideTree,
-                                         CannotFilter = a.CannotFilter,
-                                         HelpText = a.HelpText,
-                                         IsCustom = a.IsCustom,
-                                     }
-                  ).ToList();
-                FinalList = FinalList.Concat(TempInnerList).OrderBy(a => a.DisplayName).ToList();
-            }
-            return FinalList;
+                Id = item.Id,
+                Tenant = item.Tenant,
+                Name = item.Name,
+                Code = item.Code,
+                DimensionTableCode = item.DimensionTableCode,
+                DataTypeCode = item.DataTypeCode,
+                DWObjectTableCode = item.DWObjectTableCode,
+                IsRequiered = item.IsRequiered,
+                MaxLength = item.MaxLength,
+                MinLength = item.MinLength,
+                IsPrimaryKey = item.IsPrimaryKey,
+                IsMeasurement = item.IsMeasurement,
+                AggregationTypeCode = item.AggregationTypeCode,
+                DisplayInQueryBuilder = item.DisplayInQueryBuilder,
+                LOVAdditionalColumns = item.LOVAdditionalColumns,
+                HideTree = item.HideTree,
+                CannotFilter = item.CannotFilter,
+                HelpText = item.HelpText,
+                IsCustom = item.IsCustom,
+                DisplayName = parent.Name + " " + item.Name,
+                DimensionTableDisplayName = parent.Name,
+            };
+        }
+
+        private IEnumerable<IGrouping<string, DWObjectFieldPM>> GetDWObjectFieldPMDimensionListsGroups(int tenant ,List<string> dimensionTableLists)
+        {
+            IEnumerable<IGrouping<string, DWObjectFieldPM>> list = (from a in repository.webFreightContext.DWObjectFields
+                                                                                              where a.Tenant == tenant && dimensionTableLists.Contains(a.DWObjectTableCode) && a.DisplayInQueryBuilder == true && a.CannotFilter == false
+                                                                                              select new DWObjectFieldPM()
+                                                                                              {
+                                                                                                  Id = a.Id,
+                                                                                                  Tenant = a.Tenant,
+                                                                                                  Name = a.Name,
+                                                                                                  Code = a.Code,
+                                                                                                  DimensionTableCode = a.DimensionTableCode,
+                                                                                                  DataTypeCode = a.DataTypeCode,
+                                                                                                  DWObjectTableCode = a.DWObjectTableCode,
+                                                                                                  IsRequiered = a.IsRequired,
+                                                                                                  MaxLength = a.MaxLength,
+                                                                                                  MinLength = a.MinLength,
+                                                                                                  IsPrimaryKey = a.IsPrimaryKey,
+                                                                                                  IsMeasurement = a.IsMeasurement,
+                                                                                                  AggregationTypeCode = a.AggregationTypeCode,
+                                                                                                  DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                                                                                                  LOVAdditionalColumns = a.LOVAdditionalColumns,
+                                                                                                  HideTree = a.HideTree,
+                                                                                                  CannotFilter = a.CannotFilter,
+                                                                                                  HelpText = a.HelpText,
+                                                                                                  IsCustom = a.IsCustom,
+                                                                                              }
+                   ).ToList().GroupBy(d => d.DWObjectTableCode);
+
+            return list;
+
         }
 
         public DWObjectFieldPM GetSinglePM(string id, int tenant)

@@ -191,3 +191,12 @@ ON [dbo].[SpecialServicesTypes]([AutomaticLastUpdateDate])
 ON [dbo].[ObjectFields]([AutomaticLastUpdateDate])
   end  
   
+
+  
+      IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_CustomPickLists_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dbo].[CustomPickLists]'))
+  begin
+    CREATE NONCLUSTERED INDEX [IX_CustomPickLists_AutomaticLastUpdateDate]
+ON [dbo].[CustomPickLists]([AutomaticLastUpdateDate])
+  end  
+  
