@@ -47,6 +47,7 @@ namespace WebFreight.Web.DataProviders
         public string WeightUnit { get; set; }
         public string RateTypeCode { get; set; }//custom
         public string ChargeableWeight { get; set; }
+        public string ChargeableWeightInKG { get; set; }
         public string MAWBRate { get; set; }
         public string TotalFreight { get; set; }//39*40
         public string DescriptionOfGoods { get; set; }
@@ -237,6 +238,7 @@ namespace WebFreight.Web.DataProviders
         public string GrossWeight { get; set; }
         public string GrossWeightInKG { get; set; }
         public string ChargeableWeight { get; set; }
+        public string ChargeableWeightInKG { get; set; }
         public string MAWBRate { get; set; }
         public string TotalFreight { get; set; }
     }
