@@ -74,8 +74,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             DeclarationPendingUpdateService declarationPendingUpdateService = new DeclarationPendingUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             declarationPendingUpdateService.IsUpdateComposition = true;
-            declarationPendingUpdateService.UpdateMulti(entityPM.DeclarationPendings, entityPM.DeletedDeclarationPendings, entityPM, true);
-
+            declarationPendingUpdateService.UpdateMulti(entityPM.DeclarationPendings.Where(p => p.ChangeSetOp == ChangeSetOperation.Delete).ToList(), entityPM.DeletedDeclarationPendings, entityPM, true);
+            declarationPendingUpdateService.UpdateMulti(entityPM.DeclarationPendings.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete).ToList(), entityPM.DeletedDeclarationPendings, entityPM, true);
             base.UpdateComposition(entityPM);
         }
 

@@ -33,6 +33,8 @@ using Logitude.Customs.BL.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.CustomsMessaging.Common.DCAParams;
 using System.Configuration;
+using System.Collections.Concurrent;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.Dca
 {
@@ -223,13 +225,128 @@ namespace Logitude.CustomsMessaging.Dca
 
 
             _swDownAll = Stopwatch.StartNew();
+            bool multi = true;
+            if (multi)
+            {
+                Take50_MultiThread(debugIIGMessageId);
+            }
+            else
+            {
+                Take50OneByOne(debugIIGMessageId);
+            }
+            
+            _swDownAll.Stop();
+            if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr")))
+            {
+                MoveUnUseDCAFilesToDIr();
+            }
+        }
+        private void Take50_MultiThread(string debugIIGMessageId)
+        {
+            int iMultiThread = 5;
+            int _totalDownload = 0;
+            List<DCAFileModel> dcaFileList = null;
+            //foreach (var dcaFile in ListOfDCAFile)
+            while ((dcaFileList =
+                GetNextList(debugIIGMessageId, _totalDownload, iMultiThread)) != null)
+            {
+
+                ConcurrentQueue<Exception> exceptionQueue = new ConcurrentQueue<Exception>();
+                var timeout = 5 * 60 * 1000; // seconds == 5min
+                var cts = new CancellationTokenSource();
+                try
+                {
+
+
+                    using (var t = new Timer(_ => cts.Cancel(), null, timeout, -1))
+                    {
+
+
+                        Parallel.ForEach(dcaFileList,
+                            new ParallelOptions { CancellationToken = cts.Token },
+                            dcaFile =>
+                   {
+
+                       try
+                       {
+
+                           var currSelectedFileDownload = dcaFile.SelectedFileDownload;
+                           var messageDCA = _InterfaceListDCA
+                               .First(rec =>
+                                   IsMatch(currSelectedFileDownload, rec.InterfaceManagement.DcaPrefixName) ||
+                                   IsMatch(currSelectedFileDownload, rec.InterfaceManagement.DcaPrefixName2) ||
+                                   IsMatch(currSelectedFileDownload, rec.InterfaceManagement.DcaPrefixName3) ||
+                                   IsMatch(currSelectedFileDownload, rec.InterfaceManagement.DcaPrefixName4)
+                           );
+
+                           var currMessagingService = GetMainMessagingService(messageDCA);
+                           if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(currMessagingService))
+                           {
+
+
+                               Debug.WriteLine("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
+                           //_totalDownload--;
+                           return;
+
+
+                           }
 
 
 
-            _totalDownload = 0;
+                           bool dcaMessageFileSuccess = DoDcaMessageFile(messageDCA, dcaFile);//exc handler !!
+                       Debug.WriteLine("DoDcaMessageFile:" + dcaFile.SelectedFileDownload + " Elapsed:" + _swDownAll.Elapsed);
+                           LogMessagingUtil.Instance.Clear();
+                       }
+                       catch (Exception e)
+                       {
+
+                           exceptionQueue.Enqueue(e);
+                       }
+
+
+                   });
+                    }
+
+
+
+                }
+
+                //catch (OperationCanceledException e)
+                catch (Exception eee)
+                {
+
+                    Logger.LogMe(eee.ToString(), true, "DCAMulti");
+                }
+                finally
+                {
+
+                    try
+                    {
+                        exceptionQueue.ToList().ForEach(e1 =>
+                        {
+                            Logger.LogMe(e1.ToString(), true, "DCAMulti");
+                        });
+                    }
+                    catch 
+                    {
+
+                        
+                    }
+                    
+                    cts.Dispose();
+                }
+
+            }
+        }
+
+      
+
+        private void Take50OneByOne(string debugIIGMessageId)
+        {
+            int _totalDownload = 0;
             DCAFileModel dcaFile = null;
             //foreach (var dcaFile in ListOfDCAFile)
-            while ((dcaFile = GetNext(debugIIGMessageId)) != null)
+            while ((dcaFile = GetNext(debugIIGMessageId, _totalDownload)) != null)
             {
 
 
@@ -264,11 +381,6 @@ namespace Logitude.CustomsMessaging.Dca
 
 
 
-            }
-            _swDownAll.Stop();
-            if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr")))
-            {
-                MoveUnUseDCAFilesToDIr();
             }
         }
 
@@ -347,7 +459,50 @@ out myMessageOut);
             }
         }
 
-        private DCAFileModel GetNext(string debugIIGMessageId)
+        private List<DCAFileModel> GetNextList(string debugIIGMessageId, int _totalDownload,int take)
+        {
+            var allXmlFileInMyBranch = _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch ?? new List<string>();//GetFileList();
+            if (_swDownAll.Elapsed > TimeSpan.FromSeconds(60))
+            {
+                allXmlFileInMyBranch = _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = GetVaultFileListInCustomDeployStage("");
+            }
+            var ListOfDCAFile = GetListOfDCAFilesOrderByTime(debugIIGMessageId, allXmlFileInMyBranch);
+
+            if (ListOfDCAFile.Count() < 1)
+            {
+                Debug.WriteLine("After Filter nothing to Download ");
+                return null;
+            }
+            Debug.WriteLine("Start List :" + ListOfDCAFile.Count() + " Elapsed:" + _swDownAll.Elapsed);
+            _totalDownload++;
+
+            if (_totalDownload > 50)
+            {
+                Debug.WriteLine("Dowload 50 DCA Files Try Next Tenant ");
+                return null;
+            }
+
+            var myList = ListOfDCAFile.Take(take).ToList();
+            myList.ForEach(
+                item =>
+                {
+                    ListOfDCAFile.Remove(item);
+                    if (
+                    !_MyDCAIncomeDirStateM
+                .LastAllXmlFileInMyBranch
+                .Remove(item.SelectedFileDownload)
+                )
+                    {
+                        throw new Exception("Unbelievable !?!?!?!");
+                    }
+
+                }
+
+                );
+
+            return myList;
+        }
+        private DCAFileModel GetNext(string debugIIGMessageId,int _totalDownload)
         {
             var allXmlFileInMyBranch = _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch ?? new List<string>();//GetFileList();
             if (_swDownAll.Elapsed > TimeSpan.FromSeconds(60))
@@ -588,7 +743,7 @@ out myMessageOut);
         DcaManager _DcaManager;
         private List<string> _AllDcaPreFixWithoutInOutUpper;
         private Stopwatch _swDownAll;
-        private int _totalDownload;
+        
         private bool DoDcaMessageFile(InterfaceTenantDefinitionManagementPM messageDCA, DCAFileModel dcaFile)
         {
             bool myErrorOccurred;

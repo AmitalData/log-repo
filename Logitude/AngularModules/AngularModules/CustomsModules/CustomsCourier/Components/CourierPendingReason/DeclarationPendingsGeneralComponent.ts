@@ -268,7 +268,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                 var existCodeList: string[] = [];
                 this.DeclarationPendingItemsSource.Collection.forEach((item: DeclarationPendingLine) => {
                     if (existCodeList != null && item != null && existCodeList.indexOf(item.CourierPendingReasonCode) > -1) {
-                        errors.push("כבר קיימת רשומה עם קוד עיכוב " + item.CourierPendingReasonCode);
+                        errors.push("כבר קיימת רשומה עם קוד עיכוב " + item.CourierPendingReasonName);
                         this.inValid = true;
                         this.isValid = false;
                     }
@@ -393,7 +393,7 @@ export class DeclarationPendingLine extends BaseComponent {
         this.entityPM = EntityPM;
         
         this._StatusItems.push({ 'Key': "A", 'Value': "Active" });
-        this._StatusItems.push({ 'Key': "S", 'Value': "Solve" });
+        this._StatusItems.push({ 'Key': "S", 'Value': "Solved" });
         this.parent = Parent;
     }
 

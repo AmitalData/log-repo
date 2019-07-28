@@ -32,6 +32,7 @@ using Logitude.Customs.Def.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {  // moran 6.10.14 - Task 8066 -->
@@ -48,6 +49,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
         {
+            var declarationNumber = customResponse?.MessageToAgent?.RelatedEntity?.entityIdKey1;
+            
+            string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
+            using (var disposableToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5101ResponseService.Update"))
+            {
+                UpdateIt(customResponse, requestParams);
+            }
+
+        }
+        public void UpdateIt(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
+        { 
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myQueryService = new DeclarationQueryService(context);
 
@@ -319,7 +331,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
 
-                if (customResponse.MessageToAgent.msgCode == 14 || customResponse.MessageToAgent.msgCode == 13)
+                if (this._MyDeclarationPM.IsCourierDeclaration == true && this._MyDeclarationPM.HatraDate.HasValue)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Declaration has already been released (" + this._MyDeclarationPM.CustomFileNo + ")");
+                    MyResponseData = new INF_MSG_GenericResponseData() { Succeeded = true, HasException = false, UserMessage = "Declaration has already been released (" + this._MyDeclarationPM.CustomFileNo + ")" };
+                    return;
+                }
+
+                    if (customResponse.MessageToAgent.msgCode == 14 || customResponse.MessageToAgent.msgCode == 13)
                 {
                     var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                     this._MyDeclarationPM.StorageStatusCode = "3";
@@ -356,7 +375,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this._MyDeclarationPM.CourierCustomStatusCode = "2";
                             this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
                             declarationUpdateService.Update(this._MyDeclarationPM, true);
-                            SendDeclarationStatusRequest(this._MyDeclarationPM);
+                            //SendDeclarationStatusRequest(this._MyDeclarationPM);
                             notificationDefinitionCode = null;
                             break;
                         case 17:

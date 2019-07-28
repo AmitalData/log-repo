@@ -182,14 +182,14 @@ namespace CustomsWorkerRole
                 }
 
                 OnStart();
-                if (LogitudeSettings.QueueServiceMode != "db")
-                {
-                    WorkUntilQEmpty();
-                }
-                else
-                {
-                    WorkUntilQEmpty_Db();
-                }
+                //if (LogitudeSettings.QueueServiceMode != "db")
+                //{
+                //    WorkUntilQEmpty();
+                //}
+                //else
+                //{
+                WorkUntilQEmpty_Db();
+                //}
 
             }
             catch (Exception e)
@@ -202,171 +202,9 @@ namespace CustomsWorkerRole
         }
 
 
-        void WorkUntilQEmpty()
-        {
-            BrokeredMessage receivedMessage = null;
-            List<long> deferredSequenceNumbers = new List<long>();
-            bool proccesDone = false;
-            for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
-            {
-                while (true)
-                {
-                    //throw new Exception("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
-                    try
-                    {
-                        receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));
-                    }
-                    catch (Exception)
-                    {
+      
 
-                        throw;
-                    }
-
-
-                    if (receivedMessage == null)
-                    {
-                        break;
-                    }
-
-                    //if (receivedMessage.DeliveryCount > 6) // default max DeliveryCount ==10
-
-                    //if (receivedMessage.DeliveryCount > DefaultMessageController.MaxToRetry) 
-                    //{
-                    //    receivedMessage.SafeComplete();
-                    //    return;
-                    //    receivedMessage.DeadLetter();
-                    //    receivedMessage.Dispose();
-                    //    return;
-                    //}
-
-
-                    var lastExecAt = receivedMessage.GetProperty<DateTime>(QueueExt.QueuePropertyNames.LastExecAt, DateTime.MinValue);
-
-
-                    if (receivedMessage.GetProperty<int>(QueueExt.QueuePropertyNames.Priority, 1) > filtterPriority
-                        )
-                    {
-                        receivedMessage.SafeAbandon();
-                        continue;
-                    }
-                    if (DateTime.UtcNow.Subtract(lastExecAt) < TimeSpan.FromMinutes(2))
-                    {
-                        // lock message for 5 min 
-                        continue;
-                    }
-
-                    proccesDone = true;
-                    ProcessMessage(receivedMessage);
-                }
-            }
-
-            // Process the low-priority messages: 
-            foreach (long sequenceNumber in deferredSequenceNumbers)
-            {
-                ProcessMessage(_QueueClient.Receive(sequenceNumber));
-            }
-
-
-            if (proccesDone) return;
-            return;
-            while (true)
-            {
-                BrokeredMessage msg = _DeadletterQueueClient.Receive();
-
-                if (msg == null)
-                {
-                    break;
-                }
-
-                //Console.WriteLine("Deadlettered message.");
-                //Console.WriteLine("MessageId:                  {0}", msg.MessageId);
-                //Console.WriteLine("DeliveryCount:              {0}", msg.DeliveryCount);
-                //Console.WriteLine("EnqueuedTimeUtc:            {0}", msg.EnqueuedTimeUtc);
-                //Console.WriteLine("Size:                       {0} bytes", msg.Size);
-                //Console.WriteLine("DeadLetterReason:           {0}",
-                //    msg.Properties["DeadLetterReason"]);
-                //Console.WriteLine("DeadLetterErrorDescription: {0}",
-                //    msg.Properties["DeadLetterErrorDescription"]);
-                //Console.WriteLine();
-                msg.Complete();
-            }
-
-
-        }
-
-        protected virtual bool ProcessMessage(BrokeredMessage message, OverrideControllerModel controller = null)
-        {
-
-            try
-            {
-
-                var analyzeClass = message.GetProperty<string>(QueueExt.QueuePropertyNames.InterfaceTypeCode, "");//, "Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService");
-                if (String.IsNullOrWhiteSpace(analyzeClass))
-                {
-                    message.SafeComplete();
-                    ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :analyzeClass ==null", null);
-                    //message.DeadLetter();
-                    return false;//
-                }
-
-                if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(analyzeClass))
-                {
-                    message.SafeComplete();
-                    ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + analyzeClass, null);
-                    //message.DeadLetter();
-                    return false;
-                }
-                var tenant = message.GetProperty<int>(QueueExt.QueuePropertyNames.Tenant, -1);
-                if (tenant == -1)
-                {
-                    ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :tenant==-1", null);
-                    return false;
-                }
-                var correlationId = message.CorrelationId;
-                ///Due Failed if i procces it !!! ---LogMessagingUtil.Instance.AppendLine("receivedMessage.DeliveryCount =" + message.DeliveryCount.ToString());
-
-                var s = this.GetType().Name;
-                CustomsCommandEnum myCustomsCommandEnum;
-                if (Enum.TryParse<CustomsCommandEnum>(s, out myCustomsCommandEnum))
-                {
-                    //myCustomsCommandEnum
-                }
-                else
-                {
-                    throw new Exception("Enum.TryParse<CustomsCommandEnum>(s, out myCustomsCommandEnum)");
-                }
-
-                MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum, controller);
-
-                message.SafeComplete();
-                return true;
-
-            }
-            catch (CustomsRequestsSheetDomainModelServiceException customsRequestsSheetServiceException)
-            {
-
-                //ExceptionHandler.HandleException(customsRequestsSheetServiceException, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method/CustomsRequestsSheetServiceException ", null);
-                if (customsRequestsSheetServiceException.What2Do == CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue)
-                {
-                    message.SafeComplete();
-                    return true;
-                }
-                else
-                {
-                    message.SetProperty<DateTime>(QueueExt.QueuePropertyNames.LastExecAt, DateTime.UtcNow);
-                    message.SafeAbandon();
-                    return false;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method", null);
-                message.SafeComplete();
-                return false;
-                //throw;
-            }
-        }
+     
 
 
 
@@ -487,10 +325,13 @@ namespace CustomsWorkerRole
                 {
                     throw new Exception("Enum.TryParse<CustomsCommandEnum>(s, out myCustomsCommandEnum)");
                 }
+                //using (var CustomsCommandScope = TransactionFactory.GetNewTransaction())
+                {
+                    MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
+                    //CustomsCommandScope.Complete();
+                }
 
-                MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
 
-                
 
                 //_CustomDbQueueService.SafeComplete();
                 return true;

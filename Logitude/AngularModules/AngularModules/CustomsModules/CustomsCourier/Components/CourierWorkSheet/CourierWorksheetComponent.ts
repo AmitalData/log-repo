@@ -87,6 +87,7 @@ implements OnDestroy
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
     _SelectedACCValue: string = 'A'; // Wrong/WrongSpecial
+    //_SelectedHOLDValue: string = 'A'; //All/Pending Codes List
 
     public columns: any[] = null;
 
@@ -149,6 +150,7 @@ implements OnDestroy
         this._SelectedDECValue = 'A';
         this._SelectedDOCValue = 'A';
         this._SelectedACCValue = 'A';
+        if (this.SelectedPendingCodeFilter == null && this._PendingCodes != null && this._PendingCodes.length > 0) this.SelectedPendingCodeFilter = this._PendingCodes[0];
 
         switch (item.Code) {
             case "DECR": 
@@ -169,6 +171,9 @@ implements OnDestroy
                 break;
             case "ACC":
                 this._SelectedACCValue = 'W';
+                break;
+            case "HOLD":
+                if (this.SelectedPendingCodeFilter == null && this._PendingCodes != null && this._PendingCodes.length > 0) this.SelectedPendingCodeFilter = this._PendingCodes[0]; 
                 break;
         }
 
@@ -347,10 +352,7 @@ implements OnDestroy
             //''
             ;
         });
-
         
-        
-
     }
 
     SendALLCorrectDec(courierDeclarationStatusCode: string) {
@@ -503,6 +505,7 @@ implements OnDestroy
     _ReadyDECToBatchSendButtonText: string = "";
     _ReadyMNFToBatchSend = 0;
     _ReadyMNFToBatchSendButtonText: string = "";
+    _HOLD_TotalButtonText: string = "";
     _PAYReadyNotFastindividual = 0;
     _SVGTotal = 0;
     _DOCTotal = 0;
@@ -514,8 +517,10 @@ implements OnDestroy
     _MNF_C_Total = 0;
     _ACC_W_Total = 0;
     _ACC_WS_Total = 0;
+    _HOLD_Total = 0;
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
+    _PendingCodes: KeyValuePair[] = [];
 
     private _SelectedDECToBatchSendButtonText: string = "";
     public get SelectedDECToBatchSendButtonText(): string {
@@ -535,6 +540,15 @@ implements OnDestroy
         return this._SelectedMNFToBatchSendButtonText;
     }
 
+    private _PendingFilter: string = "";
+    
+    get PendingFilter() { return this._PendingFilter; }
+    set PendingFilter(value: string) {
+        if (this._PendingFilter != value) {
+            this._PendingFilter = value;
+
+        }
+    }
 
     RefreshStatistic() {
         SessionLocator.CurrentSession.StartBusyIndicatorCreating();
@@ -633,6 +647,14 @@ implements OnDestroy
                             this._ACC_WS_Total = item.Value;
                             break;
                         }
+                        case "HOLD": {
+                            //statements; 
+                            this._HOLD_Total = item.Value;
+                            var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
+                            TabFilter.Total = item.Value;
+
+                            break;
+                        }
                         default: {
                             //statements; 
                             var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
@@ -644,7 +666,9 @@ implements OnDestroy
                 });
 
             });
-
+        if (this._SelectedTabFilter.Code == "HOLD") {
+            this.GetPending();
+        }
     }
 
     RefreshMasterRequiredFields() {
@@ -815,7 +839,7 @@ implements OnDestroy
             FieldName: 'CourierPendingReasonName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
-            Styles: { width: '150px' },
+            Styles: { width: '105px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
@@ -826,7 +850,7 @@ implements OnDestroy
             FieldName: 'LastMileStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.LastMileStatusCode"),
-            Styles: { width: '50px' },
+            Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
@@ -1020,7 +1044,17 @@ implements OnDestroy
                 break;
             }
         }
-
+        if (this.SelectedPendingCodeFilter != null) {
+            switch (this.SelectedPendingCodeFilter.Key) {
+                case "A": {
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("CourierPendingReasonList", this.SelectedPendingCodeFilter.Key, null, null, "Contains", false, false, false, "string");
+                    break;
+                }
+            }
+        }
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
         }
@@ -1088,6 +1122,74 @@ implements OnDestroy
         if (this._SelectedACCValue != value) {
             this._SelectedACCValue = value;
             this.RefreshList();
+        }
+    }
+
+
+    GetPending() {
+        this._PendingCodes.length = 0;
+        this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
+        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this._CourierMasterService.GetPending(this.entityPM.Id)
+            .subscribe(resu => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                var list: string[];
+                list = resu.Result;
+                list.forEach(itemP => {
+                    this._PendingCodes.push({ 'Key': itemP, 'Value': itemP });
+                });
+                if (AppTool.IsNullOrEmpty(this.PendingFilter)) this.PendingFilter = "A";
+                if (!AppTool.IsNullOrEmpty(this.PendingFilter) && this._PendingCodes != null && this._PendingCodes.length > 0) {
+                    var tempPendingCodeFilter = this._PendingCodes.find(r => r.Key == this.PendingFilter);
+                    if (!AppTool.IsNullOrEmpty(tempPendingCodeFilter)) {
+                        this.SelectedPendingCodeFilter = tempPendingCodeFilter;
+                    }
+                    else {
+                        this.SelectedPendingCodeFilter = this._PendingCodes[0];
+                    }
+                    this.RefreshList();
+                }
+            });
+    }
+
+
+    HOLDFilterClicked(value) {
+
+        if (this.SelectedPendingCodeFilter != value) {
+            this.SelectedPendingCodeFilter = value;
+            this.RefreshList();
+        }
+    }
+    /*
+    _PendingCodesFilter: KeyValuePair;
+    get _SelectedHOLDValue() {
+        if (this._PendingFilter == "A" && this._PendingCodes != null) {
+            this._PendingCodesFilter = this._PendingCodes[0];
+        } else {
+            if (this._PendingCodes!= null)this._PendingCodesFilter = this._PendingCodes.find(r => r.Key == this._PendingFilter);
+        }
+        return this._PendingCodesFilter;
+    }
+    set _SelectedHOLDValue(value) {
+        if (this._PendingCodesFilter != value) {
+            this._PendingCodesFilter = value;
+            if (this._PendingCodesFilter != null)this._PendingFilter = this._PendingCodesFilter.Key;
+        }
+    }
+    */
+    _SelectedPendingCodeFilter: KeyValuePair;
+    get SelectedPendingCodeFilter() {
+        if (this.PendingFilter == "A" && this._PendingCodes != null) {
+            this._SelectedPendingCodeFilter = this._PendingCodes[0];
+        } else {
+            if (!AppTool.IsNullOrEmpty(this.PendingFilter) && this._PendingCodes != null && this._PendingCodes.length > 0) this._SelectedPendingCodeFilter = this._PendingCodes.find(r => r.Key == this.PendingFilter);
+        }
+        return this._SelectedPendingCodeFilter;
+    }
+    set SelectedPendingCodeFilter(value) {
+        if (this._SelectedPendingCodeFilter != value) {
+            this._SelectedPendingCodeFilter = value;
+            if (this._SelectedPendingCodeFilter != null)this.PendingFilter = this._SelectedPendingCodeFilter.Key;
         }
     }
 
