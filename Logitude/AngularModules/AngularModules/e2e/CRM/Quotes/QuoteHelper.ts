@@ -10,7 +10,7 @@ export class QuoteHelper {
 
   }
 
-  SelectDicrctionTransportMode( Direction: string, TransportMode: string, QuoteType: string) {
+  SelectDicrctionTransportMode( Direction: string, TransportMode: string, ShipmentType: string, QuoteType: string) {
     var directionBtn: any;
     var transportModeBtn: any;
     var shipmentTypeBtn: any;
@@ -18,7 +18,7 @@ export class QuoteHelper {
     var directionID: string;
     var shipmentTypeID: string;
 
-    if (TransportMode == 'A' && QuoteType == '') {
+    if (TransportMode == 'A' && ShipmentType == '') {
 
       var EC = protractor.ExpectedConditions;
       browser.wait(EC.elementToBeClickable(element(by.css('.RadioButton'))), 20000).then(a => {
@@ -43,7 +43,7 @@ export class QuoteHelper {
         browser.executeScript("arguments[0].click();", transportModeBtn.getWebElement());
       });
     }
-    else if (TransportMode == 'O' && QuoteType != '') {
+    else if (TransportMode == 'O' && ShipmentType != '') {
 
       var EC = protractor.ExpectedConditions;
       browser.wait(EC.elementToBeClickable(element(by.css('.RadioButton'))), 20000).then(a => {
@@ -67,20 +67,20 @@ export class QuoteHelper {
         transportModeBtn = element(by.id('TransportModeRadio_0O'));
         browser.executeScript("arguments[0].click();", transportModeBtn.getWebElement());
 
-        if(QuoteType == 'FCL'){
+        if(ShipmentType == 'FCL'){
           shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0FCLD'));  
         }
-        else if (QuoteType == 'LCL') {
+        else if (ShipmentType == 'LCL') {
           shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0LCLD'));  
         }
-        else if(QuoteType == 'OG')
+        else if(ShipmentType == 'OG')
         shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0MyGO'));  
     
         browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
 
       });
     }
-    else if (TransportMode == 'I' && QuoteType != '') {
+    else if (TransportMode == 'I' && ShipmentType != '') {
 
       var EC = protractor.ExpectedConditions;
       browser.wait(EC.elementToBeClickable(element(by.css('.RadioButton'))), 20000).then(a => {
@@ -104,13 +104,13 @@ export class QuoteHelper {
         transportModeBtn = element(by.id('TransportModeRadio_0I'));
         browser.executeScript("arguments[0].click();", transportModeBtn.getWebElement());
 
-        if (QuoteType == 'FTL') {
+        if (ShipmentType == 'FTL') {
           shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0FTL'));  
         }
-        else if (QuoteType == 'LTL') {
+        else if (ShipmentType == 'LTL') {
           shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0LTL'));  
         }
-        else if((QuoteType == 'IG'))
+        else if((ShipmentType == 'IG'))
         shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0MyGI'));  
     
         browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
@@ -119,9 +119,9 @@ export class QuoteHelper {
     }
   }
 
-  CreateAndCloseNewQuote(Direction:string,TransportMode:string, QuoteType:string) {
+  CreateAndCloseNewQuote(Direction:string,TransportMode:string, ShipmentType:string) {
     this.Helper.WaitByIdAndClick('NewQuote');
-    this.SelectDicrctionTransportMode( Direction,TransportMode,QuoteType);
+    this.SelectDicrctionTransportMode( Direction,TransportMode,ShipmentType);
 
     this.Helper.WaitByIdAndClick("CancelQuote");
   }
