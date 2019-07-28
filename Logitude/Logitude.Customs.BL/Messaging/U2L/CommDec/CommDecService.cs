@@ -107,7 +107,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             try
             {
                 var upsertParam = "CommDecService";
-                myDeclarationUpsertService.suppressNewTrans = true;
+                ///myDeclarationUpsertService.suppressNewTrans = true;
                 myDeclarationUpsertService.ProccessGenericRequest(xmlLOGICUSTFILE, ref upsertParam, out MessageOut);
             }
             catch (DbEntityValidationException ex)
@@ -133,7 +133,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 _LogitudeCommDecFile.Id = existId;
             }
 
+            /////////////////////////////////////////////////////////////
+            _context = CustomContext.GetContext(ResolvedTenant());
             MyGenericResponseObj.Stage = "GetSingle";
+            myQueryService = new DeclarationQueryService(_context);
             this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeCommDecFile.Id, true, false);
             if (this._MyDeclarationPM == null)
             {
@@ -424,6 +427,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             }
 
             _MyDeclarationPM.CurrentContextTag = UpsertActionConst; // moran 28.7.16 - Task 22249
+
+
+
+            declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
+
             declarationUpdateService.Update(this._MyDeclarationPM, true);
             AppendLogLine("declarationUpdat:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             string val = "";
