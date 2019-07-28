@@ -71,7 +71,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         this.SetUIProperties();
     }
     IsEditButtonDisabled: boolean = false;
-    EditWindowToolTip: string = "";
+    EditWindowToolTip: string = null;
     SetWindowArgs(args) {
         if (args != null) {
             var prevPageNo;
@@ -393,6 +393,10 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                             var result: ServiceResponse = myResult;
                             if (!result.HasError) {
                                 this.ReconcileExternalPagePM = result.Result;
+                                if (this.IsRestoreButtonVisibile) {
+                                    this.IsRestoreButtonVisibile = false;
+                                }
+                                
                                 this.FillGridsData();
                             }
                             this.CurrentSession.StopBusyIndicator();
