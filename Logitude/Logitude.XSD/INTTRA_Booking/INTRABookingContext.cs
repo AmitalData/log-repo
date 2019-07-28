@@ -807,7 +807,12 @@ namespace Logitude.XSD.INTTRA_Booking
         }
         private void BuildMessageDetails_GoodsDetails()
         {
-
+            INTTRA_Booking.GoodsDetailsType itemDetails = new INTTRA_Booking.GoodsDetailsType()
+            {
+                LineNumber = "1",
+                GoodDescription = "Shipment Description of goods",
+            };
+            this.GoodsDetails.Add(itemDetails);
         }
 
         public System.DateTime TodayDate { get; set; }

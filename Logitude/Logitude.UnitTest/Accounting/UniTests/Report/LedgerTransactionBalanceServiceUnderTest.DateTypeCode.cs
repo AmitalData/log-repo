@@ -45,10 +45,10 @@ namespace Logitude.UnitTest.Accounting.UniTests
             classUnderTest.Run();
             Assert.IsNotNull(classUnderTest.Response);
             Assert.AreEqual(100m, classUnderTest.Response.StartBalanceLocal);
-            Assert.AreEqual(400m, classUnderTest.Response.EndBalanceLocal);
+            Assert.AreEqual(350m, classUnderTest.Response.EndBalanceLocal);
             Assert.IsNotNull(classUnderTest.Response.MyLedgerTransactionList);
-            Assert.AreEqual(3, classUnderTest.Response.MyLedgerTransactionList.Count());
-            Assert.AreEqual("1", classUnderTest.Response.MyLedgerTransactionList.First().Id);
+            Assert.AreEqual(2, classUnderTest.Response.MyLedgerTransactionList.Count());
+            Assert.AreEqual("2", classUnderTest.Response.MyLedgerTransactionList.First().Id);
             Assert.AreEqual("3", classUnderTest.Response.MyLedgerTransactionList.Last().Id);
         }
 
@@ -285,8 +285,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
             int myId = 1;
             var mockLedgerTransaction = new MockObjectSet<LedgerTransaction>();
 
-            
 
+            string YearTransferTestJornalstorno = "YearTransferTest storno";
 
             var listLedgerTransaction = new List<LedgerTransaction>()
             {
@@ -333,6 +333,22 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     ForeignAmountDebit = 150,
 
                  },
+                  new LedgerTransaction()
+                 {
+                      Id = GetId(ref myId),
+                    CreateDate =currDate,
+                    Tenant=_MyTenant,
+                    AccountId = _MainGLAccountIdTeva,
+                    AccountingDate = new DateTime(yyyy, 1, 1),
+                    DueDate= new DateTime(yyyy, 7, 10),
+                    DocumentDate= new DateTime(yyyy, 5, 15),
+                    LocalAmountDebit = -50,
+                    CurrencyId = _CurrencyIdUSD,
+                    ForeignAmountDebit = -50,
+                    JournalId=YearTransferTestJornalstorno
+
+                 },
+
             };
 
             var mockJournal = new MockObjectSet<Journal>();
@@ -348,11 +364,35 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         AccountingDate = l.AccountingDate,
                         Tenant = l.Tenant,
                         AccountingEntityCode = "11",
-                        VoidedByJournalId= voidedYearTransferTest? "voidJ":""
+               //         VoidedByJournalId= voidedYearTransferTest? "voidJ":""
                     }
                 );
+                if (!voidedYearTransferTest)
+                {
+                    removeYearTransferSrorno(YearTransferTestJornalstorno, listLedgerTransaction);
+                }
+                else
+                {
+                    var l2 = listLedgerTransaction.First(r => r.JournalId == YearTransferTestJornalstorno);
+                    mockJournal.Add(
 
-                
+                        new Journal()
+                        {
+                            Id = l2.JournalId,
+                            AccountingDate = l2.AccountingDate,
+                            Tenant = l2.Tenant,
+                            AccountingEntityCode = "11",
+                        
+                    }
+                    );
+
+                }
+
+            }
+            else
+            {
+                removeYearTransferSrorno(YearTransferTestJornalstorno, listLedgerTransaction);
+
             }
             listLedgerTransaction.ForEach(
                 tran =>
@@ -383,6 +423,12 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
             return fakeIAccountingContext;
+        }
+
+        private static void removeYearTransferSrorno(string YearTransferTestJornalstorno, List<LedgerTransaction> listLedgerTransaction)
+        {
+            var lYearTransferTestJornalstorno = listLedgerTransaction.First(r => r.JournalId == YearTransferTestJornalstorno);
+            listLedgerTransaction.Remove(lYearTransferTestJornalstorno);
         }
 
         private void AccTot(MockObjectSet<GLAccountTotalByMonth> mockGLAccountTotalByMonth, List<LedgerTransaction> listLedgerTransaction)
