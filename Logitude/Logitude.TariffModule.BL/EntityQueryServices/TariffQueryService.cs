@@ -137,7 +137,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                         if (initialPropIndex == -1)
                         {
-                            initialPropIndex = Steps.Count;
+                            initialPropIndex = Steps.Count-1;
                         }
                     }
                     else
@@ -148,7 +148,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                     if (initialPropIndex == 0)
                     {
-                        items = items.Concat((from item in iQueryable.Where(p => p.Id == itemStep.Id)
+                        items = items.Concat((from item in iQueryable
                                               group iQueryable by new
                                               {
                                                   item.TariffId,
@@ -323,180 +323,6 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             }
 
 
-
-
-
-            //if (propIndex == 0)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.MinPrice,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.MinPrice),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 0,
-
-            //             }).ToList();
-            //}
-
-
-            //if (propIndex == 1)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step1Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step1Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 1,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 2)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step2Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step2Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 2,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 3)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step3Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step3Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 3,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 4)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step4Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step4Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 4,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 5)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step5Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step5Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 5,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 6)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step6Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step6Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 6,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 7)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step7Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step7Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 7,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 8)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step8Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step8Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 8,
-
-            //             }).ToList();
-            //}
 
             List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == "AFC").ToList();
             List<TariffVersion> TariffVersionList = this.repository.GetAllTariffVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), tenant).ToList();

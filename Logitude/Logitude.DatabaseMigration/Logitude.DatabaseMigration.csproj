@@ -1321,6 +1321,14 @@
     <Compile Include="Migrations\201907251420181_EndDateTariffVersion_Khalid.Designer.cs">
       <DependentUpon>201907251420181_EndDateTariffVersion_Khalid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907271103316_AddBIReportsExecutionLog_Maheera.cs" />
+    <Compile Include="Migrations\201907271103316_AddBIReportsExecutionLog_Maheera.Designer.cs">
+      <DependentUpon>201907271103316_AddBIReportsExecutionLog_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.cs" />
+    <Compile Include="Migrations\201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.Designer.cs">
+      <DependentUpon>201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2253,6 +2261,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907251420181_EndDateTariffVersion_Khalid.resx">
       <DependentUpon>201907251420181_EndDateTariffVersion_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907271103316_AddBIReportsExecutionLog_Maheera.resx">
+      <DependentUpon>201907271103316_AddBIReportsExecutionLog_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.resx">
+      <DependentUpon>201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

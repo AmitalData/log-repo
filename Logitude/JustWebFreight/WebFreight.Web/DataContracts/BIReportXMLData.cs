@@ -10,6 +10,7 @@ namespace WebFreight.Web.DataContracts
     public class BIReportXMLData
     {
         public string BIReportId { get; set; }
+        public string UserId { get;set; }
         public DWQueryData DWQueryData { get; set; }
         public BIReportPM BIReportPM { get; set; }
         public BITabularViewSettings BITabularViewSettings { get; set; }
