@@ -1566,7 +1566,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsScreenEnabled">{{ButtonContent}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsScreenEnabled" id="{{'CreateQuote' | IdGeneratorPipe}}">{{ButtonContent}}</button>
                     </td>
                 </tr>
             </table>
