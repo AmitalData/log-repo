@@ -632,25 +632,56 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                         Shipment.Transshipment1Vessel = vessel;
                     }
-
-                    if (MasterData.Transshipment1ETD != null)
+                    if (string.IsNullOrEmpty(item.MasterShipmentDataId))
                     {
-                        Shipment.Transshipment1ETD = MasterData.Transshipment1ETD;
+
+                        if (MasterData.Transshipment1ETD != null)
+                        {
+                            Shipment.Transshipment1ETD = MasterData.Transshipment1ETD;
+                        }
+
+                        if (MasterData.Transshipment1ETA != null)
+                        {
+                            Shipment.Transshipment1ETA = MasterData.Transshipment1ETA;
+                        }
+
+                        if (MasterData.Transshipment1ATD != null)
+                        {
+                            Shipment.Transshipment1ATD = MasterData.Transshipment1ATD;
+                        }
+
+                        if (MasterData.Transshipment1ATA != null)
+                        {
+                            Shipment.Transshipment1ATA = MasterData.Transshipment1ATA;
+                        }
                     }
-
-                    if (MasterData.Transshipment1ETA != null)
+                    else
                     {
-                        Shipment.Transshipment1ETA = MasterData.Transshipment1ETA;
-                    }
+                        ShipmentMasterData MasterShipment = shipmentMasterDatas.Where(p => p.Id == item.MasterShipmentDataId).FirstOrDefault();
 
-                    if (MasterData.Transshipment1ATD != null)
-                    {
-                        Shipment.Transshipment1ATD = MasterData.Transshipment1ATD;
-                    }
+                        if (MasterShipment != null)
+                        {
 
-                    if (MasterData.Transshipment1ATA != null)
-                    {
-                        Shipment.Transshipment1ATA = MasterData.Transshipment1ATA;
+                            if (MasterShipment.Transshipment1ETD != null)
+                            {
+                                Shipment.Transshipment1ETD = MasterShipment.Transshipment1ETD;
+                            }
+
+                            if (MasterShipment.Transshipment1ETA != null)
+                            {
+                                Shipment.Transshipment1ETA = MasterShipment.Transshipment1ETA;
+                            }
+
+                            if (MasterShipment.Transshipment1ATD != null)
+                            {
+                                Shipment.Transshipment1ATD = MasterShipment.Transshipment1ATD;
+                            }
+
+                            if (MasterShipment.Transshipment1ATA != null)
+                            {
+                                Shipment.Transshipment1ATA = MasterShipment.Transshipment1ATA;
+                            }
+                        }
                     }
 
                     if (myLastDelivery != null)
