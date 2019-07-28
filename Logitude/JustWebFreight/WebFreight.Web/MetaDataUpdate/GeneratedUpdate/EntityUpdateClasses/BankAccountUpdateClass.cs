@@ -2105,6 +2105,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
          
             ScreenField BankAccountBankAccountGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = BankAccountGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
+	      
+
+	         Screen BankAccountHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankAccount.HeaderScreen", Name = "HeaderScreen", ObjectTableId = BankAccountObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+            ScreenField BankAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = BankAccountHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField BankAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "BankId").FirstOrDefault().Id, ScreenId = BankAccountHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField BankAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "GLAccountNumber").FirstOrDefault().Id, ScreenId = BankAccountHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField BankAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = BankAccountObjectFields.Where(d => d.FieldName == "DeferedGLAccountNumber").FirstOrDefault().Id, ScreenId = BankAccountHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         	
+		    BankAccountObjectTable.HeaderScreenId = BankAccountHeaderScreenScreen1.Id;
+	   		  
 
 	    }
 
