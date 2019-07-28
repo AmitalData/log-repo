@@ -36,7 +36,7 @@ export class SalesNotes implements OnInit, OnDestroy {
     }
 
     public IsEnabled: boolean = true;
-    public IsFromQuote: boolean = true;
+    public IsFromQuote: boolean = false;
     public IconCode: string;
     public IconPath: string;
     public IconOpacity: number = 1;
