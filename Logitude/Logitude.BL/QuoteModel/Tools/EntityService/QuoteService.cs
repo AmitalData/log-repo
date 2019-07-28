@@ -124,7 +124,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.entityPM = entityPM;
             this.entityPM.Id = IdCounter.GetNumber("Quote", tenant).ToString();
             this.entityPoco = new Quote() { Id = this.entityPM.Id };
-            this.entityPM.StartDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             if (!entityPM.IsCopy)
             {

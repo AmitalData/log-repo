@@ -76,6 +76,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "ARPayment Fetcha Pago", 
                 SearchFields = "FPG,ARPayment Fetcha Pago", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TJC", 
+                Name = "Ticket Jumping Counter", 
+                SearchFields = "TJC,Ticket Jumping Counter", 
+			});
 			
             return all;
        }

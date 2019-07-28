@@ -111,6 +111,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
           //  this.ComputeChargeableWeight_Kg();
             this.ComputeVolume();
             this.ComputeVolumetricWeight();
+            this.SetUIProperties();
+
        }
     }
 
@@ -123,6 +125,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.grossWeightCode = value;
             this.ComputeVolume();
             this.ComputeVolumetricWeight();
+            this.SetUIProperties();
+
         }
     }
 
@@ -137,6 +141,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.volumeUnitCode = value;
             this.ComputeVolume();
             this.ComputeVolumetricWeight();
+            this.SetUIProperties();
+
         }
     }
 
@@ -208,6 +214,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (this.volume != value) {
             this.volume = value;
             this.ComputeVolumetricWeight();
+            this.SetUIProperties();
+
         }
     }
 
@@ -220,6 +228,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (this.grossWeight != value) {
             this.grossWeight = value;
             this.ComputeVolumetricWeight();
+            this.SetUIProperties();
+
         }
     }
 

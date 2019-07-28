@@ -21,7 +21,8 @@ exports.config = {
         },
         QuoteParams: {
             Direction: null,
-            TransportMode: null,
+            TransportMode: null, 
+            ShipmentType: null,
             QuoteType: null,
         },
         ReportDoc: {

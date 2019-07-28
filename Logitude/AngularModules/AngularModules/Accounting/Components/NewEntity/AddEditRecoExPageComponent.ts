@@ -624,8 +624,8 @@ export class AddEditRecoExPageComponent extends BaseComponent{
             for (var line of this.PageLinesList.Collection) {
 
                 //debit
-                sum += !line.DebitAmount?0:line.DebitAmount;
-                sum -= !line.CreditAmount?0:line.CreditAmount;
+                sum -= !line.DebitAmount?0:line.DebitAmount;
+                sum += !line.CreditAmount?0:line.CreditAmount;
 
             }
         }
