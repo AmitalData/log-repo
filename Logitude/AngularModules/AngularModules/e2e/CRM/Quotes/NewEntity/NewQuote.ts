@@ -9,7 +9,7 @@ export class NewQuote {
   private Helper: FieldsHelper;
   private Quotes: GeneralFunctions;
   private QuoteHepler : QuoteHelper;
-
+  
 
   constructor() {
    this.Helper = new FieldsHelper();
@@ -34,7 +34,8 @@ export class NewQuote {
       var QuoteNumber = this.Quotes.RandomNum();
       this.FillQuoteFields(QuoteNumber,  TransportMode ,Direction,ShipmentType, QuoteType);
       this.Helper.WaitBusyIndicator();
-
+      this.Quotes.UseSearchBox('Quote_Search', QuoteNumber);
+      //this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
       
      // this.GeneralFunction.UseSearchBox('Shipment_Search', QuoteNumber);
       //this.EditShipmentTabs.EditTabs(QuoteNumber, ShipmentLevelCode, QuoteType,Direction);
@@ -57,7 +58,7 @@ export class NewQuote {
     
     this.Helper.WaitByIdAndFill('Quote_CustomerId','TestShipper');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-  
+    this.Helper.WaitByIdAndFill('Quote_ShipperReference1', QuoteNumber);// test random number randomWholeNum
     this.Helper.WaitByIdAndFill('Quote_IncotermId','CIF');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
    
@@ -77,7 +78,11 @@ export class NewQuote {
     
     
   }
+  EditTabs(shipperRef1:string,LogitudeShipType:string,ShipmentType: string,Direction: string) {
 
+
+    this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
+  }
 
 }
 
