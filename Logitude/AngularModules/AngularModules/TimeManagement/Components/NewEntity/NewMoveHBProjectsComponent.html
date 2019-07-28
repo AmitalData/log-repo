@@ -76,34 +76,46 @@
                     </td>
                 </tr>
                 <!-- FromProject -->
-               <tr class="FormFieldRow">
+                <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'FromProject'" [NoObjectField]="true" [Text]="'From Project'" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td>
-                        <LogDatePicker [ObjectFieldName]="'FromProject'" [NoObjectField]="true" [SelectedDateValue]="FromProject" [DataContext]="DataContext"></LogDatePicker>
-                    </td>
+                    <td style="width:250px;">
+                        <LogLov [ObjectFieldName]="'FromProject'"
+                                [DataContext]="DataContext"
+                                [NoObjectField]="true"
+                                [SelectedValue]="FromProject"
+                                [LookUpTableName]="'TMProject'">
+                        </LogLov>
 
+
+
+                    </td>
                     <td>
                         <div></div>
                     </td>
                 </tr>
 
                 <!-- ToProject -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'ToProject'" [NoObjectField]="true" [Text]="'To Project'" [DataContext]="DataContext"></LogLabel>
-                    </td>
+               <tr class="FormFieldRow">
+                   <td>
+                       <LogLabel [ObjectFieldName]="'ToProject'" [NoObjectField]="true" [Text]="'To Project'" [DataContext]="DataContext"></LogLabel>
+                   </td>
 
-                    <td>
-                        <LogDatePicker [ObjectFieldName]="'ToProject'" [NoObjectField]="true" [SelectedDateValue]="ToProject" [DataContext]="DataContext"></LogDatePicker>
-                    </td>
+                   <td style="width:250px;">
+                       <LogLov [ObjectFieldName]="'ToProject'"
+                               [DataContext]="DataContext"
+                               [NoObjectField]="true"
+                               [SelectedValue]="ToProject"
+                               [LookUpTableName]="'TMProject'">
+                       </LogLov>
+                   </td>
 
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+                   <td>
+                       <div></div>
+                   </td>
+               </tr>
 
                 <!-- FromDate -->
                 <tr class="FormFieldRow">

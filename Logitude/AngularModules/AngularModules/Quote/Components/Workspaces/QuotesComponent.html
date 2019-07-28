@@ -170,7 +170,7 @@
                                         <div class="QueriesSection">
                                             <div>{{'Quote.S.Workspace.QuoteQueries' | TextCodeTranslationPipe}}</div>
                                             <div style="height:22px; width: 57px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
-                                                <button class="Button" (click)="RunQuoteWizard()">{{'General.B.New' | TextCodeTranslationPipe}}</button>
+                                                <button class="Button" (click)="RunQuoteWizard()" id="{{'NewQuote' | IdGeneratorPipe}}" >{{'General.B.New' | TextCodeTranslationPipe}}</button>
                                             </div>
                                             <div>
                                                 <p class="QueryLink" (click)="ViewQuoteQuery('CRT')">{{'Quote.Q.CreatedQuotes' | TextCodeTranslationPipe}} ({{Quotes_Created}})</p>

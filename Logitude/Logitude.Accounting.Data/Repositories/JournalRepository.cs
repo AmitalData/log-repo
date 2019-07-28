@@ -393,6 +393,17 @@ namespace Logitude.Accounting.Data.Repositories
             return journals;
         }
 
+        public IQueryable<Journal> GetJournalsNotLTByAccDateAccEntity(DateTime accountingDateFrom, DateTime accountingDateTo, string entityCode, int tenant)
+        {
+            var journals = (from a in context.Journals.Include("JournalStatusType")
+                            where a.Tenant == tenant
+                            where a.StatusCode != "0" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
+                                    && a.AccountingEntityCode == entityCode
+                            select a);
+
+            return journals;
+        }
+
 
         public bool CheckIfThereNonTranslatedJournalsByMonth(int year, int month, int tenant)
         {

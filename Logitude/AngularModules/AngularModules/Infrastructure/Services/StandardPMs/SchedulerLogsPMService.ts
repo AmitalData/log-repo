@@ -246,7 +246,7 @@ export class SchedulerLogsPMService {
 	  public GetNewEntityPM() {		 
 		    var entityPM: SchedulerLogsPM;
 			entityPM = new SchedulerLogsPM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
+			//entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 

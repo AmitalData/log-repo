@@ -32,7 +32,7 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
     public portListService: PortListService = new PortListService();
     public RemovedAirlineAreas = [];
     public AddedAirlineAreas = [];
-
+    public ISNullDescription: boolean = false;
     constructor() {
         super();
     }
@@ -61,7 +61,11 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
 
 
     public get Description() { return this.EntityPM.Description; }
-    public set Description(value: string) { this.EntityPM.Description = value; }
+    public set Description(value: string) {
+        if (this.EntityPM.Description != value) {
+            this.EntityPM.Description = value;
+        }
+    }
     
     public IsResourcesReady: boolean = false;
     SetWindowArgs(windowArgs: any) {
@@ -79,11 +83,16 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
         }
         
         else {
+            
             this.EntityPM = windowArgs['Entity'];
             this.EntityPM.CloneMe();
             this.Clone();
-
+            if (AppTool.IsNullOrEmpty(this.EntityPM.Description)) {
+                this.ISNullDescription = true;
+            }
             this.EntityPM.AirlineAreasPorts.forEach(item => {
+                this.AddedAirlineAreas.push(item);
+
                 this.myCloner.AddEntity(item);
 
                 this.portListService.getSingleFromCache(item.PortId).subscribe(p => {
@@ -168,7 +177,8 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-      
+        if (this.ISNullDescription)
+            this.Description = null;
         this.RejectChanges();
         this.AirlinePM.RejectChanges();
         this.EntityPM.RejectChanges();

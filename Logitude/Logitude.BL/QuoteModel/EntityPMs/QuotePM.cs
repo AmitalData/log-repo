@@ -160,6 +160,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsDangerous { get; set; }
         public int? ExpirationDays { get; set; }
         public DateTime? ExpirationDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public bool IsFreightBySteps { get; set; }
         public bool TotalPerContainer { get; set; }

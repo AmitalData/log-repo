@@ -998,6 +998,15 @@ namespace Simplog.Data.QuoteModel.Mapping
 
 
 
+            this.Property(t => t.SpaceLinesBeforeContainers).HasColumnName("SpaceLinesBeforeContainers");
+            this.Property(t => t.SpaceLinesBeforePackages).HasColumnName("SpaceLinesBeforePackages");
+            this.Property(t => t.SpaceLinesBeforeQuoteHeaders).HasColumnName("SpaceLinesBeforeQuoteHeaders");
+            this.Property(t => t.SpaceLinesBeforeQuoteDetails).HasColumnName("SpaceLinesBeforeQuoteDetails");
+            this.Property(t => t.SpaceLinesBeforeHeaders).HasColumnName("SpaceLinesBeforeHeaders");
+            this.Property(t => t.SpaceLinesBeforeFooters).HasColumnName("SpaceLinesBeforeFooters");
+            this.Property(t => t.SpaceLinesBeforePerContainers).HasColumnName("SpaceLinesBeforePerContainers");
+            
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

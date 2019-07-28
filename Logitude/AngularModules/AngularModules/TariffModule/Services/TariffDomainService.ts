@@ -44,11 +44,11 @@ export class TariffDomainService {
         });
     }
 
-    GetAvailableAirlineFreightTariffs(FromPort: string, ToPort: string, BetweenDate: Date, Weight: number,Weightcode:string,GrossWeight:number,GrossWeightCode:string,Volume:number,VolumeCode:string) {
+    GetAvailableAirlineFreightTariffs(FromPort: string, ToPort: string, BetweenDate: Date, Weight: number,Weightcode:string,GrossWeight:number,GrossWeightCode:string,Volume:number,VolumeCode:string, currencyId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetAvailableAirlineFreightTariffs?FromPort=' + FromPort + "&ToPort=" + ToPort + "&BetweenDate=" + ServiceHelper.GetDateString(BetweenDate) + "&Weight=" + Weight + "&Weightcode=" + Weightcode + "&GrossWeight=" + GrossWeight + "&GrossWeightCode=" + GrossWeightCode + "&Volume=" + Volume + "&VolumeCode=" + VolumeCode;
+        var url = this._apiUrl + '/GetAvailableAirlineFreightTariffs?FromPort=' + FromPort + "&ToPort=" + ToPort + "&BetweenDate=" + ServiceHelper.GetDateString(BetweenDate) + "&Weight=" + Weight + "&Weightcode=" + Weightcode + "&GrossWeight=" + GrossWeight + "&GrossWeightCode=" + GrossWeightCode + "&Volume=" + Volume + "&VolumeCode=" + VolumeCode + "&currencyId=" + currencyId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
@@ -295,7 +295,16 @@ export class TariffSearchSummary {
     VersionId: string;
     TotalSurcharge: string;
     WholePrice: string;
+    Surcharges: Array<SurchargeSummary>;
+    AllIn: string;
+    IsShown: boolean = false;
+}
 
+
+export class SurchargeSummary {
+    Code: string;
+    Name: string;
+    Price: number;  
 }
 
 export class ExcelTariffLines {

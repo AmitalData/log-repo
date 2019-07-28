@@ -51,7 +51,7 @@
                         </td>
 
                         <td style="width: 1px" *ngIf="IsUpdateSurchargesButtonVisible">
-                            <button class="GreenButton" (click)="UpdateSurchargesClicked()">Update Surcharges</button>
+                            <button class="Button" (click)="UpdateSurchargesClicked()">Update Surcharges</button>
                         </td>
 
                         <td style="width:5px;" *ngIf="IsUpdateSurchargesButtonVisible">
@@ -72,19 +72,7 @@
                                 <img src="./Images/ToggleIcon.png" />
 
                                 <div class="ToggleButtonMenu">
-                                    <button (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
                                     <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
-
-                                    <div *ngIf="IsDraftVersion">
-                                        <input class="upload" style="display: none;width:65px"
-                                               type="file" (change)="OnFileChanged($event)"
-                                               (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
-                                               #fileInput>
-                                        <a href="#" style="text-decoration:none">
-                                            <button (click)="fileInput.click()">Upload Excel</button>
-                                        </a>
-                                    </div>
-
                                     <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
                                 </div>
                             </div>

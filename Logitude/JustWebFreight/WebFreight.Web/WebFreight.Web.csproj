@@ -2305,6 +2305,7 @@
     <Compile Include="Helpers\APIHelpers\ConsolidationServiceBatch.cs" />
     <Compile Include="Helpers\APIHelpers\GenerateTariffsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
+    <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
@@ -2433,6 +2434,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AWBDescriptionOfGoodsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\BranchUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\BusinessUnitUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardContactProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardExternalAccountsByProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardExternalCodeByCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardUpdateClass.cs" />
