@@ -93,6 +93,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.InReconcileProgress).HasColumnName("InReconcileProgress");
 
             this.Property(t => t.ReconcileRemarks).HasColumnName("ReconcileRemarks").HasMaxLength(400).IsUnicode(true);
+
+            this.Property(t => t.InProgressExternalReconcile).HasColumnName("InProgressExternalReconcile");
         }
     }
 }

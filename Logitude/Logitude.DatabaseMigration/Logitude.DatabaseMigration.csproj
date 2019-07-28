@@ -1321,6 +1321,10 @@
     <Compile Include="Migrations\201907280831271_AddJournalExternalReconcile.Designer.cs">
       <DependentUpon>201907280831271_AddJournalExternalReconcile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907280851421_AddInProgressExternalReconcile.cs" />
+    <Compile Include="Migrations\201907280851421_AddInProgressExternalReconcile.Designer.cs">
+      <DependentUpon>201907280851421_AddInProgressExternalReconcile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2253,6 +2257,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907280831271_AddJournalExternalReconcile.resx">
       <DependentUpon>201907280831271_AddJournalExternalReconcile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907280851421_AddInProgressExternalReconcile.resx">
+      <DependentUpon>201907280851421_AddInProgressExternalReconcile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
