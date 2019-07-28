@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -118,7 +118,8 @@ export class UserExtendedList {
     public Id: string;
     public Tenant: number;  
     public EnglishName: string; 
-    public Email: string;    
+    public Email: string;
+    public AdditionalPackagesOnly: boolean;
     public SearchFields: string;
     
     public PackageCode1: string;

@@ -491,7 +491,7 @@ export class GlobalDomainService {
         myResult.TemporalPackageCode = entityPM.TemporalPackageCode;
         myResult.PackagesCodes_PK = entityPM.PackagesCodes_PK;
         myResult.PackagesCodes_BS = entityPM.PackagesCodes_BS;
-        myResult.TenantManagementLicenses = entityPM.TenantManagementLicenses;        
+        myResult.TenantManagementLicenses = entityPM.TenantManagementLicenses;
         ObjectsUpdater.UpdateTenantManagementJS(myResult);
     }
 }
