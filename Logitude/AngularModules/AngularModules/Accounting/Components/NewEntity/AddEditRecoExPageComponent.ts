@@ -37,8 +37,10 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     public ValidationErrorsList: string[] = [];
     isNewEntity: boolean = false;
     IsCancelApprovedEnabled: boolean = false;
+    IsRestoreButtonVisibile: boolean = false;
     public IsDisplayOnly: boolean = false;
     public IsMultiCurrency: boolean = false;
+    RestoreToolTipMessage: string;
     currency: any;
     AMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount");
     CreditAMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.CreditAmount");
@@ -75,7 +77,9 @@ export class AddEditRecoExPageComponent extends BaseComponent{
             var prevPageNo;
             this.BankAccountPM = args.BankAccount;
             this.IsEditButtonDisabled = !args.EnableReconcileEditButton;
+            this.IsRestoreButtonVisibile = args.IsRestoreButtonVisibile;
             this.EditWindowToolTip = args.message;
+            this.RestoreToolTipMessage = args.RestoreToolTipMessage;
             this.GetDefaultValues();
             if (args.entity)
             {
@@ -347,6 +351,11 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         }
     }
 
+    RestoreButtonClicked() {
+
+        this.EditButtonClicked();
+    }
+
     SubmitChanges() {
         this.CurrentSession.StartBusyIndicatorSaving();
         if (this.isNewEntity) {
@@ -611,8 +620,8 @@ export class AddEditRecoExPageComponent extends BaseComponent{
             for (var line of this.PageLinesList.Collection) {
 
                 //debit
-                sum += !line.DebitAmount?0:line.DebitAmount;
-                sum -= !line.CreditAmount?0:line.CreditAmount;
+                sum -= !line.DebitAmount?0:line.DebitAmount;
+                sum += !line.CreditAmount?0:line.CreditAmount;
 
             }
         }

@@ -1313,6 +1313,14 @@
     <Compile Include="Migrations\201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.Designer.cs">
       <DependentUpon>201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907241136029_AddStartDateToQuote_Maheera.cs" />
+    <Compile Include="Migrations\201907241136029_AddStartDateToQuote_Maheera.Designer.cs">
+      <DependentUpon>201907241136029_AddStartDateToQuote_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907251420181_EndDateTariffVersion_Khalid.cs" />
+    <Compile Include="Migrations\201907251420181_EndDateTariffVersion_Khalid.Designer.cs">
+      <DependentUpon>201907251420181_EndDateTariffVersion_Khalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2239,6 +2247,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.resx">
       <DependentUpon>201907240829512_ChangeServiceClassNameTOProcCode_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907241136029_AddStartDateToQuote_Maheera.resx">
+      <DependentUpon>201907241136029_AddStartDateToQuote_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907251420181_EndDateTariffVersion_Khalid.resx">
+      <DependentUpon>201907251420181_EndDateTariffVersion_Khalid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

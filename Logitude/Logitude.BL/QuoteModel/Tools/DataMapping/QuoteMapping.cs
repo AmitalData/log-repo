@@ -97,6 +97,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.IsDangerous = entityPM.IsDangerous;
             entityPoco.IsFreightBySteps = entityPM.IsFreightBySteps;
             entityPoco.ExpirationDate = entityPM.ExpirationDate;
+            entityPoco.StartDate = entityPM.StartDate;
             entityPoco.ExpirationDays = entityPM.ExpirationDays;
             entityPoco.BranchId = entityPM.BranchId;
             entityPoco.DepartmentId = entityPM.DepartmentId;

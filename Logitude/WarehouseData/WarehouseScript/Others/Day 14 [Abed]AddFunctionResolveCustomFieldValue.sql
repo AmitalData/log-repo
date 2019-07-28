@@ -62,6 +62,14 @@ begin
 SET @MyValueOut = @FieldValue;
 end
 
+ELSE if(@DataTypeCode = ''PickList'') 
+begin 
+Set @MyValueOut = ''-1'';
+
+if(@FieldValue is not null) begin set @MyValueOut = @FieldValue ;end
+
+end
+
 ELSE begin set @MyValueOut = null; end
 
 end
