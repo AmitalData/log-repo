@@ -211,7 +211,7 @@ namespace CommunicationWorkerRole
                 {
                     From = "admin@fnarsoft.com",
                     To = "jalal@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
-                    CC = "ahmada@logitudeworld.com;ahmadb@logitudeworld.com;YaronC@AMITAL.CO.IL;razan@logitudeworld.com",
+                    CC = "ahmada@logitudeworld.com;ahmadb@logitudeworld.com;YaronC@AMITAL.CO.IL;razan@logitudeworld.com;lana@logitudeworld.com",
                     BCC = "",
                     Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
                     EmailBody = emailbody,

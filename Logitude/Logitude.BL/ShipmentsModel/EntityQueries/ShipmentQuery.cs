@@ -2268,6 +2268,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.INTTRADocumentTypeCode = shipment.INTTRADocumentTypeCode;
             shipmentPM.INTTRALastStatusDate = shipment.INTTRALastStatusDate;
             shipmentPM.ContainerLastStatusDate = shipment.ContainerLastStatusDate;
+            shipmentPM.INTTRABookingStatusCode = shipment.INTTRABookingStatusCode;
+            shipmentPM.INTTRABookingTransStatusCode = shipment.INTTRABookingTransStatusCode;
+
+
+            INTTRABookingStatusRepository iNTTRABookingStatusRepository = new INTTRABookingStatusRepository(repository.context);
+            if(!string.IsNullOrEmpty(shipmentPM.INTTRABookingStatusCode))
+            shipmentPM.INTTRABookingStatusName = iNTTRABookingStatusRepository.GetSingleINTTRABookingStatus(shipmentPM.INTTRABookingStatusCode).Name;
+
+
+            INTTRABookingTransStatusRepository iNTTRABookingTransStatusRepository = new INTTRABookingTransStatusRepository(repository.context);
+            if (!string.IsNullOrEmpty(shipmentPM.INTTRABookingTransStatusCode))
+                shipmentPM.INTTRABookingTransStatusName = iNTTRABookingTransStatusRepository.GetSingleINTTRABookingTransStatus(shipmentPM.INTTRABookingTransStatusCode).Name;
 
             shipmentPM.Notify1Reference = shipment.Notify1Reference;
             shipmentPM.Notify2Reference = shipment.Notify2Reference;
@@ -10190,7 +10202,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      MainCarriageFromPortName = m.MainCarriageFromPort.EnglishName,
                      MainCarriageFinalDestinationPortName = m.MainCarriageFinalDestinationPort != null ? m.MainCarriageFinalDestinationPort.EnglishName : null,
                      ShipperName = shipment.ShipperCard != null ? shipment.ShipperCard.EnglishName : null,
-                     MainCarriageCarrierName = m.MainCarriageCarrierCard != null ? m.MainCarriageCarrierCard.EnglishName : null,
+                     MainCarriageCarrierName = m.MainCarriageCarrierCard != null ? m.MainCarriageCarrierCard.EnglishName : null,                    
                      ContainerNumber = jd.ContainerNumber,
                      ShipmentTypeId = shipment.ShipmentTypeId,
                      ShipmentTypeName = shipment.ShipmentType != null ? shipment.ShipmentType.Name : null,
@@ -10302,6 +10314,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      ShipperAddressId = shipment.ShipperAddressId,
                      ConsigneeAddressId = shipment.ConsigneeAddressId,
                      Volume = shipment.Volume,
+                     PackageVolume = jd.Volume,
+                     MainCarriageCarrierId = m.MainCarriageCarrierId,
                  });
 
             return dataList;
@@ -11252,6 +11266,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                INTTRASIStatusCode = f.INTTRASIStatusCode,
                                INTTRASIStatusName = f.INTTRASIStatusName,
                                INTTRASIStatusDate = f.INTTRASIStatusDate,
+                               INTTRABookingStatusCode = f.INTTRABookingStatusCode,
+                               INTTRABookingStatusName = f.INTTRABookingStatusName,
+                               INTTRABookingTransStatusName = f.INTTRABookingTransStatusName,
+                               INTTRABookingTransStatusCode = f.INTTRABookingTransStatusCode,
                                LastFinalDestination = f.LastFinalDestination,
                                FirstPickupETA = f.FirstPickupETA,
                                FirstPickupETD = f.FirstPickupETD,
@@ -11593,6 +11611,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     INTTRASIStatusCode = f.INTTRASIStatusCode,
                     INTTRASIStatusName = f.INTTRASIStatusName,
                     INTTRASIStatusDate = f.INTTRASIStatusDate,
+                    INTTRABookingStatusCode = f.INTTRABookingStatusCode,
+                    INTTRABookingStatusName = f.INTTRABookingStatusName,
+                    INTTRABookingTransStatusName = f.INTTRABookingTransStatusName,
+                    INTTRABookingTransStatusCode = f.INTTRABookingTransStatusCode,
                     LastFinalDestination = f.LastFinalDestination,
                     FirstPickupETA = f.FirstPickupETA,
                     FirstPickupETD = f.FirstPickupETD,
@@ -11861,6 +11883,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     DeclarationNumber = f.DeclarationNumber,
                     ARInvoices = f.ARInvoices,
                     Notes = f.Notes,
+                    EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
+
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

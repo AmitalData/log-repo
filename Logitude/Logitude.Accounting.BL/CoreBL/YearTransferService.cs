@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
-    public class YearTransferService : IYearTransferService
+    public class YearTransferService : IYearTransferService, ICancelYearTransferService, ICheckAndQYearTransferService
     {
         StringBuilder _sb = new StringBuilder();
         public const string RevenueType = "1";
@@ -34,7 +35,56 @@ namespace Logitude.Accounting.BL.CoreBL
         {
 
         }
+        
+        public string Check_CreateQBatchTaskYearTransfer(int YYyear, int tenant)
+        {
+            var accountingContext = AccountingContext.GetContext(tenant);
+            CheckThrowExceptionIfNeeded(accountingContext, YYyear, tenant);
+            var myBatchYearTransferService = new BatchYearTransferService(null);
+            return myBatchYearTransferService.CreateQBatchTaskExecution<BatchYearTransferParams>(new BatchYearTransferParams() { Tenant = tenant, YYyear = YYyear }, tenant, $"YearTransfer({YYyear})", false);
+        }
+
+
         public JournalPM ProccessJournal(IAccountingContext accountingContext, int YYyear, int tenant)
+        {
+            CheckThrowExceptionIfNeeded(accountingContext, YYyear, tenant);
+
+            _sb.AppendLine($"GetRevenueExpenseGLAccountFromAccSetting({tenant})");
+            _FullAccountingSettingPM = GetRevenueExpenseGLAccountFromAccSetting(accountingContext, tenant);
+            _AllRevenueExpenseCards = GetQAllRevenueExpenseCards(accountingContext, tenant);
+
+
+
+            var listOfAccountId = _AllRevenueExpenseCards.Select(r => r.Id).AsQueryable<string>();//.ToList();
+
+            var item = listOfAccountId.FirstOrDefault(id => id == _FullAccountingSettingPM.RevenueExpenseGLAccountId);
+            if (item != null)
+            {
+                //listOfAccountId.Remove(item);
+                listOfAccountId = listOfAccountId.Where(r => r != item);
+            }
+            _TotalBalance = GetBalance(accountingContext, _EndOfYearUserInput, tenant, listOfAccountId);
+
+
+            if (_TotalBalance.Count == 0)
+            {
+                return null;
+            }
+            var usrid = AuthenticationUtil.ResolveUserId(tenant);
+            DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
+            var journalPM = CreateJournal(
+                _EndOfYearUserInput,
+                _AllRevenueExpenseCards,
+                _TotalBalance,
+                _FullAccountingSettingPM.RevenueExpenseGLAccountId,
+                usrid, @now,
+                tenant);
+            var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+            JournalUP.Update(journalPM, true);
+            return journalPM;
+        }
+
+        public void CheckThrowExceptionIfNeeded(IAccountingContext accountingContext, int YYyear, int tenant)
         {
             _sb.AppendLine($"CheckYear({YYyear})");
             _EndOfYearUserInput = CheckYear(YYyear);
@@ -58,8 +108,32 @@ namespace Logitude.Accounting.BL.CoreBL
                         throw new Exception(transText);
                     }
                 }
+                DateTime accountingDateFrom = accountingDate.AddYears(-1);//1.1.yyyy
+                DateTime accountingDateTo = _EndOfYearUserInput;//31.12.yyyy
 
                 JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
+                List<JournalPM> journalsNotLT = journalQueryService.GetJournalsNotLTByAccDate(accountingDateFrom, accountingDateTo, tenant).ToList();
+                if (journalsNotLT != null)
+                {
+                    JournalPM journalNotLT = journalsNotLT.FirstOrDefault();
+                    if (journalNotLT != null)
+                    {
+                        throw new Exception(NotLTMessage(journalNotLT.JournalNumber));
+                    }
+                }
+
+
+                List<JournalPM> yearTransferJournalsNotLT = journalQueryService.GetJournalsNotLTByAccDateAccEntity(_EndOfYearUserInput, DateTime.Today, "11", tenant).ToList();
+                if (yearTransferJournalsNotLT != null)
+                {
+                    JournalPM yearTransferjournalNotLT = yearTransferJournalsNotLT.FirstOrDefault();
+                    if (yearTransferjournalNotLT != null)
+                    {
+                        throw new Exception(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
+                    }
+                }
+
+
                 List<JournalPM> notVoidedJournalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j => !j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
                 if (notVoidedJournalPMs != null)
                 {
@@ -102,43 +176,24 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
             }
+        }
 
-
-
-
-            _sb.AppendLine($"GetRevenueExpenseGLAccountFromAccSetting({tenant})");
-            _FullAccountingSettingPM = GetRevenueExpenseGLAccountFromAccSetting(accountingContext, tenant);
-            _AllRevenueExpenseCards = GetQAllRevenueExpenseCards(accountingContext, tenant);
-
-
-
-            var listOfAccountId = _AllRevenueExpenseCards.Select(r => r.Id).AsQueryable<string>();//.ToList();
-
-            var item = listOfAccountId.FirstOrDefault(id => id == _FullAccountingSettingPM.RevenueExpenseGLAccountId);
-            if (item != null)
+        private string NotLTMessage(string jNo)
+        {
+            string transText = "";
+            bool useLocal = true;
+            string transText1 = TranslateTextsClassTranslate("Accounting.General.O.JournalNumber", 0, useLocal) + jNo;
+            if (String.IsNullOrWhiteSpace(transText1))
             {
-                //listOfAccountId.Remove(item);
-                listOfAccountId = listOfAccountId.Where(r => r != item);
+                transText1 = $"Journal No. {jNo}";
             }
-            _TotalBalance = GetBalance(accountingContext, _EndOfYearUserInput, tenant, listOfAccountId);
-
-
-            if (_TotalBalance.Count == 0)
+            string transText2 = TranslateTextsClassTranslate("Accounting.General.O.YearTransferJournalNotLT", 0, useLocal);
+            if (String.IsNullOrWhiteSpace(transText2))
             {
-                return null;
+                transText2 = $" is not registered. Can not complete the year transfer process, please contact Support Center.";
             }
-            var usrid = AuthenticationUtil.ResolveUserId(tenant);
-            DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
-            var journalPM = CreateJournal(
-                _EndOfYearUserInput,
-                _AllRevenueExpenseCards,
-                _TotalBalance,
-                _FullAccountingSettingPM.RevenueExpenseGLAccountId,
-                usrid, @now,
-                tenant);
-            var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-            JournalUP.Update(journalPM, true);
-            return journalPM;
+            transText = transText1 + transText2;
+            return (transText);
         }
 
 
@@ -210,6 +265,19 @@ namespace Logitude.Accounting.BL.CoreBL
                         throw new Exception(transText);
                     }
                 }
+
+
+                List<JournalPM> yearTransferJournalsNotLT = journalQueryService.GetJournalsNotLTByAccDateAccEntity(_EndOfYearUserInput, DateTime.Today, "11", tenant).ToList();
+                if (yearTransferJournalsNotLT != null)
+                {
+                    JournalPM yearTransferjournalNotLT = yearTransferJournalsNotLT.FirstOrDefault();
+                    if (yearTransferjournalNotLT != null)
+                    {
+                        throw new Exception(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
+                    }
+                }
+
+
                 List<JournalPM> notVoidedJournalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j => !j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
                 if (notVoidedJournalPMs == null)
                 {

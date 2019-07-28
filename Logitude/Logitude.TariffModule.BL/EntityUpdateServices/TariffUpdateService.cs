@@ -29,7 +29,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 entityPM.TariffNumber = CodeCounter.GetNumber("Tariff", entityPM.Tenant).ToString();
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-
                 if (entityPM.PriceSteps == null)
                 {
                     ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
@@ -94,10 +93,12 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 {
                     throw new ApplicationException("Dates are not allowed in Surcharges versions");
                 }
+
+                //this.OnDeleteSurchargeTariffLine(entityPM);
             }
 
             this.ValidateSurchargeUniqueSeller(entityPM);
- 
+
             if (entityPM.IsApprovingDraftVersion)
             {
                 this.ApproveDraftVersion(entityPM);
@@ -121,11 +122,11 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             if (!string.IsNullOrEmpty(entityPM.FileUploadedName))
             {
                 int numberOfLines = 0;
-               TariffVersionPM version= entityPM.TariffVersions.Where(prop => prop.IsDraft == true).FirstOrDefault();
+                TariffVersionPM version = entityPM.TariffVersions.Where(prop => prop.IsDraft == true).FirstOrDefault();
 
                 if (version != null)
                 {
-                    numberOfLines= version.TariffLines.Where(p=>p.ChangeSetOp!=ChangeSetOperation.Delete).ToList().Count;
+                    numberOfLines = version.TariffLines.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete).ToList().Count;
                 }
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
@@ -159,7 +160,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 }
 
             }
-            
+
             if (entityPM.SetAsInActive)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -186,7 +187,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 });
             }
 
-            if(entityPM.IsSurchargeUpdate)
+            if (entityPM.IsSurchargeUpdate)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
@@ -364,11 +365,11 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
         private void ValidateSurchargeUniqueSeller(TariffPM entityPM)
         {
-            if(entityPM.TypeCode == "ASC")
+            if (entityPM.TypeCode == "ASC")
             {
                 ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                 int iCount = (from d in iContext.Tariffs
-                              where d.Tenant == entityPM.Tenant 
+                              where d.Tenant == entityPM.Tenant
                               && d.Id != entityPM.Id
                               && d.SellerId == entityPM.SellerId
                               && d.TypeCode == "ASC"
@@ -377,6 +378,49 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 if (iCount >= 1)
                 {
                     throw new ApplicationException("Tariff surcharge seller should be unique");
+                }
+            }
+        }
+
+        private void OnDeleteSurchargeTariffLine(TariffPM entityPM)
+        {
+            Dictionary<string, DateTime> expirationValuePairs = new Dictionary<string, DateTime>();
+            if(entityPM.DeletedLinesExpirationDates.Count > 0)
+            {
+                foreach(string expiredItem in entityPM.DeletedLinesExpirationDates)
+                {
+                    string[] expiredItemArray = expiredItem.Split(',');
+                    DateTime expDate = new DateTime(Convert.ToInt32(expiredItemArray[1]), Convert.ToInt32(expiredItemArray[2]), Convert.ToInt32(expiredItemArray[3]));
+                    expirationValuePairs.Add(expiredItemArray[0], expDate);
+                }
+            }            
+
+            TariffVersionPM iDraftVersion = entityPM.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
+            TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
+            
+            if (iPreviousVersion != null)
+            {
+                TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
+                List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
+
+                foreach (TariffLinePM linePM in iDraftVersion.TariffLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete))
+                {
+                    DateTime myDate = expirationValuePairs.Where(d => d.Key == linePM.Id).FirstOrDefault().Value;
+
+                    TariffLine iPreviousLine = iPreviousVersionLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
+                    if (iPreviousLine != null)
+                    {
+                        if (myDate < iPreviousLine.StartDate)
+                        {
+                            throw new ApplicationException("Expiration date can't be greater than start date");
+                        }
+
+                        else
+                        {
+                            iPreviousLine.ExpirationDate = myDate;
+                            iTariffLineRepository.Update(iPreviousLine);
+                        }
+                    }
                 }
             }
         }

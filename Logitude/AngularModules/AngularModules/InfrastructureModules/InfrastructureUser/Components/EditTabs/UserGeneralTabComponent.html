@@ -203,6 +203,16 @@
                                     </td>
                                 </tr>
 
+                                <!-- AdditionalPackagesOnly  -->
+                                <tr class="FormFieldRow" *ngIf="IsAdditionalPackagesOnlyVisible">
+                                    <td title="Additional Packages Only">
+                                        <LogLabel [ObjectFieldName]="'AdditionalPackagesOnly'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogCheckBox [ObjectFieldName]="'AdditionalPackagesOnly'" [Checked]="AdditionalPackagesOnly" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                </tr>
+
                                 <!-- Notes -->
                                 <tr style="height: 100px;">
                                     <td colspan="2">

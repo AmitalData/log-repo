@@ -364,6 +364,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
             modelBuilder.Configurations.Add(new SchedulerLogsMap());
+            modelBuilder.Configurations.Add(new SchedulerProcedureMap());
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
@@ -821,6 +822,12 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<SchedulerLogs> SchedulerLogs
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<SchedulerProcedure> SchedulerProcedures
         {
             get;
             set;

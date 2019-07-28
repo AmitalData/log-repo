@@ -4,6 +4,7 @@ import {Component, ElementRef, OnInit, AfterViewInit, EventEmitter, Output, Chan
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {QuoteTemplateTextDesignPM} from '../../../Quote/EntityPMs/QuoteTemplateTextDesignPM';
 import {QuoteTemplateTableDesignPM} from '../../../Quote/EntityPMs/QuoteTemplateTableDesignPM';
+import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
 declare var window: any;
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -14,14 +15,16 @@ declare var insertAtSubject : any;
     moduleId: module.id,
     selector: 'TextDesignComponent',
     templateUrl: './TextDesignComponent.html',
-    inputs: ['QuoteTemplateTextDesignPM', 'QuoteTemplateTableDesignPM',]
+    inputs: ['QuoteTemplateTextDesignPM', 'QuoteTemplateTableDesignPM', 'QuoteTemplateSettingPM', 'SectionType']
 })
 
 export class TextDesignComponent implements OnInit {
     elementRef: ElementRef;
     public QuoteTemplateTextDesignPM: QuoteTemplateTextDesignPM;
     QuoteTemplateTableDesignPM: QuoteTemplateTableDesignPM;
+    QuoteTemplateSettingPM: QuoteTemplateSettingPM;
     FontStyle: string;
+    SectionType: string;
     TextDecoration: string;
     FontFamilyLists: string[] = [];
     FontSizeLists: number[] = [];
@@ -109,6 +112,38 @@ export class TextDesignComponent implements OnInit {
 
     }
     
+
+
+
+
+    get SpaceLinesBefore() {
+        var spaceLinesBefore: number = 1;
+        if (this.QuoteTemplateSettingPM) {
+            if (this.SectionType == "Containers") spaceLinesBefore = this.QuoteTemplateSettingPM.SpaceLinesBeforeContainers;
+            else if (this.SectionType == "Packages") spaceLinesBefore = this.QuoteTemplateSettingPM.SpaceLinesBeforePackages;
+            else if (this.SectionType == "QuoteDetails") spaceLinesBefore = this.QuoteTemplateSettingPM.SpaceLinesBeforeQuoteDetails;
+            else if (this.SectionType == "QuoteHeader") spaceLinesBefore = this.QuoteTemplateSettingPM.SpaceLinesBeforeQuoteHeaders;
+            else if (this.SectionType == "Per") spaceLinesBefore = this.QuoteTemplateSettingPM.SpaceLinesBeforePerContainers;
+        }
+        return spaceLinesBefore;
+    }
+    set SpaceLinesBefore(value: number) {
+        if (this.QuoteTemplateSettingPM) {
+
+            if (this.SectionType == "Containers") this.QuoteTemplateSettingPM.SpaceLinesBeforeContainers = value;
+            else if (this.SectionType == "Packages") this.QuoteTemplateSettingPM.SpaceLinesBeforePackages = value;
+            else if (this.SectionType == "QuoteDetails") this.QuoteTemplateSettingPM.SpaceLinesBeforeQuoteDetails = value;
+            else if (this.SectionType == "QuoteHeader") this.QuoteTemplateSettingPM.SpaceLinesBeforeQuoteHeaders = value;
+            else if (this.SectionType == "Per") this.QuoteTemplateSettingPM.SpaceLinesBeforePerContainers = value;
+        }
+
+    }
+
+    
+
+
+
+
 
 
  

@@ -952,6 +952,8 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.KeyPropertyPath = GetAttributeStringValue(entity.Attributes["KeyPropertyPath"]);
                 objectTable.LookUp1 = GetAttributeStringValue(entity.Attributes["LookUp1"]);
                 objectTable.LookUp2 = GetAttributeStringValue(entity.Attributes["LookUp2"]);
+                objectTable.CodeField = GetAttributeStringValue(entity.Attributes["CodeField"]);
+                objectTable.NameField = GetAttributeStringValue(entity.Attributes["NameField"]);
                 objectTable.MainTipCode = GetAttributeStringValue(entity.Attributes["MainTipCode"]);
                 objectTable.MaxNumberOfCustomFields = GetAttributeIntegerValue(entity.Attributes["MaxNumberOfCustomFields"]);
                 objectTable.ObjectTablePlural = GetAttributeStringValue(entity.Attributes["ObjectTablePlural"]);

@@ -1197,9 +1197,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 myCard = cardRepository.GetSingleCard(entityPM.ConsolidatorId, entityPM.Tenant);
                 if (myCard != null)
                 {
-                    if (myCard.PartnerTypeId != "AG" && myCard.PartnerTypeId != "CS")
+                    if (myCard.PartnerTypeId != "AG" && myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "SG")
                     {
-                        throw new ApplicationException("Consolidator partner type should be agent or customer");
+                        throw new ApplicationException("Consolidator partner type should be agent or customer or shipping agent");
                     }
                 }
             }

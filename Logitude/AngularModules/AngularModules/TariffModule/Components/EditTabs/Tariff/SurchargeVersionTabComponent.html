@@ -72,19 +72,7 @@
                                 <img src="./Images/ToggleIcon.png" />
 
                                 <div class="ToggleButtonMenu">
-                                    <button (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
                                     <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
-
-                                    <div *ngIf="IsDraftVersion">
-                                        <input class="upload" style="display: none;width:65px"
-                                               type="file" (change)="OnFileChanged($event)"
-                                               (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
-                                               #fileInput>
-                                        <a href="#" style="text-decoration:none">
-                                            <button (click)="fileInput.click()">Upload Excel</button>
-                                        </a>
-                                    </div>
-
                                     <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
                                 </div>
                             </div>
@@ -535,9 +523,18 @@
                                                 </td>
                                                 <td class="CellDisabled" style="width: 70px; text-align: left;">
                                                     {{item.OriginPortValue}}
+                                                    <div style="height: 100%; width: 100%;" *ngIf="item.IsFromAllOtherPorts">
+                                                        <img src="./Images/Icons/A-icon.png" width="16" height="16" title="From All Other Ports" />
+                                                    </div>
                                                 </td>
                                                 <td class="CellDisabled" style="width: 70px; text-align: left;">
                                                     {{item.DestinationPortValue}}
+                                                    <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
+                                                        <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
+                                                    </div>
+                                                </td>
+                                                <td class="CellDisabled" style="width: 120px; text-align: left;">
+                                                    {{item.StartDate | DateTimePipe:'SD'}}
                                                 </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Surcharge1PriceValue}}

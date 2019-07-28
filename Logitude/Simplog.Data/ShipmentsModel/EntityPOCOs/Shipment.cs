@@ -732,6 +732,16 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         [ForeignKey("INTTRADocumentTypeCode")]
         public INTTRADocumentType INTTRADocumentType { get; set; }
         public string INTTRADocumentTypeCode { get; set; }
+
+
+        [ForeignKey("INTTRABookingTransStatusCode")]
+        public INTTRABookingTransStatus INTTRABookingTransStatus { get; set; }
+        public string INTTRABookingTransStatusCode { get; set; }
+
+        [ForeignKey("INTTRABookingStatusCode")]
+        public INTTRABookingStatus INTTRABookingStatus { get; set; }
+        public string INTTRABookingStatusCode { get; set; }
+
         #endregion
 
         public string OnCarriageAdditionalTransportModeCode { get; set; }
@@ -770,5 +780,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public bool HasContainerException { get; set; }
         public string ARInvoices { get; set; }
+
+
+
+
     }
 }

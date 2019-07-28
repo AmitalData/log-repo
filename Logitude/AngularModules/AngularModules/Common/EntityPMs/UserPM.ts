@@ -471,6 +471,11 @@ export class UserPM {
     public set UserRoles(newValue: string) { if (this.userRoles != newValue) { this.userRoles = newValue; this.MarkAsDirty("UserRoles"); } }
        
 	 
+    private additionalPackagesOnly: boolean;
+    public get AdditionalPackagesOnly() { return this.additionalPackagesOnly; }
+    public set AdditionalPackagesOnly(newValue: boolean) { if (this.additionalPackagesOnly != newValue) { this.additionalPackagesOnly = newValue; this.MarkAsDirty("AdditionalPackagesOnly"); } }
+       
+	 
 
     public OldEntityPM: UserPM;
 		

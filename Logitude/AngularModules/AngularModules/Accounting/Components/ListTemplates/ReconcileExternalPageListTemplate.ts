@@ -53,7 +53,7 @@ export class ReconcileExternalPageListTemplate {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 950;
         logWindow.Height = 600;
-        logWindow.Title = TextCodeTranslator.Translate("ReconcileExternalPage") +  " "+ TextCodeTranslator.Translate("AccountingPeriod.TH.Events");
+        logWindow.Title = TextCodeTranslator.Translate("ReconcileExternalPage");
         logWindow.WindowArgs = windowArgs;
        
         this.CurrentSession.SessionEvent.emit("noselect");

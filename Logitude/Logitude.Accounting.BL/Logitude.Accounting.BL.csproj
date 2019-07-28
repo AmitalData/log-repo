@@ -158,7 +158,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportLineTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VatReportStatusDetails.Generated.cs" />
-    <Compile Include="CloseTables\DetailsClassesGenerated\WithholdingTaxDeductionTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\WithholdingTaxDeductionTypeDetails.cs" />
     <Compile Include="CloseTables\EnumGenerated\AccountingEntityStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ARPaymentChequeStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AutomaticReconcileStruct.Generated.cs" />
@@ -194,6 +194,7 @@
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchIntegrityCheckService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxReportService.cs" />
+    <Compile Include="CoreBL\Batch\BatchYearTransferService.cs" />
     <Compile Include="CoreBL\BuildTenant\ClearTenant.cs" />
     <Compile Include="CoreBL\BuildTenant\DummyTenantProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\FullAccountingProvider.cs" />
@@ -755,6 +756,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="CoreBL\Reports\TRailReport Ver2 %28YearTRansfer - CardWithoutActivity%29.xlsx" />
     <None Include="CoreBL\Reports\TrailReportBase - Spreadsheet4.xlsx" />
     <None Include="packages.config" />
   </ItemGroup>

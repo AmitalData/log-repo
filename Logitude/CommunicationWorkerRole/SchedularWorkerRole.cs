@@ -72,11 +72,10 @@ namespace CommunicationWorkerRole
                 {
                     //TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
                     Task.Status = null;
-                    Task.Version = Task.Version + 1;
-
+                    Task.Version = Task.Version + 1; 
+                    AddSchedulerQueue(Task);
                     var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
                     LogInfoToDB(Msg, Task);
-                    AddSchedulerQueue(Task);
                     //service.Update(Task);
                 }
 
@@ -139,9 +138,10 @@ namespace CommunicationWorkerRole
             {
                 Task.Status = null;
                 Task.Version = Task.Version + 1;
+                AddSchedulerQueue(Task);
                 var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
                 LogInfoToDB(Msg, Task);
-                AddSchedulerQueue(Task);
+               
             }
         }
 
@@ -191,7 +191,7 @@ namespace CommunicationWorkerRole
 
 
                                             object[] ArrArgs = args.ToArray();
-                                            var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ServiceClassName), ArrArgs) as TaskManagerBase;
+                                            var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ProcedureCode), ArrArgs) as TaskManagerBase;
                                             Task.Status = "In progress";
                                             WRItem.Task = Task;
                                             WRItem.queueservice = queueservice;
@@ -253,7 +253,7 @@ namespace CommunicationWorkerRole
             var queueservice = new DbQueueService();
             if (task.NextRunTime < DateTime.Now)
             {
-                task.NextRunTime = DateTime.Now;
+                task.NextRunTime = TenantServerConfigration.GetCurrentDateTime(task.Tenant); 
                 task.NextRunTimeUTC = DateTime.UtcNow;
             }
             switch (task.TriggerType)

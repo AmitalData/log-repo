@@ -119,6 +119,7 @@
     <Compile Include="Accounting\UniTests\CreateAutoReconcileWhileStreamingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\YearTransferUnitTest.cs" />
     <Compile Include="ItzikTest\TransactionUnitTest.cs" />
+    <Compile Include="ItzikTest\LinqUnitTest.cs" />
     <Compile Include="SimplogDataFakeFactory.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="TestingTestingUnitTest.cs" />

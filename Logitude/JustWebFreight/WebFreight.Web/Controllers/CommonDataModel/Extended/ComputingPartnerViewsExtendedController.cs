@@ -111,8 +111,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                     if (objectTablePM != null)
                     {
-                        prop = objectTablePM.CodeField;
-                        propName = objectTablePM.NameField;
+                        //prop = objectTablePM.CodeField;
+                        //propName = objectTablePM.NameField;
+                        prop = "Code";
+                        propName = "Name";
 
                     }
                     Type type = myTableDataList.First().GetType();

@@ -135,8 +135,10 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                 OnStart();
                 if (_UseQueue)
                 {
-                    var myWorker = new JournalApproveService.JournalApproveWorkrer();
-                    myWorker.WorkUntilQEmptyQueueDB();
+                    var myWorker = new JournalApproveService.JournalApproveWorker();
+                    myWorker.SetLastActivate = () => { this.LastActivity = DateTime.UtcNow; };
+                    myWorker.LogDoneItemInMemoryAction = this.LogDoneItemInMemory;
+                    myWorker.WorkUntilQEmptyQueueDB();    
                 }
                 else
                 {

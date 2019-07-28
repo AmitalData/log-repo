@@ -176,6 +176,14 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
         }
     }
 
+    
+    get CurrencyId() { return this.EntityPM.CurrencyId; }
+    set CurrencyId(value: string) {
+        if (this.EntityPM.CurrencyId != value) {
+            this.EntityPM.CurrencyId = value;
+        }
+    }
+
     //#endregion
 
     SetUIProperties() {

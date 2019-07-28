@@ -186,6 +186,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<CardContactProduct> CardContactProducts
+        {
+            get;
+            set;
+        }
         public IDbSet<PartnerType> PartnerTypes
         {
             get;
@@ -1630,6 +1635,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<SchedulerProcedure> SchedulerProcedures
+        {
+            get;
+            set;
+        }
         public IDbSet<AWBOCI> AWBOCIs { get; set; }
         public IDbSet<AWBCustomsInformation> AWBCustomsInformations { get; set; }
         public IDbSet<AWBInformation> AWBInformations { get; set; }
@@ -1661,6 +1671,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; }
         public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
         public IDbSet<HarmonizeCode> HarmonizeCodes { get; }
+
+        public IDbSet<INTTRABookingStatus> INTTRABookingStatuses { get; }
+        public IDbSet<INTTRABookingTransStatus> INTTRABookingTransStatuses { get; }
 
         #endregion
 
@@ -4534,6 +4547,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CardExternalCodeByCurrencyMap());
             modelBuilder.Configurations.Add(new BranchMap());
             modelBuilder.Configurations.Add(new CardContactMap());
+            modelBuilder.Configurations.Add(new CardContactProductMap());
             modelBuilder.Configurations.Add(new CardMap());
             modelBuilder.Configurations.Add(new CategoryTypeMap());
             modelBuilder.Configurations.Add(new ChargesGroupMap());
@@ -4870,7 +4884,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DocumentFilingBackupSettingMap());
 
             modelBuilder.Configurations.Add(new INTTRADocumentTypeMap());
-           
+            modelBuilder.Configurations.Add(new INTTRABookingStatusMap());
+            modelBuilder.Configurations.Add(new INTTRABookingTransStatusMap());
+
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
@@ -4895,6 +4911,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
             modelBuilder.Configurations.Add(new SchedulerLogsMap());
+            modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
 

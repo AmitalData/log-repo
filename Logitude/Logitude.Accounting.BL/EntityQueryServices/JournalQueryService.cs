@@ -258,6 +258,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return base.GetEntityPM(poco);
         }
 
+        public JournalPM GetByAccountingEntityIdAndAccountingEntityCode(string entityId, string accountingEntityCode, int tenant)
+        {
+            Journal poco = repository.GetByAccountingEntityId(entityId, accountingEntityCode, tenant);
+            return base.GetEntityPM(poco);
+        }
+
         public bool CheckIfExternalNoAndSystemExist(string externalNo, string externalSystem, out string journalNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(externalNo) || String.IsNullOrWhiteSpace(externalSystem))
@@ -304,6 +310,42 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public IQueryable<JournalPM> GetJournalsByAccountingEntityCodeAndDate(string entityCode, DateTime acccountingDate, int tenant)
         {
             IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingEntityCodeAndDate(entityCode, acccountingDate, tenant);
+
+            IQueryable<JournalPM> journals = from a in journalQuery
+                                             select new JournalPM()
+                                             {
+                                                 JournalNumber = a.JournalNumber,
+                                                 AccountingDate = a.AccountingDate,
+                                                 StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
+                                                 Id = a.Id,
+                                                 IsVoided = a.IsVoided,
+                                                 OriginalJournalId = a.OriginalJournalId,
+                                             };
+
+            return journals;
+        }
+
+        public IQueryable<JournalPM> GetJournalsNotLTByAccDate(DateTime accountingDateFrom, DateTime accountingDateTo, int tenant)
+        {
+            IQueryable<Journal> journalQuery = repository.GetJournalsNotLTByAccDate(accountingDateFrom, accountingDateTo, tenant);
+
+            IQueryable<JournalPM> journals = from a in journalQuery
+                                             select new JournalPM()
+                                             {
+                                                 JournalNumber = a.JournalNumber,
+                                                 AccountingDate = a.AccountingDate,
+                                                 StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
+                                                 Id = a.Id,
+                                                 IsVoided = a.IsVoided,
+                                                 OriginalJournalId = a.OriginalJournalId,
+                                             };
+
+            return journals;
+        }
+
+        public IQueryable<JournalPM> GetJournalsNotLTByAccDateAccEntity(DateTime accountingDateFrom, DateTime accountingDateTo, string entityCode, int tenant)
+        {
+            IQueryable<Journal> journalQuery = repository.GetJournalsNotLTByAccDateAccEntity(accountingDateFrom, accountingDateTo, entityCode, tenant);
 
             IQueryable<JournalPM> journals = from a in journalQuery
                                              select new JournalPM()

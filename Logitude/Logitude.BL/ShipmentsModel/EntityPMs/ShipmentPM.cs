@@ -2220,6 +2220,14 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string INTTRADocumentTypeCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string INTTRABookingTransStatusCode { get; set; }
+        public string INTTRABookingTransStatusName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string INTTRABookingStatusCode { get; set; }
+        public string INTTRABookingStatusName{ get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastFinalDestination { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2349,5 +2357,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool FromCountryIsEC { get; set; }
         public bool ToCountryIsEC { get; set; }
         public bool PackagesDeleted { get; set; }
+        public string MasterCreatedFromHouseId { get; set; }
     }
 }

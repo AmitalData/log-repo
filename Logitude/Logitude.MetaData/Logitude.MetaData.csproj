@@ -185,6 +185,7 @@
     <None Include="EntityFiles\CommonDataModel\AirlineArea.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\CommonDataModel\CardContactProduct.lxml" />
     <None Include="EntityFiles\CommonDataModel\CheckDigitControlAlgorithm.lxml" />
     <None Include="EntityFiles\CommonDataModel\NumberFormat.lxml">
       <SubType>Designer</SubType>
@@ -463,6 +464,7 @@
     <None Include="EntityFiles\InfrastructureModel\ObjectTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\RatesTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\SchedulerLogs.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\SchedulerProcedure.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TaskSchedulerHistory.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TasksScheduler.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TransportMode.lxml" />
@@ -574,6 +576,8 @@
     <None Include="EntityFiles\ShipmentsModel\AWBCustomsInformation.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBInformation.lxml" />
     <None Include="EntityFiles\ShipmentsModel\HarmonizeCode.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\INTTRABookingStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\INTTRABookingTransStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\MessagingStock.lxml">
       <SubType>Designer</SubType>
     </None>

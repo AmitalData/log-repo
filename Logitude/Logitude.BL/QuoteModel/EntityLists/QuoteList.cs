@@ -36,7 +36,8 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public bool TotalPerContainer { get; set; }
         public string QuoteNumber { get; set; }
         public DateTime OpenDate { get; set; }
-        public DateTime? ExpirationDate { get; set; }        
+        public DateTime? ExpirationDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public string QuoteTypeName { get; set; }
         public string CarrierName { get; set; }
@@ -45,7 +46,8 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public double? GrossWeight { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }
-
+        public double? VolumeInCBM { get; set; }
+        
         public string ShipmentType { get; set; }
         
         public string FromPort { get; set; }

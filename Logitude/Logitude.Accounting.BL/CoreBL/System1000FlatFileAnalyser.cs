@@ -155,7 +155,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         taxLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         taxLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventWBLKConst;
                         this.AddSuccessUpdateVendorLine(taxLine, vendorLineDTO);
-                     }
+                        gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    }
                 });
                 gLAccountUpdateService.Update(gLAccountPM, true);
            }
@@ -299,7 +300,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
-            long count = 0;
+            long count = 1;
             foreach (VendorLineDTO vendorLine in _VendorLinesDTO)
             {
                 if (vendorLine.VendorCode.TrimStart('0') == "")
@@ -307,21 +308,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.VendorCode", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} {text_2} {text_44}");
+                    this.AddErrorRow($"{text}{count} {text_2} {text_44}");
                 }
-                if (vendorLine.LocatedDeductionFileNum.TrimStart('0') == "")
-                {
-                    text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
-                    text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
-                    text_2 = TranslateTextsClassTranslate("System1000.O.LocatedDeductionFile", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode}) {text_2} {text_44}");
-                }
-                if (vendorLine.LocatedVATNum.TrimStart('0') == "")
+                //if (vendorLine.LocatedDeductionFileNum.TrimStart('0') == "")
+                //{
+                //    text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
+                //    text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
+                //    text_2 = TranslateTextsClassTranslate("System1000.O.LocatedDeductionFile", 0, useLocal);
+                //    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode}) {text_2} {text_44}");
+                //}
+                if (vendorLine.LocatedVATNum.TrimStart('0') == "" && vendorLine.LocatedDeductionFileNum.TrimStart('0') == "")
                 {
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.LocatedVATNumber", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode}) {text_2} {text_44}");
+                    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode}) {text_2} {text_44}");
                 }
                 if (vendorLine.StartDateString == VendorLineDTO._EmptyDate && vendorLine.EndDateString != VendorLineDTO._EmptyDate)
 
@@ -329,7 +330,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.StartDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode}) {text_2} {text_44} ");
+                    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode}) {text_2} {text_44} ");
                 }
                 if (vendorLine.StartDateString != VendorLineDTO._EmptyDate && vendorLine.EndDateString == VendorLineDTO._EmptyDate)
 
@@ -337,21 +338,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.EndDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode}) {text_2} {text_44} ");
+                    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode}) {text_2} {text_44} ");
                 }
                 if (vendorLine.DeductionPercentage != 100m && vendorLine.StartDateString == VendorLineDTO._EmptyDate) // 100m = no deduction  
                 {
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.StartDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode})  {text_2} {text_44} ");
+                    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode})  {text_2} {text_44} ");
                 }
                 if (vendorLine.DeductionPercentage != 100m && vendorLine.EndDateString == VendorLineDTO._EmptyDate) // 100m = no deduction  
                 {
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.EndDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode})  {text_2} {text_44} ");
+                    this.AddErrorRow($"{text}{count} ({vendorLine.VendorCode})  {text_2} {text_44} ");
                 }
 
 

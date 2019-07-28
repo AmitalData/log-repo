@@ -37,6 +37,7 @@ export class QuoteList {
 		QuoteNumber: string;
 		OpenDate: Date;
 		ExpirationDate: Date;
+		StartDate: Date;
 		QuoteTypeName: string;
 		CarrierName: string;
 		ChargeableWeight: number;
@@ -44,6 +45,7 @@ export class QuoteList {
 		GrossWeight: number;
 		GrossWeightInKG: number;
 		GrossWeightPerTon: number;
+		VolumeInCBM: number;
 		ShipmentType: string;
 		FromPort: string;
 		FromPortName: string;

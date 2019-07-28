@@ -17,13 +17,15 @@
    declare @ParentTenant int
    declare @ReceivablesAccountingCard as varchar(25)
    declare @PayablesAccountingCard as varchar(25)
-  
    declare @CountryCode as varchar(2)
    declare @PrimaryContactEmail as varchar(70)
- 
+   declare @address1 as varchar(65)
+   declare @address2 as varchar(65)
+   declare @Phone as varchar(40)
+
 	DECLARE PartnersCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Partners.Id,dw_Partners.Code ,dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , dw_States.EnglishName , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant ,dw_Countries.Code,dw_Contacts.Email ,  dw_Partners.ReceivablesAccountingCard,dw_Partners.PayablesAccountingCard
+	SELECT dw_Partners.Id,dw_Partners.Code ,dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , dw_States.EnglishName , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant ,dw_Countries.Code,dw_Contacts.Email ,  dw_Partners.ReceivablesAccountingCard,dw_Partners.PayablesAccountingCard, dw_Partners.address1,dw_Partners.address2, dw_Partners.Phone
 	From dw_Partners
 	left JOIN dw_Customers ON dw_Partners.Id = dw_Customers.Id
 	inner JOIN dw_Contacts ON dw_Partners.PrimaryContactId = dw_Contacts.Id
@@ -36,13 +38,13 @@
 	inner JOIN dw_DWHSettings ON dw_Partners.Tenant = dw_DWHSettings.Tenant
 	inner JOIN dw_Countries ON dw_Partners.CountryId = dw_Countries.Id
 
-	OPEN PartnersCursor FETCH NEXT FROM PartnersCursor INTO @Id ,@Code, @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail,@ReceivablesAccountingCard,@PayablesAccountingCard
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
+	OPEN PartnersCursor FETCH NEXT FROM PartnersCursor INTO @Id ,@Code, @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail,@ReceivablesAccountingCard,@PayablesAccountingCard,@address1, @address2, @Phone
+	WHILE @@FETCH_STATUS = 0																																																																								
+	BEGIN																																																																													
 	
-	insert into #DIM_PartnersTemp (Id,Code,Name,[Local Name],City,Country,[State Name],[Zip Code],[Primary Contact],[Account Manager],Salesman,[Customer Rank],[Partner Type],[Source Tenant],[Parent Tenant] ,[Country Code],[Primary Contact Email] , [Receivables Accounting Card] ,[Payables Accounting Card] ) values(@Id,@Code, @Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant,@CountryCode,@PrimaryContactEmail, @ReceivablesAccountingCard,@PayablesAccountingCard)
+	insert into #DIM_PartnersTemp (Id,Code,Name,[Local Name],City,Country,[State Name],[Zip Code],[Primary Contact],[Account Manager],Salesman,[Customer Rank],[Partner Type],[Source Tenant],[Parent Tenant] ,[Country Code],[Primary Contact Email] , [Receivables Accounting Card] ,[Payables Accounting Card] ,[address1],[address2],[Phone]) values(@Id,@Code, @Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant,@CountryCode,@PrimaryContactEmail, @ReceivablesAccountingCard,@PayablesAccountingCard,@address1,  @address2,  @Phone)
 
-	FETCH NEXT FROM PartnersCursor INTO @Id ,@Code , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail, @ReceivablesAccountingCard,@PayablesAccountingCard
+	FETCH NEXT FROM PartnersCursor INTO @Id ,@Code , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail, @ReceivablesAccountingCard,@PayablesAccountingCard,@address1,  @address2,  @Phone
 		End
 	CLOSE PartnersCursor
 	DEALLOCATE PartnersCursor

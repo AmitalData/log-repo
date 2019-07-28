@@ -63,7 +63,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         NextRunTime = a.NextRunTime,
                         RepeatInMinutes = a.RepeatInMinutes,
                         Satarday = a.Satarday,
-                        ServiceClassName = a.ServiceClassName,
+                        ProcedureCode = a.ProcedureCode,
                         StartDateTime = a.StartDateTime,
                         Sunday = a.Sunday,
                         Thursday = a.Thursday,
@@ -108,7 +108,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         NextRunTime = a.NextRunTime,
                         RepeatInMinutes = a.RepeatInMinutes,
                         Satarday = a.Satarday,
-                        ServiceClassName = a.ServiceClassName,
+                        ProcedureCode = a.ProcedureCode,
                         StartDateTime = a.StartDateTime,
                         Sunday = a.Sunday,
                         Thursday = a.Thursday,
@@ -152,7 +152,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         NextRunTime = a.NextRunTime,
                         RepeatInMinutes = a.RepeatInMinutes,
                         Satarday = a.Satarday,
-                        ServiceClassName = a.ServiceClassName,
+                        ProcedureCode = a.ProcedureCode,
                         StartDateTime = a.StartDateTime,
                         Sunday = a.Sunday,
                         Thursday = a.Thursday,
@@ -194,7 +194,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              NextRunTime = a.NextRunTime,
                              RepeatInMinutes = a.RepeatInMinutes,
                              Satarday = a.Satarday,
-                             ServiceClassName = a.ServiceClassName,
+                             ProcedureCode = a.ProcedureCode,
                              StartDateTime = a.StartDateTime,
                              Sunday = a.Sunday,
                              Thursday = a.Thursday,
@@ -224,21 +224,22 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         private double GetTaskAvarageDuration(string taskId)
         {
-            var Latest10Histories = (from a in repository.context.TaskSchedulerHistories
-                                     where a.TaskId == taskId
-                                     select new TaskSchedulerHistoryPM()
-                                     {
-                                         StartDateTime = a.StartDateTime,
-                                         EndDateTime = a.EndDateTime,
-                                         Duration = DbFunctions.DiffSeconds(a.StartDateTime, a.EndDateTime), 
-                                     }).Where(x => x.StartDateTime != null && x.EndDateTime != null).OrderByDescending(x => x.StartDateTime).Take(10).ToList();
-
+            var Latest10HistoriesQuery = (from a in repository.context.TaskSchedulerHistories
+                                          where a.TaskId == taskId
+                                          select new TaskSchedulerHistoryPM()
+                                          {
+                                              StartDateTime = a.StartDateTime,
+                                              EndDateTime = a.EndDateTime,
+                                              Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
+                                          }).Where(x => x.StartDateTime != null && x.EndDateTime != null).Average(a => a.Duration);//.ToList();.OrderByDescending(x => x.StartDateTime).Take(10)
+            //var Latest10Histories = Latest10HistoriesQuery.ToList();
             double? Duration = 0.0;
-            if (Latest10Histories.Count > 0)
+            if (Latest10HistoriesQuery != null)
             {
-                Duration = Latest10Histories.Average(a => a.Duration);
+                Duration = Latest10HistoriesQuery;// Latest10Histories.Average(a => a.Duration);
             }
-             
+
+
             return (double)Duration;
             //return (from a in repository.context.TaskSchedulerHistories
             //        where a.TaskId == taskId
@@ -279,7 +280,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                         NextRunTime = a.NextRunTime,
                                                         RepeatInMinutes = a.RepeatInMinutes,
                                                         Satarday = a.Satarday,
-                                                        ServiceClassName = a.ServiceClassName,
+                                                        ProcedureCode = a.ProcedureCode,
                                                         StartDateTime = a.StartDateTime,
                                                         Sunday = a.Sunday,
                                                         Thursday = a.Thursday,
@@ -322,7 +323,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         NextRunTime = a.NextRunTime,
                         RepeatInMinutes = a.RepeatInMinutes,
                         Satarday = a.Satarday,
-                        ServiceClassName = a.ServiceClassName,
+                        ProcedureCode = a.ProcedureCode,
                         StartDateTime = a.StartDateTime,
                         Sunday = a.Sunday,
                         Thursday = a.Thursday,
@@ -365,7 +366,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         NextRunTime = a.NextRunTime,
                         RepeatInMinutes = a.RepeatInMinutes,
                         Satarday = a.Satarday,
-                        ServiceClassName = a.ServiceClassName,
+                        ProcedureCode = a.ProcedureCode,
                         StartDateTime = a.StartDateTime,
                         Sunday = a.Sunday,
                         Thursday = a.Thursday,

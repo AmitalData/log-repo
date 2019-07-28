@@ -529,9 +529,13 @@ export class PartnerItem extends BaseComponent {
 
             case "SHPNT":
             case "CONNT":
-            case "CONSL":
                 {
                     myResult = "AG,CS";
+                    break;
+                }
+            case "CONSL":
+                {
+                    myResult = "AG,CS,SG";
                     break;
                 }
 
@@ -540,7 +544,7 @@ export class PartnerItem extends BaseComponent {
                     myResult = "WH";
                     break;
                 }
-
+          
             default: {
                 myResult = "CS";
                 break;

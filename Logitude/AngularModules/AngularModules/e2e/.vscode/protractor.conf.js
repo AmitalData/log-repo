@@ -2,9 +2,7 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 
 exports.config = {
   allScriptsTimeout: 990000,
-  // specs: [
-  //  './e2e/Operations/**/Operations.e2e-spec.ts'
-  // ],
+ 
   params: {
     Env: null,
     Link: null,
@@ -17,6 +15,11 @@ exports.config = {
       Direction:null,
       TransportMode:null,
       ShipmentType:null,
+    },
+    QuoteParams:{
+      Direction:null,
+      TransportMode:null,
+      QuoteType:null,
     },
   },
   capabilities: {
@@ -69,12 +72,12 @@ exports.config = {
 
     // browser.params.ShipParams.LogitudeShipType="D",
 
-    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+    //jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   },
 
   suites: {
     // ********************* Login **********************************
-    login: 'e2e/Login/**/Login.e2e-spec.ts',
+   // login: 'e2e/Login/**/Login.e2e-spec.ts',
     //  CRM: 'e2e/CRM/**/CRMModule-spec.ts',
     //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
 
@@ -92,7 +95,9 @@ exports.config = {
     //   DocOut:'Doc-Out/**/DocOut-spec.ts',
 
 // ********************* Report **********************************
-    Report: 'e2e/Report/**/Report-spec.ts',
+    //Report: 'e2e/Report/**/Report-spec.ts',
+
+    //NewQuote : 'e2e/CRM/Quotes/NewEntity/**/NewQuote-Spec.ts',
 
 
   },

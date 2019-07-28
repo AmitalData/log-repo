@@ -97,6 +97,12 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.Shipments.INTTRASIStatusDate,
 						 dbo.INTTRASIStatus.Name AS INTTRASIStatusName,
 
+						 dbo.Shipments.INTTRABookingStatusCode,
+						 dbo.INTTRABookingStatuses.Name AS INTTRABookingStatusName,
+
+						 dbo.Shipments.INTTRABookingTransStatusCode,
+						 dbo.INTTRABookingTransStatuses.Name AS INTTRABookingTransStatusName,
+
 						 dbo.Shipments.AccountManagerUserId,
 						 dbo.Shipments.CustomsDeclarationNumber,
 						 dbo.Shipments.ShipperName,dbo.Shipments.FBLIsFromStock,
@@ -352,6 +358,9 @@ FROM            dbo.Shipments LEFT OUTER JOIN
                          dbo.FWBStatus AS CargonautFWBStatus ON dbo.ShipmentMasterDatas.CargonautFWBStatusCode = CargonautFWBStatus.Code LEFT OUTER JOIN                         
 						 dbo.AWBStatus AS CarrierLastStatuses ON dbo.Shipments.CarrierLastStatusCode = CarrierLastStatuses.Code LEFT OUTER JOIN
 						 dbo.INTTRASIStatus ON dbo.Shipments.INTTRASIStatusCode = dbo.INTTRASIStatus.Code LEFT OUTER JOIN
+
+						 dbo.INTTRABookingTransStatuses ON dbo.Shipments.INTTRABookingTransStatusCode = dbo.INTTRABookingTransStatuses.Code LEFT OUTER JOIN
+						 dbo.INTTRABookingStatuses ON dbo.Shipments.INTTRABookingStatusCode = dbo.INTTRABookingStatuses.Code LEFT OUTER JOIN
 
                          dbo.Addresses AS MainCarriageFromAddresses ON dbo.ShipmentMasterDatas.MainCarriageFromAddressId = MainCarriageFromAddresses.Id LEFT OUTER JOIN
                          dbo.Addresses AS MainCarriageToAddresses ON dbo.ShipmentMasterDatas.MainCarriageToAddressId = MainCarriageToAddresses.Id LEFT OUTER JOIN

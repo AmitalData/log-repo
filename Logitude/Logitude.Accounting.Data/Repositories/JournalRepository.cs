@@ -316,11 +316,22 @@ namespace Logitude.Accounting.Data.Repositories
             return entity;
         }
 
+        public Journal GetByAccountingEntityId(string entityId,string accountingEntityCode, int tenant)
+        {
+            var entity = (from a in context.Journals
+                          where a.Tenant == tenant
+                          && a.AccountingEntityId == entityId
+                          && a.AccountingEntityCode == accountingEntityCode
+                          select a).FirstOrDefault();
+
+            return entity;
+        }
+
         public Journal GetByAccountingEntityId(string entityId, int tenant)
         {
             var entity = (from a in context.Journals
                           where a.Tenant == tenant
-                          where a.AccountingEntityId == entityId
+                          && a.AccountingEntityId == entityId
                           select a).FirstOrDefault();
 
             return entity;
@@ -362,15 +373,38 @@ namespace Logitude.Accounting.Data.Repositories
 
             return journals;
         }
-        public IQueryable<Journal> GetByJournalsAccountingEntityCodeAndDate(string entityCode, DateTime acccountingDate, int tenant)
+        public IQueryable<Journal> GetByJournalsAccountingEntityCodeAndDate(string entityCode, DateTime accountingDate, int tenant)
         {
             var journals = (from a in context.Journals.Include("JournalStatusType")
                             where a.Tenant == tenant
-                            where a.AccountingEntityCode == entityCode && a.AccountingDate == acccountingDate
+                            where a.AccountingEntityCode == entityCode && a.AccountingDate == accountingDate
                             select a);
 
             return journals;
         }
+
+        public IQueryable<Journal> GetJournalsNotLTByAccDate(DateTime accountingDateFrom, DateTime accountingDateTo, int tenant)
+        {
+            var journals = (from a in context.Journals.Include("JournalStatusType")
+                            where a.Tenant == tenant
+                            where a.StatusCode != "0" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
+                            select a);
+
+            return journals;
+        }
+
+        public IQueryable<Journal> GetJournalsNotLTByAccDateAccEntity(DateTime accountingDateFrom, DateTime accountingDateTo, string entityCode, int tenant)
+        {
+            var journals = (from a in context.Journals.Include("JournalStatusType")
+                            where a.Tenant == tenant
+                            where a.StatusCode != "0" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
+                                    && a.AccountingEntityCode == entityCode
+                            select a);
+
+            return journals;
+        }
+
+
         public bool CheckIfThereNonTranslatedJournalsByMonth(int year, int month, int tenant)
         {
             return (from record in context.Journals

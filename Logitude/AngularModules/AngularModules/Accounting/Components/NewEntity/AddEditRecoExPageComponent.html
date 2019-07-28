@@ -423,14 +423,38 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 90px;">
+                    <td style="width: 90px;" *ngIf="!IsRestoreButtonVisibile">
                         <button class="Button" (click)="CancelApprovalButtonClicked()" [disabled]="!IsCancelApprovedEnabled">{{'BankAccounts.O.CancelPage' | TextCodeTranslationPipe}}</button>
                     </td>
+                    <td style="width: 90px;" *ngIf="IsRestoreButtonVisibile">
+                        <button class="Button" (click)="RestoreButtonClicked()">{{'Accounting.General.O.Restore' |TextCodeTranslationPipe}}</button>
+                    </td>
 
+                    <td style="width: 7px;">
+                        <div></div>
+                    </td>
+                    <td style="width: 90px;">
+                        <button class="Button" (click)="EditButtonClicked()" [disabled]="IsEditButtonDisabled">  {{'Accounting.General.O.Edit' |TextCodeTranslationPipe}} </button>
+                    </td>
+                    <td style="width: 15px;">
+                        <div>
+                            <LogToolTip *ngIf="IsEditButtonDisabled" [direction]="isRTL?'bottomleft':'bottomright'">
+                                <p>
+                                    {{
+                                    EditWindowToolTip
+                                    }}
+                                    <br> {{
+                                    RestoreToolTipMessage
+                                    }}
+                                </p>
+                                <!-- <br /> -->
+                            </LogToolTip>
+                        </div>
+                    </td>
                     <td>
                         <div class="Footer" style="text-align: center;">
-                            <span style="font-size: 13px;" >{{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{ TotalSum | NumbersPipe:'N2' }}</span>
-                            <span style="font-size: 13px; padding-left: 50px;padding-right: 50px;" >{{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}: {{ Difference | NumbersPipe:'N2' }}</span>
+                            <span style="font-size: 13px;">{{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{ TotalSum | NumbersPipe:'N2' }}</span>
+                            <span style="font-size: 13px; padding-left: 50px;padding-right: 50px;">{{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}: {{ Difference | NumbersPipe:'N2' }}</span>
                         </div>
                         <div></div>
                     </td>

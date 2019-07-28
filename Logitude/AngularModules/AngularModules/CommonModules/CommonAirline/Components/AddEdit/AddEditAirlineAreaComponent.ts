@@ -30,32 +30,75 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     public portListService: PortListService = new PortListService();
-
+    public RemovedAirlineAreas = [];
+    public AddedAirlineAreas = [];
+    public ISNullDescription: boolean = false;
     constructor() {
         super();
     }
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner.AddEntity(this.EntityPM);
+        this.myCloner.AddEntity(this.AirlinePM);
+
+        this.myCloner.AddEntity(this.EntityPM);
+        this.myCloner.AddEntity(this.EntityPM.AirlineAreasPorts);
+        this.EntityPM.AirlineAreasPorts.forEach(p => {
+            this.myCloner.AddEntity(p);
+        });
+
+
+    }
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
+    }
+
 
     public get Name() { return this.EntityPM.Name; }
     public set Name(value: string) { this.EntityPM.Name = value; }
 
 
     public get Description() { return this.EntityPM.Description; }
-    public set Description(value: string) { this.EntityPM.Description = value; }
+    public set Description(value: string) {
+        if (this.EntityPM.Description != value) {
+            this.EntityPM.Description = value;
+        }
+    }
     
     public IsResourcesReady: boolean = false;
     SetWindowArgs(windowArgs: any) {
         this.AirlinePM = windowArgs['EntityPM'];
+        this.AirlinePM.CloneMe();
+        this.AirlinePM.AirlineAreas.forEach(item => {
+            item.CloneMe();
+        });
         this.IsNew = windowArgs['IsNew'];
         if (this.IsNew) {
             this.EntityPM = new AirlineAreaPM(this.AirlinePM);
+            this.EntityPM.CloneMe();
+            this.Clone();
+
         }
         
         else {
+            
             this.EntityPM = windowArgs['Entity'];
+            this.EntityPM.CloneMe();
+            this.Clone();
+            if (AppTool.IsNullOrEmpty(this.EntityPM.Description)) {
+                this.ISNullDescription = true;
+            }
             this.EntityPM.AirlineAreasPorts.forEach(item => {
+                this.AddedAirlineAreas.push(item);
+
+                this.myCloner.AddEntity(item);
+
                 this.portListService.getSingleFromCache(item.PortId).subscribe(p => {
                     if (!p.HasError) {
                         if (p.Result) {
+                            item.CloneMe();
                             this.ItemList.push(new DestinationClass(this, p.Result,false));
                         }
                     }
@@ -83,12 +126,19 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
         logWindow.Show('./CommonModules/CommonAirline/Components/AddEdit/ChoosePortComponent');
     }
 
+
     DeletePort(Item: DestinationClass) {
         var index = this.ItemList.indexOf(Item);
         if (index > -1) {
             this.ItemList.splice(index,1);
         }
-        this.EntityPM.RemoveAirlineAreasPortPM(Item.EntityPM);
+
+        var index = this.AddedAirlineAreas.indexOf(Item.EntityPM);
+        if (index > -1) {
+            this.AddedAirlineAreas.splice(index, 1);
+        }
+
+        this.RemovedAirlineAreas.push(Item.EntityPM);
     }
    
 
@@ -98,12 +148,19 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
             this.ValidationErrorsList.push("Name is required");
         }
 
-        if (this.EntityPM.AirlineAreasPorts.filter(p => p.ChangeSetOp != "3")[0] == null) {
+        if (this.AddedAirlineAreas.filter(p => p.ChangeSetOp != "3")[0] == null) {
             this.ValidationErrorsList.push("At Least one port is required");
         }
        
       
         if (this.ValidationErrorsList.length == 0) {
+            this.AddedAirlineAreas.forEach(item => {
+                this.EntityPM.AddAirlineAreasPortPM(item);
+            });
+            this.RemovedAirlineAreas.forEach(item => {
+                this.EntityPM.RemoveAirlineAreasPortPM(item);
+            });
+
             if (this.IsNew) {
 
                 this.EntityPM.CreatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
@@ -119,7 +176,20 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
         }       
     }
 
-     CancelButtonClicked() {
+    CancelButtonClicked() {
+        if (this.ISNullDescription)
+            this.Description = null;
+        this.RejectChanges();
+        this.AirlinePM.RejectChanges();
+        this.EntityPM.RejectChanges();
+        this.myCloner.RejectChanges();
+        this.AirlinePM.AirlineAreas.forEach(item => {
+            item.RejectChanges();
+        });
+        this.EntityPM.AirlineAreasPorts.forEach(item => {
+            item.RejectChanges();
+        });
+
          this.CurrentSession.CloseCurrentWindow();
     }
 
@@ -148,7 +218,7 @@ export class DestinationClass extends BaseComponent {
             this.EntityPM.Tenant = SessionLocator.Tenant;
             this.EntityPM.AirlineAreaId = fatherComponent.EntityPM.Id;
             this.EntityPM.PortId = this.Id;
-            fatherComponent.EntityPM.AddAirlineAreasPortPM(this.EntityPM);
+            fatherComponent.AddedAirlineAreas.push(this.EntityPM);
         }
         else {
             if (Port != null) {

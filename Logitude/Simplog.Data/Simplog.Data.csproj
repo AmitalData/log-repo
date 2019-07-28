@@ -177,6 +177,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\AutomationHistory.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AutomationLastUpdate.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AutomationResultEmailRecipient.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CardContactProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CardExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
@@ -367,6 +368,7 @@
     <Compile Include="CommonDataModel\Mapping\AutomationResultEmailRecipientMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AWBDescriptionOfGoodsMap.cs" />
     <Compile Include="CommonDataModel\Mapping\BlobFileMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\CardContactProduct.cs" />
     <Compile Include="CommonDataModel\Mapping\CardExternalAccountsByProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ChargesExternalAccountsByProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CheckDigitControlAlgorithmMap.cs" />
@@ -464,6 +466,7 @@
     <Compile Include="CommonDataModel\Repositories\AutomationResultEmailRecipientRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AWBDescriptionOfGoodsRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\BlobFileRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\CardContactProductRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CardExternalAccountsByProductRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ChargesExternalAccountsByProductRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CheckDigitControlAlgorithmRepository.cs" />
@@ -536,6 +539,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQuery .cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryColumn.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryFilter.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerProcedure.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerLogs.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldCategoriesMap.cs" />
@@ -545,6 +549,7 @@
     <Compile Include="InfrastructureModel\Mapping\DWQueryColumnMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWQueryFilterMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\SchedulerProcedureMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SchedulerLogsMap.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWObjectFieldCategoriesRepository.cs" />
@@ -556,6 +561,7 @@
     <Compile Include="InfrastructureModel\Repositories\DWCategoriesRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\ScheduleProcedureRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SchedulerLogsRepository.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStock.cs" />
@@ -586,6 +592,8 @@
     <Compile Include="QuoteModel\Mapping\QuoteSettingMap.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteSettingRepository.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\HarmonizeCode.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingStatus.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingTransStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRADocumentType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRASIStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRAStatus.cs" />
@@ -599,6 +607,8 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
     <Compile Include="ShipmentsModel\Mapping\HarmonizeCodeMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\INTTRABookingStatusMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\INTTRABookingTransStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRADocumentTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRASIStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRAStatusMap.cs" />
@@ -1003,6 +1013,8 @@
     <Compile Include="ShipmentsModel\Repositories\AccountingInformationIdentifierRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\AWBAdditionalHandlingInfoRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\HarmonizeCodeRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\INTTRABookingStatusRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\INTTRABookingTransStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\MessagingStockRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\MessagingStockUsageHistoryRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransmissionsStatusRepository.cs" />

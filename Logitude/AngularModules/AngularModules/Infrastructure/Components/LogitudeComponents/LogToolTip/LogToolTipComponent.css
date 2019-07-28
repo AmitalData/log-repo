@@ -58,7 +58,7 @@
         box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.42);
         visibility: hidden;
         padding: 7px 4px;
-        padding-top: 1px;
+        padding-top: 8px;
     }
 
     .tooltip-header {

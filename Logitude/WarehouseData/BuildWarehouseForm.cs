@@ -29,8 +29,8 @@ namespace WarehouseData
         string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
 
         string dbDestinationConnection = "Logitude2-5_Global,sa,Saas256,.";
-    
-        
+
+
         public BuildWarehouseForm()
         {
             InitializeComponent();

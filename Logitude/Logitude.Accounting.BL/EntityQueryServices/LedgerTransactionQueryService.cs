@@ -620,7 +620,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             IQueryable<LedgerTransactionPM> transactions = GetTransactionsJoinedWithJounrals();
 
             // get payment transaction
-            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId).FirstOrDefault();
+            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId && t.SourceTypeCode == "3").FirstOrDefault();
 
             // filter transactions by account and source type
             transactions = transactions

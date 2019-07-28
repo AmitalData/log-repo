@@ -64,6 +64,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string DescriptionOfGoods { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? ChargeableWeightInKG { get; set; }
+        public double? VolumeInCBM { get; set; }
         public double? GrossWeight { get; set; }        
         public byte[] LastModified { get; set; }
         public bool IsClosed { get; set; }
@@ -90,6 +91,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool IsDangerous { get; set; }
         public int? ExpirationDays { get; set; }
         public DateTime? ExpirationDate { get; set; }
+        public DateTime? StartDate { get; set; }
         public bool IsFreightBySteps { get; set; }
         public string DepartmentId { get; set; }
         public string BranchId { get; set; }

@@ -4037,6 +4037,24 @@ export class ShipmentPM {
     public get INTTRASIStatusName() { return this.iNTTRASIStatusName; }
     public set INTTRASIStatusName(newValue: string) { this.iNTTRASIStatusName = newValue; this.MarkAsDirty(); }
 
+
+    private iNTTRABookingStatusCode: string;
+    public get INTTRABookingStatusCode() { return this.iNTTRABookingStatusCode; }
+    public set INTTRABookingStatusCode(newValue: string) { this.iNTTRABookingStatusCode = newValue; this.MarkAsDirty(); }
+
+    private iNTTRABookingStatusName: string;
+    public get INTTRABookingStatusName() { return this.iNTTRABookingStatusName; }
+    public set INTTRABookingStatusName(newValue: string) { this.iNTTRABookingStatusName = newValue; this.MarkAsDirty(); }
+
+    private iNTTRABookingTransStatusCode: string;
+    public get INTTRABookingTransStatusCode() { return this.iNTTRABookingTransStatusCode; }
+    public set INTTRABookingTransStatusCode(newValue: string) { this.iNTTRABookingTransStatusCode = newValue; this.MarkAsDirty(); }
+
+    private iNTTRABookingTransStatusName: string;
+    public get INTTRABookingTransStatusName() { return this.iNTTRABookingTransStatusName; }
+    public set INTTRABookingTransStatusName(newValue: string) { this.iNTTRABookingTransStatusName = newValue; this.MarkAsDirty(); }
+
+
     private iNTTRASIStatusDate: string;
     public get INTTRASIStatusDate() { return this.iNTTRASIStatusDate; }
     public set INTTRASIStatusDate(newValue: string) { this.iNTTRASIStatusDate = newValue; this.MarkAsDirty(); }
@@ -4214,6 +4232,15 @@ export class ShipmentPM {
         if (this.aRInvoices != newValue) {
             this.aRInvoices = newValue;
             this.MarkAsDirty("ARInvoices");
+        }
+    }
+
+    private masterCreatedFromHouseId: string;
+    public get MasterCreatedFromHouseId() { return this.masterCreatedFromHouseId; }
+    public set MasterCreatedFromHouseId(newValue: string) {
+        if (this.masterCreatedFromHouseId != newValue) {
+            this.masterCreatedFromHouseId = newValue;
+            this.MarkAsDirty("MasterCreatedFromHouseId");
         }
     }
 

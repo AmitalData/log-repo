@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tasks Scheduler",
-			      				    Code =  "be5e",
+			      				    Code =  "c037",
 			      				    Name =  "TasksScheduler",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -125,7 +125,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "TasksScheduler,TasksScheduler,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -783,7 +782,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ServiceClassName",
+					 						FieldName =  "ProcedureCode",
 					  						OldFieldName =  "ServiceClassName",
 					  						ObjectTableName =  "TasksScheduler",
 					  						FieldsDataType =  "Text",
@@ -802,8 +801,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ServiceClassName",
-					  						ListPropertyPath =  "ServiceClassName",
+					  						PMPropertyPath =  "ProcedureCode",
+					  						ListPropertyPath =  "ProcedureCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -823,12 +822,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ServiceClassName",
+					  						FullFieldLable =  "ProcedureCode",
 					  						DefaultText =  "Service Class Name",
-					  						FullLocalDefaultText =  "ServiceClassName",
-					  						ListFieldLable =  "ServiceClassNameListLable",
-					  						ListLableDefaultText =  "ServiceClassName",
-					  						ListLocalDefaultText =  "ServiceClassName",
+					  						FullLocalDefaultText =  "ProcedureCode",
+					  						ListFieldLable =  "ProcedureCodeListLable",
+					  						ListLableDefaultText =  "ProcedureCode",
+					  						ListLocalDefaultText =  "ProcedureCode",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2209,8 +2208,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature TasksSchedulerFeature_FTP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FTP", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.FTP", NameTextCodeDefaultText = @"FTP" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature TasksSchedulerFeature_SHOWUTCBUTTON = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHOWUTCBUTTON", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.SHOWUTCBUTTON", NameTextCodeDefaultText = @"Show UTC Button" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature TasksSchedulerFeature_SFTP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SFTP", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.SFTP", NameTextCodeDefaultText = @"SFTP" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

@@ -646,6 +646,13 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                             this.IsDeleteAttachment = true;
                             this.CurrentSession.StartBusyIndicator("Saving...");
                             this._imageLibraryService.RemoveFile(document.Id, document.Tenant).subscribe(result => {
+
+               
+                                if (this.ObjectTableName == "Shipment") {
+                                    this._documentsFilingExtendedPMService.CreateDocumentShipmentEvent(this.EntityId, this.SelectedExternalViewModel.FileName, "DODE").subscribe(res => {
+                                    });
+                                }
+
                                 this.externalDocs = this.externalDocs.filter(d => d.Id != this.SelectedExternalViewModel.ExternalDocumentId); 
 
                                 this.SelectedExternalViewModel.RemoveDocument();

@@ -206,6 +206,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetEnabled("MoveTypeId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ExpirationDays", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ExpirationDate", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, isScreenEnabled);
+
         this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, isScreenEnabled);
 
         // Pickup
@@ -1075,17 +1077,19 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             }
 
             else {
-                var date = DateTool.GetDateByDay(newValue);
+                this.SetExpirationDate();
+            }
+        }
+    }
 
-                if (this.ExpirationDate == null) {
-                    this.EntityPM.ExpirationDate = date;
-                }
-
-                else {
-                    if (this.ExpirationDate.valueOf() != date.valueOf()) {
-                        this.EntityPM.ExpirationDate = date;
-                    }
-                }
+    private SetExpirationDate() {
+        var date = DateTool.AddDays(this.StartDate, this.ExpirationDays);
+        if (date == null) {
+            this.EntityPM.ExpirationDays = null;
+        }
+        else {
+            if (this.ExpirationDate.valueOf() != date.valueOf()) {
+                this.EntityPM.ExpirationDate = date;
             }
         }
     }
@@ -1100,15 +1104,28 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             }
 
             else {
-                var todayDate = DateTool.GetCurrentDateAsUtc();
-                var days = this.GetDaysBetweenDates(newValue, todayDate);
+                var days = this.GetDaysBetweenDates(newValue, this.StartDate);
                 if (this.ExpirationDays != days) {
                     this.EntityPM.ExpirationDays = days;
                 }
             }
         }
     }
-    
+
+    get StartDate() { return this.EntityPM.StartDate; }
+    set StartDate(newValue: Date) {
+        if (this.EntityPM.StartDate != newValue) {
+            this.EntityPM.StartDate = newValue;
+
+            if (newValue == null) {
+                this.EntityPM.ExpirationDays = null;
+            }
+            else {
+                this.SetExpirationDate();
+            }
+        }
+    }
+
     get IsAutomaticallyClosed() { return this.EntityPM.IsAutomaticallyClosed; }
     set IsAutomaticallyClosed(newValue: boolean) {
         if (this.EntityPM.IsAutomaticallyClosed != newValue) {
@@ -2388,11 +2405,11 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
 
         if (computeNumberOfPackages) {
             var sum = 0;
-            if (this.EntityPM.PackageType1Quantity > 0) { sum = sum + this.EntityPM.PackageType1Quantity; }
-            if (this.EntityPM.PackageType2Quantity > 0) { sum = sum + this.EntityPM.PackageType2Quantity; }
-            if (this.EntityPM.PackageType3Quantity > 0) { sum = sum + this.EntityPM.PackageType3Quantity; }
-            if (this.EntityPM.PackageType4Quantity > 0) { sum = sum + this.EntityPM.PackageType4Quantity; }
-            if (this.EntityPM.PackageType5Quantity > 0) { sum = sum + this.EntityPM.PackageType5Quantity; }
+            if (this.EntityPM.PackageType1Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType1Quantity) ? 0 : this.PackageType1Quantity); }
+            if (this.EntityPM.PackageType2Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType2Quantity) ? 0 : this.PackageType2Quantity)}
+            if (this.EntityPM.PackageType3Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType3Quantity) ? 0 : this.PackageType3Quantity) }
+            if (this.EntityPM.PackageType4Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType4Quantity) ? 0 : this.PackageType4Quantity) }
+            if (this.EntityPM.PackageType5Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType5Quantity) ? 0 : this.PackageType5Quantity)}
 
             if (this.IsLCLEntity) {
                 this.EntityPM.NumberOfPackages = sum;

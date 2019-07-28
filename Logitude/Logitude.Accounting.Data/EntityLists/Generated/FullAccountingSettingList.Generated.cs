@@ -94,6 +94,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool IsPaymentChequesActivated  { get; set; }
        [DataMember]
        public int? GLAccounterCounterLength  { get; set; }
+       [DataMember]
+       public string PaymentChequesLogoId  { get; set; }
    }
 
 }

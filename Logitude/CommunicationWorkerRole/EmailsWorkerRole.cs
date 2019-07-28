@@ -162,12 +162,12 @@ namespace CommunicationWorkerRole
                                         {
                                             if (response.RetryNumber <= 1)
                                             {
-                                                queueservice.Delay(new TimeSpan(0, 0, 0, 4));
+                                                queueservice.Delay(new TimeSpan(0, 0, 0, 40));
                                             }
 
                                             if (response.RetryNumber >= 2 && response.RetryNumber < 3)
                                             {
-                                                queueservice.Delay(new TimeSpan(0, 0, 0, 8));
+                                                queueservice.Delay(new TimeSpan(0, 0, 1, 0));
                                             }
 
                                             //if (response.RetryNumber > 5 && response.RetryNumber <= 10)
@@ -190,6 +190,13 @@ namespace CommunicationWorkerRole
                                         }
                                         else
                                         {
+
+                                            //cl.CommunicationStatusTypeCode = "F";
+                                            //cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
+                                            //cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
+                                            //communicationLogRep.Update(cl);
+                                            //communicationLogRep.SubmitChanges();
+
                                             queueservice.Complete();
                                             AzureLog.SaveLogsInStorage("couldn't find communication log and the message is completed: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
                                                 + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);

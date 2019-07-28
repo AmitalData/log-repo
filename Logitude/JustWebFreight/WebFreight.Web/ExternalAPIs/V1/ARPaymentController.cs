@@ -22,7 +22,7 @@ using System.Xml.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
-
+using Logitude.SystemLogs;
 namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class ARPaymentController : ApiController
@@ -31,12 +31,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         public HttpResponseMessage GetSingleARPayment(string id, string number)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
             try
             {
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
+                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 
 
@@ -58,27 +59,17 @@ namespace WebFreight.Web.ExternalAPIs.V1
             catch (Exception ex)
               {
                 //ExceptionHandler.HandleException
-                string filePath = @"E:\Error.txt";
+                //ExceptionHandler.HandleException(ex, DateTime.Now, authToken.Tenant , authToken.Email , "", "AuthenticationController : PostLoginData", null);
 
-            
-
-                 using (StreamWriter writer = new StreamWriter(filePath, true))
+                //var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                string exceptionMessage = ex.Message+ Environment.NewLine+ex.StackTrace;
+                if (ex.InnerException != null)
                 {
-                    writer.WriteLine("-----------------------------------------------------------------------------");
-                    writer.WriteLine("Date : " + DateTime.Now.ToString());
-                    writer.WriteLine();
-
-                    while (ex != null)
-                    {
-                        writer.WriteLine(ex.GetType().FullName);
-                        writer.WriteLine("Message : " + ex.Message);
-                        writer.WriteLine("StackTrace : " + ex.StackTrace);
-
-                        ex = ex.InnerException;
-                    }
+                    exceptionMessage += Environment.NewLine + "inner1: " + ex.InnerException.Message + Environment.NewLine + ex.InnerException.StackTrace;
                 }
-                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                    
+                    
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, exceptionMessage);//(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
 

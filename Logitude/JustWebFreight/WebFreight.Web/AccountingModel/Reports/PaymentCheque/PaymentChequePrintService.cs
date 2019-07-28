@@ -2,19 +2,27 @@
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.StorageService;
+using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.ReportsWebServices;
+using WebFreight.Web.WebServices;
+
 namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
 {
     public class PaymentChequePrintService
@@ -75,12 +83,33 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             PaymentChequeDataProvider PaymentChequeDP = new PaymentChequeDataProvider();
 
             PaymentChequeDP.CompanyLogo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
+            FullAccountingSettingPM setting=   GetAccountingSettingPM(tenant);
+            byte[] byteImage = null;
+          
+                 byteImage = GetLogo(setting.PaymentChequesLogoId, tenant);
+                if (byteImage != null)
+                {
+                    PaymentChequeDP.AccountingLogo = Image.FromStream(new MemoryStream(byteImage));
+                }
+
+            
+
+
             PaymentChequeQueryService PaymentChequeQuery = new PaymentChequeQueryService(tenant);
             BankAccountQueryService bankAccountQuery = new BankAccountQueryService(tenant);
          //   CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant,false);
             PaymentChequePM paymentChequePM = PaymentChequeQuery.GetSingle(entityId, true, false);
+            BankCodePM bankCode = GetBankCodeByPayToGLAccount(paymentChequePM);
+            if (bankCode != null) {
+             
+                byteImage = GetLogo(bankCode.LogoId, tenant);
+                if(byteImage != null)
+                {
+                    PaymentChequeDP.BankLogo = Image.FromStream(new MemoryStream(byteImage));
+                }
+            }
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSinglePM(tenantPM.AddressId, tenant);
             InvoiceWebService invoiceWebService = new InvoiceWebService();
@@ -146,6 +175,88 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             return PaymentChequeDP;
         }
 
-   
+        public static BankCodePM GetBankCodeByPayToGLAccount(PaymentChequePM paymentCheque)
+        {
+            // GLAccountPM gLAccount = GetPayToGLAccount(paymentCheque);
+            BankAccountPM bankAccount = GetBankAccountByPaymentChequet(paymentCheque.BankAccountId, paymentCheque.Tenant);
+
+
+            return GetBankCodePM(bankAccount);
+            
+           
+
+        }
+
+        public static BankAccountPM GetBankAccountByPaymentChequet(string  bankAccountId, int tenant)
+        {
+            BankAccountQueryService bankAccountQuery = new BankAccountQueryService(tenant);
+            return bankAccountQuery.GetSingle(bankAccountId, false, false);
+        }
+
+        public static BankCodePM GetBankCodePM(BankAccountPM bankAccount)
+        {
+            BankCodeQueryService bankCodeQuery = new BankCodeQueryService(bankAccount.Tenant);
+            return bankCodeQuery.GetSingleByCode(bankAccount.BankCode, bankAccount.Tenant);
+        }
+
+        //public static GLAccountPM GetPayToGLAccount(PaymentChequePM paymentCheque)
+        //{
+        //    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(paymentCheque.Tenant);
+        //    return gLAccountQueryService.GetSinglePM(paymentCheque.PayToGLAccountId, paymentCheque.Tenant);
+
+        //}
+        public static byte[] GetLogo(string id,int tenant)
+        {
+           
+            ImageDetail imageDetail=   GetImageDetail(id,tenant);
+            if (imageDetail != null)
+            {
+                return GetFile(imageDetail.Id, imageDetail.Extension, "images", tenant);
+            }
+            else return null;
+        }
+
+        public static ImageDetail GetImageDetail(string id, int tenant)
+        {
+            ImageDetailRepository imageDetailsRepository = new ImageDetailRepository(tenant);
+           return imageDetailsRepository.GetSingleImageDetail(id, tenant);
+        
+        }
+
+        public static byte[] GetFile(string fileid, string extention, string location, int tenant)
+        {
+            try
+            {
+             
+
+                Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
+                {
+                    FileName = fileid,
+                    FolderName = location,
+                    Extension = extention,
+                    Tenant = tenant,
+
+                };
+                Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+
+                return storageservice.Read(fileInfo);
+
+
+
+            }
+            catch (Exception e)
+            {
+
+                return null;
+            }
+        }
+
+        public static FullAccountingSettingPM GetAccountingSettingPM(int tenant)
+        {
+            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
+            return fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+        }
+
+
     }
 }

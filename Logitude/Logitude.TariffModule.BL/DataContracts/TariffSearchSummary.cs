@@ -19,6 +19,10 @@ namespace Logitude.TariffModule.BL.DataContracts
         public decimal? decimalprice { get; set; }
         public string Currency { get; set; }
         public string VersionId { get; set; }
+        public string TotalSurcharge { get; set; }
+        public string WholePrice { get; set; }
+        public string AllIn { get; set; }
+        public List<SurchargeSummary> Surcharges { get; set; }
 
 
     }

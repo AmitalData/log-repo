@@ -1,3 +1,6 @@
+import { JournalPM } from './../../../../Accounting/EntityPMs/JournalPM';
+import { JournalExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/JournalExtendedPMService';
+import { ARPaymentEventManager } from './../../../../Accounting/Utilities/ARPaymentEventManager';
 import { ReconciliationExtendedPMService } from './../../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { GLAccountListService } from './../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { ReconcileEventManager } from './../../../../Accounting/Utilities/ReconcileEventManager';
@@ -59,7 +62,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public ObjectTableName = "ARPayment";
     public DataContext = this;
     public ItemsSource: ObservableCollection;
-    public FullAccounting: boolean = false;
+    public isFullAccounting: boolean = false;
     public DisplaySATSettings: boolean = false;
     public IsMultiCurrency: boolean = false;
     public TransferStatusVisibilityColumn: boolean = false;
@@ -77,6 +80,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
+    _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
     private _glaService: GLAccountListService = new GLAccountListService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
@@ -90,7 +94,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
         this.EntityPM = entityArgs.EntityPM;
-        this.FullAccounting = SessionLocator.TenantPM.AccountingActivated;
+        this.isFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.originalPaymentOpenAmount = this.EntityPM.OpenAmount;
         this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
         this.TransactionsList = new ObservableCollection([]);
@@ -140,6 +144,52 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     ngOnInit() {
         this.LoadPaymentMethods();
+
+        this.checkLedgerCreated();
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
+    _IsDisplayOnly = false;
+    public get IsDisplayOnly() : boolean {
+        return this._IsDisplayOnly;
+    }
+    public set IsDisplayOnly(v : boolean) {
+        this._IsDisplayOnly = v;
+    }
+
+    checkLedgerCreated() {
+
+        if (this.EntityPM.Id && this.isFullAccounting && this.EntityPM.StatusCode == 'AD')
+        {
+
+            this.StartBusyIndicator('checkLedgerCreated');
+            this._JournalExtendedPMService.GetByAccountingEntityId(this.EntityPM.Id, '3').subscribe(myResult => // 3- ARPayment
+            {
+                console.log("_JournalExtendedPMService.GetByAccountingEntityId", myResult);
+                this.StopBusyIndicator('checkLedgerCreated');
+
+                var res: ServiceResponse = myResult;
+                var createdJournal: JournalPM = res.Result;
+
+                if (createdJournal)
+                {
+                    this.IsDisplayOnly = !createdJournal.IsLedgerCreated;
+                    if (!this.IsDisplayOnly)
+                        this.GetData();
+                }
+                else
+                {
+                    console.log("[Check Ledger] no journal created");
+                }
+
+            });
+
+        }
+
     }
 
     //#region abdullah code
@@ -147,6 +197,16 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     paymentAmountTotal: number = 0;
     amount2reconcileTotal: number = 0;
     paymentReconciledAmountTotal: number = 0;
+
+
+    StartBusyIndicator(msg: string= '') {
+        console.log("[Busy Indicator] start: ", msg);
+        this.CurrentSession.StartBusyIndicatorLoading();
+    }
+    StopBusyIndicator(msg: string= '') {
+        console.log("[Busy Indicator] stop: ", msg);
+        this.CurrentSession.StopBusyIndicator();
+    }
 
     // IsEntityValid: boolean = true;
 
@@ -249,7 +309,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return new Promise((resolve, reject) => {
 
             var _glaId = this.billtoCard.GLAccountId;
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.StartBusyIndicator('fetchGLAccount');
             this._glaService.getSingle(_glaId)
                 .subscribe(response => {
 
@@ -258,13 +318,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                         var glaccount = res.Result;
 
                         resolve(glaccount);
-                        this.CurrentSession.StopBusyIndicator();
+                        this.StopBusyIndicator('fetchGLAccount');
                     }
                     else {
                         reject();
 
                         console.error(res.ErrorsArray);
-                        this.CurrentSession.StopBusyIndicator();
+                        this.StopBusyIndicator('fetchGLAccount');
                     }
                 });
 
@@ -345,11 +405,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     OpenReco(recoNumber) {
         if (!AppTool.IsNullOrEmpty(recoNumber)) {
 
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.StartBusyIndicator('OpenReco');
 
             this._ReconciliationExtendedPMService.getByNumber(recoNumber)
                 .subscribe(myResult => {
-                    this.CurrentSession.StopBusyIndicator();
+                    this.StopBusyIndicator('OpenReco');
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
@@ -417,12 +477,18 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.entityArgs.EditComponent != null) {
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                console.log('[EVENT] SaveCompleted', isSaveSuccess );
+
                 if (isSaveSuccess) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.GetData();
+
+                    this.checkLedgerCreated();
                 }
+
+
 
                 // if (this.RequestedCommandCode) {
                 //     this.ApplyRequestedCommand();
@@ -430,6 +496,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                console.log('[EVENT] LoadCompleted', isLoadSuccess );
                 if (isLoadSuccess) {
 
 
@@ -439,10 +506,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 }
             });
         }
-    }
-    ngOnDestroy() {
-        AppTool.KillEventEmitter(this.SaveCompletedEvent);
-        AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
     // UIProperties
@@ -480,7 +543,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.UIProperties.SetEnabled("Account", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CreditCardTypeId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false);
-            if (this.FullAccounting) {
+            if (this.isFullAccounting) {
                 this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, false);
             }
         }
@@ -505,7 +568,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (this.EntityPM.StatusCode == "VD") {
                 this.UIProperties.SetEnabled("PrintNotes", this.ObjectTableName, false);
             }
-            if (this.FullAccounting) {
+            if (this.isFullAccounting) {
                 this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, true);
             }
         }
@@ -566,7 +629,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, isEnabled);
     }
     SetUIProperties_Cheque() {
-        if (this.FullAccounting && this.AccountingPaymentMethodCode == "CH") {
+        if (this.isFullAccounting && this.AccountingPaymentMethodCode == "CH") {
             this.UIProperties.SetRequired("BankBranch", this.ObjectTableName, AppTool.IsNullOrEmpty(this.BankBranch));
             this.UIProperties.SetRequired("Account", this.ObjectTableName, AppTool.IsNullOrEmpty(this.Account));
             var service: InvoiceDomainService = new InvoiceDomainService();
@@ -624,13 +687,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
     SetUIProperties_BankTransfer() {
         this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, false);
-        if (this.FullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
+        if (this.isFullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
             if (AppTool.IsNullOrEmpty(this.BankAccountId)) {
                 this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, true);
             }
 
             this.UIProperties.SetVisibility("BankAccountId", this.ObjectTableName, true);
-            if (!this.FullAccounting) {
+            if (!this.isFullAccounting) {
                 this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
                 this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
                 this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
@@ -893,7 +956,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.LoadData();
 
                 if (value)
+                {
+                    console.log('[!] BillTo changed, reload GLAccount.  ', value);
                     this.ReloadGLAccount();
+                }
 
 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
@@ -917,7 +983,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                 }
 
                                 this.LoadAddress();
-                                if (this.FullAccounting) {
+                                if (this.isFullAccounting) {
                                     if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
                                         var myGLAccountPMService = new GLAccountPMService();
                                         myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
@@ -1021,7 +1087,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 item.InitExchangeRate();
             });
 
-            if (this.FullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
+            if (this.isFullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
                 this.CheckGLAccountCurrencyId();
             }
         }
@@ -1253,7 +1319,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     CheckARPaymentCashBook() {
         this.IsCashBookValid = false;
 
-        if (this.FullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH")) {
+        if (this.isFullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH")) {
             var service: InvoiceDomainService = new InvoiceDomainService();
 
             service.CheckARPaymentCashBook(this.AccountingPaymentMethodCode, this.PaymentCurrencyId, this.BranchId).subscribe((myResponse: ServiceResponse) => {
@@ -1422,7 +1488,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (this.EntityPM.BankBranch != value) {
                 this.EntityPM.BankBranch = value;
 
-                if (this.FullAccounting && this.AccountingPaymentMethodCode == "CH") {
+                if (this.isFullAccounting && this.AccountingPaymentMethodCode == "CH") {
                     if (!AppTool.IsNullOrEmpty(value)) {
                         this.UIProperties.SetRequired("BankBranch", this.ObjectTableName, false);
                     }
@@ -1444,7 +1510,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM != null) {
             if (this.EntityPM.Account != value) {
                 this.EntityPM.Account = value;
-                if (this.FullAccounting && this.AccountingPaymentMethodCode == "CH") {
+                if (this.isFullAccounting && this.AccountingPaymentMethodCode == "CH") {
                     if (!AppTool.IsNullOrEmpty(value)) {
                         this.UIProperties.SetRequired("Account", this.ObjectTableName, false);
                     }

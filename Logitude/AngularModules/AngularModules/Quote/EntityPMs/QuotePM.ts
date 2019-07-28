@@ -373,6 +373,11 @@ export class QuotePM {
     public set GrossWeightPerTon(newValue: number) { if (this.grossWeightPerTon != newValue) { this.grossWeightPerTon = newValue; this.MarkAsDirty("GrossWeightPerTon"); } }
        
 	 
+    private volumeInCBM: number;
+    public get VolumeInCBM() { return this.volumeInCBM; }
+    public set VolumeInCBM(newValue: number) { if (this.volumeInCBM != newValue) { this.volumeInCBM = newValue; this.MarkAsDirty("VolumeInCBM"); } }
+       
+	 
     private lastModified: string;
     public get LastModified() { return this.lastModified; }
     public set LastModified(newValue: string) { if (this.lastModified != newValue) { this.lastModified = newValue; this.MarkAsDirty("LastModified"); } }
@@ -506,6 +511,11 @@ export class QuotePM {
     private expirationDate: Date;
     public get ExpirationDate() { return this.expirationDate; }
     public set ExpirationDate(newValue: Date) { if (this.expirationDate != newValue) { this.expirationDate = newValue; this.MarkAsDirty("ExpirationDate"); } }
+       
+	 
+    private startDate: Date;
+    public get StartDate() { return this.startDate; }
+    public set StartDate(newValue: Date) { if (this.startDate != newValue) { this.startDate = newValue; this.MarkAsDirty("StartDate"); } }
        
 	 
     private isFreightBySteps: boolean;

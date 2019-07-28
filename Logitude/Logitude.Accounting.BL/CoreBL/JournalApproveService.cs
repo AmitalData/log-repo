@@ -604,11 +604,12 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
         //private static void ProcessMessage(BrokeredMessage message)
-        private static void ProcessMessage_Db(DbQueueService myDbQueueService, QueueResponse message)
+        private static bool ProcessMessage_Db(DbQueueService myDbQueueService, QueueResponse message)
         {
             string MessageId = "";
             int tenant = -1;
             string qpJournalId = null;
+            bool isSubmitApprove = false;
             try
             {
 
@@ -618,7 +619,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (tenant == -1)
                 {
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :tenant==-1", null);
-                    return;
+                    return isSubmitApprove;
                 }
 
 
@@ -631,10 +632,12 @@ namespace Logitude.Accounting.BL.CoreBL
             JournalApproveService.MyActions.BuildLedgerTransaction | JournalApproveService.MyActions.BuildGLAccountTotalByMonths;
                 var myJournalApproveService = new JournalApproveService(tenant, qpJournalId, MessageId);
                 var res = myJournalApproveService.SubmitApprove(actions);
+                
                 if (res.Success)
                 {
 
                     myDbQueueService.Complete();
+                    isSubmitApprove = true;
                 }
                 else
                 {
@@ -676,6 +679,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 ///message.SafeComplete();
                 //throw;
             }
+            return isSubmitApprove;
         }
 
         private static void OnException(DbQueueService myDbQueueService, QueueResponse message, string seedJournalId, int tenant, Exception ex)
@@ -858,9 +862,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-        public class JournalApproveWorkrer
+        public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
+
+            public Action LogDoneItemInMemoryAction { get; set; }
+            public Action SetLastActivate { get; set; }
+
             public void WorkUntilQEmptyQueueDB()
             {
 
@@ -896,8 +904,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
 
-
-                    ProcessMessage_Db(queueservice, response);
+                    SetLastActivate?.Invoke();
+                    if (ProcessMessage_Db(queueservice, response))
+                    {
+                        LogDoneItemInMemoryAction?.Invoke();
+                    }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 

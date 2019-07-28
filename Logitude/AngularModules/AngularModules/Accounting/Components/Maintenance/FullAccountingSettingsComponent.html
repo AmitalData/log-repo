@@ -195,16 +195,7 @@
                                                         </td>
                                                     </tr>
 
-                                                    <!-- IsPaymentChequesActivated -->
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'IsPaymentChequesActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td colspan="2">
-                                                            <CheckBox [IsChecked]="IsPaymentChequesActivated" (Checked)="IsPaymentChequesActivated = $event"></CheckBox>
-                                                        </td>
-                                                    </tr>
+                                                  
 
                                                     <!-- AccountingActivationDate -->
                                                     <tr class="FormFieldRow">
@@ -433,7 +424,7 @@
                                                             <LogLov [ObjectFieldName]="'DefaultDifferencesGLAccountId'"
                                                                     [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext"
-                                                                       [DependencyFilter2Value]="'1'"
+                                                                    [DependencyFilter2Value]="'1'"
                                                                     [LookUpTableName]="'GLAccount'">
                                                             </LogLov>
                                                         </td>
@@ -449,7 +440,7 @@
                                                             <LogLov [ObjectFieldName]="'DefaultExternalDiffGLAccountId'"
                                                                     [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext"
-                                                                       [DependencyFilter2Value]="'1'"
+                                                                    [DependencyFilter2Value]="'1'"
                                                                     [LookUpTableName]="'GLAccount'">
                                                             </LogLov>
                                                         </td>
@@ -495,7 +486,6 @@
                                 </div>
                             </div>
                             <!-- #endregion -->
-
                             <!-- #region ControlAccounts Tab -->
                             <div *ngSwitchCase="'ControlAccounts'" style="height: 100%;">
                                 <table *ngIf="EntityPM">
@@ -647,6 +637,48 @@
                                 </table>
                             </div>
                             <!-- #endregion -->
+                            <!-- Logo Tab -->
+                            <div *ngSwitchCase="'Logo'" style="height: 100%;">
+                                <table *ngIf="EntityPM">
+
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <table class="FixedTable">
+                                                <!-- IsPaymentChequesActivated -->
+                                                <tr class="FormFieldRow">
+                                                    <td style="width:180px; ">
+                                                        <LogLabel [ObjectFieldName]="'IsPaymentChequesActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td colspan="2">
+                                                        <CheckBox [IsChecked]="IsPaymentChequesActivated" (Checked)="IsPaymentChequesActivated = $event"></CheckBox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:180px; vertical-align:top">
+                                                        <LogLabel [ObjectFieldName]="'PaymentChequesLogoId'" [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td style="vertical-align:top">
+                                                        <div style="width:100px;height:100px">
+                                                            <ImageComponent [WidthImage]="'95px'" [HeightImage]="'95px'" [ImageId]="ImageId" [EntityId]="EntityId" [EntityName]="ObjectTableName" (UploadCompleted)="ImageUploadedCompleted($event)" style="height:72px;width:72px"> </ImageComponent>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr><td><div></div></td></tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
 
                         </div>
                     </div>
