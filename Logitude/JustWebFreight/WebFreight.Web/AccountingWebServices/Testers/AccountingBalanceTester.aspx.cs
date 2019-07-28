@@ -43,6 +43,7 @@ using Logitude.Accounting.BL.CoreBL.BankAccountPages;
 using Logitude.Accounting.BL;
 using Logitude.Accounting.BL.CoreBL.FunctionalTests;
 using Logitude.Accounting.BL.CoreBL.Batch;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -83,6 +84,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonGetSystem1000_Click,
             _ButtonLoadSystem1000_Click,
             _ButtonYearTransferCancel_Click,
+            _ButtonExternalReconcile_click
         }
 
         //DateTime _MyDate;
@@ -345,7 +347,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 }
 
                 param = JsonConvert.DeserializeObject<AccountingIntegrityInParam>(_TextBoxParam.Text);
-
+                
 
                 var accountingIntegrityService = new AccountingIntegrityService();
 
@@ -2219,6 +2221,65 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
         }
 
+
+
+
+        protected void _ButtonExternalReconcile_click(object sender, EventArgs e)
+        {
+
+
+
+            dynamic param = null;
+
+            var paramDefault = new
+            {
+                Tenant = 1071,
+
+                LedgerTransactionId = "1-222",
+                ReconcileExternalPageLineId = "1-444",
+            };
+            
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonExternalReconcile_click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
+
+                int Tenant = param.Tenant;
+                string LedgerTransactionId = param.LedgerTransactionId;
+                string ReconcileExternalPageLineId = param.ReconcileExternalPageLineId;
+
+
+                var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+                myExternalReconcileJournalService.CreateJournal(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
+                //_LabelResult.Text = JsonConvert.SerializeObject(myBankAccountPageAnalyzer.MyResultLoadBankPage); ;
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonLoadBankPages_Click.ToString();
+                if (string.IsNullOrWhiteSpace(param))
+                {
+                    param = paramDefault;
+                }
+
+                _TextBoxParam.Text = param;
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+        }
         private void SetHttpAuth(int tenant)
         {
             var email = AuthenticationUtil.SystemIdentityName(tenant);
