@@ -503,6 +503,33 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     }
 
 
+    CancelOrObjectionButtonClicked(item: ClaimsRelatedEntityLineComponent, isNewEntity: boolean) {
+        if (!this.IsControlEnabled) return;
+
+        SessionLocator.CurrentSession.StartBusyIndicator("");
+
+        var windowArgs: any = {};
+        windowArgs.EntityCounterKey = item.entityPM.EntityCounterKey;
+        windowArgs.ClaimPM = this.EntityPM;
+        windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Claim.TH.CancelOrObjection");
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 500;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe((event: any) => {
+            if (event == 'ok') {
+                this.RefreshEntity();
+            }
+        });
+
+        logWindow.IsHideHeader = true;
+        logWindow.Show('./CustomsModules/CustomsClaim/Components/EditTabs/RelatedEntity/ClaimRelatedEntityCancelOrObjectionTabComponent');
+        SessionLocator.CurrentSession.StopBusyIndicator();
+
+    }
+
     AddEntityCommand() {
 
         var errors: string[] = [];
