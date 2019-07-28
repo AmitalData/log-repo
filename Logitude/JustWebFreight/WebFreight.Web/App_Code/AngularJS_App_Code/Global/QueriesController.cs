@@ -139,8 +139,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
 
                     else
                     {
-                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryIdAndUser(tenant, userId, id);
-                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndUserAndQuery(tenant, userId, id);
+                        queryColumns = queryColumnRepository.GetQueryColumnsByQueryId(tenant, id);
+                        advancedQueryFilters = advancedQueryFilterRepository.GetAdvancedQueryFiltersByTenantAndAndQuery(tenant, id);
                     }
 
                     foreach (QueryColumn column in queryColumns)

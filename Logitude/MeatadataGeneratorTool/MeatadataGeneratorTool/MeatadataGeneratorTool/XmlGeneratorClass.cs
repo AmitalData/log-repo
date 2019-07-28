@@ -985,6 +985,8 @@ namespace MeatadataGeneratorTool
             SetAttribute("IsNewWizard", table.IsNewWizard.ToString().ToLower(), entityElement);
             SetAttribute("LookUp1", GetStringValue(table.LookUp1), entityElement);
             SetAttribute("LookUp2", GetStringValue(table.LookUp2), entityElement);
+            SetAttribute("CodeField", GetStringValue(table.CodeField), entityElement);
+            SetAttribute("NameField", GetStringValue(table.NameField), entityElement);
             SetAttribute("LovDisplayMemberPath", GetStringValue(table.LovDisplayMemberPath), entityElement);
             SetAttribute("LovDisplayMemberPathLocal", GetStringValue(table.LovDisplayMemberPathLocal), entityElement);
             SetAttribute("DependencyFilter1", GetStringValue(table.DependencyFilter1), entityElement);

@@ -496,6 +496,11 @@ export class ARPaymentPM {
     public set GLAccountRecoMethodCode(newValue: string) { if (this.gLAccountRecoMethodCode != newValue) { this.gLAccountRecoMethodCode = newValue; this.MarkAsDirty("GLAccountRecoMethodCode"); } }
        
 	 
+    private fechaPago: Date;
+    public get FechaPago() { return this.fechaPago; }
+    public set FechaPago(newValue: Date) { if (this.fechaPago != newValue) { this.fechaPago = newValue; this.MarkAsDirty("FechaPago"); } }
+       
+	 
     private isExternalEntity: boolean;
     public get IsExternalEntity() { return this.isExternalEntity; }
     public set IsExternalEntity(newValue: boolean) { if (this.isExternalEntity != newValue) { this.isExternalEntity = newValue; this.MarkAsDirty("IsExternalEntity"); } }

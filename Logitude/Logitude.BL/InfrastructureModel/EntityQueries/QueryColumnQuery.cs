@@ -238,7 +238,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 if (!string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
                 {
                     queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                              where a.Tenant == tenant && a.UserId == myQuery.SharedByUserId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
+                              where a.Tenant == tenant && (a.UserId == myQuery.SharedByUserId || a.UserId == userId) && a.QueryId == queryId && a.ObjectField.DisplayInList == true
                               select new QueryColumnPM()
                               {
                                   ColumnWidth = a.ColumnWidth,
