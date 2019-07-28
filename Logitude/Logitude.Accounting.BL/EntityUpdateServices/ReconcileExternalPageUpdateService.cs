@@ -258,8 +258,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 foreach (ReconcileExternalPageLinePM line in entityPM.ReconcileExternalPageLines)
                 {
-                    sum += line.DebitAmount;
-                    sum -= line.CreditAmount;
+                    sum -= line.DebitAmount;
+                    sum += line.CreditAmount;
                 }
             }
             if (sum != entityPM.CloseBalance)

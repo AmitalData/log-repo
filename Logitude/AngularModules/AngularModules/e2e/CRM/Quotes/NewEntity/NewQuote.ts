@@ -65,7 +65,9 @@ export class NewQuote {
       this.Helper.WaitByIdAndFill('Quote_MoveTypeId','TestMoveTypeIdAirMTA');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitByIdAndFill('Quote_FromPortId','eze');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitByIdAndFill('Quote_ToPortId','mvd');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitByIdAndFill('Quote_GrossWeight','1000');
       this.Helper.WaitByIdAndFill('Quote_Volume','3');
       this.Helper.WaitByIdAndFill('Quote_NumberOfPackages','3');

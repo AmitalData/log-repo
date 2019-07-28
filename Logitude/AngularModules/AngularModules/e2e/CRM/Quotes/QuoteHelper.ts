@@ -10,7 +10,7 @@ export class QuoteHelper {
 
   }
 
-  SelectDicrctionTransportMode( Direction: string, TransportMode: string, ShipmentType: string, QuoteType: string) {
+  SelectDicrctionTransportMode( Direction: string, TransportMode: string, ShipmentType: string) {
     var directionBtn: any;
     var transportModeBtn: any;
     var shipmentTypeBtn: any;
