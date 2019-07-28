@@ -83,7 +83,7 @@
                                 </tr>
 
                                 <!-- Price Steps  -->
-                                <tr class="FormFieldRow">
+                                <tr *ngIf="EntityPM.TypeCode != 'ASC'" class="FormFieldRow">
                                     <td>
                                         <LogLabel [NoObjectField]="true" [Text]="'Price Steps'" [DataContext]="DataContext"></LogLabel>
                                     </td>

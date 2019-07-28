@@ -1121,6 +1121,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               DocumentFilingInbox = user.DocumentFilingInbox,
                                               ShowLocalNameInLOV = user.ShowLocalNameInLOV,
                                               UserRoles = user.UserRoles,
+                                              AdditionalPackagesOnly = user.AdditionalPackagesOnly,
                                           };
 
             //int tenant = 0;
