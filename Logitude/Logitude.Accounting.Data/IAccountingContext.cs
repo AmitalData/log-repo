@@ -57,6 +57,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<Journal> Journals { get; }
 		 IDbSet<JournalActionType> JournalActionTypes { get; }
 		 IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; }
+		 IDbSet<JournalExternalReconcile> JournalExternalReconciles { get; }
 		 IDbSet<JournalLine> JournalLines { get; }
 		 IDbSet<JournalMoreData> JournalMoreDatas { get; }
 		 IDbSet<JournalReconcile> JournalReconciles { get; }

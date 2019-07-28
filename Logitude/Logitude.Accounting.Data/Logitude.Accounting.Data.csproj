@@ -166,6 +166,7 @@
     <Compile Include="EntityMapping\GLAccountCounterMap.cs" />
     <Compile Include="EntityMapping\IntegrityCheckStatusMap.cs" />
     <Compile Include="EntityMapping\JournalAdditionalDataMap.cs" />
+    <Compile Include="EntityMapping\JournalExternalReconcileMap.cs" />
     <Compile Include="EntityMapping\JournalMoreDataMap.cs" />
     <Compile Include="EntityMapping\OpenFormatReportMap.cs" />
     <Compile Include="EntityMapping\OpenFormatReportStatusMap.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="EntityPOCOs\GLAccountCounter.cs" />
     <Compile Include="EntityPOCOs\IntegrityCheckStatus.cs" />
     <Compile Include="EntityPOCOs\JournalAdditionalData.cs" />
+    <Compile Include="EntityPOCOs\JournalExternalReconcile.cs" />
     <Compile Include="EntityPOCOs\JournalMoreData.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReport.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReportStatus.cs" />
