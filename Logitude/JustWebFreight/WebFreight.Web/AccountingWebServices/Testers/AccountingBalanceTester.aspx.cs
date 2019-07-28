@@ -2259,7 +2259,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
 
                 var myExternalReconcileJournalService = new ExternalReconcileJournalService();
-                myExternalReconcileJournalService.CreateJournal(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
+                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
                 //_LabelResult.Text = JsonConvert.SerializeObject(myBankAccountPageAnalyzer.MyResultLoadBankPage); ;
 
             }

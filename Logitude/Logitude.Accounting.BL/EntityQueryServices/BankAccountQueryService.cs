@@ -26,8 +26,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return EntityPM;
         }
 
-        
-            public BankAccountPM GetBankAccountByBankIdAccNumber(string BankId, string AccountNumber, int tenant)
+
+        public BankAccountPM GetBankAccountByTransferGLAcccountId(string transferGLAcccountId, int tenant)
+        {
+            BankAccount bankAccount = this.repository.GetBankAccountByTransferGLAcccountId(transferGLAcccountId, tenant);
+
+            if (bankAccount != null)
+            {
+                return this.GetEntityPM(bankAccount);
+            }
+
+            return null;
+        }
+
+        public BankAccountPM GetBankAccountByBankIdAccNumber(string BankId, string AccountNumber, int tenant)
         {
             BankAccount bankAccount = this.repository.GetBankAccountByBankIdAccNumber(BankId, AccountNumber, tenant);
 
