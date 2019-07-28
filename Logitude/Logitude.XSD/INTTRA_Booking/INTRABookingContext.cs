@@ -810,7 +810,7 @@ namespace Logitude.XSD.INTTRA_Booking
             INTTRA_Booking.GoodsDetailsType itemDetails = new INTTRA_Booking.GoodsDetailsType()
             {
                 LineNumber = "1",
-                GoodDescription = "Shipment Description of goods",
+                GoodDescription =this.ShipmentPM.DescriptionOfGoods,
             };
             this.GoodsDetails.Add(itemDetails);
         }
