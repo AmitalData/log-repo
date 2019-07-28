@@ -51,8 +51,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
+
     public partial class ReconcileExternalPagesExtendedController : ApiController
     {
+        
         public HttpResponseMessage GetBankPageByPageNo(int pageNumber, string bankAccountId)
         {
             try
@@ -289,7 +291,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
         [HttpGet]
-        public HttpResponseMessage GetTrueIfLastApprovedBankPageWithReconciledLine(string reconcileExternalPageId)
+        public HttpResponseMessage GetCheckLastApprovedBankPageAndReconciledLine(string reconcileExternalPageId)
         {
             try
             {
@@ -304,10 +306,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ServiceResponse response = new ServiceResponse();
                 ContactPM loggedContact = GetLoggedContact(authToken.Email, tenant);
                 bool showlocal = !loggedContact.DontShowLocal;
+
                 if (islastAppprovedPage)
                 {
-                    ReconcileExternalPageLineQueryService externalPageLineQueryService = new ReconcileExternalPageLineQueryService(tenant);
-                    ReconcileExternalPageLine ReconcileExternalPageLine= externalPageLineQueryService.GetReconcileExternalPageLine(reconcileExternalPage.Id, tenant);
+                    ReconcileExternalPageLine ReconcileExternalPageLine= GetReconciledPageLine(reconcileExternalPage, tenant);
+                 
                     if (ReconcileExternalPageLine == null)
                     {
                         response.Result = null;
@@ -323,6 +326,45 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     response.Result = TextCodesTranslator.TranslateText("Accounting.General.O.LastBankPage", tenant, showlocal );
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, response );
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetCheckRestorePossibility(string reconcileExternalPageId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                ReconcileExternalPagePM reconcileExternalPage = GetReconcileExternalBankPage(reconcileExternalPageId, tenant);
+                ReconcileExternalPageQueryService reconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
+
+                bool OlderCancelledBankPage = false;
+                if (reconcileExternalPage.StatusCode == "3")
+                {
+                     OlderCancelledBankPage = reconcileExternalPageQueryService.CheckFirstCancelledBankPage(reconcileExternalPage.BankAccountId, reconcileExternalPage.PageNo, tenant);
+                }
+                ServiceResponse response = new ServiceResponse();
+               
+                bool showlocal = GetShowLocal(authToken.Email, tenant);
+
+                if (OlderCancelledBankPage)
+                {
+                    response.Result = null;
+                }
+                else
+                {
+                    response.Result =  TextCodesTranslator.TranslateText("Accounting.General.O.RestoreIsNotPossible", tenant, showlocal);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {
@@ -382,6 +424,28 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
 
             return loggedContactPM;
+        }
+
+        private ReconcileExternalPageLine GetReconciledPageLine(ReconcileExternalPagePM reconcileExternalPage , int tenant)
+        {
+            ReconcileExternalPageLineQueryService externalPageLineQueryService = new ReconcileExternalPageLineQueryService(tenant);
+            return externalPageLineQueryService.GetReconcileExternalPageLine(reconcileExternalPage.Id, tenant);
+
+        }
+
+        private bool GetShowLocal(string email, int tenant)
+        {
+
+            ContactPM loggedContact = GetLoggedContact(email, tenant);
+            return  !loggedContact.DontShowLocal;
+
+        }
+        private ReconcileExternalPagePM GetReconcileExternalBankPage(string id, int tenant)
+        {
+
+            ReconcileExternalPageQueryService reconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
+           return reconcileExternalPageQueryService.GetSingle(id, false, false);
+
         }
     }
 }

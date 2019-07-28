@@ -177,6 +177,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.IsDangerous).HasColumnName("IsDangerous");
             this.Property(t => t.ExpirationDays).HasColumnName("ExpirationDays");
             this.Property(t => t.ExpirationDate).HasColumnName("ExpirationDate");
+            this.Property(t => t.StartDate).HasColumnName("StartDate");
             this.Property(t => t.VolumetricWeight).HasColumnName("VolumetricWeight");
             this.Property(t => t.BranchId).HasColumnName("BranchId");
             this.Property(t => t.DepartmentId).HasColumnName("DepartmentId");

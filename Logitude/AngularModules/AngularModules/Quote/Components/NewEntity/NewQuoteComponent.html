@@ -639,7 +639,7 @@
                                                                             <LogLabel [ObjectFieldName]="'QuoteTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
                                                                         <td [style.width.px]="ControlColumnWidth" style="padding-right:36px;">
-                                                                            <table>                                                                                
+                                                                            <table>
                                                                                 <tr style="height: 20px;">
                                                                                     <td>
                                                                                         <table>
@@ -655,7 +655,7 @@
                                                                                                     <HelpIcon [Header]="RoutingHelpHeader" [Text]="RoutingHelpText"></HelpIcon>
                                                                                                 </td>
                                                                                             </tr>
-                                                                                        </table>                                                                                        
+                                                                                        </table>
                                                                                     </td>
                                                                                 </tr>
 
@@ -669,7 +669,53 @@
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
-                                                                    </tr>                                                                   
+                                                                    </tr>
+
+
+                                                                    <!-- Start Date -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <LogDatePicker [ObjectFieldName]="'StartDate'"
+                                                                                                                   [SelectedDateValue]="StartDate"
+                                                                                                                   [ObjectTableName]="ObjectTableName"
+                                                                                                                   [DataContext]="DataContext" [HideColumns]="true">
+                                                                                                    </LogDatePicker>
+                                                                                                </td>
+
+                                                                                                <td style="width: 2px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogDatePicker [ObjectFieldName]="'StartDate'"
+                                                                                                                   [SelectedDateValue]="StartDate"
+                                                                                                                   [ObjectTableName]="ObjectTableName"
+                                                                                                                   [DataContext]="DataContext"
+                                                                                                                   [InputType]="'time'">
+                                                                                                    </LogDatePicker>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+
+                                                                                    <td colspan="3">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
 
                                                                     <!-- Expiration Days -->
                                                                     <tr class="FormFieldRow">
@@ -687,33 +733,72 @@
                                                                     </tr>
 
                                                                     <!-- Expiration Date -->
+                                                                    <!--<tr class="FormFieldRow">
+        <td [style.width.px]="LabelColumnWidth">
+            <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td [style.width.px]="ControlColumnWidth">
+            <LogDatePicker [ObjectFieldName]="'ExpirationDate'"
+                           [SelectedDateValue]="ExpirationDate"
+                           [ObjectTableName]="ObjectTableName"
+                           [DataContext]="DataContext">
+            </LogDatePicker>
+        </td>
+    </tr>-->
+                                                                    <!-- Expiration Time -->
+                                                                    <!--<tr class="FormFieldRow">
+        <td [style.width.px]="LabelColumnWidth">
+            <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.NewQuote.ExpirationTime'"></LogLabel>
+        </td>
+
+        <td [style.width.px]="ControlColumnWidth">
+            <LogDatePicker [ObjectFieldName]="'ExpirationDate'"
+                           [SelectedDateValue]="ExpirationDate"
+                           [ObjectTableName]="ObjectTableName"
+                           [DataContext]="DataContext"
+                           [InputType]="'time'">
+            </LogDatePicker>
+        </td>
+    </tr>-->
+                                                                    <!-- Expiration Date -->
                                                                     <tr class="FormFieldRow">
                                                                         <td [style.width.px]="LabelColumnWidth">
                                                                             <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
-
                                                                         <td [style.width.px]="ControlColumnWidth">
-                                                                            <LogDatePicker [ObjectFieldName]="'ExpirationDate'"
-                                                                                           [SelectedDateValue]="ExpirationDate"
-                                                                                           [ObjectTableName]="ObjectTableName"
-                                                                                           [DataContext]="DataContext">
-                                                                            </LogDatePicker>
-                                                                        </td>
-                                                                    </tr>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <LogDatePicker [ObjectFieldName]="'ExpirationDate'"
+                                                                                                                   [SelectedDateValue]="ExpirationDate"
+                                                                                                                   [ObjectTableName]="ObjectTableName"
+                                                                                                                   [DataContext]="DataContext" [HideColumns]="true">
+                                                                                                    </LogDatePicker>
+                                                                                                </td>
+                                                                                                <td style="width: 2px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <LogDatePicker [ObjectFieldName]="'ExpirationDate'"
+                                                                                                                   [SelectedDateValue]="ExpirationDate"
+                                                                                                                   [ObjectTableName]="ObjectTableName"
+                                                                                                                   [DataContext]="DataContext"
+                                                                                                                   [InputType]="'time'">
+                                                                                                    </LogDatePicker>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
 
-                                                                    <!-- Expiration Time -->
-                                                                    <tr class="FormFieldRow">
-                                                                        <td [style.width.px]="LabelColumnWidth">
-                                                                            <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.NewQuote.ExpirationTime'"></LogLabel>
-                                                                        </td>
-
-                                                                        <td [style.width.px]="ControlColumnWidth">
-                                                                            <LogDatePicker [ObjectFieldName]="'ExpirationDate'"
-                                                                                           [SelectedDateValue]="ExpirationDate"
-                                                                                           [ObjectTableName]="ObjectTableName"
-                                                                                           [DataContext]="DataContext"
-                                                                                           [InputType]="'time'">
-                                                                            </LogDatePicker>
+                                                                                    <td colspan="3">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
                                                                         </td>
                                                                     </tr>
 
@@ -1473,7 +1558,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()" id="{{'CancelQuote' | IdGeneratorPipe}}">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
