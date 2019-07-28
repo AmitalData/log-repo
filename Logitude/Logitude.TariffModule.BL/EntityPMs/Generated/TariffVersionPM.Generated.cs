@@ -368,7 +368,30 @@ namespace Logitude.TariffModule.BL.EntityPMs
               }
              set {  deletedTariffAllInCharges = value; }
 	    }
-	     }
+	  	  private DateTime? initialEnddate ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? InitialEnddate  
+	   {
+	    
+	     get
+		{
+		   return initialEnddate;
+		 }
+		 set
+		 {
+		   if(initialEnddate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InitialEnddate",OldValue=initialEnddate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   initialEnddate=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 
