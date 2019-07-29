@@ -70,7 +70,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         this.UIProperties.SetVisibility("ExpirationDate", this.ObjectTableName, isDatesVisible);
 
         this.UIProperties.SetRequired("StartDate", this.ObjectTableName, this.StartDate == null)
-        this.UIProperties.SetRequired("ExpirationDate", this.ObjectTableName, this.ExpirationDate == null)
+        this.UIProperties.SetRequired("ExpirationDate", this.ObjectTableName, false);
     }
 
     FillChargesIDsAndUOMS() {
@@ -556,9 +556,9 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                 this.ValidationErrorsList.push("Satrt Date Field is Required");            
             }
 
-            if (this.ExpirationDate == null) {
-                this.ValidationErrorsList.push("Expiration Date Field is Required");
-            }
+            //if (this.ExpirationDate == null) {
+            //    this.ValidationErrorsList.push("Expiration Date Field is Required");
+            //}
 
             if (this.StartDate != null && this.ExpirationDate != null) {
                 if (this.ExpirationDate < this.StartDate) {

@@ -3333,7 +3333,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
-        public IDbSet<ARPaymentCheque> ARPaymentCheques
+        public IDbSet<Accounting.Data.EntityPOCOs.ARPaymentCheque> ARPaymentCheques
         {
             get;
             set;
@@ -3585,6 +3585,15 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
 
         }
+
+        public IDbSet<BIReportsExecutionLog> BIReportsExecutionLogs
+        {
+            get;
+            set;
+
+        }
+
+        
         public IDbSet<BIReportsType> BIReportsTypes
         {
             get;
@@ -4360,6 +4369,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ToggleMap());
             modelBuilder.Configurations.Add(new FeatureToggleMap());
             modelBuilder.Configurations.Add(new BIReportMap());
+            modelBuilder.Configurations.Add(new BIReportsExecutionLogMap());
             modelBuilder.Configurations.Add(new BIReportsTypeMap());
             modelBuilder.Configurations.Add(new BusinessRoleMap());
             modelBuilder.Configurations.Add(new BusinessProcessQueueMap());

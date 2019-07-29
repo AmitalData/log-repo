@@ -82,6 +82,7 @@
     <Compile Include="EntityKeys\BatchTaskExecutionStatusKeys.cs" />
     <Compile Include="EntityKeys\BIReportFolderKeys.cs" />
     <Compile Include="EntityKeys\BIReportKeys.cs" />
+    <Compile Include="EntityKeys\BIReportsExecutionLogKeys.cs" />
     <Compile Include="EntityKeys\BIReportsTypeKeys.cs" />
     <Compile Include="EntityKeys\BusinessProcessQueueKeys.cs" />
     <Compile Include="EntityKeys\BusinessRoleKeys.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="EntityListQueryServices\BatchTaskExecutionStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BIReportFolderListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BIReportListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\BIReportsExecutionLogListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BIReportsTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessProcessQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessRoleListQueryService.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BIReportFolderListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BIReportListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\BIReportsExecutionLogListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BIReportsTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessProcessQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessRoleListQueryService.Generated.cs" />
@@ -121,6 +124,7 @@
     <Compile Include="EntityLists\Generated\BatchTaskExecutionStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BIReportFolderList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BIReportList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\BIReportsExecutionLogList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BIReportsTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessProcessQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessRoleList.Generated.cs" />
@@ -134,6 +138,7 @@
     <Compile Include="EntityMapping\BatchTaskExecutionStatusMap.cs" />
     <Compile Include="EntityMapping\BIReportFolderMap.cs" />
     <Compile Include="EntityMapping\BIReportMap.cs" />
+    <Compile Include="EntityMapping\BIReportsExecutionLogMap.cs" />
     <Compile Include="EntityMapping\BIReportsTypeMap.cs" />
     <Compile Include="EntityMapping\BusinessProcessQueueMap.cs" />
     <Compile Include="EntityMapping\BusinessRoleMap.cs" />
@@ -147,6 +152,7 @@
     <Compile Include="EntityPOCOs\BatchTaskExecutionStatus.cs" />
     <Compile Include="EntityPOCOs\BIReport.cs" />
     <Compile Include="EntityPOCOs\BIReportFolder.cs" />
+    <Compile Include="EntityPOCOs\BIReportsExecutionLog.cs" />
     <Compile Include="EntityPOCOs\BIReportsType.cs" />
     <Compile Include="EntityPOCOs\BusinessProcessQueue.cs" />
     <Compile Include="EntityPOCOs\BusinessRole.cs" />
@@ -163,6 +169,7 @@
     <Compile Include="Repsitories\BatchTaskExecutionStatusRepository.cs" />
     <Compile Include="Repsitories\BIReportFolderRepository.cs" />
     <Compile Include="Repsitories\BIReportRepository.cs" />
+    <Compile Include="Repsitories\BIReportsExecutionLogRepository.cs" />
     <Compile Include="Repsitories\BIReportsTypeRepository.cs" />
     <Compile Include="Repsitories\BusinessProcessQueueRepository.cs" />
     <Compile Include="Repsitories\BusinessRoleRepository.cs" />
@@ -171,6 +178,7 @@
     <Compile Include="Repsitories\Generated\BatchTaskExecutionStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BIReportFolderRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BIReportRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\BIReportsExecutionLogRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BIReportsTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessProcessQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessRoleRepository.Generated.cs" />

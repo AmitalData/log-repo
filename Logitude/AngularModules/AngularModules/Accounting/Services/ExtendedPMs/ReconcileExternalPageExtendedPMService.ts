@@ -91,7 +91,7 @@ export class ReconcileExternalPageExtendedPMService {
     }
 
 
-    GetTrueIfLastApprovedBankPageWithReconciledLine(reconcileExternalPageId: string) {
+    CheckLastApprovedBankPageAndReconciledLine(reconcileExternalPageId: string) {
 
         return Observable.defer(() => {
 
@@ -101,7 +101,7 @@ export class ReconcileExternalPageExtendedPMService {
 
 
             return Observable.defer(() => {
-                return this._http.get(this._apiUrl + '/GetTrueIfLastApprovedBankPageWithReconciledLine?reconcileExternalPageId=' + reconcileExternalPageId, { headers: authHeader })
+                return this._http.get(this._apiUrl + '/GetCheckLastApprovedBankPageAndReconciledLine?reconcileExternalPageId=' + reconcileExternalPageId, { headers: authHeader })
                     .map(response => {
                         var res = response.json();
 
@@ -112,7 +112,27 @@ export class ReconcileExternalPageExtendedPMService {
 
 
     }
+    CheckRestorePossibility(reconcileExternalPageId: string) {
 
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+            return Observable.defer(() => {
+                return this._http.get(this._apiUrl + '/GetCheckRestorePossibility?reconcileExternalPageId=' + reconcileExternalPageId, { headers: authHeader })
+                    .map(response => {
+                        var res = response.json();
+
+                        return res;
+                    }).catch(ServiceHelper.HandleServiceError);
+            });
+        });
+
+
+    }
     GetDraftPage(bankAccountId: string) {
 
         return Observable.defer(() => {

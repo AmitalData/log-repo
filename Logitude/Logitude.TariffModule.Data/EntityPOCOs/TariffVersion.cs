@@ -50,6 +50,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
         public virtual User ApprovedByUser { get; set; }
         [Column("ParentVersionNumber")]
 	    public int ParentVersionNumber { get; set; }
+        [Column("InitialEnddate")]
+	    public DateTime? InitialEnddate { get; set; }
     }
 }
 	 
