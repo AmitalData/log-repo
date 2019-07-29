@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f8a5a968-d2a4-4be1-8960-5d72a9f89e53",
+		"_postman_id": "aa8352e5-6845-4af9-94fa-026cb3c6bcbc",
 		"name": "Quotes",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -93,6 +93,98 @@
 			"response": []
 		},
 		{
+			"name": "GetQuoteStage",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "556460c8-1fa8-474f-9642-10458635e29a",
+						"exec": [
+							"pm.test(\"GetDraftQuoteStage\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"   \r",
+							"\r",
+							"    var idexist = idvalue !== null;\r",
+							"  \r",
+							"     \r",
+							"    pm.expect(idexist);\r",
+							"  \r",
+							"     \r",
+							"    pm.environment.set(\"DraftQuoteStage\", idvalue);\r",
+							"   \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/quotestageviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=draft&GetCount=true&PageIndex=0&PageSize=16",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"quotestageviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "draft"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "16"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "CreateExportAirQuotes",
 			"event": [
 				{
@@ -149,7 +241,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"IsSecured\": false,\n  \"LastVersionNumber\": 0,\n  \"DirectionId\": \"E\",\n  \"TransportModeId\": \"A\",\n  \"IsCustomerSet\": false,\n  \"IsSubjectEdited\": false,\n  \"QuoteCustomerTypeCode\": \"SHI\",\n  \"CustomerId\": \"{{ShipperIdTestShipExport1}}\",\n  \"CustomerReference1\": \"CustomerRef 1\",\n  \"CustomerReference2\": null,\n  \"CustomerNote\": \"TestShipperExport1\",\n  \"ShipperId\": \"{{ShipperIdTestShipExport1}}\",\n  \"ShipperReference1\": \"CustomerRef 1\",\n  \"ShipperReference2\": null,\n  \"ShipperMainAddressId\": \"{{ShipperAddressIdTestShipperExport1}}\",\n  \"BusinessUnitId\": \"1102\",\n  \"FromPortId\": \"{{PortIdAirJFK}}\",\n  \"ToPortId\": \"{{PortIdLHR}}\",\n  \"IncotermId\": null,\n  \"SalesmanUserId\": \"1-82813\",\n  \"SalesmanName\": null,\n  \"CreatedByUserId\": \"{{LoggedUserId}}\",\n  \"Notes\": \"Created from API\",\n  \"DescriptionOfGoods\": null,\n  \"ChargeableWeight\": 0,\n  \"ChargeableWeightInKG\": 0,\n  \"GrossWeight\": null,\n  \"GrossWeightInKG\": null,\n  \"GrossWeightPerTon\": null,\n  \"VolumeInCBM\": null,\n  \"LastModified\": \"AAAAAAYIzF4=\",\n  \"IsClosed\": false,\n  \"IsFixedPrice\": false,\n  \"TotalReceivablesAmount\": null,\n  \"GrossWeightUnitCode\": \"KG\",\n  \"ChargeableWeightUnitCode\": \"KG\",\n  \"DimensionsUnitCode\": \"Cm\",\n  \"VolumetricWeight\": 0,\n  \"Volume\": null,\n  \"NumberOfPackages\": null,\n  \"NumberOfContainers\": null,\n  \"Ratio\": 6,\n  \"DimFactor\": 6000,\n  \"VolumeUnitCode\": \"CBM\",\n  \"IsDangerous\": false,\n  \"ExpirationDays\": 30,\n  \"ExpirationDate\": \"2019-08-22T00:00:00Z\",\n  \"IsFreightBySteps\": false,\n  \"TotalPerContainer\": false,\n  \"DepartmentId\": \"{{DepartmentId}}\",\n  \"BranchId\": \"{{BranchId}}\",\n  \"QuoteTypeCode\": \"A\",\n  \"QuoteTypeName\": null,\n  \"IsByKG\": false,\n  \"IsByContainer\": false,\n  \"MainCarriageCarrierId\": null,\n  \"IsCancelled\": false,\n  \"ActionType\": null,\n  \"EventNote\": null,\n  \"SaleCurrencyId\": \"1-4896\",\n  \"ExchangeRate\": 1.07,\n  \"IncludePickUp\": false,\n  \"IncludeDelivery\": false,\n  \"StageId\": \"1-7348\",\n  \"StageName\": null,\n  \"StageMaxDays\": null,\n  \"StageDueDate\": \"2019-07-23T00:00:00Z\",\n  \"RatingCode\": \"N\",\n  \"IsAutomaticallyClosed\": false,\n  \"AutomaticallyCloseDate\": null,\n  \"AutomaticallyCloseDays\": null,\n  \"UpdatedByUserId\": \"{{LoggedUserId}}\",\n  \"ProductCode\": \"AE\",\n  \"LastStageDate\": \"2019-07-23T09:48:38.7302025Z\",\n  \"TEU\": null,\n  \"IsChargesByVAT\": false,\n  \"IsCopy\": false,\n  \"ToCountryId\": \"{{CountryIdForPortLHR}}\",\n  \"FromCountryId\": \"{{CountryIdForPortJFK}}\",\n  \"IsPotentialShipper\": false,\n  \"IsPotentialConsignee\": false,\n  \"ConvertToFCL\": false,\n  \"ConvertToLCL\": false,\n  \"IsQuoteDataExternal\": false,\n  \"IsQuoteDocumentExternal\": false,\n  \"TransitTime\": null,\n  \"DepartureFrequency\": null,\n  \"ETD\": null,\n  \"ETA\": null,\n  \"MoveTypeId\": null,\n  \"ValueOfGoods\": null,\n  \"ValueOfGoodsCurrencyId\": \"1-4896\",\n  \"EstimateProfit\": null,\n  \"EstimateProfitEdited\": false,\n  \"CostTotalAmountInLocalCurrency\": null,\n  \"SaleTotalAmountInLocalCurrency\": null,\n  \"CostTotalAmountInSaleCurrency\": null,\n  \"SaleTotalAmountInSaleCurrency\": null,\n  \"EstimateProfitInSaleCurrency\": null,\n  \"IsHybrid\": false,\n  \"TotalSaleIncludingVATAmountInSaleCurrency\": null,\n  \"TotalSaleIncludingVATAmountInLocalCurrency\": null,\n  \"IsSaleCurrencySameAsCost\": false,\n  \"DontExportQuotationsToIntegratedSystem\": false,\n  \"QuotationSections\": null,\n  \"SameOrFixed\": null,\n  \"GrossWeightEdited\": false,\n  \"ChargeableWeightEdited\": false,\n  \"NumberOfFollowUps\": null,\n  \"FollowUps\": [],\n  \"QuoteDocumentVersions\": [],\n  \"QuoteCostCharges\": [],\n  \"QuoteSaleCharges\": [],\n  \"MarkFollowUpsAsDone\": false,\n  \"QuotePackages\": [],\n  \"SalesTotalAmounts\": null,\n  \"QuoteSalesTotals\": [],\n  \"TotalVATPerQuote\": [],\n  \"TotalVATs\": []\n}"
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"IsSecured\": false,\n   \"ConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\n  \"LastVersionNumber\": 0,\n  \"DirectionId\": \"E\",\n  \"TransportModeId\": \"A\",\n  \"IsCustomerSet\": false,\n  \"IsSubjectEdited\": false,\n  \"QuoteCustomerTypeCode\": \"SHI\",\n  \"CustomerId\": \"{{ShipperIdTestShipperExport1}}\",\n  \"CustomerName\": \"{{CustomerName}}\",\n  \"CustomerReference1\": \"CustomerRef 1\",\n  \"CustomerReference2\": null,\n  \"CustomerNote\": \"TestShipperExport1\",\n  \"ShipperId\": \"{{ShipperIdTestShipperExport1}}\",\n  \"ShipperName\": \"{{CustomerName}}\",\n  \"ShipperReference1\": \"CustomerRef 1\",\n  \"ShipperReference2\": null,\n  \"ShipperMainAddressId\": \"{{ShipperAddressIdTestShipperExport1}}\",\n  \"BusinessUnitId\": \"1102\",\n  \"StageId\": \"{{DraftQuoteStage}}\",\n  \"StageDueDate\": \"2019-07-30T00:00:00Z\",\n  \"FromPortId\": \"{{PortLHRName}}\",\n  \"ToPortId\": \"{{PortLHRName}}\",\n  \"IncotermId\": null,\n  \"SalesmanUserId\": \"1-82813\",\n  \"SalesmanName\": null,\n  \"CreatedByUserId\": \"{{LoggedUserId}}\",\n  \"Notes\": \"Created from API\",\n  \"DescriptionOfGoods\": null,\n  \"ChargeableWeight\": 0,\n  \"ChargeableWeightInKG\": 0,\n  \"GrossWeight\": null,\n  \"GrossWeightInKG\": null,\n  \"GrossWeightPerTon\": null,\n  \"VolumeInCBM\": null,\n  \"LastModified\": \"AAAAAAYIzF4=\",\n  \"IsClosed\": false,\n  \"IsFixedPrice\": false,\n  \"TotalReceivablesAmount\": null,\n  \"GrossWeightUnitCode\": \"KG\",\n  \"ChargeableWeightUnitCode\": \"KG\",\n  \"DimensionsUnitCode\": \"Cm\",\n  \"VolumetricWeight\": 0,\n  \"Volume\": null,\n  \"NumberOfPackages\": null,\n  \"NumberOfContainers\": null,\n  \"Ratio\": 6,\n  \"DimFactor\": 6000,\n  \"VolumeUnitCode\": \"CBM\",\n  \"IsDangerous\": false,\n  \"ExpirationDays\": 30,\n  \"ExpirationDate\": \"2019-08-22T00:00:00Z\",\n  \"IsFreightBySteps\": false,\n  \"TotalPerContainer\": false,\n  \"DepartmentId\": \"{{DepartmentId}}\",\n  \"BranchId\": \"{{BranchId}}\",\n  \"QuoteTypeCode\": \"A\",\n  \"QuoteTypeName\": null,\n  \"IsByKG\": false,\n  \"IsByContainer\": false,\n  \"MainCarriageCarrierId\": null,\n  \"IsCancelled\": false,\n  \"ActionType\": null,\n  \"EventNote\": null,\n  \"SaleCurrencyId\": \"1-4896\",\n  \"ExchangeRate\": 1.07,\n  \"IncludePickUp\": false,\n  \"IncludeDelivery\": false,\n \n  \"RatingCode\": \"N\",\n  \"IsAutomaticallyClosed\": false,\n  \"AutomaticallyCloseDate\": null,\n  \"AutomaticallyCloseDays\": null,\n  \"UpdatedByUserId\": \"{{LoggedUserId}}\",\n  \"ProductCode\": \"AE\",\n  \"LastStageDate\": \"2019-07-23T09:48:38.7302025Z\",\n  \"TEU\": null,\n  \"IsChargesByVAT\": false,\n  \"IsCopy\": false,\n  \"ToCountryId\": \"{{CountryIdForPortLHR}}\",\n  \"FromCountryId\": \"{{CountryIdForPortJFK}}\",\n  \"IsPotentialShipper\": false,\n  \"IsPotentialConsignee\": false,\n  \"ConvertToFCL\": false,\n  \"ConvertToLCL\": false,\n  \"IsQuoteDataExternal\": false,\n  \"IsQuoteDocumentExternal\": false,\n  \"TransitTime\": null,\n  \"DepartureFrequency\": null,\n  \"ETD\": null,\n  \"ETA\": null,\n  \"MoveTypeId\": null,\n  \"ValueOfGoods\": null,\n  \"ValueOfGoodsCurrencyId\": \"1-4896\",\n  \"EstimateProfit\": null,\n  \"EstimateProfitEdited\": false,\n  \"CostTotalAmountInLocalCurrency\": null,\n  \"SaleTotalAmountInLocalCurrency\": null,\n  \"CostTotalAmountInSaleCurrency\": null,\n  \"SaleTotalAmountInSaleCurrency\": null,\n  \"EstimateProfitInSaleCurrency\": null,\n  \"IsHybrid\": false,\n  \"TotalSaleIncludingVATAmountInSaleCurrency\": null,\n  \"TotalSaleIncludingVATAmountInLocalCurrency\": null,\n  \"IsSaleCurrencySameAsCost\": false,\n  \"DontExportQuotationsToIntegratedSystem\": false,\n  \"QuotationSections\": null,\n  \"SameOrFixed\": null,\n  \"GrossWeightEdited\": false,\n  \"ChargeableWeightEdited\": false,\n  \"NumberOfFollowUps\": null,\n  \"FollowUps\": [],\n  \"QuoteDocumentVersions\": [],\n  \"QuoteCostCharges\": [],\n  \"QuoteSaleCharges\": [],\n  \"MarkFollowUpsAsDone\": false,\n  \"QuotePackages\": [],\n  \"SalesTotalAmounts\": null,\n  \"QuoteSalesTotals\": [],\n  \"TotalVATPerQuote\": [],\n  \"TotalVATs\": []\n}"
 				},
 				"url": "{{LogitudeURL}}/api/quotes"
 			},
@@ -255,7 +347,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"Id\": \"{{ExportAirQuoteId}}\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"IsSecured\": true,\n  \"ConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\n  \"QuoteTemplateId\": null,\n  \"LastVersionNumber\": 0,\n  \"QuoteLevel\": null,\n  \"QuoteNumber\": \"{{ExportAirQuoteNumber}}\",\n  \"DirectionId\": \"E\",\n  \"TransportModeId\": \"A\",\n  \"IsCustomerSet\": false,\n  \"IsSubjectEdited\": false,\n  \"QuoteCustomerTypeCode\": \"SHI\",\n  \"CustomerId\": \"{{ConsigneeIdTestConsigneeExport1}}\",\n  \"ShipperId\": \"{{ShipperIdTestShipExport1}}\",\n  \"ConsigneeId\": \"{{ConsigneeIdTestConsigneeExport1}}\",\n  \n  \"CustomerRankName\": \"Silver\",\n  \"BusinessUnitId\": \"1102\",\n  \"FromPortId\": \"{{PortIdAirJFK}}\",\n  \"ToPortId\": \"{{PortIdLHR}}\",\n  \"IncotermId\": null,\n  \"SalesmanUserId\": \"1-82813\",\n  \"SalesmanName\": \"Protractor \",\n  \"CreatedByUserId\": \"{{LoggedUserId}}\",\n\n  \"Notes\": \" razan jarara\",\n  \"DescriptionOfGoods\": null,\n  \"ChargeableWeight\": 100,\n  \"ChargeableWeightInKG\": 100,\n  \"GrossWeight\": 100,\n  \"GrossWeightInKG\": 100,\n  \"GrossWeightPerTon\": 0.1,\n  \"VolumeInCBM\": 0.6,\n\n  \"LastModified\": \"AAAAAAYI1L0=\",\n  \"IsClosed\": false,\n  \"IsFixedPrice\": false,\n  \"TotalReceivablesAmount\": 0,\n  \"GrossWeightUnitCode\": \"KG\",\n  \"ChargeableWeightUnitCode\": \"KG\",\n  \"DimensionsUnitCode\": \"Cm\",\n  \"VolumetricWeight\": 0,\n  \"Volume\": null,\n  \"NumberOfPackages\": null,\n  \"NumberOfContainers\": null,\n  \"Ratio\": 6,\n  \"DimFactor\": 6000,\n  \"VolumeUnitCode\": \"CBM\",\n  \"IsDangerous\": false,\n  \"ExpirationDays\": 30,\n  \"ExpirationDate\": \"2019-08-22T00:00:00\",\n  \"IsFreightBySteps\": false,\n  \"TotalPerContainer\": false,\n  \"FromPort\": \"JFK\",\n  \"FromPortName\": \"John F. Kennedy Apt/New York\",\n  \"FromPortCountry\": \"United States\",\n  \"ToPort\": \"LHR\",\n  \"ToPortName\": \"Heathrow Apt/London\",\n  \"ToPortCountry\": \"United Kingdom\",\n  \"TotalContainers\": \"\",\n  \"DepartmentId\": \"{{DepartmentId}}\",\n  \"BranchId\": \"{{BranchId}}\",\n\n  \"QuoteTypeCode\": \"A\",\n  \"QuoteTypeName\": \"Spot Rate\",\n  \"IsByKG\": false,\n  \"IsByContainer\": false,\n  \"MainCarriageCarrierId\": null,\n  \"IsCancelled\": false,\n  \"ActionType\": null,\n  \"EventNote\": null,\n  \"SaleCurrencyId\": \"1-4896\",\n  \"ExchangeRate\": 1.07,\n  \"SearchFields\": \"1080,JFK > LHR, ,JFK,John F. Kennedy Apt/New York,LHR,Heathrow Apt/London,TstShipExport1,CustomerRef 1,TstShipExport1,CustomerRef 1\",\n  \n  \"IncludePickUp\": false,\n  \"IncludeDelivery\": false,\n \n  \"StageId\": \"1-7348\",\n  \"StageName\": \"Created\",\n  \"StageMaxDays\": 0,\n  \"StageDueDate\": \"2019-07-23T00:00:00\",\n  \"RatingCode\": \"N\",\n  \"RatingName\": \"Neutral\",\n  \n  \"IsAutomaticallyClosed\": false,\n  \"UpdatedByUserId\": \"{{LoggedUserId}}\",\n  \"ProductCode\": \"AE\",\n  \"LastStageDate\": \"2019-07-23T13:23:45.787\",\n  \"TEU\": null,\n  \"IsChargesByVAT\": false,\n  \"IsCopy\": false,\n\n  \"FromCountryIsEC\": false,\n  \"ToCountryIsEC\": true,\n\n  \"IsPotentialShipper\": false,\n  \"IsPotentialConsignee\": false,\n  \n  \"ConvertToFCL\": false,\n  \"ConvertToLCL\": false,\n  \"IsQuoteDataExternal\": false,\n  \"IsQuoteDocumentExternal\": false,\n  \"TransitTime\": null,\n  \"DepartureFrequency\": null,\n  \"ETD\": null,\n  \"ETA\": null,\n  \"ETDLabel\": \"ETD Port of Loading\",\n  \"ETALabel\": \"ETA Port of Destination\",\n  \"AgentId\": \"{{AgentIdTestExport1}}\",\n  \"AgentAddressId\":\"{{AgentAddressIdTestAgentExport1}}\",\n  \n  \"MoveTypeId\": null,\n  \"ValueOfGoods\": null,\n  \"ValueOfGoodsCurrencyId\": \"1-4896\",\n  \"EstimateProfit\": null,\n  \"EstimateProfitEdited\": false,\n  \"CostTotalAmountInLocalCurrency\": 0,\n  \"SaleTotalAmountInLocalCurrency\": 0,\n  \"CostTotalAmountInSaleCurrency\": 0,\n  \"SaleTotalAmountInSaleCurrency\": 0,\n  \"EstimateProfitInSaleCurrency\": 0,\n  \"IsHybrid\": false,\n  \"TotalSaleIncludingVATAmountInSaleCurrency\": 0,\n  \"TotalSaleIncludingVATAmountInLocalCurrency\": 0,\n  \"IsSaleCurrencySameAsCost\": false,\n  \n  \"DontExportQuotationsToIntegratedSystem\": false,\n  \"QuotationSections\": null,\n  \"SameOrFixed\": \"Fixed\",\n  \"GrossWeightEdited\": false,\n  \"ChargeableWeightEdited\": false,\n  \"NumberOfFollowUps\": null,\n  \"QuoteCharges\": [\n    {\n      \"$id\": \"12\",\n      \"Id\": \"1-156737\",\n      \"Tenant\": 1102,\n      \"QuoteId\": \"{{ExportAirQuoteId}}\",\n      \"CostMaxAmount\": null,\n      \"CostMinAmount\": null,\n      \"SaleMinAmount\": null,\n      \"SaleMaxAmount\": null,\n      \"IsChargeBySteps\": false,\n      \"IsAllIN\": false,\n      \"ViewOrder\": 10,\n      \"QuoteTypeCode\": \"A\",\n      \"Notes\": null,\n      \"UpdatedByUserId\": \"1-82813\",\n      \"UpdateDate\": \"2019-07-23T13:23:49.257\",\n      \"ValueDate\": \"2019-07-23T13:23:49.257\",\n      \"ChargesTypeId\": \"1-47302\",\n      \"ChargesTypeCode\": \"AFT\",\n      \"ChargesTypeName\": \"Air Freight\",\n      \"ChargesTypeDescription\": null,\n      \"ChargesTypeLocalName\": \"Air Freight\",\n      \"ChargesGroupCode\": \"FRT\",\n      \"VendorId\": null,\n      \"VendorName\": \"\",\n      \"CostMeasurementId\": \"{{MeasurementOfChargeTypeIdAFT}}\",\n      \"SaleMeasurementId\": \"{{MeasurementOfChargeTypeIdAFT}}\",\n      \"CostCurrencyId\": \"1-4896\",\n      \"CostCurrencyCode\": \"EUR\",\n      \"CostExchangeRate\": 1.07,\n      \"CostIsFixedRate\": false,\n      \"CostQuantity\": 10,\n      \"CostUnitPrice\": 10,\n\n\n      \"CostTotalAmountLocal\": null,\n      \"SaleCurrencyId\": \"1-4896\",\n      \"SaleCurrencyCode\": \"EUR\",\n      \"SaleExchangeRate\": 1.07,\n      \"SaleIsFixedRate\": false,\n      \"SaleQuantity\": 0,\n      \"SaleUnitPrice\": null,\n      \"SaleTotalAmount\": null,\n      \"SaleTotalAmountLocal\": null,\n      \"MarkUpTypeCode\": \"F\",\n      \"MarkUpValue\": 0,\n      \"VatIsMultiPercentage\": false,\n      \"IsBackToBack\": false,\n      \"MarkUpText\": null,\n      \"ChangeSetOp\": 0,\n      \"QuoteChargePriceSteps\": [],\n      \"QuoteChargePriceStepsChangeSet\": []\n    }\n  ],\n  \"FollowUps\": [],\n  \"QuoteDocumentVersions\": [],\n  \"QuoteCostCharges\": [],\n  \"QuoteSaleCharges\": [],\n  \"MarkFollowUpsAsDone\": false,\n   \"QuotePackages\": [\n    {\n      \"Tenant\": \"{{Tenant}}\",\n      \"PackageTypeId\": null,\n      \"QuoteId\": \"{{ExportAirQuoteId}}\",\n      \"Quantity\": 10,\n      \"GrossWeight\": 100,\n      \"Volume\": 0.6,\n      \"Height\": null,\n      \"Width\": null,\n      \"Length\": null,\n      \"VolumetricWeight\": 100,\n      \"PackageTypeName\": null,\n      \"Dimensions\": null,\n      \"Quote\": null,\n      \"ChangeSetOp\": 1\n    }\n  ],\n  \n  \"SalesTotalAmounts\": \"0.00 EUR\",\n  \"QuoteSalesTotals\": [\n    {\n      \"$id\": \"13\",\n      \"CurrencyCode\": \"EUR\",\n      \"Amount\": 0\n    }\n  ],\n  \"TotalVATPerQuote\": [],\n  \"TotalVATs\": []\n}"
+					"raw": "{\n  \"$id\": \"1\",\n  \"Id\": \"{{ExportAirQuoteId}}\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"IsSecured\": true,\n  \"ConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\n  \n  \"QuoteTemplateId\": null,\n  \"LastVersionNumber\": 0,\n  \"QuoteLevel\": null,\n  \"QuoteNumber\": \"{{ExportAirQuoteNumber}}\",\n  \"DirectionId\": \"E\",\n  \"TransportModeId\": \"A\",\n  \"IsCustomerSet\": false,\n  \"IsSubjectEdited\": false,\n  \"QuoteCustomerTypeCode\": \"SHI\",\n  \"CustomerId\": \"{{ConsigneeIdTestConsigneeExport1}}\",\n \"ShipperId\": \"{{ShipperIdTestShipperExport1}}\",\n  \"ShipperName\": \"{{CustomerName}}\",\n  \n  \"CustomerRankName\": \"Silver\",\n  \"BusinessUnitId\": \"1102\",\n  \"FromPortId\": \"{{PortLHRName}}\",\n  \"ToPortId\": \"{{PortLHRName}}\",\n  \"IncotermId\": null,\n  \"SalesmanUserId\": \"1-82813\",\n  \"SalesmanName\": \"Protractor \",\n  \"CreatedByUserId\": \"{{LoggedUserId}}\",\n\n  \"Notes\": \" Quote Updated\",\n  \"DescriptionOfGoods\": null,\n  \"ChargeableWeight\": 100,\n  \"ChargeableWeightInKG\": 100,\n  \"GrossWeight\": 100,\n  \"GrossWeightInKG\": 100,\n  \"GrossWeightPerTon\": 0.1,\n  \"VolumeInCBM\": 0.6,\n\n  \"LastModified\": \"AAAAAAYI1L0=\",\n  \"IsClosed\": false,\n  \"IsFixedPrice\": false,\n  \"TotalReceivablesAmount\": 0,\n  \"GrossWeightUnitCode\": \"KG\",\n  \"ChargeableWeightUnitCode\": \"KG\",\n  \"DimensionsUnitCode\": \"Cm\",\n  \"VolumetricWeight\": 0,\n  \"Volume\": null,\n  \"NumberOfPackages\": null,\n  \"NumberOfContainers\": null,\n  \"Ratio\": 6,\n  \"DimFactor\": 6000,\n  \"VolumeUnitCode\": \"CBM\",\n  \"IsDangerous\": false,\n  \"ExpirationDays\": 30,\n  \"ExpirationDate\": \"2019-08-22T00:00:00\",\n  \"IsFreightBySteps\": false,\n  \"TotalPerContainer\": false,\n  \"FromPort\": \"JFK\",\n  \"FromPortName\": \"John F. Kennedy Apt/New York\",\n  \"FromPortCountry\": \"United States\",\n  \"ToPort\": \"LHR\",\n  \"ToPortName\": \"Heathrow Apt/London\",\n  \"ToPortCountry\": \"United Kingdom\",\n  \"TotalContainers\": \"\",\n  \"DepartmentId\": \"{{DepartmentId}}\",\n  \"BranchId\": \"{{BranchId}}\",\n\n  \"QuoteTypeCode\": \"A\",\n  \"QuoteTypeName\": \"Spot Rate\",\n  \"IsByKG\": false,\n  \"IsByContainer\": false,\n  \"MainCarriageCarrierId\": null,\n  \"IsCancelled\": false,\n  \"ActionType\": null,\n  \"EventNote\": null,\n  \"SaleCurrencyId\": \"1-4896\",\n  \"ExchangeRate\": 1.07,\n  \"SearchFields\": \"1080,JFK > LHR, ,JFK,John F. Kennedy Apt/New York,LHR,Heathrow Apt/London,TstShipExport1,CustomerRef 1,TstShipExport1,CustomerRef 1\",\n  \n  \"IncludePickUp\": false,\n  \"IncludeDelivery\": false,\n \n  \"StageId\": \"1-7348\",\n  \"StageName\": \"Created\",\n  \"StageMaxDays\": 0,\n  \"StageDueDate\": \"2019-07-23T00:00:00\",\n  \"RatingCode\": \"N\",\n  \"RatingName\": \"Neutral\",\n  \n  \"IsAutomaticallyClosed\": false,\n  \"UpdatedByUserId\": \"{{LoggedUserId}}\",\n  \"ProductCode\": \"AE\",\n  \"LastStageDate\": \"2019-07-23T13:23:45.787\",\n  \"TEU\": null,\n  \"IsChargesByVAT\": false,\n  \"IsCopy\": false,\n\n  \"FromCountryIsEC\": false,\n  \"ToCountryIsEC\": true,\n\n  \"IsPotentialShipper\": false,\n  \"IsPotentialConsignee\": false,\n  \n  \"ConvertToFCL\": false,\n  \"ConvertToLCL\": false,\n  \"IsQuoteDataExternal\": false,\n  \"IsQuoteDocumentExternal\": false,\n  \"TransitTime\": null,\n  \"DepartureFrequency\": null,\n  \"ETD\": null,\n  \"ETA\": null,\n  \"ETDLabel\": \"ETD Port of Loading\",\n  \"ETALabel\": \"ETA Port of Destination\",\n  \n  \n  \"MoveTypeId\": null,\n  \"ValueOfGoods\": null,\n  \"ValueOfGoodsCurrencyId\": \"1-4896\",\n  \"EstimateProfit\": null,\n  \"EstimateProfitEdited\": false,\n  \"CostTotalAmountInLocalCurrency\": 0,\n  \"SaleTotalAmountInLocalCurrency\": 0,\n  \"CostTotalAmountInSaleCurrency\": 0,\n  \"SaleTotalAmountInSaleCurrency\": 0,\n  \"EstimateProfitInSaleCurrency\": 0,\n  \"IsHybrid\": false,\n  \"TotalSaleIncludingVATAmountInSaleCurrency\": 0,\n  \"TotalSaleIncludingVATAmountInLocalCurrency\": 0,\n  \"IsSaleCurrencySameAsCost\": false,\n  \n  \"DontExportQuotationsToIntegratedSystem\": false,\n  \"QuotationSections\": null,\n  \"SameOrFixed\": \"Fixed\",\n  \"GrossWeightEdited\": false,\n  \"ChargeableWeightEdited\": false,\n  \"NumberOfFollowUps\": null,\n  \"QuoteCharges\": [\n    {\n      \"$id\": \"12\",\n      \"Id\": \"1-156737\",\n      \"Tenant\": 1102,\n      \"QuoteId\": \"{{ExportAirQuoteId}}\",\n      \"CostMaxAmount\": null,\n      \"CostMinAmount\": null,\n      \"SaleMinAmount\": null,\n      \"SaleMaxAmount\": null,\n      \"IsChargeBySteps\": false,\n      \"IsAllIN\": false,\n      \"ViewOrder\": 10,\n      \"QuoteTypeCode\": \"A\",\n      \"Notes\": null,\n      \"UpdatedByUserId\": \"1-82813\",\n      \"UpdateDate\": \"2019-07-23T13:23:49.257\",\n      \"ValueDate\": \"2019-07-23T13:23:49.257\",\n      \"ChargesTypeId\": \"1-47302\",\n      \"ChargesTypeCode\": \"AFT\",\n      \"ChargesTypeName\": \"Air Freight\",\n      \"ChargesTypeDescription\": null,\n      \"ChargesTypeLocalName\": \"Air Freight\",\n      \"ChargesGroupCode\": \"FRT\",\n      \"VendorId\": null,\n      \"VendorName\": \"\",\n      \"CostMeasurementId\": \"{{MeasurementOfChargeTypeIdAFT}}\",\n      \"SaleMeasurementId\": \"{{MeasurementOfChargeTypeIdAFT}}\",\n      \"CostCurrencyId\": \"1-4896\",\n      \"CostCurrencyCode\": \"EUR\",\n      \"CostExchangeRate\": 1.07,\n      \"CostIsFixedRate\": false,\n      \"CostQuantity\": 10,\n      \"CostUnitPrice\": 10,\n\n\n      \"CostTotalAmountLocal\": null,\n      \"SaleCurrencyId\": \"1-4896\",\n      \"SaleCurrencyCode\": \"EUR\",\n      \"SaleExchangeRate\": 1.07,\n      \"SaleIsFixedRate\": false,\n      \"SaleQuantity\": 0,\n      \"SaleUnitPrice\": null,\n      \"SaleTotalAmount\": null,\n      \"SaleTotalAmountLocal\": null,\n      \"MarkUpTypeCode\": \"F\",\n      \"MarkUpValue\": 0,\n      \"VatIsMultiPercentage\": false,\n      \"IsBackToBack\": false,\n      \"MarkUpText\": null,\n      \"ChangeSetOp\": 0,\n      \"QuoteChargePriceSteps\": [],\n      \"QuoteChargePriceStepsChangeSet\": []\n    }\n  ],\n  \"FollowUps\": [],\n  \"QuoteDocumentVersions\": [],\n  \"QuoteCostCharges\": [],\n  \"QuoteSaleCharges\": [],\n  \"MarkFollowUpsAsDone\": false,\n   \"QuotePackages\": [\n    {\n      \"Tenant\": \"{{Tenant}}\",\n      \"PackageTypeId\": null,\n      \"QuoteId\": \"{{ExportAirQuoteId}}\",\n      \"Quantity\": 10,\n      \"GrossWeight\": 100,\n      \"Volume\": 0.6,\n      \"Height\": null,\n      \"Width\": null,\n      \"Length\": null,\n      \"VolumetricWeight\": 100,\n      \"PackageTypeName\": null,\n      \"Dimensions\": null,\n      \"Quote\": null,\n      \"ChangeSetOp\": 1\n    }\n  ],\n  \n  \"SalesTotalAmounts\": \"0.00 EUR\",\n  \"QuoteSalesTotals\": [\n    {\n      \"$id\": \"13\",\n      \"CurrencyCode\": \"EUR\",\n      \"Amount\": 0\n    }\n  ],\n  \"TotalVATPerQuote\": [],\n  \"TotalVATs\": []\n}"
 				},
 				"url": "{{LogitudeURL}}/api/quotes"
 			},
