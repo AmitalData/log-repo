@@ -3,18 +3,21 @@ import { FieldsHelper } from '../../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
 import { QuoteHelper } from '../QuoteHelper'
 import { timingSafeEqual } from 'crypto';
+import { EditTabsComponent } from '../EditEntity/EditQuoteTabs.po';
 
 
 export class NewQuote {
   private Helper: FieldsHelper;
   private Quotes: GeneralFunctions;
   private QuoteHepler : QuoteHelper;
-
+  private EditQuoteTabs: EditTabsComponent;
+  
 
   constructor() {
    this.Helper = new FieldsHelper();
     this.Quotes = new GeneralFunctions();
     this.QuoteHepler = new QuoteHelper();
+    this.EditQuoteTabs = new EditTabsComponent();
   }
 
   DoOperations() {
@@ -33,8 +36,12 @@ export class NewQuote {
         
       var QuoteNumber = this.Quotes.RandomNum();
       this.FillQuoteFields(QuoteNumber,  TransportMode ,Direction,ShipmentType, QuoteType);
+      this.Helper.WaitByIdAndClick('CreateQuote');
+      this.Helper.WaitWindowClosed();
       this.Helper.WaitBusyIndicator();
-
+      
+      this.Quotes.UseSearchBox('Quote_Search', QuoteNumber);
+      this.EditQuoteTabs.EditTabs(QuoteNumber, ShipmentType,Direction,TransportMode,QuoteType);
       
      // this.GeneralFunction.UseSearchBox('Shipment_Search', QuoteNumber);
       //this.EditShipmentTabs.EditTabs(QuoteNumber, ShipmentLevelCode, QuoteType,Direction);
@@ -57,7 +64,7 @@ export class NewQuote {
     
     this.Helper.WaitByIdAndFill('Quote_CustomerId','TestShipper');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-  
+    this.Helper.WaitByIdAndFill('Quote_ShipperReference1', QuoteNumber);// test random number randomWholeNum
     this.Helper.WaitByIdAndFill('Quote_IncotermId','CIF');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
    
@@ -73,11 +80,15 @@ export class NewQuote {
       this.Helper.WaitByIdAndFill('Quote_NumberOfPackages','3');
     }
 
-    this.Helper.WaitByIdAndClick('CreateQuote');
+    
     
     
   }
+  EditTabs(shipperRef1:string,LogitudeShipType:string,ShipmentType: string,Direction: string) {
 
+
+    this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
+  }
 
 }
 
