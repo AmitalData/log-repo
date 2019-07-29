@@ -369,6 +369,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetBIReportLogStatus(string reportId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                BIReportsExecutionLogRepository reportExecutionLogRepository = new BIReportsExecutionLogRepository(authToken.Tenant);
+                BIReportsExecutionLog reportExecutionLog = reportExecutionLogRepository.GetSingleByBIReportId(reportId, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLog);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         #region SendBlockToServer
         int counter = -1;
         long sentBytes = 0;

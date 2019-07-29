@@ -10,6 +10,21 @@ export class QuoteHelper {
 
   }
 
+  SelectQuoteType( QuoteType: string) {
+    var EC = protractor.ExpectedConditions;
+    var QuoteTypeBtn: any;
+      browser.wait(EC.elementToBeClickable(element(by.css('.RadioButton'))), 20000).then(a => {
+        if(QuoteType == 'SpotRate'){
+          QuoteTypeBtn = element(by.id('AdhocRadio0'));
+  
+        }
+        else{
+          QuoteTypeBtn = element(by.id('RoutingRadio0'));
+        }
+        browser.executeScript("arguments[0].click();", QuoteTypeBtn.getWebElement());
+      });
+  }
+
   SelectDicrctionTransportMode( Direction: string, TransportMode: string, ShipmentType: string) {
     var directionBtn: any;
     var transportModeBtn: any;
