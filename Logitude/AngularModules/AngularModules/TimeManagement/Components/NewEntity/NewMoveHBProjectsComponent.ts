@@ -32,8 +32,8 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
     }
 
     SetUIProperties() {
-        this.UIProperties.SetRequired("FromProject", null, this.FromProject == null);
-        this.UIProperties.SetRequired("ToProject", null, this.ToProject == null);
+       this.UIProperties.SetRequired("FromProject", null, this.FromProject == null);
+       this.UIProperties.SetRequired("ToProject", null, this.ToProject == null);
     }
 
     private userId: string;
@@ -74,7 +74,7 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
     set FromDate(value: Date) {
         if (this.fromDate != value) {
             this.fromDate = value;
-            this.SetUIProperties();
+      
         }
     }
 
@@ -85,7 +85,7 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
     set ToDate(value: Date) {
         if (this.toDate != value) {
             this.toDate = value;
-            this.SetUIProperties();
+           
         }
     }
 
@@ -94,7 +94,7 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-  //  private batchEntity: BatchTaskExecutionPM;
+  private batchEntity: BatchTaskExecutionPM;
     public IsResponseProgressVisible: boolean = false;
     MoveHoursClicked() {
 
@@ -106,26 +106,30 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
             errors.push("To Project field is required");
         }
         if (this.FromProject == this.ToProject) {
-            errors.push("Can't Move Hours: From Project and To Project Are The Same");
+            errors.push("Can't Move Hours: From Project, To Project Are The Same");
+        }
+        if (this.FromDate > this.ToDate) {
+            errors.push("From Date cannot be greater than To Date");
         }
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
             this.Retries = 0;
-            this.myService.GetTMProjectsByBatchTask(this.UserId, this.FromDate, this.ToDate).subscribe((myResponse: ServiceResponse) => {
-
+            ////////////
+            this.myService.GetTMProjectsByBatchProject(this.UserId, this.FromProject, this.ToProject, this.FromDate, this.ToDate).subscribe((myResponse: ServiceResponse) => {
+           ////////////////
                 if (myResponse.HasError) {
                     this.StopTimer();
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
 
                 else {
-                  //  this.batchEntity = myResponse.Result;
+                    this.batchEntity = myResponse.Result;
 
-                    //if (this.batchEntity != null) {
-                    //    this.IsResponseProgressVisible = true;
-                    //    this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
-                    //}
+                    if (this.batchEntity != null) {
+                        this.IsResponseProgressVisible = true;
+                        this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
+                    }
                 }
             });
         }
@@ -167,7 +171,7 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
     }
     private RunTimerFunction() {
         this.Retries++;
-        //this.MoveHours();
+        this.MoveHours();
 
     }
     public StopTimer() {
@@ -180,37 +184,37 @@ export class NewMoveHBProjectsComponent extends BaseComponent implements OnDestr
         this.StopTimer();
     }
 
-    //private bteList: BatchTaskExecutionList;
-    //MoveHours() {
-    //    var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-    //    batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe((myResponse: ServiceResponse) => {
+    private bteList: BatchTaskExecutionList;
+    MoveHours() {
+        var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe((myResponse: ServiceResponse) => {
 
-    //        if (myResponse.HasError) {
-    //            this.StopTimer();
-    //            this.ValidationErrorsList = myResponse.ErrorsArray;
-    //        }
+            if (myResponse.HasError) {
+                this.StopTimer();
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
 
-    //        else {
-    //            this.bteList = myResponse.Result;
+            else {
+                this.bteList = myResponse.Result;
 
-    //            if (this.bteList.StatusCode == "D") // D- Done
-    //            {
-    //                this.StopTimer();
-    //                var window: MessageWindow = new MessageWindow();
-    //                window.Show("Moving Hours Between Projects Completed Succesfully");
-    //            }
+                if (this.bteList.StatusCode == "D") // D- Done
+                {
+                    this.StopTimer();
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("Moving Hours Between Projects Completed Succesfully");
+                }
 
-    //            else if (this.bteList.StatusCode == "F") // F- Failed
-    //            {
-    //                this.StopTimer();
-    //                var window: MessageWindow = new MessageWindow();
-    //                window.Show("Faild: " + this.bteList.ErrorLog);
-    //            }
+                else if (this.bteList.StatusCode == "F") // F- Failed
+                {
+                    this.StopTimer();
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("Faild: " + this.bteList.ErrorLog);
+                }
 
-    //            this.AdjustTimerSpeed();
-    //        }
-    //    });
-    //}
+                this.AdjustTimerSpeed();
+            }
+        });
+    }
 
     CloseResponseProgressClicked() {
         this.StopTimer();

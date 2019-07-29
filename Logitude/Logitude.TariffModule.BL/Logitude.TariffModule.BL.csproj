@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="CloseTables\DetailsClassesGenerated\TariffTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TariffTypeStruct.Generated.cs" />
+    <Compile Include="DataContracts\SurchargeSummary.cs" />
     <Compile Include="DataContracts\TariffSearchSummary.cs" />
     <Compile Include="DataContracts\TariffsSummary.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffDataMapping.Generated.cs" />

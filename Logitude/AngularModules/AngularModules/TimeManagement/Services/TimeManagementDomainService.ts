@@ -84,7 +84,23 @@ export class TimeManagementDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+    /////////////////////////////////////////////////////////////////////////////////////
+    GetTMProjectsByBatchProject(employeeUserId: string , fromProject: string, toProject: string, fromDate: Date, toDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetTMProjectsByBatchProject?employeeUserId=' + employeeUserId + "&fromProject=" + fromProject + "&toProject=" + toProject +"&fromDate=" + ServiceHelper.GetDateString(fromDate) +"&toDate=" + ServiceHelper.GetDateString(toDate);
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
+                var myResponse = new ServiceResponse();
+                myResponse.Result = listJason;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
+
+    ///////////////////////////////////////////////////////////////////////////////////
     GetNewTMProjectConnect(MainId: string, ConnectedId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

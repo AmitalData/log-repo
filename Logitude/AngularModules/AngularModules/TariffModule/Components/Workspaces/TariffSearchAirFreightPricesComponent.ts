@@ -4,7 +4,7 @@ import { BaseComponent } from '../../../Infrastructure/Components/LogitudeCompon
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { TariffDomainService } from '../../../TariffModule/Services/TariffDomainService';
+import { TariffDomainService, SurchargeSummary, TariffSummery } from '../../../TariffModule/Services/TariffDomainService';
 import { TariffSearchSummary } from '../../../TariffModule/Services/TariffDomainService';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
@@ -109,8 +109,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (this.weightCode != value) {
             this.weightCode = value;
           //  this.ComputeChargeableWeight_Kg();
-           // this.ComputeVolume();
+            this.ComputeVolume();
             this.ComputeVolumetricWeight();
+            this.SetUIProperties();
+
        }
     }
 
@@ -123,6 +125,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.grossWeightCode = value;
             this.ComputeVolume();
             this.ComputeVolumetricWeight();
+            this.SetUIProperties();
+
         }
     }
 
@@ -137,6 +141,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.volumeUnitCode = value;
             this.ComputeVolume();
             this.ComputeVolumetricWeight();
+            this.SetUIProperties();
+
         }
     }
 
@@ -168,9 +174,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
 
     private ComputeVolumetricWeight() {
-        this.Volume = AppTool.ComputePackageVolume(null, null, null, null, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
+        //this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
 
-        this.Weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
+        this.weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
     }
 
 
@@ -178,12 +184,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     private chargeableWeight: number;
     get ChargeableWeight() {
-        return this.weight;
+        return this.chargeableWeight;
     }
     set ChargeableWeight(value: number) {
         if (this.chargeableWeight != value) {
             this.chargeableWeight = value;
-            this.SetUIProperties();
         }
     }
 
@@ -196,6 +201,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set Weight(value: number) {
         if (this.weight != value) {
             this.weight = value;
+            this.ChargeableWeight = value;
             this.SetUIProperties();
         }
     }
@@ -208,6 +214,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (this.volume != value) {
             this.volume = value;
             this.ComputeVolumetricWeight();
+            this.SetUIProperties();
+
         }
     }
 
@@ -220,13 +228,17 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (this.grossWeight != value) {
             this.grossWeight = value;
             this.ComputeVolumetricWeight();
+            this.SetUIProperties();
+
         }
     }
 
     private ComputeVolume() {
+        this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
+    }
 
-
-        this.Volume = AppTool.ComputePackageVolume(null, null, null, null, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
+    ShowTariffclicked(item: TariffSearchSummary) {
+        item.IsShown = !item.IsShown;
     }
 
     SearchButtonClicked() {

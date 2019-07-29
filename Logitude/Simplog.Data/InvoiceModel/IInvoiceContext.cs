@@ -53,7 +53,8 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<ARInvoiceStocksStatus> ARInvoiceStocksStatus { get; }
         IDbSet<ARInvoiceStock> ARInvoiceStocks { get; }
         IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; }
-
+        IDbSet<ARPaymentChequeReplica> ARPaymentChequeReplicas { get; }
+        IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas { get; }
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

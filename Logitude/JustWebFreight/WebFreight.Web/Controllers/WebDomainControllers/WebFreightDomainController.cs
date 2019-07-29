@@ -4,7 +4,11 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -322,6 +326,61 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.OK, ObjectTableName + DateTime.Now.ToShortDateString());
             }
 
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PutExportBIReportToExcelByWR(BIReportXMLData bIReportXMLData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                BIReportsExecutionLogRepository reportExecutionLogRepository = new BIReportsExecutionLogRepository(tenant);
+                BIReportsExecutionLog bIReportExecutionLog = new BIReportsExecutionLog()
+                {
+                    Id = IdCounter.GetNumber("BIReportsExecutionLog", tenant),
+                    CreateDate = DateTime.Now,
+                    CreatedByUserId = bIReportXMLData.UserId,
+                    ReportFilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(bIReportXMLData),
+                    Tenant = tenant,
+                    StatusCode = "W",
+                    BIReportId = bIReportXMLData.BIReportId,
+                };
+                reportExecutionLogRepository.Add(bIReportExecutionLog);
+                reportExecutionLogRepository.SubmitChanges();
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("BIReportsExecutionLogQueue", bIReportExecutionLog.Tenant);
+                queueservice.Send(new Dictionary<string, string>() {
+                    { "BIReportExecutionLogId", bIReportExecutionLog.Id },
+                    { "Tenant", bIReportExecutionLog.Tenant.ToString() }
+                }, null, null, null, null);
+
+                return Request.CreateResponse(HttpStatusCode.OK, bIReportXMLData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetBIReportLogStatus(string reportId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                BIReportsExecutionLogRepository reportExecutionLogRepository = new BIReportsExecutionLogRepository(authToken.Tenant);
+                BIReportsExecutionLog reportExecutionLog = reportExecutionLogRepository.GetSingleByBIReportId(reportId, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLog);
+            }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

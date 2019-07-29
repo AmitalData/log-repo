@@ -227,7 +227,7 @@ export class WebFreightDomainService {
                 QueryData.DWQueryData = temp;
                 var temp2 = this.deepClone(QueryData);
                 /////////////////////////////////////////////////////
-                return this._http.put(this._apiUrl + "/PutExportBIReportToExcel", JSON.stringify(temp2),
+                return this._http.put(this._apiUrl + "/PutExportBIReportToExcelByWR", JSON.stringify(temp2),
                     { headers: authHeader }).map((res) => {
                         var entity = res.json();
                         var serviceResponse: ServiceResponse;
@@ -242,6 +242,19 @@ export class WebFreightDomainService {
             }
         }
         );
+    }
+    GetBIReportLogStatus(reportId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetBIReportLogStatus?reportId=' + reportId;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var report = response.json();
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = report;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
     }
 
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: BIReportPM = null) {

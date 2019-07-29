@@ -9,6 +9,7 @@ using Logitude.Accounting.Data.Repositories;
 using System.Reflection;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -322,29 +323,39 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
 
 
-        public GenericCallBack GetReconciliationFilterCallBack(QueryOperations queryOperations, string AccountId,  int tenant, bool getOpenReconciliations = true) {
+        public GenericCallBack GetReconciliationFilterCallBack(QueryOperations queryOperations, string AccountId,  int tenant, bool getOpenReconciliations = true)
+        {
 
             IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
 
-            const int MaxTotal=99001;
+            const int MaxTotal = 99001;
 
-            if(getOpenReconciliations == true)
+            if (getOpenReconciliations == true)
                 query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
             else
                 query2 = ReconciliationFilter(AccountId, query2);
-            
 
-        var callback11 =
-                (from r in query2
-                 group r by 1 into gb
-                 select new
-                 {
-                     TotalRecord = gb.Count(),
-                     MaxCreateDate = gb.Max(r => r.CreateDate)//.ToString("yyyy-MM-dd hh:mm:ss")
-                 })
-             .FirstOrDefault() ?? new { TotalRecord = 0,
-                     MaxCreateDate = DateTime.MinValue}
-             ;
+            GenericCallBack myGenericCallBack = GetGenericCallback(query2, MaxTotal);
+            return myGenericCallBack;
+        }
+
+        private static GenericCallBack GetGenericCallback(IQueryable<LedgerTransactionList> query2, int MaxTotal)
+        {
+            var callback11 =
+                            (from r in query2
+                             group r by 1 into gb
+                             select new
+                             {
+                                 TotalRecord = gb.Count(),
+                                 MaxCreateDate = gb.Max(r => r.CreateDate)//.ToString("yyyy-MM-dd hh:mm:ss")
+                             })
+                         .FirstOrDefault() ?? new
+                         {
+                             TotalRecord = 0,
+                             MaxCreateDate = DateTime.MinValue
+                         }
+                         ;
+
             var myGenericCallBack = new GenericCallBack();
             myGenericCallBack.MaxFieldName = "CreateDate";
             myGenericCallBack.TotalRecord = callback11.TotalRecord;
@@ -353,13 +364,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 //.ToString("MM/dd/yyyy hh:mm:ss.fff tt");                        
                 //.ToString("g");                        
                 .ToString("o");   //                     
-         
+
             if (callback11.TotalRecord > MaxTotal)
             {
                 myGenericCallBack.TotalRecord = MaxTotal;
                 myGenericCallBack.IsPartial = true;
 
             }
+
             return myGenericCallBack;
         }
 
@@ -480,7 +492,41 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             query2 = query2
                 .Skip(skipped)
                 .Take(queryOperations.PageSize);
+
             var mylist = query2.ToList();
+
+            return mylist;
+        }
+
+        public List<LedgerTransactionList> GetReconciliationFilterListForTransferGLAccount(QueryOperations queryOperations, GenericCallBack callback, string AccountId, int tenant)
+        {
+            IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+
+            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+            query2 = query2
+                .Where(rec =>
+                rec.AccountId == AccountId
+            && (rec.SourceTypeCode == "5" || rec.SourceTypeCode == "9")
+            && rec.DueDate <= _today
+            && rec.IsExternalReconcile == false
+            && rec.OpenAmount == (rec.LocalAmountCredit + rec.LocalAmountDebit)
+            )
+                .OrderBy(rec => rec.AccountingDate);
+
+            DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
+            query2 = query2
+                .Where(rec => rec.CreateDate <= maxCreateDate)
+                .Take(callback.TotalRecord);
+
+            var skipped = (queryOperations.PageIndex - 1);// * queryOperations.PageSize;
+
+            query2 = query2
+                .Skip(skipped)
+                .Take(queryOperations.PageSize);
+
+            var mylist = query2.ToList();
+
             return mylist;
         }
 

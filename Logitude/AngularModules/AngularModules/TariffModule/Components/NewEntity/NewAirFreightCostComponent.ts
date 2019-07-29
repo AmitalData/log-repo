@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import { TariffPM } from '../../EntityPMs/TariffPM';
 import { TariffPMService } from '../../Services/StandardPMs/TariffPMService';
@@ -10,6 +10,10 @@ import { ChargesTypeListService } from '../../../Common/Services/StandardLists/C
 import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator'
 import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { TariffSettingPM } from '../../../TariffModule/EntityPMs/TariffSettingPM';
+import { TariffDomainService } from '../../../TariffModule/Services/TariffDomainService';
+
 
 @Component({
     selector: 'NewAirFreightCostComponent',
@@ -17,7 +21,7 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
     templateUrl: './NewAirFreightCostComponent.html',
 })
 
-export class NewAirFreightCostComponent extends BaseComponent {
+export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext = this;
     public ObjectTableName = "Tariff";
@@ -29,12 +33,18 @@ export class NewAirFreightCostComponent extends BaseComponent {
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
     private myService: TariffPMService;
+    public PriceSteps: string;
+
     constructor() {
         super();
         this.myService = new TariffPMService();
         this.chargesTypePMService = new ChargesTypeListService();        
         this.EntityPM = this.myService.GetNewEntityPM();
         this.FillChargesIDsAndUOMS();        
+    }
+
+    ngOnInit() {
+        this.GetTenantTariffSetting();
     }
 
     SetWindowArgs(args) {
@@ -60,7 +70,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
         this.UIProperties.SetVisibility("ExpirationDate", this.ObjectTableName, isDatesVisible);
 
         this.UIProperties.SetRequired("StartDate", this.ObjectTableName, this.StartDate == null)
-        this.UIProperties.SetRequired("ExpirationDate", this.ObjectTableName, this.ExpirationDate == null)
+        this.UIProperties.SetRequired("ExpirationDate", this.ObjectTableName, false);
     }
 
     FillChargesIDsAndUOMS() {
@@ -546,9 +556,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
                 this.ValidationErrorsList.push("Satrt Date Field is Required");            
             }
 
-            if (this.ExpirationDate == null) {
-                this.ValidationErrorsList.push("Expiration Date Field is Required");
-            }
+            //if (this.ExpirationDate == null) {
+            //    this.ValidationErrorsList.push("Expiration Date Field is Required");
+            //}
 
             if (this.StartDate != null && this.ExpirationDate != null) {
                 if (this.ExpirationDate < this.StartDate) {
@@ -578,5 +588,29 @@ export class NewAirFreightCostComponent extends BaseComponent {
                 }
             });
         }
+    }
+
+    GetTenantTariffSetting() {
+        var myDomainService = new TariffDomainService();
+        myDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var entity: TariffSettingPM = myResponse.Result;
+                this.PriceSteps = entity.DefaultPriceSteps;
+            }
+        });
+    }
+
+    EditPriceSteps() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Price Steps";
+        logWindow.WindowArgs = this.PriceSteps;
+        logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                var steps = s.DefaultPriceSteps;
+                this.EntityPM.PriceSteps = steps;
+                this.PriceSteps = steps;
+            });
+        });
     }
 }

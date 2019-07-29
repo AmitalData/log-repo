@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr>
         <td>
@@ -402,10 +402,14 @@
                                         <table>
                                             <tr style="height:30px;">
                                                 <td style="font-size:14px; color:#1B90CB;">Master</td>
+
+                                                <td style="width:140px;">
+                                                    <button *ngIf="IsNewMasterVisible" class="Button" (click)="NewMasterButtonClicked()">{{'Shipment.B.Master.NewMaster' | TextCodeTranslationPipe}}</button>
+                                                </td>
                                             </tr>
 
                                             <tr>
-                                                <td>
+                                                <td colspan="2">
                                                     <div class="MediaFill">
                                                         <div class="SimpleGridView">
                                                             <div class="SimpleGridViewHeader">

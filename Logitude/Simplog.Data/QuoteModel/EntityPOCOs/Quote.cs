@@ -91,6 +91,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool IsDangerous { get; set; }
         public int? ExpirationDays { get; set; }
         public DateTime? ExpirationDate { get; set; }
+        public DateTime? StartDate { get; set; }
         public bool IsFreightBySteps { get; set; }
         public string DepartmentId { get; set; }
         public string BranchId { get; set; }

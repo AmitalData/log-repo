@@ -118,7 +118,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  10,
 			      				    NewWizardControlName =  "Simplog.FreightLib.NewCustomerCommand",
-			      				    LocalDefaultText =  "לקוח",
 			      				    DefaultText =  "Customer",
 			      				    Code =  "CLNT",
 			      				    Name =  "Customers",
@@ -134,6 +133,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  true,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Customer,Customers,Simplog.FreightLib.NewCustomerCommand,Id,",
+			      				    CodeField =  "Code",
+			      				    NameField =  "EnglishName",
+			      				    LocalDefaultText =  "לקוח",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
