@@ -444,7 +444,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.IsSendDocumentEnabled = false;
             }
         }
-        /// document varification 
+        /// document varification
         if (this.CustomsDocumentsTicket) {
             if (this.CustomsDocumentsTicket.VerificationStatusTypeCode == '4' || this.CustomsDocumentsTicket.VerificationStatusTypeCode == '5') {
                 this.IsEditEnabled = false;

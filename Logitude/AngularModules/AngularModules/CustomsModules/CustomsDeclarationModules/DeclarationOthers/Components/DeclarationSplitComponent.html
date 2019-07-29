@@ -366,25 +366,31 @@
 
             <div *ngIf="IsNoDocumentSelected" class="NoDocumentSelected">בחר מסמך מרשימת המסמכים</div>
 
-            <!--In case the document has no TIF file display a message - “Document wasn't converted to TIF” (המסמך הנ”ל לא הומר ל TIF - יש לשנות את הגדרות הספריה בניהול המסמכים)-->
+            <!--In case the document has no TIF file display a message - “Document wasn't converted to TIF” (המסמך הנ”ל לא הומר ל TIF - יש לשנות את הגדרות הספריה בניהול המסמכים)  "ImgScaleValue + ' ' + ImgRotationValue"-->
             <div *ngIf="!IsNoDocumentSelected &&  this.base64Image==null " style="display: inline-block;color:#ff8025;white-space: pre-line;" class="NoDocumentSelected">
                 מסמך זה לא הומר ל TIF
                 אנא בדוק הגדרות הספריה בתיוק
             </div>
 
-            <!--<img *ngIf="!IsNoDocumentSelected &&  this.base64Image!=null " style="width: 100%;" class="grabbable"
+            <div
+            [style.transform]="ImgScaleValue"
+            [style.transform-origin]="'top right'"
 
-                 (mousemove)="OnMouseMove($event)"
-                 (mousedown)="OnMouseDown($event)"
-                 (mouseup)="OnMouseUp($event)"
-                 [attr.src]="base64Image" alt=""
-                 [style.transform]="ImgScaleValue"
-                 [style.transform-origin]="ImgTransformOriginValue"
-                 draggable="false" />-->
+            >
+
+                <img *ngIf="!IsNoDocumentSelected &&  this.base64Image!=null " style="width: 100%;" class="grabbable"
+
+                (mousemove)="OnMouseMove($event)"
+                (mousedown)="OnMouseDown($event)"
+                (mouseup)="OnMouseUp($event)"
+                [attr.src]="base64Image" alt=""
+
+                draggable="false" />
+            </div>
 
 
 
-            <div id="cont"
+            <!-- <div id="cont"
                  style="width: 100%; transform-origin: right top;"
                  class="grabbable"
                  [style.transform]="ImgScaleValue"
@@ -393,7 +399,7 @@
                  (mouseup)="OnMouseUp($event)"
                  draggable="false">
                 <canvas id="canvas" style="width: 100% !important;" class="grabbable"></canvas>
-            </div>
+            </div> -->
 
 
         </div>

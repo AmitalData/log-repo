@@ -12,6 +12,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -79,8 +80,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.ProceduralFaultStatusName); 
             this.CustomMappedPMProperties.Add(PMPropertyNames.RansomViolationTypeName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ProceduralFaultName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.SignedByUserName);
 
-           
 
             if (entityPOCO.InputTypeCode != null)
             {
@@ -128,6 +129,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 ProceduralFaultTypeQueryService proceduralFaultTypeQueryService = new ProceduralFaultTypeQueryService(entityPOCO.Tenant);
                 ProceduralFaultTypePM proceduralFaultType = proceduralFaultTypeQueryService.GetSingle(entityPOCO.ProceduralFaultCode, false, true);
                 entityPM.ProceduralFaultName = proceduralFaultType != null ? proceduralFaultType.LocalName : null;
+
+            }
+
+            if (entityPOCO.SignedByUserId != null)
+            {
+                Simplog.Data.CommonDataModel.Repositories.UserRepository userRep = new Simplog.Data.CommonDataModel.Repositories.UserRepository(entityPM.Tenant);
+                User user = userRep.GetSingleUser(entityPM.SignedByUserId, entityPM.Tenant);
+                if (user != null)
+                {
+                    entityPM.SignedByUserName = user.Contact.LocalName != null ? user.Contact.LocalName : user.Contact.EnglishName;
+                }
 
             }
 

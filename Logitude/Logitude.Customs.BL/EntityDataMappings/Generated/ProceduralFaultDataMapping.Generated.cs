@@ -44,7 +44,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsCancelled, 
 	         CancellationDate, 
 	         SearchFields, 
-	         DeclarationId,
+	         DeclarationId, 
+	         SignedByUserId,
 	      }
 
 
@@ -82,7 +83,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RansomViolationTypeName, 
 	         CustomFileNo, 
 	         CustomerName, 
-	         DeclarationNumber,
+	         DeclarationNumber, 
+	         SignedByUserId, 
+	         SignedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -199,6 +202,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
             {
 				entityPOCO.DeclarationId = entityPM.DeclarationId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SignedByUserId))
+            {
+				entityPOCO.SignedByUserId = entityPM.SignedByUserId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -322,6 +330,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DeclarationId = entityPOCO.DeclarationId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SignedByUserId))
+            {
+					entityPM.SignedByUserId = entityPOCO.SignedByUserId;
+            }
+
 		}
 
 		public void PMToOldPM(ProceduralFaultPM entityPM, ProceduralFaultPM oldEntityPM)
@@ -436,6 +449,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
             {
                 oldEntityPM.DeclarationId = entityPM.DeclarationId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SignedByUserId))
+            {
+                oldEntityPM.SignedByUserId = entityPM.SignedByUserId;
             }
 			
 		}
