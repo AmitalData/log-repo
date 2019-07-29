@@ -143,12 +143,12 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             });
         }
 
-        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-            if (s == "RefreshConnections") {
-                this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                this.LoadData();
-            }
-        });
+        //this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            //if (s == "RefreshConnections") {
+            //    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+            //    this.LoadData();
+            //}
+        //});
     }
 
     ngOnDestroy() {
@@ -238,6 +238,19 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: item.EntityId, ObjectTableName: item.ObjectTableName, BackButtonLabel: myBackButtonLabel, EntityParentPM: this.EntityPM });
+
+                let isEditComponentSaved = false;
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (isEditComponentSaved) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
+                });
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
             });
     }
 
