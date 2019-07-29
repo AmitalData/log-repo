@@ -169,7 +169,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 
         public static void BuildJournals(int tenant, List<JournalPM> JournalInput)
         {
-            using (var scope = TransactionFactory.GetTransaction())
+            using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(2)))
             {
                 foreach (var entityPM in JournalInput)
                 {

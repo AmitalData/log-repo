@@ -22,7 +22,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
             {
                 throw new Exception("tenant!= 1148");
             }
-            using (var scope = TransactionFactory.GetTransaction())
+            using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(5)))
             {
 
 
