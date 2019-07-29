@@ -325,7 +325,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var vehicleAttachmentList = new List<string>();
             var customsDocumentQueryService = new CustomsDocumentQueryService(_CustomContext);
 
-            //Get Claims Attachments
+            //Get Vehicle Attachments
             var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = this._MyVehicle.Id, ParentEntityCode = "Vehicle" }, this._MyVehicle.Tenant);
             int counter = 1;
             foreach (CustomsDocumentPM customsDocumentPM in customsDocumentPMList)

@@ -348,6 +348,10 @@
     <Compile Include="Migrations\201905290826398_fuuscreenabdullah.Designer.cs">
       <DependentUpon>201905290826398_fuuscreenabdullah.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907221201353_AddMigrationDeficitDecision.cs" />
+    <Compile Include="Migrations\201907221201353_AddMigrationDeficitDecision.Designer.cs">
+      <DependentUpon>201907221201353_AddMigrationDeficitDecision.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -595,6 +599,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907070654471_AddMigrationClaimRERequestType.resx">
       <DependentUpon>201907070654471_AddMigrationClaimRERequestType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907221201353_AddMigrationDeficitDecision.resx">
+      <DependentUpon>201907221201353_AddMigrationDeficitDecision.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -160,6 +160,22 @@ export class VehicleExtendedPMService {
         });
     }
 
+    GetIsVehicleAttachmentNumberIsMoreThenAllow(vehicleId: string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetIsVehicleAttachmentNumberIsMoreThenAllow/?' + '&vehicleId=' + vehicleId, { headers: authHeader }).map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                var pm = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = pm;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
     MapJsonToEntityPM(jsonPM: any) {
 

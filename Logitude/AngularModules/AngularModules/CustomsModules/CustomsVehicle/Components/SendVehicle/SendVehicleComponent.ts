@@ -1,31 +1,21 @@
-﻿declare var window: any;
+declare var window: any;
 declare var System: any;
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM'
-import { MenuButtonPM } from '../../../../Infrastructure/EntityPMs/MenuButtonPM'
-import { MenuButtonGroupPM } from '../../../../Infrastructure/EntityPMs/MenuButtonGroupPM'
-import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator'
-import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper'
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools'
-
-
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-
-import { Validator } from '../../../../Infrastructure/Validators/Validator';
-import { GenericRequestParams } from                '../../../../Customs/DataContract/RequestParams/GenericRequestParams';
 import { UpdateDeleteVehicleRequestParams } from    '../../../../Customs/DataContract/RequestParams/UpdateDeleteVehicleRequestParams';
 import { SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ClientSearchResponseData } from '../../../../Customs/DataContract/ResponseData/ClientSearchResponseData';
 import { EntityPMService } from     '../../../../Infrastructure/Services/EntityPMService';
-
-import { AmitalGatewayUtil } from   '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
-import { UnifreightController } from '../../../../Customs/Controller/UnifreightController';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { VehiclePM } from '../../../../Customs/EntityPMs/VehiclePM';
+import { VehicleExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/VehicleExtendedPMService';
+
 @Component({
     moduleId: module.id,
     selector: 'SendVehicleComponent', 
@@ -35,7 +25,6 @@ import { VehiclePM } from '../../../../Customs/EntityPMs/VehiclePM';
 export class SendVehicleComponent {
 
     //-----------------Properties----------------------------//
-    
     ObjectTable: ObjectTablePM;
     ValidationErrors: string[];
     EntityPM: VehiclePM;
@@ -44,24 +33,27 @@ export class SendVehicleComponent {
     ForcePersonalSign: boolean;
     Option: string;
     ResponseData: ClientSearchResponseData;
+    _VehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();ehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();
     //------------------------------------------------------//
+
     ObjectTableName = "Customs.Vehicle";
     constructor(private entityPMService: EntityPMService) {
 
     }
+
     Run(args: any) {
         this.EntityPM = args.EntityPM;
         this.ObjectTable = args.ObjectTable;
         
-        
-        
     }
+
     OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
         this.RequestVIA = customSendOptionsArgs.RequestVIA;
         this.Option = customSendOptionsArgs.Option;
         this.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
+        this.ValidationErrors = [];
 
-        SendVehicleComponent.SaveEntityChanges(customSendOptionsArgs, this.EntityPM,false);
+        this.PostSendVehicleAndPrecalculations(customSendOptionsArgs);
     }
 
     public static SaveEntityChanges(customSendOptionsArgs, EntityPM: VehiclePM, isDelete: boolean) {
@@ -108,8 +100,6 @@ export class SendVehicleComponent {
                             currRequestParams.VehicleId = EntityPM.Id;
                             currRequestParams.IsDelete = isDelete;
 
-
-
                             CustomMessageProgressComponent
                                 .ShowProgressBar(currRequestParams.PBId,
                                 "שליחת מסר עדכון פרטי רכב", false)
@@ -148,7 +138,37 @@ export class SendVehicleComponent {
 
     }
 
-   
+    FillValidationErrors() {
+        var windowArgs: any = {};
+        windowArgs.Errors = this.ValidationErrors;
+        windowArgs.ComponentHeight = '328px';
+        var windowTitle = TextCodeTranslator.Translate("Customs.General.O.PreSendValidations");;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
+        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
+    }
+
+    OnAddEditWindowClosed(event) {
+        this.ValidationErrors = [];
+    }
+
+    PostSendVehicleAndPrecalculations(customSendOptionsArgs) {
+        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this._VehicleExtendedPMService.GetIsVehicleAttachmentNumberIsMoreThenAllow(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            if (!AppTool.IsNullOrEmpty(response.Result) && response.Result == true) {
+                SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                this.ValidationErrors.push("לא ניתן לשלוח ריכבית עם מעל 5 מסמכים ");
+                this.FillValidationErrors();
+                return;
+            }
+            SendVehicleComponent.SaveEntityChanges(customSendOptionsArgs, this.EntityPM, false);
+        });
+    }
  
 
 }
