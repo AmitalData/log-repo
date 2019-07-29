@@ -21,7 +21,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                     where paymentIds.Contains(a.PaymentId) && a.Tenant == tenant && a.StatusCode != "6" && a.StatusCode != "5"
                                                     select a).ToList();
 
-            return paymentCheques.Select(r => this.GetEntityPM(r)).ToList();
+            return (from a in paymentCheques
+                    select new ARPaymentChequePM()
+                    {
+                        Id =a.Id,
+                        Tenant = a.Tenant,
+                        StatusCode = a.StatusCode ,
+                        LocalAmount = a.LocalAmount ,
+                        ValueDate = a.ValueDate,
+                    }).ToList();
 
 
         }

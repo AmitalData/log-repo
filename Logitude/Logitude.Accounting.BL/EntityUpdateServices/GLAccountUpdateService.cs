@@ -1027,7 +1027,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         UserId = contact.Id,
                         ObjectTableName = "GLAccount",
                         IsAddedManually = false,
-                        EventTypeCode = "UBLK",
+                        EventTypeCode = "GLRC",
                         
                     });
 

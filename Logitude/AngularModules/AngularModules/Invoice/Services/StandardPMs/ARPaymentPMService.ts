@@ -429,7 +429,7 @@ export class ARPaymentPMService {
 			 
             if (mapParent) {
                 newARPaymentChequeReplicaPM.UniqueKey = Guid.newGuid();
-                newARPaymentChequeReplicaPM.ChangeSetOp = "None";
+               // newARPaymentChequeReplicaPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newARPaymentChequeReplicaPM.OldEntityPM = this.clone(newARPaymentChequeReplicaPM);
 
@@ -438,11 +438,11 @@ export class ARPaymentPMService {
             else {
                 if (newARPaymentChequeReplicaPM.UniqueKey) {
 
-                    if (jItem.IsDirty)
-                        newARPaymentChequeReplicaPM.ChangeSetOp = "Update";
+                    if (jItem.IsDirty) { }
+                      //  newARPaymentChequeReplicaPM.ChangeSetOp = "Update";
                 }
                 else {
-                        newARPaymentChequeReplicaPM.ChangeSetOp = "Insert";
+                       // newARPaymentChequeReplicaPM.ChangeSetOp = "Insert";
                 }
  
                 newARPaymentChequeReplicaPM.OldEntityPM = null;
@@ -475,7 +475,7 @@ export class ARPaymentPMService {
 
                       
                         deletedPM.IsDirty = false;
-                        deletedPM.ChangeSetOp = "Delete";
+                       // deletedPM.ChangeSetOp = "Delete";
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.ARPaymentChequeReplicas.push(deletedPM);
