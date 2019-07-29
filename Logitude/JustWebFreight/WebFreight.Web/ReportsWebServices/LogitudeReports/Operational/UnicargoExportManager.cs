@@ -507,18 +507,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         }
 
                     }
-
-
-                    if (!string.IsNullOrEmpty(MasterData.MainCarriageToPortId))
-                    {
-
-                        PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.MainCarriageToPortId, true);
-                        if (myPort != null)
-                        {
-                            Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
-                        }
-
-                    }
+           
 
 
                     if (!string.IsNullOrEmpty(MasterData.MainCarriageCarrierId))
@@ -705,21 +694,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
                 else
                 {
-                    Shipment.Transshipment1ETD = MasterData.Transshipment1ETD != null ? MasterData.Transshipment1ETD : (MasterShipment != null ? MasterShipment.Transshipment1ETD : null);
-                    Shipment.Transshipment1ETA = MasterData.Transshipment1ETA != null ? MasterData.Transshipment1ETA : (MasterShipment != null ? MasterShipment.Transshipment1ETA : null);
-                    Shipment.Transshipment1ATD = MasterData.Transshipment1ATD != null ? MasterData.Transshipment1ATD : (MasterShipment != null ? MasterShipment.Transshipment1ATD : null);
-                    Shipment.Transshipment1ATA = MasterData.Transshipment1ATA != null ? MasterData.Transshipment1ATA : (MasterShipment != null ? MasterShipment.Transshipment1ATA : null);
 
-                    Shipment.MainCarriageLeg1ETD = MasterData.MainCarriageETD != null ? MasterData.MainCarriageETD : (MasterShipment != null ? MasterShipment.MainCarriageETD : null);
-
-                    Shipment.MainCarriageLeg1ETA = MasterData.MainCarriageETA != null ? MasterData.MainCarriageETA : (MasterShipment != null ? MasterShipment.MainCarriageETA : null);
-
-                    Shipment.MainCarriageLeg1ATD = MasterData.MainCarriageATD != null ? MasterData.MainCarriageATD : (MasterShipment != null ? MasterShipment.MainCarriageATD : null);
-
-                    Shipment.MainCarriageLeg1ATA = MasterData.MainCarriageATA != null ? MasterData.MainCarriageATA : (MasterShipment != null ? MasterShipment.MainCarriageATA : null);
-
-
-
+                    Shipment.Transshipment1ETD =MasterShipment != null ? MasterShipment.Transshipment1ETD : null;
+                    Shipment.Transshipment1ETA = MasterShipment != null ? MasterShipment.Transshipment1ETA : null;
+                    Shipment.Transshipment1ATD = MasterShipment != null ? MasterShipment.Transshipment1ATD : null;
+                    Shipment.Transshipment1ATA =MasterShipment != null ? MasterShipment.Transshipment1ATA : null;
+                    Shipment.MainCarriageLeg1ETD =MasterShipment != null ? MasterShipment.MainCarriageETD : null;
+                    Shipment.MainCarriageLeg1ETA =MasterShipment != null ? MasterShipment.MainCarriageETA : null;
+                    Shipment.MainCarriageLeg1ATD = MasterShipment != null ? MasterShipment.MainCarriageATD : null;
+                    Shipment.MainCarriageLeg1ATA = MasterShipment != null ? MasterShipment.MainCarriageATA : null;
+                    
                 }
 
 
