@@ -125,6 +125,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             ARInvoicePaymentQuery entityQuery = new ARInvoicePaymentQuery(entityRepository);
             payment.PaymentInvoices = entityQuery.GetARPaymentInvoicePMsForPayment(payment.Id, tenant);
 
+            payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
             GetGLAccountFields(payment);
 
             ARPaymentPM securedPM = new ARPaymentPM();
@@ -132,6 +133,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
+        }
+
+        private List<ARPaymentChequeReplicaPM> GetARPaymentChequeReplicasByPaymentId(string paymentid, int tenant)
+        {
+            ARPaymentChequeReplicaQuery aRPaymentChequeReplicaQuery = new ARPaymentChequeReplicaQuery(tenant);
+            return aRPaymentChequeReplicaQuery.GetARPaymentChequeReplicaPMsByPaymentId(paymentid, tenant);
         }
 
         void GetGLAccountFields(ARPaymentPM paymentPM)

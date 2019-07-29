@@ -20,6 +20,8 @@ export class FreightChargesTabComponent extends BaseComponent {
     public DataContext: FreightChargesTabComponent = this;
     public ObjectTableName: string;
     public LabelColumnWidth: number = 150;
+    public IsKRateClass: boolean = false;
+
     constructor() {
         super();
     }
@@ -32,6 +34,7 @@ export class FreightChargesTabComponent extends BaseComponent {
         this.Listen();
         this.Validate();
         this.SetUIProperties();
+        this.CheckKRateClassCode();
     }
 
     RefreshTab() {
@@ -67,6 +70,7 @@ export class FreightChargesTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("AsAgreedFreight", this.ObjectTableName, this.IsEditingEnabled);                
         this.UIProperties.SetEnabled("RateClassCode", this.ObjectTableName, !this.EntityPM.IsMultipleCommodities && this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ChargeableWeight", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ChargeableWeightInKG", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("AWBFreightAmountPrepaid", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("AWBFreightAmountCollect", this.ObjectTableName, false);
         this.SetRateClassUIProperties();
@@ -95,8 +99,10 @@ export class FreightChargesTabComponent extends BaseComponent {
     }
 
     public ChargeableWeightLabel: string;
+    public ChargeableWeightKGLabel: string;
     private SetLabels() {
         this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight").replace('%ChargWeightCode', this.EntityPM.ChargeableWeightUnitCode);
+        this.ChargeableWeightKGLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight").replace('%ChargWeightCode', "KG");
     }
 
     // Validate    
@@ -188,6 +194,16 @@ export class FreightChargesTabComponent extends BaseComponent {
             this.FireWizardEvent();
             this.ComputeAWBChargeAmount();
             this.SetRateClassUIProperties();
+            this.CheckKRateClassCode();
+        }
+    }
+
+    private CheckKRateClassCode() {
+        if (this.RateClassCode == "K") {
+            this.IsKRateClass = true;
+        }
+        else {
+            this.IsKRateClass = false;
         }
     }
 
@@ -214,6 +230,14 @@ export class FreightChargesTabComponent extends BaseComponent {
     set ChargeableWeight(newValue: number) {
         if (this.EntityPM.ChargeableWeight != newValue) {
             this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
+            this.ComputeAWBChargeAmount();
+        }
+    }
+
+    get ChargeableWeightInKG() { return AppTool.IsNullOrZero(this.EntityPM.ChargeableWeightInKG) ? 0 : this.EntityPM.ChargeableWeightInKG; }
+    set ChargeableWeightInKG(newValue: number) {
+        if (this.EntityPM.ChargeableWeightInKG != newValue) {
+            this.EntityPM.ChargeableWeightInKG = AppTool.Round(newValue, 3);
             this.ComputeAWBChargeAmount();
         }
     }
@@ -278,7 +302,12 @@ export class FreightChargesTabComponent extends BaseComponent {
         //}
     }
     private ComputeAWBChargeAmount() {
-        this.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM.RateClassCode, this.EntityPM.AWBChargeRate, this.EntityPM.ChargeableWeight);
+        var chargeAmount = this.EntityPM.ChargeableWeight;
+        if (this.RateClassCode == "K") {
+            chargeAmount = this.EntityPM.ChargeableWeightInKG;
+        }
+ 
+        this.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM.RateClassCode, this.EntityPM.AWBChargeRate, chargeAmount);
     }
     private ComputeAWBFrieghtAmount() {
         var computedAmount = this.AWBChargeAmount;

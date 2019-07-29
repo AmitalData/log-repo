@@ -194,6 +194,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 List<APInvoiceTotalVATPM> totalvats = new List<APInvoiceTotalVATPM>();
                 totalvats = myTotalVATQuery.GetTotalVATs(ids, tenant);
                
+                
+
                 foreach (TaxReportData a in ledgerTransactons)
                 {
                     Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
@@ -219,7 +221,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                             VatNumber = "000000000";
 
-                        var transactionSum = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
+                        IQueryable<LedgerTransaction> transactionsByJournal = ledgerTransactionRepository.GetByJournalAndReference1(a.JournalId, a.Reference, tenant);
+                        decimal transactionSum = transactionsByJournal.Sum(d => d.LocalAmountCredit);
+                        //var transactionSum = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
                         InputInvoiceAmount = transactionSum - InputVatAmount;
                     }
 

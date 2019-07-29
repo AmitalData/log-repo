@@ -164,5 +164,28 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
             }
         }
 
+        private List<ARPaymentChequeReplicaPM> paymentChequeReplicas;
+        [Include]
+        [Composition]
+        [Association("ARPaymentARPaymentChequeReplicas", "Id", "PaymentId")]
+        public virtual List<ARPaymentChequeReplicaPM> ARPaymentChequeReplicas
+        {
+            get
+            {
+                if (paymentChequeReplicas == null)
+                {
+                    paymentChequeReplicas = new List<ARPaymentChequeReplicaPM>();
+                }
+
+                return this.paymentChequeReplicas;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    paymentChequeReplicas = value;
+                }
+            }
+        }
     }
 }
