@@ -13,6 +13,7 @@ import { BIReportXMLData} from '../../../Infrastructure/Services/InfrastructureD
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { Observable } from 'rxjs/Rx';
+import { DateTool } from '../../Tools';
 
 @Component({
     moduleId: module.id,
@@ -27,7 +28,10 @@ export class ExportBI2ExcelControl {
     url: string;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);//true;
     private CurrentSession = SessionLocator.SelectedSession;
+    private WebFreightDomainService: WebFreightDomainService;
+
     constructor(private http: Http) {
+        this.WebFreightDomainService = new WebFreightDomainService();
         ServiceHelper.Http = http;
     }
     ObjectTableName: string;
@@ -40,7 +44,6 @@ export class ExportBI2ExcelControl {
     BIReportXMLData: BIReportXMLData = null;
 
     SetWindowArgs(args: any) {
-      
         this.queryId = args.queryId;
         this.reportId = args.reportId;
         this.queryName = args.reportName;
@@ -50,11 +53,14 @@ export class ExportBI2ExcelControl {
     }
 
     StartBuildStimulReportViaWorkerRole() {
-        var myService: WebFreightDomainService = new WebFreightDomainService();
+     
         this.StartBusyIndicator("Generating...");
         this.StartTimerChangeBusyIndicatorMessageAfter50Sec();
 
-        myService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
+        if (this.WebFreightDomainService == null) {
+            this.WebFreightDomainService = new WebFreightDomainService();
+        }
+        this.WebFreightDomainService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
             } else {
@@ -128,38 +134,44 @@ export class ExportBI2ExcelControl {
                 return;
             }
 
-            //if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
-            //    this._reportService.GetCheckIfStimulSoftReportIsBliud(this.ReportFliter.ReportKey, SessionLocator.Tenant).subscribe(res => {
-            //        var pmResponse: ServiceResponse = res;
-            //        if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
-            //            if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
-            //                this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
-            //                this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
-            //                this.StopBusyIndicator();
-            //            }
+            if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+                if (this.WebFreightDomainService == null) {
+                    this.WebFreightDomainService = new WebFreightDomainService();
+                }
 
-            //            if (!pmResponse.HasError) {
-            //                var result: ReportBuildResult = pmResponse.Result;
-            //                if (result) {
-            //                    if (result.HasError) {
-            //                        var messageWindow = new MessageWindow();
-            //                        messageWindow.Show(result.ExceptionMessage);
-            //                    }
-            //                    else if (result.StatusCode == "D") {
-            //                        this.ReportFliter.ProcessType = "ReportsRunUsingWR";
-            //                        this.GenerateReportViewWorkerRole(this.ReportFliter);
-            //                    }
-            //                }
-            //            }
-            //            else {
-            //                if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-            //                    var messageWindow = new MessageWindow();
-            //                    messageWindow.Show(pmResponse.ErrorsArray[0]);
-            //                }
-            //            }
-            //        }
-            //    });
-            //}
+                this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe(res => {
+                    var pmResponse: ServiceResponse = res;
+                    if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
+                            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+                            this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
+                            this.StopBusyIndicator();
+                        }
+                        if (!pmResponse.HasError) {
+                            var result = pmResponse.Result;
+                            if (result) {
+                                if (result.HasError) {
+                                    var messageWindow = new MessageWindow();
+                                    messageWindow.Show(result.ExceptionMessage);
+                                }
+                                else if (result.StatusCode == "D") {
+                                    // Work
+                                    this.FileName = "BIReport" + DateTool.GetCurrentDateTimeAsUtc();
+                                    this.btnRetryVisibile = false;
+                                    this.busyExportingVisibile = false;
+                                    this.btnSaveToFileVisibile = true;
+                                }
+                            }
+                        }
+                        else {
+                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                                var messageWindow = new MessageWindow();
+                                messageWindow.Show(pmResponse.ErrorsArray[0]);
+                            }
+                        }
+                    }
+                });
+            }
         });
     }
 
