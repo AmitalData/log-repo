@@ -316,8 +316,10 @@
 
                                     <tr style="vertical-align:top;">
                                         <td colspan="3">
-                                            <div class="MediaFill">
-                                                <LogTextBox [NoObjectField]="true" [ngStyle]="{direction: FlowDirection}" [IsMultiline]="true" [HideColumns]="true" [ObjectFieldName]="'CorrespondenceLine'" [Text]="CorrespondenceLine" [DataContext]="DataContext"></LogTextBox>
+                                            <div style="height: 100%; width: 100%;">
+                                                <LogTextBox
+                                                    [NoObjectField]="true" [ForceDirection]="FlowDirection" [IsMultiline]="true"
+                                                    [HideColumns]="true" [ObjectFieldName]="'CorrespondenceLine'" [Text]="CorrespondenceLine" [DataContext]="DataContext"></LogTextBox>
                                             </div>
                                         </td>
                                     </tr>
