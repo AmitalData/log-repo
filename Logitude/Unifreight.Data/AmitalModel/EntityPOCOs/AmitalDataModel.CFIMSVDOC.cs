@@ -78,7 +78,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for CREATEDATE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<System.DateTime> CREATEDATE
+        public virtual global::System.DateTime? CREATEDATE
         {
             get
             {
@@ -93,14 +93,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<System.DateTime> _CREATEDATE;
+        private global::System.DateTime? _CREATEDATE;
 
 
         /// <summary>
         /// There are no comments for UPDATEDATE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<System.DateTime> UPDATEDATE
+        public virtual global::System.DateTime? UPDATEDATE
         {
             get
             {
@@ -115,7 +115,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<System.DateTime> _UPDATEDATE;
+        private global::System.DateTime? _UPDATEDATE;
 
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for STATUS in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<short> STATUS
+        public virtual short? STATUS
         {
             get
             {
@@ -181,7 +181,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<short> _STATUS;
+        private short? _STATUS;
 
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TOTALPAGES in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<int> TOTALPAGES
+        public virtual int? TOTALPAGES
         {
             get
             {
@@ -225,7 +225,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<int> _TOTALPAGES;
+        private int? _TOTALPAGES;
 
 
         /// <summary>
@@ -270,6 +270,95 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
             }
         }
         private short? _HASCHANGED;
+
+
+        /// <summary>
+        /// There are no comments for QUETYPE in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string QUETYPE
+        {
+            get
+            {
+                return _QUETYPE;
+            }
+            set
+            {
+                if (_QUETYPE != value)
+                {
+                    _QUETYPE = value;
+                    OnPropertyChanged("QUETYPE");
+                }
+            }
+        }
+        private string _QUETYPE;
+
+
+        /// <summary>
+        /// There are no comments for GSTRING1 in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string GSTRING1
+        {
+            get
+            {
+                return _GSTRING1;
+            }
+            set
+            {
+                if (_GSTRING1 != value)
+                {
+                    _GSTRING1 = value;
+                    OnPropertyChanged("GSTRING1");
+                }
+            }
+        }
+        private string _GSTRING1;
+
+
+        /// <summary>
+        /// There are no comments for GSTRING2 in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string GSTRING2
+        {
+            get
+            {
+                return _GSTRING2;
+            }
+            set
+            {
+                if (_GSTRING2 != value)
+                {
+                    _GSTRING2 = value;
+                    OnPropertyChanged("GSTRING2");
+                }
+            }
+        }
+        private string _GSTRING2;
+
+
+        /// <summary>
+        /// There are no comments for GSTRING3 in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string GSTRING3
+        {
+            get
+            {
+                return _GSTRING3;
+            }
+            set
+            {
+                if (_GSTRING3 != value)
+                {
+                    _GSTRING3 = value;
+                    OnPropertyChanged("GSTRING3");
+                }
+            }
+        }
+        private string _GSTRING3;
+
 
         #endregion
 

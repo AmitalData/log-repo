@@ -27,6 +27,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.TOTALPAGES = entityPM.TOTALPAGES;
             entityPOCO.CUSTOMERID = entityPM.CUSTOMERID;
             entityPOCO.HASCHANGED = entityPM.HASCHANGED;
+            entityPOCO.QUETYPE = entityPM.QUETYPE;
+            entityPOCO.GSTRING1 = entityPM.GSTRING1;
+            entityPOCO.GSTRING2 = entityPM.GSTRING2;
+            entityPOCO.GSTRING3 = entityPM.GSTRING3;
         }
 
         public void POCOToPM(CFIMSVDOCPM entityPM, CFIMSVDOC entityPOCO)
@@ -41,6 +45,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.TOTALPAGES = entityPOCO.TOTALPAGES;
             entityPM.CUSTOMERID = entityPOCO.CUSTOMERID;
             entityPM.HASCHANGED = entityPOCO.HASCHANGED;
+            entityPM.QUETYPE = entityPOCO.QUETYPE;
+            entityPM.GSTRING1 = entityPOCO.GSTRING1;
+            entityPM.GSTRING2 = entityPOCO.GSTRING2;
+            entityPM.GSTRING3 = entityPOCO.GSTRING3;
         }
 
         public void CustomPMToPOCO(CFIMSVDOCPM entityPM, CFIMSVDOC entityPOCO)

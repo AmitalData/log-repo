@@ -164,7 +164,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TOP in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<int> TOP
+        public virtual int? TOP
         {
             get
             {
@@ -179,14 +179,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<int> _TOP;
+        private int? _TOP;
 
 
         /// <summary>
         /// There are no comments for HEIGHT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<int> HEIGHT
+        public virtual int? HEIGHT
         {
             get
             {
@@ -201,14 +201,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<int> _HEIGHT;
+        private int? _HEIGHT;
 
 
         /// <summary>
         /// There are no comments for GROUPNUM in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<int> GROUPNUM
+        public virtual int? GROUPNUM
         {
             get
             {
@@ -223,7 +223,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<int> _GROUPNUM;
+        private int? _GROUPNUM;
 
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for STATUS in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<int> STATUS
+        public virtual int? STATUS
         {
             get
             {
@@ -355,7 +355,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<int> _STATUS;
+        private int? _STATUS;
 
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for INVOICEQUANTITY in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> INVOICEQUANTITY
+        public virtual double? INVOICEQUANTITY
         {
             get
             {
@@ -399,7 +399,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _INVOICEQUANTITY;
+        private double? _INVOICEQUANTITY;
 
 
         /// <summary>
@@ -422,6 +422,138 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
             }
         }
         private string _INVOICEQUANTITYTYPE;
+
+
+        /// <summary>
+        /// There are no comments for QUETYPE in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string QUETYPE
+        {
+            get
+            {
+                return _QUETYPE;
+            }
+            set
+            {
+                if (_QUETYPE != value)
+                {
+                    _QUETYPE = value;
+                    OnPropertyChanged("QUETYPE");
+                }
+            }
+        }
+        private string _QUETYPE;
+
+
+        /// <summary>
+        /// There are no comments for CATALOGID in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string CATALOGID
+        {
+            get
+            {
+                return _CATALOGID;
+            }
+            set
+            {
+                if (_CATALOGID != value)
+                {
+                    _CATALOGID = value;
+                    OnPropertyChanged("CATALOGID");
+                }
+            }
+        }
+        private string _CATALOGID;
+
+
+        /// <summary>
+        /// There are no comments for CATALOGNAME in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string CATALOGNAME
+        {
+            get
+            {
+                return _CATALOGNAME;
+            }
+            set
+            {
+                if (_CATALOGNAME != value)
+                {
+                    _CATALOGNAME = value;
+                    OnPropertyChanged("CATALOGNAME");
+                }
+            }
+        }
+        private string _CATALOGNAME;
+
+
+        /// <summary>
+        /// There are no comments for AMOUNT in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual double? AMOUNT
+        {
+            get
+            {
+                return _AMOUNT;
+            }
+            set
+            {
+                if (_AMOUNT != value)
+                {
+                    _AMOUNT = value;
+                    OnPropertyChanged("AMOUNT");
+                }
+            }
+        }
+        private double? _AMOUNT;
+
+
+        /// <summary>
+        /// There are no comments for STATAMOUNT in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual double? STATAMOUNT
+        {
+            get
+            {
+                return _STATAMOUNT;
+            }
+            set
+            {
+                if (_STATAMOUNT != value)
+                {
+                    _STATAMOUNT = value;
+                    OnPropertyChanged("STATAMOUNT");
+                }
+            }
+        }
+        private double? _STATAMOUNT;
+
+
+        /// <summary>
+        /// There are no comments for STATTYPE in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string STATTYPE
+        {
+            get
+            {
+                return _STATTYPE;
+            }
+            set
+            {
+                if (_STATTYPE != value)
+                {
+                    _STATTYPE = value;
+                    OnPropertyChanged("STATTYPE");
+                }
+            }
+        }
+        private string _STATTYPE;
 
 
         #endregion

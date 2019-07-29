@@ -14,7 +14,7 @@ namespace Unifreight.BL.EntityPMs
         public string COMID { get; set; }
 
         public int PAGENUM { get; set; }
-  
+
         public int LINENUM { get; set; }
 
         public string PRATMEHES { get; set; }
@@ -44,6 +44,18 @@ namespace Unifreight.BL.EntityPMs
         public double? INVOICEQUANTITY { get; set; }
 
         public string INVOICEQUANTITYTYPE { get; set; }
+
+        public string QUETYPE { get; set; }
+
+        public string CATALOGID { get; set; }
+
+        public string CATALOGNAME { get; set; }
+
+        public double? AMOUNT { get; set; }
+
+        public double? STATAMOUNT { get; set; }
+
+        public string STATTYPE { get; set; }
 
     }
 }

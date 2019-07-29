@@ -11,10 +11,12 @@ namespace Unifreight.Data.AmitalModel.EntityKeys
     {
         public long FILENO { get; set; }
         public string COMID { get; set; }
+        public int PAGENUM { get; set; }
+        public string QUETYPE { get; set; }
 
         public override string GetFullKey()
         {
-            return FILENO.ToString();
+            return FILENO.ToString() + '_' + COMID.ToString() + '_' + PAGENUM.ToString() + '_' + QUETYPE.ToString();
         }
 
         public override string GetEntityPMName()
