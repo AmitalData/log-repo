@@ -161,6 +161,7 @@ namespace CommunicationWorkerRole
                     IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                     storageservice.Write(data, fileInfo);
                     handleReportExecutionLogArgs.StatusCode = "D";
+                    handleReportExecutionLogArgs.FileName = fileInfo.FileName;
                     this.UpdateReportExecutionLog(handleReportExecutionLogArgs);
                     LogDoneItemInMemory();
                 }
@@ -268,6 +269,7 @@ namespace CommunicationWorkerRole
         public BIReportsExecutionLog ReportExecutionLog { get; set; }
         public BIReportsExecutionLogRepository ReportExecutionLogRepository { get; set; }
         public string StatusCode { get; set; }
+        public string FileName { get; set; }
         public string ExceptionMessage { get; set; }
         public DbQueueService queueservice { get; set; }
         public bool IsInternalException { get; set; }

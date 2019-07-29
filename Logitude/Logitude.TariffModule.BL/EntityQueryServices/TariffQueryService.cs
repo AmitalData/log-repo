@@ -137,7 +137,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                         if (initialPropIndex == -1)
                         {
-                            initialPropIndex = Steps.Count-1;
+                            initialPropIndex = Steps.Count;
                         }
                     }
                     else
