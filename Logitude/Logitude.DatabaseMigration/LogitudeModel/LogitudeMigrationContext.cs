@@ -3333,7 +3333,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
-        public IDbSet<ARPaymentCheque> ARPaymentCheques
+        public IDbSet<Accounting.Data.EntityPOCOs.ARPaymentCheque> ARPaymentCheques
         {
             get;
             set;
