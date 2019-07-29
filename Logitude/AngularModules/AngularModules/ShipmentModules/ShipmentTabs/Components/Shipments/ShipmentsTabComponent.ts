@@ -90,6 +90,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
 
                     if (this.isLoadHousesRequested) {
                         this.LoadAllHouses();
+                        this.CurrentSession.SessionEvent.emit("RefreshConnections");
                     }
                 }
 
