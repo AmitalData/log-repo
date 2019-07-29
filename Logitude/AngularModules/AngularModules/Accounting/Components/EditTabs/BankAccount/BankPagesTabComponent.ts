@@ -399,6 +399,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
                     if (!myResult.HasError) { 
                     if (myResult.Result == null) {
                         this.EnableReconcileEditButton = true;
+                        this.message = null;
                         }
                     else {
                         this.EnableReconcileEditButton = false;
@@ -458,6 +459,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
 
         if (result == null) {
             this.IsRestoreButtonVisibile = true;
+            this.RestoreToolTipMessage = null;
         }
         else {
             this.RestoreToolTipMessage = result;

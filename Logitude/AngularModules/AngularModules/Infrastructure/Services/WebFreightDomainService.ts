@@ -243,6 +243,19 @@ export class WebFreightDomainService {
         }
         );
     }
+    GetBIReportLogStatus(reportId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetBIReportLogStatus?reportId=' + reportId;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var report = response.json();
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = report;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: BIReportPM = null) {
 
