@@ -297,6 +297,31 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     }
                 }
 
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(Tenant);
+                foreach (ShipmentReceivablePM item in temp.ShipmentReceivables)
+                {
+                    if(string.IsNullOrEmpty(item.CurrencyId))
+                    {
+                        var chergeType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, Tenant);
+                        if (chergeType != null && !string.IsNullOrEmpty(chergeType.ReceivablesDefaultCurrencyId))
+                        {
+                            item.CurrencyId = chergeType.ReceivablesDefaultCurrencyId;
+                        }
+                    }
+                }
+
+                foreach (ShipmentPayablePM item in temp.ShipmentPayables)
+                {
+                    if (string.IsNullOrEmpty(item.CurrencyId))
+                    {
+                        var chergeType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, Tenant);
+                        if (chergeType != null && !string.IsNullOrEmpty(chergeType.PayablesDefaultCurrencyId))
+                        {
+                            item.CurrencyId = chergeType.PayablesDefaultCurrencyId;
+                        }
+                    }
+                }
+
                 return temp;
             }
 
