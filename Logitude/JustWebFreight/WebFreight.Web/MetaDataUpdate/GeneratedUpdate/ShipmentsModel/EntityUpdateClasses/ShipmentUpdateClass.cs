@@ -39500,7 +39500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 		   Feature ShipmentFeature_INTTRABookingSimulator = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTTRABookingSimulator", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.INTTRABookingSimulator", NameTextCodeDefaultText = @"Send INTTRA Booking" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ShipmentFeature_NEWMASTERFROMHOUSE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWMASTERFROMHOUSE", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.NEWMASTERFROMHOUSE", NameTextCodeDefaultText = @"New Master From House" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ShipmentFeature_NEWMASTERFROMHOUSE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWMASTERFROMHOUSE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.NEWMASTERFROMHOUSE", NameTextCodeDefaultText = @"New Master From House" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

@@ -29,6 +29,7 @@ export class NewQuote {
   }
 
   CreateQuote(Direction: string, TransportMode: string,ShipmentType:string, QuoteType: string) {
+    var EC = protractor.ExpectedConditions;
     this.QuoteHepler.CreateAndCloseNewQuote(Direction,TransportMode,ShipmentType);
     this.Helper.WaitByIdAndClick('NewQuote');
     this.QuoteHepler.SelectDicrctionTransportMode( Direction,TransportMode,ShipmentType);
@@ -36,16 +37,14 @@ export class NewQuote {
         
       var QuoteNumber = this.Quotes.RandomNum();
       this.FillQuoteFields(QuoteNumber,  TransportMode ,Direction,ShipmentType, QuoteType);
-      this.Helper.WaitByIdAndClick('CreateQuote');
+      
       this.Helper.WaitWindowClosed();
       this.Helper.WaitBusyIndicator();
       
       this.Quotes.UseSearchBox('Quote_Search', QuoteNumber);
       this.EditQuoteTabs.EditTabs(QuoteNumber, ShipmentType,Direction,TransportMode,QuoteType);
       
-     // this.GeneralFunction.UseSearchBox('Shipment_Search', QuoteNumber);
-      //this.EditShipmentTabs.EditTabs(QuoteNumber, ShipmentLevelCode, QuoteType,Direction);
-
+     
    /* }
     else if ((TransportMode == 'O' || TransportMode == 'I') && QuoteType != '') {
       var QuoteNumber = this.Quotes.RandomNum();
@@ -64,21 +63,93 @@ export class NewQuote {
     
     this.Helper.WaitByIdAndFill('Quote_CustomerId','TestShipper');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByIdAndFill('Quote_ConsigneeId','TestShipper');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    
+    if(Direction=='Export' || Direction=='Domestic')
     this.Helper.WaitByIdAndFill('Quote_ShipperReference1', QuoteNumber);// test random number randomWholeNum
+    else
+    this.Helper.WaitByIdAndFill('Quote_ConsigneeReference1', QuoteNumber);// test random number randomWholeNum
+    
     this.Helper.WaitByIdAndFill('Quote_IncotermId','CIF');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-   
-    if(TransportMode == 'A'){
-      this.Helper.WaitByIdAndFill('Quote_MoveTypeId','TestMoveTypeIdAirMTA');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.QuoteHepler.SelectQuoteType(QuoteType);
+ 
+    if(Direction=='Domestic'){
+      if(TransportMode=='I'){
+
+      }
+      else{
+    this.Helper.WaitByIdAndFill('Quote_FromPortId','eze');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByIdAndFill('Quote_ToPortId','eze');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      }
+    }
+    else{
       this.Helper.WaitByIdAndFill('Quote_FromPortId','eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitByIdAndFill('Quote_ToPortId','mvd');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-      this.Helper.WaitByIdAndFill('Quote_GrossWeight','1000');
-      this.Helper.WaitByIdAndFill('Quote_Volume','3');
-      this.Helper.WaitByIdAndFill('Quote_NumberOfPackages','3');
     }
+  
+    if(TransportMode == 'A'){
+      this.Helper.WaitByIdAndFill('Quote_MoveTypeId','TestMoveTypeIdAirMTA');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+     
+      if(QuoteType=='SpotRate'){
+        this.Helper.WaitByIdAndFill('Quote_GrossWeight','1000');
+        this.Helper.WaitByIdAndFill('Quote_Volume','3');
+        this.Helper.WaitByIdAndFill('Quote_NumberOfPackages','3');
+       
+      }
+  
+    }
+
+    else if(TransportMode == 'O'){
+      this.Helper.WaitByIdAndFill('Quote_MoveTypeId', 'TestMoveTypeIDOceanMTO');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      
+
+      if(ShipmentType=='FCL'){
+        if(QuoteType=='SpotRate'){
+         this.Helper.WaitByIdAndFill('Quote_PackageType1Quantity','1');
+        }
+        this.Helper.WaitByIdAndFill('Quote_PackageType1Id', '20bu');
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      
+      }
+      else{
+        if(QuoteType=='SpotRate'){
+        this.Helper.WaitByIdAndFill('Quote_GrossWeight','1000');
+        this.Helper.WaitByIdAndFill('Quote_Volume','3');
+        this.Helper.WaitByIdAndFill('Quote_NumberOfPackages','3');
+        }
+      }
+
+    }
+
+    else if(TransportMode == 'I'){
+      this.Helper.WaitByIdAndFill('Quote_MoveTypeId', 'TestMoveTypeIdInlandMTI');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      if(ShipmentType=='FTL'){
+        if(QuoteType=='SpotRate'){
+          this.Helper.WaitByIdAndFill('Quote_PackageType1Quantity','1');
+        }
+        this.Helper.WaitByIdAndFill('Quote_PackageType1Id', '20bu');
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      }
+      else{
+          if(QuoteType=='SpotRate'){
+          this.Helper.WaitByIdAndFill('Quote_GrossWeight','1000');
+          this.Helper.WaitByIdAndFill('Quote_Volume','3');
+          this.Helper.WaitByIdAndFill('Quote_NumberOfPackages','3');
+          }
+        }
+      
+    }
+
+    this.Helper.WaitByIdAndClick('CreateQuote');
 
     
     

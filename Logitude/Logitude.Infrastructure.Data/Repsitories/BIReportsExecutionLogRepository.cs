@@ -26,6 +26,11 @@ namespace Logitude.Infrastructure.Data.Repsitories
             return (from record in context.BIReportsExecutionLogs where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
+        public BIReportsExecutionLog GetSingleByBIReportId(string id, int tenant)
+        {
+            return (from record in context.BIReportsExecutionLogs where record.BIReportId == id && record.Tenant == tenant select record).FirstOrDefault();
+        }
+
     }
 
 }
