@@ -1,4 +1,4 @@
-﻿<!-- info icon -->
+<!-- info icon -->
 <span float-start [attr.id]="'tooltip'+this.name" id="t"
     class="small-tooltip" (mouseover)="OnMouseOver()" (mouseleave)="OnMouseLeave()">
 
@@ -11,7 +11,7 @@
         <div *ngIf="title" text-start class="tooltip-header blue-title">
             {{title}}
         </div>
-        <div class="tooltip-text" [style.padding]="isRTL?'0 3px 0 20px' : '0 20px 0 3px'" style="max-width: 300px; white-space: initial;">
+        <div class="tooltip-text" [style.padding]="isRTL?'0 3px 0 20px' : '0 20px 0 3px'" style="max-width: 900px; white-space: initial;">
 
             <div [attr.id]="'tooltip-arrow'+this.name" [className]="GetArrowClassName()"></div>
             <div [attr.id]="'tooltip-arrow2'+this.name" [className]="GetArrowClassName()+'2'"></div>

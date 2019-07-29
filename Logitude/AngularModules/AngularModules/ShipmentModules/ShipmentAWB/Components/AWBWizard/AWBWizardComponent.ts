@@ -35,7 +35,18 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {InfrastructureDomainService} from '../../../../Infrastructure/Services/InfrastructureDomainService';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {BranchList} from '../../../../Common/EntityLists/BranchList';
-import {BranchListService} from '../../../../Common/Services/StandardLists/BranchListService';
+import { BranchListService } from '../../../../Common/Services/StandardLists/BranchListService';
+import { IATACodeList } from '../../../../Infrastructure/EntityLists/IATACodeList';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { DueTypeList } from '../../../../Common/EntityLists/DueTypeList';
+import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
+import { MeasurementList } from '../../../../Common/EntityLists/MeasurementList';
+import { IATACodeListService } from '../../../../Infrastructure/Services/StandardLists/IATACodeListService';
+import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
+import { DueTypeListService } from '../../../../Common/Services/StandardLists/DueTypeListService';
+import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
+import { MeasurementListService } from '../../../../Common/Services/StandardLists/MeasurementListService';
+import { ShipmentAWBPrintOnlyPM } from '../../../../Shipment/EntityPMs/ShipmentAWBPrintOnlyPM';
 
 @Component({
     moduleId: module.id,
@@ -480,7 +491,151 @@ export class AWBWizardComponent {
             this.EntityPM.ConsolidatorContactId = oldShipment.ConsolidatorContactId;
             //this.EntityPM.ConsolidatorReference = oldShipment.ConsolidatorReference;
         }
+
+        else {
+            if (FeatureLocator.IsPackage_EAWB()) {
+                this.GenerateShipmentAWBPrintOnlies();
+            }
+        }
     }
+
+    private GenerateShipmentAWBPrintOnlies() {
+        var iCurrencyListService: CurrencyListService = new CurrencyListService();
+        var iChargesTypeListService: ChargesTypeListService = new ChargesTypeListService();
+        var iMeasurementListService: MeasurementListService = new MeasurementListService();
+        var iIATACodeListService: IATACodeListService = new IATACodeListService();
+
+        iChargesTypeListService.getAllFromCache().subscribe((iResponseCharges: ServiceResponse) => {
+            if (!iResponseCharges.HasError) {
+                var AllChargesTypes: ChargesTypeList[] = iResponseCharges.Result;
+
+                if (AllChargesTypes.length > 0) {
+                    AllChargesTypes = AllChargesTypes.filter(d => d.IsAir == true && d.InActive == false && d.ChargesGroupCode != "FRT");
+
+                    if (this.EntityPM.ShipmentLevelCode == "C") {
+                        AllChargesTypes = AllChargesTypes.filter(d => d.IsAutoDisplayInConsolidation);
+                    }
+
+                    else {
+                        AllChargesTypes = AllChargesTypes.filter(d => d.IsAutoDisplayInShipment == true);
+                    }
+                }
+
+                if (AllChargesTypes.length > 0) {
+                    iCurrencyListService.getAllFromCache().subscribe((iResponseCurrency: ServiceResponse) => {
+                        if (!iResponseCurrency.HasError) {
+                            var AllCurrencies: CurrencyList[] = iResponseCurrency.Result;
+
+                            iMeasurementListService.getAllFromCache().subscribe((iResponseMeasurement: ServiceResponse) => {
+                                if (!iResponseMeasurement.HasError) {
+                                    var AllMeasurements: MeasurementList[] = iResponseMeasurement.Result;
+
+                                    iIATACodeListService.getAllFromCache().subscribe((iResponseIATAs: ServiceResponse) => {
+                                        if (!iResponseIATAs.HasError) {
+                                            var AllIATACodes: IATACodeList[] = iResponseIATAs.Result;
+
+                                            AllChargesTypes.sort((a, b) => { return a.ViewOrder - b.ViewOrder }).forEach((item) => {
+                                                var itemPM: ShipmentAWBPrintOnlyPM = new ShipmentAWBPrintOnlyPM(this.EntityPM);
+                                                itemPM.Tenant = this.EntityPM.Tenant;
+                                                itemPM.ShipmentId = this.EntityPM.Id;
+                                                itemPM.MeasurementId = item.MeasurementId;
+                                                itemPM.DueTypeCode = item.DueTypeCode;
+                                                itemPM.DueTypeName = item.DueTypeName;
+                                                itemPM.IATACodeId = item.IATACodeId;
+                                                itemPM.CurrencyId = this.EntityPM.AWBCurrencyId;
+                                                itemPM.CurrencyCode = this.EntityPM.AWBCurrencyCode;
+                                                itemPM.PrepaidCollectId = this.EntityPM.OtherPrepaidCollectId;
+
+                                                if (itemPM.CurrencyId != null) {
+                                                    var myCurrencyList: CurrencyList = AllCurrencies.filter(d => d.Id == itemPM.CurrencyId)[0];
+                                                    if (myCurrencyList != null) {
+                                                        itemPM.CurrencyCode = myCurrencyList.Code;
+                                                    }
+
+                                                    else {
+                                                        iCurrencyListService.getSingle(itemPM.CurrencyId).subscribe((myResponse: ServiceResponse) => {
+                                                            if (myResponse != null) {
+                                                                if (!myResponse.HasError) {
+                                                                    AllCurrencies.push(myResponse.Result);
+                                                                    itemPM.CurrencyCode = myResponse.Result.Code;
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                                if (itemPM.IATACodeId != null) {
+                                                    var myIATACodeList: IATACodeList = AllIATACodes.filter(d => d.Id == itemPM.IATACodeId)[0];
+                                                    if (myIATACodeList != null) {
+                                                        itemPM.IATACodeName = myIATACodeList.Name;
+                                                    }
+
+                                                    else {
+                                                        iIATACodeListService.getSingle(itemPM.IATACodeId).subscribe((myResponse: ServiceResponse) => {
+                                                            if (myResponse != null) {
+                                                                if (!myResponse.HasError) {
+                                                                    AllIATACodes.push(myResponse.Result);
+                                                                    itemPM.IATACodeName = myResponse.Result.Name;
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                                if (itemPM.MeasurementId != null) {
+                                                    var myMeasurementList: MeasurementList = AllMeasurements.filter(d => d.Id == itemPM.MeasurementId)[0];
+                                                    if (myMeasurementList != null) {
+                                                        itemPM.MeasurementCode = myMeasurementList.Code;
+
+                                                        switch (itemPM.MeasurementCode) {
+                                                            case "GRWT": { itemPM.Quantity = this.EntityPM.GrossWeight; break; }
+                                                            case "CHWT": { itemPM.Quantity = this.EntityPM.ChargeableWeight; break; }
+                                                            case "VOLU": { itemPM.Quantity = this.EntityPM.Volume; break; }
+                                                            case "BTEU": { itemPM.Quantity = this.EntityPM.TEU; break; }
+                                                            case "FIXD": { itemPM.Quantity = 1; break; }
+                                                            case "PRVL": { itemPM.Quantity = this.EntityPM.ValueOfGoods; break; }
+                                                            case "GWTN": { itemPM.Quantity = this.EntityPM.GrossWeightPerTon; break; }
+                                                            case "QTY": { itemPM.Quantity = this.EntityPM.NumberOfPackages; break; }
+                                                            default: { break; }
+                                                        }
+                                                    }
+
+                                                    else {
+                                                        iMeasurementListService.getSingle(itemPM.MeasurementId).subscribe((myResponse: ServiceResponse) => {
+                                                            if (myResponse != null) {
+                                                                if (!myResponse.HasError) {
+                                                                    AllMeasurements.push(myResponse.Result);
+                                                                    itemPM.MeasurementCode = myResponse.Result.Code;
+
+                                                                    switch (itemPM.MeasurementCode) {
+                                                                        case "GRWT": { itemPM.Quantity = this.EntityPM.GrossWeight; break; }
+                                                                        case "CHWT": { itemPM.Quantity = this.EntityPM.ChargeableWeight; break; }
+                                                                        case "VOLU": { itemPM.Quantity = this.EntityPM.Volume; break; }
+                                                                        case "BTEU": { itemPM.Quantity = this.EntityPM.TEU; break; }
+                                                                        case "FIXD": { itemPM.Quantity = 1; break; }
+                                                                        case "PRVL": { itemPM.Quantity = this.EntityPM.ValueOfGoods; break; }
+                                                                        case "GWTN": { itemPM.Quantity = this.EntityPM.GrossWeightPerTon; break; }
+                                                                        case "QTY": { itemPM.Quantity = this.EntityPM.NumberOfPackages; break; }
+                                                                        default: { break; }
+                                                                    }
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                }
+
+                                                this.EntityPM.ShipmentAWBPrintOnlies.push(itemPM);
+                                            });
+
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    }
+
     private GetAWBSignature() {        
 
         if (this.EntityPM.BranchId) {

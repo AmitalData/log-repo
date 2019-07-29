@@ -39,7 +39,9 @@ export class ShipmentWorkSpace {
     this.EditShipmentTabs = new EditTabsComponent();
 
     this.shipHelper = new ShipmentHelper();
+    
   }
+  
   
   CreateShipment(ShipmentLevelCode: string, Direction: string, TransportMode: string, ShipmentType: string) {
     // this.DirectShipment.CreateAndCloseNewShipment('NEWDIRECT','ShipmentCancelbtn');

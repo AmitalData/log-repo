@@ -958,6 +958,7 @@ export class BIReportXMLData {
     public DWQueryData: DWQueryData; 
     public BIReportPM: BIReportPM;
     public BITabularViewSettings: BITabularViewSettings;
+    public UserId: string;
 }
 export class BITabularViewSettings {
     public Columns: Column[];  

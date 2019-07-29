@@ -862,7 +862,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-        public class JournalApproveWorkrer
+        public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
 

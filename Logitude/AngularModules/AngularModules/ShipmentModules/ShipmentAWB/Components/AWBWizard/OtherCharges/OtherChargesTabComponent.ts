@@ -114,7 +114,8 @@ export class OtherChargesTabComponent extends BaseComponent {
 
     public IsEditingEnabled: boolean = false;
     private SetUIProperties() {
-        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);    
+        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
+        
         this.ItemsSource.forEach(item => {
             item.SetUIProperties();
         });
@@ -201,10 +202,14 @@ export class OtherChargesTabComponent extends BaseComponent {
     private SetGenerateButton() {
         var myResult = false;
 
-        if (!FeatureLocator.IsPackage_EAWB()) {
-            if (this.ItemsSource.length == 0) {
-                myResult = true;
-            }
+        //if (!FeatureLocator.IsPackage_EAWB()) {
+        //    if (this.ItemsSource.length == 0) {
+        //        myResult = true;
+        //    }
+        //}
+
+        if (this.ItemsSource.length == 0) {
+            myResult = true;
         }
 
         this.IsGeneratingVisible = myResult;

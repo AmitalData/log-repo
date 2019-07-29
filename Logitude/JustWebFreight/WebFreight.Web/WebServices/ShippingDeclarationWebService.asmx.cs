@@ -1763,6 +1763,16 @@ namespace WebFreight.Web.WebServices
                     {
                         case "PART":
                             {
+                                Card toPartner = CardRepository.GetSingleCard(myDelivery.ToPartnerCardId, tenant, false);
+                                if (!string.IsNullOrEmpty(toPartner.PrimaryContactId))
+                                {
+                                    Contact toPartnerContact = contactRepository.GetSingleContact(toPartner.PrimaryContactId, tenant);
+                                    if (toPartnerContact != null)
+                                    {
+                                        myDataProvider.FirstDeliveryToContactPhone = toPartnerContact.BusinessPhone;
+                                    }
+                                }
+
                                 if (!string.IsNullOrEmpty(myDelivery.ToAddressId))
                                 {
                                     Address myPartnerAddress = addressRepository.GetSingleAddress(myDelivery.ToAddressId, tenant);
@@ -1772,7 +1782,7 @@ namespace WebFreight.Web.WebServices
                                         myDataProvider.PlaceOfDelivery = myPartnerAddress.City;
                                         myDataProvider.PlaceOfDeliveryCountryCode = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.Code;
                                         myDataProvider.PlaceOfDeliveryCountryName = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
-                                        myDataProvider.PlaceOfDeliveryStateCode = myPartnerAddress.State == null ? "" : myPartnerAddress.State.Code;
+                                        myDataProvider.PlaceOfDeliveryStateCode = myPartnerAddress.State == null ? "" : myPartnerAddress.State.Code;                                        
                                     }
 
                                     if (!string.IsNullOrEmpty(myDataProvider.DeliveryTo))
