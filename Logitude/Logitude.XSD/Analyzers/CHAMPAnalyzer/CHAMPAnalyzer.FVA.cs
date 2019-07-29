@@ -24,7 +24,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         {
             this.myFVA = (CHAMP17.ScheduleAndAvailabilityInformationAnswer)myEnvelope.Item;
 
-            this.myRequestDetails = XSDHelper.GetFlightsSchedulesRequestDetails(myFVA.ScheduleAndAvailabilityInformationRequestDetails, myCommonContext, myTenant);
+            this.myRequestDetails = XSDHelper.GetFlightsSchedulesRequestDetails(myFVA.ScheduleAndAvailabilityInformationRequestDetails, iCommonContext, myTenant);
         }
 
         private void AnalyzeMessageQueue_FVA(FlightsSchedulesRequest myRequest, FlightsSchedulesRequestRepository myRequestRepository)
@@ -85,13 +85,13 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             {
                 hasResponse = true;
 
-                if (myCommonContext == null)
+                if (iCommonContext == null)
                 {
-                    myCommonContext = CommonDataContext.GetContext(myTenant);
+                    iCommonContext = CommonDataContext.GetContext(myTenant);
                 }
 
-                PortRepository myPortRepository = new PortRepository(myCommonContext);
-                CardRepository myCardRepository = new CardRepository(myCommonContext);
+                PortRepository myPortRepository = new PortRepository(iCommonContext);
+                CardRepository myCardRepository = new CardRepository(iCommonContext);
 
                 int myResultNumber = 1;                
                 CHAMP17.ScheduleInformation[] myScheduleInformation = myFVA.ScheduleInformation;

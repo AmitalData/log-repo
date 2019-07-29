@@ -30,8 +30,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.HasCustomValidator);
             this.Property(t => t.UpdateKey).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.AllowedForComputingPartners);
-            this.Property(t => t.CodeField).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.NameField).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CodeField).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.NameField).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.ClientModuleName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.ServerModuleName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.NewWizardComponentPath).HasMaxLength(250).IsUnicode(false);

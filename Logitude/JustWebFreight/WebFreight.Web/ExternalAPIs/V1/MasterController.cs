@@ -94,10 +94,20 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 throw new ApplicationException("Receivable Charges Type is required");
                             }
-                            
+
                             if (item.Currency == null)
                             {
-                                throw new ApplicationException("Receivable Currency is required");
+                                string currancy = null;
+
+                                if (item.ChargesType != null)
+                                {
+                                    currancy = CheckReceivablesChargesTypeCurrency(item.ChargesType.Code, authToken.Tenant);
+                                }
+
+                                if (string.IsNullOrEmpty(currancy))
+                                {
+                                    throw new ApplicationException("Receivable Currency is required");
+                                }
                             }
                         }
                     }
@@ -110,10 +120,21 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 throw new ApplicationException("Payable Charges Type is required");
                             }
-                            
+
+
                             if (item.Currency == null)
                             {
-                                throw new ApplicationException("Payable Currency is required");
+                                string currancy = null;
+
+                                if (item.ChargesType != null)
+                                {
+                                    currancy = CheckPayablesChargesTypeCurrency(item.ChargesType.Code, authToken.Tenant);
+                                }
+
+                                if (string.IsNullOrEmpty(currancy))
+                                {
+                                    throw new ApplicationException("Payable Currency is required");
+                                }
                             }
                         }
                     }
@@ -591,6 +612,36 @@ namespace WebFreight.Web.ExternalAPIs.V1
             var apiExceptionResult = ApiExceptionHandler.HandleException(new Exception("Updates are not supported"));
             APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Master API");
             return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+        }
+
+        private string CheckReceivablesChargesTypeCurrency(string chargeTypeCode, int tenant)
+        {
+            string currency = null;
+            if (!string.IsNullOrEmpty(chargeTypeCode))
+            {
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
+                var chergeType = chargesTypeRepository.GetSingleChargesTypeByCode(chargeTypeCode, tenant);
+                if (chergeType != null && !string.IsNullOrEmpty(chergeType.ReceivablesDefaultCurrencyId))
+                {
+                    currency = chergeType.ReceivablesDefaultCurrencyId;
+                }
+            }
+            return currency;
+        }
+
+        private string CheckPayablesChargesTypeCurrency(string chargeTypeCode, int tenant)
+        {
+            string currency = null;
+            if (!string.IsNullOrEmpty(chargeTypeCode))
+            {
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
+                var chergeType = chargesTypeRepository.GetSingleChargesTypeByCode(chargeTypeCode, tenant);
+                if (chergeType != null && !string.IsNullOrEmpty(chergeType.PayablesDefaultCurrencyId))
+                {
+                    currency = chergeType.PayablesDefaultCurrencyId;
+                }
+            }
+            return currency;
         }
     }
 }
