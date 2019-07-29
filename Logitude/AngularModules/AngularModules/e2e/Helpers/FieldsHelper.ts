@@ -13,6 +13,7 @@ export class FieldsHelper {
         });
     }
 
+    //to choose last element
     WaitActionButtonAndClick(containerClassName: string, isLast: boolean) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.elementToBeClickable(element(by.className(containerClassName))), 100000).then(a => {
