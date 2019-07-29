@@ -378,6 +378,18 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == declarationId && a.Tenant == tenant && a.TradeAgreementCode != null
                     select a).Count();
         }
+        public List<string> GetIdsThatIsChanged(int tenant,List<string> DecIds)
+        {
+
+            var declarations = (from a in context.Declarations
+                                where a.Tenant == tenant
+                                where DecIds.Contains(a.Id)
+                                where a.IsChanged
+                                select a.Id
+                                                    );
+
+            return declarations.ToList();
+        }
 
         public IQueryable<Declaration> GetCourierConnectedDeclaratins(string CourierMasterId, int tenant)
         {

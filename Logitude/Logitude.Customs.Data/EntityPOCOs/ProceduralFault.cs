@@ -86,6 +86,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DeclarationId { get; set; }
 	      
         public virtual Declaration Declaration { get; set; }
+        [ForeignKey("User")]
+        [Column("SignedByUserId")]
+	    public string SignedByUserId { get; set; }
+	      
+        public virtual User User { get; set; }
     }
 }
 	 

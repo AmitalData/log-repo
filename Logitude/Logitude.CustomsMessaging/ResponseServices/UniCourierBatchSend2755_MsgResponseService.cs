@@ -102,7 +102,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             string UnifreightListOnServerOnly_BankeId = SetBankIdInUnifreightListOnServerOnly(customResponse);
             List<CourierPendingReason> allCourierPendingReason = GetAllCourierPendingReason(requestParams);
-
+            var idS=listPoco.Select(r => r.DeclarationId).ToList();
+            var repo =new DeclarationRepository(requestParams.Tenant);
+            var IdsThatIsChanged= repo.GetIdsThatIsChanged(requestParams.Tenant, idS);
             var realUpdatedList = new List<string>();
             foreach (var itemPoco in listPoco)
             {
@@ -110,7 +112,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 // If  ErrorPlace.CourierPendingReasons == 1 Display error Message 
                 //"קיים Pending עם עצירה בתשלום הצהרה"
-
+                if (IdsThatIsChanged.Contains(itemPoco.DeclarationId))
+                {
+                    mess.AppendLine($"בוצעו שינויים בהצהרה , יש לשדר שוב לפני הגשת תשלום :({itemPoco.DeclarationId})");
+                    continue;
+                }
 
                 if (!String.IsNullOrWhiteSpace(itemPoco.CourierPendingReasonCode))
                 {
