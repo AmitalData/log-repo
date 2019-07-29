@@ -74,11 +74,17 @@ export class NewQuote {
     this.Helper.WaitByIdAndFill('Quote_IncotermId','CIF');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     this.QuoteHepler.SelectQuoteType(QuoteType);
+ 
     if(Direction=='Domestic'){
+      if(TransportMode=='I'){
+
+      }
+      else{
     this.Helper.WaitByIdAndFill('Quote_FromPortId','eze');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     this.Helper.WaitByIdAndFill('Quote_ToPortId','eze');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      }
     }
     else{
       this.Helper.WaitByIdAndFill('Quote_FromPortId','eze');
@@ -86,7 +92,7 @@ export class NewQuote {
       this.Helper.WaitByIdAndFill('Quote_ToPortId','mvd');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     }
-   
+  
     if(TransportMode == 'A'){
       this.Helper.WaitByIdAndFill('Quote_MoveTypeId','TestMoveTypeIdAirMTA');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);

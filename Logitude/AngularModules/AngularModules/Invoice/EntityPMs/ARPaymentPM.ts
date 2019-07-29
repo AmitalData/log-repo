@@ -11,6 +11,8 @@
 import {ARPaymentInvoicePM} from './ARPaymentInvoicePM';
 
 import {LedgerTransactionPM} from './../../Accounting/EntityPMs/LedgerTransactionPM';
+
+import {ARPaymentChequeReplicaPM} from './ARPaymentChequeReplicaPM';
 import {ARPaymentPMCustomCode} from '../EntityPMCustomCode/ARPaymentPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -521,6 +523,42 @@ export class ARPaymentPM {
         }
     }
     //public InvoicesLedgerTransactions: Array<LedgerTransactionPMPM>= [];
+      
+	private aRPaymentChequeReplicas: ARPaymentChequeReplicaPM[];
+    get  ARPaymentChequeReplicas() {
+        if (this.aRPaymentChequeReplicas == null) {
+            this.aRPaymentChequeReplicas = [];
+        }
+
+        return this.aRPaymentChequeReplicas;
+    }
+    set  ARPaymentChequeReplicas(newValue: ARPaymentChequeReplicaPM[]) {
+        if (this.aRPaymentChequeReplicas != newValue) {
+            this.aRPaymentChequeReplicas = newValue;
+        }
+    }
+    public AddARPaymentChequeReplicaPM(item: ARPaymentChequeReplicaPM) {
+        if (item != null) {
+            var index = this.ARPaymentChequeReplicas.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. ARPaymentChequeReplicas.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveARPaymentChequeReplicaPM(item: ARPaymentChequeReplicaPM) {
+        if (item != null) {
+            var index = this.ARPaymentChequeReplicas.indexOf(item);
+            if (index > -1) {
+                this. ARPaymentChequeReplicas.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
  
     public OldEntityPM: ARPaymentPM;
 		

@@ -25,9 +25,9 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             this.ShipmentPM.IsUpdatedByChampAnalyzer = true;
             this.ShipmentPM.IsFSRSent = false;
 
-            if (this.iPortRepository == null)
+            if (this.myPortRepository == null)
             {
-                this.iPortRepository = new PortRepository(myCommonContext);
+                this.myPortRepository = new PortRepository(iCommonContext);
             }
 
             this.AnalyzeMasterConsignment();
@@ -50,10 +50,10 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
                     if (this.ShipmentPM.MainCarriageFromPortCode == "---")
                     {
-                        Port newFromPort = this.iPortRepository.GetPortsByNameOrCode(CodeOfOrigin, null, myTenant).Where(d => d.IsAir).FirstOrDefault();
+                        Port newFromPort = this.myPortRepository.GetPortsByNameOrCode(CodeOfOrigin, null, myTenant).Where(d => d.IsAir).FirstOrDefault();
                         if (newFromPort == null)
                         {
-                            Port portZero = this.iPortRepository.GetPortsByNameOrCode(CodeOfOrigin, null, 0).Where(d => d.IsAir).FirstOrDefault();
+                            Port portZero = this.myPortRepository.GetPortsByNameOrCode(CodeOfOrigin, null, 0).Where(d => d.IsAir).FirstOrDefault();
                             if (portZero != null)
                             {
                                 newFromPort = this.GetPortCopyToCurrentTenant(portZero.Id, myTenant);
@@ -71,10 +71,10 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     {
                         string OldPortId = this.ShipmentPM.MainCarriageFinalDestinationPortId;
 
-                        Port newToPort = this.iPortRepository.GetPortsByNameOrCode(CodeOfDestination, null, myTenant).Where(d => d.IsAir).FirstOrDefault();
+                        Port newToPort = this.myPortRepository.GetPortsByNameOrCode(CodeOfDestination, null, myTenant).Where(d => d.IsAir).FirstOrDefault();
                         if (newToPort == null)
                         {
-                            Port portZero = this.iPortRepository.GetPortsByNameOrCode(CodeOfDestination, null, 0).Where(d => d.IsAir).FirstOrDefault();
+                            Port portZero = this.myPortRepository.GetPortsByNameOrCode(CodeOfDestination, null, 0).Where(d => d.IsAir).FirstOrDefault();
                             if (portZero != null)
                             {
                                 newToPort = this.GetPortCopyToCurrentTenant(portZero.Id, myTenant);
@@ -829,10 +829,10 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
             if (!string.IsNullOrEmpty(iStatusArgs.FromPortCode))
             {
-                Port iPort = this.iPortRepository.GetSinglePortByCode(this.myTenant, iStatusArgs.FromPortCode, true);
+                Port iPort = this.myPortRepository.GetSinglePortByCode(this.myTenant, iStatusArgs.FromPortCode, true);
                 if (iPort == null)
                 {
-                    Port portZero = this.iPortRepository.GetPortsByNameOrCode(iStatusArgs.FromPortCode, null, 0).Where(a => a.IsAir).FirstOrDefault();
+                    Port portZero = this.myPortRepository.GetPortsByNameOrCode(iStatusArgs.FromPortCode, null, 0).Where(a => a.IsAir).FirstOrDefault();
                     if (portZero != null)
                     {
                         iPort = this.GetPortCopyToCurrentTenant(portZero.Id, this.myTenant);
@@ -848,10 +848,10 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
             if (!string.IsNullOrEmpty(iStatusArgs.ToPortCode))
             {
-                Port iPort = this.iPortRepository.GetSinglePortByCode(this.myTenant, iStatusArgs.ToPortCode, true);
+                Port iPort = this.myPortRepository.GetSinglePortByCode(this.myTenant, iStatusArgs.ToPortCode, true);
                 if (iPort == null)
                 {
-                    Port portZero = this.iPortRepository.GetPortsByNameOrCode(iStatusArgs.ToPortCode, null, 0).Where(a => a.IsAir).FirstOrDefault();
+                    Port portZero = this.myPortRepository.GetPortsByNameOrCode(iStatusArgs.ToPortCode, null, 0).Where(a => a.IsAir).FirstOrDefault();
                     if (portZero != null)
                     {
                         iPort = this.GetPortCopyToCurrentTenant(portZero.Id, this.myTenant);
@@ -867,10 +867,10 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
             if (!string.IsNullOrEmpty(iStatusArgs.LocationPortCode))
             {
-                Port iPort = this.iPortRepository.GetSinglePortByCode(this.myTenant, iStatusArgs.LocationPortCode, true);
+                Port iPort = this.myPortRepository.GetSinglePortByCode(this.myTenant, iStatusArgs.LocationPortCode, true);
                 if (iPort == null)
                 {
-                    Port portZero = this.iPortRepository.GetPortsByNameOrCode(iStatusArgs.LocationPortCode, null, 0).Where(a => a.IsAir).FirstOrDefault();
+                    Port portZero = this.myPortRepository.GetPortsByNameOrCode(iStatusArgs.LocationPortCode, null, 0).Where(a => a.IsAir).FirstOrDefault();
                     if (portZero != null)
                     {
                         iPort = this.GetPortCopyToCurrentTenant(portZero.Id, this.myTenant);

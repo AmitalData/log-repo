@@ -568,6 +568,8 @@
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStockLine.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStocksStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APPaymentTransferStatus.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\ARPaymentChequeReplica.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\ARPaymentChequeStatusReplica.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\BankAccountLite.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATPaymentMethod.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATInvoiceStatus.cs" />
@@ -576,6 +578,8 @@
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStockLineMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStockMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStocksStatusMap.cs" />
+    <Compile Include="InvoiceModel\Mapping\ARPaymentChequeReplicaMap.cs" />
+    <Compile Include="InvoiceModel\Mapping\ARPaymentChequeStatusReplicaMap.cs" />
     <Compile Include="InvoiceModel\Mapping\BankAccountLiteMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATPaymentMethodMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATInvoiceStatusMap.cs" />
@@ -584,6 +588,8 @@
     <Compile Include="InvoiceModel\Repositories\ARInvoiceStockLineRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ARInvoiceStockRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ARInvoiceStocksStatusRepository.cs" />
+    <Compile Include="InvoiceModel\Repositories\ARPaymentChequeReplicaRepository.cs" />
+    <Compile Include="InvoiceModel\Repositories\ARPaymentChequeStatusReplicaRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\BankAccountLiteRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATInvoiceStatusRepository.cs" />
