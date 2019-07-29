@@ -423,25 +423,36 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 90px;">
+                    <td style="width: 90px;" *ngIf="!IsRestoreButtonVisibile">
                         <button class="Button" (click)="CancelApprovalButtonClicked()" [disabled]="!IsCancelApprovedEnabled">{{'BankAccounts.O.CancelPage' | TextCodeTranslationPipe}}</button>
                     </td>
+                    <td style="width: 90px;" *ngIf="IsRestoreButtonVisibile">
+                        <button class="Button" (click)="RestoreButtonClicked()">{{'Accounting.General.O.Restore' |TextCodeTranslationPipe}}</button>
+                    </td>
+
                     <td style="width: 7px;">
                         <div></div>
                     </td>
                     <td style="width: 90px;">
-                        <button class="Button" (click)="EditButtonClicked()" [disabled]="IsEditButtonDisabled" >  {{'Accounting.General.O.Edit' |TextCodeTranslationPipe}} </button>
+                        <button class="Button" (click)="EditButtonClicked()" [disabled]="IsEditButtonDisabled">  {{'Accounting.General.O.Edit' |TextCodeTranslationPipe}} </button>
                     </td>
                     <td style="width: 15px;">
                         <div>
-                            <LogToolTip *ngIf="IsEditButtonDisabled" [direction]="isRTL?'bottomleft':'bottomright'">
-                                {{ EditWindowToolTip
-                            }}
-                            <br />
-                            <!-- <br /> -->
+                            <LogToolTip *ngIf="IsEditButtonDisabled || !IsRestoreButtonVisibile" [direction]="isRTL?'bottomleft':'bottomright'">
+                                <p><span *ngIf="IsEditButtonDisabled">
+    {{
+                                    EditWindowToolTip
+    }}
+
+    <br>
+</span> {{
+                                    RestoreToolTipMessage
+                                    }}
+                                </p>
+                                <!-- <br /> -->
                             </LogToolTip>
-                            </div>
-</td>
+                        </div>
+                    </td>
                     <td>
                         <div class="Footer" style="text-align: center;">
                             <span style="font-size: 13px;">{{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{ TotalSum | NumbersPipe:'N2' }}</span>

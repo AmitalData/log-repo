@@ -14,6 +14,10 @@ namespace Logitude.BL.CommonDataModel.CloseTables
        public const string Devolucionesdescuentosobonificaciones = "G02";  
        public const string Gastosengeneral = "G03";  
        public const string Pordefinir = "P01";  
+       public const string Mobilarioyequipodeoficinaporinversiones = "I02";  
+       public const string Equipodetransporte = "I03";  
+       public const string Equipodecomputoyaccesorios = "I04";  
+       public const string Comunicacionestelefónicas = "I06";  
     }
 }
 

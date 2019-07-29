@@ -31,6 +31,8 @@ update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from Obje
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'EntityStatus') and (FieldName = 'Name' or FieldName = 'Code' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Rank') and (FieldName = 'Name'  )
 
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'CustomPickList') and (FieldName = 'Value' or FieldName = 'Code' or FieldName = 'IsMultipleChoice' )
+
 
 
 

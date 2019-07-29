@@ -24,7 +24,7 @@ export class GeneralFunctions {
     UseSearchBox(searchFeildId: string, searchByRef: string) {
 
         this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.LogitudeQuickSearchItem', 0);
     }
     QuickSearchTextBox(searchFeildId: string, searchByRef: string) {
         this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);

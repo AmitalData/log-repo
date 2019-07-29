@@ -613,7 +613,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         static QueueClient _QueueClient;
         protected void _ButtonJournalApproveQueue_Click(object sender, EventArgs e)
         {
-            var myWorker = new JournalApproveService.JournalApproveWorkrer();
+            var myWorker = new JournalApproveService.JournalApproveWorker();
             var sw = Stopwatch.StartNew();
             myWorker.WorkUntilQEmptyQueueDB();
             sw.Stop();

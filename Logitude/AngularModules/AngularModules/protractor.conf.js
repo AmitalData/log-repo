@@ -19,6 +19,12 @@ exports.config = {
             TransportMode: null,
             ShipmentType: null,
         },
+        QuoteParams: {
+            Direction: null,
+            TransportMode: null, 
+            ShipmentType: null,
+            QuoteType: null,
+        },
         ReportDoc: {
             SenarioType: null,
 
@@ -123,13 +129,14 @@ exports.config = {
 
         // ********************* Login **********************************
         login: 'e2e/Login/**/Login.e2e-spec.ts',
+        NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
 
      //   FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
         //   ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
         //   CRM: 'e2e/CRM/**/CRMModule-spec.ts',
         //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
 
-       //   NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+        // NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
         // NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
         //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
 
@@ -152,7 +159,7 @@ exports.config = {
         //  Reports: 'e2e/Report/**/Report-spec.ts',
 
          //*************ShipmentView********************
-        ShipmentView: 'e2e/**/ShipmentView-spec.ts'
+        //ShipmentView: 'e2e/**/ShipmentView-spec.ts'
 
         //*************DocOutTab***************
        //  DocOut: 'e2e/**/DocsOut.e2e-spec.ts'

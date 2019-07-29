@@ -95,6 +95,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
+    private SessionEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -141,12 +142,20 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                 }
             });
         }
+
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "RefreshConnections") {
+                this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                this.LoadData();
+            }
+        });
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.TabSelectedEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     LoadData() {
