@@ -152,7 +152,7 @@ exports.config = {
         //  Reports: 'e2e/Report/**/Report-spec.ts',
 
          //*************ShipmentView********************
-        //ShipmentView: 'e2e/**/ShipmentView-spec.ts'
+        ShipmentView: 'e2e/**/ShipmentView-spec.ts'
 
         //*************DocOutTab***************
        //  DocOut: 'e2e/**/DocsOut.e2e-spec.ts'

@@ -13,6 +13,22 @@ export class FieldsHelper {
         });
     }
 
+    WaitActionButtonAndClick(containerClassName: string, isLast: boolean) {
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.elementToBeClickable(element(by.className(containerClassName))), 100000).then(a => {
+            let last = element.all(by.className(containerClassName)).last();
+            browser.actions().mouseMove(last).perform();
+            var allBtns = last.all(by.css('.ActionButtons'));
+            var btnToClick = null;
+            if (isLast) {
+                btnToClick = allBtns.last();
+            } else {
+                btnToClick = allBtns.first();
+            }
+            btnToClick.click();
+        });
+    }
+
     WaitByIdAndClick(Id: string) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.elementToBeClickable(element(by.id(Id))), 100000000).then(a => {
