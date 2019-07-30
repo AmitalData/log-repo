@@ -13,7 +13,7 @@ using UnifreightIIG.Common.TheGateway;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
-    class CLAIM_5005_ContinuousRequestOnClaimFileMessagingService : MessagingServiceBase<
+    public class CLAIM_5005_ContinuousRequestOnClaimFileMessagingService : MessagingServiceBase<
         ContinuousRequestOnClaimFileRequestParams,
         ContinuousResponseOnClaimFileResponseData,
         CLAIM_MSG9_ContinuousRequestOnClaimFile,
