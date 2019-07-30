@@ -153,26 +153,27 @@ export class GLAccountMenuButtonsHandler {
 
 
                 case "GLAccountReactivate": {
-                    this.ReactivateGLAccount();
+                    this.SetInactiveField(false);
                     break;
                 }
 
                 case "GLAccountInactive":
                     {
-                        var myGLAccountListService: GLAccountListService = new GLAccountListService();
-                        myGLAccountListService.getSingle(this.EntityPM.Id)
-                            .subscribe((myResponse: ServiceResponse) => {
-                                var myGLAccountList: GLAccountList = myResponse.Result as GLAccountList;
+                        this.SetInactiveField(true);
+                        //var myGLAccountListService: GLAccountListService = new GLAccountListService();
+                        //myGLAccountListService.getSingle(this.EntityPM.Id)
+                        //    .subscribe((myResponse: ServiceResponse) => {
+                        //        var myGLAccountList: GLAccountList = myResponse.Result as GLAccountList;
 
-                                if (!myGLAccountList.BalanceInLocalCurrency || myGLAccountList.BalanceInLocalCurrency == 0) {
-                                    this.EntityPM.Inactive = true;
-                                    this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
-                                    this.entityArgs.EditComponent.SaveChanges();
-                                } else {
-                                    this.entityArgs.EditComponent.ValidationErrorsList = [];
-                                    this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
-                                }
-                            });
+                        //        if (!myGLAccountList.BalanceInLocalCurrency || myGLAccountList.BalanceInLocalCurrency == 0) {
+                        //            this.EntityPM.Inactive = true;
+                        //            this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
+                        //            this.entityArgs.EditComponent.SaveChanges();
+                        //        } else {
+                        //            this.entityArgs.EditComponent.ValidationErrorsList = [];
+                        //            this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
+                        //        }
+                        //    });
                         break;
                     }
                 case "GLAccountPrintCardIndex":
@@ -198,16 +199,17 @@ export class GLAccountMenuButtonsHandler {
         this.CurrentSession.StartBusyIndicator(message);
     }
 
-    private ReactivateGLAccount() {
+    private SetInactiveField(inactive:boolean) {
        
         var myGLAccountListService: GLAccountListService = new GLAccountListService();
         myGLAccountListService.getSingle(this.EntityPM.Id)
-            .subscribe((myResponse: ServiceResponse) => {
-                var myGLAccountList: GLAccountList = myResponse.Result as GLAccountList;
+            .subscribe((response: ServiceResponse) => {
+                var gLAccount: GLAccountList = response.Result as GLAccountList;
 
-                if (!myGLAccountList.BalanceInLocalCurrency || myGLAccountList.BalanceInLocalCurrency == 0) {
-                    this.EntityPM.Inactive = false;
-                    //this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
+                if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) {
+                    this.EntityPM.Inactive = inactive;
+                    if (inactive)
+                    this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
                     this.entityArgs.EditComponent.SaveChanges();
                 } else {
                     this.entityArgs.EditComponent.ValidationErrorsList = [];
