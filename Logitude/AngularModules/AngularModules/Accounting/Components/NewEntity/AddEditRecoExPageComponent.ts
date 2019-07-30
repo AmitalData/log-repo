@@ -278,7 +278,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         this.IsDisplayOnly = false;
         this.SetUIProperties();
         this.closeScreen = false;
-    
+         
         this.SaveEntity();
 
     }
@@ -352,7 +352,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     }
 
     RestoreButtonClicked() {
-
+        this.IsCancelApprovedEnabled = true;
         this.EditButtonClicked();
     }
 
