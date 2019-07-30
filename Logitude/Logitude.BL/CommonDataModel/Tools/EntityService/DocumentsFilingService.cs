@@ -35,6 +35,7 @@ using Logitude.BL.Helpers;
 using Logitude.SystemLogs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Configuration;
+using System.Xml.Serialization;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -1260,11 +1261,38 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             };
 
 
+            string xml = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString<DocumentsFilingPM>(myDocumentsFilingPM);
+                
+                
+            
+            var myEnvelope = new Envelope() {
+                 CommunicationLogId = Guid.NewGuid().ToString(),
+                  Tasks= new List<QueueTask>() {
+                      
+
+                      new QueueTask() {
+
+                          Action = "DocumentsFiling.Upsert",
+                      Parameters = new List<Parameter>()
+                      {
+                            new Parameter()
+                            {
+                                 Value = xml
+                            }
+                      }
+                  } }
+                  
+            };
+
             var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService
-                <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, DocumentsFilingPM>(
-                amitalCustomFileCommunicationModel, myDocumentsFilingPM);
+                <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, Envelope>(
+                amitalCustomFileCommunicationModel, /*myDocumentsFilingPM*/ myEnvelope);
             bool pImmediately = true;
             var info = myUServerCommunicationService.Send(pImmediately);
+            if (info.GenericResponseObj?.Status !="0" )//&&  !string.IsNullOrWhiteSpace(info.GenericResponseObj?.ErrorDescription))
+            {
+                throw new Exception($"Send 2 Urouter ErrorDescription{info.GenericResponseObj?.ErrorDescription}");
+            }
         }
 
         private List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet;
