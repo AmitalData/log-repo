@@ -123,6 +123,11 @@ export class ARPaymentChequeReplicaPM {
     public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
        
 	 
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+       
+	 
     private exchangeRate: number;
     public get ExchangeRate() { return this.exchangeRate; }
     public set ExchangeRate(newValue: number) { if (this.exchangeRate != newValue) { this.exchangeRate = newValue; this.MarkAsDirty("ExchangeRate"); } }
