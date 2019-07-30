@@ -72,7 +72,7 @@ namespace CommunicationWorkerRole
                 {
                     //TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
                     Task.Status = null;
-                    Task.Version = Task.Version + 1; 
+                    Task.Version = Task.Version + 1;
                     AddSchedulerQueue(Task);
                     var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
                     LogInfoToDB(Msg, Task);
@@ -123,7 +123,7 @@ namespace CommunicationWorkerRole
                     SchedulerLog.Log += StringHelper.TruncateLongString(Environment.NewLine + MyFinalLog.ToString(), 4000);
                     SchedulerLogsService.Update(SchedulerLog);
                 }
-                 
+
 
                 //}
             }
@@ -141,7 +141,7 @@ namespace CommunicationWorkerRole
                 AddSchedulerQueue(Task);
                 var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
                 LogInfoToDB(Msg, Task);
-               
+
             }
         }
 
@@ -180,18 +180,24 @@ namespace CommunicationWorkerRole
                                     Task.LastRunStartTimeUTC = DateTime.UtcNow;
                                     if (Task != null)
                                     {
-                                        if (Version >= Task.Version)
+                                        if (Task.InActive)
                                         {
-                                            List<object> args = new List<object>();
-                                            if (!string.IsNullOrEmpty(Task.Id))
+                                            queueservice.Complete();
+                                        }
+                                        else
+                                        {
+                                            if (Version >= Task.Version)
                                             {
-                                                args.Add(Task.Id);
-                                            }
-                                            args.Add(Task.Tenant);
+                                                List<object> args = new List<object>();
+                                                if (!string.IsNullOrEmpty(Task.Id))
+                                                {
+                                                    args.Add(Task.Id);
+                                                }
+                                                args.Add(Task.Tenant);
 
 
                                                 object[] ArrArgs = args.ToArray();
-                                                var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ServiceClassName), ArrArgs) as TaskManagerBase;
+                                                var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ProcedureCode), ArrArgs) as TaskManagerBase;
                                                 Task.Status = "In progress";
                                                 WRItem.Task = Task;
                                                 WRItem.queueservice = queueservice;
@@ -255,7 +261,7 @@ namespace CommunicationWorkerRole
             var queueservice = new DbQueueService();
             if (task.NextRunTime < DateTime.Now)
             {
-                task.NextRunTime = TenantServerConfigration.GetCurrentDateTime(task.Tenant); 
+                task.NextRunTime = TenantServerConfigration.GetCurrentDateTime(task.Tenant);
                 task.NextRunTimeUTC = DateTime.UtcNow;
             }
             switch (task.TriggerType)
