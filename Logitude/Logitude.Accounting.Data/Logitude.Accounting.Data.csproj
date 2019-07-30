@@ -86,6 +86,7 @@
     <Compile Include="EntityKeys\GLAccountCounterKeys.cs" />
     <Compile Include="EntityKeys\IntegrityCheckStatusKeys.cs" />
     <Compile Include="EntityKeys\JournalAdditionalDataKeys.cs" />
+    <Compile Include="EntityKeys\JournalExternalReconcileKeys.cs" />
     <Compile Include="EntityKeys\JournalMoreDataKeys.cs" />
     <Compile Include="EntityKeys\OpenFormatReportKeys.cs" />
     <Compile Include="EntityKeys\OpenFormatReportStatusKeys.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="EntityMapping\GLAccountCounterMap.cs" />
     <Compile Include="EntityMapping\IntegrityCheckStatusMap.cs" />
     <Compile Include="EntityMapping\JournalAdditionalDataMap.cs" />
+    <Compile Include="EntityMapping\JournalExternalReconcileMap.cs" />
     <Compile Include="EntityMapping\JournalMoreDataMap.cs" />
     <Compile Include="EntityMapping\OpenFormatReportMap.cs" />
     <Compile Include="EntityMapping\OpenFormatReportStatusMap.cs" />
@@ -186,6 +188,7 @@
     <Compile Include="EntityPOCOs\GLAccountCounter.cs" />
     <Compile Include="EntityPOCOs\IntegrityCheckStatus.cs" />
     <Compile Include="EntityPOCOs\JournalAdditionalData.cs" />
+    <Compile Include="EntityPOCOs\JournalExternalReconcile.cs" />
     <Compile Include="EntityPOCOs\JournalMoreData.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReport.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReportStatus.cs" />
@@ -211,6 +214,7 @@
     <Compile Include="Repositories\Generated\GLAccountCounterRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\IntegrityCheckStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\JournalAdditionalDataRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\JournalExternalReconcileRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\JournalMoreDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\OpenFormatReportRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\OpenFormatReportStatusRepository.Generated.cs" />
@@ -227,6 +231,7 @@
     <Compile Include="Repositories\GLAccountCounterRepository.cs" />
     <Compile Include="Repositories\IntegrityCheckStatusRepository.cs" />
     <Compile Include="Repositories\JournalAdditionalDataRepository.cs" />
+    <Compile Include="Repositories\JournalExternalReconcileRepository.cs" />
     <Compile Include="Repositories\JournalMoreDataRepository.cs" />
     <Compile Include="Repositories\OpenFormatReportRepository.cs" />
     <Compile Include="Repositories\OpenFormatReportStatusRepository.cs" />

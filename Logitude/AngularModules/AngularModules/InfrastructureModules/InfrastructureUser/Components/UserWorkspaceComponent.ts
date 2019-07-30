@@ -80,6 +80,10 @@ export class UserWorkspaceComponent implements OnInit {
             }
         }
 
+        else if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+            isLicensesManagmentSystem = true;
+        }
+
         this.IsLicensesManagmentSystem = isLicensesManagmentSystem;
 
         if (this.IsLicensesManagmentSystem) {
@@ -165,7 +169,8 @@ export class UserWorkspaceComponent implements OnInit {
         args.AllUserLicenses = this.allUserLicenses;
 
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 780;
+        logitudeWindow.Width = 960;
+        logitudeWindow.Height = 570;
         logitudeWindow.Title = "Licenses Management";
         logitudeWindow.WindowArgs = args;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureUser/Components/LicensesManagementComponent');

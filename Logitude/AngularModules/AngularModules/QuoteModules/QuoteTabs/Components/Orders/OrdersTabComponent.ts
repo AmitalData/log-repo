@@ -314,13 +314,16 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     private SetExpirationDate() {
-        var date = DateTool.AddDays(this.StartDate, this.ExpirationDays);
-        if (date == null) {
-            this.EntityPM.ExpirationDays = null;
-        }
+        if (this.EntityPM.ExpirationDays == null && this.EntityPM.ExpirationDate == null) {}
         else {
-            if (this.ExpirationDate.valueOf() != date.valueOf()) {
-                this.EntityPM.ExpirationDate = date;
+            var date = DateTool.AddDays(this.StartDate, this.ExpirationDays);
+            if (date == null) {
+                this.EntityPM.ExpirationDays = null;
+            }
+            else {
+                if (this.ExpirationDate.valueOf() != date.valueOf()) {
+                    this.EntityPM.ExpirationDate = date;
+                }
             }
         }
     }

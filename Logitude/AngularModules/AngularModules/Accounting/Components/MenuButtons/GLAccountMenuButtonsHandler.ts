@@ -28,6 +28,7 @@ export class GLAccountMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     private glAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
+    gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
@@ -82,16 +83,27 @@ export class GLAccountMenuButtonsHandler {
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
                     switch (button.EventCode) {
+                        case "GLAccountReactivate": {
+                            if (this.EntityPM.Inactive == true) {
+                                button.IsHidden = false;
+                            }
+                            else {
+                                button.IsHidden = true;
+                            }
+                            break;
+                        }
+
 
                         case "GLAccountInactive":
                             {
                                 if (this.EntityPM.Inactive == true) {
-                                    button.IsDisabled = true;
+                                    button.IsHidden = true;
                                 } else if (this.EntityPM.AccountTypeCode == '4' || this.EntityPM.AccountTypeCode == '5') { // Job / File
                                     button.IsDisabled = true;
                                 }
                                 else {
                                     button.IsDisabled = false;
+                                      button.IsHidden = false;
                                 }
                                 break;
                             }
@@ -139,6 +151,12 @@ export class GLAccountMenuButtonsHandler {
         if (errors.length == 0) {
             switch (menuButton.EventCode) {
 
+
+                case "GLAccountReactivate": {
+                    this.ReactivateGLAccount();
+                    break;
+                }
+
                 case "GLAccountInactive":
                     {
                         var myGLAccountListService: GLAccountListService = new GLAccountListService();
@@ -180,6 +198,23 @@ export class GLAccountMenuButtonsHandler {
         this.CurrentSession.StartBusyIndicator(message);
     }
 
+    private ReactivateGLAccount() {
+       
+        var myGLAccountListService: GLAccountListService = new GLAccountListService();
+        myGLAccountListService.getSingle(this.EntityPM.Id)
+            .subscribe((myResponse: ServiceResponse) => {
+                var myGLAccountList: GLAccountList = myResponse.Result as GLAccountList;
+
+                if (!myGLAccountList.BalanceInLocalCurrency || myGLAccountList.BalanceInLocalCurrency == 0) {
+                    this.EntityPM.Inactive = false;
+                    //this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
+                    this.entityArgs.EditComponent.SaveChanges();
+                } else {
+                    this.entityArgs.EditComponent.ValidationErrorsList = [];
+                    this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
+                }
+            });
+    }
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
     }

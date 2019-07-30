@@ -157,7 +157,12 @@ export class TariffVersionPM {
         }
     }
     //public TariffAllInCharges: Array<TariffVersionAllInChargePM>= [];
- 
+     private initialEnddate: Date;
+    public get InitialEnddate() { return this.initialEnddate; }
+    public set InitialEnddate(newValue: Date) { if (this.initialEnddate != newValue) { this.initialEnddate = newValue; this.MarkAsDirty("InitialEnddate"); } }
+       
+	 
+
     public OldEntityPM: TariffVersionPM;
 	
     private entityParentPM: any;

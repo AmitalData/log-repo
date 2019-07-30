@@ -63,6 +63,34 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             }
         }
 
+        private IBookingContext iBookingContext;
+        private IShipmentsContext iShipmentsContext;
+        private ICommonDataContext iCommonContext;
+        private IWebFreightContext iWebFreightContext;
+        private BookingRepository myBookingRepository;
+        private ShipmentRepository myShipmentRepository;
+        private PortRepository myPortRepository;
+        private AirlineRepository myAirlineRepository;
+        private ObjectTableRepository myObjectTabelRepository;
+        private CommunicationLogRepository myCommunicationLogRepository;
+        private FlightsSchedulesRequestRepository myFlightsSchedulesRequestRepository;
+        private FlightsSchedulesRequest myFlightsSchedulesRequest;
+        private List<Airline> AllPrefixAirlines;
+        private void InitializeComponent()
+        {
+            iBookingContext = BookingContext.GetContext(myTenant);
+            iShipmentsContext = ShipmentsContext.GetContext(myTenant);
+            iCommonContext = CommonDataContext.GetContext(myTenant);
+            iWebFreightContext = WebFreightContext.GetContext(myTenant);
+            myBookingRepository = new BookingRepository(iBookingContext);
+            myShipmentRepository = new ShipmentRepository(iShipmentsContext);
+            myPortRepository = new PortRepository(iCommonContext);
+            myAirlineRepository = new AirlineRepository(iCommonContext);
+            myObjectTabelRepository = new ObjectTableRepository(iWebFreightContext);
+            myCommunicationLogRepository = new CommunicationLogRepository(iCommonContext);
+            AllPrefixAirlines = new List<Airline>();
+        }
+
         public void Run()
         {
             if (myAnalyzeQueue != null)
@@ -71,6 +99,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
                 if (myEnvelope != null)
                 {
+                    this.InitializeComponent();
                     this.AnalyzeData();
                 }
             }
@@ -289,35 +318,8 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             }
         }
 
-        private IBookingContext iBookingContext;
-        private IShipmentsContext iShipmentsContext;
-        private ICommonDataContext myCommonContext;
-        private IWebFreightContext myWebFreightContext;
-        private ObjectTableRepository myObjectTabelRepository;
-        private CommunicationLogRepository myCommunicationLogRepository;
-        private AirlineRepository myAirlineRepository;
-        private BookingRepository myBookingRepository;
-        private FlightsSchedulesRequestRepository myFlightsSchedulesRequestRepository;
-        private FlightsSchedulesRequest myFlightsSchedulesRequest;
-        private PortRepository iPortRepository;
-        private void InitializeComponent()
-        {
-            iBookingContext = BookingContext.GetContext(myTenant);
-            iShipmentsContext = ShipmentsContext.GetContext(myTenant);
-            myCommonContext = CommonDataContext.GetContext(myTenant);
-            myWebFreightContext = WebFreightContext.GetContext(myTenant);
-            myCommunicationLogRepository = new CommunicationLogRepository(myCommonContext);
-            myObjectTabelRepository = new ObjectTableRepository(myWebFreightContext);
-
-            if (myBookingRepository == null)
-            {
-                myBookingRepository = new BookingRepository(iBookingContext);
-            }
-        }
-
         private void ConnectAnalyzeQueue()
         {
-            this.InitializeComponent();
 
             try
             {
@@ -354,11 +356,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         case "FNA":
                         case "FMA":
                             {
-                                //if (mySenderID != "REUBCSP")
-                                //{
-                                //    AnalyzeMessageQueue();
-                                //}
-
                                 if (mySenderID != "BCSSYS03AWBCPY")
                                 {
                                     AnalyzeMessageQueue();
@@ -431,7 +428,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         private string CreateCommunicationLogForTenant(string from, int fileSize)
         {
             #region Document
-            DocumentRepository documentrepository = new DocumentRepository(myCommonContext);
+            DocumentRepository documentrepository = new DocumentRepository(iCommonContext);
 
             Document document = new Document()
             {
@@ -464,6 +461,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 DocumentId = document.Id,
                 LastStatusDateUTC = DateTime.UtcNow,
                 CreateDateUTC = DateTime.UtcNow,
+                AWBNumber = this.GetAWBNumber(),
             };
 
             if (myMessageIdentifier == "FNA" && isTechnicalFNA)
@@ -502,6 +500,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         }
         private void ConnectQueueToEntity()
         {
+            if (!string.IsNullOrEmpty(myPrefix))
+            {
+                this.AllPrefixAirlines = myAirlineRepository.GetAllAirlinesByPrefix(myPrefix, myTenant).ToList();
+            }
+
             switch (myMessageIdentifier)
             {
                 case "FSU":
@@ -509,174 +512,40 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     {
                         #region
 
-                        if (myAirlineRepository == null)
+                        bool analyzeBookingFirst = false;
+
+                        Booking myBooking = this.GetBookingByPrefix();
+
+                        if (myBooking != null)
                         {
-                            myAirlineRepository = new AirlineRepository(myCommonContext);
-                        }
-
-                        Airline myAirline = myAirlineRepository.GetSingleAirlineByPrefix(myPrefix, myTenant);
-
-                        if (myAirline == null)
-                        {
-                            throw new Exception("There is no airline with prefix. : " + myPrefix);
-                        }
-
-                        else
-                        {
-                            bool analyzeBookingFirst = false;
-
-                            Booking myBooking = myBookingRepository.GetBookingByMasterAndAirline(myMaster, myAirline.Id, myTenant);
-
-                            if (myBooking != null)
+                            if (myBooking.FFRStatusCode == "BRQ" || myBooking.FFRStatusCode == "CFM" || myBooking.FFRStatusCode == "RBA")
                             {
-                                if (myBooking.FFRStatusCode == "BRQ" || myBooking.FFRStatusCode == "CFM" || myBooking.FFRStatusCode == "RBA")
-                                {
-                                    analyzeBookingFirst = true;
-                                }
+                                analyzeBookingFirst = true;
                             }
-
-                            if (analyzeBookingFirst)
-                            {
-                                string myObjectTableName = "Booking";
-
-                                string objectTabelId = myObjectTabelRepository.GetObjectTableByName(myObjectTableName, 0, true).Id;
-
-                                CommunicationLog commlog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
-                                commlog.EntityId = myBooking.Id;
-                                commlog.EntityReference = myBooking.BookingNumber;
-                                commlog.ObjectTableId = objectTabelId;
-                                commlog.AWBNumber = this.GetAWBNumber();
-                                myCommunicationLogRepository.Update(commlog);
-                                myCommunicationLogRepository.SubmitChanges();
-
-                                myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
-                                myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
-                                myAnalyzeQueue.ObjectTableName = myObjectTableName;
-                            }
-
-                            else
-                            {
-                                Shipment myShipment = null;
-                                ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
-
-                                if (isFHLType)
-                                {
-                                    myShipment = shipmentRepository.GetShipmentByHouseAndAirline(myMaster, myHouse, myAirline.Id, myTenant);
-                                }
-
-                                else
-                                {
-                                    myShipment = shipmentRepository.GetShipmentByMasterAndAirline(myMaster, myAirline.Id, myTenant);
-                                }
-
-                                if (myShipment != null)
-                                {
-                                    string myObjectTableName = "Shipment";
-
-                                    string objectTabelId = myObjectTabelRepository.GetObjectTableByName(myObjectTableName, 0, true).Id;
-
-                                    CommunicationLog commlog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
-                                    commlog.EntityId = myShipment.Id;
-                                    commlog.EntityReference = myShipment.ShipmentNumber;
-                                    commlog.ObjectTableId = objectTabelId;
-                                    commlog.AWBNumber = this.GetAWBNumber();
-                                    myCommunicationLogRepository.Update(commlog);
-                                    myCommunicationLogRepository.SubmitChanges();
-
-                                    myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
-                                    myAnalyzeQueue.EntityReference = myShipment.ShipmentNumber;
-                                    myAnalyzeQueue.ObjectTableName = myObjectTableName;
-
-                                    if (myMessageIdentifier == "FNA")
-                                    {
-                                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                        {
-                                            Tenant = myTenant,
-                                            EventTypeCode = "FNAR",
-                                            UserId = null,
-                                            EntityId = myShipment.Id,
-                                            ObjectTableName = myObjectTableName,
-                                        });
-                                    }
-
-                                    else if (myMessageIdentifier == "FMA")
-                                    {
-                                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                        {
-                                            Tenant = myTenant,
-                                            EventTypeCode = "FMAR",
-                                            UserId = null,
-                                            EntityId = myShipment.Id,
-                                            ObjectTableName = myObjectTableName,
-                                        });
-                                    }
-                                }
-
-                                else
-                                {
-                                    if (myBooking != null)
-                                    {
-                                        string myObjectTableName = "Booking";
-
-                                        string objectTabelId = myObjectTabelRepository.GetObjectTableByName(myObjectTableName, 0, true).Id;
-
-                                        CommunicationLog commlog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
-                                        commlog.EntityId = myBooking.Id;
-                                        commlog.EntityReference = myBooking.BookingNumber;
-                                        commlog.ObjectTableId = objectTabelId;
-                                        commlog.AWBNumber = this.GetAWBNumber();
-                                        myCommunicationLogRepository.Update(commlog);
-                                        myCommunicationLogRepository.SubmitChanges();
-
-                                        myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
-                                        myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
-                                        myAnalyzeQueue.ObjectTableName = myObjectTableName;
-                                    }
-
-                                    else
-                                    {
-                                        throw new ApplicationException("There is no shipment or booking with AWBno. : " + myMaster);
-                                    }
-                                }
-                            }
-
                         }
 
-                        #endregion
-
-                        break;
-                    }
-
-                case "FSA":
-                    {
-                        #region
-
-                        if (myAirlineRepository == null)
+                        if (analyzeBookingFirst)
                         {
-                            myAirlineRepository = new AirlineRepository(myCommonContext);
-                        }
+                            string myObjectTableName = "Booking";
 
-                        Airline myAirline = myAirlineRepository.GetSingleAirlineByPrefix(myPrefix, myTenant);
+                            string objectTabelId = myObjectTabelRepository.GetObjectTableByName(myObjectTableName, 0, true).Id;
 
-                        if (myAirline == null)
-                        {
-                            throw new Exception("There is no airline with prefix. : " + myPrefix);
+                            CommunicationLog commlog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
+                            commlog.EntityId = myBooking.Id;
+                            commlog.EntityReference = myBooking.BookingNumber;
+                            commlog.ObjectTableId = objectTabelId;
+                            commlog.AWBNumber = this.GetAWBNumber();
+                            myCommunicationLogRepository.Update(commlog);
+                            myCommunicationLogRepository.SubmitChanges();
+
+                            myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
+                            myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
+                            myAnalyzeQueue.ObjectTableName = myObjectTableName;
                         }
 
                         else
-                        {                            
-                            Shipment myShipment = null;
-                            ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
-
-                            if (isFHLType)
-                            {
-                                myShipment = shipmentRepository.GetShipmentByHouseAndAirline(myMaster, myHouse, myAirline.Id, myTenant);
-                            }
-
-                            else
-                            {
-                                myShipment = shipmentRepository.GetShipmentByMasterAndAirline(myMaster, myAirline.Id, myTenant);
-                            }
+                        {
+                            Shipment myShipment = this.GetShipmentByPrefix(); ;
 
                             if (myShipment != null)
                             {
@@ -695,12 +564,34 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                 myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
                                 myAnalyzeQueue.EntityReference = myShipment.ShipmentNumber;
                                 myAnalyzeQueue.ObjectTableName = myObjectTableName;
+
+                                if (myMessageIdentifier == "FNA")
+                                {
+                                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                    {
+                                        Tenant = myTenant,
+                                        EventTypeCode = "FNAR",
+                                        UserId = null,
+                                        EntityId = myShipment.Id,
+                                        ObjectTableName = myObjectTableName,
+                                    });
+                                }
+
+                                else if (myMessageIdentifier == "FMA")
+                                {
+                                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                    {
+                                        Tenant = myTenant,
+                                        EventTypeCode = "FMAR",
+                                        UserId = null,
+                                        EntityId = myShipment.Id,
+                                        ObjectTableName = myObjectTableName,
+                                    });
+                                }
                             }
 
                             else
                             {
-                                Booking myBooking = myBookingRepository.GetBookingByMasterAndAirline(myMaster, myAirline.Id, myTenant);
-
                                 if (myBooking != null)
                                 {
                                     string myObjectTableName = "Booking";
@@ -732,6 +623,65 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         break;
                     }
 
+                case "FSA":
+                    {
+                        #region
+
+                        Shipment myShipment = this.GetShipmentByPrefix(); ;
+
+                        if (myShipment != null)
+                        {
+                            string myObjectTableName = "Shipment";
+
+                            string objectTabelId = myObjectTabelRepository.GetObjectTableByName(myObjectTableName, 0, true).Id;
+
+                            CommunicationLog commlog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
+                            commlog.EntityId = myShipment.Id;
+                            commlog.EntityReference = myShipment.ShipmentNumber;
+                            commlog.ObjectTableId = objectTabelId;
+                            commlog.AWBNumber = this.GetAWBNumber();
+                            myCommunicationLogRepository.Update(commlog);
+                            myCommunicationLogRepository.SubmitChanges();
+
+                            myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
+                            myAnalyzeQueue.EntityReference = myShipment.ShipmentNumber;
+                            myAnalyzeQueue.ObjectTableName = myObjectTableName;
+                        }
+
+                        else
+                        {
+                            Booking myBooking = this.GetBookingByPrefix();
+
+                            if (myBooking != null)
+                            {
+                                string myObjectTableName = "Booking";
+
+                                string objectTabelId = myObjectTabelRepository.GetObjectTableByName(myObjectTableName, 0, true).Id;
+
+                                CommunicationLog commlog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
+                                commlog.EntityId = myBooking.Id;
+                                commlog.EntityReference = myBooking.BookingNumber;
+                                commlog.ObjectTableId = objectTabelId;
+                                commlog.AWBNumber = this.GetAWBNumber();
+                                myCommunicationLogRepository.Update(commlog);
+                                myCommunicationLogRepository.SubmitChanges();
+
+                                myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
+                                myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
+                                myAnalyzeQueue.ObjectTableName = myObjectTableName;
+                            }
+
+                            else
+                            {
+                                throw new ApplicationException("There is no shipment or booking with AWBno. : " + myMaster);
+                            }
+                        }
+
+                        #endregion
+
+                        break;
+                    }
+
                 case "FNA":
                     {
                         if (myMessageIdentifier == "FNA" && isTechnicalFNA && myTechnicalIdentifier == "FVR")
@@ -748,107 +698,81 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         {
                             #region
 
-                            if (myAirlineRepository == null)
-                            {
-                                myAirlineRepository = new AirlineRepository(myCommonContext);
-                            }
+                            Shipment myShipment = this.GetShipmentByPrefix(); ;
 
-                            Airline myAirline = myAirlineRepository.GetSingleAirlineByPrefix(myPrefix, myTenant);
-
-                            if (myAirline == null)
+                            if (myShipment != null)
                             {
-                                throw new Exception("There is no airline with prefix. : " + myPrefix);
+                                string myObjectTableName = "Shipment";
+
+                                string objectTabelId = myObjectTabelRepository.GetObjectTableByName(myObjectTableName, 0, true).Id;
+
+                                CommunicationLog commlog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
+                                commlog.EntityId = myShipment.Id;
+                                commlog.EntityReference = myShipment.ShipmentNumber;
+                                commlog.ObjectTableId = objectTabelId;
+                                commlog.AWBNumber = this.GetAWBNumber();
+                                myCommunicationLogRepository.Update(commlog);
+                                myCommunicationLogRepository.SubmitChanges();
+
+                                myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
+                                myAnalyzeQueue.EntityReference = myShipment.ShipmentNumber;
+                                myAnalyzeQueue.ObjectTableName = myObjectTableName;
+
+                                if (myMessageIdentifier == "FNA")
+                                {
+                                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                    {
+                                        Tenant = myTenant,
+                                        EventTypeCode = "FNAR",
+                                        UserId = null,
+                                        EntityId = myShipment.Id,
+                                        ObjectTableName = myObjectTableName,
+                                    });
+                                }
+
+                                else if (myMessageIdentifier == "FMA")
+                                {
+                                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                    {
+                                        Tenant = myTenant,
+                                        EventTypeCode = "FMAR",
+                                        UserId = null,
+                                        EntityId = myShipment.Id,
+                                        ObjectTableName = myObjectTableName,
+                                    });
+                                }
                             }
 
                             else
                             {
-                                Shipment myShipment = null;
-                                ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
+                                Booking myBooking = this.GetBookingByPrefix();
 
-                                if (isFHLType)
+                                if (myBooking != null)
                                 {
-                                    myShipment = shipmentRepository.GetShipmentByHouseAndAirline(myMaster, myHouse, myAirline.Id, myTenant);
-                                }
-
-                                else
-                                {
-                                    myShipment = shipmentRepository.GetShipmentByMasterAndAirline(myMaster, myAirline.Id, myTenant);
-                                }
-
-                                if (myShipment != null)
-                                {
-                                    string myObjectTableName = "Shipment";
+                                    string myObjectTableName = "Booking";
 
                                     string objectTabelId = myObjectTabelRepository.GetObjectTableByName(myObjectTableName, 0, true).Id;
 
                                     CommunicationLog commlog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
-                                    commlog.EntityId = myShipment.Id;
-                                    commlog.EntityReference = myShipment.ShipmentNumber;
+                                    commlog.EntityId = myBooking.Id;
+                                    commlog.EntityReference = myBooking.BookingNumber;
                                     commlog.ObjectTableId = objectTabelId;
                                     commlog.AWBNumber = this.GetAWBNumber();
                                     myCommunicationLogRepository.Update(commlog);
                                     myCommunicationLogRepository.SubmitChanges();
 
                                     myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
-                                    myAnalyzeQueue.EntityReference = myShipment.ShipmentNumber;
+                                    myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
                                     myAnalyzeQueue.ObjectTableName = myObjectTableName;
-
-                                    if (myMessageIdentifier == "FNA")
-                                    {
-                                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                        {
-                                            Tenant = myTenant,
-                                            EventTypeCode = "FNAR",
-                                            UserId = null,
-                                            EntityId = myShipment.Id,
-                                            ObjectTableName = myObjectTableName,
-                                        });
-                                    }
-
-                                    else if (myMessageIdentifier == "FMA")
-                                    {
-                                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                        {
-                                            Tenant = myTenant,
-                                            EventTypeCode = "FMAR",
-                                            UserId = null,
-                                            EntityId = myShipment.Id,
-                                            ObjectTableName = myObjectTableName,
-                                        });
-                                    }
                                 }
 
                                 else
                                 {
-                                    Booking myBooking = myBookingRepository.GetBookingByMasterAndAirline(myMaster, myAirline.Id, myTenant);
-
-                                    if (myBooking != null)
-                                    {
-                                        string myObjectTableName = "Booking";
-
-                                        string objectTabelId = myObjectTabelRepository.GetObjectTableByName(myObjectTableName, 0, true).Id;
-
-                                        CommunicationLog commlog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
-                                        commlog.EntityId = myBooking.Id;
-                                        commlog.EntityReference = myBooking.BookingNumber;
-                                        commlog.ObjectTableId = objectTabelId;
-                                        commlog.AWBNumber = this.GetAWBNumber();
-                                        myCommunicationLogRepository.Update(commlog);
-                                        myCommunicationLogRepository.SubmitChanges();
-
-                                        myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
-                                        myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
-                                        myAnalyzeQueue.ObjectTableName = myObjectTableName;
-                                    }
-
-                                    else
-                                    {
-                                        throw new ApplicationException("There is no shipment or booking with AWBno. : " + myMaster);
-                                    }
+                                    throw new ApplicationException("There is no shipment or booking with AWBno. : " + myMaster);
                                 }
                             }
-                            #endregion
                         }
+                        #endregion
 
                         break;
                     }
@@ -857,46 +781,32 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     {
                         #region
 
-                        if (myAirlineRepository == null)
-                        {
-                            myAirlineRepository = new AirlineRepository(myCommonContext);
-                        }
+                        Booking myBooking = this.GetBookingByPrefix();
 
-                        Airline myAirline = myAirlineRepository.GetSingleAirlineByPrefix(myPrefix, myTenant);
-
-                        if (myAirline == null)
+                        if (myBooking != null)
                         {
-                            throw new Exception("There is no airline with prefix. : " + myPrefix);
+                            string myObjectTableName = "Booking";
+
+                            string objectTabelId = myObjectTabelRepository.GetObjectTableByName(myObjectTableName, 0, true).Id;
+
+                            CommunicationLog commlog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
+                            commlog.EntityId = myBooking.Id;
+                            commlog.EntityReference = myBooking.BookingNumber;
+                            commlog.ObjectTableId = objectTabelId;
+                            commlog.AWBNumber = this.GetAWBNumber();
+                            myCommunicationLogRepository.Update(commlog);
+                            myCommunicationLogRepository.SubmitChanges();
+
+                            myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
+                            myAnalyzeQueue.ObjectTableName = myObjectTableName;
+                            myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
                         }
 
                         else
                         {
-                            Booking myBooking = myBookingRepository.GetBookingByMasterAndAirline(myMaster, myAirline.Id, myTenant);
-
-                            if (myBooking != null)
-                            {
-                                string myObjectTableName = "Booking";
-
-                                string objectTabelId = myObjectTabelRepository.GetObjectTableByName(myObjectTableName, 0, true).Id;
-
-                                CommunicationLog commlog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
-                                commlog.EntityId = myBooking.Id;
-                                commlog.EntityReference = myBooking.BookingNumber;
-                                commlog.ObjectTableId = objectTabelId;
-                                commlog.AWBNumber = this.GetAWBNumber();
-                                myCommunicationLogRepository.Update(commlog);
-                                myCommunicationLogRepository.SubmitChanges();
-
-                                myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
-                                myAnalyzeQueue.ObjectTableName = myObjectTableName;
-                                myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
-                            }
-
-                            else
-                            {
-                                throw new ApplicationException("There is no booking with AWBno. : " + myMaster);
-                            }
+                            throw new ApplicationException("There is no booking with AWBno. : " + myMaster);
                         }
+
                         #endregion
 
                         break;
@@ -905,18 +815,70 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 case "FVA":
                     {
                         this.ConnectFVREntity();
-
                         break;
                     }
             }
         }
-        private void ConnectFVREntity()
+
+        private Booking GetBookingByPrefix()
         {
-            if (this.iBookingContext == null)
+            Booking iResult = null;
+
+            if (this.AllPrefixAirlines.Count == 0)
             {
-                this.iBookingContext = BookingContext.GetContext(myTenant);
+                throw new Exception("There is no airline with prefix. : " + myPrefix);
             }
 
+            else
+            {
+                foreach (Airline item in this.AllPrefixAirlines)
+                {
+                    iResult = myBookingRepository.GetBookingByMasterAndAirline(myMaster, item.Id, myTenant);
+
+                    if (iResult != null)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return iResult;
+        }
+        private Shipment GetShipmentByPrefix()
+        {
+            Shipment iResult = null;
+
+            if (this.AllPrefixAirlines.Count == 0)
+            {
+                throw new Exception("There is no airline with prefix. : " + myPrefix);
+            }
+
+            else
+            {
+                foreach (Airline item in this.AllPrefixAirlines)
+                {
+                    if (isFHLType)
+                    {
+                        iResult = myShipmentRepository.GetShipmentByHouseAndAirline(myMaster, myHouse, item.Id, myTenant);
+                    }
+
+                    else
+                    {
+                        iResult = myShipmentRepository.GetShipmentByMasterAndAirline(myMaster, item.Id, myTenant);
+                    }
+
+                    if (iResult != null)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return iResult;
+        }
+
+        private void ConnectFVREntity()
+        {            
             if (myFlightsSchedulesRequestRepository == null)
             {
                 myFlightsSchedulesRequestRepository = new FlightsSchedulesRequestRepository(this.iBookingContext);

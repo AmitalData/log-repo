@@ -40,7 +40,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                                         select a).ToList();
 
-            List<ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques
+            List<Data.EntityPOCOs.ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques
 
                                         where a.Tenant == tenant && a.StatusCode != "5" && a.StatusCode != "6" 
 

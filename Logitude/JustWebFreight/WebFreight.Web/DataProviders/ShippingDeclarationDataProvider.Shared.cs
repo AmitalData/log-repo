@@ -305,6 +305,7 @@ namespace WebFreight.Web.DataProviders
         public string DeliveryToContactName { get; set; }
         public string DeliveryToContactEmail { get; set; }
         public string DeliveryToContactPhone { get; set; }
+        public string FirstDeliveryToContactPhone { get; set; }
 
         public DateTime? FirstPickupETD { get; set; }
 

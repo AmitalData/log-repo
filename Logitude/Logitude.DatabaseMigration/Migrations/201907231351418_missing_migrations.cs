@@ -15,7 +15,7 @@ namespace Logitude.DatabaseMigration.Migrations
             //AddColumn("dbo.QuoteTemplateSettings", "SpaceLinesBeforeFooters", c => c.Int(nullable: false));
             //AddColumn("dbo.QuoteTemplateSettings", "SpaceLinesBeforePerContainers", c => c.Int(nullable: false));
 
-            AddColumn("dbo.ARPayments", "FechaPago", c => c.DateTime());
+            //AddColumn("dbo.ARPayments", "FechaPago", c => c.DateTime());
 
             //AddColumn("dbo.ShipmentComputedFields", "Commodity", c => c.String());
             //AddColumn("dbo.ShipmentComputedFields", "FirstPickupLocation", c => c.String());
