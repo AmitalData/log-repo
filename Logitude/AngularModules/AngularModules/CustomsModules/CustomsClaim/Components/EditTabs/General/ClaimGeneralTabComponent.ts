@@ -12,9 +12,7 @@ import { ClientPM } from '../../../../../Customs/EntityPMs/ClientPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
-import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
-import { ClientsAddressCommTypePM } from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
+import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';import { ClientsAddressCommTypePM } from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
@@ -506,28 +504,29 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     CancelOrObjectionButtonClicked(item: ClaimsRelatedEntityLineComponent, isNewEntity: boolean) {
         if (!this.IsControlEnabled) return;
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        if (AppTool.IsNullOrEmpty(item.entityPM.TapagNumber)) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 250;
+            messageWindow.Height = 150;
+            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            messageWindow.Show("לא ניתן לבטל/ערר ישות תביעה שאינה המקושרת לתיק תפג");
+            return;
+        }
 
+        SessionLocator.CurrentSession.StartBusyIndicator("");
         var windowArgs: any = {};
-        windowArgs.EntityCounterKey = item.entityPM.EntityCounterKey;
+        windowArgs.ClaimsRelatedEntityPM = item.entityPM;
         windowArgs.ClaimPM = this.EntityPM;
-        windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Claim.TH.CancelOrObjection");
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
         logWindow.Height = 500;
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe((event: any) => {
-            if (event == 'ok') {
-                this.RefreshEntity();
-            }
-        });
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Claim.TH.CancelOrObjection");
 
-        logWindow.IsHideHeader = true;
         logWindow.Show('./CustomsModules/CustomsClaim/Components/EditTabs/RelatedEntity/ClaimRelatedEntityCancelOrObjectionTabComponent');
         SessionLocator.CurrentSession.StopBusyIndicator();
-
     }
 
     AddEntityCommand() {

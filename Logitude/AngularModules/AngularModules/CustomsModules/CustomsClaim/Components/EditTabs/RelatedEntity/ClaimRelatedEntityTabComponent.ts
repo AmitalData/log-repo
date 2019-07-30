@@ -85,7 +85,6 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
         this.TabsItemsSource.push(new TabItem("ExportDeclaration", "Customs.Claim.O.ClaimsRelatedEntityAdditional"));
         this.TabsItemsSource.push(new TabItem("ClaimDecision", "Customs.Claim.TH.ClaimDecision"));
         this.TabsItemsSource.push(new TabItem("CustomAnswer", "Customs.Claim.TH.CustomAnswer"));
-        this.TabsItemsSource.push(new TabItem("CancelOrObjection", "Customs.Claim.TH.CancelOrObjection"));
         this.selectedTabCode = "FileData";
     }
 
@@ -140,7 +139,6 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
     private ReasonsAndExplanitaions: any = null;
     private CustomAnswer: any = null;
     private ClaimDecision: any = null;
-    private CancelOrObjection: any = null;
     public SelectedTab: TabItem;
     SelectionChanged() {
         if (!AppTool.IsNullOrEmpty(this.SelectedTabCode)) {
@@ -184,16 +182,6 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
                                 .then(cmpRef => {
                                     this.CustomAnswer = cmpRef.instance;
                                     this.CustomAnswer.InitTab(this.ClaimPM.ClaimsRelatedEntities.filter(d => d.EntityCounterKey == this.EntityCounterKey)[0], this.ClaimPM, !this.IsDisplayOnly);
-                                });
-                        }
-                        break;
-                    }
-                    case "CancelOrObjection": {
-                        if (this.CancelOrObjection == null) {
-                            SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsClaim/Components/EditTabs/RelatedEntity/ClaimRelatedEntityCancelOrObjectionTabComponent', myLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    this.CancelOrObjection = cmpRef.instance;
-                                    this.CancelOrObjection.InitTab(this.ClaimPM.ClaimsRelatedEntities.filter(d => d.EntityCounterKey == this.EntityCounterKey)[0], this.ClaimPM, !this.IsDisplayOnly, this.IsNewEntity);
                                 });
                         }
                         break;

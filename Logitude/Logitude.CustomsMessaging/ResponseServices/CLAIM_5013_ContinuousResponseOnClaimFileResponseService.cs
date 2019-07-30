@@ -61,6 +61,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
+            MyResponseData.ContinuousMessagesTypeName = customResponse.SystemAnswer.FirstOrDefault().continuousMessagesTypecode.ToString();
+            MyResponseData.ClaimRequestNumber = customResponse.SystemAnswer.FirstOrDefault().requestNumber.ToString();
+            MyResponseData.Note = customResponse.SystemAnswer.FirstOrDefault().note;
+
             if (_ClaimPM != null && _ClaimPM.ClaimsRelatedEntities != null && _ClaimPM.ClaimsRelatedEntities.Count > 0)
             {
                 ClaimsRelatedEntityPM myClaimsRelatedEntityPM = _ClaimPM.ClaimsRelatedEntities.Where(r => r.EntityCounterKey.ToString() == requestParams.ClaimRelatedEntityCounterKey).FirstOrDefault();
