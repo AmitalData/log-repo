@@ -190,28 +190,30 @@ namespace CommunicationWorkerRole
                                             args.Add(Task.Tenant);
 
 
-                                            object[] ArrArgs = args.ToArray();
-                                            var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ProcedureCode), ArrArgs) as TaskManagerBase;
-                                            Task.Status = "In progress";
-                                            WRItem.Task = Task;
-                                            WRItem.queueservice = queueservice;
-                                            WRItem.RetryNumber = message.RetryNumber;
-                                            WRItem.MessageId = message.MessageId;
-                                            Thread thread = new Thread(WRItem.Run) { Name = Task.Name };
-                                            //Task.Status = "In progress";
-                                            service.Update(Task);
-                                            var CurThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
-                                            if (CurThread != null)
-                                            {
-                                                TasksThreads.Remove(CurThread);
+                                                object[] ArrArgs = args.ToArray();
+                                                var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ServiceClassName), ArrArgs) as TaskManagerBase;
+                                                Task.Status = "In progress";
+                                                WRItem.Task = Task;
+                                                WRItem.queueservice = queueservice;
+                                                WRItem.RetryNumber = message.RetryNumber;
+                                                WRItem.MessageId = message.MessageId;
+                                                Thread thread = new Thread(WRItem.Run) { Name = Task.Name };
+                                                //Task.Status = "In progress";
+                                                service.Update(Task);
+                                                var CurThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
+                                                if (CurThread != null)
+                                                {
+                                                    TasksThreads.Remove(CurThread);
+                                                }
+                                                thread.Start();
+                                                TasksThreads.Add(thread);
+                                                //queueservice.Complete();
+                                                //AddSchedulerQueue(Task);// need to be Moved
                                             }
-                                            thread.Start();
-                                            TasksThreads.Add(thread);
-                                            //queueservice.Complete();
-                                            //AddSchedulerQueue(Task);// need to be Moved
-                                        }
 
-                                        queueservice.Complete();
+                                            queueservice.Complete();
+                                        }
+                                      
 
 
                                     }
