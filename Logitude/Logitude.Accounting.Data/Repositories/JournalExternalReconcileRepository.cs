@@ -17,8 +17,12 @@ namespace Logitude.Accounting.Data.Repositories
         
 		public List<JournalExternalReconcile> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            JournalKeys journalKeys = entityKeys as JournalKeys;
+
+            return (from a in context.JournalExternalReconciles
+                    where a.JournalId == journalKeys.Id
+                    select a).ToList();
         }
 
    }

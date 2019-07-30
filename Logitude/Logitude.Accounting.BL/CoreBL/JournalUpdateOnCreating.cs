@@ -102,6 +102,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     item.JournalId = entityPM.Id;
 
                 }
+                foreach (var item in entityPM.JournalExternalReconciles)
+                {
+
+                    item.JournalId = entityPM.Id;
+
+                }
                 var renumber = true;
                 if (renumber)
                 {

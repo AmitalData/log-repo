@@ -199,6 +199,8 @@
     <Compile Include="CoreBL\BuildTenant\DummyTenantProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\FullAccountingProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
+    <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingService.cs" />
+    <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileDataProvider.cs" />
     <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileJournalService.cs" />
     <Compile Include="CoreBL\GLAccountCounterService.cs" />
     <Compile Include="CoreBL\CreateJournalReconcileService.cs" />
@@ -336,6 +338,7 @@
     <Compile Include="EntityDataMappings\Generated\JournalActionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalAdditionalDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\JournalExternalReconcileDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalLineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalMoreDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalReconcileDataMapping.Generated.cs" />
@@ -381,6 +384,7 @@
     <Compile Include="EntityDataMappings\JournalActionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalAdditionalDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalDataMapping.cs" />
+    <Compile Include="EntityDataMappings\JournalExternalReconcileDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalLineDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalMoreDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalReconcileDataMapping.cs" />
@@ -454,6 +458,7 @@
     <Compile Include="EntityQueryServices\Generated\GLAccountWithholdingTaxQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\IntegrityCheckStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalAdditionalDataQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\JournalExternalReconcileQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalMoreDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalReconcileQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OpenFormatReportQueryService.Generated.cs" />
@@ -529,6 +534,7 @@
     <Compile Include="EntityUpdateServices\Generated\GLAccountWithholdingTaxUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\IntegrityCheckStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\JournalAdditionalDataUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\JournalExternalReconcileUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\JournalMoreDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\JournalReconcileUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\OpenFormatReportStatusUpdateService.Generated.cs" />
@@ -553,6 +559,7 @@
     <Compile Include="EntityUpdateServices\Generated\WithholdingTaxDeductionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountWithholdingTaxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\IJournalUpdateServiceProvider.cs" />
+    <Compile Include="EntityUpdateServices\JournalExternalReconcileUpdateService.cs" />
     <Compile Include="EntityUpdateServices\JournalReconcileUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OpenFormatReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PaymentChequeLineUpdateService.cs" />

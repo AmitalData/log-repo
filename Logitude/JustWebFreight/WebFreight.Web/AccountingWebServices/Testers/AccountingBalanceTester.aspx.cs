@@ -44,6 +44,7 @@ using Logitude.Accounting.BL;
 using Logitude.Accounting.BL.CoreBL.FunctionalTests;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+using Logitude.Accounting.BL.EntityUpdateServices;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -2233,10 +2234,10 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
             var paramDefault = new
             {
-                Tenant = 1071,
+                Tenant = 1064,
 
-                LedgerTransactionId = "1-222",
-                ReconcileExternalPageLineId = "1-444",
+                LedgerTransactionId = "1-3069551",
+                ReconcileExternalPageLineId = "1-1313",//"1-12225"
             };
             
             try
@@ -2257,10 +2258,13 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 string LedgerTransactionId = param.LedgerTransactionId;
                 string ReconcileExternalPageLineId = param.ReconcileExternalPageLineId;
 
-
+                
                 var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+                myExternalReconcileJournalService.MustInit(new ExternalReconcileDataProvider( AccountingContext.GetContext(Tenant),Tenant ));
                 myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
-                //_LabelResult.Text = JsonConvert.SerializeObject(myBankAccountPageAnalyzer.MyResultLoadBankPage); ;
+                var us = new JournalUpdateService(AccountingContext.GetContext(Tenant), new Dictionary<string, IContext>(),Tenant);
+                us.Update(myExternalReconcileJournalService.TheJournalPM, true);
+                _LabelResult.Text = JsonConvert.SerializeObject(myExternalReconcileJournalService.TheJournalPM); ;
 
             }
             catch (Exception)
@@ -2270,14 +2274,19 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
             finally
             {
-                _MyLastAction.Value = MyLastAction._ButtonLoadBankPages_Click.ToString();
-                if (string.IsNullOrWhiteSpace(param))
+                _MyLastAction.Value = MyLastAction._ButtonExternalReconcile_click.ToString();
+                if (param == null)
                 {
-                    param = paramDefault;
+                    _TextBoxParam.Text = JsonConvert.SerializeObject(paramDefault);
+                }
+                else
+                {
+                    _TextBoxParam.Text = JsonConvert.SerializeObject(param);
                 }
 
-                _TextBoxParam.Text = param;
                 _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+
+                
             }
         }
         private void SetHttpAuth(int tenant)
