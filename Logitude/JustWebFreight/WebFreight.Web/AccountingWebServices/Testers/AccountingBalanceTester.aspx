@@ -1003,6 +1003,7 @@ div#two {
                     <a href="Reconcile.aspx">Reconcile.aspx</a>
                     <a href="TrailReport.aspx">TrailReport.aspx</a>
                     <button id="ButtonReconcileAfterConversion"  onclick="javascript:return OnClickButtonReconcileAfterConversion();">Reconcile After Conversion</button>        
+                    <asp:Button id="_ButtonExternalReconcile" runat="server" onclick="_ButtonExternalReconcile_click"   Text="ExternalReconcile" />
                 </li>
                 <li>
                     <button id="ButtonRevaluationsBatch" onclick="javascript:return OnClickButtonRevaluationsBatch();" >RevaluationsBatch</button>

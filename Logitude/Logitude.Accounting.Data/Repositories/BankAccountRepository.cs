@@ -65,6 +65,20 @@ namespace Logitude.Accounting.Data.Repositories
 
             return entity;
         }
+
+        public BankAccount GetBankAccountByTransferGLAcccountId(string transferGLAcccountId, int tenant)
+        {
+            BankAccount entity;
+
+            entity = (from a in context.BankAccounts
+                      where
+                      a.TransferGLAcccountId== transferGLAcccountId &&
+                      
+                      a.Tenant == tenant
+                      select a).FirstOrDefault();
+
+            return entity;
+        }
     }
 
 }
