@@ -13,7 +13,7 @@ RETURNS sql_variant
 AS  
 BEGIN  
  DECLARE @MyValueOut sql_variant
- set @MyValueOut = -1;
+ if(@DataTypeCode = ''Date'' )begin  set @MyValueOut = -1; end 
 
 if(@DataTypeCode = ''DateTime'' and  LEN(@FieldValue) >= 14)
 begin
