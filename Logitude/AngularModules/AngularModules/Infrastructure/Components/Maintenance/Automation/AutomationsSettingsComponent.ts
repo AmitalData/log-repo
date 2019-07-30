@@ -61,32 +61,34 @@ export class AutomationsSettingsComponent implements OnInit {
     ) {
 
     }
+    EntityDisplayName: string;
+    SetDataContext(dataContext: any) {
+        if (dataContext) {
+            var tableName: string = dataContext.ObjectTableName;
+            this.EntityDisplayName = dataContext.DisplayName;
+            this.AutomationList = [];
 
-    SetDataContext(tableName: string) {
+
+            if (tableName) {
+                var table = window.ObjectTables.filter(d => d.Name == tableName)[0];
+
+                if (table) {
+                    this.ObjectTableName = table.Name;
+                    this.ObjectTableId = table.Id;
+                    this.LoadAutomationsList();
+                }
+
+                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
 
 
-        this.AutomationList = [];
+                    if (tableName == "Master") {
+                        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response => {
+                            this.Start();
 
-
-        if (tableName) {
-            var table = window.ObjectTables.filter(d => d.Name == tableName)[0];
-
-            if (table) {
-                this.ObjectTableName = table.Name;
-                this.ObjectTableId = table.Id;
-                this.LoadAutomationsList();
+                        });
+                    } else this.Start();
+                });
             }
-
-            this._entityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
-
-
-                if (tableName == "Master") {
-                    this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response => {
-                        this.Start();
-
-                    });
-                } else this.Start();
-            });
         }
     }
 
@@ -198,7 +200,7 @@ export class AutomationsSettingsComponent implements OnInit {
         newEntity.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         newEntity.Description = "";
         newEntity.Version = 1,
-        newEntity.Inactive = false;
+            newEntity.Inactive = false;
         newEntity.ResultCode = "EMAIL";
         newEntity.DocumentTypeId = "";
         newEntity.TemplateId = "";
@@ -207,13 +209,13 @@ export class AutomationsSettingsComponent implements OnInit {
         newEntity.FromEmail = "";
         newEntity.AutomationXML = "";
         newEntity.ObjectTableId = this.ObjectTableId;
-        newEntity.Order = this.AutomationList.filter(d=> d.EntityPM.Type == type) ? this.AutomationList.filter(d=> d.EntityPM.Type == type).length : 0;
+        newEntity.Order = this.AutomationList.filter(d => d.EntityPM.Type == type) ? this.AutomationList.filter(d => d.EntityPM.Type == type).length : 0;
         newEntity.Name = "";
 
         var windowArgs: any = {};
 
         this.SetObjectTableInWindoWArgs(windowArgs);
-        
+
         windowArgs.DataViewModel = this;
         windowArgs.AutomationPM = newEntity;
         windowArgs.Mode = "Add";
@@ -221,7 +223,7 @@ export class AutomationsSettingsComponent implements OnInit {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 800;
         logWindow.Height = 815;
-        logWindow.Title = "Add Automation";
+        logWindow.Title = "Add " + this.EntityDisplayName+" Automation";
         logWindow.IsShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Infrastructure/Components/Maintenance/Automation/AddEditAutomationsComponent");
@@ -242,8 +244,8 @@ export class AutomationsSettingsComponent implements OnInit {
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 800;
-        logWindow.Height = 815;
-        logWindow.Title = "Edit Automation";
+        logWindow.Height = 815;;
+        logWindow.Title = "Edit " + this.EntityDisplayName + " Automation";
         logWindow.IsShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Infrastructure/Components/Maintenance/Automation/AddEditAutomationsComponent");

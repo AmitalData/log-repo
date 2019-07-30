@@ -30,13 +30,13 @@ export class MainMenuAutomationComponent implements OnInit {
 
         
         if (FeatureLocator.HasFeaturePermession("Shipment", "AUTOMATION")) {
-            this.AutomationEntityLists.push(new AutomationItemClass("Masters", "Master", "Masters & Directs"));
-            this.AutomationEntityLists.push(new AutomationItemClass("Shipments", "Shipment", "Houses & Directs"));
+            this.AutomationEntityLists.push(new AutomationItemClass("Masters", "Master","Master", "Masters & Directs"));
+            this.AutomationEntityLists.push(new AutomationItemClass("Shipments", "Shipment","Shipment", "Houses & Directs"));
         }
 
-        if (FeatureLocator.HasFeaturePermession("Ticket", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Tickets", "Ticket"));
+        if (FeatureLocator.HasFeaturePermession("Ticket", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Tickets", "Ticket", "Ticket"));
 
-        if (FeatureLocator.HasFeaturePermession("LogitudeMessagesTransmissionLog", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Transmission Logs", "LogitudeMessagesTransmissionLog"));
+        if (FeatureLocator.HasFeaturePermession("LogitudeMessagesTransmissionLog", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Transmission Logs", "LogitudeMessagesTransmissionLog","Transmission Log"));
 
        
 
@@ -54,9 +54,9 @@ export class MainMenuAutomationComponent implements OnInit {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 980;
         logWindow.Height = 650;
-        logWindow.Title = "Automations / Results Settings";
+        logWindow.Title = (item.DisplayName + " Automations / Results Settings");
         logWindow.IsShowCloseButton = true;
-        logWindow.DataContext = item.ObjectTableName;
+        logWindow.DataContext = item;
         logWindow.Show('./Infrastructure/Components/Automation/AutomationsSettingsComponent');
 
         logWindow.WindowClosed.subscribe(($event: any) => {
@@ -82,10 +82,12 @@ export class AutomationItemClass {
     Name: string;
     ObjectTableName: string;
     Description: string;
-    constructor(name: string, objectTableName: string, description: string = null) {
+    DisplayName: string;
+    constructor(name: string, objectTableName: string, displayName:string, description: string = null) {
 
         this.Name = name;
         this.ObjectTableName = objectTableName;
+        this.DisplayName = displayName;
         this.Description = description;
     }
 
