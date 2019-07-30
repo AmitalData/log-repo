@@ -81,7 +81,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 
 
                 (accountingContext as DbContextBase)
-    .DeleteWhere<ARPaymentCheque>(rec => rec.Tenant == tenant);
+    .DeleteWhere((Data.EntityPOCOs.ARPaymentCheque rec) => rec.Tenant == tenant);
 
                 (accountingContext as DbContextBase)
     .DeleteWhere<ARInvoicePayment>(rec => rec.Tenant == tenant);

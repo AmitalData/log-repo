@@ -20,7 +20,9 @@ describe('ShipmentView', () => {
 
     it('OpenShipmentView', function () {
 
-        CreatView.OpenShipmentView();
+      //  CreatView.OpenShipmentView();
+
+        ShipmentScenario.OpenShipmentView();
 
    });
 
@@ -28,28 +30,30 @@ describe('ShipmentView', () => {
 
    it('CreatShipmentView', function () {
 
-      CreatView.CreatNewView();
+     // CreatView.CreatNewView();
+      ShipmentScenario.CreatNewView();
 
    });
 
- /*  it('DeleteNewView', function () {
+ 
+it('EditNewView', function () {
 
-    CreatView.DeleteNewView();
+  //  CreatView.EditNewView();
+    ShipmentScenario.EditNewView();
+});
+
+ 
+ 
+ 
+ it('DeleteNewView', function () {
+
+ //   CreatView.DeleteNewView();
+    ShipmentScenario.DeleteNewView();
 });
 
 
- it('EditNewView', function () {
 
-       CreatView.EditNewView();
-   });
-
-
-   it('DeleteNewView', function () {
-
-    CreatView.DeleteNewView();
-});
-
-  it('DisplayView', function () {
+ /* it('DisplayView', function () {
 
     CreatView.DisplayView();
 });*/

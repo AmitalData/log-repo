@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -14,7 +14,7 @@
                         <SearchBox [SearchText]="SearchFields" (TextChanged)="SearchTextChanged($event)"></SearchBox>
                     </td>
 
-                    <td style="width: 150px;">
+                    <td [style.width.px]="HeaderColumnWidth">
                         <div></div>
                     </td>
 

@@ -2226,8 +2226,15 @@ namespace WebFreight.Web.ReportsWebServices
                     if (shipmentCommodity.ChargeableWeight != null)
                     {
                         commodityLine.ChargeableWeight = String.Format("{0:#,0.00}", shipmentCommodity.ChargeableWeight.Value);
+                        double? varChargeableWeightInKG = ShipmentMapping.GetWeightInKG("KG", shipmentCommodity.ChargeableWeight);
+
+                        if (varChargeableWeightInKG != null)
+                        {
+                            commodityLine.ChargeableWeightInKG = String.Format("{0:#,0.00}", varChargeableWeightInKG.Value);
+                        }
                     }
 
+                   
                     if (shipmentCommodity.NumberOfPackages != null)
                     {
                         commodityLine.TotalQuantity = shipmentCommodity.NumberOfPackages.ToString();
@@ -2333,6 +2340,13 @@ namespace WebFreight.Web.ReportsWebServices
                     awbDp.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
                     commodityLine.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
                 }
+
+                if (shipmentPM.ChargeableWeightInKG != null)
+                {
+                    awbDp.ChargeableWeightInKG = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeightInKG.Value);
+                    commodityLine.ChargeableWeightInKG = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeightInKG.Value);
+                }
+
 
                 if (shipmentPM.NumberOfPackages != null)
                 {

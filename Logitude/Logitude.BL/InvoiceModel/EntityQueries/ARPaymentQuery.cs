@@ -116,6 +116,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        FirstApproveDate = a.FirstApproveDate,
                                        IsFullAccounting = a.IsFullAccounting,
                                        FechaPago = a.FechaPago,
+                                       IsExternalEntity = a.IsExternalEntity 
                                    }).FirstOrDefault();
 
 
@@ -125,6 +126,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             ARInvoicePaymentQuery entityQuery = new ARInvoicePaymentQuery(entityRepository);
             payment.PaymentInvoices = entityQuery.GetARPaymentInvoicePMsForPayment(payment.Id, tenant);
 
+            payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
             GetGLAccountFields(payment);
 
             ARPaymentPM securedPM = new ARPaymentPM();
@@ -132,6 +134,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
+        }
+
+        private List<ARPaymentChequeReplicaPM> GetARPaymentChequeReplicasByPaymentId(string paymentid, int tenant)
+        {
+            ARPaymentChequeReplicaQuery aRPaymentChequeReplicaQuery = new ARPaymentChequeReplicaQuery(tenant);
+            return aRPaymentChequeReplicaQuery.GetARPaymentChequeReplicaPMsByPaymentId(paymentid, tenant);
         }
 
         void GetGLAccountFields(ARPaymentPM paymentPM)
@@ -273,6 +281,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 AccountingPaymentMethod method = paymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
                 payment.AccountingPaymentMethodName = method != null ? method.Name : null;
                 payment.AccountingPaymentMethodCode = method != null ? method.Code : null;
+                payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
             }
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), payment, tenant); ;

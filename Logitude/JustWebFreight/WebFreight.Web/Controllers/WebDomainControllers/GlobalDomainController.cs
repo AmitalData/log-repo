@@ -519,9 +519,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         PackagesCodes_BS = entityPM.PackagesCodes_BS,
                         PackagesCodes_PK = entityPM.PackagesCodes_PK,
                         TrailDaysLeft = entityPM.TrailDaysLeft,
-                         TenantManagementLicenses = entityPM.TenantManagementLicenses,
-                         CountryName=entityPM.CountryName,
-                         BluesnapContractQTY=entityPM.BluesnapContractQTY,
+                        TenantManagementLicenses = entityPM.TenantManagementLicenses,
+                        CountryName = entityPM.CountryName,
+                        BluesnapContractQTY = entityPM.BluesnapContractQTY,
                         BluesnapCRMContractQTY = entityPM.BluesnapCRMContractQTY,
                         BluesnapEAWBContractQTY = entityPM.BluesnapEAWBContractQTY,
                         BluesnapEAWBSContractQTY = entityPM.BluesnapEAWBSContractQTY,
@@ -530,8 +530,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         BluesnapEAWBContractId = entityPM.BluesnapEAWBContractId,
                         BluesnapEAWBSContractId = entityPM.BluesnapEAWBSContractId,
                         BluesnapOneTimeContract = entityPM.BluesnapOneTimeContract,
-                        BluesnapInttraStockContractId=entityPM.BluesnapInttraStockContractId,
-                        BluesnapInttraStockContractQTY=entityPM.BluesnapInttraStockContractQTY,
+                        BluesnapInttraStockContractId = entityPM.BluesnapInttraStockContractId,
+                        BluesnapInttraStockContractQTY = entityPM.BluesnapInttraStockContractQTY,
+                        MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied,
                     };
 
                     if (entityPM.PaymentFailure)
@@ -613,9 +614,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                         scope.Complete();
                     }
-
-
-
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -696,6 +694,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string PackageName { get; set; }
         public string TemporalPackageCode { get; set; }
         public string CountryName { get; set; }
+        public bool MainAdditionalPackageApplied { get; set; }
 
         private List<string> packagesCodes_PK;
         public List<string> PackagesCodes_PK

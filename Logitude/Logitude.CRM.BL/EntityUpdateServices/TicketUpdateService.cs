@@ -43,7 +43,14 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
                 if (string.IsNullOrEmpty(entityPM.TicketNumber))
                 {
-                    entityPM.TicketNumber = CodeCounter.GetNumber_Ticket("Ticket", entityPM.Tenant).ToString();
+                    if (FeatureToggleHelper.HasFeatureToggle("TJC", entityPM.Tenant))
+                    {
+                        entityPM.TicketNumber = CodeCounter.GetNumber_Ticket("Ticket", entityPM.Tenant).ToString();
+                    }
+                    else
+                    {
+                        entityPM.TicketNumber = CodeCounter.GetNumber("Ticket", entityPM.Tenant).ToString();
+                    }
                 }
 
                 TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);

@@ -438,12 +438,14 @@
                     </td>
                     <td style="width: 15px;">
                         <div>
-                            <LogToolTip *ngIf="IsEditButtonDisabled" [direction]="isRTL?'bottomleft':'bottomright'">
-                                <p>
-                                    {{
+                            <LogToolTip *ngIf="IsEditButtonDisabled || !IsRestoreButtonVisibile" [direction]="isRTL?'bottomleft':'bottomright'">
+                                <p><span *ngIf="IsEditButtonDisabled">
+    {{
                                     EditWindowToolTip
-                                    }}
-                                    <br> {{
+    }}
+
+    <br>
+</span> {{
                                     RestoreToolTipMessage
                                     }}
                                 </p>

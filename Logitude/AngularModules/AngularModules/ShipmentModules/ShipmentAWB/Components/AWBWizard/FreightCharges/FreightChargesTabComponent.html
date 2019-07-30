@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr>
         <td>
@@ -54,12 +54,22 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="FormFieldRow">
+                                    <tr *ngIf="!IsKRateClass" class="FormFieldRow">
                                         <td [style.width.px]="LabelColumnWidth">
                                             <LogLabel [ObjectFieldName]="'ChargeableWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightLabel" [ShowWarning]="ShowWarning_ChargeableWeight"></LogLabel>
                                         </td>
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'ChargeableWeight'" [Text]="ChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr *ngIf="IsKRateClass" class="FormFieldRow">
+                                        <td [style.width.px]="LabelColumnWidth">
+                                            <LogLabel [ObjectFieldName]="'ChargeableWeightInKG'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightKGLabel" [ShowWarning]="ShowWarning_ChargeableWeight"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'ChargeableWeightInKG'" [Text]="ChargeableWeightInKG" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
                                     </tr>
 

@@ -376,6 +376,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                         Tenant = user.Tenant,
                         EnglishName = user.EnglishName,
                         Email = user.Email,
+                        AdditionalPackagesOnly = user.AdditionalPackagesOnly,
                         SearchFields = user.EnglishName + "," + user.Email,
                     };
 
@@ -780,6 +781,7 @@ public class UserExtendedList
     public int Tenant { get; set; }
     public string EnglishName { get; set; }
     public string Email { get; set; }
+    public bool AdditionalPackagesOnly { get; set; }
     public string SearchFields { get; set; }
 
     public string PackageCode1 { get; set; }

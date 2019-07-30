@@ -23,6 +23,7 @@ import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 
 import {ARPaymentInvoicePM} from '../../EntityPMs/ARPaymentInvoicePM';
 import {LedgerTransactionPM} from '../../../Accounting/EntityPMs/LedgerTransactionPM';
+import {ARPaymentChequeReplicaPM} from '../../EntityPMs/ARPaymentChequeReplicaPM';
 import {ARPaymentPMInitService} from '../../EntityPMInitServices/ARPaymentPMInitService';
 import {ARPaymentValidator} from '../../Validators/ARPaymentValidator';
 
@@ -231,6 +232,7 @@ export class ARPaymentPMService {
 			
                this.MapPaymentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapInvoicesLedgerTransactions(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapARPaymentChequeReplicas(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -253,6 +255,15 @@ export class ARPaymentPMService {
 						
 							 
             entityPM.OldEntityPM.InvoicesLedgerTransactions.push(newLedgerTransactionPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.ARPaymentChequeReplicas = [];
+            for (var item in entityPM.ARPaymentChequeReplicas) {
+            var myARPaymentChequeReplicaPM = entityPM.ARPaymentChequeReplicas[item];
+            var newARPaymentChequeReplicaPM: ARPaymentChequeReplicaPM = this.clone(myARPaymentChequeReplicaPM);
+						
+							 
+            entityPM.OldEntityPM.ARPaymentChequeReplicas.push(newARPaymentChequeReplicaPM);
             }
 			   
 		}
@@ -381,6 +392,96 @@ export class ARPaymentPMService {
             }
             newLedgerTransactionPM.IsDirty = false;
             entityPM.InvoicesLedgerTransactions.push(newLedgerTransactionPM);
+        }
+    }
+    MapARPaymentChequeReplicas(entityPM: ARPaymentPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldARPaymentChequeReplicas: ARPaymentChequeReplicaPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldARPaymentChequeReplicas = entityPM.OldEntityPM.ARPaymentChequeReplicas;
+        }
+
+        entityPM.ARPaymentChequeReplicas = new Array<ARPaymentChequeReplicaPM>();
+        for (var item in jsonPM.ARPaymentChequeReplicas) {
+            var jItem = jsonPM.ARPaymentChequeReplicas[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newARPaymentChequeReplicaPM: ARPaymentChequeReplicaPM;
+	  
+            if (mapParent) {
+                newARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(entityPM);
+            }
+            else
+            {
+                newARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newARPaymentChequeReplicaPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newARPaymentChequeReplicaPM.UniqueKey = Guid.newGuid();
+               // newARPaymentChequeReplicaPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newARPaymentChequeReplicaPM.OldEntityPM = this.clone(newARPaymentChequeReplicaPM);
+
+				
+            }
+            else {
+                if (newARPaymentChequeReplicaPM.UniqueKey) {
+
+                    if (jItem.IsDirty) { }
+                      //  newARPaymentChequeReplicaPM.ChangeSetOp = "Update";
+                }
+                else {
+                       // newARPaymentChequeReplicaPM.ChangeSetOp = "Insert";
+                }
+ 
+                newARPaymentChequeReplicaPM.OldEntityPM = null;
+                newARPaymentChequeReplicaPM.EntityParentPM = null;
+            }
+			
+			 newARPaymentChequeReplicaPM.IsDirty = false;
+            entityPM.ARPaymentChequeReplicas.push(newARPaymentChequeReplicaPM);
+        }
+        if (oldARPaymentChequeReplicas) {
+            
+            for (var itemKey in oldARPaymentChequeReplicas) {
+                if (entityPM.ARPaymentChequeReplicas.filter(p=> p.UniqueKey === oldARPaymentChequeReplicas[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldARPaymentChequeReplicas[itemKey]) {
+                        //oldARPaymentChequeReplicas[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ARPaymentChequeReplicas.push(oldARPaymentChequeReplicas[itemKey]);
+						var oldItemJson = oldARPaymentChequeReplicas[itemKey];
+                        var deletedPM: ARPaymentChequeReplicaPM = new ARPaymentChequeReplicaPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                       // deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ARPaymentChequeReplicas.push(deletedPM);
+                    }
+                }
+            }
         }
     }
 

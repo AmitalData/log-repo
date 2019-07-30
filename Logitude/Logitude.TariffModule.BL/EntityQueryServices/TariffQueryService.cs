@@ -104,7 +104,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             List<Tariff> TariffListTemp = this.repository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == "AFC").ToList();
 
 
-            if(TariffListTemp!=null && TariffListTemp.Count>0)
+            if (TariffListTemp != null && TariffListTemp.Count > 0)
             {
                 TariffListTemp.ForEach(itemStep =>
                 {
@@ -148,357 +148,183 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                     if (initialPropIndex == 0)
                     {
-                        items = items.Concat((from item in iQueryable.Where(p=>p.Id== itemStep.Id)
-                                 group iQueryable by new
-                                 {
-                                     item.TariffId,
-                                     item.MinPrice,
-                                     item.Version,
-                                 } into g
-                                 select new TariffResult()
-                                 {
-                                     price = g.Min(p => g.Key.MinPrice),
-                                     tariffid = g.Key.TariffId,
-                                     TariffVersion = g.Key.Version,
-                                     PriceIndex = 0,
+                        items = items.Concat((from item in iQueryable
+                                              group iQueryable by new
+                                              {
+                                                  item.TariffId,
+                                                  item.MinPrice,
+                                                  item.Version,
+                                              } into g
+                                              select new TariffResult()
+                                              {
+                                                  price = g.Min(p => g.Key.MinPrice),
+                                                  tariffid = g.Key.TariffId,
+                                                  TariffVersion = g.Key.Version,
+                                                  PriceIndex = 0,
 
-                                 })).ToList();
+                                              })).ToList();
                     }
 
 
                     if (initialPropIndex == 1)
                     {
                         items = items.Concat((from item in iQueryable
-                                 group iQueryable by new
-                                 {
-                                     item.TariffId,
-                                     item.Step1Price,
-                                     item.Version,
-                                 } into g
-                                 select new TariffResult()
-                                 {
-                                     price = g.Min(p => g.Key.Step1Price),
-                                     tariffid = g.Key.TariffId,
-                                     TariffVersion = g.Key.Version,
-                                     PriceIndex = 1,
+                                              group iQueryable by new
+                                              {
+                                                  item.TariffId,
+                                                  item.Step1Price,
+                                                  item.Version,
+                                              } into g
+                                              select new TariffResult()
+                                              {
+                                                  price = g.Min(p => g.Key.Step1Price),
+                                                  tariffid = g.Key.TariffId,
+                                                  TariffVersion = g.Key.Version,
+                                                  PriceIndex = 1,
 
-                                 })).ToList();
+                                              })).ToList();
                     }
 
                     else if (initialPropIndex == 2)
                     {
                         items = items.Concat((from item in iQueryable
-                                 group iQueryable by new
-                                 {
-                                     item.TariffId,
-                                     item.Step2Price,
-                                     item.Version,
-                                 } into g
-                                 select new TariffResult()
-                                 {
-                                     price = g.Min(p => g.Key.Step2Price),
-                                     tariffid = g.Key.TariffId,
-                                     TariffVersion = g.Key.Version,
-                                     PriceIndex = 2,
+                                              group iQueryable by new
+                                              {
+                                                  item.TariffId,
+                                                  item.Step2Price,
+                                                  item.Version,
+                                              } into g
+                                              select new TariffResult()
+                                              {
+                                                  price = g.Min(p => g.Key.Step2Price),
+                                                  tariffid = g.Key.TariffId,
+                                                  TariffVersion = g.Key.Version,
+                                                  PriceIndex = 2,
 
-                                 })).ToList();
+                                              })).ToList();
                     }
 
                     else if (initialPropIndex == 3)
                     {
                         items = items.Concat((from item in iQueryable
-                                 group iQueryable by new
-                                 {
-                                     item.TariffId,
-                                     item.Step3Price,
-                                     item.Version,
-                                 } into g
-                                 select new TariffResult()
-                                 {
-                                     price = g.Min(p => g.Key.Step3Price),
-                                     tariffid = g.Key.TariffId,
-                                     TariffVersion = g.Key.Version,
-                                     PriceIndex = 3,
+                                              group iQueryable by new
+                                              {
+                                                  item.TariffId,
+                                                  item.Step3Price,
+                                                  item.Version,
+                                              } into g
+                                              select new TariffResult()
+                                              {
+                                                  price = g.Min(p => g.Key.Step3Price),
+                                                  tariffid = g.Key.TariffId,
+                                                  TariffVersion = g.Key.Version,
+                                                  PriceIndex = 3,
 
-                                 })).ToList();
+                                              })).ToList();
                     }
 
                     else if (initialPropIndex == 4)
                     {
                         items = items.Concat((from item in iQueryable
-                                 group iQueryable by new
-                                 {
-                                     item.TariffId,
-                                     item.Step4Price,
-                                     item.Version,
-                                 } into g
-                                 select new TariffResult()
-                                 {
-                                     price = g.Min(p => g.Key.Step4Price),
-                                     tariffid = g.Key.TariffId,
-                                     TariffVersion = g.Key.Version,
-                                     PriceIndex = 4,
+                                              group iQueryable by new
+                                              {
+                                                  item.TariffId,
+                                                  item.Step4Price,
+                                                  item.Version,
+                                              } into g
+                                              select new TariffResult()
+                                              {
+                                                  price = g.Min(p => g.Key.Step4Price),
+                                                  tariffid = g.Key.TariffId,
+                                                  TariffVersion = g.Key.Version,
+                                                  PriceIndex = 4,
 
-                                 })).ToList();
+                                              })).ToList();
                     }
 
                     else if (initialPropIndex == 5)
                     {
                         items = items.Concat((from item in iQueryable
-                                 group iQueryable by new
-                                 {
-                                     item.TariffId,
-                                     item.Step5Price,
-                                     item.Version,
-                                 } into g
-                                 select new TariffResult()
-                                 {
-                                     price = g.Min(p => g.Key.Step5Price),
-                                     tariffid = g.Key.TariffId,
-                                     TariffVersion = g.Key.Version,
-                                     PriceIndex = 5,
+                                              group iQueryable by new
+                                              {
+                                                  item.TariffId,
+                                                  item.Step5Price,
+                                                  item.Version,
+                                              } into g
+                                              select new TariffResult()
+                                              {
+                                                  price = g.Min(p => g.Key.Step5Price),
+                                                  tariffid = g.Key.TariffId,
+                                                  TariffVersion = g.Key.Version,
+                                                  PriceIndex = 5,
 
-                                 })).ToList();
+                                              })).ToList();
                     }
 
                     else if (initialPropIndex == 6)
                     {
                         items = items.Concat((from item in iQueryable
-                                 group iQueryable by new
-                                 {
-                                     item.TariffId,
-                                     item.Step6Price,
-                                     item.Version,
-                                 } into g
-                                 select new TariffResult()
-                                 {
-                                     price = g.Min(p => g.Key.Step6Price),
-                                     tariffid = g.Key.TariffId,
-                                     TariffVersion = g.Key.Version,
-                                     PriceIndex = 6,
+                                              group iQueryable by new
+                                              {
+                                                  item.TariffId,
+                                                  item.Step6Price,
+                                                  item.Version,
+                                              } into g
+                                              select new TariffResult()
+                                              {
+                                                  price = g.Min(p => g.Key.Step6Price),
+                                                  tariffid = g.Key.TariffId,
+                                                  TariffVersion = g.Key.Version,
+                                                  PriceIndex = 6,
 
-                                 })).ToList();
+                                              })).ToList();
                     }
 
                     else if (initialPropIndex == 7)
                     {
                         items = items.Concat((from item in iQueryable
-                                 group iQueryable by new
-                                 {
-                                     item.TariffId,
-                                     item.Step7Price,
-                                     item.Version,
-                                 } into g
-                                 select new TariffResult()
-                                 {
-                                     price = g.Min(p => g.Key.Step7Price),
-                                     tariffid = g.Key.TariffId,
-                                     TariffVersion = g.Key.Version,
-                                     PriceIndex = 7,
+                                              group iQueryable by new
+                                              {
+                                                  item.TariffId,
+                                                  item.Step7Price,
+                                                  item.Version,
+                                              } into g
+                                              select new TariffResult()
+                                              {
+                                                  price = g.Min(p => g.Key.Step7Price),
+                                                  tariffid = g.Key.TariffId,
+                                                  TariffVersion = g.Key.Version,
+                                                  PriceIndex = 7,
 
-                                 })).ToList();
+                                              })).ToList();
                     }
 
                     else if (initialPropIndex == 8)
                     {
                         items = items.Concat((from item in iQueryable
-                                 group iQueryable by new
-                                 {
-                                     item.TariffId,
-                                     item.Step8Price,
-                                     item.Version,
-                                 } into g
-                                 select new TariffResult()
-                                 {
-                                     price = g.Min(p => g.Key.Step8Price),
-                                     tariffid = g.Key.TariffId,
-                                     TariffVersion = g.Key.Version,
-                                     PriceIndex = 8,
+                                              group iQueryable by new
+                                              {
+                                                  item.TariffId,
+                                                  item.Step8Price,
+                                                  item.Version,
+                                              } into g
+                                              select new TariffResult()
+                                              {
+                                                  price = g.Min(p => g.Key.Step8Price),
+                                                  tariffid = g.Key.TariffId,
+                                                  TariffVersion = g.Key.Version,
+                                                  PriceIndex = 8,
 
-                                 })).ToList();
+                                              })).ToList();
                     }
 
                 });
 
             }
 
-           
 
 
-
-            //if (propIndex == 0)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.MinPrice,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.MinPrice),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 0,
-
-            //             }).ToList();
-            //}
-
-
-            //if (propIndex == 1)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step1Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step1Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 1,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 2)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step2Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step2Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 2,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 3)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step3Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step3Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 3,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 4)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step4Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step4Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 4,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 5)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step5Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step5Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 5,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 6)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step6Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step6Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 6,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 7)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step7Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step7Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 7,
-
-            //             }).ToList();
-            //}
-
-            //else if (propIndex == 8)
-            //{
-            //    items = (from item in iQueryable
-            //             group iQueryable by new
-            //             {
-            //                 item.TariffId,
-            //                 item.Step8Price,
-            //                 item.Version,
-            //             } into g
-            //             select new TariffResult()
-            //             {
-            //                 price = g.Min(p => g.Key.Step8Price),
-            //                 tariffid = g.Key.TariffId,
-            //                 TariffVersion = g.Key.Version,
-            //                 PriceIndex = 8,
-
-            //             }).ToList();
-            //}
-
-            List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive && p.TypeCode== "AFC").ToList();
+            List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == "AFC").ToList();
             List<TariffVersion> TariffVersionList = this.repository.GetAllTariffVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), tenant).ToList();
             List<int> VersionIds = TariffVersionList.Select(a => a.Version).ToList();
 
@@ -512,7 +338,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             List<TariffVersion> TariffSurchargeVersionList = this.repository.GetAllTariffVersionsByTariffIds(SurchargeTariffList.Select(p => p.Id).ToArray(), tenant).ToList();
             List<int> VersionsSurchargeIds = TariffSurchargeVersionList.Select(a => a.Version).ToList();
-            Dictionary<string,List<TariffLine>> SurchargeTariffLines = this.repository.GetAllTariffLinesByTariffIds(SurchargeTariffList.Select(p => p.Id).ToArray(), tenant).Where(p=> VersionsSurchargeIds.Contains(p.Version)).Where(p=> System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && p.ExpirationDate!=null?(System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate):true).GroupBy(p=>p.TariffId).ToDictionary(o=>o.Key,o=>o.ToList());
+            Dictionary<string, List<TariffLine>> SurchargeTariffLines = this.repository.GetAllTariffLinesByTariffIds(SurchargeTariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionsSurchargeIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
             Dictionary<string, List<TariffLine>> SurchargeTariffLinesFiltered = new Dictionary<string, List<TariffLine>>();// this.repository.GetAllTariffLinesByTariffIds(SurchargeTariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionsSurchargeIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
 
             foreach (KeyValuePair<string, List<TariffLine>> entry in SurchargeTariffLines)
@@ -521,7 +347,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromport && p.DestinationPortId == toport).ToList();
                 if (filteredLines.Count() == 0)
                 {
-                    filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromport && p.IsToAllOtherPorts==true).ToList();
+                    filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromport && p.IsToAllOtherPorts == true).ToList();
 
                     if (filteredLines.Count() == 0)
                     {
@@ -545,177 +371,177 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 TariffResult item = resultItems.Where(x => x.price == resultItems.Min(y => y.price)).FirstOrDefault();
                 if (item != null)
                 {
-                    
-                        decimal? Sum = 0;
-                        TariffSearchSummary tariffsSummary = new TariffSearchSummary() { Id = result.Id };
-                        tariffsSummary.Surcharges = new List<SurchargeSummary>();
-                        //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
-                        decimal? minprice = 1;
-                        TariffLine SelectedLine = null;
 
-                        if (TariffLines.ContainsKey(result.Id))
-                        {
-                            List<TariffLine> Temp = TariffLines[result.Id].Where(p => p.Version == item.TariffVersion).ToList();// && (decimal?)(p.GetType().GetProperty("Step"+item.PriceIndex+"Price").GetValue(p))==item.price).FirstOrDefault();
-                            if (item.PriceIndex != 0)
-                            {
-                                SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("Step" + (item.PriceIndex) + "Price").GetValue(p)) == item.price).FirstOrDefault();
-                            }
-                            else
-                            {
-                                SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("MinPrice").GetValue(p)) == item.price).FirstOrDefault();
-                            }
-                        }
-                        if (SelectedLine != null)
-                        {
-                            minprice = SelectedLine.MinPrice;
-                        }
+                    decimal? Sum = 0;
+                    TariffSearchSummary tariffsSummary = new TariffSearchSummary() { Id = result.Id };
+                    tariffsSummary.Surcharges = new List<SurchargeSummary>();
+                    //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
+                    decimal? minprice = 1;
+                    TariffLine SelectedLine = null;
+
+                    if (TariffLines.ContainsKey(result.Id))
+                    {
+                        List<TariffLine> Temp = TariffLines[result.Id].Where(p => p.Version == item.TariffVersion).ToList();// && (decimal?)(p.GetType().GetProperty("Step"+item.PriceIndex+"Price").GetValue(p))==item.price).FirstOrDefault();
                         if (item.PriceIndex != 0)
                         {
-                            if ((item.price * (decimal)weight) < minprice)
-                            {
-                                item.price = minprice;
-
-                            }
-                            else
-                            {
-                                item.price = item.price * (decimal)weight;
-                            }
+                            SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("Step" + (item.PriceIndex) + "Price").GetValue(p)) == item.price).FirstOrDefault();
                         }
                         else
                         {
-                            item.price = minprice != null ? minprice : 0;
+                            SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("MinPrice").GetValue(p)) == item.price).FirstOrDefault();
+                        }
+                    }
+                    if (SelectedLine != null)
+                    {
+                        minprice = SelectedLine.MinPrice;
+                    }
+                    if (item.PriceIndex != 0)
+                    {
+                        if ((item.price * (decimal)weight) < minprice)
+                        {
+                            item.price = minprice;
 
                         }
-                        //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
-                        tariffsSummary.price = Math.Round((double)CalculateLocalAmount(item.price.Value, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
-                        List<TariffVersionAllInCharge> allinList = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).ToList();
-                        if (allinList != null && allinList.Count > 0)
+                        else
                         {
-                            List<string> AllInChargesIds = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).Select(p => p.ChargesTypeId).ToList();
-                            List<string> AllInChargesNames = chargesTypes.Where(p => AllInChargesIds.Contains(p.Id)).Select(p => p.EnglishName).ToList();
-                            tariffsSummary.AllIn = string.Join(", ", AllInChargesNames);
+                            item.price = item.price * (decimal)weight;
                         }
-                        Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
-                        if (CurrentSurcharge != null)
+                    }
+                    else
+                    {
+                        item.price = minprice != null ? minprice : 0;
+
+                    }
+                    //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
+                    tariffsSummary.price = Math.Round((double)CalculateLocalAmount(item.price.Value, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
+                    List<TariffVersionAllInCharge> allinList = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).ToList();
+                    if (allinList != null && allinList.Count > 0)
+                    {
+                        List<string> AllInChargesIds = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).Select(p => p.ChargesTypeId).ToList();
+                        List<string> AllInChargesNames = chargesTypes.Where(p => AllInChargesIds.Contains(p.Id)).Select(p => p.EnglishName).ToList();
+                        tariffsSummary.AllIn = string.Join(", ", AllInChargesNames);
+                    }
+                    Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
+                    if (CurrentSurcharge != null)
+                    {
+                        if (SurchargeTariffLinesFiltered.ContainsKey(CurrentSurcharge.Id))
                         {
-                            if (SurchargeTariffLinesFiltered.ContainsKey(CurrentSurcharge.Id))
+                            TariffLine ChargesfilteredLines = SurchargeTariffLinesFiltered[CurrentSurcharge.Id].FirstOrDefault();
+
+                            if (ChargesfilteredLines != null)
                             {
-                                TariffLine ChargesfilteredLines = SurchargeTariffLinesFiltered[CurrentSurcharge.Id].FirstOrDefault();
 
-                                if (ChargesfilteredLines != null)
+                                for (int i = 1; i <= 10; i++)
                                 {
 
-                                    for (int i = 1; i <= 10; i++)
+                                    decimal? myQuantity = 0;
+                                    string chargeId = (string)CurrentSurcharge.GetType().GetProperty("Surcharge" + i + "Id").GetValue(CurrentSurcharge);
+                                    if (TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion && p.ChargesTypeId == chargeId).FirstOrDefault() == null)
                                     {
+                                        string measurementId = (string)CurrentSurcharge.GetType().GetProperty("Surcharge" + i + "UOM").GetValue(CurrentSurcharge);
 
-                                        decimal? myQuantity = 0;
-                                        string chargeId = (string)CurrentSurcharge.GetType().GetProperty("Surcharge" + i + "Id").GetValue(CurrentSurcharge);
-                                        if (TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion && p.ChargesTypeId == chargeId).FirstOrDefault() == null)
+                                        if (!string.IsNullOrEmpty(measurementId))
                                         {
-                                            string measurementId = (string)CurrentSurcharge.GetType().GetProperty("Surcharge" + i + "UOM").GetValue(CurrentSurcharge);
+                                            Measurement UsedMesurment = UsedMeasurements.Where(p => p.Id == measurementId).FirstOrDefault();
 
-                                            if (!string.IsNullOrEmpty(measurementId))
+                                            if (UsedMesurment != null)
                                             {
-                                                Measurement UsedMesurment = UsedMeasurements.Where(p => p.Id == measurementId).FirstOrDefault();
+                                                decimal? valueofSurcharge = (decimal?)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
+                                                ChargesType CurrentCharge = chargesTypes.Where(p => p.Id == chargeId).FirstOrDefault();
 
-                                                if (UsedMesurment != null)
+                                                string surchargeName = "";
+                                                string surchargeCode = "";
+                                                if (CurrentCharge != null)
                                                 {
-                                                    decimal? valueofSurcharge = (decimal?)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
-                                                    ChargesType CurrentCharge = chargesTypes.Where(p => p.Id == chargeId).FirstOrDefault();
-
-                                                    string surchargeName = "";
-                                                    string surchargeCode = "";
-                                                    if (CurrentCharge != null)
-                                                    {
-                                                        surchargeName = CurrentCharge.EnglishName;// (string)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
-                                                        surchargeCode = CurrentCharge.Code;// (string)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
-
-                                                    }
-                                                    //   TariffLine surchargeLine= SurchargeTariffLines.Min(p=>p.)
-                                                    if (valueofSurcharge != null)
-                                                    {
-                                                        decimal? CurrentSurchargePriceCalculation = 0;
-
-                                                        SurchargeSummary SurchargeItem = new SurchargeSummary();
-                                                        SurchargeItem.Code = surchargeCode;
-                                                        SurchargeItem.Name = surchargeName;
-                                                        switch (UsedMesurment.Code)
-                                                        {
-                                                            case "GRWT": { myQuantity = (decimal?)GrossWeight; break; }
-                                                            case "CHWT": { myQuantity = (decimal?)weight; break; }
-                                                            case "VOLU": { myQuantity = (decimal?)Volume; break; }
-                                                            case "BTEU": { myQuantity = 1; break; }
-                                                            case "FIXD": { myQuantity = 1; break; }
-                                                            case "PRVL": { myQuantity = 1; break; }
-                                                            case "PRFR": { myQuantity = 1; break; }
-                                                            case "GWTN": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(GrossWeight, GrossWeightCode, "ton"); break; }
-                                                            case "CWKG": { myQuantity = (decimal?)this.ComputeChargeableWeight_Kg(weight, Weightcode); break; }
-                                                            case "GWKG": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(GrossWeight, GrossWeightCode, "kg"); break; }
-                                                            case "QTY": { myQuantity = 1; break; }
-                                                            case "VCBM": { myQuantity = (decimal?)ComputeVolumeInCBM(Volume, VolumeCode); break; }
-                                                            default: { break; }
-                                                        }
-                                                        if (myQuantity == null)
-                                                            myQuantity = 1;
-
-                                                        if (UsedMesurment.Code == "PRVL" || UsedMesurment.Code == "PRFR")
-                                                        {
-                                                            CurrentSurchargePriceCalculation = ((valueofSurcharge * myQuantity * item.price) / 100);
-                                                        }
-                                                        else
-                                                        {
-                                                            CurrentSurchargePriceCalculation = (valueofSurcharge * myQuantity);
-                                                        }
-
-                                                        SurchargeItem.Price = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrentSurcharge.CurrencyId, tenant);
-                                                    Sum += SurchargeItem.Price;
-                                                    tariffsSummary.Surcharges.Add(SurchargeItem);
-                                                    }
-
-
+                                                    surchargeName = CurrentCharge.EnglishName;// (string)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
+                                                    surchargeCode = CurrentCharge.Code;// (string)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
 
                                                 }
-                                            }
-                                            else
-                                            {
-                                                break;
+                                                //   TariffLine surchargeLine= SurchargeTariffLines.Min(p=>p.)
+                                                if (valueofSurcharge != null)
+                                                {
+                                                    decimal? CurrentSurchargePriceCalculation = 0;
+
+                                                    SurchargeSummary SurchargeItem = new SurchargeSummary();
+                                                    SurchargeItem.Code = surchargeCode;
+                                                    SurchargeItem.Name = surchargeName;
+                                                    switch (UsedMesurment.Code)
+                                                    {
+                                                        case "GRWT": { myQuantity = (decimal?)GrossWeight; break; }
+                                                        case "CHWT": { myQuantity = (decimal?)weight; break; }
+                                                        case "VOLU": { myQuantity = (decimal?)Volume; break; }
+                                                        case "BTEU": { myQuantity = 1; break; }
+                                                        case "FIXD": { myQuantity = 1; break; }
+                                                        case "PRVL": { myQuantity = 1; break; }
+                                                        case "PRFR": { myQuantity = 1; break; }
+                                                        case "GWTN": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(GrossWeight, GrossWeightCode, "ton"); break; }
+                                                        case "CWKG": { myQuantity = (decimal?)this.ComputeChargeableWeight_Kg(weight, Weightcode); break; }
+                                                        case "GWKG": { myQuantity = (decimal?)this.ComputeGrossWeigh_Kg_Ton(GrossWeight, GrossWeightCode, "kg"); break; }
+                                                        case "QTY": { myQuantity = 1; break; }
+                                                        case "VCBM": { myQuantity = (decimal?)ComputeVolumeInCBM(Volume, VolumeCode); break; }
+                                                        default: { break; }
+                                                    }
+                                                    if (myQuantity == null)
+                                                        myQuantity = 1;
+
+                                                    if (UsedMesurment.Code == "PRVL" || UsedMesurment.Code == "PRFR")
+                                                    {
+                                                        CurrentSurchargePriceCalculation = ((valueofSurcharge * myQuantity * item.price) / 100);
+                                                    }
+                                                    else
+                                                    {
+                                                        CurrentSurchargePriceCalculation = (valueofSurcharge * myQuantity);
+                                                    }
+
+                                                    SurchargeItem.Price = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrentSurcharge.CurrencyId, tenant);
+                                                    Sum += SurchargeItem.Price;
+                                                    tariffsSummary.Surcharges.Add(SurchargeItem);
+                                                }
+
+
+
                                             }
                                         }
+                                        else
+                                        {
+                                            break;
+                                        }
                                     }
-
                                 }
+
                             }
-
-
                         }
 
 
-                        AirlinePM airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
-                        tariffsSummary.Name = airline.Card != null ? airline.Card.EnglishName : "";
-                        tariffsSummary.EffictiveDate = result.ExpirationDate;
-                        tariffsSummary.Remarks = result.Description;
-                        tariffsSummary.decimalprice = (decimal?)Sum+CalculateLocalAmount((item.price).Value, currencyId, result.CurrencyId, tenant);
-                        tariffsSummary.VersionId = item.TariffVersion + "";
-                        tariffsSummary.Id = item.tariffid;
-                        tariffsSummary.TotalSurcharge = Sum + "";
+                    }
+
+
+                    AirlinePM airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
+                    tariffsSummary.Name = airline.Card != null ? airline.Card.EnglishName : "";
+                    tariffsSummary.EffictiveDate = result.ExpirationDate;
+                    tariffsSummary.Remarks = result.Description;
+                    tariffsSummary.decimalprice = (decimal?)Sum + CalculateLocalAmount((item.price).Value, currencyId, result.CurrencyId, tenant);
+                    tariffsSummary.VersionId = item.TariffVersion + "";
+                    tariffsSummary.Id = item.tariffid;
+                    tariffsSummary.TotalSurcharge = Sum + "";
                     tariffsSummary.WholePrice = (decimal?)Sum + CalculateLocalAmount((item.price).Value, currencyId, result.CurrencyId, tenant) + "";
 
                     byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
-                        string resultImage = "";
-                        if (filedata != null)
-                        {
-                            resultImage = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
-                        }
+                    string resultImage = "";
+                    if (filedata != null)
+                    {
+                        resultImage = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
+                    }
 
-                        tariffsSummary.ImageId = resultImage;
+                    tariffsSummary.ImageId = resultImage;
 
-                        if (!string.IsNullOrEmpty(currencyId))
-                        {
-                            tariffsSummary.Currency = Currencies.Keys.Contains(currencyId) ? Currencies[currencyId] : null;
-                        }
+                    if (!string.IsNullOrEmpty(currencyId))
+                    {
+                        tariffsSummary.Currency = Currencies.Keys.Contains(currencyId) ? Currencies[currencyId] : null;
+                    }
 
-                        tariffSearchSummaries.Add(tariffsSummary);
-                    
+                    tariffSearchSummaries.Add(tariffsSummary);
+
                 }
             }
 
@@ -752,7 +578,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 {
                     RatesTableList rateList = RatesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == convertedCurrencyId);
                     var rate = rateList == null ? 0 : rateList.Rate;
-                    amountInTariffCurr = amount / (decimal)rate;
+                    amountInTariffCurr = amountInTariffCurr / (decimal)rate;
                 }
             }
 
