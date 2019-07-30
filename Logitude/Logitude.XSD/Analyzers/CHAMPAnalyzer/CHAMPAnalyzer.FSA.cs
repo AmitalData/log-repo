@@ -65,7 +65,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         {
             entityPM.IsUpdatedByChampAnalyzer = true;
 
-            PortRepository portRepository = new PortRepository(myCommonContext);
+            PortRepository portRepository = new PortRepository(iCommonContext);
             //DocumentRepository documentrepository = new DocumentRepository(myCommonContext);
 
             string myFromPortCode = null;
@@ -167,7 +167,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         LogDate = TenantServerConfigration.GetCurrentDateTime(myTenant),
                         Location = null,
                         AirlineName = null,
-                        CommonContext = myCommonContext,
+                        CommonContext = iCommonContext,
                         ShipmentContext = myContext
                     });
 
@@ -233,7 +233,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         {
                             Tenant = myTenant,
                             AirlineName = entityPM.MainCarriageCarrierName,
-                            CommonContext = myCommonContext,
+                            CommonContext = iCommonContext,
                             ShipmentContext = myContext,
                             EntityId = entityPM.Id,
                             EventDate = myStatusContext.EventDate,
@@ -265,10 +265,10 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         }
         private void AnalyzeMessageQueue_FSA(BookingPM entityPM, IBookingContext myContext, AnalyzeQueue analyzeQueue)
         {
-            PortRepository portRepository = new PortRepository(myCommonContext);
-            DocumentRepository documentrepository = new DocumentRepository(myCommonContext);
+            PortRepository portRepository = new PortRepository(iCommonContext);
+            DocumentRepository documentrepository = new DocumentRepository(iCommonContext);
             BookingAnswerRepository bookingAnswerRepository = new BookingAnswerRepository(myContext);
-            AirlineRepository airlineRepository = new AirlineRepository(myCommonContext);
+            AirlineRepository airlineRepository = new AirlineRepository(iCommonContext);
 
             entityPM.FMAAcknowledgementReason = null;
             entityPM.FNAReason = null;
