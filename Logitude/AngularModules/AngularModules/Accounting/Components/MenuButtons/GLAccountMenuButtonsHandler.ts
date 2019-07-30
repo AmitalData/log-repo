@@ -28,6 +28,7 @@ export class GLAccountMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     private glAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
+    gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
@@ -102,6 +103,7 @@ export class GLAccountMenuButtonsHandler {
                                 }
                                 else {
                                     button.IsDisabled = false;
+                                      button.IsHidden = false;
                                 }
                                 break;
                             }
@@ -197,6 +199,7 @@ export class GLAccountMenuButtonsHandler {
     }
 
     private ReactivateGLAccount() {
+       
         var myGLAccountListService: GLAccountListService = new GLAccountListService();
         myGLAccountListService.getSingle(this.EntityPM.Id)
             .subscribe((myResponse: ServiceResponse) => {
