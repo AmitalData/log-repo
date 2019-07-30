@@ -2202,7 +2202,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayLongName = a.DisplayLongName,
                                                     FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
                                                     Code = a.Code,
-                                            
+                                            CustomPickListCode =a.CustomPickListCode,
                                                 }).ToList();
 
             return objectFields;

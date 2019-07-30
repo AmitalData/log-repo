@@ -150,6 +150,11 @@ export class DWObjectFieldPM {
     public set IsCustom(newValue: boolean) { if (this.isCustom != newValue) { this.isCustom = newValue; this.MarkAsDirty("IsCustom"); } }
        
 	 
+    private customPickListCode: string;
+    public get CustomPickListCode() { return this.customPickListCode; }
+    public set CustomPickListCode(newValue: string) { if (this.customPickListCode != newValue) { this.customPickListCode = newValue; this.MarkAsDirty("CustomPickListCode"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		

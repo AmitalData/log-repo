@@ -46,6 +46,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal CreditAmount  { get; set; }
        [DataMember]
        public decimal Amount  { get; set; }
+       [DataMember]
+       public bool InProgressExternalReconcile  { get; set; }
    }
 
 }

@@ -27,6 +27,7 @@ using Simplog.Data.Helpers;
 using System.Data;
 using System.Data.SqlClient;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -225,6 +226,30 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     }
                     //}
+
+                    bool featureTested = true;
+
+                    if (featureTested)
+                    {
+                        var myCreateAutoExternalReconcileWhileStreamingService = new CreateAutoExternalReconcileWhileStreamingService();
+                        var providor = new ExternalReconcileDataProvider(_AccountingContext, _JournalPM.Tenant);
+                        myCreateAutoExternalReconcileWhileStreamingService.MustInit(providor, _JournalPM, myLedgerTransactionsWithCounters);
+                        myCreateAutoExternalReconcileWhileStreamingService.CreateAutoExternalReconcileWhileStreaming();
+                        if (myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList != null &&
+                        myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Count> 0)
+                        {
+                            var myExternalReconciliationUpdateService = new ExternalReconciliationUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
+
+                            myExternalReconciliationUpdateService.UpdateMulti(myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList, new List<ExternalReconciliationPM>(), _JournalPM, true);
+
+                            var toUpdateInReconcileProgressToFalse = false;// next sprint
+                            if (toUpdateInReconcileProgressToFalse)
+                            {
+                                UpdateInExternalReconcileProgressToFalse();
+                            }
+                        }
+                    }
+
 #if false
                     else
                     {
@@ -260,6 +285,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     LogMessagingUtil.Instance.AppendLine("AccountingStreamingInNewSerializableTransaction:Took:" + sw.Elapsed.ToString());
                 }
             }
+        }
+
+        private void UpdateInExternalReconcileProgressToFalse()
+        {
+            throw new NotImplementedException();
         }
 
         private void UpdateInReconcileProgressToFalse()
