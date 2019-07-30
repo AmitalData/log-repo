@@ -2449,6 +2449,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
         this.ReloadEntityEvent.emit();
     }
 
+    RefreshChangeInSupplierInvoice() {
+        this.ChangeInSupplierInvoice = "1";
+    }
+
     IsFirstInvoice() {
         var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
         return (this.EntityPM.InvoiceCounterKey == firstInvoice.InvoiceCounterKey);
