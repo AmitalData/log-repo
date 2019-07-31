@@ -349,9 +349,16 @@
     <Compile Include="InfrastructureModel\EntityPMs\SchedulerLogsPM.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\SchedulerLogsQuery.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\APInvoice.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\APInvoiceStatus.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\APInvoiceTransferStatus.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentChequeReplica.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentChequeStatusReplica.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentInvoice.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceQueryService.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceStatusQueryService.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceTransferStatusQueryService.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceQueryService.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentChequeReplicaQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentChequeStatusReplicaQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentInvoiceQueryService.cs" />

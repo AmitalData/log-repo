@@ -20,6 +20,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     {
 
 	    
+	[XmlAttribute]
     public string Id { get; set; }
     
     public string EnglishName { get; set; }
@@ -36,6 +37,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
     public GLAccount GLAccount { get; set; }
     
+	[XmlAttribute]
     public string Code { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
