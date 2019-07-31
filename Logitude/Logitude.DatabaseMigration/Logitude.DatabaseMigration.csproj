@@ -1329,6 +1329,10 @@
     <Compile Include="Migrations\201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.Designer.cs">
       <DependentUpon>201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907310721355_Nawras_Add_IsInternallyDefined_ToSchedulerProcedure.cs" />
+    <Compile Include="Migrations\201907310721355_Nawras_Add_IsInternallyDefined_ToSchedulerProcedure.Designer.cs">
+      <DependentUpon>201907310721355_Nawras_Add_IsInternallyDefined_ToSchedulerProcedure.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201907280831271_AddJournalExternalReconcile.cs" />
     <Compile Include="Migrations\201907280831271_AddJournalExternalReconcile.Designer.cs">
       <DependentUpon>201907280831271_AddJournalExternalReconcile.cs</DependentUpon>
@@ -1340,6 +1344,14 @@
     <Compile Include="Migrations\201907310922001_AbedAddLastStatusUpdateDateToWarehouseEntry.cs" />
     <Compile Include="Migrations\201907310922001_AbedAddLastStatusUpdateDateToWarehouseEntry.Designer.cs">
       <DependentUpon>201907310922001_AbedAddLastStatusUpdateDateToWarehouseEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907310800149_Nawras.cs" />
+    <Compile Include="Migrations\201907310800149_Nawras.Designer.cs">
+      <DependentUpon>201907310800149_Nawras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907310818484_Nawras_IsInternallyDefined_SchedulerProcedure.cs" />
+    <Compile Include="Migrations\201907310818484_Nawras_IsInternallyDefined_SchedulerProcedure.Designer.cs">
+      <DependentUpon>201907310818484_Nawras_IsInternallyDefined_SchedulerProcedure.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2280,11 +2292,20 @@
     <EmbeddedResource Include="Migrations\201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.resx">
       <DependentUpon>201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907310721355_Nawras_Add_IsInternallyDefined_ToSchedulerProcedure.resx">
+      <DependentUpon>201907310721355_Nawras_Add_IsInternallyDefined_ToSchedulerProcedure.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907280831271_AddJournalExternalReconcile.resx">
       <DependentUpon>201907280831271_AddJournalExternalReconcile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907280851421_AddInProgressExternalReconcile.resx">
       <DependentUpon>201907280851421_AddInProgressExternalReconcile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907310800149_Nawras.resx">
+      <DependentUpon>201907310800149_Nawras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907310818484_Nawras_IsInternallyDefined_SchedulerProcedure.resx">
+      <DependentUpon>201907310818484_Nawras_IsInternallyDefined_SchedulerProcedure.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907310922001_AbedAddLastStatusUpdateDateToWarehouseEntry.resx">
       <DependentUpon>201907310922001_AbedAddLastStatusUpdateDateToWarehouseEntry.cs</DependentUpon>
