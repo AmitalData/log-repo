@@ -48,7 +48,7 @@ export class AddEditCourierPendingReasonComponent
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
 
             SessionLocator.CurrentSession.StopBusyIndicator();
-            if (AppTool.IsNullOrEmpty(entityArgs.EntityPM)) {
+            if (AppTool.IsNullOrEmpty(entityArgs.EntityPM) || !(entityArgs.EntityPM instanceof CourierPendingReasonPM)) {
                 this.EntityPM = new CourierPendingReasonPM();
                 this.EntityPM.Tenant = SessionLocator.Tenant;
                 this.isWindowMode = true;
