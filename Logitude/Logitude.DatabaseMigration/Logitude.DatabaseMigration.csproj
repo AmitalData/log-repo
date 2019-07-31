@@ -1329,6 +1329,10 @@
     <Compile Include="Migrations\201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.Designer.cs">
       <DependentUpon>201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907310721355_Nawras_Add_IsInternallyDefined_ToSchedulerProcedure.cs" />
+    <Compile Include="Migrations\201907310721355_Nawras_Add_IsInternallyDefined_ToSchedulerProcedure.Designer.cs">
+      <DependentUpon>201907310721355_Nawras_Add_IsInternallyDefined_ToSchedulerProcedure.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2267,6 +2271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.resx">
       <DependentUpon>201907280948351_UpdateBIReportsExecutionLogDoneDate_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907310721355_Nawras_Add_IsInternallyDefined_ToSchedulerProcedure.resx">
+      <DependentUpon>201907310721355_Nawras_Add_IsInternallyDefined_ToSchedulerProcedure.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
