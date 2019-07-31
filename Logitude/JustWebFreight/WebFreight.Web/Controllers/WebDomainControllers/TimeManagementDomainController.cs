@@ -789,6 +789,73 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
+        //////////////////////////////////////////////////////////////////
+        /// //////////////////////////////////////////////////////////////////////
+        ///  //////////////////////////////////////////////////////////////////////
+        ///   //////////////////////////////////////////////////////////////////////
+
+        public HttpResponseMessage GetTMProjectsByBatchProject(string employeeUserId,string fromProject, string toProject, string fromDate, string toDate)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
+                employeeUserId = FixFilter(employeeUserId);
+                fromProject = FixFilter(fromProject);
+                toProject = FixFilter(toProject);
+                DateTime? fromDate_ = fromDate == "null" ? null : DateHelper.GetDate(fromDate);
+                DateTime? toDate_ = toDate == "null" ? null : DateHelper.GetDate(toDate);
+
+                
+
+                TMMBProjectDataArgs args = new TMMBProjectDataArgs() { EmployeeUserId = employeeUserId,FromProject = fromProject, ToProject =toProject, FromDate = fromDate_, ToDate = toDate_, Tenant = tenant };
+                var stringwriter = new System.IO.StringWriter();
+                var serializer = new XmlSerializer(typeof(TMMBProjectDataArgs));
+                serializer.Serialize(stringwriter, args);
+                string xmlParameters = stringwriter.ToString();
+
+                BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
+                {
+                    Subject = "Move Hours Between Projects",
+                    Tenant = tenant,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ClassName = "WebFreight.Web.Helpers.APIHelpers.TMMBProjectsHelper,WebFreight.Web",
+                    CreateDate = DateTime.Now,
+                    PrametersXml = xmlParameters,
+                    StatusCode = "C",
+                };
+
+                IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
+                BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                bteUpdateService.Update(taskExe, true);
+
+                // 2- Send to queue
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+                queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant", tenant.ToString() }
+                });
+
+                return Request.CreateResponse(HttpStatusCode.OK, taskExe);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        //////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////
+        /// //////////////////////////////////////////////////////////////////////
+        ///  //////////////////////////////////////////////////////////////////////
         private string GetTimeFormatFromMinutes(double minutes)
         {
             string iResult = "";
@@ -1231,6 +1298,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
     }
+
+    /// /////////////////////////////////////////////////////////////////////////
+    public class TMMBProjectDataArgs
+    {
+        public string EmployeeUserId { get; set; }
+        public string FromProject { get; set; }
+        public string ToProject { get; set; }
+        public int Tenant { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+    }
+    /// /////////////////////////////////////////////////////////////////////////
+
     public class TMVacationsSummary
     {
         public double Holidays { get; set; }
