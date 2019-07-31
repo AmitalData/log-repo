@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Scheduler Procedure",
-			      				    Code =  "d877",
+			      				    Code =  "1bbd",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -378,6 +378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "IsInternallyDefined",
+					  						OldFieldName =  "IsInternallyDefined",
 					  						ObjectTableName =  "SchedulerProcedure",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -397,6 +398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsInternallyDefined",
 					  						ListPropertyPath =  "IsInternallyDefined",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
