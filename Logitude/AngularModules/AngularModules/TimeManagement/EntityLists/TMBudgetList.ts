@@ -12,6 +12,7 @@ export class TMBudgetList {
 	Tenant: number;
 	SearchFields: string;
 	Name: string;
+	Inactive: boolean;
 	
 }
  

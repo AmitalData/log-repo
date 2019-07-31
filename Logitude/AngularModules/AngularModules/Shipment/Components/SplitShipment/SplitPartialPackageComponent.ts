@@ -22,6 +22,7 @@ export class SplitPartialPackageComponent extends BaseComponent {
     public IsFCLEntity: boolean = false;
     public TransportModeId: string = null;
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -106,7 +107,7 @@ export class SplitPartialPackageComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -156,7 +157,7 @@ export class SplitPartialPackageComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+            this.CurrentSession.CloseCurrentWindowEmit("Ok");
         }
     }
 }

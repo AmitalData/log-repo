@@ -20,6 +20,7 @@ export class AddEditReceivableComponent {
     public ShipmentLevelCode: string = null;    
     public ValidationErrorsList: string[] = [];
     public ChargeTypesQueryFilters: ApiQueryFilters;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
                
     }
@@ -78,7 +79,7 @@ export class AddEditReceivableComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -130,7 +131,7 @@ export class AddEditReceivableComponent {
             }
 
             this.DataContext.IsNewEntity = false;
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

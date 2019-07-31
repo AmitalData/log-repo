@@ -344,6 +344,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   MoveTypeName = f.MoveTypeName,
                                   ContainerLastStatusDate = f.ContainerLastStatusDate,
                                   BookingConfirmationNumber = f.BookingConfirmationNumber,
+                                  DeclarationDate = f.DeclarationDate,
+                                  DeclarationNumber = f.DeclarationNumber,
+                                  ARInvoices = f.ARInvoices,
+                                  Notes = f.Notes,
+                                  WarehouseLegLastFreeDate=f.WarehouseLegLastFreeDate,
+                                  LastFinalDestination=f.LastFinalDestination,
+                                  EstimatedFinalArrivalDate=f.EstimatedFinalArrivalDate,
+
+
                               };
 
             entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);

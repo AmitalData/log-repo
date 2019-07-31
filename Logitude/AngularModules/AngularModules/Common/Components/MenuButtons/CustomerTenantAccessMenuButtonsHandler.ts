@@ -1,4 +1,4 @@
-﻿declare var window;
+declare var window;
 import {CustomerTenantAccessPM} from '../../EntityPMs/CustomerTenantAccessPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -22,6 +22,7 @@ export class CustomerTenantAccessMenuButtonsHandler {
     public entityArgs: EntityArgs
     public TenantPM: TenantPM;
     public ObjectTableName: string = "CustomerTenantAccess";
+    private CurrentSession = SessionLocator.SelectedSession;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
@@ -76,7 +77,7 @@ export class CustomerTenantAccessMenuButtonsHandler {
             if (confirmWindow.Yes) {
                 var service: CustomerTenantAccessExtendedPMService = new CustomerTenantAccessExtendedPMService();
                 service.DenyRequest(this.EntityPM.Id).subscribe(p => {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 });;
             }
         });

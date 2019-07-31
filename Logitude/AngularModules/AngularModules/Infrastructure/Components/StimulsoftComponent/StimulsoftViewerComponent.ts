@@ -88,6 +88,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
 
     public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
         if (this.documentTypeTemplatePMService == null) {
@@ -597,12 +598,12 @@ export class StimulsoftViewerComponent implements OnInit {
 
     SendButtonClick(type: string) {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Presend...");
+        this.CurrentSession.StartBusyIndicator("Presend...");
 
         //  var fileName: string = this.StimulsoftArgData.ReportKey + "@" + (this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Name:"");
         var fileName: string = this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription;
         this.reportService.GetPrepareSendReport(type, fileName , SessionLocator.Tenant).subscribe(res => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             var pmResponse: ServiceResponse = res;
             var result;
@@ -683,11 +684,11 @@ export class StimulsoftViewerComponent implements OnInit {
 
             if (filter.EditableFieldLists && filter.EditableFieldLists.length > 0) {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
 
                 this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (!pmResponse.HasError) {
                         this.EditableField.filter(d => d.Status == "Change").forEach((field) => {
@@ -810,7 +811,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
         if (this.StimulsoftArgData && this.StimulsoftArgData.ReportsPreviewComponent && this.StimulsoftArgData.ReportsPreviewComponent.Report && this.StimulsoftArgData.ReportsPreviewComponent.Report.Id) {
             var reportId: string = this.StimulsoftArgData.ReportsPreviewComponent.Report.Id;
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: reportId, ObjectTableName: "Report" });
@@ -875,7 +876,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
     public ApplayShift(isCloseEditWindow: boolean) {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
         if (this.StimulsoftArgData.EditDocumentComponent) {
             if (this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists) {
                 var item = this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d=> d.Id == this.StimulsoftArgData.DocumenttypetemplateId)[0];
@@ -901,7 +902,7 @@ export class StimulsoftViewerComponent implements OnInit {
             }
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
 
      
@@ -911,7 +912,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
         this.documentTypeTemplatePMService.update(item).subscribe(myResult=> {
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
 
 

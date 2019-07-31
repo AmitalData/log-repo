@@ -70,6 +70,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     AgentLable: string = "Agent";
     private messageWindow: MessageWindow = new MessageWindow();
     RefreshTimer: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public http: Http, public serviceArgs: ServiceArgs, private _entityListService: EntityListService) {
         super();
         this.serviceArgs.http = this.http;
@@ -83,7 +84,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         this._LogBoxSignatureClientService = new LogBoxSignatureClientService();
         this._HybridPartnerPMService = new HybridPartnerPMService();
         this._EntityStatusExtendedListService = new EntityStatusExtendedListService();
-        SessionLocator.CurrentSession.SessionEvent.subscribe(($event: any) => {
+        this.CurrentSession.SessionEvent.subscribe(($event: any) => {
             if ($event.Name == "DisableBusyIndicator") {
                 this.StopBusyIndicator();
             }
@@ -103,7 +104,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             this.IsPrivateLabel = false;
         }
         this.ShipmentSelectedEvent.subscribe((res) => {
-            //SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");//
+            //this.CurrentSession.StartBusyIndicator("Loading ...");//
             if (res == null)
             {
                 this.externalDocs = [];
@@ -114,7 +115,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 this.SignRequiredCount = 0;
                 return;
             }
-            this.DisableAddDocumentButton = false;
+             
+            //this.DisableAddDocumentButton = true;
             this.StartBusyIndicator("Loading ...");
             var div = document.getElementById("DocsTab");
             this.Style = { "max-height": div.clientHeight };
@@ -132,6 +134,10 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                         if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
                             this.DisableAddDocumentButton = true;
                         }
+                        else {
+                            this.DisableAddDocumentButton = false;
+                        }
+                        this.ReloadDocuments(true);
                     });
                     this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe(theResult => {
                         if (!theResult.HasError) {
@@ -144,10 +150,13 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     //    }
                     //});
                 }
+                else {
+                    this.ReloadDocuments(true);
+                }
             });
             
 
-            this.ReloadDocuments(true);
+            //this.ReloadDocuments(true);
 
         });
         this.OnImporterShipmentsFilterChanged.subscribe((res) => {
@@ -510,6 +519,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
     IsDeleteClicked: boolean = false;
     DeleteDocumentClicked(item) {
+        if (this.DisableAddDocumentButton == true) {
+            return;
+        }
         this.IsDeleteClicked = true;
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Title = "Confirm Deletion";
@@ -540,6 +552,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         //alert(item.Id);
     }
     DeleteDocumentFile(item) {
+        if (this.DisableAddDocumentButton == true) {
+            return;
+        }
         this.IsDeleteClicked = true;
         if (item.IsCustomReference) {
             this.messageWindow.Width = 300;
@@ -644,7 +659,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
 
                 //    }
                 //});
-                //SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");//
+                //this.CurrentSession.StartBusyIndicator("Loading ...");//
+                ServiceLocator.SendTotangoUserActivity("LogBox", "Share Document With Agent");
                 this.StartBusyIndicator("Loading ...");
                 if (EntityPm.IsSharedWithForwarder == true) {
                     EntityPm.IsSharedWithForwarder = false;
@@ -667,7 +683,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
 
                 }
                 this._documentsFilingPMService.update(EntityPm).subscribe(myResult => {
-                    //SessionLocator.CurrentSession.StopBusyIndicator();//
+                    //this.CurrentSession.StopBusyIndicator();//
                     this.StopBusyIndicator();
                     //this.IssharedWithAgentButtonEnabled = false;
                     this.ReloadDocuments();
@@ -692,7 +708,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     public set ArchiveButtonText(newValue: string) { this.archiveButtonText = newValue; }
 
     ArchiveClicked() {
-        //SessionLocator.CurrentSession.StartBusyIndicator("Saving ...");
+        //this.CurrentSession.StartBusyIndicator("Saving ...");
         this.StartBusyIndicator("Saving ...");
         this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe(myResult => {
             if (!myResult.HasError) {
@@ -721,13 +737,13 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                             this.ArchiveButtonText == "Archive";
                             action = "U";
                         }
-                        //SessionLocator.CurrentSession.StopBusyIndicator();
+                        //this.CurrentSession.StopBusyIndicator();
                         this.StopBusyIndicator();
-                        //SessionLocator.CurrentSession.FireEvent({ Name: "ReloadPublicShipments" });
+                        //this.CurrentSession.FireEvent({ Name: "ReloadPublicShipments" });
                         this.ArchiveDone.emit({ Ship: this.SelectedShipment, Action: action });
                     }
                     else {
-                        //SessionLocator.CurrentSession.StopBusyIndicator();
+                        //this.CurrentSession.StopBusyIndicator();
                         this.StopBusyIndicator();
                     }
 
@@ -735,7 +751,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             }
             else {
                 //this.ValidationErrorsList = myResult.ErrorsArray;
-                //SessionLocator.CurrentSession.StopBusyIndicator();
+                //this.CurrentSession.StopBusyIndicator();
                 this.StopBusyIndicator();
             }
         });
@@ -773,6 +789,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             if (this.IsRequestedSelected && this.SelectedShipment.IsRequestedDocuments == true) {
                 this.SelectedTabCode = 'REQ';
             }
+            else if (this.IsRequestedSelected && this.SelectedShipment.IsDigitalSignRequired == true) {
+                this.SelectedTabCode = 'SREQ'; 
+            } 
             else {
                 this.SelectedTabCode = 'CAT';
             }
@@ -872,12 +891,12 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
 
                 this.SelectedTabCode = 'SREQ';
             }
-            //SessionLocator.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
             this.StopBusyIndicator();
 
         }, error => {
             var dd: Response = error;
-            //SessionLocator.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
             this.StopBusyIndicator();
         });
         this._documentsFilingExtendedPMService.getRequestedDocumentsFilingsByEntityIdAndObjectTable(this.SelectedShipment.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
@@ -927,7 +946,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DownloadAllFilesComponent');
 
     }
-    DisableAddDocumentButton: boolean = false;
+    DisableAddDocumentButton: boolean = true;
+
     ShareDocumentsClick() {
         if (this.SharedDocs.length > 0) {
             var window = new ConfirmWindow();
@@ -941,7 +961,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             window.WindowClosed.subscribe((event: any) => {
                 if (window.Yes) {
                     var SharedDocsIds = [];
-                    SessionLocator.CurrentSession.StartBusyIndicator("Sharing ...");
+                    this.CurrentSession.StartBusyIndicator("Sharing ...");
                     this.SharedDocs.forEach((docin) => {
                         SharedDocsIds.push(docin.Id);
                     });
@@ -961,8 +981,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                                             this._ShipmentPMService.update(this.ShipmentPM).subscribe(myResult => {
                                                 if (!myResult.HasError) {
                                                     this.DisableAddDocumentButton = true;
-                                                    SessionLocator.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
-                                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                                    this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });
+                                                    this.CurrentSession.StopBusyIndicator();
                                                 }
                                                 //else {
                                                 //    this.ValidationErrorsList = myResult.ErrorsArray;
@@ -972,7 +992,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                                     });
                                 }
                                 else {
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    this.CurrentSession.StopBusyIndicator();
                                     this.messageWindow.Width = 300;
                                     this.messageWindow.Height = 150;
                                     this.messageWindow.Title = "No Status In progress !";

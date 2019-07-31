@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TMRelease", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TMRelease", entityPM.Tenant, authToken.Tenant);
 	                    
                         ITimeManagementContext MyContext = TimeManagementContext.GetContext(entityPM.Tenant);
                         TMReleaseUpdateService service = new TMReleaseUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TMRelease", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TMRelease", entityPM.Tenant, authToken.Tenant);
 	
                         ITimeManagementContext MyContext = TimeManagementContext.GetContext(entityPM.Tenant);
                         TMReleaseUpdateService service = new TMReleaseUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

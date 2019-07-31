@@ -87,25 +87,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal amount ;
+	  private decimal debitAmount ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal Amount  
+       public decimal DebitAmount  
 	   {
 	    
 	     get
 		{
-		   return amount;
+		   return debitAmount;
 		 }
 		 set
 		 {
-		   if(amount != value)
+		   if(debitAmount != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Amount",OldValue=amount,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DebitAmount",OldValue=debitAmount,NewValue=value,PropertyType="decimal"};
 		    NotifyPropertyChanged(values);
-		   amount=value;
+		   debitAmount=value;
 		   }
 			
 		 }
@@ -315,6 +315,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReconciliationNumber",OldValue=reconciliationNumber,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   reconciliationNumber=value;
+		   }
+			
+		 }
+	   }
+	  private decimal creditAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal CreditAmount  
+	   {
+	    
+	     get
+		{
+		   return creditAmount;
+		 }
+		 set
+		 {
+		   if(creditAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreditAmount",OldValue=creditAmount,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   creditAmount=value;
+		   }
+			
+		 }
+	   }
+	  private decimal amount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal Amount  
+	   {
+	    
+	     get
+		{
+		   return amount;
+		 }
+		 set
+		 {
+		   if(amount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Amount",OldValue=amount,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   amount=value;
 		   }
 			
 		 }

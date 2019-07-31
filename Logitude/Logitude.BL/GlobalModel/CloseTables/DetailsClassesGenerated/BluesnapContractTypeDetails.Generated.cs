@@ -55,6 +55,13 @@ namespace Logitude.BL.GlobalModel
                 Code = "EABS", 
                 Name = "e-AWB stock", 
 			});
+			 
+            all.Add(new BluesnapContractTypeDetails()
+            {    
+                Name = "INTTRA stock", 
+                Code = "INTS", 
+                SearchFields = "INTS,INTTRA stock", 
+			});
 			
             return all;
        }

@@ -109,7 +109,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                
 				int tenant = authToken.Tenant;
 				if(filters.Tenant != null)
-					tenant = filters.Tenant.Value;
+					tenant = tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {

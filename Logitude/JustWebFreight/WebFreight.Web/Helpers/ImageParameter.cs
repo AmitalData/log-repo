@@ -8,6 +8,7 @@ namespace WebFreight.Web.Helpers
 {
     public class ImageParameter
     {
+        public bool IsReadDocumentFromBarCode { get; set; }
         public bool IsCheckedSecuritykey { get; set; }
         public string ShipmentNumber { get; set; }
         public string Key { get; set; }

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -39,7 +39,7 @@ export class APInvoiceTransferTemplate extends BaseComponent {
     public IsNew: boolean = false; 
     public EntityId: string;
     public ItemsSource: APInvoiceTransferLineArgs[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -194,7 +194,7 @@ export class APInvoiceTransferTemplate extends BaseComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     public ValidationErrorsList = [];
     OkButtonClicked() {
@@ -202,13 +202,13 @@ export class APInvoiceTransferTemplate extends BaseComponent {
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var service = new APInvoicePMService();
             service.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!response.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
                 else {
                     this.ValidationErrorsList = response.ErrorsArray;

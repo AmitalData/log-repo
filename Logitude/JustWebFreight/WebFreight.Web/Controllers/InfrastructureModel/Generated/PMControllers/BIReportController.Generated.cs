@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("BIReport", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("BIReport", entityPM.Tenant, authToken.Tenant);
 	                    
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         BIReportUpdateService service = new BIReportUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("BIReport", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("BIReport", entityPM.Tenant, authToken.Tenant);
 	
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         BIReportUpdateService service = new BIReportUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

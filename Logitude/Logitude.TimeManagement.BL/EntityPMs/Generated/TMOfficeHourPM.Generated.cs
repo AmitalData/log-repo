@@ -365,6 +365,52 @@ namespace Logitude.TimeManagement.BL.EntityPMs
 			
 		 }
 	   }
+	  private double minutes ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double Minutes  
+	   {
+	    
+	     get
+		{
+		   return minutes;
+		 }
+		 set
+		 {
+		   if(minutes != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Minutes",OldValue=minutes,NewValue=value,PropertyType="double"};
+		    NotifyPropertyChanged(values);
+		   minutes=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return updatedByUserName;
+		 }
+		 set
+		 {
+		   if(updatedByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=updatedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByUserName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

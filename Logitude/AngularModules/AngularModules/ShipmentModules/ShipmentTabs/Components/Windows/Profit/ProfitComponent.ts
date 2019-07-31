@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, FontTool} from '../../../../../Infrastructure/Tools';
 import {NumbersPipe} from '../../../../../Infrastructure/Pipes/NumbersPipe';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
@@ -23,6 +23,7 @@ export class ProfitComponent {
     public SelectedCurrencyCode: string = null;
     public ProfitsCollection: ProfitClass[] = [];
     private myDomainService: ShipmentDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myDomainService = new ShipmentDomainService();
     }
@@ -112,7 +113,7 @@ export class ProfitComponent {
     }
 
     LoadMasterHousesPayables() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetAllMasterHousesPayables(this.allHousesIdsString).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -123,7 +124,7 @@ export class ProfitComponent {
         });
     }
     LoadMasterHousesReceivables() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetAllMasterHousesReceivables(this.allHousesIdsString).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -139,7 +140,7 @@ export class ProfitComponent {
     }
 
     BuildProfitData() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
 
         this.ProfitsCollection = [];
 

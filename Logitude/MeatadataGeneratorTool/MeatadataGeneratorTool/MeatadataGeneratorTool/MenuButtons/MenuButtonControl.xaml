@@ -65,7 +65,15 @@
                                    FontWeight="Bold"
                                    Text="Style :" />
 
-                    </StackPanel>
+						<TextBlock Width="80"
+                                   Height="25"
+                                   Margin="5,5,0,5"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Text="Is Packagable :" />
+
+					</StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Vertical">
                         <TextBox Width="200"
                                  Height="25"
@@ -107,8 +115,13 @@
                                  VerticalAlignment="Center"
                                  Text="{Binding Style,
                                                 Mode=TwoWay}" />
+						<CheckBox Height="25"
+                                  Margin="5"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding IsPackagable,
+                                                      Mode=TwoWay}" />
 
-                    </StackPanel>
+					</StackPanel>
                 </Grid>
             </Grid>
         </Border>

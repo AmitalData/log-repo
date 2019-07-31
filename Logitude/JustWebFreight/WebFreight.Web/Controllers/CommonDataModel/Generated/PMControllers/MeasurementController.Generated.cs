@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Measurement", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Measurement", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         MeasurementService service = new MeasurementService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Measurement", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Measurement", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "Measurement" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "MeasurementPM" + entityPM.Id + entityPM.Tenant;

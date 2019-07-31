@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("APPaymentMethod", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("APPaymentMethod", entityPM.Tenant, authToken.Tenant);
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
                         APPaymentMethodService service = new APPaymentMethodService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("APPaymentMethod", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("APPaymentMethod", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "APPaymentMethod" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "APPaymentMethodPM" + entityPM.Id + entityPM.Tenant;

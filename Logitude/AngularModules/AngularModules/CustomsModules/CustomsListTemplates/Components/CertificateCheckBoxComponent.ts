@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
 
@@ -16,10 +16,10 @@ export class CertificateCheckBoxComponent{
     public fieldName: any;
     publish: boolean = true;
     isAllSelected: boolean;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef) {
-        SessionLocator.CurrentSession.SubscriptionAdd(
-            SessionLocator.CurrentSession.ConnectedItemSelectedEvent.subscribe((res) => {
+        this.CurrentSession.SubscriptionAdd(
+            this.CurrentSession.ConnectedItemSelectedEvent.subscribe((res) => {
                 this.publish = false;
                 if (res.Count == "All") {
 
@@ -53,14 +53,14 @@ export class CertificateCheckBoxComponent{
         this.isSelected = value;
             if (this.isSelected) {
                 //if (!this.isAllSelected) {
-                    SessionLocator.CurrentSession.SelectItemEvent.emit({ data: this.rowData, selected: true });
+                    this.CurrentSession.SelectItemEvent.emit({ data: this.rowData, selected: true });
                 //}
                 this.rowData.IsSelected = true;
             }
             else {
                 this.rowData.IsSelected = false;
                 //if (!this.isAllSelected) {
-                    SessionLocator.CurrentSession.SelectItemEvent.emit({ data: this.rowData, selected: false });
+                    this.CurrentSession.SelectItemEvent.emit({ data: this.rowData, selected: false });
                 //}
 
         }
@@ -75,7 +75,7 @@ export class CertificateCheckBoxComponent{
     }
 
     FirePreventSelect() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("certificate");
+        this.CurrentSession.PseventRowSelectEvent.emit("certificate");
     }
    
 

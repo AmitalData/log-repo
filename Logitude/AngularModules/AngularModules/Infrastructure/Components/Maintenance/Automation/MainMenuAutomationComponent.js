@@ -31,7 +31,7 @@ export var MainMenuAutomationComponent = (function () {
         });
     };
     MainMenuAutomationComponent.prototype.CloseButtonClicked = function () {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     };
     MainMenuAutomationComponent.decorators = [
         { type: Component, args: [{

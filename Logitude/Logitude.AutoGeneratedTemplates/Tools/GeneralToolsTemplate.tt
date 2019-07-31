@@ -99,11 +99,67 @@ public void SaveFileOutput(string outputFileName)
     return Char.ToUpperInvariant(str[0]).ToString() + str.Substring(1);
 }
 
+    public string TrimString(string myString,string trimmedStr){
+        if (myString.EndsWith(trimmedStr) && myString.StartsWith(trimmedStr))
+        {
+            myString = myString.Remove(0, trimmedStr.Length);
+            myString = myString.Remove(myString.Length - 1, trimmedStr.Length);
+
+            //trimmedString = test.Remove(0, 1).Remove(test.Length - 1, 1);
+
+        }
+
+        return myString;
+    }
+
+    public string FixSpecialCharacters(string myString){
+        
+        if(!string.IsNullOrEmpty(myString)){
+            string result = "";
+            for (int i = 0; i < myString.Length; i++)
+            {
+                char mychar = myString[i];
+                result += mychar;
+                if (i != myString.Length - 1)
+                {
+                    if (mychar == '\\' && myString[i + 1] != '\\' && myString[i + 1] != 'n')
+                    {
+                        result += mychar;
+                    }
+                }
+                else if (mychar == '\\')
+                {result += mychar;}
+            }
+
+            result = result.Replace("\"", @"\""");
+
+
+            return result;
+        }
+
+        return myString;
+    }
+
+
+
+    public string TrimCharacter(string myString,char ch){
+        if (myString.EndsWith(ch.ToString()) && myString.StartsWith(ch.ToString()))
+        {
+            myString = myString.Remove(0, 1);
+            myString = myString.Remove(myString.Length - 1, 1);
+
+            //trimmedString = test.Remove(0, 1).Remove(test.Length - 1, 1);
+
+        }
+
+        return myString;
+    }
+
 //Create an elastic object
 private dynamic GetXmlDocumentFromFile(string file)
-{
-   var path= Host.ResolvePath(file);
-   return XDocument.Load(path).Root.ToElastic();
-}
+    {
+        var path= Host.ResolvePath(file);
+        return XDocument.Load(path).Root.ToElastic();
+    }
 
 #>

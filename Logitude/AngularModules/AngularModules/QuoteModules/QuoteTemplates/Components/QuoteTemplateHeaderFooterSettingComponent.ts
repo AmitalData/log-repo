@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';
 import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
@@ -38,6 +38,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     froalaEditorSetting: FroalaEditorSetting;
     public ValidationErrorsList: string[];
     QuoteTemplateSectionTypeName: string = "Packages";
+    EditQuoteTemplateComponent: any;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
 
@@ -46,7 +47,8 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     BorderTypesSelected: BorderType;
     BorderTypes: BorderType[] = [];
 
-    AreaType: string[]; 
+    AreaType: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
@@ -55,7 +57,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
         this.quoteTemplateTextDesignExtendedPMService = new QuoteTemplateTextDesignExtendedPMService();
         this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
         
-
+      
     }
 
     ngOnInit() {
@@ -68,9 +70,14 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
         this.QuoteTemplateSectionTypeName = args.QuoteTemplateSectionTypeName
         this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
         this.QuoteTemplateSectionViewModel = args.QuoteTemplateSectionViewModel;  
-        
+        this.EditQuoteTemplateComponent = args.EditQuoteTemplateComponent;  
+     
+
+
         this.QuoteId = args.QuoteId;  
-        var areaTypeString = "Logo,Text,None";
+        var areaTypeString = "Logo,Text";
+        if (this.QuoteTemplateSectionTypeName == "Header") areaTypeString += ",Quote Header";
+        areaTypeString += ",None";
 
         this.AreaType = areaTypeString.split(',');
 
@@ -89,7 +96,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
             //}
         }
         
-        this.froalaEditorSetting.Height = ((SessionLocator.CurrentSession.CurrentWindow.Height / 2) -20);
+        this.froalaEditorSetting.Height = ((this.CurrentSession.CurrentWindow.Height / 2) -20);
 
 
         this.FullProperity();
@@ -310,39 +317,74 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     EditPageArea(type: string) {
 
 
-        var windowArgs: any = {};
-        var logWindow = new LogitudeWindow();
-        windowArgs.QuoteTemplateSettingPM = this.QuoteTemplateSettingPM;
-        windowArgs.QuoteTemplateSectionTypeName = this.QuoteTemplateSectionTypeName;
-        windowArgs.AreaType = type;
 
-        if (type == "Area1") windowArgs.AreaMode = this.PageArea1Type; 
-        else if (type == "Area2") windowArgs.AreaMode = this.PageArea2Type;
-        else if (type == "Area3") windowArgs.AreaMode = this.PageArea3Type;
-      
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Width = 800;
-        logWindow.Height = 600;
-        logWindow.BottomBorderForTitle = "1px solid LightGray";
-        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.Edit" + type); 
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/PageAreaHeaderFooterComponent");
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event == "Refresh") {
-                this.IsChangeSetting = true;
-                this.RefreshQuoteTemplateSectionBodyHtml();
-            }
-        });
+        if ((type == "Area1" && this.PageArea1Type == "Quote Header") || (type == "Area2" && this.PageArea2Type == "Quote Header") || (type == "Area3" && this.PageArea3Type == "Quote Header")) {
+            this.ShowQuoteHeaderEditWindow();
+        } else {
 
+            var windowArgs: any = {};
+            var logWindow = new LogitudeWindow();
+            windowArgs.QuoteTemplateSettingPM = this.QuoteTemplateSettingPM;
+            windowArgs.QuoteTemplateSectionTypeName = this.QuoteTemplateSectionTypeName;
+            windowArgs.AreaType = type;
+
+            if (type == "Area1") windowArgs.AreaMode = this.PageArea1Type;
+            else if (type == "Area2") windowArgs.AreaMode = this.PageArea2Type;
+            else if (type == "Area3") windowArgs.AreaMode = this.PageArea3Type;
+
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Width = 800;
+            logWindow.Height = 600;
+            logWindow.BottomBorderForTitle = "1px solid LightGray";
+            logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.Edit" + type);
+            logWindow.Show("./QuoteModules/QuoteTemplates/Components/PageAreaHeaderFooterComponent");
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                if ($event == "Refresh") {
+                    this.IsChangeSetting = true;
+                    this.RefreshQuoteTemplateSectionBodyHtml();
+                }
+            });
+        }
+    }
+
+
+    ShowQuoteHeaderEditWindow() {
+        if (this.EditQuoteTemplateComponent) {
+            var windowArgs: any = {};
+            windowArgs.QuoteTemplatePM = this.QuoteTemplatePM;
+            windowArgs.QuoteTemplateSettingPM = this.QuoteTemplateSettingPM;
+            var quoteTemplateSectionHeaderViewModel = this.EditQuoteTemplateComponent.QuoteTemplateSectionLists.filter(d => d.QuoteTemplateSectionTypeCode == "QH")[0];
+            windowArgs.QuoteTemplateSectionViewModel = quoteTemplateSectionHeaderViewModel;
+            windowArgs.QuoteId = this.EditQuoteTemplateComponent.QuotePM != null ? this.EditQuoteTemplateComponent.QuotePM.Id : "";
+            windowArgs.QuoteTemplateSectionTypeName = "QuoteHeader";
+            windowArgs.QuoteTemplateSectionTypeCode = "QH";
+            windowArgs.QuoteTemplateTextCodePMList = this.EditQuoteTemplateComponent.QuoteTemplateTextCodeLists;
+            windowArgs.QuotePM = this.EditQuoteTemplateComponent.QuotePM;
+            var logWindow = new LogitudeWindow();
+            logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.QuoteHeader" + "Settings");
+            logWindow.Width = 940;
+            logWindow.Height = 660;
+            logWindow.WindowArgs = windowArgs;
+
+            logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteTemplateHeaderDetailsSettingComponent");
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                if ($event == "Refresh") {
+                    quoteTemplateSectionHeaderViewModel.IsLoaded = false;
+                    this.IsChangeSetting = true;
+                    this.RefreshQuoteTemplateSectionBodyHtml();
+                }
+            });
+        }
     }
 
     SaveChanges() {
 
         if (this.QuoteTemplateSettingPM.IsDirty) {
             this.IsChangeSetting = true;
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
             this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                 this.QuoteTemplateSettingPM.IsDirty = false;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.RefreshQuoteTemplateSectionBodyHtml();
             });
         }
@@ -350,10 +392,10 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     }
 
     RefreshQuoteTemplateSectionBodyHtml() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, this.QuoteTemplateSectionViewModel.Id, this.QuoteTemplateSectionViewModel.EntityPM.QuoteTemplateId, this.QuoteTemplateSettingPM.Id, this.QuoteId, this.QuoteTemplatePM.CreatedByUserId, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
  
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.QuoteTemplateSectionViewModel.HtmlBody = pmResponse.Result;
@@ -382,6 +424,35 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     }
 
 
+    get SpaceLinesBefore() {
+        var spaceLinesBefore: number = 1;
+        if (this.QuoteTemplateSettingPM) {
+            if (this.QuoteTemplateSectionTypeName == "Header") spaceLinesBefore = this.QuoteTemplateSettingPM.SpaceLinesBeforeHeaders;
+            else if (this.QuoteTemplateSectionTypeName == "Footer") spaceLinesBefore = this.QuoteTemplateSettingPM.SpaceLinesBeforeFooters;
+           
+        }
+        return spaceLinesBefore;
+    }
+    set SpaceLinesBefore(value: number) {
+        if (this.QuoteTemplateSettingPM) {
+
+            if (this.QuoteTemplateSectionTypeName == "Header") {
+                if (this.QuoteTemplateSettingPM.SpaceLinesBeforeHeaders != value) {
+                    this.QuoteTemplateSettingPM.SpaceLinesBeforeHeaders = value;
+                    this.SaveChanges();
+                }
+            }
+            else if (this.QuoteTemplateSectionTypeName == "Footer") {
+                if (this.QuoteTemplateSettingPM.SpaceLinesBeforeFooters != value) {
+                    this.QuoteTemplateSettingPM.SpaceLinesBeforeFooters = value;
+                    this.SaveChanges();
+                }
+            }
+           
+        }
+
+    }
+    //SpaceLinesBefore
     
     SaveButtonClicked() {
        this.ValidateFields();
@@ -389,19 +460,19 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
            if (this.QuoteTemplateSettingPM.IsDirty) {
 
-               SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+               this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                    this.QuoteTemplateSettingPM.IsDirty = false;
-                   SessionLocator.CurrentSession.StopBusyIndicator();
-                   SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+                   this.CurrentSession.StopBusyIndicator();
+                   this.CurrentSession.CurrentWindow.Close("Refresh");
 
 
                });
            }
            else {
 
-               if (this.IsChangeSetting) SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
-              else SessionLocator.CurrentSession.CloseCurrentWindow();
+               if (this.IsChangeSetting) this.CurrentSession.CurrentWindow.Close("Refresh");
+              else this.CurrentSession.CloseCurrentWindow();
            }
             
 
@@ -463,7 +534,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     CloseButtonClicked() {
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 

@@ -27,6 +27,9 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Globalization;
+using Simplog.Data.InvoiceModel;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -35,8 +38,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         public static void Validate(ARPaymentPM entityPM, CashBookPM cashBook = null)
         {
             int tenant = entityPM.Tenant;
-
-            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
 
             string paymentMethodCode = "";
             Simplog.Data.InvoiceModel.Repositories.AccountingPaymentMethodRepository paymentMethodRepository = new Simplog.Data.InvoiceModel.Repositories.AccountingPaymentMethodRepository(tenant);
@@ -45,7 +48,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 paymentMethodCode = paymentMethod.Code;
             }
-
+           
             bool isNegativeAmountEnabled = false;
             if (paymentMethodCode == "FS")
             {
@@ -69,7 +72,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 string msg = TranslateTextsClass.Translate("ARPayment.M.CantSetFutureDatePayment", tenant);
                 throw new ApplicationException(msg);
             }
-
+           
             if (entityPM.AmountInPaymentCurrency == 0)
             {
                 bool isAllowed = false;
@@ -104,6 +107,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     throw new ApplicationException(rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ChequeOrPaymentRef", tenant)));
                 }
+              
             }
 
             if (paymentMethodCode == "CC")
@@ -168,7 +172,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 throw new ApplicationException("Can't connect lines with zero Amount to Pay");
             }
 
-            ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account);
+            ValidateAccountingSetting(entityPM);
+            ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account, entityPM.Bank );
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
@@ -199,6 +204,65 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             if (MethodHelper.IsAirlineRestricted(myCardId, airlineRepository, tenant))
                             {
                                 throw new ApplicationException("Bill to Airline is not allowed");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void ValidateAccountingSetting(ARPaymentPM entityPM)
+        {
+            if (entityPM.SetApproved)
+            {
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
+                Tenant loggedTenant = (from a in myCommonContext.Tenants.Include("AccountingSetting")
+                                       where a.Id == entityPM.Tenant
+                                       select a).FirstOrDefault();
+
+                IInvoiceContext myContext = InvoiceContext.GetContext(entityPM.Tenant);
+
+                if (loggedTenant != null)
+                {
+                    if (loggedTenant.AccountingSetting != null)
+                    {
+                        if (loggedTenant.AccountingSetting.IsARPaymentChronologicalDates && !entityPM.IsExternalEntity)
+                        {
+                            ARPayment lastApprovedPayment = (from a in myContext.ARPayments
+                                                             where a.Tenant == entityPM.Tenant
+                                                             && a.StatusCode != "DR"
+                                                             && a.StatusCode != "VD"
+                                                             && a.PaymentNo != entityPM.PaymentNo
+                                                             select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
+                            if (lastApprovedPayment != null)
+                            {
+                                DateTime? entityDate = null;
+                                DateTime? lastApprovedDate = null;
+                                string approvedDateString = "";
+
+                                entityDate = entityPM.RegisterDate;
+                                lastApprovedDate = lastApprovedPayment.RegisterDate;
+                                approvedDateString = "Register Date";
+
+                                if (entityDate < lastApprovedDate)
+                                {
+                                    ICommonDataContext context = CommonDataContext.GetContext(entityPM.Tenant);
+                                    Tenant currentTenant = context.Tenants.Where(t => t.Id == entityPM.Tenant).FirstOrDefault();
+                                    string datetimeformat = @"dd\/MM\/yyyy";
+                                    if (!string.IsNullOrEmpty(currentTenant.DateTimeFormat))
+                                    {
+                                        datetimeformat = currentTenant.DateTimeFormat;
+                                    }
+                                    string dateString = lastApprovedDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
+                                    bool useLocal = true;
+                                    var user = GetLoggedContact(entityPM.Tenant);
+                                    if (user != null) useLocal = !(GetLoggedContact(entityPM.Tenant).DontShowLocal);
+
+                                    string fieldLabel = TranslateTextsClass.Translate("ARPayment.M.ChronologicalDate", entityPM.Tenant, useLocal);
+                                    string exception = fieldLabel.Replace("%Date", dateString);
+                                    exception = exception.Replace("%ApprovedDate", approvedDateString);
+                                    throw new ApplicationException(exception);
+                                }
                             }
                         }
                     }
@@ -256,8 +320,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             return glaAccount;
         }
-
-        public static void ValidateFullAccounting(int tenant, string billToId, string paymentCurrencyId, CashBookPM cashBook, string code, DateTime? registerDate, string bankAccountId, bool isOut = false, DateTime? valueDate = null, string branch = null, string account = null)
+       
+        public static void ValidateFullAccounting(int tenant, string billToId, string paymentCurrencyId, CashBookPM cashBook, string code, DateTime? registerDate, string bankAccountId, bool isOut = false, DateTime? valueDate = null, string branch = null, string account = null, string bank=null)
         {
             var errors = "";
 
@@ -288,17 +352,28 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         string msg = TranslateTextsClass.Translate("ARPayment.M.ValueDateCantBeFutureDate", tenant, useLocal);
                         errors += msg + ";";
                     }
+                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
 
                     if (code == "CH" && string.IsNullOrEmpty(branch))
                     {
-                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
                         errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.BankBranch", tenant, useLocal)) + ";";
                     }
 
                     if (code == "CH" && string.IsNullOrEmpty(account))
                     {
-                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
                         errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Account", tenant, useLocal)) + ";";
+                    }
+
+                    if (code == "CH" && string.IsNullOrEmpty(bank))
+                    {
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
+                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Bank", tenant, useLocal)) + ";";
+                    }
+                    if(code  == "CH" && valueDate != null && registerDate != null)
+                    {
+                        ValidateValueDate(valueDate, registerDate , tenant);
                     }
                 }
                 GLAccountPM glAccount = getGLAccount(billToId, tenant);
@@ -372,7 +447,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         if (!isOut)
                         {
                             string msg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, useLocal);
-                            errors += msg.Replace("%FieldName", "Bank Account") + ";";
+                            errors += msg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.BankAccountId", tenant, useLocal)) + ";";
                         }
                     }
 
@@ -385,7 +460,17 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+        public static void ValidateValueDate(DateTime? valueDate, DateTime? registerDate, int tenant)
+        {
+            DateTime date = registerDate.Value.AddDays(-180);
+            ContactPM contact = GetLoggedContact(tenant);
+            bool showLocal =(bool) !contact?.DontShowLocal;
+            if (valueDate < date)
+            {
+                throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.OlderThan180Days",tenant , showLocal));
+            }
 
+        }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         private static ContactPM GetLoggedContact(int tenant)
         {

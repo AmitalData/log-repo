@@ -62,8 +62,6 @@ export class ShipmentDomainService {
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
-
-
     }
     GetRecentShipments() {
         var authHeader = new Headers();
@@ -199,7 +197,7 @@ export class ShipmentDomainService {
 
             var mappedEntity: ValidateShipmentMasterArgs = this.MapJsonToValidateShipmentMasterArgs(args, false);
 
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+            return this._http.post(this._apiUrl + "/PostValidateShipmentMasterArgs", JSON.stringify(mappedEntity),
                 { headers: authHeader }).map((res) => {
                     var myJsonResult = res.json();
                     return myJsonResult;
@@ -295,12 +293,12 @@ export class ShipmentDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetShipmentsQueriesCounts(tenant: number, transportModeId: string, SearchFilter: string, serviceContextUser: string, TypeCode: string = null) {
+    GetShipmentsQueriesCounts(tenant: number, transportModeId: string, directionId: string, SearchFilter: string, serviceContextUser: string, TypeCode: string = null) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetShipmentsQueriesCounts?tenant=' + tenant + '&transportModeId=' + transportModeId + '&SearchFilter=' + SearchFilter + '&serviceContextUser=' + serviceContextUser + '&TypeCode=' + TypeCode, {
+            return this._http.get(this._apiUrl + '/GetShipmentsQueriesCounts?tenant=' + tenant + '&transportModeId=' + transportModeId + '&directionId=' + directionId + '&SearchFilter=' + SearchFilter + '&serviceContextUser=' + serviceContextUser + '&TypeCode=' + TypeCode, {
                 headers: authHeader
             }).map(response => {
 
@@ -721,6 +719,76 @@ export class ShipmentDomainService {
 
         return entityList;
     }
+
+    DownloadShipmentPackages(shipmentNumber: string, shipmentId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetDownloadShipmentPackages?shipmentNumber=' + shipmentNumber + '&shipmentId=' + shipmentId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    CreateMissingMasters() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetCreateMissingMasterData';
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult: string = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    CheckIfConnectedEntryOrRelease(shipmentId) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetIfConnectedEntryOrRelease?shipmentId=' + shipmentId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    PostUploadExcelFile(filter: ExcelPackageFilter) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + "/PostUploadExcelFile", JSON.stringify(filter), {
+                headers: authHeader,
+            }).map(response => {
+                var result = response.json();
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
+    }
 }
 
 export class ShipmentsSummary {
@@ -779,7 +847,6 @@ export class ShipmentCarrierStatusList {
     public TimeOfDepartureInfo: string;
     public TimeOfArrivalInfo: string;
 }
-
 export class ValidateShipmentMasterArgs {
     public ShipmentId: string;
     public BookingId: string;
@@ -812,4 +879,26 @@ export class ShipmentConnectedEntity {
     public OpenDate: Date;
     public AcceptedDate: Date;
     public Salesman: string;    
+}
+
+export class ExcelPackageFilter {
+    Tenant: number;
+    FileData: string;
+    ShipmentId: string;
+}
+export class ExcelPackage {
+    ContainerTypeId: string;
+    ContainerTypeCode: string;
+    ContainerTypeName: string;
+    ContainerNumber: string;
+    Volume: number;
+    GrossWeight: number;
+    Step2Price: number;
+    Tare: number;
+    ShipperSeal: string;
+    CarrierSeal: string;
+    MarksAndNumbers: string;
+    Description: string;
+    IsRefrigerated: boolean;
+    HasErrors: boolean;
 }

@@ -1,4 +1,4 @@
-﻿import { JournalPM } from '../EntityPMs/JournalPM';
+import { JournalPM } from '../EntityPMs/JournalPM';
 import { JournalLinePM } from '../EntityPMs/JournalLinePM';
 import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
@@ -6,9 +6,11 @@ import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTransla
 
 export class JournalValidator
 {
+    private static CurrentSession = SessionLocator.SelectedSession;
+
     public static ValidateJournal(entityPM: any)
     {
-        
+
 
         return [];
     }
@@ -46,7 +48,7 @@ export class JournalValidator
 
                 // Currency
                 if (!line.CurrencyId) {
-                    //you must choose Currency 
+                    //you must choose Currency
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseCurrency") + " " + line.Line  ); //You must choose Currency for line
 
                 }
@@ -84,7 +86,7 @@ export class JournalValidator
 
             }
         }
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         return errors;
     }
 
@@ -94,7 +96,7 @@ export class JournalValidator
 
         if (entityPM.StatusCode == "1" || entityPM.StatusCode == "2" || entityPM.StatusCode == "3")
         {
-            
+
             var cSum: number = 0;
             var dSum: number = 0;
 
@@ -129,18 +131,21 @@ export class JournalValidator
             }
             if (cSum != dSum) {
                 errors.push(TextCodeTranslator.Translate("Accounting.General.O.TotalDebitMustEqualTotalCredit") + ": " + JournalValidator.Abs(dSum - cSum).toFixed(2)); //Total debit amount must be equal to total credit amount, There is a difference of
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
             } else {
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             }
         }
         return errors;
     }
 
     public Validate(entityPM: JournalPM) {
+
+        JournalValidator.CurrentSession = SessionLocator.SelectedSession;
+
         var errors = [];
         var result = [];
-        // Validate last row of journal lines 
+        // Validate last row of journal lines
         if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
             var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
         }
@@ -154,7 +159,7 @@ export class JournalValidator
         if (result.length > 0) {
             return result;
         }
-        
+
         return errors;
     }
 
@@ -196,6 +201,6 @@ export class JournalValidator
         return new Date(year, month + 1, 0).getDate();
     }
 
-    
+
 }
 

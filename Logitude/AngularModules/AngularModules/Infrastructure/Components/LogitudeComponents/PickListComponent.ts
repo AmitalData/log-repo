@@ -158,6 +158,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         }
     }
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService, public entityListService: EntityListService) {
 
     }
@@ -369,7 +370,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.FocusOnMe) {
             var element = document.getElementById(this.ElementId);
             element.focus();
-            SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, OnBlurEvent: this.OnBlurEvent });
+            this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, OnBlurEvent: this.OnBlurEvent });
             this.timerToken = setTimeout(() => {
                 Selection(element);
             }, 1);

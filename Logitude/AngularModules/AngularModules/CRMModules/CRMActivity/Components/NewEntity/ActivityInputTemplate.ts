@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ActivityPM} from '../../../../CRM/EntityPMs/ActivityPM';
 import {ActivityInputArgs, InviteeArgs} from '../../../../CRM/Args'
@@ -75,9 +75,11 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
     SetWindowArgs(args: ActivityInputArgs) {
         if (args != null) {
             this.entityPM = args.Activity;
+
             if (this.entityPM.ActivityTypeCode == "CL") {
                 this.CallWithId = args.Activity.CallWithId;
             }
+
             this.TypeCode = this.entityPM.ActivityTypeCode;
             this.CustomerVisibility = args.IsAddCustomerAllowed;
             this.AddCustomerVisibility = this.CustomerVisibility;
@@ -87,6 +89,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         }
         this.InitializeData();
     }
+
     InitializeData() {
         this.Durations = [];
         CRMTool.GetDurationsList().forEach(item => {
@@ -95,11 +98,16 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
 
         if (!this.OnEditModeVisibility) {
             this.SetActivityTypeName();
+
             if (this.TypeCode == "AP") {
                 this.StartDateTime = CRMTool.RoundTimeForwardByMinutes(DateTool.GetCurrentDateTimeAsUtc(), 30);
                 this.Duration = 30;
                 this.entityPM.ActivityTimeTypeCode = "BS";
                 this.OnDurationChanged();
+            }
+
+            else if (this.TypeCode == "CL") {
+                this.CallTypeCode = "O";
             }
 
             this.SetUIProperties_New();
@@ -264,13 +272,10 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
             if (!resp.HasError) {
                 var list: CallTypeList[] = resp.Result;
                 this.CallTypesList = list.sort((a, b) => { return (a.Code === b.Code) ? 0 : (a.Code < b.Code) ? -1 : 1 });
-
-                //list.sort((a, b) => { return (a.Code === b.Code) ? 0 : (a.Code < b.Code) ? -1 : 1 }).forEach(item => {
-                //    this.CallTypesList.push(new TypeListClass(item));
-                //});
-                if (this.TypeCode == "CL") {
-                    this.SelectedCallType = this.CallTypesList.filter(d => d.Code == "O")[0];
-                }
+                
+                //if (this.TypeCode == "CL") {
+                //    this.SelectedCallType = this.CallTypesList.filter(d => d.Code == "O")[0];
+                //}
             }
         });
     }
@@ -491,15 +496,15 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
     }
 
     // Call Type
-    get SelectedCallType() { return this.CallTypesList.filter(d => d.Code == this.entityPM.CallTypeCode)[0]; }
-    set SelectedCallType(value: CallTypeList) {
-        if (value == null) {
-            this.CallTypeCode = null;
-        }
-        else {
-            this.CallTypeCode = value.Code;
-        }
-    }
+    //get SelectedCallType() { return this.CallTypesList.filter(d => d.Code == this.entityPM.CallTypeCode)[0]; }
+    //set SelectedCallType(value: CallTypeList) {
+    //    if (value == null) {
+    //        this.CallTypeCode = null;
+    //    }
+    //    else {
+    //        this.CallTypeCode = value.Code;
+    //    }
+    //}
 
     get CallTypeCode() { return this.entityPM.CallTypeCode; }
     set CallTypeCode(value: string) {
@@ -1165,7 +1170,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         }
         return IsOk;
     }
-
+    private CurrentSession = SessionLocator.SelectedSession;
     // Commands 
     AddContactClicked() {
         var logWindow = new LogitudeWindow();
@@ -1289,7 +1294,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         }
     }
     ViewEntity(tableName: string, entityId: string) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: tableName, });

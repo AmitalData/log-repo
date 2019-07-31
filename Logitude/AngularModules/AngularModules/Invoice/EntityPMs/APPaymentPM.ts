@@ -363,6 +363,11 @@ export class APPaymentPM {
     public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
+    private automaticPaymentCheque: boolean;
+    public get AutomaticPaymentCheque() { return this.automaticPaymentCheque; }
+    public set AutomaticPaymentCheque(newValue: boolean) { if (this.automaticPaymentCheque != newValue) { this.automaticPaymentCheque = newValue; this.MarkAsDirty("AutomaticPaymentCheque"); } }
+       
+	 
 
     public OldEntityPM: APPaymentPM;
 		

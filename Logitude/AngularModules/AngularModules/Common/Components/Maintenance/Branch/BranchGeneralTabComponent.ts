@@ -23,6 +23,7 @@ export class BranchGeneralTabComponent extends BaseComponent implements OnDestro
     public IsNewEntity: boolean = true;
     public ObjectTableName: string = "Branch";
     private addressService: AddressPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public args: EntityArgs) {
         super();
 
@@ -43,20 +44,20 @@ export class BranchGeneralTabComponent extends BaseComponent implements OnDestro
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadAddress();
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadAddress();
                     }
                 });
@@ -185,8 +186,8 @@ export class BranchGeneralTabComponent extends BaseComponent implements OnDestro
             logWindow.Show('./Common/Components/Maintenance/Branch/AddEditBranchAddressComponent');
 
             logWindow.WindowClosed.subscribe(s => {
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                //SessionLocator.CurrentSession.FireEvent("LoadAddress");
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                //this.CurrentSession.FireEvent("LoadAddress");
             });
         });        
     }  

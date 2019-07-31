@@ -94,5 +94,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string DownloadToExcelFeatureCode { get; set; }
         public string SplitComponentPath { get; set; }
         public bool AllowedInQueues { get; set; }
+        public bool IsTabsHidden { get; set; }
     }
 }

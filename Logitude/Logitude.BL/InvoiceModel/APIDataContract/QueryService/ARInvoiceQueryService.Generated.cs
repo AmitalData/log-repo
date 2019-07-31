@@ -261,7 +261,8 @@ using Simplog.Data.InvoiceModel;
 					}
 			
 					
-					temp.InvoiceCurrencyExchangeRate = MyEntity.InvoiceCurrencyExchangeRate;
+					temp.InvoiceCurrencyExchangeRate = MyEntity.InvoiceCurrencyExchangeRate; 
+
 					if(MyEntity.ARInvoiceLines != null && MyEntity.ARInvoiceLines.Count > 0)
 					{
 						ARInvoiceLineQueryService ARInvoiceLineService9 = new ARInvoiceLineQueryService(Tenant);

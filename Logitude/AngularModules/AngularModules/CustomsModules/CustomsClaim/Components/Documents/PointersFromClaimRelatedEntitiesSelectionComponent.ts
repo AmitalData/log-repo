@@ -1,4 +1,4 @@
-﻿import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {ClaimPM} from "../../../../Customs/EntityPMs/ClaimPM";
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {ClaimsRelatedEntityPM} from "../../../../Customs/EntityPMs/ClaimsRelatedEntityPM";
@@ -24,6 +24,7 @@ export class PointersFromClaimRelatedEntitiesSelectionComponent {
     IsDisplayOnly: boolean;
     DisplayOnlyMessage: string;
     filterAgrs: ApiQueryFilters;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ClaimRelatedEntitiesList = new ObservableCollection([ClaimsRelatedEntityPM]);
         this.SelectedClaimRelatedEntities = new ObservableCollection([]);
@@ -79,7 +80,7 @@ export class PointersFromClaimRelatedEntitiesSelectionComponent {
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -91,7 +92,7 @@ export class PointersFromClaimRelatedEntitiesSelectionComponent {
         this.ConnectedClaimRelatedEntities = this.ConnectedClaimRelatedEntities.substr(1, this.ConnectedClaimRelatedEntities.length - 1);
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        this.CurrentSession.CloseCurrentWindowEmit("ok");
     }
 
   

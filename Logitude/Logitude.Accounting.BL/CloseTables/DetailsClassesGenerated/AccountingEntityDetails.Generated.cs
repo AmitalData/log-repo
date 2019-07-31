@@ -90,6 +90,13 @@ namespace Logitude.Accounting.BL
                 LocalName = "התאמה", 
                 EnglishName = "Adjustment", 
 			});
+			 
+            all.Add(new AccountingEntityDetails()
+            {    
+                Code = "11", 
+                LocalName = "העברת שנה", 
+                EnglishName = "Year Transfer", 
+			});
 			
             return all;
        }

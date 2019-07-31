@@ -11,6 +11,7 @@ import {ContainerFollowupWizardComponent} from './Components/Packages/ContainerF
 import {ContainerFollowupWizardTemplate} from './Components/Packages/ContainerFU/ContainerFollowupWizardTemplate';
 import { LastStatusComponent } from './Components/Packages/LastStatusComponent';
 import { AddEditPackageHarmonizeComponent } from './Components/Packages/AddEditPackageHarmonizeComponent';
+import { DownloadPackagesFileComponent } from './Components/Packages/DownloadPackagesFileComponent';
 
 export const Components =
     [
@@ -26,6 +27,7 @@ export const Components =
         ContainerFollowupWizardTemplate,
         LastStatusComponent,
         AddEditPackageHarmonizeComponent,
+        DownloadPackagesFileComponent,
     ];
 
 export class ModuleDeclarations {
@@ -45,7 +47,8 @@ export class ModuleDeclarations {
             case "ContainerFollowupWizardComponent": { myResult = ContainerFollowupWizardComponent; break; }
             case "ContainerFollowupWizardTemplate": { myResult = ContainerFollowupWizardTemplate; break; }  
             case "LastStatusComponent": { myResult = LastStatusComponent; break; }
-            case "AddEditPackageHarmonizeComponent": { myResult = AddEditPackageHarmonizeComponent; break; }  
+            case "AddEditPackageHarmonizeComponent": { myResult = AddEditPackageHarmonizeComponent; break; }
+            case "DownloadPackagesFileComponent": { myResult = DownloadPackagesFileComponent; break; }
         }
 
         return myResult;

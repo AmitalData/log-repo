@@ -139,5 +139,6 @@ export class CustomerList {
 		Address2: string;
 		Phone: string;
 		CompetitorFields: string;
+		LeadSourceName: string;
 	
 }

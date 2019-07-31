@@ -34,12 +34,12 @@ export class InvoicesRoutingsFilterComponent extends BaseComponent  {
     public CustomerId: string = null;
 
     InitilizeIds() {
-        this.InvoiceDateId = "InvoiceDateId_" + SessionLocator.CurrentSession.GetNewId("InvoiceDateId");        
-        this.CreateDateId = "CreateDateId_" + SessionLocator.CurrentSession.GetNewId("CreateDateId");        
-        this.ShipmentTypeRadioName = "ShipmentTypeRadioName_" + SessionLocator.CurrentSession.GetNewId("ShipmentTypeRadioName");        
-        this.LocalCurrencyId = "LocalCurrencyId_" + SessionLocator.CurrentSession.GetNewId("LocalCurrencyId");        
-        this.LocalCurencyRadio = "LocalCurencyRadio_" + SessionLocator.CurrentSession.GetNewId("LocalCurencyRadio");        
-        this.InvoiceCurrencyId = "InvoiceCurrencyId_" + SessionLocator.CurrentSession.GetNewId("InvoiceCurrencyId");        
+        this.InvoiceDateId = "InvoiceDateId_" + this.CurrentSession.GetNewId("InvoiceDateId");        
+        this.CreateDateId = "CreateDateId_" + this.CurrentSession.GetNewId("CreateDateId");        
+        this.ShipmentTypeRadioName = "ShipmentTypeRadioName_" + this.CurrentSession.GetNewId("ShipmentTypeRadioName");        
+        this.LocalCurrencyId = "LocalCurrencyId_" + this.CurrentSession.GetNewId("LocalCurrencyId");        
+        this.LocalCurencyRadio = "LocalCurencyRadio_" + this.CurrentSession.GetNewId("LocalCurencyRadio");        
+        this.InvoiceCurrencyId = "InvoiceCurrencyId_" + this.CurrentSession.GetNewId("InvoiceCurrencyId");        
         this.ShipmentTypeRadio = "InvoiceDate";
         
     }
@@ -140,6 +140,7 @@ export class InvoicesRoutingsFilterComponent extends BaseComponent  {
 
 
     public DataContext: InvoicesRoutingsFilterComponent = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.FillInvoiceStatus();

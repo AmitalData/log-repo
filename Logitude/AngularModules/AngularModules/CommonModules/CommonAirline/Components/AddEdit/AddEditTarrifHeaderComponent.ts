@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -48,18 +48,19 @@ export class AddEditTarrifHeaderComponent extends BaseComponent {
     public TariffRadioTo: string = "";
     public TariffRadio: string = "";
     public InActiveCheck: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
 
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.TariffRadioTo = "RadioTo_-1_-1";
             this.TariffRadio = "RadioFrom_-1_-1";
             this.InActiveCheck = "Check_-1";
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("RadioButton");
+            var idIndex = this.CurrentSession.GetNewId("RadioButton");
             this.TariffRadioTo = "RadioTo_" + idIndex;
             this.TariffRadio = "RadioFrom_" + idIndex;
             this.InActiveCheck = "Check_" + idIndex;
@@ -189,7 +190,7 @@ export class AddEditTarrifHeaderComponent extends BaseComponent {
     //Commands 
     public ValidationErrorsList: string[] = [];
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
 
     }
 
@@ -244,16 +245,16 @@ export class AddEditTarrifHeaderComponent extends BaseComponent {
             myService.update(this.EntityPM).subscribe(myResult => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
                 , error => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     //var dd: Response = error;
                     //console.log(dd.text);
                 });
@@ -263,16 +264,16 @@ export class AddEditTarrifHeaderComponent extends BaseComponent {
             myService.insert(this.EntityPM).subscribe(myResult => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
                 , error => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     //var dd: Response = error;
                     //console.log(dd.text);
                 });

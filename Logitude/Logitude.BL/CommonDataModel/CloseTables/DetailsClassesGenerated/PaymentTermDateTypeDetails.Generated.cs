@@ -34,6 +34,13 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "SHI, Shipment Date", 
                 Name = "Shipment Date", 
 			});
+			 
+            all.Add(new PaymentTermDateTypeDetails()
+            {    
+                Code = "OPR", 
+                Name = "Operational Date", 
+                SearchFields = "OPR, Operational Date", 
+			});
 			
             return all;
        }

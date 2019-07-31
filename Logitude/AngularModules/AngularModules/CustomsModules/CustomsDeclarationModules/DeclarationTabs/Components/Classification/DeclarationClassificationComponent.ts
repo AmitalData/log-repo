@@ -61,7 +61,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     public RefreshDatePicker: boolean;
     SInvoiceTabs: LogTab[] = [];
     public ShowStorageStatusMessage: boolean;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
         this.PreceduralFilterItems = new ApiQueryFilters();
@@ -137,13 +137,13 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     }
     ForceSave: boolean = false;
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             this.ForceSave = true;
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         //this.SInvoiceTabs.forEach(
                         //    tab => {
 
@@ -156,10 +156,10 @@ export class DeclarationClassificationComponent extends BaseComponent implements
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess && SessionLocator.CurrentSession.CurrentEditComponent) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess && this.CurrentSession.CurrentEditComponent) {
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.RefreshDatePicker = false;
                         
 
@@ -169,11 +169,11 @@ export class DeclarationClassificationComponent extends BaseComponent implements
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DCCF") {
-                            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                            this.CurrentSession.StartBusyIndicatorLoading();
                             //this.RefreshEntity();
                             this.ForceSave = true;
 
@@ -187,16 +187,16 @@ export class DeclarationClassificationComponent extends BaseComponent implements
                         } 
                         else {
                             if (this.ForceSave && this.EntityPM.IsDirty) {
-                                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-                                SessionLocator.CurrentSession.CurrentEditComponent.SaveAndCloseCompleted
+                                this.CurrentSession.StartBusyIndicatorSaving();
+                                this.CurrentSession.CurrentEditComponent.SaveAndCloseCompleted
                                     .subscribe(isSuccess => {
                                         if (isSuccess) {
-                                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                                            SessionLocator.CurrentSession.StopBusyIndicator();
+                                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                            this.CurrentSession.StopBusyIndicator();
                                         }
 
                                     });
-                                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                                this.CurrentSession.CurrentEditComponent.SaveChanges();
                             }
                             this.ForceSave = false;
                         }
@@ -427,9 +427,9 @@ export class DeclarationClassificationComponent extends BaseComponent implements
 
     }
     EditCasualSupplier() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         var windowTitle = "נתונים נוספים לספק";
@@ -447,10 +447,10 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Classification/CasualSupplierDetailsComponent');
     }
     EditImporter() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
 
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
@@ -617,8 +617,8 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     //#endregion
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
     ChangeTransportMode() {
         if (!AppTool.IsNullOrEmpty(this.DeclarationOfficeCode)) {
@@ -639,9 +639,9 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     DisplayOnlyCheck() {
     
         this.DrawMe = true;
-        this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;
@@ -681,7 +681,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     _IncotermCode;
     public get IncotermCode() { return this._IncotermCode ; }
     BuildScreen() {
-        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         this.CalcFields();
         this.BuildSInvoiceTabs();
         //this.cd.detectChanges();
@@ -789,7 +789,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         if (this.SInvoiceTabs.length > 0) {
             this.SelectedTab = this.SInvoiceTabs[0];
         }
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
     ReconnectSII() {

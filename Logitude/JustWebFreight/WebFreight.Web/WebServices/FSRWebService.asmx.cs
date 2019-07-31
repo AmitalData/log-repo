@@ -1,4 +1,5 @@
 ﻿using CHAMP17;
+using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -7,6 +8,7 @@ using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data.Repositories;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Logitude.XSD;
 using Logitude.XSD.FSR;
@@ -282,7 +284,7 @@ namespace WebFreight.Web.WebServices
                             DocumentId = document.Id,
                             EntityReference = entityReference,
                             CreateDateUTC = DateTime.UtcNow,
-                            AWBNumber = myMaster,
+                            AWBNumber = myPrefix + "-" + myMaster,
                         };
 
                         if (IsDemoTenant)
@@ -362,20 +364,23 @@ namespace WebFreight.Web.WebServices
                         {
                             try
                             {
-                                using (TransactionScope serializableScope = TransactionFactory.GetNewSerializableTransaction())
-                                {
-                                    BrokeredMessage message = new BrokeredMessage();
+                                //using (TransactionScope serializableScope = TransactionFactory.GetNewSerializableTransaction())
+                                //{
+                                //    BrokeredMessage message = new BrokeredMessage();
 
-                                    message.Properties["CommunicationLogId"] = commLog.Id;
-                                    message.Properties["Tenant"] = tenant;
-                                    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment("champmessageoutqueue");
+                                //    message.Properties["CommunicationLogId"] = commLog.Id;
+                                //    message.Properties["Tenant"] = tenant;
+                                //    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment("champmessageoutqueue");
 
-                                    QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
+                                //    QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
 
-                                    client.Send(message);
+                                //    client.Send(message);
 
-                                    serializableScope.Complete();
-                                }
+                                //    serializableScope.Complete();
+                                //}
+
+                                DbQueueService queueservice = new DbQueueService("champmessageoutqueue", tenant);
+                                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } });
                             }
 
                             catch (Exception ex)

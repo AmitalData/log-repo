@@ -74,5 +74,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public bool IsRefrigerated { get; set; }
 
+        [DataMember]
+        public bool IsVehicle { get; set; }
+
     }
 }

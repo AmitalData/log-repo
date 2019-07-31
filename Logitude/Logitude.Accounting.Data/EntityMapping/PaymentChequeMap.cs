@@ -82,6 +82,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(250).IsUnicode(true);
 
             this.Property(t => t.UniqueField).HasColumnName("UniqueField").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.APPaymentId).HasColumnName("APPaymentId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

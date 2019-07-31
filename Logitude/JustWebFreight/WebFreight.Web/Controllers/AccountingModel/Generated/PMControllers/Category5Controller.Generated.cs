@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Category5", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("Category5", entityPM.Tenant, authToken.Tenant);
 	                    
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         Category5UpdateService service = new Category5UpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Category5", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("Category5", entityPM.Tenant, authToken.Tenant);
 	
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         Category5UpdateService service = new Category5UpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

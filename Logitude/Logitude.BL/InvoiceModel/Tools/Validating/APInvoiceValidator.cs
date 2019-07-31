@@ -27,12 +27,13 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Data.Entity.Core;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class APInvoiceValidator
     {
-        public static void Validate(APInvoicePM entityPM, IInvoiceContext myContext)
+        public static void Validate(APInvoicePM entityPM, IInvoiceContext myContext, string MainShipmentConcurrencyGUID = null)
         {
             string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant);
 
@@ -40,8 +41,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
 
             AccountingSetting myAccountingSetting = (from d in myCommonContext.AccountingSettings
-                                                   where d.Id == entityPM.Tenant
-                                                   select d).FirstOrDefault();
+                                                     where d.Id == entityPM.Tenant
+                                                     select d).FirstOrDefault();
 
             bool isVatNumberMandatoryInAP = false;
             if (myAccountingSetting != null)
@@ -55,11 +56,17 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 throw new ApplicationException(msg);
             }
 
+            if (entityPM.InvoiceDate > entityPM.AccountingDate)
+            {
+                string msg = TranslateTextsClass.Translate("APInvoice.O.CheckInvoiceDate", entityPM.Tenant, !(GetLoggedContact(entityPM.Tenant).DontShowLocal));//.t "nvoice Date cant be bigger the the Accounting Date"; // TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
+                throw new ApplicationException(msg);
+            }
+
             if (isVatNumberMandatoryInAP)
             {
                 if (string.IsNullOrEmpty(entityPM.VATNumber))
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Vat Number"));
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
                 }
             }
 
@@ -88,12 +95,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
 
                     else
-                    {                        
+                    {
                         double? invoiceAmount = (double)MethodHelper.Round(entityPM.AmountInInvoiceCurrency, 2);
 
                         if (invoiceAmount == 0 || invoiceAmount == null)
                         {
-                            throw new ApplicationException(msgRequired.Replace("%FieldName", "Invoice Amount"));
+                            throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant)));
                         }
 
                         else
@@ -130,7 +137,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                 if (entityPM.InvoiceExpectedAmount == null)
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Invoice Amount"));
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant)));
                 }
 
                 else if (entityPM.InvoiceExpectedAmount != entityPM.AmountInInvoiceCurrency)
@@ -171,6 +178,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
 
                 ValidateMultiVatPercentages(entityPM, myAccountingSetting, allVats);
+                ValidateShipmentConcurrencyGUID(entityPM, MainShipmentConcurrencyGUID);
             }
 
             ValidateOnVoid(entityPM);
@@ -255,7 +263,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     if (glAccount.CurrencyId != invoiceCurrencyId)
                     {
-                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant, useLocal)  + glAccount.CurrencyCode;
+                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant, useLocal)  + " "+ glAccount.CurrencyName + " ";
                         errors += msg + ";";
                     }
                 }
@@ -268,13 +276,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     var month = accountingDate.Value.Month;
                     if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
                     {
-                        string msg = "ClosedMonth";
+                        
+                        string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, useLocal);
                         errors += msg + ";";
                     }
                 }
                 else
                 {
-                    string msg = "ClosedMonth";
+                    string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, useLocal);
                     errors += msg + ";";
                 }
                 if (!string.IsNullOrEmpty(errors))
@@ -311,7 +320,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
             }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
+            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() {  };
             return loggedContact;
         }
         private static void ValidateOnVoid(APInvoicePM entityPM)
@@ -326,5 +335,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
         }
 
+        private static void ValidateShipmentConcurrencyGUID(APInvoicePM entityPM, string MainShipmentConcurrencyGUID)
+        {
+            if (!string.IsNullOrEmpty(entityPM.ShipmentConcurrencyGUID) && !string.IsNullOrEmpty(entityPM.ShipmentNewConcurrencyGUID) && !string.IsNullOrEmpty(MainShipmentConcurrencyGUID))
+            {
+                if (!entityPM.ShipmentConcurrencyGUID.Equals(MainShipmentConcurrencyGUID) && !entityPM.ShipmentNewConcurrencyGUID.Equals(MainShipmentConcurrencyGUID))
+                {
+                    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+                    throw new OptimisticConcurrencyException(msg);
+                }
+            }
+        }
     }
 }

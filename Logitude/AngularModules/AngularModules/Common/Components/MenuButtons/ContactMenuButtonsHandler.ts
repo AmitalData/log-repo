@@ -1,4 +1,4 @@
-﻿
+
 import {ContactPM} from '../../EntityPMs/ContactPM'
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow'
@@ -13,6 +13,7 @@ import {UserExtendedPMService} from '../../Services/ExtendedPMs/UserExtendedPMSe
 export class ContactMenuButtonsHandler {
     public EntityPM: ContactPM;
     public entityArgs: EntityArgs
+    private CurrentSession = SessionLocator.SelectedSession;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -94,7 +95,7 @@ export class ContactMenuButtonsHandler {
                 service.Anonymization(this.EntityPM.Id).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
       

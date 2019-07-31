@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {VatTypePM} from '../../../../Common/EntityPMs/VatTypePM';
@@ -23,6 +23,7 @@ export class UpdateVATPercentageComponent extends BaseComponent {
     public DataContext = this;
     private myService: VatTypePMService;
     public IsResourcesReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myService = new VatTypePMService();
@@ -41,7 +42,7 @@ export class UpdateVATPercentageComponent extends BaseComponent {
 
             if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
 
                 this.myService.get(this.VatTypeId).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
@@ -52,7 +53,7 @@ export class UpdateVATPercentageComponent extends BaseComponent {
                         }
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
         });
@@ -73,7 +74,7 @@ export class UpdateVATPercentageComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -94,16 +95,16 @@ export class UpdateVATPercentageComponent extends BaseComponent {
 
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             this.myService.update(this.VatTypePM).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
             });
         }

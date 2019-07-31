@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class APInvoiceTotalVATUpdateClass
@@ -171,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "QuoteId",
-					  						DefaultText =  @"Quote",
+					  						DefaultText =  "Quote",
 					  						HelpTextCode =  "QuoteId",
 					  						Code =  "QuoteId",
 					  						DependencyFilter3IsList =  false,
@@ -229,9 +233,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "InvoiceCurrencyVATAmount",
-					  						DefaultText =  @"Invoice Currency VAT Amount",
+					  						DefaultText =  "Invoice Currency VAT Amount",
 					  						ListFieldLable =  "InvoiceCurrencyVATAmountListLable",
-					  						ListLableDefaultText =  @"Invoice Currency VAT Amount",
+					  						ListLableDefaultText =  "Invoice Currency VAT Amount",
 					  						HelpTextCode =  "InvoiceCurrencyVATAmount",
 					  						Code =  "InvoiceCurrencyVATAmount",
 					  						DependencyFilter3IsList =  false,
@@ -289,9 +293,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "LocalVATAmount",
-					  						DefaultText =  @"Local VAT Amount",
+					  						DefaultText =  "Local VAT Amount",
 					  						ListFieldLable =  "LocalVATAmountListLable",
-					  						ListLableDefaultText =  @"Local VAT Amount",
+					  						ListLableDefaultText =  "Local VAT Amount",
 					  						HelpTextCode =  "LocalVATAmount",
 					  						Code =  "LocalVATAmount",
 					  						DependencyFilter3IsList =  false,
@@ -349,9 +353,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "InvoiceCurrencyVatableAmount",
-					  						DefaultText =  @"Invoice Currency Vatable Amount",
+					  						DefaultText =  "Invoice Currency Vatable Amount",
 					  						ListFieldLable =  "InvoiceCurrencyVatableAmountListLable",
-					  						ListLableDefaultText =  @"Invoice Currency Vatable Amount",
+					  						ListLableDefaultText =  "Invoice Currency Vatable Amount",
 					  						HelpTextCode =  "InvoiceCurrencyVatableAmount",
 					  						Code =  "InvoiceCurrencyVatableAmount",
 					  						DependencyFilter3IsList =  false,
@@ -409,9 +413,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "LocalVatableAmount",
-					  						DefaultText =  @"Local Vatable Amount",
+					  						DefaultText =  "Local Vatable Amount",
 					  						ListFieldLable =  "LocalVatableAmountListLable",
-					  						ListLableDefaultText =  @"Local Vatable Amount",
+					  						ListLableDefaultText =  "Local Vatable Amount",
 					  						HelpTextCode =  "LocalVatableAmount",
 					  						Code =  "LocalVatableAmount",
 					  						DependencyFilter3IsList =  false,
@@ -469,17 +473,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "VatPercent",
-					  						DefaultText =  @"VAT Percent",
+					  						DefaultText =  "VAT Percent",
 					  						ListFieldLable =  "VatPercentListLable",
-					  						ListLableDefaultText =  @"VAT Percent",
+					  						ListLableDefaultText =  "VAT Percent",
 					  						HelpTextCode =  "VatPercent",
 					  						Code =  "VatPercent",
 					  						DependencyFilter3IsList =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  true,
-					  						FullLocalDefaultText =  @"אחוז מע''מ",
-					  						ListLocalDefaultText =  @"אחוז מע''מ",
+					  						FullLocalDefaultText =  "אחוז מע''מ",
+					  						ListLocalDefaultText =  "אחוז מע''מ",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -532,14 +536,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "VatTypeId",
-					  						DefaultText =  @"VAT Type",
+					  						DefaultText =  "VAT Type",
 					  						HelpTextCode =  "VatTypeId",
 					  						Code =  "VatTypeId",
 					  						DependencyFilter3IsList =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  true,
-					  						FullLocalDefaultText =  @"מספר סוג מע''מ",
+					  						FullLocalDefaultText =  "מספר סוג מע''מ",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -591,17 +595,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "VatTypeName",
-					  						DefaultText =  @"VAT Type",
+					  						DefaultText =  "VAT Type",
 					  						ListFieldLable =  "VatTypeNameListLable",
-					  						ListLableDefaultText =  @"VAT Type",
+					  						ListLableDefaultText =  "VAT Type",
 					  						HelpTextCode =  "VatTypeName",
 					  						Code =  "VatTypeName",
 					  						DependencyFilter3IsList =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
-					  						FullLocalDefaultText =  @"מספר סוג מע''מ",
-					  						ListLocalDefaultText =  @"מספר סוג מע''מ",
+					  						FullLocalDefaultText =  "מספר סוג מע''מ",
+					  						ListLocalDefaultText =  "מספר סוג מע''מ",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -654,14 +658,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "APInvoiceId",
-					  						DefaultText =  @"Invoice",
+					  						DefaultText =  "Invoice",
 					  						HelpTextCode =  "APInvoiceId",
 					  						Code =  "APInvoiceId",
 					  						DependencyFilter3IsList =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  true,
-					  						FullLocalDefaultText =  @"חשבונית",
+					  						FullLocalDefaultText =  "חשבונית",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  

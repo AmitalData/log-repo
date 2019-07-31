@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {BankDepositPM} from '../../EntityPMs/BankDepositPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -24,7 +24,7 @@ export class BankDepositShortTitleComponent {
 
     txt_cash: string = TextCodeTranslator.Translate('BankDeposit.Q.cash');
     txt_chequeDeposit: string = TextCodeTranslator.Translate('BankDeposit.Q.chequeDeposit');
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = this.entityArgs.EntityPM;
@@ -40,13 +40,13 @@ export class BankDepositShortTitleComponent {
     Listen() {
 
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.ComponentId;
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
                     }
                 });

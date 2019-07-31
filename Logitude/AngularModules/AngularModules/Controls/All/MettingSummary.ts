@@ -1,4 +1,4 @@
-﻿
+
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
@@ -21,9 +21,9 @@ export class MettingSummary {
     public Height: number = 280;
 
     @Output() Updated: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("MettingSummary");
+        var idIndex = this.CurrentSession.GetNewId("MettingSummary");
         this.ComponentId = "MettingSummary_" + idIndex;
         this.ComponentButtonId = "MettingSummaryButton_" + idIndex;
         this.ComponentContentId = "MettingSummaryContent_" + idIndex;

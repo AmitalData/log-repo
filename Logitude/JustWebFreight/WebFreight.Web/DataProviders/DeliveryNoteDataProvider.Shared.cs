@@ -19,6 +19,7 @@ namespace WebFreight.Web.DataProviders
         //Pickup From
         public string PickupCompanyName { get; set; }
         public string PickupAddress { get; set; }
+        public string FromAddressDescription { get; set; }
         public string PickupContactName { get; set; }
         public string PickupContactPhone { get; set; }
         public string PickupDate { get; set; }
@@ -28,6 +29,7 @@ namespace WebFreight.Web.DataProviders
         //Delivery To
         public string DeliveryCompanyName { get; set; }
         public string DeliveryAddress { get; set; }
+        public string ToAddressDescription { get; set; }
         public string DeliveryContactName { get; set; }
         public string DeliveryContactPhone { get; set; }
         public string DeliveryDate { get; set; }
@@ -114,6 +116,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNotes { get; set; }
         public string ShipperName { get; set; }
         public string ShipperAddress { get; set; }
+        public string ShipperReference2 { get; set; }
         public int? TotalNumberOfPackages { get; set; }
         public double? TotalGrossWeight { get; set; }
         public double? TotalVolume { get; set; }
@@ -145,10 +148,10 @@ namespace WebFreight.Web.DataProviders
         public string UserName { get; set; }
         public string IssuingCarrierAgentName { get; set; }
         public string IssuingCarrierAgentAddress { get; set; }
-        public string ShipperReference2 { get; set; }
         public string ConsigneeReference2 { get; set; }
         public string TransportMode { get; set; }
         public string ShipmentSalesman { get; set; }
+        public string FinalDestinationCode { get; set; }
 
         public string Reference1 { get; set; }
         public string Reference2 { get; set; }
@@ -165,5 +168,7 @@ namespace WebFreight.Web.DataProviders
         public string DriverName { get; set; }
 
         public string ProjectNumber { get; set; }
+
+        public string ITNumber { get; set; }
     }
 }

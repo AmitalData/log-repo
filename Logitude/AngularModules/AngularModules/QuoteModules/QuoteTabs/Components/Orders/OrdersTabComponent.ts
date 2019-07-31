@@ -157,6 +157,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         this.UIProperties.SetEnabled("IncotermId", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("MoveTypeId", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("ExpirationDays", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("ExpirationDate", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, this.IsQuoteEditEnabled);
         this.UIProperties.SetEnabled("AutomaticallyCloseDate", this.ObjectTableName, this.IsQuoteEditEnabled);
@@ -307,8 +308,19 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
             }
 
             else {
-                var date = DateTool.GetDateByDay(newValue);
+                this.SetExpirationDate();
+            }
+        }
+    }
 
+    private SetExpirationDate() {
+        if (this.EntityPM.ExpirationDays == null && this.EntityPM.ExpirationDate == null) {}
+        else {
+            var date = DateTool.AddDays(this.StartDate, this.ExpirationDays);
+            if (date == null) {
+                this.EntityPM.ExpirationDays = null;
+            }
+            else {
                 if (this.ExpirationDate.valueOf() != date.valueOf()) {
                     this.EntityPM.ExpirationDate = date;
                 }
@@ -326,11 +338,24 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
             }
 
             else {
-                var todayDate = DateTool.GetCurrentDateAsUtc();
-                var days = this.GetDaysBetweenDates(newValue, todayDate);
+                var days = this.GetDaysBetweenDates(newValue, this.StartDate);
                 if (this.ExpirationDays != days) {
                     this.EntityPM.ExpirationDays = days;
                 }
+            }
+        }
+    }
+
+    get StartDate() { return this.EntityPM.StartDate; }
+    set StartDate(newValue: Date) {
+        if (this.EntityPM.StartDate != newValue) {
+            this.EntityPM.StartDate = newValue;
+
+            if (newValue == null) {
+                this.EntityPM.ExpirationDays = null;
+            }
+            else {
+                this.SetExpirationDate();
             }
         }
     }

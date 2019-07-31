@@ -27,8 +27,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int LineNumber { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [Column("Amount")]
-	    public decimal Amount { get; set; }
+        [Column("DebitAmount")]
+	    public decimal DebitAmount { get; set; }
         [Column("ReferenceDate")]
 	    public DateTime ReferenceDate { get; set; }
         [Column("Reference")]
@@ -44,6 +44,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string Id { get; set; }
         [Column("ReconcileRemarks")]
 	    public string ReconcileRemarks { get; set; }
+        [Column("CreditAmount")]
+	    public decimal CreditAmount { get; set; }
     }
 }
 	 

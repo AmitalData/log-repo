@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {INTRAWebService, INTTRASimulator} from '../../../../Shipment/Services/INTRAWebService';
@@ -12,6 +12,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 export class SimulatorComponent {
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -39,7 +40,7 @@ export class SimulatorComponent {
         this.Close();
     }
     Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     SimulateClicked() {
         var errors: string[] = [];
@@ -59,7 +60,7 @@ export class SimulatorComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Simulating...");
+            this.CurrentSession.StartBusyIndicator("Simulating...");
 
             var simulator = new INTTRASimulator();
             simulator.AnalyzeQueueId = this.AnalyzeQueueId;
@@ -69,7 +70,7 @@ export class SimulatorComponent {
 
             myService.Simulate(simulator).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -96,12 +97,12 @@ export class SimulatorComponent {
 
         this.ValidationErrorsList = errors;
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Reading FTP...");
+        this.CurrentSession.StartBusyIndicator("Reading FTP...");
 
         var myService = new INTRAWebService();
         myService.ReadFTP().subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;

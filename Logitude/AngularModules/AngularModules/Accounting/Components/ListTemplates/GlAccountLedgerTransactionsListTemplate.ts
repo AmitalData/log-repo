@@ -1,4 +1,4 @@
-﻿import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
+import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
 import {Component,ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
@@ -33,7 +33,7 @@ export class GlAccountLedgerTransactionsListTemplate {
 
     public isRTL: boolean = false;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
         if (ObjectsLocator.GlobalSetting)
@@ -147,7 +147,7 @@ export class GlAccountLedgerTransactionsListTemplate {
 
         SessionLocator.DynamicLoader.Load(
             "./Infrastructure/Components/EditComponent/EditComponent",
-            SessionLocator.CurrentSession.SessionLocation.viewContainerRef
+            this.CurrentSession.SessionLocation.viewContainerRef
         ).then(cmpRef => {
             cmpRef.instance.ComponentRef = cmpRef;
             cmpRef.instance.Run({
@@ -161,7 +161,7 @@ export class GlAccountLedgerTransactionsListTemplate {
         if (!AppTool.IsNullOrEmpty(id)) {
             SessionLocator.DynamicLoader.Load(
                 "./Infrastructure/Components/EditComponent/EditComponent",
-                SessionLocator.CurrentSession.SessionLocation.viewContainerRef
+                this.CurrentSession.SessionLocation.viewContainerRef
             ).then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -198,7 +198,7 @@ export class GlAccountLedgerTransactionsListTemplate {
                 if (this.rowData["LocalAmountCredit"] == 0) {
                     return this.rowData["LocalAmountDebit"];
                 } else {
-                    return -1 * this.rowData["LocalAmountCredit"];
+                    return this.rowData["LocalAmountCredit"]; // -1 *
                 }
             } else if (
                 ReconcileEventManager.GLAccountReconcileMethodCode == "1"
@@ -208,7 +208,7 @@ export class GlAccountLedgerTransactionsListTemplate {
                 if (this.rowData["ForeignAmountCredit"] == 0) {
                     return this.rowData["ForeignAmountDebit"];
                 } else {
-                    return -1 * this.rowData["ForeignAmountCredit"];
+                    return this.rowData["ForeignAmountCredit"];  // -1 *
                 }
             }
         }
@@ -251,7 +251,7 @@ export class GlAccountLedgerTransactionsListTemplate {
         var tableName = "GLAccount";
         SessionLocator.DynamicLoader.Load(
             "./Infrastructure/Components/EditComponent/EditComponent",
-            SessionLocator.CurrentSession.SessionLocation.viewContainerRef
+            this.CurrentSession.SessionLocation.viewContainerRef
         ).then(cmpRef => {
             cmpRef.instance.ComponentRef = cmpRef;
             cmpRef.instance.Run({

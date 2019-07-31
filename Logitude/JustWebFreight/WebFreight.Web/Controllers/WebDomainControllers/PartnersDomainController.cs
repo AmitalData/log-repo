@@ -758,8 +758,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
         
         // Partners, Address, Contact
         public HttpResponseMessage PostPartnerAddress(PartnerServicePM args)
@@ -2512,5 +2510,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return loggedUserId;
         }
 
+        public HttpResponseMessage GetCardContactProducts(string cardId, string contactId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;                
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                CardContactRepository cardContactRepository = new CardContactRepository(commonDataContext);
+                CardContact cardContact = cardContactRepository.GetCardContactByContactAndCard(cardId, contactId, tenant);
+                CardContactProductRepository cardContactProductRepository = new CardContactProductRepository(commonDataContext);
+                CardContactProductQuery cardContactProductQuery = new CardContactProductQuery(cardContactProductRepository);
+
+                List<CardContactProductPM> cardContactProducts = new List<CardContactProductPM>();
+                if(cardContact != null)
+                {
+                    cardContactProducts = cardContactProductQuery.GetCardContactProductPMsByCardContactId(cardContact.Id, tenant);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, cardContactProducts);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

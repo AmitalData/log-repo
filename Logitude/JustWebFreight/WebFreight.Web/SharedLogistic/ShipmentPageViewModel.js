@@ -65,7 +65,16 @@
             contentType: 'application/json',
             
             success: function (result) {                
-                jQuery("#companyLogo").attr('src', result);
+                //jQuery("#companyLogo").attr('src', result);
+                var img = new Image();
+                img.onload = function () {
+                    var width = this.width > 200 ? "200px" : (this.width + "px");
+                    jQuery("#companyLogo").attr('src', result);
+                    jQuery("#companyLogo").css('width', width);
+                    jQuery("#companyLogoArea").css('width', width);
+                }
+                img.src = result;
+
             },
 
             error: function (jqXHR, textStatus, errorThrown) {                
@@ -238,7 +247,7 @@
 
                     $.each(result.ARInvoices, function (index, item) {
 
-                        var amount = $.trim(item.GrandTotalInInvoiceCurrency) == "" ? 0 : item.GrandTotalInInvoiceCurrency;
+                        var amount = $.trim(item.AmountInInvoiceCurrency) == "" ? 0 : item.AmountInInvoiceCurrency;
                         var amountDue = $.trim(item.AmountDue) == "" ? 0 : item.AmountDue;
 
                         InvoicesGridDataSource.push({

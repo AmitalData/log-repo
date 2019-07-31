@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { Component, EventEmitter, Output, Input, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -39,6 +39,7 @@ export class CustomsErrorsComponent {
     NoButtonText: string;
     SaveButtonText: string;
     ComponentHeight: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     SetWindowArgs(windowArgs) {
         this.ComponentHeight = windowArgs.ComponentHeight;
         this.Errors = windowArgs.Errors;
@@ -63,14 +64,14 @@ export class CustomsErrorsComponent {
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        this.CurrentSession.CloseCurrentWindowEmit("ok");
     }
 
     NoButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("no");
+        this.CurrentSession.CloseCurrentWindowEmit("no");
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 }

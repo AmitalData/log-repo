@@ -91,6 +91,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ExternalSystem { get; set; }
         [Column("QueueId")]
 	    public string QueueId { get; set; }
+        [Column("IsLedgerCreated")]
+	    public bool IsLedgerCreated { get; set; }
     }
 }
 	 

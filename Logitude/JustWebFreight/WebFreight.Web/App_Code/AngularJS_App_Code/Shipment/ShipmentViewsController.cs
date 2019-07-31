@@ -155,7 +155,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     }
                 }
 
-
+                
 
                 ShipmentAPiHelper.AddFilters(queryOperations, tenant);
 
@@ -167,6 +167,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 GenericSort sortClass = new GenericSort();
                 ShipmentCustomFilter customfilters = new ShipmentCustomFilter(tenant);
                 IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+                var MySearchFilter = queryOperations.QueryFilterItems.Where(a => a.FieldName == "SearchFields").FirstOrDefault();
+
+                if (MySearchFilter != null)
+                {
+                    var SearchTerm = MySearchFilter.FieldValue.ToString();
+                    shipments = shipments.Where(a => a.SearchFields.Contains(SearchTerm));
+                    queryOperations.QueryFilterItems.Remove(MySearchFilter);
+                }
                 shipments = customfilters.GetFilteredQuery(queryOperations, shipments);
 
                 QueryOperations nonListQueryOperation = new QueryOperations();
@@ -258,9 +266,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 {
                     response.Count = entityLists.Count();
                 }
-
-                entityLists = entityLists.Skip(skippedShipments);
-                entityLists = entityLists.Take(queryOperations.PageSize);
+                entityLists = System.Data.Entity.QueryableExtensions.Skip(entityLists,()=> skippedShipments);
+                entityLists = System.Data.Entity.QueryableExtensions.Take(entityLists,() => queryOperations.PageSize);
+                //entityLists = entityLists.Skip(skippedShipments);
+                //entityLists = entityLists.Take(queryOperations.PageSize);
                 List<ShipmentList> listQuery;
                 //string loggedUserEmail = authToken.Email;
                 //string loggedContactId = null;

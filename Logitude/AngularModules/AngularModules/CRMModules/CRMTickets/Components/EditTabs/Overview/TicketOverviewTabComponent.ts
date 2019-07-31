@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
@@ -23,6 +23,7 @@ export class TicketOverviewTabComponent {
     public LegendDiv: string;
     public PerformanceChartIdExistance: Boolean = false;
     public _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.InitializeServices();
@@ -32,8 +33,8 @@ export class TicketOverviewTabComponent {
     private CRMDomainService: CRMDomainService;
     private InitializeServices() {
         this.CRMDomainService = new CRMDomainService();
-        this.PerformanceChartId = "PerformanceChartId_" + SessionLocator.CurrentSession.GetNewId("PerformanceChartId");
-        this.LegendDiv = "LegendDiv_" + SessionLocator.CurrentSession.GetNewId("LegendDiv");        
+        this.PerformanceChartId = "PerformanceChartId_" + this.CurrentSession.GetNewId("PerformanceChartId");
+        this.LegendDiv = "LegendDiv_" + this.CurrentSession.GetNewId("LegendDiv");        
     }
 
     private LoadAllData() {
@@ -287,7 +288,7 @@ export class TicketOverviewTabComponent {
                     listArgs.ObjectTableName = "TicketEscalation";
                     listArgs.BackButtonTitle = "Tickets";
                     this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run(listArgs);
@@ -305,7 +306,7 @@ export class TicketOverviewTabComponent {
                     listArgs.ObjectTableName = "Activity";
                     listArgs.BackButtonTitle = "Tickets";
                     this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run(listArgs);

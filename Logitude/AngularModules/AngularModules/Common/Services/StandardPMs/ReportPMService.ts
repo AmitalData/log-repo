@@ -19,6 +19,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {ReportPM} from '../../EntityPMs/ReportPM';
 
+import {ReportPMInitService} from '../../EntityPMInitServices/ReportPMInitService';
 
 @Injectable()
 
@@ -48,6 +49,8 @@ export class ReportPMService {
 					if(pm)
 					{
                       entity = this.MapJsonToEntityPM(pm);
+                      ReportPMInitService.InitValues(entity, false);
+                      ReportPMInitService.ApplyUIPoperties(entity, false);
                     }
 
                 var serviceResponse: ServiceResponse;
@@ -247,6 +250,10 @@ export class ReportPMService {
 		    var entityPM: ReportPM;
 			entityPM = new ReportPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+
+			ReportPMInitService.InitValues(entityPM, true);
+			ReportPMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 

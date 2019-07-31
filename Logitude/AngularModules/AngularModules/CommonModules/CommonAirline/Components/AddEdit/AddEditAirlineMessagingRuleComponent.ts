@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AirlinePM} from '../../../../Common/EntityPMs/AirlinePM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -28,6 +28,7 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
     public DataContext: AddEditAirlineMessagingRuleComponent = this;
     public IsNew: boolean;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -159,7 +160,7 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -177,39 +178,39 @@ export class AddEditAirlineMessagingRuleComponent extends BaseComponent {
             var myService: AirlineMessagingRulePMService = new AirlineMessagingRulePMService();
 
             if (this.IsNew) {
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
                 myService.insert(this.EntityPM).subscribe(Result => {
 
                     var mm: ServiceResponse = Result;
                     if (!mm.HasError) {
                         CachedDataManager.RefreshTableData(this.ObjectTableName, true);
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
 
                     }
 
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
                 myService.update(this.EntityPM).subscribe(Result => {
 
                     var mm: ServiceResponse = Result;
                     if (!mm.HasError) {
                         CachedDataManager.RefreshTableData(this.ObjectTableName, true);
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
 
                     }
 
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }

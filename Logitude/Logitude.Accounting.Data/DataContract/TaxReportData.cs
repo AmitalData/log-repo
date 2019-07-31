@@ -26,5 +26,6 @@ namespace Logitude.Accounting.Data.DataContract
         public decimal LocalAmountCredit { get; set; }
         public string OppositGLAccount { get; set; }
         public string AccountingEntityId { get; set; }
+        public decimal? TaxReportTotalAmount { get; set; }
     }
 }

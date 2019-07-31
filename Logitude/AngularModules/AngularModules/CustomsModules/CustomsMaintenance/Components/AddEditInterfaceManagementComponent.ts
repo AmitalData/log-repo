@@ -59,7 +59,7 @@ export class AddEditInterfaceManagementComponent
 
     ValidationErrorsList: string[] = [];
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -89,7 +89,7 @@ export class AddEditInterfaceManagementComponent
     SetWindowArgs(WinArg) {
         ;
         this._TenantInterfaceManagementList = WinArg.SelectedItem;
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe(response => {
@@ -102,7 +102,7 @@ export class AddEditInterfaceManagementComponent
                             this.SelectedInterfaceType = this.InterfaceTypeList.filter(r => r.Code == this.entityPM.InterfaceType)[0];
                         }
                         this.ValidScreen()
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
 
             });
@@ -222,7 +222,7 @@ export class AddEditInterfaceManagementComponent
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {

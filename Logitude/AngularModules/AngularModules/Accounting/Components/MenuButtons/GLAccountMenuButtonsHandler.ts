@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -25,6 +25,7 @@ export class GLAccountMenuButtonsHandler {
     public TenantPM: TenantPM;
     public ObjectTableName: string = "GLAccount"
     TotalSum: number = 0;
+    private CurrentSession = SessionLocator.SelectedSession;
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     private glAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -40,20 +41,20 @@ export class GLAccountMenuButtonsHandler {
     private LoadCompletedEvent: any = null;
     private TabSelectedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
                     }
                 });
@@ -81,11 +82,21 @@ export class GLAccountMenuButtonsHandler {
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
                     switch (button.EventCode) {
+                        case "GLAccountReactivate": {
+                            if (this.EntityPM.Inactive == true) {
+                                button.IsHidden = false;
+                            }
+                            else {
+                                button.IsHidden = true;
+                            }
+                            break;
+                        }
+
 
                         case "GLAccountInactive":
                             {
                                 if (this.EntityPM.Inactive == true) {
-                                    button.IsDisabled = true;
+                                    button.IsHidden = true;
                                 } else if (this.EntityPM.AccountTypeCode == '4' || this.EntityPM.AccountTypeCode == '5') { // Job / File
                                     button.IsDisabled = true;
                                 }
@@ -138,6 +149,12 @@ export class GLAccountMenuButtonsHandler {
         if (errors.length == 0) {
             switch (menuButton.EventCode) {
 
+
+                case "GLAccountReactivate": {
+                    this.ReactivateGLAccount();
+                    break;
+                }
+
                 case "GLAccountInactive":
                     {
                         var myGLAccountListService: GLAccountListService = new GLAccountListService();
@@ -176,11 +193,27 @@ export class GLAccountMenuButtonsHandler {
     }
 
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
+    private ReactivateGLAccount() {
+        var myGLAccountListService: GLAccountListService = new GLAccountListService();
+        myGLAccountListService.getSingle(this.EntityPM.Id)
+            .subscribe((myResponse: ServiceResponse) => {
+                var myGLAccountList: GLAccountList = myResponse.Result as GLAccountList;
+
+                if (!myGLAccountList.BalanceInLocalCurrency || myGLAccountList.BalanceInLocalCurrency == 0) {
+                    this.EntityPM.Inactive = false;
+                    //this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
+                    this.entityArgs.EditComponent.SaveChanges();
+                } else {
+                    this.entityArgs.EditComponent.ValidationErrorsList = [];
+                    this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
+                }
+            });
+    }
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
     ReconcileButtonClicked() {

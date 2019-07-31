@@ -38,6 +38,8 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Resolvers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace CommunicationWorkerRole
 {
@@ -107,6 +109,10 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.Id = setting.Id;
                 LogitudeSettings.ChampEnv = setting.ChampEnv;
                 LogitudeSettings.ChampURL = setting.ChampURL;
+                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
                 LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
                 LogitudeSettings.DeploymentStage = setting.DeploymentStage;
                 LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
@@ -155,6 +161,8 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
                 LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
                 LogitudeSettings.EmailSendingQuota = setting.EmailSendingQuota;
+                LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
+
                 //LogitudeSettings.ABMProductId = setting.ABMProductId;
 
             }
@@ -187,6 +195,8 @@ namespace CommunicationWorkerRole
             if (toTest)
             {
                 TestBatch();
+                workers = new List<WorkerEntryPoint>();
+                return base.OnStart();
             }
             
             UpdateRunningWR();
@@ -204,8 +214,38 @@ namespace CommunicationWorkerRole
 
         private void TestBatch()
         {
+
+            try
+            {
+
+                var batchTaskExecutionWR = new BatchTaskExecutionWR();
+                var dic = new Dictionary<string, string>();
+
+                dic.Add("BatchTaskExecutionId", "1-5726");
+                dic.Add("Tenant", "1106");
+                batchTaskExecutionWR.SupressStartThread = true;
+                batchTaskExecutionWR.ExecuteQueue(new Logitude.Server.Tools.QueueService.QueueResponse() { MessageValues = dic });
+                //var myEmailsWorkerRole = new EmailsWorkerRole("EmailQueue","itzik");
+                //var context = CommonDataContext.GetContext(989);
+                //var communicationLogRep = new CommunicationLogRepository(context);
+                //var cl = communicationLogRep.GetSingleCommunicationLog(id: "1-1075543", tenant: 989);
+
+                //myEmailsWorkerRole.SendWaitingCommunicationLog(cl);
+                /////BatchAccountingLoadTestTask();
+                ///            }
+            }
+            catch (Exception)
+            {
+
+
+            }
+
+        }
+
+        private static void BatchAccountingLoadTestTask()
+        {
             string s =
-                @"<?xml version=""1.0"" encoding=""utf-16""?><BatchAccountingLoadArg xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""><Tenant>1051</Tenant>";
+                            @"<?xml version=""1.0"" encoding=""utf-16""?><BatchAccountingLoadArg xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""><Tenant>1051</Tenant>";
             //s+="<ActionType>CreateCustomers</ActionType>";
             s += "<ActionType>CreateJournalEvery</ActionType>";
             s += @"<Amount>10</Amount>
@@ -231,10 +271,35 @@ namespace CommunicationWorkerRole
         List<BatchServicesDefinitionPM> BatchServicesDefinitions;
         private void UpdateRunningWR()
         {
-            
+            string SpecialBatchCode = null;
+            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+            if (iAppSettings != null)
+            {
+                if (iAppSettings["BatchCode"] != null)
+                {
+                    SpecialBatchCode = iAppSettings["BatchCode"].ToString();
+                }
+            }
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
             List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
+            if (!string.IsNullOrEmpty(SpecialBatchCode))
+            {
+                var temp = SpecialBatchCode.Split(',');
+                if (temp.Length > 0)
+                {
+                    var BatchCode = temp[0].ToLower();
+                    var IsActivate = temp[1].ToLower();
+                    if (IsActivate == "true")
+                    {
+                        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
+                    }
+                    else
+                    {
+                        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
+                    }
+                }
+            }
             if (BatchServicesDefinitions == null)
             {
                 BatchServicesDefinitions = BatchServicesDefinitionsTemp;
@@ -285,7 +350,7 @@ namespace CommunicationWorkerRole
             var tst = false;
             if (tst)
             {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "SchedularWorkerRole").ToList();
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "BatchTaskExecutionWR").ToList();
             }
             foreach (var Service in BatchServicesDefinitions)
             {
@@ -410,6 +475,10 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.Id = setting.Id;
                 LogitudeSettings.ChampEnv = setting.ChampEnv;
                 LogitudeSettings.ChampURL = setting.ChampURL;
+                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
                 LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
                 LogitudeSettings.DeploymentStage = setting.DeploymentStage;
                 LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
@@ -430,6 +499,11 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.GLSHKURL = setting.GLSHKURL;
                 LogitudeSettings.ABMProductId = setting.ABMProductId;
                 LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+                LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
+                
+
+
+
                 //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
                 if (LogitudeSettings.IsCostomsDeploy)
                 {

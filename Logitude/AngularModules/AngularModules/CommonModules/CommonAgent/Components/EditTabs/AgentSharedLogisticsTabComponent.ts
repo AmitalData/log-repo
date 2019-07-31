@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AgentPM} from '../../../../Common/EntityPMs/AgentPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -20,6 +20,7 @@ export class AgentSharedLogisticsTabComponent extends BaseComponent {
     public ObjectTableName: string = "Agent";
     IsShowDefultButton: boolean = true;
     agentSharedLogisticsKey: AgentSharedLogisticsKey;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public _agentSharedLogisticsKeyPMService: AgentSharedLogisticsKeyPMService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -39,10 +40,10 @@ export class AgentSharedLogisticsTabComponent extends BaseComponent {
 
     StatusName: string = "";
     LoadAgentSharedLogisticsKey() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicator("Loading...");
         this._agentSharedLogisticsKeyPMService.GetSingle(this.EntityPM.AgentSharedLogisticsKey).subscribe(res => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
 
             if (!pmResponse.HasError) {
@@ -93,11 +94,11 @@ export class AgentSharedLogisticsTabComponent extends BaseComponent {
                 //this.StatusName = "Waiting";
                 //this.SetButtonsVisibility();
 
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadData();
                     }
                 });
@@ -111,9 +112,9 @@ export class AgentSharedLogisticsTabComponent extends BaseComponent {
         this.agentSharedLogisticsKey.StatusCode = "I";
         this.agentSharedLogisticsKey.InactiveByUserEmail = SessionLocator.LoggedUserPM.Email;
         this.agentSharedLogisticsKey.InactiveDate = DateTool.GetCurrentDateTimeAsUtc();
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        this.CurrentSession.StartBusyIndicator("Saving...");
         this._agentSharedLogisticsKeyPMService.update(this.agentSharedLogisticsKey, this.EntityPM.Id, false).subscribe(res => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!res.HasError) {
                 this.agentSharedLogisticsKey = res.Result;
                 this.SetButtonsVisibility();
@@ -140,11 +141,11 @@ export class AgentSharedLogisticsTabComponent extends BaseComponent {
         logWindow.Show("./CommonModules/CommonAgent/Components/EditTabs/AcceptAgentInvitaionComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadData();
                     }
                 });

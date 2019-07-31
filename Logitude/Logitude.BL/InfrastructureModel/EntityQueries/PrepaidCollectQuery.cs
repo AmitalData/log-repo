@@ -53,6 +53,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     where a.Id == id
                     select new PrepaidCollectPM() { Id = a.Id, Name = a.Name, SearchFields = a.SearchFields, }).FirstOrDefault();
         }
+        public PrepaidCollectPM GetCustomSinglePM(string id)
+        {
+            return (from a in repository.context.PrepaidCollects
+                    where a.Id == id
+                    select new PrepaidCollectPM() { Id = a.Id, Name = a.Name, SearchFields = a.SearchFields, }).FirstOrDefault();
+        }
+        
 
         public PrepaidCollectPM GetSinglePrepaidCollectPM(string id)
         {

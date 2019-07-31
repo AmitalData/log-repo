@@ -249,10 +249,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 string EventCombinedCode = location.LocationCode.Value;
                 string EventPortCode = EventCombinedCode.Substring(EventCountryCode.Length);
 
-                Port iEventPort = iPortRepository.GetSinglePortByCode(this.Tenant, EventPortCode, true);
+                Port iEventPort = iPortRepository.GetOceanPortByCodeAndCountryCode(this.Tenant, EventPortCode, EventCountryCode, true);
                 if (iEventPort == null)
                 {
-                    iEventPort = iPortRepository.GetPortsByNameOrCode(EventPortCode, null, 0).Where(a => a.IsOcean).FirstOrDefault();
+                    iEventPort = iPortRepository.GetOceanPortByCodeAndCountryCode(0, EventPortCode, EventCountryCode, true);
                     if (iEventPort != null)
                     {
                         iEventPort = this.GetPortCopyToCurrentTenant(iEventPort.Id, this.Tenant);
@@ -301,6 +301,30 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             this.ShipmentRoutingLegCode = "Main";
                             location_From = this.RoutingLocations.Where(d => d.LocationType == INTTRA_Status.LocationType1LocationType.PortOfLoading).FirstOrDefault();
                             location_To = this.RoutingLocations.Where(d => d.LocationType == INTTRA_Status.LocationType1LocationType.PortOfDischarge).FirstOrDefault();
+
+                            if (location_From != null)
+                            {
+                                string CountryCode = location_From.LocationCountry;
+                                string CombinedCode = location_From.LocationCode.Value;
+                                string PortCode = CombinedCode.Substring(CountryCode.Length);
+
+                                if (PortCode != this.shipmentPM.MainCarriageFromPortCode)
+                                {
+                                    throw new Exception("Invalid Port Of Loading");
+                                }
+                            }
+
+                            if (location_To != null)
+                            {
+                                string CountryCode = location_To.LocationCountry;
+                                string CombinedCode = location_To.LocationCode.Value;
+                                string PortCode = CombinedCode.Substring(CountryCode.Length);
+
+                                if (PortCode != this.shipmentPM.MainCarriageToPortCode)
+                                {
+                                    throw new Exception("Invalid Port Of Discharge");
+                                }
+                            }
                         }
 
                         else
@@ -372,10 +396,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             DateTime? LocationsDate = this.GetDateFromString(iLocation);
                             string PortCode = CombinedCode.Substring(CountryCode.Length);
 
-                            Port iPort = iPortRepository.GetSinglePortByCode(this.Tenant, PortCode, true);
+                            Port iPort = iPortRepository.GetOceanPortByCodeAndCountryCode(this.Tenant, PortCode, CountryCode, true);
                             if (iPort == null)
                             {
-                                iPort = iPortRepository.GetPortsByNameOrCode(PortCode, null, 0).Where(a => a.IsOcean).FirstOrDefault();
+                                iPort = iPortRepository.GetOceanPortByCodeAndCountryCode(0, PortCode, CountryCode, true);
                                 if (iPort != null)
                                 {
                                     iPort = this.GetPortCopyToCurrentTenant(iPort.Id, this.Tenant);
@@ -387,18 +411,21 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 DeparturePortId = iPort.Id;
                             }
 
-                            DeparturePortCode = PortCode;                            
+                            DeparturePortCode = PortCode;
 
-                            if (location_From.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.DepartureActual)
+                            if (location_From.DateTime != null)
                             {
-                                DepartureDate = LocationsDate;
-                                DepartureDateIndicator = "A";
-                            }
+                                if (location_From.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.DepartureActual)
+                                {
+                                    DepartureDate = LocationsDate;
+                                    DepartureDateIndicator = "A";
+                                }
 
-                            else if (location_From.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.DepartureEstimated)
-                            {
-                                DepartureDate = LocationsDate;
-                                DepartureDateIndicator = "E";
+                                else if (location_From.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.DepartureEstimated)
+                                {
+                                    DepartureDate = LocationsDate;
+                                    DepartureDateIndicator = "E";
+                                }
                             }
                             #endregion
                         }
@@ -412,10 +439,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             DateTime? LocationsDate = this.GetDateFromString(iLocation);
                             string PortCode = CombinedCode.Substring(CountryCode.Length);
 
-                            Port iPort = iPortRepository.GetSinglePortByCode(this.Tenant, PortCode, true);
+                            Port iPort = iPortRepository.GetOceanPortByCodeAndCountryCode(this.Tenant, PortCode, CountryCode, true);
                             if (iPort == null)
                             {
-                                iPort = iPortRepository.GetPortsByNameOrCode(PortCode, null, 0).Where(a => a.IsOcean).FirstOrDefault();
+                                iPort = iPortRepository.GetOceanPortByCodeAndCountryCode(0, PortCode, CountryCode, true);
                                 if (iPort != null)
                                 {
                                     iPort = this.GetPortCopyToCurrentTenant(iPort.Id, this.Tenant);
@@ -429,16 +456,19 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                             ArrivalPortCode = PortCode;
 
-                            if (location_To.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.ArrivalActual)
+                            if (location_To.DateTime != null)
                             {
-                                ArrivalDate = LocationsDate;
-                                ArrivalDateIndicator = "A";
-                            }
+                                if (location_To.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.ArrivalActual)
+                                {
+                                    ArrivalDate = LocationsDate;
+                                    ArrivalDateIndicator = "A";
+                                }
 
-                            else if (location_To.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.ArrivalEstimated)
-                            {
-                                ArrivalDate = LocationsDate;
-                                ArrivalDateIndicator = "E";
+                                else if (location_To.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.ArrivalEstimated)
+                                {
+                                    ArrivalDate = LocationsDate;
+                                    ArrivalDateIndicator = "E";
+                                }
                             }
                             #endregion
                         }
@@ -526,55 +556,67 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 case "TR1":
                     {
-                        if (this.location_From.DateTime != null)
+                        if (this.location_From != null)
                         {
-                            switch (this.location_From.DateTime.DateType)
+                            if (this.location_From.DateTime != null)
                             {
-                                case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
-                                    {
-                                        if (this.shipmentPM.Transshipment1ETD == null && this.shipmentPM.Transshipment1ATD == null)
+                                switch (this.location_From.DateTime.DateType)
+                                {
+                                    case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
                                         {
-                                            this.shipmentPM.Transshipment1ETD = this.DepartureDate;
+                                            if (this.shipmentPM.Transshipment1ETD == null && this.shipmentPM.Transshipment1ATD == null)
+                                            {
+                                                this.shipmentPM.Transshipment1ETD = this.DepartureDate;
+                                            }
+
+                                            break;
                                         }
 
-                                        break;
-                                    }
-
-                                case INTTRA_Status.DateTimeType2DateType.DepartureActual:
-                                    {
-                                        if (this.EventLocationCode == "VD")
+                                    case INTTRA_Status.DateTimeType2DateType.DepartureActual:
                                         {
-                                            this.shipmentPM.Transshipment1ATD = EventLocationeDate;
-                                        }
+                                            if (this.EventLocationCode == "VD")
+                                            {
+                                                if (this.shipmentPM.Transshipment1ATD == null)
+                                                {
+                                                    this.shipmentPM.Transshipment1ATD = EventLocationeDate;
+                                                }
+                                            }
 
-                                        break;
-                                    }
+                                            break;
+                                        }
+                                }
                             }
                         }
 
-                        if (this.location_To.DateTime != null)
+                        if (this.location_To != null)
                         {
-                            switch (location_To.DateTime.DateType)
+                            if (this.location_To.DateTime != null)
                             {
-                                case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
-                                    {
-                                        if (this.shipmentPM.Transshipment1ETA == null && this.shipmentPM.Transshipment1ATA == null)
+                                switch (location_To.DateTime.DateType)
+                                {
+                                    case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
                                         {
-                                            this.shipmentPM.Transshipment1ETA = this.ArrivalDate;
+                                            if (this.shipmentPM.Transshipment1ETA == null && this.shipmentPM.Transshipment1ATA == null)
+                                            {
+                                                this.shipmentPM.Transshipment1ETA = this.ArrivalDate;
+                                            }
+
+                                            break;
                                         }
 
-                                        break;
-                                    }
-
-                                case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
-                                    {
-                                        if (this.EventLocationCode == "VA")
+                                    case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
                                         {
-                                            this.shipmentPM.Transshipment1ATA = EventLocationeDate;
-                                        }
+                                            if (this.EventLocationCode == "VA")
+                                            {
+                                                if (this.shipmentPM.Transshipment1ATA == null)
+                                                {
+                                                    this.shipmentPM.Transshipment1ATA = EventLocationeDate;
+                                                }
+                                            }
 
-                                        break;
-                                    }
+                                            break;
+                                        }
+                                }
                             }
                         }
 
@@ -593,55 +635,67 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                 default:
                     {
-                        if (this.location_From.DateTime != null)
+                        if (this.location_From != null)
                         {
-                            switch (this.location_From.DateTime.DateType)
+                            if (this.location_From.DateTime != null)
                             {
-                                case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
-                                    {
-                                        if (this.shipmentPM.MainCarriageETD == null && this.shipmentPM.MainCarriageATD == null)
+                                switch (this.location_From.DateTime.DateType)
+                                {
+                                    case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
                                         {
-                                            this.shipmentPM.MainCarriageETD = this.DepartureDate;
+                                            if (this.shipmentPM.MainCarriageETD == null && this.shipmentPM.MainCarriageATD == null)
+                                            {
+                                                this.shipmentPM.MainCarriageETD = this.DepartureDate;
+                                            }
+
+                                            break;
                                         }
 
-                                        break;
-                                    }
-
-                                case INTTRA_Status.DateTimeType2DateType.DepartureActual:
-                                    {
-                                        if (this.EventLocationCode == "VD")
+                                    case INTTRA_Status.DateTimeType2DateType.DepartureActual:
                                         {
-                                            this.shipmentPM.MainCarriageATD = EventLocationeDate;
-                                        }
+                                            if (this.EventLocationCode == "VD")
+                                            {
+                                                if (this.shipmentPM.MainCarriageATD == null)
+                                                {
+                                                    this.shipmentPM.MainCarriageATD = EventLocationeDate;
+                                                }
+                                            }
 
-                                        break;
-                                    }
+                                            break;
+                                        }
+                                }
                             }
                         }
 
-                        if (this.location_To.DateTime != null)
+                        if (this.location_To != null)
                         {
-                            switch (location_To.DateTime.DateType)
+                            if (this.location_To.DateTime != null)
                             {
-                                case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
-                                    {
-                                        if (this.shipmentPM.MainCarriageETA == null && this.shipmentPM.MainCarriageATA == null)
+                                switch (location_To.DateTime.DateType)
+                                {
+                                    case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
                                         {
-                                            this.shipmentPM.MainCarriageETA = this.ArrivalDate;
+                                            if (this.shipmentPM.MainCarriageETA == null && this.shipmentPM.MainCarriageATA == null)
+                                            {
+                                                this.shipmentPM.MainCarriageETA = this.ArrivalDate;
+                                            }
+
+                                            break;
                                         }
 
-                                        break;
-                                    }
-
-                                case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
-                                    {
-                                        if (this.EventLocationCode == "VA")
+                                    case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
                                         {
-                                            this.shipmentPM.MainCarriageATA = EventLocationeDate;
-                                        }
+                                            if (this.EventLocationCode == "VA")
+                                            {
+                                                if (this.shipmentPM.MainCarriageATA == null)
+                                                {
+                                                    this.shipmentPM.MainCarriageATA = EventLocationeDate;
+                                                }
+                                            }
 
-                                        break;
-                                    }
+                                            break;
+                                        }
+                                }
                             }
                         }
 
@@ -671,7 +725,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             }
         }
         private void UpdateContainerFields()
-        {            
+        {
             if (this.DepartureDateIndicator == "E")
             {
                 iContainer.ETD = this.DepartureDate;
@@ -712,14 +766,14 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                     foreach (ShipmentPackagePM item in AllContainers.Where(d => d.VoyageTripNumber != null && d.Routing != null))
                     {
-                        bool iHasContainerException = false;                       
+                        bool iHasContainerException = false;
 
                         if (item.RoutingIds == iRouting_Main)
                         {
                             if (item.ETD != shipmentPM.MainCarriageETD || item.ETA != shipmentPM.MainCarriageETA)
                             {
                                 iHasContainerException = true;
-                            }                            
+                            }
                         }
 
                         else if (item.RoutingIds == iRouting_Trs1)
@@ -753,6 +807,16 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                         }
                     }
                 }
+
+                else
+                {
+                    foreach (ShipmentPackagePM item in AllContainers.Where(d => d.VoyageTripNumber != null && d.Routing != null))
+                    {
+                        item.HasContainerException = false;
+                        item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    }
+                }
+
                 #endregion
             }
 
@@ -764,6 +828,59 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             else
             {
                 shipmentPM.HasContainerException = false;
+
+                var AllVoyageNumber = (from a in AllContainers
+                                       where
+                                       a.VoyageTripNumber != null
+                                       && a.RoutingIds != null
+                                       && a.ETD != null
+                                       && a.ETA != null
+
+                                       group a by new
+                                       {
+                                           a.VoyageTripNumber,
+                                           a.RoutingIds,
+                                           a.ETD,
+                                           a.ETA
+                                       } into g
+
+                                       select g.Key).ToList();
+
+                if (AllVoyageNumber.Count == 1)
+                {
+                    string iRouting_Main = this.shipmentPM.MainCarriageFromPortId + "," + this.shipmentPM.MainCarriageToPortId;
+                    string iRouting_Trs1 = this.shipmentPM.Transshipment1FromPortId + "," + this.shipmentPM.Transshipment1ToPortId;
+                    string iRouting_Trs2 = this.shipmentPM.Transshipment2FromPortId + "," + this.shipmentPM.Transshipment2ToPortId;
+                    string iRouting_Trs3 = this.shipmentPM.Transshipment3FromPortId + "," + this.shipmentPM.Transshipment3ToPortId;
+
+                    string iRoutingIds = AllVoyageNumber.FirstOrDefault().RoutingIds;
+                    DateTime? iETD = AllVoyageNumber.FirstOrDefault().ETD;
+                    DateTime? iETA = AllVoyageNumber.FirstOrDefault().ETA;
+
+                    if (iRoutingIds == iRouting_Main)
+                    {
+                        this.shipmentPM.MainCarriageETD = iETD;
+                        this.shipmentPM.MainCarriageETA = iETA;
+                    }
+
+                    else if (iRoutingIds == iRouting_Trs1)
+                    {
+                        this.shipmentPM.Transshipment1ETD = iETD;
+                        this.shipmentPM.Transshipment1ETA = iETA;
+                    }
+
+                    else if (iRoutingIds == iRouting_Trs2)
+                    {
+                        this.shipmentPM.Transshipment2ETD = iETD;
+                        this.shipmentPM.Transshipment2ETA = iETA;
+                    }
+
+                    else if (iRoutingIds == iRouting_Trs3)
+                    {
+                        this.shipmentPM.Transshipment3ETD = iETD;
+                        this.shipmentPM.Transshipment3ETA = iETA;
+                    }
+                }
             }
         }
         private DateTime? GetDateFromString(INTTRA_Status.LocationType iLocation)

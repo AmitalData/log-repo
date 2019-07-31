@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit} from '@angular/core';  
 import {SessionLocator} from '../../Utilities/SessionLocator';
 
@@ -11,7 +11,7 @@ import {SessionLocator} from '../../Utilities/SessionLocator';
 })
 
 export class ChooseDatesComponent {
-
+    private CurrentSession = SessionLocator.SelectedSession;
     public ValidationErrorsList: string[] = [];
     public DateSelected: EventEmitter<any> = new EventEmitter();
     private selectedToDate: any;
@@ -36,12 +36,12 @@ export class ChooseDatesComponent {
         this.ValidationErrorsList = this.validateDates();
         if (this.ValidationErrorsList.length == 0) {
             this.DateSelected.emit({ From: this.SelectedFromDate, To: this.SelectedToDate });
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     validateDates(): string[] {

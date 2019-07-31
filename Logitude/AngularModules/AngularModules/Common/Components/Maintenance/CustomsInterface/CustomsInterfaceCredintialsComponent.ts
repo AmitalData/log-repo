@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {CustomsInterfaceSettingPM} from '../../../EntityPMs/CustomsInterfaceSettingPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -16,6 +16,7 @@ export class CustomsInterfaceCredintialsComponent extends BaseComponent {
     public ObjectTableName: string;
     public DataContext: CustomsInterfaceCredintialsComponent = this;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();        
     }
@@ -65,7 +66,7 @@ export class CustomsInterfaceCredintialsComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -93,7 +94,7 @@ export class CustomsInterfaceCredintialsComponent extends BaseComponent {
 
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+            this.CurrentSession.CloseCurrentWindowEmit("ok");
         }
     }
 

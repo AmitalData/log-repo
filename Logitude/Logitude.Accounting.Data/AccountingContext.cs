@@ -126,6 +126,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new GLAccountMap());
 	
+            modelBuilder.Configurations.Add(new GLAccountCounterMap());
+	
             modelBuilder.Configurations.Add(new GLAccountCurrencyMap());
 	
             modelBuilder.Configurations.Add(new GLAccountMoreDataMap());
@@ -275,7 +277,9 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<PaymentCheque>().Property(x => x.ExchangeRate).HasPrecision(5, 3);
 				
-			modelBuilder.Entity<ReconcileExternalPageLine>().Property(x => x.Amount).HasPrecision(15, 2);
+			modelBuilder.Entity<ReconcileExternalPageLine>().Property(x => x.DebitAmount).HasPrecision(15, 2);
+				
+			modelBuilder.Entity<ReconcileExternalPageLine>().Property(x => x.CreditAmount).HasPrecision(15, 2);
 				
 			modelBuilder.Entity<ReconciliationLine>().Property(x => x.ReconciliationAmount).HasPrecision(16, 2);
 				
@@ -746,6 +750,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<GLAccount> GLAccounts 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<GLAccountCounter> GLAccountCounters 
 	 {
 	      get; set;
 	 

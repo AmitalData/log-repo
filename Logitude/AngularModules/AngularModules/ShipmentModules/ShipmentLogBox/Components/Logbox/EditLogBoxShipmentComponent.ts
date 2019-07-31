@@ -37,7 +37,8 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
     ValidationErrorsList: any[]; 
     public _ShipmentPMService: ShipmentPMService;
     IsPrivate: boolean = false;
-    public PLShortName: string = ""; 
+    public PLShortName: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
         if (SessionLocator.PrivateLableSettings) {
@@ -101,7 +102,7 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
             this.SaveData();
         }
         else { 
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
     }
@@ -110,7 +111,7 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
        
         
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.EntityPm.IsImporterShipment = true;
             this.EntityPm.MainCarriageFromPortId = this.EntityPm.FromPortId;
             this.EntityPm.MainCarriageToPortId = this.EntityPm.ToPortId;
@@ -124,16 +125,16 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
                  
                 this._ShipmentPMService.update(this.EntityPm).subscribe(myResult => {
                     if (!myResult.HasError) {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        //SessionLocator.CurrentSession.CloseCurrentWindow();
-                        //SessionLocator.CurrentSession.CloseCurrentWindowEmit("CustomReloadShipments");
-                        SessionLocator.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
-                        SessionLocator.CurrentSession.CurrentWindow.Close("");
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        //this.CurrentSession.CloseCurrentWindow();
+                        //this.CurrentSession.CloseCurrentWindowEmit("CustomReloadShipments");
+                        this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
+                        this.CurrentSession.CurrentWindow.Close("");
                     }
                     else {
                         //this.ValidationErrorsList = myResult.ErrorsArray;
                         this.ValidationErrorsList = myResult.ErrorsArray;//.push("There Are Validation Errors.");
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
                 });
           
@@ -141,14 +142,14 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
 
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
     }
 
     
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     } 
 
 }

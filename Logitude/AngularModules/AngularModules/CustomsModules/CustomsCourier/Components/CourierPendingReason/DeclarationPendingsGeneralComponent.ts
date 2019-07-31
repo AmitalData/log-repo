@@ -94,17 +94,17 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                 */
             });
 
-            //SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             //this.declarationPMService.get(args.DeclarationId).subscribe((response: ServiceResponse) => {
-            //    SessionLocator.CurrentSession.StopBusyIndicator();
+            //    SessionLocator.SelectedSession.StopBusyIndicator();
             //    this.declarationPM = response.Result;
             //});
             //this.CourierHawb = args.CourierHawb;
             /*
             if (args.Mode == "FromDeclaration") {
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                 //this.declarationPendingPMService.get(args.DeclarationId, "").subscribe((response: ServiceResponse) => {
-                //    SessionLocator.CurrentSession.StopBusyIndicator();
+                //    SessionLocator.SelectedSession.StopBusyIndicator();
                   //  var declarationPendingPM: DeclarationPendingPM = response.Result;
                 var declarationPendingPM: DeclarationPendingPM = this.DeclarationCourierStatus.;
                     if (declarationPendingPM != null) {
@@ -232,14 +232,14 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                 }
                 else {
                     //this.RejectChanges();
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    SessionLocator.SelectedSession.CloseCurrentWindow();
                 }
 
             });
 
         }
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
+            SessionLocator.SelectedSession.CloseCurrentWindowEmit('cancel');
         }
 
     }
@@ -304,7 +304,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                     if (errors.length == 0) {
                         var isSave = 1;
                         if (isSave == 1) {
-                            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                            SessionLocator.SelectedSession.StartBusyIndicatorSaving();
                             this._DeclarationCourierStatusPMService.update(this.DeclarationCourierStatus).subscribe((response: ServiceResponse) => {
                                 //this.DeclarationPendingsList.forEach((declarationPendingPM: DeclarationPendingPM) => {
                                 //declarationPendingPM.CourierPendingReasonCode = this.CourierPendingReasonCode;
@@ -314,13 +314,13 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                                 //declarationPendingPM.DeclarationID = this.declarationPM.Id;
                                 //declarationPendingPM.Tenant = this.declarationPM.Tenant;
                                 //this.declarationPendingPMService.update(declarationPendingPM).subscribe((response: ServiceResponse) => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
-                                SessionLocator.CurrentSession.CloseCurrentWindow();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
+                                SessionLocator.SelectedSession.CloseCurrentWindow();
                             });
 
                         }
                         else {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            SessionLocator.SelectedSession.CloseCurrentWindow();
                         }
                     }
 
@@ -340,14 +340,14 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
 
                 var isSave = 1;
                 if (isSave == 1) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    SessionLocator.SelectedSession.StartBusyIndicatorSaving();
                     this._DeclarationCourierStatusPMService.update(this.DeclarationCourierStatus).subscribe((response: ServiceResponse) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
                     });
                 }
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    SessionLocator.SelectedSession.CloseCurrentWindow();
                 }
             }
 
@@ -509,7 +509,7 @@ export class DeclarationPendingLine extends BaseComponent {
         }
         if (this.valid != true && logCellTemplate != null && CourierPendingReasonLovBox != null) {
             SessionLocator.SustainFocusOnCell = true;
-            SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: CourierPendingReasonLovBox.InputId });
+            SessionLocator.SelectedSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: CourierPendingReasonLovBox.InputId });
 
         }
     }

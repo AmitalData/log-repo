@@ -143,5 +143,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
+        public string GetMoveTypeNameById(string id, int tenant)
+        {
+            return (from a in repository.context.MoveTypes
+                    where a.Tenant == tenant && a.Id == id
+                    select a.MoveTypeEnglishName).FirstOrDefault();
+
+
+        }
+
     }
 }

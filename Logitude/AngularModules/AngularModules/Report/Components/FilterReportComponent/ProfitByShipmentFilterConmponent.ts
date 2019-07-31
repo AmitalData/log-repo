@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -37,6 +37,7 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
     public SalesmanUserId: string;
     public AgentId: string;
     public DepartmentId: string;
+    public CarrierId: string;
 
     private mySelectedDirectionFilter: string = "All";
     public get MySelectedDirectionFilter() { return this.mySelectedDirectionFilter; }
@@ -51,12 +52,13 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
     queryFilterItem: QueryFilterItem;
     public ObjectTableName: string = "Report";
     public DataContext: ProfitByShipmentFilterConmponent = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
-        this.IsOperationalDateId = this.IsOperationalDateId + SessionLocator.CurrentSession.GetNewId(this.IsOperationalDateId);
-        this.IsCreateDateId = this.IsCreateDateId + SessionLocator.CurrentSession.GetNewId(this.IsCreateDateId);
-        this.DateRadio = this.DateRadio + SessionLocator.CurrentSession.GetNewId(this.DateRadio);
+        this.IsOperationalDateId = this.IsOperationalDateId + this.CurrentSession.GetNewId(this.IsOperationalDateId);
+        this.IsCreateDateId = this.IsCreateDateId + this.CurrentSession.GetNewId(this.IsCreateDateId);
+        this.DateRadio = this.DateRadio + this.CurrentSession.GetNewId(this.DateRadio);
     }
     
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
@@ -160,6 +162,15 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
             this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "DepartmentId";
             this.queryFilterItem.FieldValue = this.DepartmentId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+        }
+
+        if (this.CarrierId) {
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "CarrierId";
+            this.queryFilterItem.FieldValue = this.CarrierId;
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
         }

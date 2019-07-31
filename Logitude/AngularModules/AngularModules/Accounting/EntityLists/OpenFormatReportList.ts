@@ -23,6 +23,7 @@ export class OpenFormatReportList {
 	Status: string;
 	UserLocalName: string;
 	StatusLocalName: string;
+	PDFRerportXML: string;
 	
 }
  

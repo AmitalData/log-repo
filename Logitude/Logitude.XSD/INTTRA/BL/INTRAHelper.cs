@@ -398,6 +398,7 @@ namespace Logitude.XSD.INTTRA.BL
                         Username = fTPDetail.UserName,
                         Password = fTPDetail.Password,
                         Filename = filename,
+                        UseSFTP = fTPDetail.UseSFTP,
                     };
 
                     myResult = JsonConvert.SerializeObject(settings);
@@ -423,7 +424,7 @@ namespace Logitude.XSD.INTTRA.BL
             this.BuildDemo_Data();
             this.BuildDemo_CONTRL();
             this.BuildDemo_APERAK();
-            this.BuildDemo_Status();
+            //this.BuildDemo_Status();
         }
         private void BuildDemo_Data()
         {
@@ -1036,5 +1037,6 @@ namespace Logitude.XSD.INTTRA.BL
         public string Username { get; set; }
         public string Password { get; set; }
         public string Filename { get; set; }
+        public bool UseSFTP { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.PaymentChequeTests
 {
 
     [TestClass]
-    public class PaymentChequeOnCreatingServiceUnitTest
+    public class PaymentChequeOnCreatingServiceUnitTest : TestBase
     {
         [TestMethod]
         public void OnCreating_IdMatchesExpected_Success() 
@@ -71,18 +71,18 @@ namespace Logitude.UnitTest.Accounting.UniTests.PaymentChequeTests
 
             // Act
             paymentChequeOnCreatingService.OnCreating(entityPM);
-            entityPM.InternalNumber = "11";
-            entityPM.Id = "22";
+            //entityPM.InternalNumber = "11";
+            //entityPM.Id = "22";
             // Assert
 
-            Assert.AreEqual(expectedCodeCounter, entityPM.InternalNumber, "Number not matches expected");
-        Assert.AreEqual(expectedIdCounter, entityPM.Id, "Id not matches expected");
+      
 
-            //    MultiAssert.Aggregate(
-            //() => Assert.AreEqual(expectedCodeCounter, entityPM.InternalNumber, "Number not matches expected"),
-            //() => Assert.AreEqual(expectedIdCounter, entityPM.Id, "Id not matches expected"));
+            Aggregate(
+        () => Assert.AreEqual(expectedCodeCounter, entityPM.InternalNumber, "Number not matches expected"),
+        () => Assert.AreEqual(expectedIdCounter, entityPM.Id, "Id not matches expected"),
+          () => Assert.AreEqual(expectedLoggedUserId, entityPM.UpdatedByUserId, "Id not matches expected"));
 
-            //    Assert.AreEqual(expectedCodeCounter, entityPM.InternalNumber, "Code not matches expected #DP02");
+           
 
         }
 
@@ -119,12 +119,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.PaymentChequeTests
 
         }
 
-        //public void TestPaymentChequeFields(PaymentChequePM entityPM, string id , string Number)
-        //{
-        //    Assert.AreEqual(Number, entityPM.InternalNumber, "number not matches expected #DP02");
-
-
-        //}
+    
 
         private ContactPM GetLoggedContactInstance()
         {
@@ -140,33 +135,4 @@ namespace Logitude.UnitTest.Accounting.UniTests.PaymentChequeTests
     }
 
 
-    public static class MultiAssert
-    {
-        public static void Aggregate(params Action[] actions)
-        {
-            var exceptions = new List<AssertFailedException>();
-
-            foreach (var action in actions)
-            {
-                try
-                {
-                    action();
-                }
-                catch (AssertFailedException ex)
-                {
-                    exceptions.Add(ex);
-                }
-            }
-
-            var assertionTexts =
-                exceptions.Select(assertFailedException => assertFailedException.Message);
-            if (0 != assertionTexts.Count())
-            {
-                throw new
-                    AssertFailedException(
-                    assertionTexts.Aggregate(
-                        (aggregatedMessage, next) => aggregatedMessage + Environment.NewLine + next));
-            }
-        }
-    }
 }

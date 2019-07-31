@@ -27,6 +27,7 @@ export class ShipmentList {
 		LocalCustomsTransmissionsStatusDate: Date;
 		LocalCustomsSentByUserId: string;
 		LocalCustomsSentByUserName: string;
+		OperationalClosedByUserId: string;
 		ComputedStatusId: string;
 		ComputedStatusDate: Date;
 		ComputedStatusName: string;
@@ -54,6 +55,7 @@ export class ShipmentList {
 		TruckNumber: string;
 		MainCarriageCarrierCode: string;
 		MainCarriageCarrierName: string;
+		AgentComputed: string;
 		CustomFieldId: string;
 		FromPortId: string;
 		FromPort: string;
@@ -82,6 +84,7 @@ export class ShipmentList {
 		IsAccountingClosed: boolean;
 		IsOperationalClosed: boolean;
 		LastUpdate: Date;
+		ComputedShipmentNumber: string;
 		Field1Id: string;
 		Field1: string;
 		Field2: string;
@@ -383,6 +386,7 @@ export class ShipmentList {
 		WarehouseLegVGMCutOffDate: Date;
 		WarehouseLegCutOffDate: Date;
 		FirstOperationalCloseDate: Date;
+		FirstAccountingCloseDate: Date;
 		AMSClosingDate: Date;
 		UpdatedByPartner: string;
 		INTTRASIError: string;
@@ -397,6 +401,10 @@ export class ShipmentList {
 		SIHasAttachList: boolean;
 		INTTRAIsFreighted: boolean;
 		INTTRADocumentTypeCode: string;
+		INTTRABookingTransStatusCode: string;
+		INTTRABookingStatusCode: string;
+		INTTRABookingTransStatusName: string;
+		INTTRABookingStatusName: string;
 		From: string;
 		To: string;
 		Origin: string;
@@ -424,5 +432,6 @@ export class ShipmentList {
 		IsDepositionRequired: boolean;
 		ImporterDepositionRequestDetails: string;
 		ForwarderPartnerId: string;
+		ARInvoices: string;
 	
 }

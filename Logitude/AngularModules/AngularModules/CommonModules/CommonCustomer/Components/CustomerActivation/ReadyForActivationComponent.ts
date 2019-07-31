@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {CustomerProductPM} from '../../../../Common/EntityPMs/CustomerProductPM';
@@ -42,6 +42,7 @@ export class ReadyForActivationComponent extends BaseComponent {
     public ServicesList: Array<ServiceItemClass> = [];
     private _QuestionnairePMService: QuestionnairePMService
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.partnersDomainService = new PartnersDomainService();
@@ -367,7 +368,7 @@ export class ReadyForActivationComponent extends BaseComponent {
     
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private myCloner: Cloner;
@@ -576,22 +577,22 @@ export class ReadyForActivationComponent extends BaseComponent {
 
     private Save(msg: string) {
         if (msg == "Activated") {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
         }
 
         this.customerService.update(this.EntityPM).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 if (msg == "Activated") {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(msg);
-                    SessionLocator.CurrentSession.FireEvent("EntityActivated");
+                    this.CurrentSession.CloseCurrentWindowEmit(msg);
+                    this.CurrentSession.FireEvent("EntityActivated");
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

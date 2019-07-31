@@ -28,6 +28,9 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<Department> Departments { get; }
         IDbSet<Branch> Branches { get; }
         IDbSet<Airline> Airlines { get; }
+        IDbSet<AirlineArea> AirlineAreas { get; }
+        IDbSet<AirlineAreasPort> AirlineAreasPorts { get; }
+
         IDbSet<ShippingLine> ShippingLines { get; }
         IDbSet<Trucker> Truckers { get; }
         IDbSet<Tenant> Tenants { get; }
@@ -189,6 +192,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<ChargesExternalAccountsByProduct> ChargesExternalAccountsByProducts { get; set; }
         IDbSet<RegistryDateType> RegistryDateTypes { get; set; }
         IDbSet<WarehouseType> WarehouseTypes { get; }
+        IDbSet<NumberFormat> NumberFormats { get; }
         IDbSet<UsoCFDI> UsoCFDIs { get; }
         IDbSet<ReportsTemplate> ReportsTemplates { get; set; }
         IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; set; }
@@ -205,11 +209,13 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<HybridPartnersPermission> HybridPartnersPermissions { get; set; }
         IDbSet<DWHSetting> DWHSettings { get; set; }
         IDbSet<PaymentGatewayPartners> PaymentGatewayPartners { get; set; }
-
         IDbSet<TemperatureUnit> TemperatureUnits { get; set; }
-
         IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         IDbSet<CustomsShipper> CustomsShippers { get; }
+        IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set;}
+        IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
+        IDbSet<CardContactProduct> CardContactProducts { get; set; }
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

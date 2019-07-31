@@ -57,7 +57,9 @@ namespace Logitude.Customs.Data
                 currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             }
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             ProceduralFaultsDeclarationsViewContext context = new ProceduralFaultsDeclarationsViewContext(connection);
             return context;
 

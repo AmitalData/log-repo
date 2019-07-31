@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -33,8 +33,9 @@ export class ActivitiesFilter {
     ActivityFilter_TS: string;
     ActivityFilter_AP: string;
     ActivityFilter_EO: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.ActivityFilter_CL = "ActivityFilter_CL_-1_-1";
             this.ActivityFilter_TS = "ActivityFilter_TS_-1_-1";
             this.ActivityFilter_AP = "ActivityFilter_AP_-1_-1";
@@ -42,7 +43,7 @@ export class ActivitiesFilter {
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("ActivityFilter");
+            var idIndex = this.CurrentSession.GetNewId("ActivityFilter");
             this.ActivityFilter_CL = "ActivityFilter_CL_" + idIndex;
             this.ActivityFilter_TS = "ActivityFilter_TS_" + idIndex;
             this.ActivityFilter_AP = "ActivityFilter_AP_" + idIndex;

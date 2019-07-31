@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
 import {APInvoicePaymentPM} from '../../../../Invoice/EntityPMs/APInvoicePaymentPM';
@@ -31,10 +31,33 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
     public ItemsSource2Hidden: boolean = false;
     public IsResourcesReady: boolean = false;
     public isRTL: boolean = false;
+    public IsEnabledDisconnect: boolean = false;
+    public IsEnabledConnect: boolean = false;
+    public ConnectFeatureTitle: string;
+    public DisConnectFeatureTitle: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
 
         this.EntityPM = entityArgs.EntityPM;
+
+        if (FeatureLocator.HasFeaturePermession("APPayment", "APPaymentDissconectInvoices")) {
+            this.IsEnabledDisconnect = true;
+            this.DisConnectFeatureTitle = "";
+        }
+        else {
+            this.IsEnabledDisconnect = false;
+            this.DisConnectFeatureTitle = "You have no permission to disconnect invoices";
+        }
+
+        if (FeatureLocator.HasFeaturePermession("APPayment", "APPaymentConnectInvoices")) {
+            this.IsEnabledConnect = true;
+            this.ConnectFeatureTitle = "";
+        }
+        else {
+            this.IsEnabledConnect = false;
+            this.ConnectFeatureTitle = "You have no permission to connect invoices";
+        }
 
         entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe(response => {
             this.IsResourcesReady = true;
@@ -108,7 +131,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
         else {
             if (isLoading) {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
                 if (this.myService == null) {
                     this.myService = new APPaymentListService();
                 }
@@ -179,7 +202,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
                         this.SetGridColumnsWidth();
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
         }
@@ -214,6 +237,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
 
 export class APInvoicePaymentItem {
     public IsConnected: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private item: APPaymentList, private fatherComponent: APInvoicePaymentsTabComponent) {
         this.SetUIProperties();
     }
@@ -261,6 +285,7 @@ export class APInvoicePaymentItem {
         if (this.fatherComponent.EntityPM.AmountInInvoiceCurrency  < 0) {
             result = false;
         }
+        this.fatherComponent.IsEnabledDisconnect ? result = true : result = false;
         return result;
     }
 
@@ -277,7 +302,7 @@ export class APInvoicePaymentItem {
     get ForeignAmount() { return this.item.AmountInPaymentCurrency; }
 
     ViewEntityClicked() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.item.Id, ObjectTableName: 'APPayment', BackButtonLabel: "A/P Invoice: " + this.fatherComponent.EntityPM.InvoiceNumber });
@@ -285,7 +310,7 @@ export class APInvoicePaymentItem {
                 let isEditComponentSaved = false;
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     if (isEditComponentSaved) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 });
 
@@ -340,8 +365,8 @@ export class APInvoicePaymentItem {
     }
 
     SaveEntity() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
 }

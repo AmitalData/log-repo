@@ -2,7 +2,7 @@
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="IsValidationSingleLine"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
 
@@ -224,7 +224,7 @@
                                             </td>
 
                                             <td>
-                                                <div class="MediaFill">
+                                                <div class="MediaFill" style="padding-top:3px">
                                                     <LogTextBox [ObjectFieldName]="'INTTRAInstructions'" [Text]="INTTRAInstructions" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                                 </div>
                                             </td>
@@ -271,7 +271,7 @@
                     <td style="width: 57px;" *ngIf="SimulatorIsVisible">
                         <button class="Button" (click)="SimulateClicked()">Simulate</button>
                     </td>
-
+          
                     <td>
                         <div></div>
                     </td>

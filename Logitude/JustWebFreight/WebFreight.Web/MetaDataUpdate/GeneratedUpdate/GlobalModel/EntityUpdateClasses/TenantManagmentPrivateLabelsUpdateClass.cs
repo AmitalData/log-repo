@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class TenantManagmentPrivateLabelsUpdateClass
@@ -179,9 +183,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PrivateLabelShortName",
-					  						DefaultText =  @"Private Label Short Name",
+					  						DefaultText =  "Private Label Short Name",
 					  						ListFieldLable =  "PrivateLabelShortNameListLable",
-					  						ListLableDefaultText =  @"Private Label Short Name",
+					  						ListLableDefaultText =  "Private Label Short Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -241,9 +245,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PrivateLabelName",
-					  						DefaultText =  @"Private Label Name",
+					  						DefaultText =  "Private Label Name",
 					  						ListFieldLable =  "PrivateLabelNameListLable",
-					  						ListLableDefaultText =  @"Private Label Name",
+					  						ListLableDefaultText =  "Private Label Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -303,9 +307,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PrivateLabelUrl",
-					  						DefaultText =  @"Private Label Url",
+					  						DefaultText =  "Private Label Url",
 					  						ListFieldLable =  "PrivateLabelUrlListLable",
-					  						ListLableDefaultText =  @"Private Label Url",
+					  						ListLableDefaultText =  "Private Label Url",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -365,9 +369,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactUsEmail",
-					  						DefaultText =  @"Contact Us Email",
+					  						DefaultText =  "Contact Us Email",
 					  						ListFieldLable =  "ContactUsEmailListLable",
-					  						ListLableDefaultText =  @"Contact Us Email",
+					  						ListLableDefaultText =  "Contact Us Email",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -427,9 +431,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReceiveAllStatuses",
-					  						DefaultText =  @"Receive All Statuses",
+					  						DefaultText =  "Receive All Statuses",
 					  						ListFieldLable =  "ReceiveAllStatusesListLable",
-					  						ListLableDefaultText =  @"Receive All Statuses",
+					  						ListLableDefaultText =  "Receive All Statuses",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -489,9 +493,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  @"In Active",
+					  						DefaultText =  "In Active",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  @"In Active",
+					  						ListLableDefaultText =  "In Active",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -549,9 +553,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search..",
+					  						DefaultText =  "Search..",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: Short Name\n2: Full Name",
+					  						HelpTextDefaultText =  "Searching by :\n1: Short Name\n2: Full Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -614,6 +618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable TenantManagmentPrivateLabelsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagmentPrivateLabels" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature TenantManagmentPrivateLabelsFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TenantManagmentPrivateLabelsFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TenantManagmentPrivateLabelsFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TenantManagmentPrivateLabelsObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagmentPrivateLabels.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

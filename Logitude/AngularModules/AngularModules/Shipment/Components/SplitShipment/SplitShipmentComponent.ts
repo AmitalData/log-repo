@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import {ShipmentPackagePM} from '../../EntityPMs/ShipmentPackagePM';
@@ -22,6 +22,7 @@ export class SplitShipmentComponent {
     public ShipmentPackages: SplitShipmentItem[] = [];
     public NewShipmentPackages: SplitShipmentItem[] = [];
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         
     }
@@ -67,7 +68,7 @@ export class SplitShipmentComponent {
 
         //this.EntityPM.IsDirty = false;
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         if (this.NewShipmentPackages.length == 0) {
@@ -76,7 +77,7 @@ export class SplitShipmentComponent {
         }
 
         else {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var helper = new SplitShipmentHelper();
             helper.OldShipmentId = this.EntityPM.Id;
@@ -99,7 +100,7 @@ export class SplitShipmentComponent {
 
             myService.Split(helper).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -108,9 +109,9 @@ export class SplitShipmentComponent {
                 else {
                     var updatedHelper: SplitShipmentHelper = myResponse.Result;
 
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("Ok");
 
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityId: updatedHelper.NewShipmentId, ObjectTableName: 'Shipment', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });                            

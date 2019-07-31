@@ -126,7 +126,7 @@ img {
                             <tr>
                                 <td style="width:5px;"></td>
 
-                                <td style="width:50px;">
+                                <td id="companyLogoArea" style="width:50px;">
                                     <img id="companyLogo" src="../HtmlHelpers/Images/Icons/Logo.png" style="width:50px; height:35px; vertical-align:bottom; position:absolute; top:2px;"/>                    
                                 </td>
 
@@ -288,7 +288,7 @@ img {
 
                                                     <td style="vertical-align:top;">
                                                         
-                                                        <div style="margin:0 0 0 5px;">
+                                                        <div style="margin:0 0 0 5px;" data-bind="style: { visibility: PartnerVisibility }">
                                                             <div>
                                                                 <span class="LabelTextStyle" data-bind="text: PartnerTitle" style="display:inline-block; width:65px;"> </span>                                                                
                                                                 <span class="ValueTextStyle" data-bind="text: PartnerName"> </span>
@@ -774,7 +774,8 @@ img {
                             <div style="margin-left: 8px;">
                                 <div style="height:30px;">
                                   <span class="BlueTextStyle" style="display: inline-block; font-size:16px; white-space: nowrap;">${FromPortCode}</span>
-                                  <span class="ValueTextStyle" style="display: inline-block; margin-left:5px; white-space: nowrap;">${FromPortName}</span>
+                                  <span style="width:5px; visibility: #= PortNameMarginVisibility #;"></span>
+                                  <span class="ValueTextStyle" style="display: inline-block; white-space: nowrap;">${FromPortName}</span>
                                 </div>
 
                                 <div style="height:22px;">
@@ -795,7 +796,8 @@ img {
                            <div style="margin-left: 8px">
                                <div style="height:30px;">
                                   <span class="BlueTextStyle" style="display: inline-block; font-size:16px; white-space: nowrap;">${ToPortCode}</span>
-                                  <span class="ValueTextStyle" style="display: inline-block; margin-left: 5px; white-space: nowrap;">${ToPortName}</span>
+                                  <span style="width:5px; visibility: #= PortNameMarginVisibility #"></span>
+                                  <span class="ValueTextStyle" style="display: inline-block; white-space: nowrap;">${ToPortName}</span>
                                </div>
 
                                <div style="height:22px;">

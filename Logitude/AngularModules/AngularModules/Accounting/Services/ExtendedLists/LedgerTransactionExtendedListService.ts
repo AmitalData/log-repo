@@ -22,7 +22,7 @@ export class LedgerTransactionExtendedListService {
 
     GetFirstLedgerTransaction(AccountId:string) {
 
-        var urlparameters = '/GetFirstLedgerTransaction?AccountId=' + AccountId; 
+        var urlparameters = '/GetFirstLedgerTransaction?AccountId=' + AccountId;
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
@@ -155,7 +155,7 @@ export class LedgerTransactionExtendedListService {
         // Parse Filters into URI
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
-        var callTime = new Date(); 
+        var callTime = new Date();
         for (var i in mykeys) {
             var propName = mykeys[i];
             var propValue = filters[propName];
@@ -179,7 +179,7 @@ export class LedgerTransactionExtendedListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
         // End Parse
-       
+
 
         var callUrl = url.concat(urlparameters);
 
@@ -196,6 +196,59 @@ export class LedgerTransactionExtendedListService {
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
+    }
+
+
+    // External Reconciliations
+    getReconciliationsByFilter(accountId: string, filters: ApiQueryFilters) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        var url = this._reconciliationUrl + "/GetReconciliationsByFilter";
+
+        var urlparameters = '?gLAccountId=' + accountId
+                            + '&tenant=' + SessionInfo.LoggedUserTenant; // Get Open Transaction by Itzik service , the get is inside post method
+
+        urlparameters = this.parseFiltersToURL(filters, urlparameters);
+
+        var callUrl = url.concat(urlparameters);
+
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response.json();
+                console.log("serviceResponse: ", serviceResponse);
+
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    private parseFiltersToURL(filters: ApiQueryFilters, urlparameters: string) {
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        var callTime = new Date();
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+        }
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+        return urlparameters;
     }
 
     getAutomaticReconcileByFilter(method1: string, method2: string, method3: string, accountId: string, filters: ApiQueryFilters) {
@@ -304,6 +357,27 @@ export class LedgerTransactionExtendedListService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    getTransactionsForARPayment(arpaymentId:string, billToGLAccountId:string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+
+        var url = this._apiUrl + '/GetTransactionsForARPayment?arpaymentId=' + arpaymentId
+        + '&billToGLAccountId=' + billToGLAccountId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
 
 
     MapJsonToEntityList(jsonList: any) {

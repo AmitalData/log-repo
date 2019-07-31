@@ -21,6 +21,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
                 entityPOCO.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                TenantPM tenant = GetCurrentTenant(entityPM.Tenant);
+                entityPOCO.DontShowLocalLabels = tenant.LayoutDirection == "rtl" ? false : true; //bug 44449
             }
 
             entityPOCO.ComputedKey = (!string.IsNullOrEmpty(entityPOCO.Email) ? entityPOCO.Email : entityPOCO.Id);
@@ -47,7 +49,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.ContactDoneMethodCode = entityPM.ContactDoneMethodCode;
             entityPOCO.Position = entityPM.Position;
             //entityPOCO.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true; //bug 44449
-
             if (entityPM.CompanyName != null)
             {
                 if (entityPM.CompanyName.Length > 1000)
@@ -58,6 +59,13 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             entityPOCO.CompanyName = entityPM.CompanyName;
             BuildSearchFields(entityPM, entityPOCO);
+        }
+
+        public static TenantPM GetCurrentTenant(int id)
+        {
+            TenantQuery tenantQuery = new TenantQuery(id);
+            TenantPM tenant = tenantQuery.GetTenantFromDB(id);
+            return tenant;
         }
 
         public static void BuildSearchFields(ContactPM entityPM, Contact entityPOCO)

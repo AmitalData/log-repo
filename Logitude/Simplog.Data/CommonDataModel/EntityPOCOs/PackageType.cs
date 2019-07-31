@@ -28,6 +28,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SearchFields { get; set; }
         public string PrintAs { get; set; }
         public bool IsRefrigerated { get; set; }
+        public bool IsVehicle { get; set; }
 
         [ForeignKey("MeasurementId")]
         public virtual Measurement Measurement { get; set; }

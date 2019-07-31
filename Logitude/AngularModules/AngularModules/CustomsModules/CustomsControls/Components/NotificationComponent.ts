@@ -64,8 +64,8 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         super();
 
         //var t = setInterval(() => {this.timerValue++;}, 1000); // TESTING!! timer for testing detect changes
-        SessionLocator.CurrentSession.SubscriptionAdd(
-            SessionLocator.CurrentSession.SessionEvent.subscribe(($event: any) => {
+        SessionLocator.SelectedSession.SubscriptionAdd(
+            SessionLocator.SelectedSession.SessionEvent.subscribe(($event: any) => {
                 if ($event.Name == "ClosedByAssigneeClicked") {
                     this.ShowHLineOverRow.emit($event.rowIndex);
                     this.preventSelect = true;
@@ -76,8 +76,8 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         this.ExcludedItems = new ObservableCollection([]);
         this.selectedItems = new ObservableCollection([]);
         this.connectedItems = new ObservableCollection([]);
-        SessionLocator.CurrentSession.SubscriptionAdd(
-            SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
+        SessionLocator.SelectedSession.SubscriptionAdd(
+            SessionLocator.SelectedSession.PseventRowSelectEvent.subscribe((res) => {
                 if (res == "select") {
                     this.preventSelect = true;
                 }
@@ -371,7 +371,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
-      //   SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+      //   SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
@@ -612,7 +612,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 //}
                // this.status = null;
 
-            //    SessionLocator.CurrentSession.StopBusyIndicator();
+            //    SessionLocator.SelectedSession.StopBusyIndicator();
             });
 
         if (AppTool.IsNullOrEmpty(this.dataCount))
@@ -1327,7 +1327,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                     //logitudeWindow.ShowSaveAsButton = true;
                     logitudeWindow.Show(control);
 
-                    //SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
                     //EntityIdForCustomEditControlEvent entityIdEvent = eventAggregator.GetEvent<EntityIdForCustomEditControlEvent>();
                     //entityIdEvent.Publish(new EntityIdForCustomEditControlEventArgs() { EntityId = selected.EntityId, ObjectTableName = selected.ObjectTableName, IdentityKey = customEditIdentityKey });
@@ -1350,7 +1350,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
 
                         
                         if (selected.ObjectTableName == "Customs.Declaration") {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
                                     cmpRef.instance.Run({
@@ -1526,13 +1526,13 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 this.selectedNotifications.ExcludedIds = this.ExcludedItems.Collection;
             }
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
               
                 this.LoadNotifications();
                 this.IsSelected = false;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
@@ -1542,7 +1542,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
         }
         else {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.selectedNotifications.IsAllSelected = false;
 
             this.selectedNotifications.selectedIds = [];
@@ -1584,7 +1584,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 this.selectedItems.Clear();
 
             });
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
         }
 
     }
@@ -1618,12 +1618,12 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             if (this.ExcludedItems.Length > 0) {
                 this.selectedNotifications.ExcludedIds = this.ExcludedItems.Collection;
             }
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
                 
                 this.LoadNotifications();
                 this.IsSelected = false;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
@@ -1632,7 +1632,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             });
         }
         else {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.selectedNotifications.IsAllSelected = false;
 
             this.selectedNotifications.selectedIds = [];
@@ -1665,7 +1665,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 this.selectedItems.Clear();
 
             });
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
         }
     }
 
@@ -1699,13 +1699,13 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             if (this.ExcludedItems.Length > 0) {
                 this.selectedNotifications.ExcludedIds = this.ExcludedItems.Collection;
             }
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
               
                 this.LoadNotifications();
                 this.IsSelected = false;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
@@ -1714,7 +1714,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             });
         }
         else {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.selectedNotifications.IsAllSelected = false;
 
             this.selectedNotifications.selectedIds = [];
@@ -1746,7 +1746,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 });
                 this.selectedItems.Clear();
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 //this.CustomBackFromEditevent.emit(this.selectedItems.Collection);
 
 
@@ -1785,13 +1785,13 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 this.selectedNotifications.ExcludedIds = this.ExcludedItems.Collection;
             }
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
               
                 this.LoadNotifications();
                 this.IsSelected = false;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (this.DataSource.rowCount > 1000) {
                     var msg = new MessageWindow();
 
@@ -1811,7 +1811,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             });
 
             this.selectedNotifications.dataCount = this.selectedItems.Length;
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe(response => {
                 response.Result.forEach((value, key) => {
                     var temp = this.selectedItems.Collection.filter(a => a.rowData.Id == value.Id)[0];
@@ -1826,7 +1826,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                 this.IsReopenButtonVisible = false;
                 this.selectedItems.Clear();
                 this.LoadNotifications();
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
             });
         }
     }

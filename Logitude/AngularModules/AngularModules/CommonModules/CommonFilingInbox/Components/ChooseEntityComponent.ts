@@ -24,6 +24,7 @@ export class ChooseEntityComponent {
     private DomainService: ShipmentDomainService;
     public ListTitle = "";
     public EntityId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.DomainService = new ShipmentDomainService();
         this.myShipmentListService = new ShipmentListService();
@@ -71,7 +72,7 @@ export class ChooseEntityComponent {
     }
 
     LoadShipmentsData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.ItemsSource = [];
         this.AllShipmentsCount = 0;
         var filters = new ApiQueryFilters();
@@ -125,7 +126,7 @@ export class ChooseEntityComponent {
         //});
 
         this.myShipmentListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
                 this.ItemsSource = myResponse.Result;
                 this.AllShipmentsCount = this.ItemsSource.length;
@@ -133,7 +134,7 @@ export class ChooseEntityComponent {
         });
     }
     LoadQuotesData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.ItemsSource = [];
         this.AllQuotesCount = 0;
         var filters = new ApiQueryFilters();
@@ -164,7 +165,7 @@ export class ChooseEntityComponent {
         }
 
         this.myQuoteListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
                 this.ItemsSource = myResponse.Result;
                 this.AllQuotesCount = this.ItemsSource.length;
@@ -219,6 +220,6 @@ export class ChooseEntityComponent {
     }
 
     Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

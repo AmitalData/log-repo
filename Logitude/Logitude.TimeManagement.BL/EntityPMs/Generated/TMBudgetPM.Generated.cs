@@ -112,6 +112,29 @@ namespace Logitude.TimeManagement.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool inactive ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Inactive  
+	   {
+	    
+	     get
+		{
+		   return inactive;
+		 }
+		 set
+		 {
+		   if(inactive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Inactive",OldValue=inactive,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   inactive=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

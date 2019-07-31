@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {GeneralDomainService} from '../../../../Infrastructure/Services/GeneralDomainService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
@@ -41,6 +41,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     public ScreenRows: Array<ScreenRowDetails> = [];
     private myGeneralService: GeneralDomainService;
     loginService: LoginService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.myService = new EntityResourceService();
@@ -180,10 +181,10 @@ export class ScreenLayoutComponent extends BaseComponent {
         //});       
     }
 
-    CancelClicked() { SessionLocator.CurrentSession.CloseCurrentWindow(); }
+    CancelClicked() { this.CurrentSession.CloseCurrentWindow(); }
     public authHeader;
     OkClicked(CloseWindow: boolean = true) {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
         var ScreenId = this.SelectedItem.ScreenPM.Id;
         //this.MyArgs.RemovedScreenFields = [];
         this.MyArgs.ScreenFields = [];
@@ -211,9 +212,9 @@ export class ScreenLayoutComponent extends BaseComponent {
             this.loginService.CurrentTenant = SessionLocator.Tenant;
             this.loginService.GetScreenFields().subscribe(myResult => {
                 if (myResult != null) { 
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (CloseWindow == true) {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                     }
                     window.ScreenFields = myResult;
                     this.currentScreenFields = window.ScreenFields.filter(sf => sf.Tenant == SessionLocator.Tenant && sf.ScreenId == ScreenId);

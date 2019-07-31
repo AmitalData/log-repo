@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {TicketPM} from '../../EntityPMs/TicketPM';
 import {TicketStageList} from '../../EntityLists/TicketStageList';
@@ -22,7 +22,7 @@ export class TicketHelperComponent {
     public EntityPM: TicketPM;
     public StagesList: TicketStagesArgs[] = [];
     public ObjectTableName = "Ticket";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
 
@@ -35,19 +35,19 @@ export class TicketHelperComponent {
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (!this.SaveCompletedEvent) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildComponent();
                     }
                 });
             }
             if (!this.LoadCompletedEvent) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
@@ -138,8 +138,8 @@ export class TicketHelperComponent {
         var errors = validator.ValidateCurrenctEntity(this.EntityPM);
         if (errors != null && errors.length > 0) {
             isValid = false;
-            if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+            if (this.CurrentSession.CurrentEditComponent != null) {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
             }
         }
 
@@ -155,7 +155,7 @@ export class TicketHelperComponent {
                 this.CompleteWorking();
             }
             else {
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
             }
         });
     }

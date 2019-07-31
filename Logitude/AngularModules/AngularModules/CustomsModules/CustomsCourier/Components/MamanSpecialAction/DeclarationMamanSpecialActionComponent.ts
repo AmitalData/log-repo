@@ -45,7 +45,7 @@ export class DeclarationMamanSpecialActionComponent
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
 
 

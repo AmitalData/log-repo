@@ -342,6 +342,9 @@ void SaveEntityControllerOutput(string outputFileName)
 
 		 if(tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting")
 			 contextTenantParam = "entityPM.Id";
+
+            if(tableName == "Distributor")
+                contextTenantParam = tenantStringParam= "authToken.Tenant";
     }
 
  
@@ -438,7 +441,7 @@ else
          
 		
 <#+
-		 if(hasTenant || tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting")
+		 if(hasTenant || tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting" || tableName == "Distributor")
          {
 	#><#= ""
  #>
@@ -459,6 +462,15 @@ if(enableSecurity)
 {
 #>
                         SecurityUtility.CheckContactFeature("<#= tableName #>", "NEW", authToken.Tenant);
+<#+
+}
+
+#>
+<#+ 
+if(hasTenant && enableSecurity)
+{
+#>
+                        SecurityUtility.AuthenticationOnEntityTenant("<#= tableName #>", entityPM.Tenant, authToken.Tenant);
 <#+
 }
 
@@ -526,6 +538,14 @@ if(enableSecurity)
                         SecurityUtility.CheckContactFeature("<#= tableName #>", "UPDATE", authToken.Tenant);
 <#+
 }
+
+if(hasTenant && enableSecurity)
+{
+#>
+                        SecurityUtility.AuthenticationOnEntityTenant("<#= tableName #>", entityPM.Tenant, authToken.Tenant);
+<#+
+}
+
 if(hasTenant)
 {
 #>
@@ -1034,8 +1054,15 @@ if(hasCustomFields){
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				if(filters.Tenant != null)
-					tenant = filters.Tenant.Value;
+<#+
+if(tableName == "Port" || tableName == "Carrier" || tableName == "Currency")
+{
+	#>
+            if(filters.Tenant != null)
+	                tenant = filters.Tenant.Value;
+	<#+
+}
+#>
 				<#+ 
 if(tableName != "Card" && !isClosed && enableSecurity)
 {

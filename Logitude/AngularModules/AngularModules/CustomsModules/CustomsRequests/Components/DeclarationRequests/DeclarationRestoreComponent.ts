@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
 import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
@@ -39,6 +39,7 @@ export class DeclarationRestoreComponent
     _UserMessagehidden: boolean = true;
 
     _LastFetchDeclarationList: DeclarationList;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.UIProperties.SetRequired("DeclarationNumber", this.ObjectTableName, true);
@@ -94,10 +95,10 @@ export class DeclarationRestoreComponent
             }
         }
         this.DueChangeClearChildField(true);
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.FetchDeclaration(myResponse, true);
 
             });
@@ -118,10 +119,10 @@ export class DeclarationRestoreComponent
         }
         this.DueChangeClearChildField(false);
 
-        SessionLocator.CurrentSession.StartBusyIndicator("")
+        this.CurrentSession.StartBusyIndicator("")
         this._DeclarationExtendedListService.GetSingleDeclarationByNumber(this.DeclarationNumber, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.FetchDeclaration(myResponse, false);
             });
     }

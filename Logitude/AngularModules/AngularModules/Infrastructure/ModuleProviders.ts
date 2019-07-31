@@ -75,6 +75,7 @@ import {TeamListService} from  './Services/StandardLists/TeamListService';
 import {TeamPMService} from './Services/StandardPMs/TeamPMService'; 
 import { DWQueryBuilderService } from './Services/ExtendedPMs/DWQueryBuilderService';
 
+import { BIReportFolderListService } from './Services/StandardLists/BIReportFolderListService';
 import { BIReportListService } from './Services/StandardLists/BIReportListService';
 import { BIReportPMService } from './Services/StandardPMs/BIReportPMService';
 import { BIReportsTypeListService } from './Services/StandardLists/BIReportsTypeListService';
@@ -83,6 +84,8 @@ import { WebhookKeysListService } from './Services/StandardLists/WebhookKeysList
 import { ToggleListService } from './Services/StandardLists/ToggleListService';
 import { FeatureToggleListService } from './Services/StandardLists/FeatureToggleListService';
 import { FeatureTogglePMService } from './Services/StandardPMs/FeatureTogglePMService';
+import { TaskSchedulerHistoryListService } from './Services/StandardLists/TaskSchedulerHistoryListService';
+import { SchedulerProcedureListService } from './Services/StandardLists/SchedulerProcedureListService';
 
 export class ModuleProviders {
     
@@ -94,6 +97,7 @@ export class ModuleProviders {
             case "BIReportPMService": { myResult = new BIReportPMService(); break; }
             case "BIReportsTypeListService": { myResult = new BIReportsTypeListService(); break; }
             case "BIReportListService": { myResult = new BIReportListService(); break; }
+            case "BIReportFolderListService": { myResult = new BIReportFolderListService(); break; }
             case "BusinessHoursHolidayListService": { myResult = new BusinessHoursHolidayListService(); break; }
             case "ChargesGroupListService": { myResult = new ChargesGroupListService(); break; }
             case "CustomPickListListService": { myResult = new CustomPickListListService(); break; }
@@ -172,6 +176,8 @@ export class ModuleProviders {
             case "FeatureToggleListService": { myResult = new FeatureToggleListService(); break; }
             case "FeatureTogglePMService": { myResult = new FeatureTogglePMService(); break; }
             case "ToggleListService": { myResult = new ToggleListService(); break; }
+            case "TaskSchedulerHistoryListService": { myResult = new TaskSchedulerHistoryListService(); break; }
+            case "SchedulerProcedureListService": { myResult = new SchedulerProcedureListService(); break; }
         }
 
         return myResult;

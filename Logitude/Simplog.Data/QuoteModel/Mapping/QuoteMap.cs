@@ -102,7 +102,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.FreelancerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FreelancerContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(d => d.BusinessUnitId).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.Subject).HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.Subject).HasMaxLength(200).IsUnicode(true);
             this.Property(d => d.StageId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(d => d.RatingCode).IsRequired().HasMaxLength(1).IsUnicode(false);
             this.Property(d => d.LastActivityTypeCode).HasMaxLength(2).IsUnicode(false);
@@ -141,6 +141,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
             this.Property(t => t.ChargeableWeight).HasColumnName("ChargeableWeight");
             this.Property(t => t.GrossWeight).HasColumnName("GrossWeight");
+            this.Property(t => t.ChargeableWeightInKG).HasColumnName("ChargeableWeightInKG");
+            this.Property(t => t.VolumeInCBM).HasColumnName("VolumeInCBM");
             this.Property(t => t.LastModified).HasColumnName("LastModified");
             this.Property(t => t.Field1).HasColumnName("Field1");
             this.Property(t => t.Field2).HasColumnName("Field2");
@@ -175,6 +177,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.IsDangerous).HasColumnName("IsDangerous");
             this.Property(t => t.ExpirationDays).HasColumnName("ExpirationDays");
             this.Property(t => t.ExpirationDate).HasColumnName("ExpirationDate");
+            this.Property(t => t.StartDate).HasColumnName("StartDate");
             this.Property(t => t.VolumetricWeight).HasColumnName("VolumetricWeight");
             this.Property(t => t.BranchId).HasColumnName("BranchId");
             this.Property(t => t.DepartmentId).HasColumnName("DepartmentId");
@@ -283,6 +286,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.NotifyAddressId).HasColumnName("NotifyAddressId");
             this.Property(t => t.NotifyContactId).HasColumnName("NotifyContactId");
             this.Property(t => t.NumberOfFollowUps).HasColumnName("NumberOfFollowUps");
+            this.Property(t => t.GrossWeightEdited).HasColumnName("GrossWeightEdited");
+            this.Property(t => t.ChargeableWeightEdited).HasColumnName("ChargeableWeightEdited");
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);

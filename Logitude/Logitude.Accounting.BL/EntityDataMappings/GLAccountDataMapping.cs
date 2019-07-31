@@ -123,10 +123,31 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.PreviousEnglishName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.PreviousLocalName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CardId);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.CreatedByUserName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.UpdatedByUserName);
 
             // GET logged contact, RTL
+            ContactQuery contactQuery = new ContactQuery(entityPOCO.Tenant);
             ContactPM contact = GetLoggedContact(entityPOCO.Tenant)?? new ContactPM();
             bool showLocals = !contact.DontShowLocal;
+
+            if(entityPOCO.CreatedByUserId != null)
+            {
+                ContactPM createdByContact = contactQuery.GetSinglePM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
+                if (createdByContact == null) 
+                    createdByContact = contactQuery.GetSinglePM(entityPOCO.CreatedByUserId, 0); // user is customer care, get it from tenant 0
+                if (createdByContact != null)
+                    entityPM.CreatedByUserName = showLocals ? createdByContact.LocalName : createdByContact.EnglishName;
+            }
+
+            if (entityPOCO.UpdatedByUserId != null)
+            {
+                ContactPM updatedByContact = contactQuery.GetSinglePM(entityPOCO.UpdatedByUserId, entityPOCO.Tenant);
+                if(updatedByContact == null) 
+                    updatedByContact = contactQuery.GetSinglePM(entityPOCO.UpdatedByUserId, 0); // user is customer care, get it from tenant 0
+                if (updatedByContact != null)
+                    entityPM.UpdatedByUserName = showLocals ? updatedByContact.LocalName : updatedByContact.EnglishName;
+            }
 
 
             //(showLocals ? xxxxx.LocalName: xxxxx.EnglishName);
@@ -196,7 +217,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 ChartOfAccountQueryService chartOfAccountQueryService = new ChartOfAccountQueryService(entityPOCO.Tenant);
                 ChartOfAccountPM chartOfAccounts = chartOfAccountQueryService.GetSingle(entityPOCO.ChartOfAccountsId, false, true);
-                if (chartOfAccounts != null) entityPM.ChartOfAccountsName = (showLocals ? chartOfAccounts.LocalName : chartOfAccounts.EnglishName);
+                if (chartOfAccounts != null)
+                {
+                    entityPM.ChartOfAccountsName = (showLocals ? chartOfAccounts.LocalName : chartOfAccounts.EnglishName);
+                    entityPM.ChartOfAccountsCode = chartOfAccounts.Code;
+                }
 
                 if (entityPOCO.ChartOfAccountsTypeCode != null)
                 {

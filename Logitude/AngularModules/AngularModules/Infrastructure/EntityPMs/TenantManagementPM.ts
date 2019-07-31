@@ -349,9 +349,14 @@ export class TenantManagementPM {
     public set BluesnapEAWBSContractId(newValue: string) { if (this.bluesnapEAWBSContractId != newValue) { this.bluesnapEAWBSContractId = newValue; this.MarkAsDirty("BluesnapEAWBSContractId"); } }
        
 	 
-    private bluesnapOneTimeContractId: string;
-    public get BluesnapOneTimeContractId() { return this.bluesnapOneTimeContractId; }
-    public set BluesnapOneTimeContractId(newValue: string) { if (this.bluesnapOneTimeContractId != newValue) { this.bluesnapOneTimeContractId = newValue; this.MarkAsDirty("BluesnapOneTimeContractId"); } }
+    private bluesnapOneTimeContract: string;
+    public get BluesnapOneTimeContract() { return this.bluesnapOneTimeContract; }
+    public set BluesnapOneTimeContract(newValue: string) { if (this.bluesnapOneTimeContract != newValue) { this.bluesnapOneTimeContract = newValue; this.MarkAsDirty("BluesnapOneTimeContract"); } }
+       
+	 
+    private bluesnapInttraStockContractId: string;
+    public get BluesnapInttraStockContractId() { return this.bluesnapInttraStockContractId; }
+    public set BluesnapInttraStockContractId(newValue: string) { if (this.bluesnapInttraStockContractId != newValue) { this.bluesnapInttraStockContractId = newValue; this.MarkAsDirty("BluesnapInttraStockContractId"); } }
        
 	 
     private aWBMessagesCCSTypeCode: string;
@@ -462,6 +467,11 @@ export class TenantManagementPM {
     private bluesnapOneTimeContractQTY: number;
     public get BluesnapOneTimeContractQTY() { return this.bluesnapOneTimeContractQTY; }
     public set BluesnapOneTimeContractQTY(newValue: number) { if (this.bluesnapOneTimeContractQTY != newValue) { this.bluesnapOneTimeContractQTY = newValue; this.MarkAsDirty("BluesnapOneTimeContractQTY"); } }
+       
+	 
+    private bluesnapInttraStockContractQTY: number;
+    public get BluesnapInttraStockContractQTY() { return this.bluesnapInttraStockContractQTY; }
+    public set BluesnapInttraStockContractQTY(newValue: number) { if (this.bluesnapInttraStockContractQTY != newValue) { this.bluesnapInttraStockContractQTY = newValue; this.MarkAsDirty("BluesnapInttraStockContractQTY"); } }
        
 	 
     private isDEXXConnectionEnabled: boolean;
@@ -664,6 +674,11 @@ export class TenantManagementPM {
     public set IsINTTRAOnlyDemo(newValue: boolean) { if (this.isINTTRAOnlyDemo != newValue) { this.isINTTRAOnlyDemo = newValue; this.MarkAsDirty("IsINTTRAOnlyDemo"); } }
        
 	 
+    private autoArchiveOnInvoice: boolean;
+    public get AutoArchiveOnInvoice() { return this.autoArchiveOnInvoice; }
+    public set AutoArchiveOnInvoice(newValue: boolean) { if (this.autoArchiveOnInvoice != newValue) { this.autoArchiveOnInvoice = newValue; this.MarkAsDirty("AutoArchiveOnInvoice"); } }
+       
+	 
     private packageCodeSearchField: string;
     public get PackageCodeSearchField() { return this.packageCodeSearchField; }
     public set PackageCodeSearchField(newValue: string) { if (this.packageCodeSearchField != newValue) { this.packageCodeSearchField = newValue; this.MarkAsDirty("PackageCodeSearchField"); } }
@@ -755,7 +770,12 @@ export class TenantManagementPM {
         }
     }
 	    //public AddOns: Array<TenantAddOnPMPM>= [];
- 
+     private isTestTenant: boolean;
+    public get IsTestTenant() { return this.isTestTenant; }
+    public set IsTestTenant(newValue: boolean) { if (this.isTestTenant != newValue) { this.isTestTenant = newValue; this.MarkAsDirty("IsTestTenant"); } }
+       
+	 
+
     public OldEntityPM: TenantManagementPM;
 		
     public IsDirty: boolean;

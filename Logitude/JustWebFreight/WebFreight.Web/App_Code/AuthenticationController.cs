@@ -8,17 +8,17 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel; 
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure.Helpers; 
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using WebFreight.Web.DataContracts;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
-using WebFreight.Web.WebServices;
-using System.Text.RegularExpressions;
-using System.Web.UI;
+using Logitude.BL.CommonDataModel.EntityQueries;  
+using WebFreight.Web.DataContracts;   
+using WebFreight.Web.Helpers;  
+using WebFreight.Web.Security;     
+using WebFreight.Web.WebServices; 
+using System.Text.RegularExpressions;  
+using System.Web.UI; 
 
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Counters;
@@ -30,7 +30,7 @@ using Simplog.Server.Infrastructure.Azure;
 using Microsoft.Practices.Unity;
 using System.IO;
 using Logitude.Server.Tools;
-using Logitude.SystemLogs;
+using Logitude.SystemLogs; 
 using System.ServiceModel;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Diagnostics;
@@ -69,14 +69,14 @@ namespace WebFreight.Web
             userdata.Token = logintokenparam.Token;
             return userdata;
         }
-
+         
         public UserData PostLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool isAngular)
         {
             UserData userData = null;
             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
             AuthenticationToken auttoken = authenticationTokenRepository.GetSingleToken(logintokenparam.Token);
             if (auttoken != null)
-            {
+            { 
                 LoginParameters loginParameters = new LoginParameters() { Email = auttoken.Email, GetToken = true, IsUser = true, Password = auttoken.Password + "@HashPassword" };
                 if (!string.IsNullOrEmpty(logintokenparam.CardId))
                 {
@@ -88,8 +88,8 @@ namespace WebFreight.Web
             }
             return userData;
         }
-
-
+         
+          
         public UserData PostTrayLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool fromTray, bool useTenant)
         {
             UserData userdata;
@@ -204,7 +204,7 @@ namespace WebFreight.Web
             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
             AuthenticationToken auttoken = authenticationTokenRepository.GetSingleToken(logintokenparam.Token);
             if (auttoken != null)
-            {
+            { 
                 // userdata =  PostLoginToken(auttoken.Email, auttoken.Password, true);
 
                 LoginParameters loginParameters = new LoginParameters()
@@ -381,7 +381,7 @@ namespace WebFreight.Web
                     fileInfo.Extension = "jpg";
                     datainByte = storageservice.Read(fileInfo);
                 }
-
+                 
                 if (datainByte == null)
                 {
                     fileInfo.FileName = "smalllogo" + companyId;
@@ -1436,23 +1436,25 @@ namespace WebFreight.Web
                                 AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
                                 AuthenticationToken authentication = new AuthenticationToken() { CreateDate = DateTime.Now, Email = email, Password = hashedPassword, Token = token, Tenant = user.CurrentTenant, ClientType = parameters.IsMobileLogin ? "Mobile" : parameters.ClientType };
                                 if (!user.KeepUserLoggedIn && authentication.ClientType == "Web" && user.WebTokenLifeTimeInMinutes != 0) authentication.ExpirationDate = DateTime.Now.AddMinutes(user.WebTokenLifeTimeInMinutes);
-
-                                AuthenticationToken authenticationDocument = new AuthenticationToken()
-                                {
-                                    CreateDate = DateTime.Now,
-                                    ExpirationDate = DateTime.Now.AddMinutes(15),
-                                    Email = email,
-                                    Password = hashedPassword,
-                                    Token = AuthenticationUtil.GenerateToken(),
-                                    Tenant = user.CurrentTenant,
-                                    ClientType = "DocumentDownload"
-                                };
-                                authenticationTokenRepository.Add(authenticationDocument);
                                 authenticationTokenRepository.Add(authentication);
+                                user.Token = token;
+
+                                #region Document Token
+
+                                AuthenticationToken authenticationDocument = new AuthenticationToken() { CreateDate = DateTime.Now, ExpirationDate = DateTime.Now.AddMinutes(15), Email = email, Password = hashedPassword, Token = AuthenticationUtil.GenerateToken(), Tenant = user.CurrentTenant, ClientType = "DocumentDownload" };
+                                authenticationTokenRepository.Add(authenticationDocument);
+                                user.DocumentDownloadToken = authenticationDocument.Token;
+                                if (parameters.GetInvalidDocumentToken)
+                                {
+                                    AuthenticationToken invalidDocumentToken = new AuthenticationToken() { CreateDate = DateTime.Now,ExpirationDate = DateTime.Now.AddMinutes(-5),Email = email,Password = hashedPassword,Token = AuthenticationUtil.GenerateToken(),Tenant = user.CurrentTenant,ClientType = "DocumentDownload"};
+                                    authenticationTokenRepository.Add(invalidDocumentToken);
+                                    user.InvalidDocumentToken = invalidDocumentToken.Token;
+                                }
+                                #endregion
 
                                 authenticationTokenRepository.SubmitChanges();
-                                user.Token = token;
-                                user.DocumentDownloadToken = authenticationDocument.Token;
+                              
+                              
                                 //}
                             }
                         }
@@ -2274,7 +2276,11 @@ namespace WebFreight.Web
                 if (!authenticatedIPs.Contains(currentIP))
                 {
                     if (Environment.CommandLine.ToLower().Contains("iisexpress.exe") &&
-                        HttpContext.Current.Request.UserHostAddress == "::1") ///localhost !!!
+                        (
+                        HttpContext.Current.Request.UserHostAddress == "::1" ||
+                        HttpContext.Current.Request.UserHostAddress =="127.0.0.1"
+                        )
+                        ) ///localhost !!!
                     {
                         isIpAuthenticated = true;//iisexpress
                     }
@@ -2943,7 +2949,7 @@ namespace WebFreight.Web
 
 
 
-
+         
     }
     public class LoginTokenParameter
     {

@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class TenantLoginPolicyUpdateClass
@@ -176,7 +180,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LoginPolicyCode",
-					  						DefaultText =  @"Login Policy",
+					  						DefaultText =  "Login Policy",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -235,9 +239,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsEnabledForSpecificUsers",
-					  						DefaultText =  @"Is Enabled For Specific Users",
+					  						DefaultText =  "Is Enabled For Specific Users",
 					  						ListFieldLable =  "IsEnabledForSpecificUsersListLable",
-					  						ListLableDefaultText =  @"Is Enabled For Specific Users",
+					  						ListLableDefaultText =  "Is Enabled For Specific Users",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -296,9 +300,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TwoFactorInternalIPs",
-					  						DefaultText =  @"Internal IPs",
+					  						DefaultText =  "Internal IPs",
 					  						ListFieldLable =  "TwoFactorInternalIPsListLable",
-					  						ListLableDefaultText =  @"Internal IPs",
+					  						ListLableDefaultText =  "Internal IPs",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -357,9 +361,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  @"In Active",
+					  						DefaultText =  "In Active",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  @"In Active",
+					  						ListLableDefaultText =  "In Active",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -418,11 +422,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "KeepUserLoggedIn",
-					  						DefaultText =  @"Keep User Logged In",
+					  						DefaultText =  "Keep User Logged In",
 					  						ListFieldLable =  "KeepUserLoggedInListLable",
-					  						ListLableDefaultText =  @"Keep User Logged In",
+					  						ListLableDefaultText =  "Keep User Logged In",
 					  						HelpTextCode =  "KeepUserLoggedIn",
-					  						HelpTextDefaultText =  @"Enabling this setting the system will remember logged users",
+					  						HelpTextDefaultText =  "Enabling this setting the system will remember logged users",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -480,11 +484,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExcludeInternalIPs",
-					  						DefaultText =  @"Exclude Internal IPs",
+					  						DefaultText =  "Exclude Internal IPs",
 					  						ListFieldLable =  "ExcludeInternalIPsListLable",
-					  						ListLableDefaultText =  @"Exclude Internal IPs",
+					  						ListLableDefaultText =  "Exclude Internal IPs",
 					  						HelpTextCode =  "ExcludeInternalIPs",
-					  						HelpTextDefaultText =  @"Users will be able to login from internal IPs without using two factor authentication",
+					  						HelpTextDefaultText =  "Users will be able to login from internal IPs without using two factor authentication",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -542,9 +546,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AllowedIPs",
-					  						DefaultText =  @"Allowed IPs",
+					  						DefaultText =  "Allowed IPs",
 					  						ListFieldLable =  "AllowedIPsListLable",
-					  						ListLableDefaultText =  @"Allowed IPs",
+					  						ListLableDefaultText =  "Allowed IPs",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -603,9 +607,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SessionTimeout",
-					  						DefaultText =  @"Session Timeout",
+					  						DefaultText =  "Session Timeout",
 					  						ListFieldLable =  "SessionTimeoutListLable",
-					  						ListLableDefaultText =  @"Session Timeout",
+					  						ListLableDefaultText =  "Session Timeout",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -637,6 +641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable TenantLoginPolicyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantLoginPolicy" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature TenantLoginPolicyFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TenantLoginPolicyObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantLoginPolicy.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TenantLoginPolicyFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TenantLoginPolicyObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantLoginPolicy.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TenantLoginPolicyFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TenantLoginPolicyObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantLoginPolicy.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

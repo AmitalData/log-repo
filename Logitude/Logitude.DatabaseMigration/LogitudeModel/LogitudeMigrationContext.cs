@@ -33,6 +33,9 @@ using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.EntityMapping;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityMapping;
+using Simplog.Data.InvoiceModel;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.Data.EntityMapping;
 
 namespace Logitude.DatabaseMigration.LogitudeModel
 {
@@ -183,6 +186,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<CardContactProduct> CardContactProducts
+        {
+            get;
+            set;
+        }
         public IDbSet<PartnerType> PartnerTypes
         {
             get;
@@ -209,6 +217,19 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
         public IDbSet<Airline> Airlines
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<AirlineArea> AirlineAreas
+        {
+            get;
+            set;
+        }
+
+
+        public IDbSet<AirlineAreasPort> AirlineAreasPorts
         {
             get;
             set;
@@ -359,6 +380,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
         public IDbSet<WarehouseType> WarehouseTypes
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<NumberFormat> NumberFormats
         {
             get;
             set;
@@ -883,7 +910,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
-
+        public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
+        public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
 
 
 
@@ -1601,6 +1629,17 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+
+        public IDbSet<SchedulerLogs> SchedulerLogs
+        {
+            get;
+            set;
+        }
+        public IDbSet<SchedulerProcedure> SchedulerProcedures
+        {
+            get;
+            set;
+        }
         public IDbSet<AWBOCI> AWBOCIs { get; set; }
         public IDbSet<AWBCustomsInformation> AWBCustomsInformations { get; set; }
         public IDbSet<AWBInformation> AWBInformations { get; set; }
@@ -1632,6 +1671,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; }
         public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
         public IDbSet<HarmonizeCode> HarmonizeCodes { get; }
+
+        public IDbSet<INTTRABookingStatus> INTTRABookingStatuses { get; }
+        public IDbSet<INTTRABookingTransStatus> INTTRABookingTransStatuses { get; }
 
         #endregion
 
@@ -1799,14 +1841,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<QuickbooksSyncRequestTicket> QuickbooksSyncRequestTickets { get; set; }
         public IDbSet<CardExternalCodeByCurrency> CardExternalCodeByCurrencies { get; set; }
         public IDbSet<ARInvoiceLineAction> ARInvoiceLineActions { get; set; }
-
-
         public IDbSet<SATInterface> SATInterfaces { get; set; }
         public IDbSet<SATInterfaceSetting> SATInterfaceSettings { get; set; }
         public IDbSet<SATTransferStatus> SATTransferStatus { get; set; }
         public IDbSet<SATInvoiceStatus> SATInvoiceStatus { get; set; }
-
-
+        public IDbSet<ARInvoiceStocksStatus> ARInvoiceStocksStatus { get; set; }
+        public IDbSet<ARInvoiceStock> ARInvoiceStocks { get; set; }
+        public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
         #endregion
 
         #region Quotes Context
@@ -2989,6 +3030,10 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         public IDbSet<TicketCreatedByType> TicketCreatedByTypes { get; set; }
         public IDbSet<TicketSource> TicketSources { get; set; }
+
+        public IDbSet<Occasion> Occasions { get; set; }
+        public IDbSet<OccasionType> OccasionTypes { get; set; }
+        public IDbSet<OccasionStatus> OccasionStatuses { get; set; }
         #endregion
 
         #region Social Context
@@ -3299,7 +3344,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
-        public IDbSet<ARPaymentCheque> ARPaymentCheques
+        public IDbSet<Accounting.Data.EntityPOCOs.ARPaymentCheque> ARPaymentCheques
         {
             get;
             set;
@@ -3357,7 +3402,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks { get; set; }
         public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; set; }
         public IDbSet<AccountingNote> AccountingNotes { get; set; }
-   
+        public IDbSet<GLAccountCounter> GLAccountCounters { get; set; }
+
 
         #endregion
 
@@ -3433,6 +3479,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<TMDayOffType> TMDayOffTypes
+        {
+            get;
+            set;
+
+        }
+
         public IDbSet<TMProject> TMProjects
         {
             get;
@@ -3475,6 +3528,53 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         }
         #endregion
 
+
+        #region Tariff Module
+
+        public IDbSet<Tariff> Tariffs
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<TariffType> TariffTypes
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<TariffVersion> TariffVersions
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<TariffLine> TariffLines
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<TariffSetting> TariffSettings
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<TariffVersionAllInCharge> TariffVersionAllInCharges
+        {
+            get;
+            set;
+
+        }
+        #endregion
+
+
         #region Infrastructure Generated
         public IDbSet<Toggle> Toggles
         {
@@ -3496,7 +3596,23 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
 
         }
+
+        public IDbSet<BIReportsExecutionLog> BIReportsExecutionLogs
+        {
+            get;
+            set;
+
+        }
+
+        
         public IDbSet<BIReportsType> BIReportsTypes
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<BIReportFolder> BIReportFolders
         {
             get;
             set;
@@ -3627,6 +3743,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new TicketSourceMap());
             modelBuilder.Configurations.Add(new TicketCreatedByTypeMap());
+            modelBuilder.Configurations.Add(new OccasionMap());
+            modelBuilder.Configurations.Add(new OccasionStatusMap());
+            modelBuilder.Configurations.Add(new OccasionTypeMap());
             #endregion
 
             #region Booking
@@ -4227,6 +4346,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new OpenFormatReportMap());
         //    modelBuilder.Configurations.Add(new OpenFormatDateTypeMap());
             modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
+            modelBuilder.Configurations.Add(new GLAccountCounterMap());
             #endregion
 
             #region WareHouse
@@ -4242,6 +4362,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             #region Time Management
             modelBuilder.Configurations.Add(new TMEmployeeTimeMap());
             modelBuilder.Configurations.Add(new TMLocationMap());
+            modelBuilder.Configurations.Add(new TMDayOffTypeMap());
             modelBuilder.Configurations.Add(new TMProjectMap());
             modelBuilder.Configurations.Add(new TMOfficeHourMap());
             modelBuilder.Configurations.Add(new TMReleaseMap());
@@ -4251,10 +4372,20 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
             #endregion
 
+            #region Tariff Module
+            modelBuilder.Configurations.Add(new TariffMap());
+            modelBuilder.Configurations.Add(new TariffLineMap());
+            modelBuilder.Configurations.Add(new TariffTypeMap());
+            modelBuilder.Configurations.Add(new TariffVersionMap());
+            modelBuilder.Configurations.Add(new TariffSettingMap());
+            modelBuilder.Configurations.Add(new TariffVersionAllInChargeMap());
+            #endregion
+
             #region Infrastructure Generated
             modelBuilder.Configurations.Add(new ToggleMap());
             modelBuilder.Configurations.Add(new FeatureToggleMap());
             modelBuilder.Configurations.Add(new BIReportMap());
+            modelBuilder.Configurations.Add(new BIReportsExecutionLogMap());
             modelBuilder.Configurations.Add(new BIReportsTypeMap());
             modelBuilder.Configurations.Add(new BusinessRoleMap());
             modelBuilder.Configurations.Add(new BusinessProcessQueueMap());
@@ -4264,6 +4395,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new BatchTaskExecutionMap());
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
+            modelBuilder.Configurations.Add(new BIReportFolderMap());
             #endregion
 
             modelBuilder.Configurations.Add(new BlobFileMap());
@@ -4396,6 +4528,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new AdvancedQueryFilterMap());
             modelBuilder.Configurations.Add(new AgentMap());
             modelBuilder.Configurations.Add(new AirlineMap());
+            modelBuilder.Configurations.Add(new AirlineAreaMap());
+            modelBuilder.Configurations.Add(new AirlineAreasPortMap());
             modelBuilder.Configurations.Add(new APInvoiceEntityMap());
             modelBuilder.Configurations.Add(new APInvoiceLineMap());
             modelBuilder.Configurations.Add(new APInvoicePaymentMap());
@@ -4405,7 +4539,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
             modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
-
+            modelBuilder.Configurations.Add(new ARInvoiceStockMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStockLineMap());
 
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -4423,6 +4558,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new AccountingPaymentMethodMap());
             modelBuilder.Configurations.Add(new ARPaymentMap());
             modelBuilder.Configurations.Add(new ARPaymentStatuMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStocksStatusMap());
             modelBuilder.Configurations.Add(new ARInvoiceLineActionMap());
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
@@ -4437,6 +4573,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CardExternalCodeByCurrencyMap());
             modelBuilder.Configurations.Add(new BranchMap());
             modelBuilder.Configurations.Add(new CardContactMap());
+            modelBuilder.Configurations.Add(new CardContactProductMap());
             modelBuilder.Configurations.Add(new CardMap());
             modelBuilder.Configurations.Add(new CategoryTypeMap());
             modelBuilder.Configurations.Add(new ChargesGroupMap());
@@ -4773,7 +4910,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DocumentFilingBackupSettingMap());
 
             modelBuilder.Configurations.Add(new INTTRADocumentTypeMap());
-           
+            modelBuilder.Configurations.Add(new INTTRABookingStatusMap());
+            modelBuilder.Configurations.Add(new INTTRABookingTransStatusMap());
+
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
@@ -4797,8 +4936,10 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new HarmonizeCodeMap());
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
-
-
+            modelBuilder.Configurations.Add(new SchedulerLogsMap());
+            modelBuilder.Configurations.Add(new SchedulerProcedureMap());
+            modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
+            modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
 
             base.OnModelCreating(modelBuilder);
         }

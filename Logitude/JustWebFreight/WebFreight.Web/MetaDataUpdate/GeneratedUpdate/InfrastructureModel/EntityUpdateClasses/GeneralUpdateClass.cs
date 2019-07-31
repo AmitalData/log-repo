@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class GeneralUpdateClass
@@ -111,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "ac60",
+			      				    Code =  "cc84",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -123,6 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "General,Generals,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -148,6 +153,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature GeneralFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature GeneralFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature GeneralFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
@@ -520,6 +526,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_SHAREDINVOICES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDINVOICES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SharedInvoices", NameTextCodeDefaultText = @"Shared Logistics Invoices" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_EXTERNALAPIS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXTERNALAPIS", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ExternalAPIs", NameTextCodeDefaultText = @"External API" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_SCHEDULERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SCHEDULERS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Schedulers", NameTextCodeDefaultText = @"Schedulers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_TariffModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TariffModule", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TariffModule", NameTextCodeDefaultText = @"Tariffs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_CREATETENANT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATETENANT", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CREATETENANT", NameTextCodeDefaultText = @"Create Tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_ACCJORN = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCJORN", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.ACCJORN", NameTextCodeDefaultText = @"Journal Tab" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_CacheLogMenu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CacheLogMenu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CacheLogMenu", NameTextCodeDefaultText = @"Cache Log" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_General_Occasion_OccasionType = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Occasion.OccasionType", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Occasion.OccasionType", NameTextCodeDefaultText = @"Occasion Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_General_Features_VATSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.VATSettings", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.VATSettings", NameTextCodeDefaultText = @"VAT Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
@@ -1001,7 +1021,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralODashBoardIncome = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DashBoard.Income", DefaultText = "Income",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMHCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Customers", DefaultText = "Customers",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMHCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Customers", DefaultText = "Customers",LocalDefaultText = @"לקוחות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralBSendRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.SendRequest", DefaultText = "Send",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -1021,7 +1041,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMCManagementErrorLogs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Management.ErrorLogs", DefaultText = "ErrorLogs",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMHReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Reports", DefaultText = "Reports",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMHReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Reports", DefaultText = "Reports",LocalDefaultText = @"דוחות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMHSharedLogistics = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.SharedLogistics", DefaultText = "Shared Logistics",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -1599,7 +1619,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOAccountingBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountingBalance", DefaultText = "Accounting Balance",LocalDefaultText = @"יתרה חשבונאית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralONewInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInvoice", DefaultText = "New General Invoice",LocalDefaultText = @"חשבונית הכלליות חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralONewInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInvoice", DefaultText = "New General Invoice",LocalDefaultText = @"חשבונית כללית חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralONewCreditNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewCreditNote", DefaultText = "New Credit Note",LocalDefaultText = @"זיכוי חדש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -1887,7 +1907,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOCancelReconciltiation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.CancelReconciltiation", DefaultText = "Cancel Reconciltiation",LocalDefaultText = @"ביטול התאמה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOIsCancelled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.IsCancelled", DefaultText = "Cancelled",LocalDefaultText = @"מבוטלת", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOIsCancelled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.IsCancelled", DefaultText = "Cancelled",LocalDefaultText = @"מבוטל", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOWantToCancelCurrentReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WantToCancelCurrentReconciliation", DefaultText = "Are you sure you want to cancel the current reconciliation?",LocalDefaultText = @"האם אתה בטוח שאתה רוצה לבטל את ההתאמה הנוכחית?", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2069,8 +2089,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMHInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Invoices", DefaultText = "Invoices",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-            TextCode GeneralTextCode_GeneralMCTablesPendingByKeyword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.PendingByKeyword", DefaultText = "Pending By Keywords", LocalDefaultText = @"מילות מפתח לקודי עיכוב", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOPaymentBankAccountCurrencyDifferent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentBankAccountCurrencyDifferent", DefaultText = "Payment currency is different from bank account currency",LocalDefaultText = @"מטבע התשלום שונה ממטבע חשבון הבנק הנבחר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GeneralTextCode_GeneralMHDepositions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Depositions", DefaultText = "Depositions",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralOYes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Yes", DefaultText = "Yes",LocalDefaultText = @"כן", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralONo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.No", DefaultText = "No",LocalDefaultText = @"לא", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralOShowNewRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ShowNewRelease", DefaultText = "New Version is online , for more details",LocalDefaultText = @"גרסה חדשה עלתה לאוויר - לפירוט השינויים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralBPressHere = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.PressHere", DefaultText = "Press Here",LocalDefaultText = @"לחץ כאן", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMHTariffModule = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.TariffModule", DefaultText = "Tariffs",LocalDefaultText = @"Tariffs", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCOthersCreateTenant = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.CreateTenant", DefaultText = "Create Tenant",LocalDefaultText = @"Create Tenant", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingOJournals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Journals", DefaultText = "Journals",LocalDefaultText = @"פק יומן", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCOthersCacheLog = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.CacheLog", DefaultText = "Cache Log",LocalDefaultText = @"Cache Log", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralOWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Warning", DefaultText = "Warning",LocalDefaultText = @"אזהרה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_GeneralMCTablesPendingByKeyword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Tables.PendingByKeyword", DefaultText = "Pending By Keywords", LocalDefaultText = @"מילות מפתח לקודי עיכוב", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 
 

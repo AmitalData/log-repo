@@ -94,10 +94,10 @@ export class CourierWorksheetListTemplate {
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
 
     FirePreventSelect() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
+        SessionLocator.SelectedSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
     }
     FireUnSelect() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("FireUnSelect");
+        SessionLocator.SelectedSession.PseventRowSelectEvent.emit("FireUnSelect");
     }
 
     //  @ViewChild( SplitButtonComponent)  public MySplitButtonComponent: SplitButtonComponent = new SplitButtonComponent(null,null);
@@ -271,7 +271,7 @@ export class CourierWorksheetListTemplate {
                 _SendManifestService.Run({ EntityPM: entitypm, ObjectTable: objectTable, CourierWorksheetmode: true });
                 _SendManifestService.OnSuccessSendMethod =
                     (res1) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                         //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
                         this.RefreshData();
                     };
@@ -325,7 +325,7 @@ export class CourierWorksheetListTemplate {
                 _SendDeclarationService.Run({ EntityPM: entitypm, ObjectTable: objectTable, CourierWorksheetmode: true });
                 _SendDeclarationService.OnSuccessSendMethod =
                     (res1) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                         //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
                         this.RefreshData()
                     };
@@ -381,10 +381,10 @@ export class CourierWorksheetListTemplate {
 
     GetSendECTHRDataMaman(event) {
         this.ButtonClick(event);
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendECTHRDataMaman(this._CourierWorksheet['DeclarationId'])
             .subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 let mess = "";
                 if (res.HasError) {
@@ -397,7 +397,7 @@ export class CourierWorksheetListTemplate {
     }
     SpecialActionStatusXClicked(event) {
         this.ButtonClick(event);
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         var filters = new ApiQueryFilters();
         filters.PageIndex = 0;
         filters.PageSize = 1000;
@@ -408,7 +408,7 @@ export class CourierWorksheetListTemplate {
             .subscribe(response => {
                 this._DeclarationMamanSpecialActionListService.getByFilters(filters)
                     .subscribe((response: ServiceResponse) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                         if (!response.HasError && response.Result != null) {
                             let list: DeclarationMamanSpecialActionList[] = response.Result;
                             list.forEach((declarationMamanSpecialActionPMItem: any) => {
@@ -468,7 +468,7 @@ export class CourierWorksheetListTemplate {
         }
 
         let BackButtonLabel = "תיק עמילות"
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 //this.SelectionChanged(myDeclarationEditTab);
                 cmpRef.instance.ComponentRef = cmpRef;
@@ -637,7 +637,7 @@ export class CourierWorksheetListTemplate {
                     //}
                     logitudeWindow.Width = 470;
                     logitudeWindow.Height = 300;
-                    logitudeWindow.IsShowCloseButton = false;
+                    logitudeWindow.IsShowCloseButton = true;
                     logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
                     logitudeWindow.WindowArgs = windowArgs;
                     //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
@@ -654,11 +654,11 @@ export class CourierWorksheetListTemplate {
     }
 
     DeletePending(declarationCourierStatusPM: DeclarationCourierStatusPM) {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
         declarationCourierStatusPM.CourierPendingReasonList = null;
         //declarationCourierStatusPM.PendingRemarks = null;
         this._DeclarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             this.RefreshData();
         });
     }
@@ -773,7 +773,7 @@ export class CourierWorksheetListTemplate {
         confirm.WindowClosed.subscribe((event: any) => {
             if (confirm.Yes) {
                 this._IsDropdownMenuFilterReady = false;
-                SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+                SessionLocator.SelectedSession.StartBusyIndicatorCreating();
                 if (actionCode == "U") {
                     if (declarationMamanSpecialActionPM == null) {
                         declarationMamanSpecialActionPM = new DeclarationMamanSpecialActionPM();
@@ -784,7 +784,7 @@ export class CourierWorksheetListTemplate {
                         this._DeclarationMamanSpecialActionPMService.insert(declarationMamanSpecialActionPM).subscribe(res => {
                             this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
                                 .subscribe((myResponse: ServiceResponse) => {
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    SessionLocator.SelectedSession.StopBusyIndicator();
                                     var myMessageWindow = new MessageWindow();
                                     myMessageWindow.Show(myResponse.Result);
                                 });
@@ -796,7 +796,7 @@ export class CourierWorksheetListTemplate {
                         this._DeclarationMamanSpecialActionPMService.update(declarationMamanSpecialActionPM).subscribe(res => {
                             this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
                                 .subscribe((myResponse: ServiceResponse) => {
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
+                                    SessionLocator.SelectedSession.StopBusyIndicator();
                                     var myMessageWindow = new MessageWindow();
                                     myMessageWindow.Show(myResponse.Result);
                                 });
@@ -806,7 +806,7 @@ export class CourierWorksheetListTemplate {
                 else {
                     this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "C", mamanSpecialActionCode)
                         .subscribe((myResponse: ServiceResponse) => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
                             var myMessageWindow = new MessageWindow();
                             myMessageWindow.Show(myResponse.Result);
                         });
@@ -819,9 +819,9 @@ export class CourierWorksheetListTemplate {
 
     SetManualProcesscode(declarationId: string, manualProcessCode: string) {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
         this._DeclarationCourierStatusWebService.GetSetManualProcesscode(declarationId, manualProcessCode).subscribe((response: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             this.RefreshData();
         });
     }

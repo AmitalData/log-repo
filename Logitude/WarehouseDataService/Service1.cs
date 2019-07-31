@@ -10,6 +10,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WarehouseData.Helper;
 using WarehouseDataService.Helper;
 
 namespace WarehouseDataService
@@ -31,8 +32,16 @@ namespace WarehouseDataService
         {
             try
             {
-                ApplicationInfo.SourceConnection = ConfigurationSettings.AppSettings["SourceConnection"];
+
+                WarehouseServiceHelper warehouseServiceHelper = new WarehouseServiceHelper();
+
+
+
+                string sourceConnection = warehouseServiceHelper.BuildConnectionString(ConfigurationSettings.AppSettings["SourceConnection"]);
+                ApplicationInfo.SourceConnection = warehouseServiceHelper.GetMainDBConnectionString(sourceConnection);
                 ApplicationInfo.DestinationConnection = ConfigurationSettings.AppSettings["DestinationConnection"];
+
+
 
                 string updateWarehouseSleepTime = ConfigurationSettings.AppSettings["UpdateWarehouseSleepTime"];
                 ApplicationInfo.UpdateWarehouseSleepTime = (!string.IsNullOrEmpty(updateWarehouseSleepTime) ? Int32.Parse(updateWarehouseSleepTime) : 1) * 60000;
@@ -55,20 +64,19 @@ namespace WarehouseDataService
                 }
 
                 ApplicationInfo.BliudingServiceWorking = true;
-                WarehouseDataHelper warehouseDataHelper = new WarehouseDataHelper();
-                warehouseDataHelper.FillDaysList();
+                warehouseServiceHelper.FillDaysList();
+
 
 
                 ApplicationInfo.WarehouseBuildDays = ApplicationInfo.Days.Where(d => buildDays.Contains(d.NumberOfDay)).ToList();
                 ApplicationInfo.WarehouseBuildHours = !string.IsNullOrEmpty(warehouseBuildHoures) ? warehouseBuildHoures.ToString() : null;
 
-
-
-                Thread buildWarehouseDatThread = new Thread(() => warehouseDataHelper.BuildWarehouseData());
+                WarehouseService warehouseService = new WarehouseService();
+                Thread buildWarehouseDatThread = new Thread(() => warehouseService.BuildWarehouseData());
                 buildWarehouseDatThread.IsBackground = true;
                 buildWarehouseDatThread.Start();
 
-                Thread updateWarehouseDataThread = new Thread(() => warehouseDataHelper.UpdateWarehouseData());
+                Thread updateWarehouseDataThread = new Thread(() => warehouseService.UpdateWarehouseData());
                 updateWarehouseDataThread.IsBackground = true;
                 updateWarehouseDataThread.Start();
 

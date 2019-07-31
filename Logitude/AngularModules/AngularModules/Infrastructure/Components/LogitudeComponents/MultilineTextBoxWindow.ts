@@ -18,8 +18,10 @@ export class MultilineTextBoxWindow implements OnInit {
     public DataContext: any;
     DisplayMode: boolean = false;
     PreventNewLine: boolean = false;
+    IsTextBoxRTL: boolean = false;
     RowsCount: number;
 
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
@@ -29,6 +31,7 @@ export class MultilineTextBoxWindow implements OnInit {
             this.DisplayMode = args.DisplayMode;
         }
         this.RowsCount = args.RowsCount;
+        this.IsTextBoxRTL = args.IsTextBoxRTL;
 
         this.PreventNewLine = this.RowsCount == 1;
 
@@ -54,14 +57,11 @@ export class MultilineTextBoxWindow implements OnInit {
         }
 
     }
-
-
     ngOnInit() {}
-
     OkButtonClicked(){
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.text);
+        this.CurrentSession.CloseCurrentWindowEmit(this.text);
     }
     CancelButtonClicked(){
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("<!#cancelled>");
+        this.CurrentSession.CloseCurrentWindowEmit("<!#cancelled>");
     }
 }

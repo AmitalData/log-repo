@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../Customs/Args';
@@ -43,6 +43,7 @@ export class RecallClientsForCutoms
     ProgressBarPercentText: string;
 
     ResponseMessage: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -88,7 +89,7 @@ export class RecallClientsForCutoms
 
     //#region General Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
@@ -118,7 +119,7 @@ export class RecallClientsForCutoms
             var response = myServiceResponse.Result;
 
             myCustomMessageProgressHelper.MessageArrived = true;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!AppTool.IsNullOrEmpty(response)) {
             }
         });

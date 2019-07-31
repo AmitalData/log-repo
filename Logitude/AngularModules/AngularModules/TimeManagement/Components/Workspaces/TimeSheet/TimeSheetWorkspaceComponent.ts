@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList} from '@angular/core';
+import {Component, ViewChildren, QueryList} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
@@ -12,16 +12,14 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 })
 
 export class TimeSheetWorkspaceComponent {
-
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-
     constructor(private _entityResourceService: EntityResourceService) {
     }
 
     InitComponent() {
         this.RunComponent();
-
     }
+
     private isLoaderReady: boolean = false;
     RunComponent() {
         if (this.AllLocations) {
@@ -71,7 +69,7 @@ export class TimeSheetWorkspaceComponent {
     public PageChild_Weekly: any = null;
     public PageChild_Monthly: any = null;
     public PageChild_ClockTime: any = null;
-
+    public PageChild_Vacations: any = null;
     SelectionChanged() {
         if (this.isLoaderReady) {
             if (this.SelectedTabCode != null) {
@@ -151,7 +149,23 @@ export class TimeSheetWorkspaceComponent {
 
                             break;
                         }
-                
+
+                        case "Vacations": {
+
+                            if (this.PageChild_Vacations == null) {
+                                SessionLocator.DynamicLoader.Load('./TimeManagement/Components/Workspaces/TimeSheet/VacationsComponent', myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.PageChild_Vacations = cmpRef.instance;
+                                        this.PageChild_Vacations.InitTab();
+                                    });
+                            }
+
+                            else {
+                                this.PageChild_Vacations.LoadAllScreenData();
+                            }
+
+                            break;
+                        }
                     }
                 }
             }

@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("BusinessHour", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("BusinessHour", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         BusinessHourService service = new BusinessHourService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("BusinessHour", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("BusinessHour", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "BusinessHour" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "BusinessHourPM" + entityPM.Id + entityPM.Tenant;

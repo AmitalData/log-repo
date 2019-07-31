@@ -50,10 +50,10 @@ export class GatepassRequestComponent extends BaseComponent {
     constructor() {
         super();
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this.Loaded = true;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
         });
     }
 
@@ -263,7 +263,7 @@ export class GatepassRequestComponent extends BaseComponent {
             return;
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this.EntityPM.UpdateCode = this.UpdateCode;
         this.EntityPM.OriginSiteCode = this.OriginSiteCode;
         this.EntityPM.DesignateSiteCode = this.DesignateSiteCode;
@@ -271,13 +271,13 @@ export class GatepassRequestComponent extends BaseComponent {
         this.EntityPM.GatepassRequestStatus = null;
         if (this.IsNew) {
             this._GatepassRequestPMService.insert(this.EntityPM).subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.SendGatepassRequestMessage(customSendOptionsArgs);
             });
         }
         else {
             this._GatepassRequestPMService.update(this.EntityPM).subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.SendGatepassRequestMessage(customSendOptionsArgs);
             });
         }
@@ -285,7 +285,7 @@ export class GatepassRequestComponent extends BaseComponent {
 
     SendGatepassRequestMessage(customSendOptionsArgs: CustomSendOptionsArgs) {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         var currRequestParams = new GatepassRequestMessageRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -316,7 +316,7 @@ export class GatepassRequestComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
 }
 

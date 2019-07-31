@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { AgentPM } from '../../../../Common/EntityPMs/AgentPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -17,6 +17,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 
 export class AgentShareInvitaionComponent extends BaseComponent {
     agentSharedLogisticsKey: AgentSharedLogisticsKey;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _agentSharedLogisticsKeyPMService: AgentSharedLogisticsKeyPMService) {
         super();
         
@@ -41,16 +42,16 @@ export class AgentShareInvitaionComponent extends BaseComponent {
          }
 
          if (!AppTool.IsNullOrEmpty(this.Email)) {
-             SessionLocator.CurrentSession.StartBusyIndicator("Sending...");
+             this.CurrentSession.StartBusyIndicator("Sending...");
 
              this._agentSharedLogisticsKeyPMService.SendAgentInvitaion(this.EntityPM.Id, this.Email, SessionLocator.Tenant).subscribe(response => {
 
-                 SessionLocator.CurrentSession.StopBusyIndicator();
+                 this.CurrentSession.StopBusyIndicator();
                  if (!response.HasError) {
                      this.CancelButtonLabel = "Close";
                      this.InvitationSent = true;
 
-                     //SessionLocator.CurrentSession.CurrentWindow.Close(response.Result);
+                     //this.CurrentSession.CurrentWindow.Close(response.Result);
                  }
                  else
                  {
@@ -72,9 +73,9 @@ export class AgentShareInvitaionComponent extends BaseComponent {
 
      OnCancel() {
          if (this.InvitationSent) {
-             SessionLocator.CurrentSession.CurrentWindow.Close("InvitationSent");
+             this.CurrentSession.CurrentWindow.Close("InvitationSent");
          } else {
-             SessionLocator.CurrentSession.CloseCurrentWindow();
+             this.CurrentSession.CloseCurrentWindow();
          }
      }
 }

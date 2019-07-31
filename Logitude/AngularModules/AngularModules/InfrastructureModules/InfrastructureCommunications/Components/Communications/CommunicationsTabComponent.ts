@@ -24,6 +24,7 @@ export class CommunicationsTabComponent implements OnDestroy {
     private EntityPM: any;
     public IsResourcesReady: boolean = false;
     public TabHeaderTextCode: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.ItemsSource = [];
 
@@ -36,9 +37,9 @@ export class CommunicationsTabComponent implements OnDestroy {
 
     private SessionEvent: any = null;
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(event => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(event => {
                 if (event == "CommunicationRefresh") {
                     this.LoadData();
                 }
@@ -111,7 +112,7 @@ export class CommunicationsTabComponent implements OnDestroy {
     EditItemClicked(item: CommunicationLogList) {
         var entityId = item.Id;
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'CommunicationLog' });

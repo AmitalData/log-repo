@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {BankAccountLitePM} from '../../EntityPMs/BankAccountLitePM';
@@ -18,6 +18,7 @@ export class NewBankAccountLiteComponent extends BaseComponent implements OnInit
     public DataContext: NewBankAccountLiteComponent = this;
     public ObjectTableName: string = "BankAccountLite";
     public EntityPM: BankAccountLitePM = new BankAccountLitePM();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new BankAccountLitePM();
@@ -72,7 +73,7 @@ export class NewBankAccountLiteComponent extends BaseComponent implements OnInit
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -85,11 +86,11 @@ export class NewBankAccountLiteComponent extends BaseComponent implements OnInit
             myService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
                 if (response != null) {
                     if (!response.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
                     else {
                         this.ValidationErrorsList = response.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }
             });

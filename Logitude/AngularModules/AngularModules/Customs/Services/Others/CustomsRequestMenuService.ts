@@ -16,6 +16,7 @@ import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager
 export class CustomsRequestMenuService {
     private _CustomsRequestMenuItems: CustomsMenuItem[];
     public get CustomsRequestMenuItems() { return this._CustomsRequestMenuItems }
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         ///alert("CustomsRequestMenuService");
         this.buildCustomsList();
@@ -175,7 +176,7 @@ export class CustomsRequestMenuService {
         let reqJson = "";
         let resJson = "";
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         var myCommunicationLogStepListService = new CommunicationLogStepListService();
         //logId=1-212245&tenant=1
         var ary = [20, 30];
@@ -195,7 +196,7 @@ export class CustomsRequestMenuService {
                 resJson = res.DocumentData;
 
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (suppressHugeDataFeature && reqJson == "(item.DocumentData.Length * sizeof(Char) > sizeOf250KB)") {
 
@@ -321,7 +322,7 @@ export class CustomsRequestMenuService {
         let reqJson = "";
         let resJson = "";
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         var myCommunicationLogStepListService = new CommunicationLogStepListService();
         //logId=1-212245&tenant=1
         myCommunicationLogStepListService.getCommunicationLogStepsRequestParamResponseData(
@@ -336,7 +337,7 @@ export class CustomsRequestMenuService {
                 //alert(reqJson);
                 resJson = res.DocumentData;
                 //alert(resJson);
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.ShowAsRequestSheet(logitudeWindow, item, reqJson, resJson, menuArg, logId);
 
 

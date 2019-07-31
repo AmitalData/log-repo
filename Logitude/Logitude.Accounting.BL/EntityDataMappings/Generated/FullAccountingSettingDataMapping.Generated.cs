@@ -45,7 +45,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CustomsGLAccountId, 
 	         DefaultDifferencesGLAccountId, 
 	         DefaultExternalDiffGLAccountId, 
-	         SoftwareVersion,
+	         SoftwareVersion, 
+	         IsPaymentChequesActivated, 
+	         GLAccounterCounterLength, 
+	         PaymentChequesLogoId,
 	      }
 
 
@@ -92,7 +95,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CustomsGLAccountId, 
 	         DefaultDifferencesGLAccountId, 
 	         DefaultExternalDiffGLAccountId, 
-	         SoftwareVersion,
+	         SoftwareVersion, 
+	         IsPaymentChequesActivated, 
+	         GLAccounterCounterLength, 
+	         PaymentChequesLogoId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -214,6 +220,21 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SoftwareVersion))
             {
 				entityPOCO.SoftwareVersion = entityPM.SoftwareVersion;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentChequesActivated))
+            {
+				entityPOCO.IsPaymentChequesActivated = entityPM.IsPaymentChequesActivated;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccounterCounterLength))
+            {
+				entityPOCO.GLAccounterCounterLength = entityPM.GLAccounterCounterLength;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentChequesLogoId))
+            {
+				entityPOCO.PaymentChequesLogoId = entityPM.PaymentChequesLogoId;
 			}
 			}
 
@@ -340,6 +361,21 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.SoftwareVersion = entityPOCO.SoftwareVersion;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPaymentChequesActivated))
+            {
+					entityPM.IsPaymentChequesActivated = entityPOCO.IsPaymentChequesActivated;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GLAccounterCounterLength))
+            {
+					entityPM.GLAccounterCounterLength = entityPOCO.GLAccounterCounterLength;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PaymentChequesLogoId))
+            {
+					entityPM.PaymentChequesLogoId = entityPOCO.PaymentChequesLogoId;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -459,6 +495,21 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SoftwareVersion))
             {
                 oldEntityPM.SoftwareVersion = entityPM.SoftwareVersion;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentChequesActivated))
+            {
+                oldEntityPM.IsPaymentChequesActivated = entityPM.IsPaymentChequesActivated;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccounterCounterLength))
+            {
+                oldEntityPM.GLAccounterCounterLength = entityPM.GLAccounterCounterLength;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentChequesLogoId))
+            {
+                oldEntityPM.PaymentChequesLogoId = entityPM.PaymentChequesLogoId;
             }
 			
 		}

@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {CustomerProductPM} from '../../../../Common/EntityPMs/CustomerProductPM';
@@ -43,7 +43,7 @@ export class OpportunityProductsTabComponent extends BaseComponent {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public TEUActualVisibile: boolean = true;
     public ActualSelectedItem: any = null;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -111,10 +111,10 @@ export class OpportunityProductsTabComponent extends BaseComponent {
     public BuildObsList() {
         var ObsList: ProductData [] = [];
         this.ItemsSource.Clear();
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         var proeductTypeListService: ProductTypeListService = new ProductTypeListService();
         proeductTypeListService.getAllFromCache().subscribe((resp: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!resp.HasError) {
                 var list: ProductTypeList[] = resp.Result.filter(d => !d.InActive).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
 

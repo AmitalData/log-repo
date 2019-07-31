@@ -31,7 +31,7 @@ export class VendorEditComponent extends BaseComponent {
     public ValdationErrorList: any[];
 
     public entityResourceService: EntityResourceService = new EntityResourceService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.BuildTabs();
@@ -168,10 +168,10 @@ export class VendorEditComponent extends BaseComponent {
     //#endregion
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 }
 

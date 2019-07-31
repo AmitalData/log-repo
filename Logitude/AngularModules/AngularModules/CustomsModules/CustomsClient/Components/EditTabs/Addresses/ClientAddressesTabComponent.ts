@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -34,7 +34,7 @@ export class ClientAddressesTabComponent extends BaseComponent{
     private newAddressButtonVisibility: boolean = true;
     private editButtonVisibility: boolean = true;
     Parent: ClaimGeneralTabComponent;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _EntityArgs: EntityArgs) {
         super();
     }
@@ -145,11 +145,11 @@ export class ClientAddressesTabComponent extends BaseComponent{
     }
 
     ReloadEntityPM() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     SendAddUpdateDeleteClientAddressContactRequest(address: ClientAddressPM) {
-                SessionLocator.CurrentSession.StartBusyIndicator("");
+                this.CurrentSession.StartBusyIndicator("");
 
 
                 var currRequestParams = new AddAddressContactForClientRequestParams();
@@ -242,13 +242,13 @@ export class ClientAddressesTabComponent extends BaseComponent{
     }
 
     ChooseAddressButtonClicked(address: ClientAddressPM) {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
         this.Parent.SelectAddresseCompleted(address);
     }
 
     OnRowDoubleClick(item: ClientAddressPM) {
         if (this.Mode == "Claims") {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
             this.Parent.SelectAddresseCompleted(item);
         }
     }

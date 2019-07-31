@@ -1,17 +1,18 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
 import {AgentPM} from '../../../../Common/EntityPMs/AgentPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
     templateUrl: './AgentBillingTabComponent.html',
 })
 
-export class AgentBillingTabComponent extends BaseComponent implements OnInit {
+export class AgentBillingTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public EntityPM: AgentPM;
     public ObjectTableName: string = "Agent";
     public DataContext = this;
@@ -28,6 +29,7 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit {
         if (this.HasCreditLimitFeature) {
             this.IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
         }
+
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
         }
@@ -39,9 +41,33 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit {
         this.RunComponent();
     }
 
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent != null) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                }
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                }
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
     RunComponent() {
         if (this.viewContainerRef) {
             this.LoadChildComponent();
+            this.Listen();
         }
 
         else {

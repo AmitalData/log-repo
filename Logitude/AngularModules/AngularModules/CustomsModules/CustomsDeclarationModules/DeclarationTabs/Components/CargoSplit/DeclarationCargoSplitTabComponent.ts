@@ -66,29 +66,29 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
 
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                         this.LoadDeclarationCargoSplits();
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DCCS") {
                             this.LoadDeclarationCargoSplits();
                         }
@@ -103,7 +103,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
         //this.DeclarationCargoSplitWebService.GetDeclarationCargoSplitByDeclarationIdLists(this.EntityPM.Id, this.EntityPM.Tenant)
         this._DeclarationWebService.GetDeclarationCargoSplitByDeclarationIdList(this.EntityPM.Id, this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.GetDeclarationCargoSplitByDeclarationIdListsOp_Completed(myResponse, false);
                 this.CargoSplitIdEdit();
             });
@@ -120,7 +120,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
     }
 
     CargoSplitIdEdit(): any {
-        var myDeclarationEditComponentController = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
+        var myDeclarationEditComponentController = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController as DeclarationEditComponentController;
         if (!AppTool.IsNullOrEmpty(myDeclarationEditComponentController.CargoSplitId)) {
             if (this.DeclarationCargoSplitList != null && this.DeclarationCargoSplitList.Collection != null) {
                 var item = this.DeclarationCargoSplitList.Collection.find(r => r.Id == myDeclarationEditComponentController.CargoSplitId);
@@ -134,7 +134,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     EditButtonClickedOld(item: DeclarationCargoSplitPM) {
@@ -158,12 +158,12 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
             }
         }
         logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        SessionLocator.SelectedSession.StopBusyIndicator();
 
         /*if (!AppTool.IsNullOrEmpty(item)) {
-            //SessionLocator.CurrentSession.StartBusyIndicator("");
+            //SessionLocator.SelectedSession.StartBusyIndicator("");
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     //this.showAlert = false;
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -239,7 +239,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
     }
 
     NewDeclarationCargoSplit(item: DeclarationCargoSplitPM) {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
 
         var windowArgs: any = {};
         windowArgs.CurrentEntity = item;
@@ -258,7 +258,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
 
         logWindow.IsHideHeader = true;
         logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        SessionLocator.SelectedSession.StopBusyIndicator();
 
     }
 }

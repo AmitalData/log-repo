@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -21,6 +21,7 @@ export class UserUnlockComponent{
     CurrentPassword: string;
     IsValidPassword: boolean = false;
     IsShowProgressLoading: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _passwordChangeService: PasswordChangeService) {
 
     }
@@ -60,7 +61,7 @@ export class UserUnlockComponent{
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
                     if (myResult) {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                       
                     } else {
 

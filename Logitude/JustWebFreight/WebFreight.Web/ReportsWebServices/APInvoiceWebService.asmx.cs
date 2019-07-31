@@ -125,9 +125,11 @@ namespace WebFreight.Web.ReportsWebServices
                 invoiceDataProvider.ShipmentNumber = invoice.MainEntityReference;
                 invoiceDataProvider.AccountingNumber = invoice.CreditAccount;
                 invoiceDataProvider.HouseNumber = invoice.HouseNumber;
+                invoiceDataProvider.MasterNumber = invoice.MasterNumber;
                 invoiceDataProvider.Notes = invoice.InternalNotes;
                 invoiceDataProvider.PaymentTerm = invoice.PaymentTermName;
                 invoiceDataProvider.InvoiceCurrency = invoice.InvoiceCurrencyCode;
+                invoiceDataProvider.ExchangeRate = invoice.InvoiceCurrencyExchangeRate == null ? 0 : invoice.InvoiceCurrencyExchangeRate;
 
                 double? invoiceSubTotals = invoice.SubTotalInInvoiceCurrency;
                 double? invoiceAmount = invoice.AmountInInvoiceCurrency;
@@ -239,15 +241,48 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
-                    invoiceDataProvider.ShipperName = shipment.ShipperName;
-                    invoiceDataProvider.ConsigneeName = shipment.ConsigneeName;
+                    if (!string.IsNullOrEmpty(shipment.ShipperId))
+                    {
+                        Card iCard = CardRepository.GetSingleCard(shipment.ShipperId, currentTenant, true);
+                        if (iCard != null)
+                        {
+                            invoiceDataProvider.ShipperName = iCard.EnglishName;
+
+                            if (!string.IsNullOrEmpty(shipment.ShipperAddressId))
+                            {
+                                Address iAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, currentTenant);
+                                if (iAddress != null)
+                                {
+                                    invoiceDataProvider.ShipperAddress = DataProviders.General.GetAddress(iAddress);
+                                }
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(shipment.ConsigneeId))
+                    {
+                        Card iCard = CardRepository.GetSingleCard(shipment.ConsigneeId, currentTenant, true);
+                        if (iCard != null)
+                        {
+                            invoiceDataProvider.ConsigneeName = iCard.EnglishName;
+
+                            if (!string.IsNullOrEmpty(shipment.ConsigneeAddressId))
+                            {
+                                Address iAddress = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, currentTenant);
+                                if (iAddress != null)
+                                {
+                                    invoiceDataProvider.ConsigneeAddress = DataProviders.General.GetAddress(iAddress);
+                                }
+                            }
+                        }
+                    }
+
                     invoiceDataProvider.MainCarriageCarrierName = shipment.MainCarriageCarrierName;
                     invoiceDataProvider.GrossWeight = shipment.GrossWeight;
                     invoiceDataProvider.ChargeableWeight = shipment.ChargeableWeight;
                     invoiceDataProvider.GrossWeightUnitCode = shipment.GrossWeightUnitCode;
                     invoiceDataProvider.ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode;
                     invoiceDataProvider.DescriptionOfGoods = shipment.DescriptionOfGoods;
-
                     invoiceDataProvider.MainCarriageMAWB = shipment.Master;
 
                     string carrierPrefix = null;
@@ -458,6 +493,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
                 #endregion 
+
                 #region InvoiceLines
 
                 invoiceDataProvider.APInvoiceLinesList = new List<APReportInvoiceLine>();
@@ -483,6 +519,7 @@ namespace WebFreight.Web.ReportsWebServices
                     reportinvoiceline.ForeignAmount = MethodHelper.Round(invoiceline.ForiegnCurrencyAmount, 2);
                     reportinvoiceline.InvoiceAmount = MethodHelper.Round(invoiceline.InvoiceCurrencyAmount, 2);
                     reportinvoiceline.OpenAmount = payable == null ? 0 : payable.OpenAmount;
+                    reportinvoiceline.Notes = invoiceline.Notes != null ? invoiceline.Notes : "";
 
                     invoiceDataProvider.APInvoiceLinesList.Add(reportinvoiceline);
                 }

@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
@@ -19,9 +19,9 @@ export class QuoteFiltersMenuComponent {
     DirectionFilter_R: string;
     DirectionFilter_D: string;
     DirectionFilter_I: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.TransportFilter_A = "TransportFilter_A_-1_-1";
             this.TransportFilter_O = "TransportFilter_O_-1_-1";
             this.TransportFilter_I = "TransportFilter_I_-1_-1";
@@ -32,8 +32,8 @@ export class QuoteFiltersMenuComponent {
         }
 
         else {
-            var index_T = SessionLocator.CurrentSession.GetNewId("QuoteTransportFilterMenu");
-            var index_D = SessionLocator.CurrentSession.GetNewId("QuoteDirectionFilterMenu");
+            var index_T = this.CurrentSession.GetNewId("QuoteTransportFilterMenu");
+            var index_D = this.CurrentSession.GetNewId("QuoteDirectionFilterMenu");
             this.TransportFilter_A = "TransportFilter_A" + index_T;
             this.TransportFilter_O = "TransportFilter_O" + index_T;
             this.TransportFilter_I = "TransportFilter_I" + index_T;

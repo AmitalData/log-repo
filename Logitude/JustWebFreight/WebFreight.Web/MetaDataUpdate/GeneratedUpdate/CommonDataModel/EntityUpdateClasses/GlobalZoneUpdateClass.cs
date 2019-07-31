@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class GlobalZoneUpdateClass
@@ -166,9 +170,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
+					  						DefaultText =  "Code",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  @"Code",
+					  						ListLableDefaultText =  "Code",
 					  						HelpTextCode =  "Code",
 					  						Code =  "Code",
 					  						DependencyFilter3IsList =  false,
@@ -226,9 +230,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "EnglishNameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						HelpTextCode =  "Name",
 					  						Code =  "EnglishName",
 					  						DependencyFilter3IsList =  false,
@@ -286,9 +290,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "LocalName",
-					  						DefaultText =  @"Local Name",
+					  						DefaultText =  "Local Name",
 					  						ListFieldLable =  "LocalNameListLable",
-					  						ListLableDefaultText =  @"Local Name",
+					  						ListLableDefaultText =  "Local Name",
 					  						HelpTextCode =  "LocalName",
 					  						Code =  "LocalName",
 					  						DependencyFilter3IsList =  false,
@@ -346,7 +350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "ComputedLocalName",
-					  						DefaultText =  @"Local Name",
+					  						DefaultText =  "Local Name",
 					  						HelpTextCode =  "ComputedLocalName",
 					  						Code =  "ComputedLocalName",
 					  						DependencyFilter3IsList =  false,
@@ -404,9 +408,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  @"Inactive Global Zone",
+					  						DefaultText =  "Inactive Global Zone",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  @"Inactive",
+					  						ListLableDefaultText =  "Inactive",
 					  						HelpTextCode =  "InActive",
 					  						Code =  "InActive",
 					  						DependencyFilter3IsList =  false,
@@ -463,9 +467,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search codes/ names",
+					  						DefaultText =  "Search codes/ names",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: english and local names",
+					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: english and local names",
 					  						Code =  "SearchFields",
 					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -564,6 +568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable GlobalZoneObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GlobalZone" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature GlobalZoneFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = GlobalZoneObjectTable.Id, Tenant = 0, NameTextCodeCode = "GlobalZone.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature GlobalZoneFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = GlobalZoneObjectTable.Id, Tenant = 0, NameTextCodeCode = "GlobalZone.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature GlobalZoneFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = GlobalZoneObjectTable.Id, Tenant = 0, NameTextCodeCode = "GlobalZone.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

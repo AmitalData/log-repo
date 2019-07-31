@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {GeneralDomainService, FieldsTranslations} from '../../../../../Infrastructure/Services/GeneralDomainService';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -31,7 +31,7 @@ export class RulesMainComponent {
     public TableRulesItems: ObjectTableRulePM[] = [];
     public AllTableRules: ObjectTableRulePM[] = [];
     private entityResourceService: EntityResourceService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         //        window.ObjectTableRules = [];
 
@@ -51,7 +51,7 @@ export class RulesMainComponent {
 
     LoadRules() {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this._objectTableRulePMService.getAllByTenant(SessionLocator.Tenant).subscribe(response => {
             if (!response.HasError && response.Result) {
 
@@ -62,7 +62,7 @@ export class RulesMainComponent {
             }
 
             this._objectTableRuleFieldPMService.getAllByTenant(SessionLocator.Tenant).subscribe(response2 => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                 if (!response2.HasError && response2.Result) {
                     window.ObjectTableRuleFields = response2.Result;
@@ -141,7 +141,7 @@ export class RulesMainComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
 }

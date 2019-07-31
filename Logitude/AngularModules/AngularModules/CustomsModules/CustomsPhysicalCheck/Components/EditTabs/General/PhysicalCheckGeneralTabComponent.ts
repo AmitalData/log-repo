@@ -92,7 +92,7 @@ export class PhysicalCheckGeneralTabComponent
         this.entityArgs = this._InputParam = val;
         this.Init();
     }
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -130,28 +130,28 @@ export class PhysicalCheckGeneralTabComponent
         //this.UIProperties.SetRequired("ToDate", this.ObjectTableName, true);
     }
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.currentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+            this.currentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         //this.BuildAccountingCustomFilesList();
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.currentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.currentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEGC") {
                             //this.DisplayOnlyCheck();
                         }
@@ -371,7 +371,7 @@ export class PhysicalCheckGeneralTabComponent
                 }
             }
 
-            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             //RefreshScreenEvent myEvent = SessionLocator.CurrentAssemblyLocator.EventAggregator.GetEvent<RefreshScreenEvent>();
             //myEvent.Publish(new RefreshScreenEventArgs("") { ScreenCode = "PhysicalCheckSpotlight" });
         }

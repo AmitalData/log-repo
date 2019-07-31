@@ -17,7 +17,7 @@ export class NewProjectComponent extends BaseComponent {
     public ObjectTableName = "TMProject";
     public EntityPM: TMProjectPM;
     public SelectedLocationFilter: any;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
@@ -38,6 +38,7 @@ export class NewProjectComponent extends BaseComponent {
         this.EntityPM.ProjectNumber = args.EntityArgs.ProjectNumber;
         this.EntityPM.Id = args.EntityArgs.Id;
         this.EntityPM.IsInnerProject = true;
+        this.EntityPM.CategoryId = args.EntityArgs.CategoryId;
     }
 
     get CustomerId() {
@@ -49,6 +50,15 @@ export class NewProjectComponent extends BaseComponent {
         }
     }
 
+
+    get DayOffTypeCode() {
+        return this.EntityPM.DayOffTypeCode;
+    }
+    set DayOffTypeCode(value: string) {
+        if (this.EntityPM.DayOffTypeCode != value) {
+            this.EntityPM.DayOffTypeCode = value;
+        }
+    }
 
     get BudgetId() {
         return this.EntityPM.BudgetId;
@@ -68,6 +78,15 @@ export class NewProjectComponent extends BaseComponent {
         }
     }
 
+    get ExcludeFromProrating() {
+        return this.EntityPM.ExcludeFromProrating;
+    }
+    set ExcludeFromProrating(value: boolean) {
+        if (this.EntityPM.ExcludeFromProrating != value) {
+            this.EntityPM.ExcludeFromProrating = value;
+        }
+    }
+    
     get CategoryId() {
         return this.EntityPM.CategoryId;
     }
@@ -115,17 +134,17 @@ export class NewProjectComponent extends BaseComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating...");
+        this.CurrentSession.StartBusyIndicator("Creating...");
         var myService: TMProjectPMService = new TMProjectPMService();
         myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                this.CurrentSession.CloseCurrentWindowEmit('OK');
             }
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;

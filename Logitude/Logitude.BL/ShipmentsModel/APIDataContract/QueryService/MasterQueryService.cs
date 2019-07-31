@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
@@ -40,12 +41,28 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.AWBCurrencyId = MyTenantPM.FreightCurrencyId;
                 temp.ProfitCurrencyId = MyTenantPM.ProfitCurrencyId;
                 temp.ValueOfGoodsCurrencyId = MyTenantPM.FreightCurrencyId;
-                temp.VolumeUnitCode = MyTenantPM.VolumeUnitCode;
-                temp.DimensionsUnitCode = MyTenantPM.DimensionsUnitCode;
-                temp.GrossWeightUnitCode = MyTenantPM.GrossWeightUnitCode;
-                temp.ChargeableWeightUnitCode = MyTenantPM.ChargeableWeightUnitCode;
                 temp.OnCarriageAdditionalTransportModeCode = "BYTR";
 
+                if (string.IsNullOrEmpty(temp.VolumeUnitCode))
+                {
+                    temp.VolumeUnitCode = MyTenantPM.VolumeUnitCode;
+                }
+
+                if (string.IsNullOrEmpty(temp.DimensionsUnitCode))
+                {
+                    temp.DimensionsUnitCode = MyTenantPM.DimensionsUnitCode;
+                }
+
+                if (string.IsNullOrEmpty(temp.GrossWeightUnitCode))
+                {
+                    temp.GrossWeightUnitCode = MyTenantPM.GrossWeightUnitCode;
+                }
+
+                if (string.IsNullOrEmpty(temp.ChargeableWeightUnitCode))
+                {
+                    temp.ChargeableWeightUnitCode = MyTenantPM.ChargeableWeightUnitCode;
+                }
+                
                 switch (temp.DirectionId)
                 {
                     case "E":
@@ -149,6 +166,31 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     else if (!string.IsNullOrEmpty(item.ToPortId))
                     {
                         item.PickUpDeliveryToTypeCode = "PORT";
+                    }
+                }
+
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(Tenant);
+                foreach (ShipmentReceivablePM item in temp.ShipmentReceivables)
+                {
+                    if (string.IsNullOrEmpty(item.CurrencyId))
+                    {
+                        var chergeType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, Tenant);
+                        if (chergeType != null && !string.IsNullOrEmpty(chergeType.ReceivablesDefaultCurrencyId))
+                        {
+                            item.CurrencyId = chergeType.ReceivablesDefaultCurrencyId;
+                        }
+                    }
+                }
+
+                foreach (ShipmentPayablePM item in temp.ShipmentPayables)
+                {
+                    if (string.IsNullOrEmpty(item.CurrencyId))
+                    {
+                        var chergeType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, Tenant);
+                        if (chergeType != null && !string.IsNullOrEmpty(chergeType.PayablesDefaultCurrencyId))
+                        {
+                            item.CurrencyId = chergeType.PayablesDefaultCurrencyId;
+                        }
                     }
                 }
 

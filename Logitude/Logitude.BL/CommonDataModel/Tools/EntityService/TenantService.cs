@@ -255,7 +255,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void CreateDWHSettings()
         {
-            DWHSetting dWHSetting = new DWHSetting(){Tenant = entityPM.Id, ParentTenant = entityPM.Id, Server = null, Password = null,UserName = null,Catalog = null};
+            DWHSetting dWHSetting = new DWHSetting(){Tenant = entityPM.Id, ParentTenant = entityPM.Id, Server = null, Password = null,UserName = null,Catalog = null,IsParentTenant = false};
             DWHSettingRepository dWHSettingRepository = new DWHSettingRepository(dWHSetting.Tenant);
             dWHSettingRepository.Add(dWHSetting);
             dWHSettingRepository.SubmitChanges();

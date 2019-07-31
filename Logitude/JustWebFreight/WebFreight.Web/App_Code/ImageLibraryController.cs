@@ -18,6 +18,7 @@ using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Security;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.App_Code
 {
@@ -69,8 +70,22 @@ namespace WebFreight.Web.App_Code
                 {
                     throw new Exception("Sorry you’re not authenticated");
                 }
+                if (!string.IsNullOrEmpty(type) && type.Contains('^'))
+                {
+                    var imageType = type.Split('^')[1];
+                    type = type.Split('^')[0];
+
+                    if (imageType == "ImageDetail")
+                    {
+                        ImageDetailRepository imageDetailRepository = new ImageDetailRepository(tenant);
+                        string extension = imageDetailRepository.GetImageExtensionbyId(tenant, filename);
+                        if (!string.IsNullOrEmpty(extension)) documentExtension = extension;
+                    }
+                }
 
 
+
+          
                 Uploader uploaderService = new Uploader();
                 byte[] filedata = uploaderService.DownloadFile(filename, documentExtension, fileLocation, tenant);
 
@@ -162,7 +177,7 @@ namespace WebFreight.Web.App_Code
 
             try
             {
-
+                 
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);

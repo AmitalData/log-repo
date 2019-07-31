@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {RolePM} from '../../../../Common/EntityPMs/RolePM';
 import {FeaturePM} from '../../../../Infrastructure/EntityPMs/FeaturePM';
@@ -34,6 +34,7 @@ export class EditRoleFeaturesComponent {
     public IsCustomRole: boolean = false;
     public IsEventsButtonVisible: boolean = false;
     private myDomainService: InfrastructureDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.myDomainService = new InfrastructureDomainService();
 
@@ -84,7 +85,7 @@ export class EditRoleFeaturesComponent {
     private allFeatures: FeaturePM[] = [];
     private allFeaturesItems: RoleFeatureClass[] = [];
     private LoadFeatures() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetSelectedAndUnselectedRoleFeatures(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -114,7 +115,7 @@ export class EditRoleFeaturesComponent {
             }
 
             this.BuildCollections();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     private BuildCollections() {
@@ -183,13 +184,13 @@ export class EditRoleFeaturesComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {    
         var items: FeaturePM[] = this.allFeatures.filter(f => f.IsDirty == true);
 
         if (items.length == 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
         else {
@@ -209,7 +210,7 @@ export class EditRoleFeaturesComponent {
         }
     }
     Save(items: FeaturePM[]) {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var myServiceHelper = new FeaturesUpdateHelper();
         myServiceHelper.Tenant = SessionLocator.Tenant;
@@ -217,24 +218,24 @@ export class EditRoleFeaturesComponent {
         myServiceHelper.Items = items;
 
         this.myDomainService.UpdateFeatures(myServiceHelper).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
             else {
                 this.myDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse1: ServiceResponse) => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (myResponse1.HasError) {
                         this.ValidationErrorsList = myResponse1.ErrorsArray;
                     }
 
                     else {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                        this.CurrentSession.CloseCurrentWindowEmit("Ok");
                     }
                 });
             }

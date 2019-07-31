@@ -9,6 +9,10 @@
 
 
 import {ARPaymentInvoicePM} from './ARPaymentInvoicePM';
+
+import {LedgerTransactionPM} from './../../Accounting/EntityPMs/LedgerTransactionPM';
+
+import {ARPaymentChequeReplicaPM} from './ARPaymentChequeReplicaPM';
 import {ARPaymentPMCustomCode} from '../EntityPMCustomCode/ARPaymentPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -464,7 +468,98 @@ export class ARPaymentPM {
     public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
+    private approvedDate: Date;
+    public get ApprovedDate() { return this.approvedDate; }
+    public set ApprovedDate(newValue: Date) { if (this.approvedDate != newValue) { this.approvedDate = newValue; this.MarkAsDirty("ApprovedDate"); } }
+       
+	 
+    private approvedByUserId: string;
+    public get ApprovedByUserId() { return this.approvedByUserId; }
+    public set ApprovedByUserId(newValue: string) { if (this.approvedByUserId != newValue) { this.approvedByUserId = newValue; this.MarkAsDirty("ApprovedByUserId"); } }
+       
+	 
+    private firstApproveDate: Date;
+    public get FirstApproveDate() { return this.firstApproveDate; }
+    public set FirstApproveDate(newValue: Date) { if (this.firstApproveDate != newValue) { this.firstApproveDate = newValue; this.MarkAsDirty("FirstApproveDate"); } }
+       
+	 
+    private isFullAccounting: boolean;
+    public get IsFullAccounting() { return this.isFullAccounting; }
+    public set IsFullAccounting(newValue: boolean) { if (this.isFullAccounting != newValue) { this.isFullAccounting = newValue; this.MarkAsDirty("IsFullAccounting"); } }
+       
+	 
+    private gLAccountId: string;
+    public get GLAccountId() { return this.gLAccountId; }
+    public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
+       
+	 
+    private gLAccountRecoMethodCode: string;
+    public get GLAccountRecoMethodCode() { return this.gLAccountRecoMethodCode; }
+    public set GLAccountRecoMethodCode(newValue: string) { if (this.gLAccountRecoMethodCode != newValue) { this.gLAccountRecoMethodCode = newValue; this.MarkAsDirty("GLAccountRecoMethodCode"); } }
+       
+	 
+    private fechaPago: Date;
+    public get FechaPago() { return this.fechaPago; }
+    public set FechaPago(newValue: Date) { if (this.fechaPago != newValue) { this.fechaPago = newValue; this.MarkAsDirty("FechaPago"); } }
+       
+	 
+    private isExternalEntity: boolean;
+    public get IsExternalEntity() { return this.isExternalEntity; }
+    public set IsExternalEntity(newValue: boolean) { if (this.isExternalEntity != newValue) { this.isExternalEntity = newValue; this.MarkAsDirty("IsExternalEntity"); } }
+       
+	 
+     
+	private invoicesLedgerTransactions: LedgerTransactionPM[];
+    get  InvoicesLedgerTransactions() {
+        if (this.invoicesLedgerTransactions == null) {
+            this.invoicesLedgerTransactions = [];
+        }
 
+        return this.invoicesLedgerTransactions;
+    }
+    set  InvoicesLedgerTransactions(newValue: LedgerTransactionPM[]) {
+        if (this.invoicesLedgerTransactions != newValue) {
+            this.invoicesLedgerTransactions = newValue;
+        }
+    }
+    //public InvoicesLedgerTransactions: Array<LedgerTransactionPMPM>= [];
+      
+	private aRPaymentChequeReplicas: ARPaymentChequeReplicaPM[];
+    get  ARPaymentChequeReplicas() {
+        if (this.aRPaymentChequeReplicas == null) {
+            this.aRPaymentChequeReplicas = [];
+        }
+
+        return this.aRPaymentChequeReplicas;
+    }
+    set  ARPaymentChequeReplicas(newValue: ARPaymentChequeReplicaPM[]) {
+        if (this.aRPaymentChequeReplicas != newValue) {
+            this.aRPaymentChequeReplicas = newValue;
+        }
+    }
+    public AddARPaymentChequeReplicaPM(item: ARPaymentChequeReplicaPM) {
+        if (item != null) {
+            var index = this.ARPaymentChequeReplicas.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. ARPaymentChequeReplicas.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveARPaymentChequeReplicaPM(item: ARPaymentChequeReplicaPM) {
+        if (item != null) {
+            var index = this.ARPaymentChequeReplicas.indexOf(item);
+            if (index > -1) {
+                this. ARPaymentChequeReplicas.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
+ 
     public OldEntityPM: ARPaymentPM;
 		
     public IsDirty: boolean;

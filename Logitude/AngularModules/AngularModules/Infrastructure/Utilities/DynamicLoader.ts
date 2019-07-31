@@ -206,8 +206,9 @@ export class DynamicLoader {
             case "CRMModules/CRMOthers": { myResult = "CRMModules/CRMOthers/ModuleCRMOthers#ModuleCRMOthers"; break; }
             case "CRMModules/CRMStages": { myResult = "CRMModules/CRMStages/ModuleCRMStages#ModuleCRMStages"; break; }
             case "CRMModules/CRMTickets": { myResult = "CRMModules/CRMTickets/ModuleCRMTickets#ModuleCRMTickets"; break; }
+            case "CRMModules/CRMOccasion": { myResult = "CRMModules/CRMOccasion/ModuleCRMOccasion#ModuleCRMOccasion"; break; }
 
-
+                
             
                  
              //Customs
@@ -246,6 +247,7 @@ export class DynamicLoader {
             case "InvoiceModules/ARInvoice": { myResult = "InvoiceModules/ARInvoice/ModuleARInvoice#ModuleARInvoice"; break; }
             case "InvoiceModules/ARPayment": { myResult = "InvoiceModules/ARPayment/ModuleARPayment#ModuleARPayment"; break; }
             case "InvoiceModules/Transfer": { myResult = "InvoiceModules/Transfer/ModuleTransfer#ModuleTransfer"; break; }
+            case "InvoiceModules/InvoiceStocks": { myResult = "InvoiceModules/InvoiceStocks/ModuleInvoiceStocks#ModuleInvoiceStocks"; break; }
 
                 //Quote
             case "Quote": { myResult = "Quote/Module_QUOT#QuoteModule"; break; }
@@ -272,6 +274,10 @@ export class DynamicLoader {
             case "Social": { myResult = "Social/Module_SOCL#SocialModule"; break; }
             case "TimeManagement": { myResult = "TimeManagement/Module_TIME#TimeManagementModule"; break; }
             case "Warehouse": { myResult = "Warehouse/Module_WARH#WarehouseModule"; break; }
+            case "TariffModule": { myResult = "TariffModule/Module_Tariff#Tariff_Module"; break; }
+
+
+
         }
 
         return myResult;

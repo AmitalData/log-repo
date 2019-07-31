@@ -48,7 +48,7 @@ export class ImporterDeclarationComponent
     public SecurityDeclarationList: ObservableCollection;
 
     public DeclarationConectFilterList: CodeNameClass[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.PeriodDeclarationList = new ObservableCollection([]);
@@ -298,7 +298,7 @@ export class ImporterDeclarationComponent
 
     //#region General Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     FillErrors() {

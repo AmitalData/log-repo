@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {CardPM} from '../../../../../Common/EntityPMs/CardPM';
 import {ContactPM} from '../../../../../Common/EntityPMs/ContactPM';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
@@ -18,6 +18,7 @@ export class PartnersTabComponent {
     public ItemsSource: CardPM[];
     private CardService: CardPMService;
     private DomainService: PartnersDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.DomainService = new PartnersDomainService();
@@ -38,7 +39,7 @@ export class PartnersTabComponent {
         if (item != null) {
             var itemTableName = item.PartnerTypeId == "PO" ? "Customer" : item.PartnerTypeName;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: item.Id, ObjectTableName: itemTableName });

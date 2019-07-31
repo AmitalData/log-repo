@@ -1,3 +1,4 @@
+/// <reference path="../../../datacontracts/automationargs.ts" />
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
@@ -37,19 +38,18 @@ import {AutomationConditionViewModel} from './ViewModel/AutomationConditionViewM
 import {ResultEmailRecipientViewModel} from './ViewModel/ResultEmailRecipientViewModel';
 import {AutomationSetValueViewModel} from './ViewModel/AutomationSetValueViewModel';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
-import {TraceEventExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {CodeNameClass} from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import {AutomationQueuedTask} from '../../../../Infrastructure/DataContracts/AutomationQueuedTask';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-
+import {AutomationArgs} from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 @Component({
     moduleId: module.id,
     selector: 'AddEditAutomationsComponent',
     templateUrl: './AddEditAutomationsComponent.html',
-    providers: [DocumentTypeTemplatePMExtendedService, AutomationResultEmailRecipientExtendedService, AutomationExtendedPMService, AutomationHistoryExtendedPMService, EntityArgs, TraceEventExtendedPMService],
+    providers: [DocumentTypeTemplatePMExtendedService, AutomationResultEmailRecipientExtendedService, AutomationExtendedPMService, AutomationHistoryExtendedPMService, EntityArgs],
 })
 
 export class AddEditAutomationsComponent extends BaseComponent implements OnInit {
@@ -136,10 +136,13 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     public FollowDateEscalationActionTimeIndicatorCode: string = "";
 
     FollowUpNote: string = "";
-    EventTypeCode: string;
-   
-    constructor(public _automationResultEmailRecipientExtendedService: AutomationResultEmailRecipientExtendedService,   public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs, public _traceEventExtendedPMService: TraceEventExtendedPMService) {
+    Code: string;
+    IsShowAutomationCodeField: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor(public _automationResultEmailRecipientExtendedService: AutomationResultEmailRecipientExtendedService,   public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
         super();
+
+        if (SessionLocator.TenantPM.Id == 0) this.IsShowAutomationCodeField = true;
 
         this._documentTypeListService = new DocumentTypeListService();
     }
@@ -168,7 +171,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.InactiveKey = Guid.newGuid();
         this.IsMasterShipment = args.IsMasterShipment;
         this.entityArgs.EntityPM = this.CurrentEntityPM;
-        this.entityArgs.ObjectTableName = this.ObjectTableName;
+        this.entityArgs.ObjectTableName = "Automation";
         this.SLAHeaderLists = [];
 
         this.BuildQueuedTaskFilters();
@@ -243,7 +246,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
    
     LoadDocumentType() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.DocumentTypeLists = [];
         this.AllDocumentTypeLists = [];
 
@@ -283,20 +286,20 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                         this.LoadDocumentTypeTemplate(this.DocumentTypeSelected);
                     }
 
-                    else SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    else this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     this.IsEnableAddTemplate = true;
                 }
                 else {
                     this.IsEnableAddTemplate = false;
                     this.IsEnableEditTemplate = false;
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 }
             }
 
             else {
                 this.IsEnableAddTemplate = false;
                 this.IsEnableEditTemplate = false;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
         });
     }
@@ -306,7 +309,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
 
@@ -527,7 +530,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ResultCodeList.push(new ResultCode("F/U Creation", "FOLLOWUP"));
                 this.ResultCodeList.push(new ResultCode("Docs Out F/U Creation", "DOCOUTFOLLOWUP"));
                 this.ResultCodeList.push(new ResultCode("Docs In F/U Creation", "DOCINFOLLOWUP"));
-                this.ResultCodeList.push(new ResultCode("Queued Task", "QUEUE"));
+
+                if (FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessQueue")) {
+                    this.ResultCodeList.push(new ResultCode("Queued Task", "QUEUE"));
+                }                
             }
 
             this.ResultCodeSelected = this.ResultCodeList.filter(d => d.Code == this.AutomatedBackupClass.ResultCode)[0];
@@ -630,7 +636,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.IsActiveAutomation = this.CurrentEntityPM.Inactive;
             this.DelayTime = this.AutomatedBackupClass.Delaytime;
             this.IsAutomationResultEmailAllActiveUsers = this.AutomatedBackupClass.IsAutomationResultEmailAllActiveUsers;
-
+            this.Code = this.CurrentEntityPM.Code;
             this.FillObjectField();
             this.LoadAutomationHistory();
             this.LoadDocumentType();
@@ -638,7 +644,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         this.IsLoadingComplete = true;
     }
-    
+
+
+
     DelaytimeIndicatorChange(value) {
 
         if (value != null && value.Code != this.DelaytimeIndicator) {
@@ -822,8 +830,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-        SessionLocator.CurrentSession.CurrentWindow.Close("Cancel");
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        this.CurrentSession.CurrentWindow.Close("Cancel");
     }
     
     AddAutomationConditionMethod(conditionType: string) {
@@ -838,7 +846,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automationConditionPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         automationConditionPM.OperatorCode = "Equals";
         automationConditionPM.ObjectFieldId = "";
-        automationConditionPM.AutomationsId = this.CurrentEntityPM.Id;
         
         if (conditionType == "And") {
             this.AutomationCondationAndList.push(new AutomationConditionViewModel(automationConditionPM, this));
@@ -915,7 +922,28 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     IsChangeCondition: boolean = false;
     IsChangeSetValue: boolean = false;
     ParticipantsList: any[] = []; 
-    EventTypeCodeList: string[] = [];
+
+
+    ExsitCode: string = "";
+    AutomationCodeValueChange(value) {
+        if (this.Code && this.ExsitCode != this.Code) {
+            this.ExsitCode = this.Code;
+            this._automationExtendedPMService.GetDoesAutomationCodeExist(this.Code).subscribe(res => {
+
+                    var pmResponse: ServiceResponse = res;
+                    if (!pmResponse.HasError) {
+                        var myResult = pmResponse.Result;
+                        if (myResult == true) {
+                            this.ValidationErrorsList = [];
+                            this.ValidationErrorsList.push("The code " + this.Code + " already exists");
+                        } else this.ValidationErrorsList = [];
+                    }
+                });
+
+        }
+
+    }
+
 
     SaveButtonClicked() {
         this.ParticipantsList = [];
@@ -936,11 +964,12 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         if (this.Name != this.CurrentEntityPM.Name || this.Description != this.CurrentEntityPM.Description || this.Inactive != this.IsActiveAutomation) this.IsChangeAutomation = true;
 
         this.CurrentEntityPM.Name = this.Name;
+        this.CurrentEntityPM.Code = this.Code;
         this.CurrentEntityPM.Description = this.Description;
         this.CurrentEntityPM.Inactive = this.Inactive;
 
         var isFollowUp: boolean = this.IsFollowUp();
-  
+
         if (isFollowUp) {
             this.AutomationFollowUp.OwnerValue = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.FollowOwnerObjectFieldId : this.FollowUpOwnerId;
             this.AutomationFollowUp.NoteValue = this.FollowUpNote;
@@ -980,7 +1009,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 }
             }
         }
-        
+
+
+
         if (this.CurrentEntityPM.ResultCode == "QUEUE") {
             this.AutomationQueuedTask.QueueId = this.QueueId;
             this.AutomationQueuedTask.TeamId = this.TeamId;
@@ -994,6 +1025,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.AutomationQueuedTask.TaskCustomerId = this.TaskCustomerId;
             this.AutomationQueuedTask.TaskPriorityId = this.TaskPriorityId;
         }
+
+
 
         if (AppTool.IsNullOrEmpty(this.CurrentEntityPM.Name)) {
             this.ValidationErrorsList.push("Name field is required");
@@ -1053,55 +1086,68 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
         }
 
-
+        if (this.IsShowAutomationCodeField && AppTool.IsNullOrEmpty(this.Code)) {
+            this.ValidationErrorsList.push("Code field is required");
+        }
 
         if (this.ValidationErrorsList.length == 0) {
+
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.SaveAutomationBackup();
+            this.SaveAutomationResultEmailRecipientLists();
+
+
             if (this.IsNewEntity) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-                this.EventTypeCode = "AUCR";
-                this.CurrentEntityPM.AutomatedDataBackup = null;
-                this.CurrentEntityPM.IsChangeAutomationXaml = false;
                 this._automationExtendedPMService.insert(this.CurrentEntityPM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         ServiceLocator.SendTotangoUserActivity("Automation", "New Automation");
-
-
                         var myResult = pmResponse.Result;
                         this.CurrentEntityPM = myResult;
-
-                        if (this.IsActiveAutomation != this.CurrentEntityPM.Inactive) {
-
-                            if (this.CurrentEntityPM.Inactive) this.EventTypeCodeList.push("AUSI");
-                            else this.EventTypeCodeList.push("AURE");
-                        }
-
-                        this.SaveAutomationResultEmailRecipient();
+                        this.DataViewModel.RefreshAutomation(this.CurrentEntityPM, "Add");
+                        this.CloseButtonClicked();
                     }
 
                     else {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
                 });
             }
 
             else {
-                if ((this.IsChangeCondition || this.IsChangeSetValue || this.IsChangeAutomation) || (isFollowUp && this.CheckIfAutomationFollowUpChange()) || this.CheckIfAutomationSetSLAValueChange() || this.CheckIfAutomationQueuedTaskChange()) {
-                    SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+                if ((this.IsChangeCondition || this.IsChangeSetValue || this.IsChangeAutomation) || (isFollowUp && this.CheckIfAutomationFollowUpChange()) || (this.CurrentEntityPM.ResultCode == "SETSLA" && this.CheckIfAutomationSetSLAValueChange()) || (this.CurrentEntityPM.ResultCode == "QUEUE" && this.CheckIfAutomationQueuedTaskChange())) {
+                    this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+                    this.CurrentEntityPM.Version += 1;
+                    this.CurrentEntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+                    this._automationExtendedPMService.update(this.CurrentEntityPM).subscribe(res => {
+                        var pmResponse: ServiceResponse = res;
+                        if (!pmResponse.HasError) {
+                            ServiceLocator.SendTotangoUserActivity("Automation", "Edit Automation");
 
-                    if (this.IsActiveAutomation != this.CurrentEntityPM.Inactive) {
-                        if (this.CurrentEntityPM.Inactive) this.EventTypeCodeList.push("AUSI");
-                        else this.EventTypeCodeList.push("AURE");
-                    }
+                            var myResult = pmResponse.Result;
+                            this.CurrentEntityPM = myResult;
+                            this.DataViewModel.RefreshAutomation(this.CurrentEntityPM, "Edit");
+                        
+                            this.CloseButtonClicked();
 
-
-                    this.SaveAutomationResultEmailRecipient();
+                        }
+                        else {
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        }
+                    });
                 }
 
                 else this.CloseButtonClicked();
             }
         }
     }
+
+
+    SaveAutomationResultEmailRecipientLists() {
+
+        if (this.CurrentEntityPM.ResultCode == "EMAIL") this.CurrentEntityPM.AutomationResultEmailRecipientLists = this.BuildAutomationResultEmailRecipient();
+    }
+
 
     IsFollowUp() {
 
@@ -1115,10 +1161,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.AutomationSetSLAValue.SLAId = value;
     }
     
-    SaveAutomationResultEmailRecipient() {
+    BuildAutomationResultEmailRecipient() {
         var resultEmailRecipientPMLists: AutomationResultEmailRecipientPM[] = [];
 
-        if (this.CurrentEntityPM.ResultCode == "EMAIL") {
             this.ParticipantsList.forEach((userid) => {
                 if (!this.AutomationResultEmailRecipientPMList.filter(d => d.RecipientValue == userid && (d.RecipientType == "Fixed"))[0]) {
                     var automationResultEmailRecipientPM: AutomationResultEmailRecipientPM = new AutomationResultEmailRecipientPM();
@@ -1165,31 +1210,20 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     }
                 }
             });
-        }
+        
 
-        if (resultEmailRecipientPMLists.length > 0) {
-            this._automationResultEmailRecipientExtendedService.update(resultEmailRecipientPMLists).subscribe(res => {
-                var pmResponse: ServiceResponse = res;
-                if (!pmResponse.HasError) {
-                    var myResult = pmResponse.Result;
-                    this.SaveAutomation();
-                }
+        return resultEmailRecipientPMLists;
 
-                else {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                }
-            });
-        }
-
-        else this.SaveAutomation();
     }
 
-    SaveAutomation() {
+
+
+    SaveAutomationBackup() {
+
         var automationConditionList: AutomationCondition[] = [];
         var automationSetValuelist: AutomationSetValue[] = [];
 
         this.AutomationCondationAndList.forEach((item) => {
-            item.CurrentEntityPM.AutomationsId = this.CurrentEntityPM.Id;
             item.CurrentEntityPM.UpdateDate = this.CurrentEntityPM.UpdateDate;
             item.CurrentEntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
             automationConditionList.push(item.CurrentEntityPM);
@@ -1197,7 +1231,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         });
 
         this.AutomationCondationOrList.forEach((item) => {
-            item.CurrentEntityPM.AutomationsId = this.CurrentEntityPM.Id;
             item.CurrentEntityPM.UpdateDate = this.CurrentEntityPM.UpdateDate;
             item.CurrentEntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
             automationConditionList.push(item.CurrentEntityPM);
@@ -1211,13 +1244,13 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
 
-        var automatedBackup: AutomatedBackup = new AutomatedBackup();
 
+
+        var automatedBackup: AutomatedBackup = new AutomatedBackup();
         automatedBackup.Name = this.CurrentEntityPM.Name;
         automatedBackup.CreateDate = this.CurrentEntityPM.CreateDate;
         automatedBackup.Description = this.CurrentEntityPM.Description;
         automatedBackup.ResultCode = this.CurrentEntityPM.ResultCode;
-        automatedBackup.Id = this.CurrentEntityPM.Id;
         automatedBackup.Version = this.CurrentEntityPM.Version;
         automatedBackup.UpdateDate = this.CurrentEntityPM.UpdateDate;
         automatedBackup.Delaytime = this.DelayTime;
@@ -1226,68 +1259,16 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.DelayAautomationConditionLists = this.AutomatedBackupClass.DelayAautomationConditionLists;
         automatedBackup.AautomationConditionLists = automationConditionList;
         automatedBackup.IsAutomationResultEmailAllActiveUsers = this.IsAutomationResultEmailAllActiveUsers;
-
-        if (this.CurrentEntityPM.ResultCode == "FIELDSET") automatedBackup.AutomationSetValueLists = automationSetValuelist;
-        else if (this.CurrentEntityPM.ResultCode == "SETSLA") automatedBackup.AutomationSetSLAValue = this.AutomationSetSLAValue;
-        else if (this.IsFollowUp()) automatedBackup.AutomationFollowUp = this.AutomationFollowUp;
-        else if (this.CurrentEntityPM.ResultCode == "QUEUE") automatedBackup.AutomationQueuedTask = this.AutomationQueuedTask;
-
+        automatedBackup.AutomationSetValueLists = this.CurrentEntityPM.ResultCode == "FIELDSET" ? automationSetValuelist : null;
+        automatedBackup.AutomationSetSLAValue = this.CurrentEntityPM.ResultCode == "SETSLA" ? this.AutomationSetSLAValue : null;
+        automatedBackup.AutomationQueuedTask = this.CurrentEntityPM.ResultCode == "QUEUE" ? this.AutomationQueuedTask : null;
+        automatedBackup.AutomationFollowUp = this.IsFollowUp() ? this.AutomationFollowUp : null;
         this.CurrentEntityPM.AutomatedDataBackup = automatedBackup;
-        this.CurrentEntityPM.IsChangeAutomationXaml = true;
-        this.CurrentEntityPM.Version += 1;
-        this.CurrentEntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-
-        this._automationExtendedPMService.update(this.CurrentEntityPM).subscribe(res => {
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-                if (!this.IsNewEntity) {
-                    ServiceLocator.SendTotangoUserActivity("Automation", "Edit Automation");
-                }
-                var myResult = pmResponse.Result;
-                this.CurrentEntityPM = myResult;
-
-                if (this.CurrentEntityPM && this.IsNewEntity) {
-                    this.DataViewModel.RefreshAutomation(this.CurrentEntityPM, "Add");
-                }
-                else {
-                    this.DataViewModel.RefreshAutomation(this.CurrentEntityPM, "Edit");
-                }
-
-                if (AppTool.IsNullOrEmpty(this.EventTypeCode)) {
-                    this.EventTypeCodeList.push("AUUP");
-                }
-                else {
-                    this.EventTypeCodeList.push("AUCR");
-                }
-
-                this.EventTypeCode = "";
-                this.SaveTraceEvent();
-            }
-            else {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-            }
-        });
     }
 
-    SaveTraceEvent() {   
-        if (this.EventTypeCodeList  && this.EventTypeCodeList.length != 0) {
-            var traceEventArgs: EventTypeArgs = new EventTypeArgs();
-            traceEventArgs.EventTypeCodeList = this.EventTypeCodeList;
-            traceEventArgs.Tenant = SessionLocator.Tenant;
-            traceEventArgs.ObjectTableId = this.ObjectTableId;
-            traceEventArgs.EntityId = this.CurrentEntityPM.Id;
-            traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
-            
-            this._traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {    
-                this.CloseButtonClicked();
-            });
-        }
 
-        else {
-            this.CloseButtonClicked();
-        }
-    }
-    
+
+
     CheckIfAutomationSetSLAValueChange() {
         var isChange: boolean = false;
         if (this.CurrentEntityPM.ResultCode == "SETSLA") {

@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import {Http} from '@angular/http';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
@@ -25,6 +25,7 @@ export class Export2ExcelControl {
     Filters: ApiQueryFilters;
     url: string;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);//true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private http: Http) {
         ServiceHelper.Http = http;
         //serviceArgs.http = http;
@@ -74,7 +75,7 @@ export class Export2ExcelControl {
             window.open(url);
         }
         
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveBtnCLicked() {
@@ -108,7 +109,7 @@ export class Export2ExcelControl {
         //    exportExcelService.Abort();
         //    exportExcelService.ExportQueryToExcelCompleted -= new EventHandler<ExportQueryToExcelCompletedEventArgs>(exportExcelService_ExportQueryToExcelCompleted);
         //}
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

@@ -1,4 +1,4 @@
-﻿
+
 declare var window: any;
 import {Component, OnInit, EventEmitter}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
@@ -27,8 +27,9 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
     OnCloseWindowEvent = new EventEmitter();
     ObjectTableId: string;
     FullComponentsVisibility: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypePMExtendedService: DocumentTypePMExtendedService) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
     }
 
     ngOnInit(
@@ -65,7 +66,7 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
 
                 this.LoadTenantData();
             }
-            else SessionLocator.CurrentSession.StopBusyIndicator();
+            else this.CurrentSession.StopBusyIndicator();
         });
 
 
@@ -83,7 +84,7 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
                 this.BuildData();
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
 
     }
@@ -135,14 +136,14 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
 
     SaveButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.myTenantList = [];
         this.DocumentPermissiosLists.forEach((item) => {
 

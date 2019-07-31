@@ -46,6 +46,9 @@ export class FullAccountingSettingList {
 	DefaultDifferencesGLAccountId: string;
 	DefaultExternalDiffGLAccountId: string;
 	SoftwareVersion: string;
+	IsPaymentChequesActivated: boolean;
+	GLAccounterCounterLength: number;
+	PaymentChequesLogoId: string;
 	
 }
  

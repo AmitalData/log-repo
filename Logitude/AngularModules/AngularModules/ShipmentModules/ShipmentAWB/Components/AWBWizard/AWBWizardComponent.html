@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SquareIcon {
         width: 10px;
@@ -356,7 +356,7 @@
                 <tr>
                     <td style="width: 1px; vertical-align: middle;">
                         <div class="SquareIcon" style="background: #E45A26; font-size: 11px; color: Gray; font-family: Arial; text-indent: 15px;">Required fields for creation of shipment</div>
-                        <div class="SquareIcon" style="background: #FFCB00; font-size: 11px; color: Gray; font-family: Arial; text-indent: 15px; margin-top: 2px;">{{YellowIconHelpMessage}}</div>
+                        <div class="SquareIcon" style="background: #FFCB00; font-size: 11px; color: Gray; font-family: Arial; text-indent: 15px; margin-top: 2px;" *ngIf="!IsImportWizard">{{YellowIconHelpMessage}}</div>
                     </td>
 
                     <td>
@@ -376,7 +376,7 @@
                                             <button (click)="CopyShipmentClicked()">Copy Shipment</button>
                                             <button (click)="CancelShipmentClicked()" [disabled]="IsCancelButtonDisabled">Cancel Shipment</button>
                                             <button (click)="ReactivateShipmentClicked()" [disabled]="IsReactivateButtonDisabled">Reactivate Shipment</button>
-                                            <button (click)="SendToAirlineTenantClicked()" *ngIf="IsSendToAirlineTenantVisible">Send to airline tenant</button>
+                                            <button (click)="SendToAirlineTenantClicked()" *ngIf="IsSendToAirlineTenantVisible &&!IsImportWizard">Send to airline tenant</button>
                                         </div>
                                     </div>
                                 </td>
@@ -413,21 +413,21 @@
                     </td>
 
                     <!-- Send -->
-                    <td style="width: 5px;" *ngIf="IsSendVisible">
+                    <td style="width: 5px;" *ngIf="IsSendVisible &&!IsImportWizard">
                         <div></div>
                     </td>
-                    <td style="width: 1px;" *ngIf="IsSendVisible">
+                    <td style="width: 1px;" *ngIf="IsSendVisible &&!IsImportWizard">
                         <button class="Button" (click)="SendClicked()">{{SendAWBLabel}}</button>
                     </td>
-                    <td style="width: 5px;" *ngIf="IsSendFHLsVisible">
+                    <td style="width: 5px;" *ngIf="IsSendFHLsVisible &&!IsImportWizard">
                         <div></div>
                     </td>
-                    <td style="width: 1px;" *ngIf="IsSendFHLsVisible">
+                    <td style="width: 1px;" *ngIf="IsSendFHLsVisible &&!IsImportWizard">
                         <button class="Button" (click)="SendFHLsClicked()">Send FHL(s)</button>
                     </td>
 
                     <!-- Cargonaut -->
-                    <td style="width: 1px;" *ngIf="IsCargonautVisibile">
+                    <td style="width: 1px;" *ngIf="IsCargonautVisibile &&!IsImportWizard">
                         <table>
                             <tr>
                                 <td style="width: 5px; min-width: 5px;" *ngIf="IsCargonautButtonVisibile">
@@ -458,7 +458,7 @@
                     </td>
 
                     <!-- DEXX -->
-                    <td style="width: 1px;" *ngIf="IsDEXXVisibile">
+                    <td style="width: 1px;" *ngIf="IsDEXXVisibile &&!IsImportWizard">
                         <table>
                             <tr>
                                 <td style="width: 5px; min-width: 5px;" *ngIf="IsDEXXButtonVisibile">

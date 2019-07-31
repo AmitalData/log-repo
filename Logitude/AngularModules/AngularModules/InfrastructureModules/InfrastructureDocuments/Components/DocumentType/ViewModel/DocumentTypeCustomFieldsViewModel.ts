@@ -36,7 +36,7 @@ export class DocumentTypeCustomFieldsViewModel {
     //        this.EntityPM.IsRequired = newValue;
     //    }
     //}
-
+    Name: string;
 
     public constructor(entityPM: any) {
 
@@ -47,7 +47,7 @@ export class DocumentTypeCustomFieldsViewModel {
         this.DefaultValue = entityPM.DefaultValue;
         this.FieldCode = entityPM.FieldCode;
         this.FieldDataTypeCode = entityPM.FieldDataTypeCode;
-       
+        this.Name = entityPM.Name;
         this.IsRequired = entityPM.IsRequired;
         this.InActive = entityPM.InActive;
     }

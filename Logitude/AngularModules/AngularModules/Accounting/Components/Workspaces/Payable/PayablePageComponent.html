@@ -58,7 +58,7 @@
                         <table>
                             <tr class="SectionHeader">
                                 <td>
-                                    <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.VendorsQueries' | TextCodeTranslationPipe}}</label>
+                                    <label float-start style="margin-right: 10px;">{{'Accounting.General.O.VendorsQueries' | TextCodeTranslationPipe}}</label>
                                 </td>
                             </tr>
 
@@ -94,18 +94,18 @@
                                                                     </tr>-->
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="activeVendorsGLAVisibility" (click)="ViewVendorQuery('ActiveVendorsGLAccounts')"> {{'GLAccounts.Q.ActiveVendors' | TextCodeTranslationPipe}} ({{glAccountSummary.ActiveVendorsCount}})</p>
+                                                                            <p class="QueryLink" *ngIf="activeVendorsGLAVisibility" (click)="ViewVendorQuery('ActiveVendorsGLAccounts')"> {{'GLAccounts.Q.ActiveVendors' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="inactiveVendorsGlaVisibility" (click)="ViewVendorQuery('InactiveVendorsGLAccount')"> {{'GLAccounts.Q.InactiveVendors' | TextCodeTranslationPipe}} ({{glAccountSummary.InactiveVendorsCount}})</p>
+                                                                            <p class="QueryLink" *ngIf="inactiveVendorsGlaVisibility" (click)="ViewVendorQuery('InactiveVendorsGLAccount')"> {{'GLAccounts.Q.InactiveVendors' | TextCodeTranslationPipe}}</p>
                                                                         </td>
                                                                     </tr>
 
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="CLIENTGLACCOUNTSGlaVisibility" (click)="ViewVendorQuery('All Vendors')"> {{'GLAccounts.Q.AllVendors' | TextCodeTranslationPipe}} ({{glAccountSummary.AllVendorsCount}})</p>
+                                                                            <p class="QueryLink" *ngIf="CLIENTGLACCOUNTSGlaVisibility" (click)="ViewVendorQuery('All Vendors')"> {{'GLAccounts.Q.AllVendors' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
 
@@ -124,9 +124,9 @@
 
                                             <!-- General Invoices-->
                                             <div class="QueriesSection">
-                                                <div>{{'General.O.Invoices' | TextCodeTranslationPipe}}</div>
+                                                <div>{{'Accounting.General.O.APInvoices' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button class="Button" (click)="NewGeneralAPInvoice()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button id="{{'NewAPInvoice' | IdGeneratorPipe}}" class="Button" (click)="NewGeneralAPInvoice()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <!--<div>
                                                     <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Draft General APInvoices')">{{'APInvoice.Q.DraftGeneralInvoices' | TextCodeTranslationPipe}}</p>
@@ -135,7 +135,7 @@
                                                 </div>-->
                                                 <div>
                                                     <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Waiting for Approval')">{{'APInvoice.Q.WaitingApprovalAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesDraftsCount}})</p>
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Unpaid Invoices')">{{'APInvoice.Q.UnpaidAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesUnpaidCount}})</p>
+                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Unpaid Invoices')">{{'APInvoice.Q.UnpaidAPInvoices'|TextCodeTranslationPipe}} </p>
                                                     <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:All Invoices')">{{'APInvoice.Q.AllAPInvoices'|TextCodeTranslationPipe}}</p>
                                                 </div>
                                             </div>
@@ -144,23 +144,23 @@
 
                                             <!-- APPayment -->
                                             <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{'Accounting.General.O.Payments' | TextCodeTranslationPipe}}</div>
+                                                <div>{{'Accounting.General.O.APPayments' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button class="Button" (click)="NewAPPaymentMethod()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button id="{{'NewAPPayment' | IdGeneratorPipe}}" class="Button" (click)="NewAPPaymentMethod()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>
                                                         <tr>
                                                             <td>
                                                                 <table>
-                                                                    <tr>
+                                                                    <!--<tr>
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Draft Payments')"> {{'APPayment.Q.DraftAPPayments' | TextCodeTranslationPipe}}  ({{APPaymentsDraftsCount}})</p>
                                                                         </td>
-                                                                    </tr>
+                                                                    </tr>-->
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')"> {{'APPayment.Q.OpenAPPayments' | TextCodeTranslationPipe}}  ({{APPaymentsOpenedCount}})</p>
+                                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')"> {{'APPayment.Q.OpenAPPayments' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -204,7 +204,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td>
-                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{RecentGLAccountsCount}} {{'Accounting.General.O.RecentVendors' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{RecentGLAccountsCount}} {{'Accounting.General.O.RecentVendors' | TextCodeTranslationPipe}}</label>
 
                                             </td>
                                         </tr>

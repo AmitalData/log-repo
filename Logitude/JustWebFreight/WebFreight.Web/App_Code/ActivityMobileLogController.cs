@@ -14,7 +14,7 @@ namespace WebFreight.Web.App_Code
         {
             if (cardId == "null")
             {
-                cardId = null;
+                cardId = null; 
             } 
 
             if (module == "Help Center")
@@ -22,7 +22,7 @@ namespace WebFreight.Web.App_Code
                 ActivityLog.SendTotangoContactActivity(email, module, activity, tenant, false, cardId, null);
             }
 
-            else
+            else 
             {
                 ActivityLog.SendTotangoContactActivity(email, module, activity, tenant, true, cardId, "Mobile");
             }

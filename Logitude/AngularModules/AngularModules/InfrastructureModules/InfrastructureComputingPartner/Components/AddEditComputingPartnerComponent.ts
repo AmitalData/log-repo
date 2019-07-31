@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -27,6 +27,7 @@ export class AddEditComputingPartnerComponent extends BaseComponent {
     public myComputingPartnerPM: ComputingPartnerPM;
     public IsNewEntity: boolean = true;
     public HiddenFields: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -119,7 +120,7 @@ export class AddEditComputingPartnerComponent extends BaseComponent {
 
         }
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public get IsEditTableAllowed() {
@@ -192,7 +193,7 @@ export class AddEditComputingPartnerComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

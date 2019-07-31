@@ -27,6 +27,8 @@ namespace Logitude.TimeManagement.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
+        [Column("Inactive")]
+	    public bool Inactive { get; set; }
     }
 }
 	 

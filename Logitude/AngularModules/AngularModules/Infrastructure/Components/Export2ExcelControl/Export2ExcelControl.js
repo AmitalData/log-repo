@@ -50,7 +50,7 @@ export var Export2ExcelControl = (function () {
         {
             window.open(url);
         }
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     };
     Export2ExcelControl.prototype.SaveBtnCLicked = function () {
         this.SaveExcelFile(this.tenant, this.FileName, this.ObjectTableName);
@@ -82,7 +82,7 @@ export var Export2ExcelControl = (function () {
         //    exportExcelService.Abort();
         //    exportExcelService.ExportQueryToExcelCompleted -= new EventHandler<ExportQueryToExcelCompletedEventArgs>(exportExcelService_ExportQueryToExcelCompleted);
         //}
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     };
     Export2ExcelControl.decorators = [
         { type: Component, args: [{

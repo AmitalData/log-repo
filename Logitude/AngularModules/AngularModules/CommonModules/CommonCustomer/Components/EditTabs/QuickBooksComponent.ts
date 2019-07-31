@@ -12,6 +12,7 @@ import {GlobalDomainService} from "../../../../Common/Services/GlobalDomainServi
 
 export class QuickBooksComponent implements OnInit {
     public EntityPM: CustomerPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.GlobalDomainService = new GlobalDomainService();
@@ -69,12 +70,12 @@ export class QuickBooksComponent implements OnInit {
     OkButtonClicked() {
         if (this.SelectedItem != null)
             this.args.SelectedEntity = this.SelectedItem;
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
 
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
 
     }
 
@@ -145,7 +146,7 @@ export class QuickBooksComponent implements OnInit {
         else {
             if (this.searchText == null)
                 this.searchText = "";
-            SessionLocator.CurrentSession.StartBusyIndicator("Searching ..");           
+            this.CurrentSession.StartBusyIndicator("Searching ..");           
             this.GlobalDomainService.GetQuickBooksQueries(this.args, this.SearchText).subscribe(myResult => {
                 this.TempList = [];
                 this.CustomersListFilterd = [];
@@ -181,7 +182,7 @@ export class QuickBooksComponent implements OnInit {
                     });
                 this.CustomersListFilterd = this.TempList;
                 this.MyCardsLabel = this.QuantityLabel + " (" + this.CustomersListFilterd.length + ")";
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
 
         }

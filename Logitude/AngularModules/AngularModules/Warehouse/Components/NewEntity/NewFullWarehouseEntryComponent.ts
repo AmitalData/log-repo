@@ -1,4 +1,4 @@
-﻿
+
 
 declare var System: any;
 declare var window: any;
@@ -85,7 +85,7 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
     ConsigneePartnerTypeId: string;
     public ScreenOpacity: number = 0.7;
     public IsScreenEnabled: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.SessionIndex = SessionLocator.Index;
@@ -1353,7 +1353,7 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
 
     CancelButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
    

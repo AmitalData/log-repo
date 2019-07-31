@@ -81,6 +81,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(/*entityPOCO.Tenant*/accContext);
                 GLAccountPM parent = gLAccountQueryService.GetSingle(entityPOCO.CreditAccountId, false, true/*false*/);
                 entityPM.CreditAccountName = parent.LocalName;
+                entityPM.CreditAccountNumber = parent.InternalNumber;
             }
 
             if (entityPOCO.CreditControlAccountId != null)
@@ -88,18 +89,22 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(/*entityPOCO.Tenant*/accContext);
                 GLAccountPM parent = gLAccountQueryService.GetSingle(entityPOCO.CreditControlAccountId, false, true/*false*/);
                 entityPM.CreditControlAccountName = parent.LocalName;
+                entityPM.CreditControlAccountNumber = parent.InternalNumber;
             }
             if (entityPOCO.DebitAccountId != null)
             {
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(/*entityPOCO.Tenant*/accContext);
                 GLAccountPM parent = gLAccountQueryService.GetSingle(entityPOCO.DebitAccountId, false, true/*false*/);
                 entityPM.DebitAccountName = parent.LocalName;
+                entityPM.DebitAccountNumber = parent.InternalNumber;
+
             }
             if (entityPOCO.DebitControlAccountId != null)
             {
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(/*entityPOCO.Tenant*/accContext);
                 GLAccountPM parent = gLAccountQueryService.GetSingle(entityPOCO.DebitControlAccountId, false, true/*false*/);
                 entityPM.DebitControlAccountName = parent.LocalName;
+                entityPM.DebitControlAccountNumber = parent.InternalNumber;
             }
         }
    }

@@ -68,6 +68,22 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.IsConnectedToShipment).HasColumnName("IsConnectedToShipment");
 
             this.Property(t => t.VolumetricWeight).HasColumnName("VolumetricWeight");
+
+            this.Property(t => t.Make).HasColumnName("Make").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.Model).HasColumnName("Model").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.Year).HasColumnName("Year").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.Color).HasColumnName("Color").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.ChassisNumber).HasColumnName("ChassisNumber").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.RegistrationNumber).HasColumnName("RegistrationNumber").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.CountryId).HasColumnName("CountryId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.CommodityNumber).HasColumnName("CommodityNumber").HasMaxLength(20).IsUnicode(false);
         }
     }
 }

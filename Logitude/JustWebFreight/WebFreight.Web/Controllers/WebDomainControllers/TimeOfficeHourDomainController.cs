@@ -65,6 +65,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             TMOfficeHourQuery query = new TMOfficeHourQuery(tenant);
 
             List<TMOfficeHourPM> myResult = query.GetTMOfficeHoursByUserIdAndDate(employeeUserId, myStartDate, myEndDate, tenant).ToList();
+            foreach(TMOfficeHourPM item in myResult)
+            {
+                if (item.ExitTime != null && item.EntryTime != null)
+                {
+                    item.Minutes = (item.ExitTime.Value - item.EntryTime.Value).TotalMinutes;
+                }
+            }
+
             return myResult;
 
         }
@@ -92,6 +100,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     OfficeHourItem.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     repository.Update(OfficeHourItem);
                 }
+
                 repository.SubmitChanges();
                 return Request.CreateResponse(HttpStatusCode.OK, args);
             }

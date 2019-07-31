@@ -61,6 +61,19 @@ namespace WebFreight.Web.App_Code
                 var NewEntityPM = new DocumentsFilingPM() { Tenant = EntityPM.Tenant };
                 Result = MapNewEntityPMToEntityPM(EntityPM, NewEntityPM);
                 var aPILogsRepository = new APILogsRepository(webFreightContext);
+                string PartnerName = "";
+                if (EntityPM.CustomerTenantNumber != null)
+                {
+                    PartnerName = EntityPM.CustomerTenantNumber.ToString();
+                    CustomerTenantAccessQuery CustomerTenantAccessQuery = new CustomerTenantAccessQuery(EntityPM.Tenant);
+                    var CustomerTenantAccess = CustomerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(EntityPM.Tenant, (int)EntityPM.CustomerTenantNumber);
+                    if (CustomerTenantAccess != null)
+                    {
+                        //LogPM.PartnerName = customerTenantAccess.CompanyName + " ( " + customerTenantAccess.CustomerTenant + " )";
+                        PartnerName = CustomerTenantAccess.CompanyName + " ( " + EntityPM.CustomerTenantNumber + " )";
+                    }
+                }
+               
                 APILogs Log = aPILogsRepository.GetSingleAPILogsByCorrelationId(CorrelationId, EntityPM.Tenant);
                 APILogsPM LogPM;
                 if (Log == null)
@@ -80,9 +93,10 @@ namespace WebFreight.Web.App_Code
                         NumberOfRetries = 1,
                         ObjectTableId = Objecttable.Id,
                         ExpirationDate = DateTime.Now.AddDays(90),
-                        //Refrence = Shipment.ShipmentNumber,
+                        Refrence = EntityPM.Code,
                         Status = "I",
-                        Tenant = EntityPM.Tenant
+                        Tenant = EntityPM.Tenant,
+                        PartnerName = PartnerName
                     };
                 }
                 else
@@ -105,6 +119,7 @@ namespace WebFreight.Web.App_Code
                         Refrence = Log.Refrence,
                         Status = "I",
                         Tenant = Log.Tenant,
+                        PartnerName = PartnerName
 
                     };
                 }

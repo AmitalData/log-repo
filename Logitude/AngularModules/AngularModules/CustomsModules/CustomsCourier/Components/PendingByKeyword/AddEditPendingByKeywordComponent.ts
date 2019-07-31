@@ -41,10 +41,10 @@ export class AddEditPendingByKeywordComponent
     constructor(public entityArgs: EntityArgs) {
         super();
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             if (AppTool.IsNullOrEmpty(entityArgs.EntityPM)) {
                 this.EntityPM = new PendingByKeywordPM();
                 this.EntityPM.Tenant = SessionLocator.Tenant;
@@ -60,9 +60,9 @@ export class AddEditPendingByKeywordComponent
 
     Loaded: boolean = false;
     ngOnInit() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             this.Loaded = true;
         });
     }
@@ -142,7 +142,7 @@ export class AddEditPendingByKeywordComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
 
 

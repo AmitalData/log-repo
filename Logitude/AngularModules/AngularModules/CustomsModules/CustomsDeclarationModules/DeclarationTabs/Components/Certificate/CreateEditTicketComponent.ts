@@ -70,7 +70,7 @@ export class CreateEditTicketComponent extends BaseComponent {
                 if (!AppTool.IsNullOrEmpty(customsSetting)) {
                     if (customsSetting.UnifreightCertificateActivated) {
                         //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-                        let myDec = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        let myDec = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                         //if (AmitalGatewayUtil.Instance.IsDeclarationInUse(myDec.CustomFileNo, myDec.IsConvertedDeclaration, myDec.IsConnectedToUnifreight)) {
                         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {     //'Search Certificate Document' Icon Is Not Appearing - Certificate Multi Entry - Edit Declaration 
                             this.IsSearchIconVisibile = true;
@@ -317,9 +317,9 @@ export class CreateEditTicketComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("no");
+        SessionLocator.SelectedSession.CloseCurrentWindowEmit("no");
 
-       // SessionLocator.CurrentSession.CloseCurrentWindow();
+       // SessionLocator.SelectedSession.CloseCurrentWindow();
     }
     FIELD_IS_REQUIERD: string;
     GetRequierdFieldErrorText(fieldName) {
@@ -520,7 +520,7 @@ export class CreateEditTicketComponent extends BaseComponent {
     public certificateTicke: CertificateTicket
     UpdateTicket() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this.certificateTicke  = new CertificateTicket();
         this.certificateTicke.DeclarationId = this.declarationId;
         this.certificateTicke.InvoiceNumber = null;
@@ -564,9 +564,9 @@ export class CreateEditTicketComponent extends BaseComponent {
         this.multiCertificatesService.PutCertificateTickets(this.certificateTicke)
             .subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
-                    //SessionLocator.CurrentSession.CloseCurrentWindow();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
+                    //SessionLocator.SelectedSession.CloseCurrentWindow();
                 }
             });
     }
@@ -581,14 +581,14 @@ export class CreateEditTicketComponent extends BaseComponent {
                     (myUnifreightMessageM.LogitudeEntity == "Customs.Declaration" || myUnifreightMessageM.LogitudeEntity == "Declaration") &&
                     myUnifreightMessageM.LogitudeEntityNumber == this.Parent.DeclarationPM.Id) {
                     sub.unsubscribe();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                     this.UnifreightCertificateCallbackAction(myUnifreightMessageM);
 
 
                 }
 
             });
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        SessionLocator.SelectedSession.StartBusyIndicator("Loading ...");
         
         this._CardListService.getSingle(this.Parent.DeclarationPM.CustomerId)
             .subscribe(res => {
@@ -656,11 +656,11 @@ export class CreateEditTicketComponent extends BaseComponent {
             funcSetTicketAndOkClick();
             return;
         }
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        SessionLocator.SelectedSession.StartBusyIndicator("Loading ...");
         
         this._ConfirmationTypeListService.getSingle(sResponseConfirmationTypeCode)
             .subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 let myConfirmationTypeList :ConfirmationTypeList=res.Result;
                 if (AppTool.IsNullOrEmpty(myConfirmationTypeList)) {
                     let msg = new MessageWindow();

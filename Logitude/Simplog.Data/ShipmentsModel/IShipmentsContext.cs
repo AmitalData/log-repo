@@ -64,6 +64,8 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentCustomsTransmission> ShipmentCustomsTransmissions { get; }
         IDbSet<INTTRAStatus> INTTRAStatuses { get; }
         IDbSet<INTTRASIStatus> INTTRASIStatus { get; }
+        IDbSet<INTTRABookingTransStatus> INTTRABookingTransStatuses { get; }
+        IDbSet<INTTRABookingStatus> INTTRABookingStatuses { get; }
         IDbSet<ShipmentContainerStatus> ShipmentContainerStatuses { get; }
         IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; }
         IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; }

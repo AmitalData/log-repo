@@ -57,7 +57,13 @@ namespace Logitude.TimeManagement.Data.EntityMapping
 
             this.Property(t => t.IsProrated).HasColumnName("IsProrated");
 
-            this.Property(t => t.ExternalProjectNumber).HasColumnName("ExternalProjectNumber").HasMaxLength(10).IsUnicode(false);
+            this.Property(t => t.ExternalProjectNumber).HasColumnName("ExternalProjectNumber").HasMaxLength(25).IsUnicode(false);
+
+            this.Property(t => t.ExcludeFromProrating).HasColumnName("ExcludeFromProrating");
+
+            this.Property(t => t.DayOffTypeCode).HasColumnName("DayOffTypeCode").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.BlockedForDataEntry).HasColumnName("BlockedForDataEntry");
         }
     }
 }

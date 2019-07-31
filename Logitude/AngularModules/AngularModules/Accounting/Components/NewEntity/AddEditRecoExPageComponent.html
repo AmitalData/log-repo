@@ -325,19 +325,36 @@
                                             </log-cell-template>
                                         </log-column>
 
-                                        <!-- Amount -->
-                                        <log-column [header]="AmountColHeader" [width]="'130'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Amount'">
+
+
+                                        <!-- DebitAmount -->
+                                        <log-column [header]="DebitAmountColHeader" [width]="'130'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DebitAmount'">
                                             <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span style="color:#00a24d;" [class.red]='item.Amount<0'>{{ item.Amount | NumbersPipe:'n2' }}</span>
+                                                    <span style="" >{{ item.DebitAmount | NumbersPipe:'n2' }}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'sigdouble'" [DataContext]="item"
-                                                                [Text]="item.Amount" [AlignTextToRight]="true"
+                                                    <LogTextBox [ObjectFieldName]="'DebitAmount'" [InputType]="'sigdouble'" [DataContext]="item"
+                                                                [Text]="item.DebitAmount" [AlignTextToRight]="true"
                                                                 [ObjectTableName]="'ReconcileExternalPageLine'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
                                         </log-column>
+
+                                        <!-- CreditAmount -->
+                                        <log-column [header]="CreditAmountColHeader" [width]="'130'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CreditAmount'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span style="" >{{ item.CreditAmount | NumbersPipe:'n2' }}</span>
+                                                </div>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [ObjectFieldName]="'CreditAmount'" [InputType]="'sigdouble'" [DataContext]="item"
+                                                                [Text]="item.CreditAmount" [AlignTextToRight]="true"
+                                                                [ObjectTableName]="'ReconcileExternalPageLine'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
 
                                         <!-- Reference -->
                                         <log-column [header]="'ReconcileExternalPageLine.F.Reference' | TextCodeTranslationPipe" [width]="'160'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference'">
@@ -406,14 +423,40 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 90px;">
+                    <td style="width: 90px;" *ngIf="!IsRestoreButtonVisibile">
                         <button class="Button" (click)="CancelApprovalButtonClicked()" [disabled]="!IsCancelApprovedEnabled">{{'BankAccounts.O.CancelPage' | TextCodeTranslationPipe}}</button>
                     </td>
+                    <td style="width: 90px;" *ngIf="IsRestoreButtonVisibile">
+                        <button class="Button" (click)="RestoreButtonClicked()">{{'Accounting.General.O.Restore' |TextCodeTranslationPipe}}</button>
+                    </td>
 
+                    <td style="width: 7px;">
+                        <div></div>
+                    </td>
+                    <td style="width: 90px;">
+                        <button class="Button" (click)="EditButtonClicked()" [disabled]="IsEditButtonDisabled">  {{'Accounting.General.O.Edit' |TextCodeTranslationPipe}} </button>
+                    </td>
+                    <td style="width: 15px;">
+                        <div>
+                            <LogToolTip *ngIf="IsEditButtonDisabled || !IsRestoreButtonVisibile" [direction]="isRTL?'bottomleft':'bottomright'">
+                                <p><span *ngIf="IsEditButtonDisabled">
+    {{
+                                    EditWindowToolTip
+    }}
+
+    <br>
+</span> {{
+                                    RestoreToolTipMessage
+                                    }}
+                                </p>
+                                <!-- <br /> -->
+                            </LogToolTip>
+                        </div>
+                    </td>
                     <td>
                         <div class="Footer" style="text-align: center;">
-                            <span style="font-size: 13px;" >{{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{ TotalSum | NumbersPipe:'N2' }}</span>
-                            <span style="font-size: 13px; padding-left: 50px;padding-right: 50px;" >{{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}: {{ Difference | NumbersPipe:'N2' }}</span>
+                            <span style="font-size: 13px;">{{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{ TotalSum | NumbersPipe:'N2' }}</span>
+                            <span style="font-size: 13px; padding-left: 50px;padding-right: 50px;">{{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}: {{ Difference | NumbersPipe:'N2' }}</span>
                         </div>
                         <div></div>
                     </td>

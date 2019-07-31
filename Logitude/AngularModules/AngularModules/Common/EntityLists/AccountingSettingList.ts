@@ -15,7 +15,8 @@ export class AccountingSettingList {
 		AllowManualInvoiceNumber: boolean;
 		IsVatNumberMandatoryInAR: boolean;
 		IsVatNumberMandatoryInAP: boolean;
-		IsChronologicalDates: boolean;
+		IsARInvoiceChronologicalDates: boolean;
+		IsARPaymentChronologicalDates: boolean;
 		AccountingSystemCode: string;
 		ReceivableVATableTempCard: string;
 		ReceivableVATExemptTempCard: string;
@@ -46,5 +47,6 @@ export class AccountingSettingList {
 		IsAPPaymentsTransferEnabled: boolean;
 		EnableNegativeOffsetARPayments: boolean;
 		EnableNegativeOffsetAPPayments: boolean;
+		EnableInvoiceStocksManagement: boolean;
 	
 }

@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {HybridPartnerList} from '../../../../Common/EntityLists/HybridPartnerList';
@@ -24,6 +24,7 @@ export class PermissionsHybridPartnerTabComponent extends BaseComponent {
     IsCompleteLoadAllowdHybrid: boolean = false;
     IsCompleteLoadAllowingHybrid: boolean = false;
     partnerId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.hybridPartnerExtendedListService = new HybridPartnerExtendedListService();
@@ -36,7 +37,7 @@ export class PermissionsHybridPartnerTabComponent extends BaseComponent {
 
     LoadData(hybridPartnerId: string) {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.LoadAllowdHybridPartner(hybridPartnerId);
         this.LoadAllowingHybridPartner(hybridPartnerId);
     }
@@ -85,7 +86,7 @@ export class PermissionsHybridPartnerTabComponent extends BaseComponent {
     StopLoading() {
 
         if (this.IsCompleteLoadAllowingHybrid && this.IsCompleteLoadAllowdHybrid) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
 
     }

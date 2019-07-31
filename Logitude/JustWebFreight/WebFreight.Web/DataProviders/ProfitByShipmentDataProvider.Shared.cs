@@ -31,7 +31,6 @@ namespace WebFreight.Web.DataProviders
         public string Signature { get; set; }
         public string TenantPhone { get; set; }
         public string TenantFax { get; set; }  
-        
         public List<ProfitByShipmentReport> ProfitByShipmentReportList { get; set; }
 
         public class ProfitByShipmentReport
@@ -48,6 +47,7 @@ namespace WebFreight.Web.DataProviders
             public double? TEU { get; set; }
             public double? Receivables { get; set; }
             public double? Payables { get; set; }
+            public double? PayablesExpectedAmount { get; set; }
             public double? Profit { get; set; }
             public double? Margin { get; set; }
             public string WeightUnit { get; set; }
@@ -93,6 +93,8 @@ namespace WebFreight.Web.DataProviders
             public string FromPortName { get; set; }
             public string FinalDestinationPortCode { get; set; }
             public string FinalDestinationPortName { get; set; }
+            //public string PayablesExpectedAmount { get; set; }
+
         }
     }
 }

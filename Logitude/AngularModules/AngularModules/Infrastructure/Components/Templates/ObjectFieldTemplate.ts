@@ -27,7 +27,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
     public FieldValue: any = null;
     public HasTemplate: boolean = false;
     public DataTypeCode: string = null;
-    public DigitsAfterPoints: number = 0;
+    public DigitsAfterPoints: string = "n0";
     public IsAutoFormat: boolean = false;    
     public IsLookUp: boolean = false;
     public LookUpFieldValue: string = null;
@@ -41,6 +41,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
     public NumberFieldTextAlign: string = "right";
     @ViewChild('Template', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     public isRTL: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
     }
 
@@ -51,7 +52,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
             //this.IsCustom = this.ObjectField.IsCustom;
             this.HasTemplate = this.ObjectField.HasTemplate;
             this.DataTypeCode = this.ObjectField.DataTypeCode;
-            this.DigitsAfterPoints = this.ObjectField.DigitsAfterPoint;
+            this.DigitsAfterPoints = "n"+this.ObjectField.DigitsAfterPoint;
 
             if (this.IsHeaderScreenTemplate) {
                 this.FieldName = this.ObjectField.PMPropertyPath;
@@ -247,7 +248,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
 
                             this.DetectChanges();
 
-                            SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+                            this.CurrentSession.SessionEvent.subscribe(s => {
                                 if (s == "SpotLightDetectChanges") {
                                     this.DetectChanges();
                                 }

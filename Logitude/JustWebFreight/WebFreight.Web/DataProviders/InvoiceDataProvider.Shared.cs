@@ -506,6 +506,12 @@ namespace WebFreight.Web.DataProviders
 
         public string AgentReference1 { get; set; }
         public string AgentReference2 { get; set; }
+
+
+        public string TenantCBSA { get; set; }
+        public string TenantCAAT { get; set; }
+        public string CarrierCBSA { get; set; }
+        public string CarrierCAAT { get; set; }
     }
 
     public class SAT
@@ -620,6 +626,7 @@ namespace WebFreight.Web.DataProviders
         public double? LocalAmount_Double { get; set; }
         public double? InvoiceAmount_Double { get; set; }
         public double? CalculatedUnitPrice { get; set; }
+        public double? ForeignAmount_Double { get; set; }
 
         public string ClaveUnidad { get; set; }
         public string ClaveProdServ { get; set; }

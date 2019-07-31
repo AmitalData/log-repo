@@ -114,7 +114,8 @@ export class OtherChargesTabComponent extends BaseComponent {
 
     public IsEditingEnabled: boolean = false;
     private SetUIProperties() {
-        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);    
+        this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
+        
         this.ItemsSource.forEach(item => {
             item.SetUIProperties();
         });
@@ -122,23 +123,25 @@ export class OtherChargesTabComponent extends BaseComponent {
 
     public IsFillDataWarningVisible: boolean = false;
     private SetWarningInfo() {
-        var myResult = false;
+        if (!this.Wizard.IsImportWizard) {
+            var myResult = false;
 
-        var myCodes: string[] = [];
-        myCodes.push("EAWB");
-        myCodes.push("BUBK");
+            var myCodes: string[] = [];
+            myCodes.push("EAWB");
+            myCodes.push("BUBK");
 
-        if (FeatureLocator.IsPackageOneOf(myCodes)) {
-            myResult = false;
-        }
-
-        else {
-            if (this.ItemsSource.length == 0) {
-                myResult = true;
+            if (FeatureLocator.IsPackageOneOf(myCodes)) {
+                myResult = false;
             }
-        }
 
-        this.IsFillDataWarningVisible = myResult;
+            else {
+                if (this.ItemsSource.length == 0) {
+                    myResult = true;
+                }
+            }
+
+            this.IsFillDataWarningVisible = myResult;
+        }
     }
 
     private FireWizardEvent() {
@@ -199,10 +202,14 @@ export class OtherChargesTabComponent extends BaseComponent {
     private SetGenerateButton() {
         var myResult = false;
 
-        if (!FeatureLocator.IsPackage_EAWB()) {
-            if (this.ItemsSource.length == 0) {
-                myResult = true;
-            }
+        //if (!FeatureLocator.IsPackage_EAWB()) {
+        //    if (this.ItemsSource.length == 0) {
+        //        myResult = true;
+        //    }
+        //}
+
+        if (this.ItemsSource.length == 0) {
+            myResult = true;
         }
 
         this.IsGeneratingVisible = myResult;

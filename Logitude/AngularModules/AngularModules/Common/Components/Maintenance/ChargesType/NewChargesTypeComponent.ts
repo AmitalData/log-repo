@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
@@ -21,6 +21,7 @@ export class NewChargesTypeComponent extends BaseComponent {
     public DataContext: NewChargesTypeComponent = this;
     public ObjectTableName: string = "ChargesType";
     public EntityPM: ChargesTypePM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -179,6 +180,34 @@ export class NewChargesTypeComponent extends BaseComponent {
         }
     }
 
+    get IsImport() { return this.EntityPM.IsImport; }
+    set IsImport(newValue: boolean) {
+        if (this.EntityPM.IsImport != newValue) {
+            this.EntityPM.IsImport = newValue;
+        }
+    }
+
+    get IsExport() { return this.EntityPM.IsExport; }
+    set IsExport(newValue: boolean) {
+        if (this.EntityPM.IsExport != newValue) {
+            this.EntityPM.IsExport = newValue;
+        }
+    }
+
+    get IsDrop() { return this.EntityPM.IsDrop; }
+    set IsDrop(newValue: boolean) {
+        if (this.EntityPM.IsDrop != newValue) {
+            this.EntityPM.IsDrop = newValue;
+        }
+    }
+
+    get IsDomestic() { return this.EntityPM.IsDomestic; }
+    set IsDomestic(newValue: boolean) {
+        if (this.EntityPM.IsDomestic != newValue) {
+            this.EntityPM.IsDomestic = newValue;
+        }
+    }
+
     get DueTypeCode() { return this.EntityPM.DueTypeCode; }
     set DueTypeCode(newValue: string) {
         if (this.EntityPM.DueTypeCode != newValue) {
@@ -276,24 +305,30 @@ export class NewChargesTypeComponent extends BaseComponent {
     FinishButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);        
-        
+
+        if (this.EntityPM.IsAutoDisplayInQuote || this.EntityPM.IsAutoDisplayInShipment || this.EntityPM.IsAutoDisplayInConsolidation || this.EntityPM.IsAutoDisplayInCustoms) {
+            if (!this.EntityPM.IsExport && !this.EntityPM.IsImport && !this.EntityPM.IsDomestic && !this.EntityPM.IsDrop) {
+                errors.push("Please select at least one direction (export, import, domestic or drop)");
+            }
+        }
+
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
             this.EntityPM.IsReceivable = true;
             this.EntityPM.IsPayable = true;
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             
             var myService: ChargesTypePMService = new ChargesTypePMService();
             myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     CachedDataManager.RefreshTableData(this.ObjectTableName, true);
 
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                    this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                 }
 
                 else {
@@ -304,6 +339,6 @@ export class NewChargesTypeComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

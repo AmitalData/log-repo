@@ -23,6 +23,7 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -308,11 +309,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 journalLineCredit.CreditAccountId = depositPM.DeferredGLAccountId;
             }
-
-
             GLAccountQueryService glaQuery = new GLAccountQueryService(accountingContext);
             GLAccountPM glaccountPM = glaQuery.GetSingle(journalLineCredit.CreditAccountId, false, false);
             journalLineCredit.CreditControlAccountId = glaccountPM.ControlAccountId;
+
+
+            // opposit account
+            CardQuery cardService = new CardQuery(chequePM.Tenant);
+            CardPM paymentCard = cardService.GetSinglePM(paymentPM.BillToId, paymentPM.Tenant);
+            journalLineCredit.DebitAccountId = paymentCard.GLAccountId;
 
             journalPM.JournalLines.Add(journalLineCredit);
 
@@ -367,6 +372,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             GLAccountPM glaccountPM2 = glaQuery.GetSingle(cashbookPM.AccountId, false, false);
             journalLineDebit.DebitControlAccountId = glaccountPM2.ControlAccountId;
+
+
+            // opposit account
+            journalLineCredit.CreditAccountId = cashbookPM.AccountId;
 
             journalPM.JournalLines.Add(journalLineDebit);
 
@@ -580,6 +589,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountPM glaccountPM3 = glaQuery.GetSingle(cardPM.GLAccountId, false, false);
             journalLineDebitCustomer.DebitControlAccountId = glaccountPM3.ControlAccountId;
 
+            // opposit account
+            journalLineDebitCustomer.CreditAccountId = cashbookPM.AccountId;
+
             journalPM.JournalLines.Add(journalLineDebitCustomer);
             //
             // --------------------------------------------------------------
@@ -607,6 +619,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             journalLineCreditCashbook.CreditAccountId = cashbookPM.AccountId;
             GLAccountPM glaccountPM5 = glaQuery.GetSingle(cashbookPM.AccountId, false, false);
             journalLineCreditCashbook.CreditControlAccountId = glaccountPM5.ControlAccountId;
+
+            // opposit account
+            CardQuery cardService = new CardQuery(chequePM.Tenant);
+            CardPM paymentCard = cardService.GetSinglePM(paymentPM.BillToId, paymentPM.Tenant);
+            journalLineCreditCashbook.DebitAccountId = paymentCard.GLAccountId;
+
             journalPM.JournalLines.Add(journalLineCreditCashbook);
 
             // --------------------------------------------------------------

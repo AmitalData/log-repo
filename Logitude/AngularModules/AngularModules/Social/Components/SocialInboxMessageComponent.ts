@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ComponentRef}  from '@angular/core';
+import {Component, OnInit, ComponentRef}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -58,7 +58,7 @@ export class SocialInboxMessageComponent implements OnInit {
     MessageListsId: string = Guid.newGuid();
     ConversationHeaderListsId: string;
     conversationHeaderParticipantExtendedPMService: ConversationHeaderParticipantExtendedPMService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.conversationHeaderExtendedPMService = new ConversationHeaderExtendedPMService();
         this.conversationHeaderPMService = new ConversationHeaderPMService();
@@ -82,7 +82,7 @@ export class SocialInboxMessageComponent implements OnInit {
 
     Listen() {
         if (!this.SocialInboxMessageRefreshEvent) {
-            this.SocialInboxMessageRefreshEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SocialInboxMessageRefreshEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "SocialInboxMessagesRefresh") {
                     this.LoadingMessageList();
                     this.IsChange = true;
@@ -141,8 +141,8 @@ export class SocialInboxMessageComponent implements OnInit {
     BackButtonClicked() {
         if (this.ComponentRef) {
             if (this.IsChange || this.ConversationHeaderLists.filter(d => d.IsChange)[0] ) {
-                SessionLocator.CurrentSession.FireEvent("SocialMessagesRefresh");
-                SessionLocator.CurrentSession.FireEvent("SociaMessagesCountRefresh");
+                this.CurrentSession.FireEvent("SocialMessagesRefresh");
+                this.CurrentSession.FireEvent("SociaMessagesCountRefresh");
                 
             }
             this.ComponentRef.destroy();

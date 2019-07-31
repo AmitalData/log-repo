@@ -227,6 +227,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             AddIfNotNull(refs, _JournalLine.Reference1);
             AddIfNotNull(refs, _JournalLine.Reference2);
             AddIfNotNull(refs, _JournalLine.Reference3);
+            AddIfNotNull(refs, _JournalLine.Notes);
             MyLedgerTransaction.SearchFields= string.Join(",", refs.ToArray());
 
             MyLedgerTransaction.IsExternalReconcile = _JournalLine.IsExternalReconcile/*.GetValueOrDefault()*/;
@@ -254,22 +255,23 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
         {
             if (_JournalLine.ExternalOpenAmount.HasValue)
             {
-                if (_JournalLine.ExternalOpenAmount.GetValueOrDefault() == 0)
-                {
-                    MyLedgerTransaction.IsReconciled = true;
-                    MyLedgerTransaction.OpenAmount = 0;
-                }
-                else
-                {
-                    MyLedgerTransaction.IsReconciled = false;
-                    MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
-                }
+                //if (_JournalLine.ExternalOpenAmount.GetValueOrDefault() == 0)
+                //{
+                //    MyLedgerTransaction.IsReconciled = true;
+                //    MyLedgerTransaction.OpenAmount = 0;
+                //}
+                //else
+                //{
+                //    MyLedgerTransaction.IsReconciled = false;
+                //    MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
+                //}
+                MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
 
             }
             MyLedgerTransaction.IsExternalReconcile = _JournalLine.IsExternalReconcile;
         }
 
-        
+
     }
 
 }

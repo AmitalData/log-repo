@@ -1,4 +1,4 @@
-﻿declare var System: any, window: any;
+declare var System: any, window: any;
 import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
@@ -40,7 +40,7 @@ export class DenyReasonComponent extends BaseComponent implements OnInit, AfterV
     ValidationErrorsList: any[];
     AdditionalData: any;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
@@ -56,7 +56,7 @@ export class DenyReasonComponent extends BaseComponent implements OnInit, AfterV
     } 
    
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SendButtonClicked() {
@@ -66,12 +66,12 @@ export class DenyReasonComponent extends BaseComponent implements OnInit, AfterV
             this.ValidationErrorsList.push(msg.replace("%FieldName", "DenyReason"));
         }
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.AdditionalData.IsImporterApprovalRequried = false;
             this.DenyReason = SessionLocator.LoggedUserPM.EnglishName + ", " + SessionLocator.LoggedUserPM.LocalName + ", " + SessionLocator.LoggedUserPM.Email + ", " + this.DenyReason + ", " + this.AdditionalData.VersionApproved;
             this._ShipmentAdditionalCloudDataService.update(this.AdditionalData).subscribe(AdditionalResult => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("Denied");
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindowEmit("Denied");
             });
         }
     }

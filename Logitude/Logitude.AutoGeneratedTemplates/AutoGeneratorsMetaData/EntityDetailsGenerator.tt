@@ -446,7 +446,7 @@ namespace <#= detailsnamespacestring.Replace(".CLoseTable","") #>
                    { 
 			   #>
 
-       public const string <#= CTName.Replace(" ","").Trim('"').Replace(",","") #> = <#= CTCode #>;  <#+
+       public const string <#= CTName.Replace(" ","").Trim('"').Replace(",","").Replace(":","").Replace(".","") #> = <#= CTCode #>;  <#+
 					   
                    }
 			    CTName = "";

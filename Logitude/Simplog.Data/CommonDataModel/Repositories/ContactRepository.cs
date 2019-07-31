@@ -221,11 +221,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Contact GetSingleContactByEmailSpecificTenant(string email, int tenant)
         {
-            UserRepository usersRepository = new UserRepository(tenant);
             Contact contact = (from a in context.Contacts
-                               where a.Email == email.ToLower() && (a.Tenant == tenant)
+                               where
+                               a.Email != null
+                               && a.Email.ToLower() == email.ToLower()
+                               && a.Tenant == tenant
                                select a).FirstOrDefault();
-
 
             return contact;
         }
@@ -485,6 +486,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
                               select a).FirstOrDefault();
             return entity;
         }
+
+        public string GetContactIdByUserTypeAndTenant(string userType, int tenant)
+        {
+            string contactId = (from a in context.Contacts
+                              where a.Tenant == tenant && a.UserType == userType && a.Email.Contains("system")
+                              select a.Id).FirstOrDefault();
+            return contactId;
+        }
+
+
+
 
         public IQueryable<Contact> GetContactsByIds(List<string> trackedIds, int tenant)
         {

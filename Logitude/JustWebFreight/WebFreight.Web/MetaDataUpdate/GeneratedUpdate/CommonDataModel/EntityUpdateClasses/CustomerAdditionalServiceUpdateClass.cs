@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerAdditionalServiceUpdateClass
@@ -128,11 +132,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						PMPropertyPath =  "Notes",
 					  						ListPropertyPath =  "Notes",
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  @"Notes",
-					  						FullLocalDefaultText =  @"Notes",
+					  						DefaultText =  "Notes",
+					  						FullLocalDefaultText =  "Notes",
 					  						ListFieldLable =  "NotesListLable",
-					  						ListLableDefaultText =  @"Notes",
-					  						ListLocalDefaultText =  @"Notes",
+					  						ListLableDefaultText =  "Notes",
+					  						ListLocalDefaultText =  "Notes",
 					  						ValidForQuerySection1 =  "CustomerAdditionalService",
 					  						IsRequired =  false,
 					  						DisplayInList =  false,
@@ -225,7 +229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "CustomerId",
-					  						DefaultText =  @"Customer",
+					  						DefaultText =  "Customer",
 					  						HelpTextCode =  "CustomerId",
 					  						Code =  "CustomerId",
 					  						DependencyFilter3IsList =  false,
@@ -284,7 +288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "AdditionalServiceId",
-					  						DefaultText =  @"Additional Service",
+					  						DefaultText =  "Additional Service",
 					  						HelpTextCode =  "AdditionalServiceId",
 					  						Code =  "AdditionalServiceId",
 					  						DependencyFilter3IsList =  false,
@@ -342,7 +346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "AdditionalServiceName",
-					  						DefaultText =  @"Additional Service",
+					  						DefaultText =  "Additional Service",
 					  						HelpTextCode =  "AdditionalServiceName",
 					  						Code =  "AdditionalServiceName",
 					  						DependencyFilter3IsList =  false,
@@ -400,7 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "AdditionalServiceCode",
-					  						DefaultText =  @"Additional Service",
+					  						DefaultText =  "Additional Service",
 					  						HelpTextCode =  "AdditionalServiceCode",
 					  						Code =  "AdditionalServiceCode",
 					  						DependencyFilter3IsList =  false,

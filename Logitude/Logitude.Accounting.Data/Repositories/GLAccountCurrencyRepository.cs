@@ -1,4 +1,4 @@
- 
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,12 +20,24 @@ namespace Logitude.Accounting.Data.Repositories
             
 			throw new NotImplementedException();
         }
-        public List<GLAccountCurrency> GetRelatedCurrenciesAccountByCustomerGLAccount(int tenant, string GLAccountId)
+        public List<GLAccountCurrency> GetRelatedCurrenciesAccountByCustomerGLAccountAll(int tenant, string GLAccountId)
         {
 
             return (from a in context.GLAccountCurrencies
                     where a.MainGLAccountId == GLAccountId && a.Tenant == tenant
                     select a).ToList();
+        }
+        public List<GLAccountCurrency> GetRelatedCurrenciesAccountByCustomerGLAccountActive(int tenant, string GLAccountId)
+        {
+
+            return (from accCurr in context.GLAccountCurrencies
+                    //.Include("GLAccount") -- in unitest not work !!!
+                    join acc in context.GLAccounts
+                    on accCurr.Id equals acc.Id
+
+                    where accCurr.MainGLAccountId == GLAccountId && accCurr.Tenant == tenant
+                    where acc.Inactive==false
+                    select accCurr).ToList();
         }
         public IQueryable<GLAccountCurrency> GetQRelatedCurrenciesAccountIdByCustomerGLAccount(int tenant, IQueryable<string> qGLAccountIdS)
         {

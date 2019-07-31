@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
@@ -36,7 +36,7 @@ export class MasavPaymentsToAgentComponent
     _PaymentMessagesService: PaymentMessagesService = new PaymentMessagesService();
 
     public AgentMasavPaymentResultList: ObservableCollection;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.AgentMasavPaymentResultList = new ObservableCollection([]);
@@ -91,7 +91,7 @@ export class MasavPaymentsToAgentComponent
 
     //#region General Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     FillErrors() {

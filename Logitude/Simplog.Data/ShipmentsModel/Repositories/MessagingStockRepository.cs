@@ -54,7 +54,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public IQueryable<MessagingStock> GetMessagingStocksByTenant(int tenant, string type)
         {
-            return (from a in Context.MessagingStocks where a.TenantNumber == tenant select a);
+            return (from a in Context.MessagingStocks where a.TenantNumber == tenant && a.StockType.ToLower() == type.ToLower() select a);
         }
 
         public IQueryable<MessagingStockDataView> GetMessagingStockDataViewsByTenant(int tenant)

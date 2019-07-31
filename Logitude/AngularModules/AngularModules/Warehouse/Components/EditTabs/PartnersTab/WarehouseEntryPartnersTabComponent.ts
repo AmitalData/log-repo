@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {WarehouseEntryPM} from '../../../EntityPMs/WarehouseEntryPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -27,7 +27,7 @@ export class WarehouseEntryPartnersTabComponent implements OnInit, OnDestroy {
     public ObjectTableName: string = "WarehouseEntry";
     public ItemsCollection: PartnerItem[];
     public IsInlandDomestic: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.InitializeServices();
@@ -56,7 +56,7 @@ export class WarehouseEntryPartnersTabComponent implements OnInit, OnDestroy {
 
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "PAEY") {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.UpdateScreen();
                 }
             });

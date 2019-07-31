@@ -88,7 +88,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
             }
         }
 
-        public HttpResponseMessage GetQuoteTemplateLists(string queryName, bool isCustomerCare, int tenant)
+        public HttpResponseMessage GetQuoteTemplateLists(string queryName)
         {
             try
             {
@@ -97,21 +97,17 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
 
-                QuoteTemplateRepository quoteTemplateRepository;
-                quoteTemplateRepository = new QuoteTemplateRepository(tenant);
-                QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(quoteTemplateRepository);
-                IQueryable<QuoteTemplate> quoteTemplates = null;
+                int tenant = authToken.Tenant;
 
-                if (queryName == "FromTenant")
+                QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(0);
+                IQueryable<QuoteTemplateList> quoteTemplates = quoteTemplateQuery.GetQuoteTemplateLists();
+                if (queryName == "FromAllTenant" && SecurityUtility.CheckIsUserCustomerCare(authToken.Email))
                 {
-                    if (isCustomerCare) quoteTemplates = quoteTemplateRepository.GetAllQuoteTemplates();
-                    else quoteTemplates = quoteTemplateRepository.GetQuoteTemplates(tenant);
+                    if (tenant != 0) quoteTemplates = quoteTemplates.Where(d => d.Tenant == tenant || d.Tenant == 0);
                 }
-                else quoteTemplates = quoteTemplateRepository.GetQuoteTemplates(tenant);
+                else quoteTemplates = quoteTemplates.Where(d => d.Tenant == tenant);
 
-
-                IQueryable<QuoteTemplateList> query2 = quoteTemplateQuery.GetIQueryableEntityList(quoteTemplates);
-                return Request.CreateResponse(HttpStatusCode.OK, query2);
+                return Request.CreateResponse(HttpStatusCode.OK, quoteTemplates);
             }
             catch (Exception ex)
             {
@@ -218,12 +214,10 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
-                QuoteTemplateRepository quoteTemplateRepository = new QuoteTemplateRepository(tenant);
-                QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(quoteTemplateRepository);
-                IQueryable<QuoteTemplate> quoteTemplates = quoteTemplateRepository.GetQuoteTemplatesByType(quotetemplatetype, tenant);
-                IQueryable<QuoteTemplateList> query2 = quoteTemplateQuery.GetIQueryableEntityList(quoteTemplates);
-
-                return Request.CreateResponse(HttpStatusCode.OK, query2.ToList());
+                QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(authToken.Tenant);
+                IQueryable<QuoteTemplatePM> quoteTemplates = quoteTemplateQuery.GetQuoteTemplatePMListsByQuotetemplatetype(quotetemplatetype, tenant);
+    
+                return Request.CreateResponse(HttpStatusCode.OK, quoteTemplates.ToList());
             }
             catch (Exception ex)
             {
@@ -233,10 +227,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
         }
 
 
-        public HttpResponseMessage GetSinglePMByQuoteId(string id, string quoteId, int tenant , string defultQuoteTemplate, string quotationSections)
+        public HttpResponseMessage GetTemplateSectionsByQuoteTemplateIdAndQuoteId(string id, string quoteId, int tenant , string defultQuoteTemplate, string quotationSections)
         {
-
-
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
@@ -244,9 +236,10 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(tenant);
-                var result = quoteTemplateQuery.GetSinglePMByQuoteId(id, quoteId, tenant, defultQuoteTemplate, quotationSections);
+                QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(tenant);
+                var templateSections = quoteTemplateSectionQuery.GetQuoteTemplateSectionPMsByTemplateId(id, quoteId, tenant, defultQuoteTemplate, quotationSections);
 
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+                return Request.CreateResponse(HttpStatusCode.OK, templateSections);
             }
             catch (Exception ex)
             {
@@ -263,8 +256,9 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
-                QuoteTemplateEntityService QuoteTemplateService = new QuoteTemplateEntityService();
-                byte[] data = QuoteTemplateService.GetQuoteTemplatePdfReport(quoteId, quoteTemplateId, userId, authToken.Tenant, null);
+                QuoteTemplateReportHelper quoteTemplateReportHelper = new QuoteTemplateReportHelper();
+                byte[] data = quoteTemplateReportHelper.BuildQuoteTemplatePdfReport(quoteId, quoteTemplateId, userId, authToken.Tenant, null);
+
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
@@ -295,46 +289,48 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 IQuotesContext objectContext = QuotesContext.GetContext(tenant);
                 QuoteDocumentVersionRepository quoteDocumentVersionRep = new QuoteDocumentVersionRepository(objectContext);
                 QuoteRepository quoteRep = new QuoteRepository(objectContext);
+                QuoteQuery quoteQuery = new QuoteQuery(new QuoteRepository(objectContext));
                 string documentTypeId = documentTypeRepository.GetDocumentTypeIdByCode("QUOTE", tenant);
-
+                QuoteService quoteService = new QuoteService(objectContext, tenant);
                 byte[] pdfData = null;
                 if (!string.IsNullOrEmpty(documentTypeId))
                 {
-                    QuoteTemplateEntityService QuoteTemplateService = new QuoteTemplateEntityService();
+                  
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
+                       
                         QuoteDocumentVersion version = quoteDocumentVersionRep.GetSingleQuoteDocumentVersion(quoteId, tenant, versionNumber);
-                        Quote quote = quoteRep.GetSingleQuote(quoteId, tenant);
+                        QuotePM quotePM = quoteQuery.GetSinglePM(quoteId, tenant);
                         QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(tenant);
 
-                        string defult = !isGenerate ? quote.QuoteTemplateId : null;
-                        List <QuoteTemplateSectionPM> templateSections = quoteTemplateSectionQuery.GetQuoteTemplateSectionPMsByTemplateId(quoteTemplateId, quoteId, tenant, defult, quote.QuotationSections);
+                        string defult = !isGenerate ? quotePM.QuoteTemplateId : null;
+                        List <string> templateSectionsIds = quoteTemplateSectionQuery.GetQuoteTemplateSectionIdsByQuoteTemplateId(quoteTemplateId, quoteId, tenant, defult, quotePM.QuotationSections);
                         string sectionsIds = "";
-                        foreach (QuoteTemplateSectionPM section in templateSections)
+                        foreach (string sectionId in templateSectionsIds)
                         {
-                            sectionsIds += (section.Id + ",");
+                            sectionsIds += (sectionId + ",");
                         }
 
                         sectionsIds = sectionsIds.Remove(sectionsIds.Length - 1);
 
-
-                        if (quote.QuoteTemplateId != quoteTemplateId || quote.QuotationSections != sectionsIds || quote.LastVersionNumber != version.VersionNumber)
+                        if (quotePM.QuoteTemplateId != quoteTemplateId || quotePM.QuotationSections != sectionsIds || quotePM.LastVersionNumber != version.VersionNumber)
                         {
-                            quote.LastVersionNumber = version.VersionNumber;
-                            quote.QuoteTemplateId = quoteTemplateId;
-                            quote.QuotationSections = sectionsIds;
-                            quoteRep.Update(quote);
-                            quoteRep.SubmitChanges();
+                            quotePM.LastVersionNumber = version.VersionNumber;
+                            quotePM.QuoteTemplateId = quoteTemplateId;
+                            quotePM.QuotationSections = sectionsIds;
+                            quoteService.SetChangeSet(new List<QuoteChargePM>(), new List<QuoteFollowUpPM>(), new List<QuotePackagePM>(), new List<QuoteDocumentVersionPM>());
+                            quoteService.Update(quotePM);
+
                         }
 
-
-                        pdfData = QuoteTemplateService.GetQuoteTemplatePdfReport(quoteId, quoteTemplateId, updatedByUserId, tenant, null);
+                        QuoteTemplateReportHelper quoteTemplateReportHelper = new QuoteTemplateReportHelper();
+                        pdfData = quoteTemplateReportHelper.BuildQuoteTemplatePdfReport(quoteId, quoteTemplateId, updatedByUserId, tenant, null,null, quotePM);
 
                         Simplog.Data.CommonDataModel.EntityPOCOs.Document document = documentRep.GetSingleDocument(tenant, version.DocumentId);
                      
                         document.FileSize = Convert.ToInt32(pdfData.Length);
                         document.Extension = "pdf";
-                        document.CalculatedFileName = "Quotation-" + quote.QuoteNumber + "-" + version.VersionNumber;
+                        document.CalculatedFileName = "Quotation-" + quotePM.QuoteNumber + "-" + version.VersionNumber;
                         document.IsEncrypted = true;
                         documentRep.Update(document);
 

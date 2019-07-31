@@ -1,4 +1,4 @@
-﻿
+
 import {ShipmentPM} from './ShipmentPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 
@@ -72,6 +72,10 @@ export class ConsoleShipmentPM {
     private chargeableWeight: number;
     public get ChargeableWeight() { return this.chargeableWeight; }
     public set ChargeableWeight(newValue: number) { this.chargeableWeight = newValue; this.MarkAsDirty(); }
+
+    private chargeableWeightInKG: number;
+    public get ChargeableWeightInKG() { return this.chargeableWeightInKG; }
+    public set ChargeableWeightInKG(newValue: number) { if (this.chargeableWeightInKG != newValue) { this.chargeableWeightInKG = newValue; this.MarkAsDirty(); } }
 
     private volumetricWeight: number;
     public get VolumetricWeight() { return this.volumetricWeight; }
@@ -148,6 +152,11 @@ export class ConsoleShipmentPM {
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue; this.MarkAsDirty(); }
+
+    private volumeInCBM: number;
+    public get VolumeInCBM() { return this.volumeInCBM; }
+    public set VolumeInCBM(newValue: number) { this.volumeInCBM = newValue; this.MarkAsDirty(); }
+
 
     private fCLDataList: HouseContainerPackage[];
     get FCLDataList() {

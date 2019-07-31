@@ -14,5 +14,6 @@ export class HybridTenantStateList {
 		WaitingQueueTextColor: string;
 		FailedQueueTextColor: string;
 		LastUpdateDateTime: Date;
+        LastQueueDateTime: Date;
 	
 }

@@ -1,4 +1,4 @@
-﻿import { AccountingEntityHelper } from './../../../Utilities/AccountingEntityHelper';
+import { AccountingEntityHelper } from './../../../Utilities/AccountingEntityHelper';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {LedgerTransactionListService} from '../../../Services/StandardLists/LedgerTransactionListService';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -70,7 +70,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
     externalReconciliationExtendedPMService: ExternalReconciliationExtendedPMService = new ExternalReconciliationExtendedPMService();
     externalReconciliationPMService: ExternalReconciliationPMService = new ExternalReconciliationPMService();
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -134,7 +134,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
         //#endregion
 
         // 2- get lines
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         if (bankPageLinesIds.length > 0) {
             this.GetBankLines(bankPageLinesIds, transactionsLinesIds); // then get ledger lines
         } else {
@@ -148,18 +148,26 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
             var result = myResult.Result;
             var list = result.Result;
 
+            // Incapsulate transactions
+            var pageLines: BankLineModel[] = [];
+            for (var line of list) {
+                var pageLine = new BankLineModel(line, this, -1);
+                pageLines.push(pageLine);
+            }
+            //
+
             // 3- fil group hash
-            for (var line of this.ExternalRecoPM.ExternalReconciliationLines) {
-                if (line.ExternalPageLineId) {
-                    var item = list.find(d => d.Id == line.ExternalPageLineId);
-                    item.GroupHash = line.GroupNumber;
+            for (var recoLine of this.ExternalRecoPM.ExternalReconciliationLines) {
+                if (recoLine.ExternalPageLineId) {
+                    var item = pageLines.find(d => d.Id == recoLine.ExternalPageLineId);
+                    item.GroupHash = recoLine.GroupNumber;
                 }
             }
 
             // 4- sort
             list.sort((a, b) => { return (a.GroupHash === b.GroupHash) ? 0 : (a.GroupHash < b.GroupHash) ? -1 : 1 });
 
-            this.BankPageLines.InsertCollection(list);
+            this.BankPageLines.InsertCollection(pageLines);
 
             this.GetLedgerLines(transactionsLinesIds);
         });
@@ -195,11 +203,11 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
                 this.FillGroupHash();
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         } else {
             console.log("No ledger lines!");
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
 
 
@@ -292,7 +300,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -305,7 +313,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
     }
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
@@ -353,6 +361,12 @@ class TransactionLineModel extends BaseComponent {
 
         //#endregion
     }
+
+
+    get IsCredit(){
+        return this.LedgerTransactionPM.ForeignAmountCredit != 0;
+    }
+
 
     get GroupHash() { return this.LedgerTransactionPM.GroupHash };
     set GroupHash(value: number) { this.LedgerTransactionPM.GroupHash = value };
@@ -482,6 +496,12 @@ class BankLineModel extends BaseComponent {
         this.PageLinePM = pageLine;
         this.RowIndex = myRowIndex;
 
+    }
+
+
+
+    get IsCredit(){
+        return this.PageLinePM.CreditAmount != 0;
     }
 
     get GroupHash() { return this.pageLine.GroupHash };

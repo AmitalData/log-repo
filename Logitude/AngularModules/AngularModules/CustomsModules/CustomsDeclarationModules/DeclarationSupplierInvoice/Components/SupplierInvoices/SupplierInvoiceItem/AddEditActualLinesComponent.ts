@@ -19,7 +19,7 @@ export class AddEditActualLinesComponent extends BaseComponent {
     public ItemsSource: ObservableCollection;
     public ValidationErrorsList: string[] = [];
 
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -94,7 +94,7 @@ export class AddEditActualLinesComponent extends BaseComponent {
 
     CancelButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
     OkButtonClicked() {
@@ -120,7 +120,7 @@ export class AddEditActualLinesComponent extends BaseComponent {
 
         if (errors.length == 0) {
            
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit(dataString);
+            this.CurrentSession.CloseCurrentWindowEmit(dataString);
         }
 
      

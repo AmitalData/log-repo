@@ -762,5 +762,43 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 throw new NotImplementedException();
             }
         }
+
+        public IDbSet<ARInvoiceStocksStatus> ARInvoiceStocksStatus
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<ARInvoiceStock> ARInvoiceStocks
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public IDbSet<ARPaymentChequeReplica> ARPaymentChequeReplicas
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

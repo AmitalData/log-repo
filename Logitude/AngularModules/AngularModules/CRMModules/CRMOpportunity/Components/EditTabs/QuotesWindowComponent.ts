@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OpportunityPM} from '../../../../CRM/EntityPMs/OpportunityPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
@@ -28,7 +28,7 @@ export class QuotesWindowComponent extends BaseComponent {
         this.OnSearchTextChanged();        
     }
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     SetWindowArgs(args: OpportunityPM) {
         this.EntityPM = args;
         this.LoadQuotesList();
@@ -78,21 +78,21 @@ export class QuotesWindowComponent extends BaseComponent {
     CancelButtonClicked() {
 
    
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
     OkButtonClicked() {
         var myConnectedQuotes:string ="";
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.ObsList.filter(p => p.IsChecked).forEach(item => { myConnectedQuotes+=item.QuoteId+":"; });
         if (myConnectedQuotes.length > 0) {
             this.quoteDomainService.ConnectQuotesToOpportunity(this.EntityPM.Id, myConnectedQuotes).subscribe(p => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindowEmit("ok");
             });
         }
         else {
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+            this.CurrentSession.CloseCurrentWindowEmit("cancel");
 
         }
 

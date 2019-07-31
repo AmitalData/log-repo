@@ -47,7 +47,7 @@ export class PaymentOrderDepositDataComponent extends BaseComponent {
 
     public tapagMessagesService: TapagMessagesService = new TapagMessagesService();
     public declarationWebService: DeclarationWebService = new DeclarationWebService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -76,30 +76,30 @@ export class PaymentOrderDepositDataComponent extends BaseComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.InitPaymentOrderDepositDataScreen();
                     }
                 })
             );
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "PODP") {
-                            this.PaymentOrderPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                            this.PaymentOrderPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                             this.LoadDepositData(this.PaymentOrderPM.PaymentNumber, null, this.PaymentOrderPM.Tenant);
                         }
                     }
@@ -266,7 +266,7 @@ export class PaymentOrderDepositDataComponent extends BaseComponent {
     public set PaymentNumber(newValue: string) { this.EntityPM.PaymentNumber = newValue; }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 
     BankAccountToRefundButtonClicked() {

@@ -29,11 +29,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                 entityPM.Id = IdCounter.GetNumber("WarehouseRelease", entityPM.Tenant);
-
-                if (string.IsNullOrEmpty(entityPM.ReleaseNumber) || entityPM.ReleaseNumber == "123")
-                {
-                    entityPM.ReleaseNumber = CodeCounter.GetNumber("WarehouseRelease", entityPM.Tenant).ToString();
-                }
+                entityPM.ReleaseNumber = TableCounter.GetNumber(entityPM.Tenant, "WARC", null, null).ToString();
                 this.BuildActivityLog("N", entityPM);
             }
         }

@@ -122,6 +122,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.LastStatusDate = itemPM.LastStatusDate;
             itemPoco.DeliveryTransportModeCode = itemPM.DeliveryTransportModeCode;
             itemPoco.ECRTransportModeCode = itemPM.ECRTransportModeCode;
+
+            itemPoco.Make = itemPM.Make;
+            itemPoco.Year = itemPM.Year;
+            itemPoco.Color = itemPM.Color;
+            itemPoco.Model = itemPM.Model;
+            itemPoco.ChassisNumber = itemPM.ChassisNumber;
+            itemPoco.RegistrationNumber = itemPM.RegistrationNumber;
+            itemPoco.CountryId = itemPM.CountryId;
         }
 
         public static void MapCommodityPackage(CommodityPackagePM itemPM, ShipmentPackage itemPoco, bool isNewEntity)

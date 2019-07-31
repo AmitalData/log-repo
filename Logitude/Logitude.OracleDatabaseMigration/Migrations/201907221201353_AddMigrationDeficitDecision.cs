@@ -7,6 +7,7 @@ namespace Logitude.OracleDatabaseMigration.Migrations
     {
         public override void Up()
         {
+            
             DropForeignKey("Customs.DeclarationPendings", "DeclarationID", "Customs.Declarations");
             CreateTable(
                 "dbo.ApprovedProfessions",

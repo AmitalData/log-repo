@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -10,6 +10,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 export class ViewInboundLineBodyComponent {
     public DataContext = this;
     public Description: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
@@ -17,7 +18,7 @@ export class ViewInboundLineBodyComponent {
         this.Description = args;
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
 
     }
 }

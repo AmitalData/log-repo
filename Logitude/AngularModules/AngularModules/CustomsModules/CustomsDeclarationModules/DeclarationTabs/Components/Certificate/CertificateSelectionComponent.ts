@@ -26,7 +26,7 @@ export class CertificateSelectionComponent extends BaseComponent {
     ExcludedItems: CertificateConnectedItem[] = [];
    ticket: CertificateTicket;
    multiCertificatesService: MultiCertificatesService = new MultiCertificatesService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
    constructor() {
         super();
 
@@ -46,9 +46,9 @@ export class CertificateSelectionComponent extends BaseComponent {
    }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("no");
+        this.CurrentSession.CloseCurrentWindowEmit("no");
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SelectedRow: any;
@@ -57,7 +57,7 @@ export class CertificateSelectionComponent extends BaseComponent {
     }
     OkButtonClicked() {
         if (!AppTool.IsNullOrEmpty(this.SelectedRow)) {
-            SessionLocator.CurrentSession.StartBusyIndicator("");
+            this.CurrentSession.StartBusyIndicator("");
             var certificateTicket: CertificateTicket = new CertificateTicket();
             certificateTicket.DeclarationId = this.ticket.DeclarationId;
             certificateTicket.InvoiceNumber = null;
@@ -92,9 +92,9 @@ export class CertificateSelectionComponent extends BaseComponent {
             this.multiCertificatesService.PutCertificateTickets(certificateTicket)
                 .subscribe((response: ServiceResponse) => {
                     if (!response.HasError) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                        this.CurrentSession.CloseCurrentWindow();
                     }
                 });
         }

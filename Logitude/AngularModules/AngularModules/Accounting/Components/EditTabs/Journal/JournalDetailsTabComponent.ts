@@ -57,7 +57,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         console.log("this.JournalLines.Length : " + this.JournalLines.Length);
         if (($event) == this.JournalLines.Length) {
             this.AddLine();
-            //SessionLocator.CurrentSession.ResetRowIndex();
+            //this.CurrentSession.ResetRowIndex();
         }
     }
     OnFocus() {
@@ -67,7 +67,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(
         private entityArgs: EntityArgs,
         private currencyListService: CurrencyListService,
@@ -94,9 +94,9 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
 
         // redraw
-        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
+        this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
             if (isSuccess) {
-                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
                 this.FillGrid();
                 this.SetUIProperties();
@@ -116,14 +116,14 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     Listen() {
 
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
 
             //
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
                         this.FillGrid();
                         this.SetUIProperties();
@@ -133,9 +133,9 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
             //
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
                         this.FillGrid();
                         this.SetUIProperties();
@@ -210,7 +210,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     txt_Amount: string = TextCodeTranslator.Translate("JournalLine.F.LocalAmount");
 
     ngOnInit() {
-        SessionLocator.CurrentSession.LostFocusEvent.subscribe((res) => {
+        this.CurrentSession.LostFocusEvent.subscribe((res) => {
             if (this.CD) {
                 var isDestroyed: boolean = this.CD['destroyed'];
                 if (!isDestroyed) {
@@ -307,13 +307,13 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                     // Valid Month => (ClosedMonth < month <= OpenMonth)
                     if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
 
-                        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
+                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
 
                     } else { // invalid (closed month)
 
                         // push the error to errors list
                         var msg = TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth");
-                        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(msg);
+                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(msg);
                         this.EntityPM.AccountingDate = value;
                         return;
 
@@ -326,11 +326,11 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                     this.UIProperties.SetValidity("AccountingDate", this.ObjectTableName, false, msg);
 
                     // push the error to errors list
-                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(msg);
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(msg);
                     this.EntityPM.AccountingDate = value;
                     return;
                 } else {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
                     this.UIProperties.SetValidity("AccountingDate", this.ObjectTableName, true, "OK");
                 }
 
@@ -377,7 +377,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             var lastRow = this.JournalLines.Collection[this.JournalLines.Collection.length - 1];
             errors = JournalValidator.ValidateJournalLine(lastRow);
 
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
             if (errors.length > 0) {
                 return;
             }
@@ -583,7 +583,7 @@ class JournalLineModel extends BaseComponent {
     public isValid: boolean = true;
 
     public __UserCanSetRateManually: boolean = false; // user can set rate manually by insert forign amount with local amount empty (see WI 24999)
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(
         private journalLine: JournalLinePM,
         private parent: JournalDetailsTabComponent
@@ -737,11 +737,11 @@ class JournalLineModel extends BaseComponent {
                                     }
 
                                     console.log(">Ex. Rate: ", this.currencyRate);
-                                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
                                 } else {
-                                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-                                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push("The selected currency does not have Exchange Rate!");
+                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push("The selected currency does not have Exchange Rate!");
 
                                     this.LocalAmount = null;
                                     this.ForeignAmount = null;
@@ -922,7 +922,7 @@ class JournalLineModel extends BaseComponent {
             else {
                 //this.CurrencyId = null;
                 //this.CurrencyCode = null;
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             }
 
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
@@ -957,7 +957,7 @@ class JournalLineModel extends BaseComponent {
             else {
                 //this.CurrencyId = null;
                 //this.CurrencyCode = null;
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             }
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();

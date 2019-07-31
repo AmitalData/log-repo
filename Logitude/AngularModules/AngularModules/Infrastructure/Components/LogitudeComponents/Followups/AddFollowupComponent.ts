@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component} from '@angular/core';
 import {Validator} from '../../../Validators/Validator';
 import {BaseComponent} from '../BaseComponent';
@@ -26,6 +26,7 @@ export class AddFollowupComponent extends BaseComponent {
     public ObjectTableName: string = "FollowUp";
     public ValidationErrorsList: string[] = [];
     private AllEventTypes: EventTypeList[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.EntityPM = new FollowUpPM();
@@ -255,7 +256,7 @@ export class AddFollowupComponent extends BaseComponent {
         }
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -297,8 +298,8 @@ export class AddFollowupComponent extends BaseComponent {
                 this.ShipmentPM.AddShipmentFollowUp(myShipmentFollowUpPM);
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.CloseCurrentWindowEmit("Ok");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
 }

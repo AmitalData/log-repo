@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, AfterViewInit, Output, EventEmitter} from '@angular/core';
 import {AppTool, FormatTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ContactList} from '../../Common/EntityLists/ContactList';
@@ -13,7 +13,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
     moduleId: module.id,
     templateUrl: './EmailSearchTextBox.html',
     selector: "EmailSearchTextBox",
-    inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult'],
+    inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult', 'DontInCludeInactive'],
 })
 
 export class EmailSearchTextBox implements OnInit, AfterViewInit {
@@ -37,14 +37,17 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
     public SelectedValuePath: string = 'Email';
     public IsDisabled: boolean = false;
     public ExcludedResult: string[];
+    public DontInCludeInactive: boolean = false;
+    
     @Output() EmailsTextChanged: EventEmitter<string> = new EventEmitter<string>();
     @Output() SelectedListChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() ValidationErrorsListChanged: EventEmitter<any> = new EventEmitter<any>();
 
     private contactService: ContactListService;
     private userService: UserListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("EmailSearchTextBox");
+        var idIndex = this.CurrentSession.GetNewId("EmailSearchTextBox");
         this.ComponentId = "EmailSearchTextBox_" + idIndex;
         this.SeparatorId = "EmailSearchTextBox_Separator_" + idIndex;
         this.InputId = "EmailSearchTextBox_Input_" + idIndex;
@@ -54,6 +57,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
         this.userService = new UserListService();
     }
 
+    IsShowRedUserInActiveNote: boolean = false;
     ngOnInit() {
 
         this.Placeholder = this.Watermark;
@@ -65,6 +69,13 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
                 myDomainService.GetUserListsByidsString(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         this.SelectedItems = myResponse.Result;
+                        this.SelectedItems.forEach(item => {
+                            if (item.InActive) {
+                                this.IsShowRedUserInActiveNote = true;
+                            }
+                        });
+                        
+
                     }
 
                     setTimeout(() => this.SetInputPosition(), 5);
@@ -389,6 +400,10 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
 
         filters.addAdditionalFilter("HasEmail", true, null, null, "Equals", true, false, false, "boolean");
 
+        if (this.DontInCludeInactive) {
+            filters.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "boolean");
+        }
+
         if (!AppTool.IsNullOrEmpty(this.EmailsText)) {
             filters.addAdditionalFilter("SearchEmailsWithout", this.EmailsText, null, null, "Equals", true, false, false, "string");
         }
@@ -451,6 +466,10 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
             filters.ObjectTableName = "Contact";
 
             filters.addAdditionalFilter("HasEmail", true, null, null, "Equals", true, false, false, "boolean");
+
+            if (this.DontInCludeInactive) {
+                filters.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "boolean");
+            }
 
             if (!AppTool.IsNullOrEmpty(this.EmailsText)) {
                 filters.addAdditionalFilter("SearchEmailsWithout", this.EmailsText, null, null, "Equals", true, false, false, "string");

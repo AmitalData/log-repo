@@ -230,7 +230,7 @@ export class CustomsSettingsComponent
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
     
     OkButtonClicked() {

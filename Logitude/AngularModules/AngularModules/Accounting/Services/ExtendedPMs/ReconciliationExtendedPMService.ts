@@ -223,6 +223,30 @@ export class ReconciliationExtendedPMService {
 
     }
 
+    getByNumber(number: string){
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+            return Observable.defer(() => {
+                return this._http.get(this._apiUrl + '/GetByNumber?number=' + number, { headers: authHeader })
+                    .map(response => {
+                        var entity = response.json();
+
+
+
+                        var serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
+
+                        return serviceResponse;
+                    }).catch(ServiceHelper.HandleServiceError);
+            });
+        });
+    }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReconciliationPM = null) {
 
 

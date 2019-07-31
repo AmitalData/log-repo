@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class AWBOCIUpdateClass
@@ -161,9 +165,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "SupplementaryCustomsInfo",
-					  						DefaultText =  @"Supplementary value",
+					  						DefaultText =  "Supplementary value",
 					  						ListFieldLable =  "SupplementaryCustomsInfo",
-					  						ListLableDefaultText =  @"Supplementary value",
+					  						ListLableDefaultText =  "Supplementary value",
 					  						HelpTextCode =  "SupplementaryCustomsInfo",
 					  						Code =  "SupplementaryCustomsInfo",
 					  						DependencyFilter3IsList =  false,
@@ -221,9 +225,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "CountryId",
-					  						DefaultText =  @"Country",
+					  						DefaultText =  "Country",
 					  						ListFieldLable =  "CountryId",
-					  						ListLableDefaultText =  @"Country",
+					  						ListLableDefaultText =  "Country",
 					  						HelpTextCode =  "CountryId",
 					  						Code =  "CountryId",
 					  						DependencyFilter3IsList =  false,
@@ -281,9 +285,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "AWBCustomsInformationCode",
-					  						DefaultText =  @"Customs Info. ID",
+					  						DefaultText =  "Customs Info. ID",
 					  						ListFieldLable =  "AWBCustomsInformationCode",
-					  						ListLableDefaultText =  @"Customs Info. ID",
+					  						ListLableDefaultText =  "Customs Info. ID",
 					  						HelpTextCode =  "AWBCustomsInformationCode",
 					  						Code =  "AWBCustomsInformationCode",
 					  						DependencyFilter3IsList =  false,
@@ -341,9 +345,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "AWBInformationCode",
-					  						DefaultText =  @"Information ID",
+					  						DefaultText =  "Information ID",
 					  						ListFieldLable =  "AWBInformationCode",
-					  						ListLableDefaultText =  @"Information ID",
+					  						ListLableDefaultText =  "Information ID",
 					  						HelpTextCode =  "AWBInformationCode",
 					  						Code =  "AWBInformationCode",
 					  						DependencyFilter3IsList =  false,

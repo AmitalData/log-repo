@@ -124,7 +124,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 else
                 {
                     advancedFilters = from a in repository.context.AdvancedQueryFilters.Include("ObjectField").Include("Query").Include("Query.ObjectTable")
-                                      where (a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId) || a.Tenant == 0
+                                      where (a.Tenant == tenant && (a.Query.UserId == userId && a.UserId != null) && a.QueryId == queryId) || (a.Tenant == tenant && a.QueryId == queryId && a.UserId == userId) || (a.Tenant == 0 && a.QueryId == queryId && a.UserId == null)
                                       select new AdvancedQueryFilterPM()
                                       {
                                           DisplayInList = a.ObjectField.DisplayInList,

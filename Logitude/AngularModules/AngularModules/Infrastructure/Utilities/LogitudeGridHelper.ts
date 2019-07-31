@@ -1,4 +1,4 @@
-﻿export class LogitudeGridHelper {
+export class LogitudeGridHelper {
     public SessionIndex: number;
     constructor(sessionIndex: number) {
         this.SessionIndex = sessionIndex;
@@ -137,7 +137,7 @@
     public ResetEditCellIndex() {
         this.EditCellIndex = null;
     }
-    GridColumnsCount: any[];
+    GridColumnsCount: any[] = [];
     public SetColumnsCount(reset: boolean, GridId: string) {
         if (this.GridColumnsCount == null) {
             this.GridColumnsCount = [];

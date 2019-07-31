@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentAssemblyUpdateClass
@@ -172,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ShipmentId",
-					  						DefaultText =  @"Shipment",
+					  						DefaultText =  "Shipment",
 					  						HelpTextCode =  "ShipmentId",
 					  						Code =  "ShipmentId",
 					  						DependencyFilter3IsList =  false,
@@ -230,7 +234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ShipperId",
-					  						DefaultText =  @"Shipper",
+					  						DefaultText =  "Shipper",
 					  						HelpTextCode =  "ShipperId",
 					  						Code =  "ShipperId",
 					  						DependencyFilter3IsList =  false,
@@ -287,7 +291,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ShipperName",
-					  						DefaultText =  @"Shipper",
+					  						DefaultText =  "Shipper",
 					  						HelpTextCode =  "ShipperName",
 					  						ShortFieldLable =  "ShipperName",
 					  						Code =  "ShipperName",
@@ -345,7 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "House",
-					  						DefaultText =  @"House",
+					  						DefaultText =  "House",
 					  						HelpTextCode =  "House",
 					  						ShortFieldLable =  "House",
 					  						Code =  "House",
@@ -404,7 +408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  @"Created By",
+					  						DefaultText =  "Created By",
 					  						HelpTextCode =  "CreatedByUserId",
 					  						Code =  "CreatedByUserId",
 					  						DependencyFilter3IsList =  false,
@@ -461,7 +465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "CreatedByUserName",
-					  						DefaultText =  @"Created By",
+					  						DefaultText =  "Created By",
 					  						HelpTextCode =  "CreatedByUserName",
 					  						Code =  "CreatedByUserName",
 					  						DependencyFilter3IsList =  false,
@@ -519,7 +523,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  @"Updated By",
+					  						DefaultText =  "Updated By",
 					  						HelpTextCode =  "UpdatedByUserId",
 					  						Code =  "UpdatedByUserId",
 					  						DependencyFilter3IsList =  false,
@@ -576,7 +580,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "UpdatedByUserName",
-					  						DefaultText =  @"Updated By",
+					  						DefaultText =  "Updated By",
 					  						HelpTextCode =  "UpdatedByUserName",
 					  						Code =  "UpdatedByUserName",
 					  						DependencyFilter3IsList =  false,
@@ -633,7 +637,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
+					  						DefaultText =  "Create Date",
 					  						HelpTextCode =  "CreateDate",
 					  						Code =  "CreateDate",
 					  						DependencyFilter3IsList =  false,
@@ -690,7 +694,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
+					  						DefaultText =  "Update Date",
 					  						HelpTextCode =  "UpdateDate",
 					  						Code =  "UpdateDate",
 					  						DependencyFilter3IsList =  false,

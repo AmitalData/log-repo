@@ -1,0 +1,751 @@
+{
+	"info": {
+		"_postman_id": "389ef129-d425-4840-ae84-e29be03a67b1",
+		"name": "Reports",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AuthSuccessfull",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
+						"exec": [
+							"pm.test(\"AuthSuccessfullOnTenant1\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"   ",
+							"    var idvalue1 = (pm.response.json().Token);",
+							"    var idvalue2 = (pm.response.json().Tenant);",
+							"    var idvalue3 = (pm.response.json().UserId);",
+							"    var idvalue4 = (pm.response.json().DocumentDownloadToken);",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"    var id3exist = idvalue3 !== null;",
+							"    var id4exist = idvalue4 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    pm.expect(id3exist);",
+							"    pm.expect(id4exist);",
+							"    pm.globals.set(\"Token\",idvalue1);",
+							"    pm.globals.set(\"Tenant\",idvalue2);",
+							"    pm.globals.set(\"LoggedUserId\",idvalue3);",
+							"    pm.globals.set(\"DocumentDownloadToken\",idvalue4);",
+							"    ",
+							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"ahmadb@fnarsoft.com\",\"Password\":\"ahmed13!A15\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1}\n"
+				},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetReportGroupFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e994dfb3-b783-48ad-8f3d-41db70452adf",
+						"exec": [
+							"   pm.test(\"GetReportGroupFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    ",
+							"",
+							"    var idvalue1 = (pm.response.json().filter(a =>a.Code == 'RACC')[0].Id);",
+							"    var id1exist = idvalue1 !== null;",
+							"",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"ReportGroupId\",idvalue1);",
+							"    ",
+							"     if (id1exist)  {",
+							"    postman.setNextRequest(\"GetReportUnpaidInvoicesIdFromReportGroup\");  ",
+							"    } ",
+							"  ",
+							"    ",
+							"});",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/api/ReportGroup?tenant=0",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"ReportGroup"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetReportUnpaidInvoicesIdFromReportGroup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "076f4a13-bc4f-473c-98be-d86ed4d7b181",
+						"exec": [
+							"   pm.test(\"GetReportUnpaidInvoicesIdFromReportGroup\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"  ",
+							"    var idvalue1 = (pm.response.json().filter(a =>a.Code == 'RIBP')[0].Id);",
+							"    var idvalue2 = (pm.response.json().filter(a =>a.Code == 'RIBP')[0].DefaultTemplateId);",
+							"",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"",
+							"    ",
+							"    pm.environment.set(\"ReportUnpaidInvoicesId\",idvalue1);",
+							"    pm.environment.set(\"ReportDefaultTemplateId\",idvalue2);",
+							"  ",
+							"  ",
+							"       if (id1exist)  {",
+							"    postman.setNextRequest(\"GetReportsTemplateLists\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "referer",
+						"value": "https://system.logitudeworld.com/Angular19042211/index.html"
+					},
+					{
+						"key": "authority",
+						"value": "system.logitudeworld.com"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/api/Report?groupId={{ReportGroupId}}&tenant={{Tenant}}",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"Report"
+					],
+					"query": [
+						{
+							"key": "groupId",
+							"value": "{{ReportGroupId}}"
+						},
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetReportsTemplateLists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d96bf8e4-524b-4bde-8b5a-259625d06864",
+						"exec": [
+							"   pm.test(\"GetReportsTemplateLists\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var reportDefaultTemplateId =  pm.environment.get(\"ReportDefaultTemplateId\");",
+							"    var idvalue1 = (pm.response.json().filter(a =>a.Id ==reportDefaultTemplateId)[0].Description);",
+							"    var id1exist = idvalue1 !== null;",
+							"    ",
+							"    pm.expect(id1exist);",
+							"    ",
+							"    pm.environment.set(\"ReportUnpaidInvoicesDescription\",idvalue1);",
+							"",
+							"        if (id1exist)  {",
+							"    postman.setNextRequest(\"CheckIfReportsRunUsingWR\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"    ",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19280415/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/api/ReportsTemplateExtended/getReportsTemplateListsByReportId?reportId={{ReportUnpaidInvoicesId}}&reportType=R",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"ReportsTemplateExtended",
+						"getReportsTemplateListsByReportId"
+					],
+					"query": [
+						{
+							"key": "reportId",
+							"value": "{{ReportUnpaidInvoicesId}}"
+						},
+						{
+							"key": "reportType",
+							"value": "R"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CheckIfReportsRunUsingWR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02c8a64c-f932-4345-83a3-829350cf9134",
+						"exec": [
+							"   pm.test(\"GetReportsTemplateLists\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue1 =  pm.response.json();",
+							"    var id1exist = idvalue1 !== null;",
+							"    ",
+							"    pm.expect(id1exist);",
+							"    ",
+							"    pm.environment.set(\"IsReportsRunUsingWR\",idvalue1);",
+							"",
+							"        if (id1exist)  {",
+							"    postman.setNextRequest(\"GetPartnersbyfilters\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"    ",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19280415/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {},
+				"url": "http://test.logitudeworld.com/test/api/Report/GetCheckIfReportsRunUsingWR"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPartnersbyfilters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "497d5f8c-3452-44e1-ab57-24305a3a467c",
+						"exec": [
+							"   pm.test(\"GetReportsTemplateLists\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   var idvalue1 = pm.response.json();",
+							"   ",
+							"       if (idvalue1 => 0)  {",
+							"    postman.setNextRequest(\"RunUnpaidInvoiceReport\");  ",
+							"    } ",
+							"",
+							"       ",
+							"});",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19280415/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/api/cardviews/getbyfilters?ForceCacheRefresh=false&GetAll=false",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"cardviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RunUnpaidInvoiceReport",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f05090e9-b6ec-4fb2-a9e2-5a6fa5b4b6a7",
+						"exec": [
+							"pm.test(\"RunUnpaidInvoiceReport\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    ",
+							"    var idvalue1 = (pm.response.json()[0].ReportKey);",
+							"    var id1exist = idvalue1 !== null;",
+							"    ",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"ReportPDFKey\",idvalue1);",
+							"",
+							"        if (idvalue1 => 0)  {",
+							"    postman.setNextRequest(\"PrintUnpaidInvoicePDFReport\");  ",
+							"    } ",
+							"",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "http://test.logitudeworld.com"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19280415/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ReportsRunUsingWR\": false,\n  \"Tenant\": \"{{Tenant}}\",\n  \"QueryFilterItemLists\": [\n    {\n      \"FieldName\": \"CreateDate\",\n      \"FieldValue\": \"2019-03-01T00:00:00.696Z\",\n      \"FieldDataType\": \"Date\",\n      \"DisplayInList\": false,\n      \"Operator\": \"GreaterThanOrEqual\"\n    },\n    {\n      \"FieldName\": \"CreateDate\",\n      \"FieldValue\": \"2019-03-31T00:00:00.696Z\",\n      \"FieldDataType\": \"Date\",\n      \"DisplayInList\": false,\n      \"Operator\": \"LessThanOrEqual\"\n    }\n  ],\n  \"FilterControlName\": \"InvoicesByPartnerFilterControl\",\n  \"CurrentCurrencyCodeType\": \"NIS,local\",\n  \"DateType\": \"InvoiceDate\",\n  \"ReportDocumentId\": null,\n  \"ReportCode\": \"RIBP\",\n  \"NumberOfPage\": 1,\n  \"ProcessType\": \"GenerateReport\",\n  \"DefaultTemplateId\": \"{{ReportDefaultTemplateId}}\",\n  \"ReportName\": \"Unpaid Invoices (1)\",\n  \"DefaultTemplateVsersion\": 1,\n  \"UserId\": \"{{LoggedUserId}}\",\n  \"ReportId\": \"{{ReportUnpaidInvoicesId}}\",\n  \"NumberOfRequests\": 1\n}"
+				},
+				"url": "http://test.logitudeworld.com/test/api/Report"
+			},
+			"response": []
+		},
+		{
+			"name": "PrintUnpaidInvoicePDFReport",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e255eb77-d3b3-4d34-9813-6fcbccf53cba",
+						"exec": [
+							"   pm.test(\"PrintUnpaidInvoicePDFReport\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"",
+							"",
+							"",
+							"       ",
+							"});",
+							"   "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "http://test.logitudeworld.com"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19280415/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ReportsRunUsingWR\": false,\n  \"Tenant\": \"{{Tenant}}\",\n  \"QueryFilterItemLists\": [\n    {\n      \"FieldName\": \"CreateDate\",\n      \"FieldValue\": \"2019-03-01T00:00:00.696Z\",\n      \"FieldDataType\": \"Date\",\n      \"DisplayInList\": false,\n      \"Operator\": \"GreaterThanOrEqual\"\n    },\n    {\n      \"FieldName\": \"CreateDate\",\n      \"FieldValue\": \"2019-03-31T00:00:00.696Z\",\n      \"FieldDataType\": \"Date\",\n      \"DisplayInList\": false,\n      \"Operator\": \"LessThanOrEqual\"\n    }\n  ],\n  \"FilterControlName\": \"InvoicesByPartnerFilterControl\",\n  \"CurrentCurrencyCodeType\": \"NIS,local\",\n  \"DateType\": \"InvoiceDate\",\n  \"ReportDocumentId\": null,\n  \"ReportCode\": \"RIBP\",\n  \"NumberOfPage\": 1,\n  \"ProcessType\": \"GenerateReport\",\n  \"DefaultTemplateId\": \"{{ReportDefaultTemplateId}}\",\n  \"ReportName\": \"Unpaid Invoices (1)\",\n  \"DefaultTemplateVsersion\": 1,\n  \"UserId\": \"{{LoggedUserId}}\",\n  \"ReportId\": \"{{ReportUnpaidInvoicesId}}\",\n  \"NumberOfRequests\": 1\n}"
+				},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/WebPages/DawnLoadReportPage.aspx?fileName={{ReportPDFKey}}@{{ReportUnpaidInvoicesDescription}}&tempId={{DocumentDownloadToken}}&type=PrintToPDF",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"WebPages",
+						"DawnLoadReportPage.aspx"
+					],
+					"query": [
+						{
+							"key": "fileName",
+							"value": "{{ReportPDFKey}}@{{ReportUnpaidInvoicesDescription}}"
+						},
+						{
+							"key": "tempId",
+							"value": "{{DocumentDownloadToken}}"
+						},
+						{
+							"key": "type",
+							"value": "PrintToPDF"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

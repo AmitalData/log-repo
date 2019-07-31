@@ -83,15 +83,15 @@ export class GetStorageSiteCodeComponent extends BaseComponent {
     }
     
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
 
     ChangeStorageSiteCode() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
         this.CourierMasterPM.StorageSiteCode = this.StorageSiteCode;
         this._CourierMasterPMService.update(this.CourierMasterPM).subscribe((response: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             this.SendALLChangeStorageSiteCode();
         });
     }
@@ -107,7 +107,7 @@ export class GetStorageSiteCodeComponent extends BaseComponent {
 
         this._CourierMasterService.PostSendALLChangeStorageSiteCode(currRequestParams)
             .subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
                 myMessageWindow.WindowClosed.subscribe(s => {

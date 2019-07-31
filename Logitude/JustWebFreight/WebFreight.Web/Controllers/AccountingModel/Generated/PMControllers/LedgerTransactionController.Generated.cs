@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("LedgerTransaction", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("LedgerTransaction", entityPM.Tenant, authToken.Tenant);
 	                    
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         LedgerTransactionUpdateService service = new LedgerTransactionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("LedgerTransaction", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("LedgerTransaction", entityPM.Tenant, authToken.Tenant);
 	
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         LedgerTransactionUpdateService service = new LedgerTransactionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

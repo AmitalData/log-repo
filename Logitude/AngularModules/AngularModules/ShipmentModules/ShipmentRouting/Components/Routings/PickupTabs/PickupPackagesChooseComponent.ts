@@ -26,6 +26,7 @@ export class PickupPackagesChooseComponent {
     public ItemsSource: PickupPackagesChooseItem[] = [];
     public IsOkButtonEnabled: boolean = false;
     private fatherComponent: PickupPackagesTabComponent;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -91,7 +92,7 @@ export class PickupPackagesChooseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -124,7 +125,7 @@ export class PickupPackagesChooseComponent {
         });
 
         this.fatherComponent.BuildItemsSource();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 }
 export class PickupPackagesChooseItem {

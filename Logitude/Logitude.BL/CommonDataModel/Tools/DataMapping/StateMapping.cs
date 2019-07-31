@@ -27,7 +27,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.InActive = entityPM.InActive;
             entityPOCO.LocalName = entityPM.LocalName;
             entityPOCO.Notes = entityPM.Notes;
-            entityPOCO.SearchFields = entityPM.Code + "," + entityPM.EnglishName + "," + entityPM.LocalName;
+            entityPOCO.QBOTransactionLocationCode = entityPM.QBOTransactionLocationCode;
+        entityPOCO.SearchFields = entityPM.Code + "," + entityPM.EnglishName + "," + entityPM.LocalName;
+
         }
     }
 }

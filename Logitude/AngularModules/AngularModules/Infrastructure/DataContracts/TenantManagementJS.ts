@@ -31,12 +31,18 @@ export class TenantManagementJS {
     public BluesnapCRMContractId: string;
     public BluesnapEAWBContractId: string;
     public BluesnapEAWBSContractId: string;
-    public BluesnapOneTimeContractId: string;
+    public BluesnapOneTimeContract: string;
+    public BluesnapInttraStockContractId: string;
     public BluesnapContractQTY: number;
     public BluesnapCRMContractQTY: number;
     public BluesnapEAWBContractQTY: number;
     public BluesnapEAWBSContractQTY: number;
     public BluesnapOneTimeContractQTY: number;
+    public BluesnapInttraStockContractQTY: number;
+
+    public DoBlocking: boolean;
+    public BlockType: string;
+    public ExpirationDaysLeft: number;
 
     public BluesnapAccount: string;
     public ManagesRegisteredAgent: boolean;
@@ -46,6 +52,8 @@ export class TenantManagementJS {
     public PackagesCodes_PK: Array<string> = [];
     public PackagesCodes_BS: Array<string> = [];
     public CountryName: string;
+    public MainAdditionalPackageApplied: boolean;
+
     private tenantManagementLicenses: TenantManagementLicensePM[];
     get TenantManagementLicenses() {
         if (this.tenantManagementLicenses == null) {

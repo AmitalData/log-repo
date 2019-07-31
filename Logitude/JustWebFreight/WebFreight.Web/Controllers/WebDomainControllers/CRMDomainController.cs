@@ -51,6 +51,28 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
     {
         #region Ticket
 
+        public HttpResponseMessage GetUpdateCorrespondence(string entityId, bool rightToLeft)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+                CRMDomainService crmDomain = new CRMDomainService();
+                CorrespondencePM entityPM = crmDomain.GetSingleCorrespondencePM(entityId, tenant);
+                entityPM.RightToLeft = rightToLeft;
+                crmDomain.UpdateCorrespondence(entityPM);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetActiveSLAbyTenant()
         {
             try
@@ -707,12 +729,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         if (!string.IsNullOrEmpty(ownerId))
                         {
-                            iQueryable = iQueryable.Where(d => d.Customer.SalesmanUser == null || d.Customer.SalesmanUserId == ownerId);
+                            iQueryable = iQueryable.Where(d =>  d.Customer.SalesmanUserId == ownerId);
                         }
 
                         if (!string.IsNullOrEmpty(businessUnitId))
                         {
-                            iQueryable = iQueryable.Where(d => d.Customer.SalesmanUser == null || d.Customer.SalesmanUser.BusinessUnitId == businessUnitId);
+                            iQueryable = iQueryable.Where(d =>  d.Customer.SalesmanUser.BusinessUnitId == businessUnitId);
                         }
                     }
 
@@ -2008,6 +2030,34 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         //    }
         //}
 
+        public HttpResponseMessage GetOccasionsSummary()
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.CheckContactFeature("Occasion", "READ", tenant);
+
+                    ICRMContext myContext = CRMContext.GetContext(tenant);
+                    OccasionSummary myResult = new OccasionSummary() { Id = tenant };
+                    myResult.AllOccasionsCount = (from d in myContext.Occasions where d.Tenant == tenant select d).Count();
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         private string FixFilter(string filter)
         {
             string myResult = filter;
@@ -2052,5 +2102,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string ActivityId { get; set; }
         public string Summary { get; set; }
         public bool Post { get; set; }
+    }
+
+    public class OccasionSummary
+    {
+        public int Id { get; set; }
+        public int AllOccasionsCount { get; set; }
     }
 }

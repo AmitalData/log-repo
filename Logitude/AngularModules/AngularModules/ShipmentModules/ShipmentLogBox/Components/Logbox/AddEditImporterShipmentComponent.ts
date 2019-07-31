@@ -40,6 +40,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
     public _DepartmentListService: DepartmentListService;
     public _BranchListService: BranchListService;
     public _ShipmentPMService: ShipmentPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
         this.ValidationErrorsList = [];
@@ -136,21 +137,28 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
     public get FromPortId() { return this.EntityPM.FromPortId }
     public set FromPortId(newValue: string) { this.EntityPM.FromPortId = newValue; }
     public _PortExtendedPMService: PortExtendedPMService;
+
+    isSaveClicked: boolean = false;
     SaveChanges() {
+
+        if (this.isSaveClicked == true) {
+            return;
+        }
+        this.isSaveClicked = true;
         this.ValidationErrorsList = [];
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         if (AppTool.IsNullOrEmpty(this.TransportModeId)) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportModeId"));
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Transportation Type"));
         }
 
         if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Order Number"));
         }
 
         if (AppTool.IsNullOrEmpty(this.ForwarderPartnerId)) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "ForwarderPartnerId"));
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Agent"));
         }
         this._PortExtendedPMService = new PortExtendedPMService();
         if (AppTool.IsNullOrEmpty(this.FromPortId)) {
@@ -167,7 +175,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
         //FillErrors(errors);
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.EntityPM.IsImporterShipment = true;
             this.EntityPM.MainCarriageFromPortId = this.EntityPM.FromPortId;
             this.EntityPM.MainCarriageToPortId = this.EntityPM.ToPortId;
@@ -192,39 +200,42 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
                 this._ShipmentPMService.insert(this.EntityPM).subscribe(myResult => {
                     if (!myResult.HasError) {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "New Shipment");
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
                         //ParentViewModel.setImporterFilter();
                         //ParentViewModel.LoadAllData();
                     }
                     else {
                         this.ValidationErrorsList = myResult.ErrorsArray;
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
+                    this.isSaveClicked = false;
                 });
             }
             else {
                 this._ShipmentPMService.update(this.EntityPM).subscribe(myResult => {
                     if (!myResult.HasError) {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded"); 
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded"); 
                     }
                     else {
                         this.ValidationErrorsList = myResult.ErrorsArray;
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
+                    this.isSaveClicked = false;
                 });
             }
             //ShipmentContext.SubmitChanges().Completed += AddEditImporterShipmentViewModel_Completed;
 
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.isSaveClicked = false;
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
         
 }

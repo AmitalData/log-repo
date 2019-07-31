@@ -325,6 +325,16 @@ export class ObjectTablePM {
     public set LovDisplayMemberPathLocal(newValue: string) { if (this.lovDisplayMemberPathLocal != newValue) { this.lovDisplayMemberPathLocal = newValue; this.MarkAsDirty("LovDisplayMemberPathLocal"); } }
        
 	 
+    private displayName: string;
+    public get DisplayName() { return this.displayName; }
+    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
+       
+	 
+    private isTabsHidden: boolean;
+    public get IsTabsHidden() { return this.isTabsHidden; }
+    public set IsTabsHidden(newValue: boolean) { if (this.isTabsHidden != newValue) { this.isTabsHidden = newValue; this.MarkAsDirty("IsTabsHidden"); } }
+       
+	 
 
     public OldEntityPM: ObjectTablePM;
 		

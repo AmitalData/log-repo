@@ -19,6 +19,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {TMBudgetPM} from '../../EntityPMs/TMBudgetPM';
 
+import {TMBudgetPMInitService} from '../../EntityPMInitServices/TMBudgetPMInitService';
 
 @Injectable()
 
@@ -48,6 +49,8 @@ export class TMBudgetPMService {
 					if(pm)
 					{
                       entity = this.MapJsonToEntityPM(pm);
+                      TMBudgetPMInitService.InitValues(entity, false);
+                      TMBudgetPMInitService.ApplyUIPoperties(entity, false);
                     }
 
                 var serviceResponse: ServiceResponse;
@@ -247,6 +250,10 @@ export class TMBudgetPMService {
 		    var entityPM: TMBudgetPM;
 			entityPM = new TMBudgetPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+
+			TMBudgetPMInitService.InitValues(entityPM, true);
+			TMBudgetPMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 

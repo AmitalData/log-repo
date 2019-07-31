@@ -1,4 +1,4 @@
-﻿
+
 
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -35,6 +35,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
     warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
     warehouseEntryListExtendedService: WarehouseEntryListExtendedService;
     warehouseReleaseListExtendedService: WarehouseReleaseListExtendedService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.SetReleasesQueriesVisibility();
@@ -177,11 +178,11 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
 
     LoadDataSummary() {
 
-       // SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+       // this.CurrentSession.StartBusyIndicatorLoading();
         this.warehouseReleasePMExtendedService.GetCrossDockWorkspaceSummary(this.SelectedTransportFilter, this.SelectedDirectionFilter).subscribe(res => {
             var pmResponse: ServiceResponse = res;
 
-          //  SessionLocator.CurrentSession.StopBusyIndicator();
+          //  this.CurrentSession.StopBusyIndicator();
 
             if (!pmResponse.HasError) {
                 var crossDockWorkspaceSummaryClass: any = pmResponse.Result;
@@ -307,7 +308,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
                 listArgs.DisplayTitle = displayTitle;
                 listArgs.BackButtonTitle = "Cross Docks";
                 this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
 
                             var filtersBar: any = null;
@@ -342,7 +343,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
                             listArgs.SelectedTransportMode = this.mySelectedTransportFilter;
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run(listArgs);
-                            SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                            this.CurrentSession.AddMenuReference(cmpRef);
                         });
                 });
 
@@ -390,7 +391,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Cross Docks";
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     var filtersBar: any = null;
                     cmpRef.instance.FiltersBarLoaded.subscribe((myBar: any) => {
@@ -424,7 +425,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
                     listArgs.SelectedTransportMode = this.mySelectedTransportFilter;
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         });
     }
@@ -433,7 +434,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
 
         var myBackButtonLabel = "Cross Docks";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: item.Id, ObjectTableName: "WarehouseEntry", BackButtonLabel: myBackButtonLabel });
@@ -446,7 +447,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
 
         var myBackButtonLabel = "Cross Docks";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: item.Id, ObjectTableName: "WarehouseRelease", BackButtonLabel: myBackButtonLabel });

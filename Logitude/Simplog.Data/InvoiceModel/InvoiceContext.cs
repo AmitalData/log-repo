@@ -51,7 +51,9 @@ namespace Simplog.Data.InvoiceModel
                 currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             //}
             string dbConnectionInfo = currentDb.DBConnection;/*"Logitude2-4_Main,sa,Saas256,.";*/
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             InvoiceContext context = new InvoiceContext(connection);
             return context;            
         }
@@ -103,10 +105,12 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new AccountingPaymentMethodMap());
             modelBuilder.Configurations.Add(new ARPaymentMap());
             modelBuilder.Configurations.Add(new ARPaymentStatuMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStocksStatusMap());
             modelBuilder.Configurations.Add(new ARInvoiceLineActionMap());
             modelBuilder.Configurations.Add(new ARPaymentTransferStatusMap());
             modelBuilder.Configurations.Add(new APPaymentTransferStatusMap());
-
+            modelBuilder.Configurations.Add(new ARInvoiceStockMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStockLineMap());
 
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
@@ -334,6 +338,8 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new SATTransferStatusMap());
             modelBuilder.Configurations.Add(new SATInvoiceStatusMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
+            modelBuilder.Configurations.Add(new ARPaymentChequeReplicaMap());
+            modelBuilder.Configurations.Add(new ARPaymentChequeStatusReplicaMap());
 
 
             base.OnModelCreating(modelBuilder);
@@ -480,6 +486,12 @@ namespace Simplog.Data.InvoiceModel
 
         public IDbSet<SATInvoiceStatus> SATInvoiceStatus { get; set; }
 
+        public IDbSet<ARInvoiceStocksStatus> ARInvoiceStocksStatus { get; set; }
+
+        public IDbSet<ARInvoiceStock> ARInvoiceStocks { get; set; }
+        public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
+        public IDbSet<ARPaymentChequeReplica> ARPaymentChequeReplicas { get; set; }
+       public IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas { get; set; }
         public void DetectChanges()
         {
             this.ChangeTracker.DetectChanges();

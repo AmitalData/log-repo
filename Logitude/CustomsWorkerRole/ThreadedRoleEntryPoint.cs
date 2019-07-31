@@ -180,6 +180,10 @@ namespace CustomsWorkerRole
                 LogitudeSettings.Id = setting.Id;
                 LogitudeSettings.ChampEnv = setting.ChampEnv;
                 LogitudeSettings.ChampURL = setting.ChampURL;
+                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
                 LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
                 LogitudeSettings.DeploymentStage = setting.DeploymentStage;
                 LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
@@ -211,6 +215,9 @@ namespace CustomsWorkerRole
                 LogitudeSettings.QueueServiceMode = setting.QueueServiceMode;
                 LogitudeSettings.ABMProductId = setting.ABMProductId;
                 LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+                LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
+
+                
             }
             if (LogitudeSettings.IsCostomsDeploy)
             {

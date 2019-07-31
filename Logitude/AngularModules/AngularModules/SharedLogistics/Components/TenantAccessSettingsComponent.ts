@@ -1,4 +1,4 @@
-﻿import {Component, EventEmitter}  from '@angular/core';
+import {Component, EventEmitter}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TenantPMService} from '../../Common/Services/StandardPMs/TenantPMService';
@@ -28,6 +28,7 @@ export class TenantAccessSettingsComponent extends BaseComponent  {
     public get IsCustomerTenantShareEnable() {
         return this.EntityPM != null ? this.EntityPM.IsCustomerTenantShare == true ? false : true : null;
     }
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -43,18 +44,18 @@ export class TenantAccessSettingsComponent extends BaseComponent  {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         if (this.EntityPM.IsCustomerTenantShare && !AppTool.IsNullOrEmpty(this.EntityPM.LogBoxAdminUserId)) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             var service: TenantPMService = new TenantPMService();
             service.update(this.EntityPM).subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 SessionLocator.TenantPM = this.EntityPM;
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             });           
         }
         else {

@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {DocumentOutCopyPM} from '../../../../../Common/EntityPMs/DocumentOutCopyPM';
 import {DocumentOutCopyViewModel} from '../DocsOut/ViewModel/DocumentOutCopyViewModel';
 import {AttachmentsList} from '../DocsOut/Filters/AttachmentsList';
@@ -19,7 +19,7 @@ export class AttachDocsOutComponent implements OnInit {
      public AttachmentsLists: AttachmentsList[];
      DataContext: any;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
 
@@ -76,7 +76,7 @@ export class AttachDocsOutComponent implements OnInit {
             this.DataContext.IsShowAttachmentList = true;
         }
         this.DataContext.IsEnableLinkDocOout = true;
-        SessionLocator.CurrentSession.CurrentWindow.Close("");
+        this.CurrentSession.CurrentWindow.Close("");
     }
 
 

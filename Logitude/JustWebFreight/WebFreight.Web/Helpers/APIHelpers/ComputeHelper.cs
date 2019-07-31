@@ -16,6 +16,92 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return myResult;
         }
+
+
+        public static double? ComputeInsideVolume(InsideShipmentPackagePM package, ShipmentPM entityPM)
+        {
+            double? myResult = null;
+            myResult = ComputeInsidePackageVolume(package.Quantity, package.Width, package.Height, package.Length,package.Volume, package.Weight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
+
+            return myResult;
+        }
+
+        public static double? ComputeInsidePackageVolume(double? quantity, double? width, double? height, double? length, double? volume, double? weight, double? ratio, string dimentionCode, string volumeCode, string fromWeightCode)
+        {
+            double? myWidth = null;
+            double? myHeight = null;
+            double? myLength = null;
+            double? myWeight = null;
+            double? myRatio = null;
+            double? myQuantity = null;
+            double? myVolume = null;
+
+            if (width != null)
+            {
+                myWidth = Convert.ToDouble(width);
+            }
+
+            if (height != null)
+            {
+                myHeight = Convert.ToDouble(height);
+            }
+
+            if (length != null)
+            {
+                myLength = Convert.ToDouble(length);
+            }
+
+            if (weight != null)
+            {
+                myWeight = Convert.ToDouble(weight);
+            }
+
+            if (ratio != null)
+            {
+                myRatio = Convert.ToDouble(ratio);
+            }
+
+            if (quantity != null)
+            {
+                myQuantity = Convert.ToDouble(quantity);
+            }
+
+            if (volume != null)
+            {
+                myVolume = Convert.ToDouble(volume);
+            }
+
+            double? myResult = null;
+
+
+            if (myWidth == null || myHeight == null || myLength == null || myQuantity == null)
+            {
+                if (myVolume != null)
+                {
+                    myResult = myVolume;// GetWeightFromVolume(volumeCode, fromWeightCode, myVolume, myRatio);
+                }
+
+              else  if (myWeight != null)
+                {
+                    myResult = GetVolumeFromWeight(fromWeightCode, volumeCode, myWeight, myRatio);
+                }
+            }
+
+            else
+            {
+                myResult = GetVolumeFromDimentions(dimentionCode, volumeCode, myWidth, myHeight, myLength, myQuantity);
+            }
+
+            if (myResult != null)
+            {
+                myResult = Round(myResult.Value, 3);
+            }
+
+            return myResult;
+        }
+
+
+
         public static double? ComputePackageVolume(double? quantity, double? width, double? height, double? length, double? weight, double? ratio, string dimentionCode, string volumeCode, string fromWeightCode)
         {
             double? myWidth = null;
@@ -228,6 +314,16 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return myResult;
         }
+
+
+        public static double? ComputeInsideVolumetricWeight(InsideShipmentPackagePM package, ShipmentPM entityPM)
+        {
+            double? myResult = null;
+            myResult = ComputePackageVolumetricWeight(package.Quantity, package.Width, package.Height, package.Length, package.Volume, package.Weight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
+
+            return myResult;
+        }
+
         public static double? ComputePackageVolumetricWeight(double? quantity, double? width, double? height, double? length, double? volume, double? weight, double? ratio, string dimentionCode, string volumeCode, string grossWeightCode, string chargeableWeightCode)
         {
             double? myWidth = null;
@@ -737,93 +833,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             entityPM.GrossWeightInKG = weigh_Kg;
             entityPM.GrossWeightPerTon = weigh_Ton;
-        }
-
-        public static void ComputeReceivablesPayablesTotals(ShipmentPM entityPM)
-        {
-            // Payables
-            double? openPayablesLocal = null;
-            double? openPayablesProfit = null;
-            if (entityPM.ShipmentLevelCode == "C" && entityPM.ShipmentConsoleShipments.Count > 0)
-            {
-                openPayablesLocal = entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTPayables_Local);
-                openPayablesProfit = entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTPayables_Profit);
-            }
-
-            else
-            {
-                openPayablesLocal = entityPM.ShipmentPayables.Sum(s => s.OpenAmountInLocalCurrency);
-                openPayablesProfit = entityPM.ShipmentPayables.Sum(s => s.OpenAmountInProfitCurrency);
-            }
-
-            // Receivables
-            double? openReceivablesLocal = null;
-            double? openReceivablesProfit = null;
-            if (entityPM.ShipmentLevelCode == "C" && entityPM.ShipmentConsoleShipments.Count > 0)
-            {
-                if (entityPM.ProrateReceivables)
-                {
-                    openReceivablesLocal = entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTReceivables_Local);
-                    openReceivablesProfit = entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTReceivables_Profit);
-                }
-
-                else
-                {
-                    openReceivablesLocal = entityPM.ShipmentReceivables.Where(f => f.ShipmentReceivableLineStatusCode != "ACCT").Sum(s => s.TotalAmountLocal);
-                    openReceivablesProfit = entityPM.ShipmentReceivables.Where(f => f.ShipmentReceivableLineStatusCode != "ACCT").Sum(s => s.AmountInProfitCurrency);
-                    
-                    openReceivablesLocal += entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTReceivables_Local_NoParent);
-                    openReceivablesProfit += entityPM.ShipmentConsoleShipments.Sum(s => s.OAMTReceivables_Profit_NoParent);
-                }
-            }
-
-            else
-            {
-                openReceivablesLocal = entityPM.ShipmentReceivables.Where(f => f.ShipmentReceivableLineStatusCode != "ACCT").Sum(s => s.TotalAmountLocal);
-                openReceivablesProfit = entityPM.ShipmentReceivables.Where(f => f.ShipmentReceivableLineStatusCode != "ACCT").Sum(s => s.AmountInProfitCurrency);
-            }
-
-            var allPayablesLocal = openPayablesLocal;
-            var allPayablesProfit = openPayablesProfit;
-            var allReceivablesLocal = openReceivablesLocal;
-            var allReceivablesProfit = openReceivablesProfit;
-
-            // New Design
-            var profitInLocal = allReceivablesLocal - allPayablesLocal;
-            var profitInProfit = allReceivablesProfit - allPayablesProfit;
-            
-            /* Payables */
-            if (entityPM.OpenPayablesInLocalCurrency != openPayablesLocal)
-            {
-                entityPM.OpenPayablesInLocalCurrency = (openPayablesLocal == null) ? 0 : Round(openPayablesLocal, 2);
-            }
-
-            if (entityPM.OpenPayablesInProfitCurrency != openPayablesProfit)
-            {
-                entityPM.OpenPayablesInProfitCurrency = (openPayablesProfit == null) ? 0 : Round(openPayablesProfit, 2);
-            }
-            
-            /* Receivables */
-            if (entityPM.OpenReceivablesInLocalCurrency != openReceivablesLocal)
-            {
-                entityPM.OpenReceivablesInLocalCurrency = (openReceivablesLocal == null) ? 0 : Round(openReceivablesLocal, 2);
-            }
-
-            if (entityPM.OpenReceivablesInProfitCurrency != openReceivablesProfit)
-            {
-                entityPM.OpenReceivablesInProfitCurrency = (openReceivablesProfit == null) ? 0 : Round(openReceivablesProfit, 2);
-            }
-            
-            /* Profit */
-            if (entityPM.ProfitInLocalCurrency != profitInLocal)
-            {
-                entityPM.ProfitInLocalCurrency = ((profitInLocal == null) ? 0 : Round(profitInLocal, 2)).Value;
-            }
-
-            if (entityPM.ProfitInProfitCurrency != profitInProfit)
-            {
-                entityPM.ProfitInProfitCurrency = (profitInProfit == null) ? 0 : Round(profitInProfit, 2);
-            }
-        }
+        }        
     }
 }

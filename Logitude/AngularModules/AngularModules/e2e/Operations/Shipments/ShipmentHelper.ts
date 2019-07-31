@@ -10,7 +10,7 @@ export class ShipmentHelper {
 
   }
 
-  SelectDicrctionTransportMode(LogitudeShipType: string, Direction: string, TransportMode: string, ShipmentType: string) {
+  SelectDicrctionTransportMode( Direction: string, TransportMode: string, ShipmentType: string) {
     var directionBtn: any;
     var transportModeBtn: any;
     var shipmentTypeBtn: any;
@@ -103,7 +103,7 @@ export class ShipmentHelper {
         else if (ShipmentType == 'LCL') {
           shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0LCLD'));  
         }
-        else
+        else if(ShipmentType == 'OG')
         shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0MyGO'));  
     
         browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
@@ -140,13 +140,21 @@ export class ShipmentHelper {
         else if (ShipmentType == 'LTL') {
           shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0LTL'));  
         }
-        else
-        shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0MyGO'));  
+        else if((ShipmentType == 'IG'))
+        shipmentTypeBtn = element(by.id('ShipmentTypeRadio_0MyGI'));  
     
         browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
 
       });
     }
+  }
+
+  CreateAndCloseNewShipment(MasterDirectType: string, CancelBtnId: string,Direction:string,TransportMode:string, ShipmentType:string) {
+    var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
+    this.Helper.WaitByIdAndClick(MasterDirectType);
+    this.SelectDicrctionTransportMode( Direction,TransportMode, ShipmentType);
+
+    this.Helper.WaitByIdAndClick(CancelBtnId);
   }
 
   OperationalCloseShipment() {
@@ -200,6 +208,4 @@ this.Helper.WaitByCssStringAndClick('.LogitudeCheckBox','Include PickUp')
 
 
   }
-
-
 } 

@@ -53,7 +53,7 @@
                         <table>
                             <tr class="SectionHeader">
                                 <td>
-                                    <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.BanksQuery' | TextCodeTranslationPipe}}</label>
+                                    <label float-start style="margin-right: 10px;">{{'Accounting.General.O.BanksQuery' | TextCodeTranslationPipe}}</label>
                                 </td>
 
                             </tr>
@@ -80,7 +80,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="TodayDepositsVisibility" (click)="ViewDepositQuery('TodayDeposits')"> {{'BankDeposit.Q.Today' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" *ngIf="TodayDepositsVisibility" (click)="ViewDepositQuery('TodayDeposits')"> {{'BankDeposit.Q.Today' | TextCodeTranslationPipe}} ({{bankDepositSummary.TodaysDepositCount}})</p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -98,7 +98,7 @@
                                                                             <p class="QueryLink" *ngIf="AllBankDepositsVisibility" (click)="ViewDepositQuery('AllBankDeposits')"> {{'Accounting.General.Q.AllDeposits' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
-                                                                  
+
                                                                 </table>
 
 
@@ -124,17 +124,17 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCash')"> {{'Accounting.General.O.Cash' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCash')"> {{'Accounting.General.O.Cash' | TextCodeTranslationPipe}} ({{cashBookSummary.CashCashbookCount}})</p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCheque')"> {{'Accounting.General.O.Cheque' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCheque')"> {{'Accounting.General.O.Cheque' | TextCodeTranslationPipe}} ({{cashBookSummary.ChequeCashbookCount}})</p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashBooks')"> {{'Accounting.General.O.AllCashbook' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashBooks')"> {{'Accounting.General.O.AllCashbook' | TextCodeTranslationPipe}} ({{cashBookSummary.AllCashbookCount}})</p>
                                                                         </td>
                                                                     </tr>
 
@@ -167,6 +167,12 @@
                                                                         </td>
                                                                     </tr>
 
+                                                                    <tr *ngIf="LoadBankPageMENUVisibility" >
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="LoadBankPagesFromFile()"> {{'Accounting.General.O.LoadBankPage' | TextCodeTranslationPipe}}  </p>
+                                                                        </td>
+                                                                    </tr>
+
                                                                 </table>
 
 
@@ -190,7 +196,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewPaymentChequesQuery('AllPaymentCheques')"> {{'Accounting.General.O.AllPaymentCheques' | TextCodeTranslationPipe}} ({{paymentChequeSummary.AllPaymenChequesCount}})</p>
+                                                                            <p class="QueryLink" (click)="ViewPaymentChequesQuery('AllPaymentCheques')"> {{'Accounting.General.O.AllPaymentCheques' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
 
@@ -225,7 +231,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td>
-                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{ RecentBankDepositCount }} {{'Accounting.General.O.RecentDeposits' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{ RecentBankDepositCount }} {{'Accounting.General.O.RecentDeposits' | TextCodeTranslationPipe}}</label>
                                             </td>
                                         </tr>
 
@@ -318,7 +324,7 @@
                                     <table style="table-layout: fixed;">
                                         <tr class="SectionHeader">
                                             <td colspan="2">
-                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.CashbookStatus' | TextCodeTranslationPipe}} ({{tenantCurrencyCode}})</label>
+                                                <label float-start style="margin-right: 10px;">{{'Accounting.General.O.CashbookStatus' | TextCodeTranslationPipe}} ({{tenantCurrencyCode}})</label>
                                             </td>
                                         </tr>
 

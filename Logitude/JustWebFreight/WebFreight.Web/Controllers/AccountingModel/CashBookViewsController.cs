@@ -38,6 +38,7 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Helpers;
+using WebFreight.Web.AccountingModel.DomainServices;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -68,7 +69,26 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-      
+        public HttpResponseMessage GetCashBookSummary()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                AccountingDomainService domain = new AccountingDomainService();
+                CashBookSummary myResult = domain.GetCashbookSummary(tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }
 	 

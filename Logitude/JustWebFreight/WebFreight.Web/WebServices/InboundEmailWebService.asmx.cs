@@ -3,6 +3,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -165,20 +166,24 @@ namespace WebFreight.Web.WebServices
 
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())//TransactionFactory.GetNewTransaction())
-                {
-                    BrokeredMessage message = new BrokeredMessage();
+				//using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())//TransactionFactory.GetNewTransaction())
+				//{
+				//    BrokeredMessage message = new BrokeredMessage();
 
-                    message.Properties["CommunicationLogId"] = myCommunicationLogId;
-                    message.Properties["Tenant"] = Tenant;
+				//    message.Properties["CommunicationLogId"] = myCommunicationLogId;
+				//    message.Properties["Tenant"] = Tenant;
 
-                    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment("emailqueue");//"emailqueue"
-                    QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
-                    client.Send(message);
+				//    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment("emailqueue");//"emailqueue"
+				//    QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
+				//    client.Send(message);
 
-                    scope.Complete();
-                }
-            }
+				//    scope.Complete();
+				//}
+
+			 
+				DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", tenant.ToString() } });
+			}
 
             catch (Exception ex)
             {

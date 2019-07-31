@@ -13,6 +13,9 @@ using System.Data.Entity.Core.Objects;
 using System.Diagnostics;
 using System.Data.Entity;
 using Logitude.Server.Tools;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Logitude.Accounting.Data.DataContract;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -260,6 +263,15 @@ namespace Logitude.Accounting.Data.Repositories
             return Journal;
         }
 
+        public Journal GetSingleJournalByExternalNoAndExternalSystem(string externalNo,string externalSystem ,int tenant)
+        {
+           
+
+            Journal Journal = (from a in context.Journals
+                               where a.ExternalNo == externalNo  && a.ExternalSystem == externalSystem && a.Tenant == tenant
+                               select a).FirstOrDefault();
+            return Journal;
+        }
 
 
         public bool CheckIfExternalNoAndSystemExist(string externalNo, string externalSystem, out string journalNumber, int tenant)
@@ -304,11 +316,22 @@ namespace Logitude.Accounting.Data.Repositories
             return entity;
         }
 
+        public Journal GetByAccountingEntityId(string entityId,string accountingEntityCode, int tenant)
+        {
+            var entity = (from a in context.Journals
+                          where a.Tenant == tenant
+                          && a.AccountingEntityId == entityId
+                          && a.AccountingEntityCode == accountingEntityCode
+                          select a).FirstOrDefault();
+
+            return entity;
+        }
+
         public Journal GetByAccountingEntityId(string entityId, int tenant)
         {
             var entity = (from a in context.Journals
                           where a.Tenant == tenant
-                          where a.AccountingEntityId == entityId
+                          && a.AccountingEntityId == entityId
                           select a).FirstOrDefault();
 
             return entity;
@@ -341,6 +364,47 @@ namespace Logitude.Accounting.Data.Repositories
 
             return journals;
         }
+        public IQueryable<Journal> GetByOriginal(string originalId, int tenant)
+        {
+            var journals = (from a in context.Journals.Include("JournalStatusType")
+                            where a.Tenant == tenant
+                            where a.OriginalJournalId == originalId
+                            select a);
+
+            return journals;
+        }
+        public IQueryable<Journal> GetByJournalsAccountingEntityCodeAndDate(string entityCode, DateTime accountingDate, int tenant)
+        {
+            var journals = (from a in context.Journals.Include("JournalStatusType")
+                            where a.Tenant == tenant
+                            where a.AccountingEntityCode == entityCode && a.AccountingDate == accountingDate
+                            select a);
+
+            return journals;
+        }
+
+        public IQueryable<Journal> GetJournalsNotLTByAccDate(DateTime accountingDateFrom, DateTime accountingDateTo, int tenant)
+        {
+            var journals = (from a in context.Journals.Include("JournalStatusType")
+                            where a.Tenant == tenant
+                            where a.StatusCode != "0" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
+                            select a);
+
+            return journals;
+        }
+
+        public IQueryable<Journal> GetJournalsNotLTByAccDateAccEntity(DateTime accountingDateFrom, DateTime accountingDateTo, string entityCode, int tenant)
+        {
+            var journals = (from a in context.Journals.Include("JournalStatusType")
+                            where a.Tenant == tenant
+                            where a.StatusCode != "0" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
+                                    && a.AccountingEntityCode == entityCode
+                            select a);
+
+            return journals;
+        }
+
+
         public bool CheckIfThereNonTranslatedJournalsByMonth(int year, int month, int tenant)
         {
             return (from record in context.Journals
@@ -352,19 +416,39 @@ namespace Logitude.Accounting.Data.Repositories
                     select record).Any();
         }
 
-        public List<Journal> GetARInvoiceJournals(DateTime? taxReportMonth, int tenant)
+        public List<TaxReportData> GetARInvoiceJournals(DateTime? taxReportMonth, int tenant)
         {
             int days= DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
             DateTime date = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days);
-            return (from a in context.Journals
+
+            IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
+            List<string> invoiceIds = (from a in invoicecontext.ARInvoices
+                                        where a.InvoiceDate <= date && a.TotalAmountForTaxReport != null && a.Tenant == tenant 
+                                        select a.Id).ToList();
+           
+            List< Journal> journals=(from a in context.Journals
                     join r in context.JournalLines on a.Id equals r.JournalId
                     join m in context.JournalAdditionalDatas on a.Id equals m.JournalId
                     where a.AccountingEntityCode == "2" && (m.TaxReportId == null ||m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null) && a.Tenant== tenant
                     && r.DocumentDate <= date 
 
-                    select a).ToList();
+                    select a ).ToList();
 
+           
+            List<TaxReportData> data = (from a in journals
+                                       
+                                        where invoiceIds.Contains(a.AccountingEntityId)
+                                        select new TaxReportData()
+                                        {
+                                            Id = a.Id,
+                                            AccountingEntityId = a.AccountingEntityId,
+                                           
 
+                                        }).ToList();
+
+            return data;
+
+           
         }
 
         public Journal GetJournalByIdAndTenant(string id, int tenant)

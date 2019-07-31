@@ -27,9 +27,10 @@ export class DeclarationQueryComponent extends BaseComponent {
 
     declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     EntityPM: DeclarationPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         
         this.BuildColumns();
         //this.onQueryChangeEvent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
@@ -178,7 +179,7 @@ export class DeclarationQueryComponent extends BaseComponent {
 
         }
         filters.addAdditionalFilter("CustomFileNo", this.EntityPM.CustomFileNo, null, null, "NotEqual", false, false, false, "string");
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
         return this.entityListService.getByFilters("Customs.Declaration",filters);
     }
 
@@ -261,7 +262,7 @@ export class DeclarationQueryComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
     OkButtonClicked() {
@@ -281,7 +282,7 @@ export class DeclarationQueryComponent extends BaseComponent {
 
                                 }
                                 else {
-                                    SessionLocator.CurrentSession.StartBusyIndicator("");
+                                    this.CurrentSession.StartBusyIndicator("");
                                     this.declarationExtendedListService
                                         .PutCopyDeclaration(this.SelectedRow.Id, this.EntityPM.Id, this.EntityPM.Tenant)
                                         .subscribe((response: any) => {
@@ -290,9 +291,9 @@ export class DeclarationQueryComponent extends BaseComponent {
                                                 if (!response.HasError) {
 
 
-                                                    //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                                                    SessionLocator.CurrentSession.StopBusyIndicator();
-                                                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(null);
+                                                    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                                    this.CurrentSession.StopBusyIndicator();
+                                                    this.CurrentSession.CloseCurrentWindowEmit(null);
                                                 }
                                             }
                                         });

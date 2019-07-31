@@ -34,7 +34,7 @@ namespace Logitude.Server.Tools.StorageService
             var blobfile = blobContainer.GetBlockBlobReference(localPath);
             if (!blobfile.Exists())
             {
-                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName))
+                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) && IsEnableAzureRootFolder(fileInfo.Tenant))
                 {
                     GetFileBlobContainerWithoutAzureFolder(fileInfo, out localPath, out blobContainer);
                     blobfile = blobContainer.GetBlockBlobReference(localPath);
@@ -101,7 +101,7 @@ namespace Logitude.Server.Tools.StorageService
                 string extension = !string.IsNullOrEmpty(fileInfo.Extension) ? fileInfo.Extension.ToLower() : "";
 
                 localPath = fileInfo.FileName + "." + extension;
-                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName))
+                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) &&  IsEnableAzureRootFolder(fileInfo.Tenant))
                 {
                     localPath = fileInfo.ExternalContainerName + "/" + localPath;
                     blobContainer = StorageAcountDetails.GetCurrentContainer(LogitudeSettings.AzureFolderName.ToLower());
@@ -116,7 +116,7 @@ namespace Logitude.Server.Tools.StorageService
                 string extension =!string.IsNullOrEmpty(fileInfo.Extension) ? fileInfo.Extension.ToLower() : "";
 
                 localPath = StorageAcountDetails.GetBlobNameByLocation(fileInfo.FileName + "." + extension, fileInfo.FolderName);
-                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName))
+                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) && IsEnableAzureRootFolder(fileInfo.Tenant))
                 {
                     localPath = fileInfo.ContainerName + "/" + localPath;
                     blobContainer = StorageAcountDetails.GetCurrentContainer(LogitudeSettings.AzureFolderName.ToLower());
@@ -234,7 +234,7 @@ namespace Logitude.Server.Tools.StorageService
             var blobfile = blobContainer.GetBlockBlobReference(localPath);
             if (!blobfile.Exists())
             {
-                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName))
+                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) && IsEnableAzureRootFolder(fileInfo.Tenant))
                 {
                     GetFileBlobContainerWithoutAzureFolder(fileInfo, out localPath, out blobContainer);
                     blobfile = blobContainer.GetBlockBlobReference(localPath);
@@ -257,7 +257,7 @@ namespace Logitude.Server.Tools.StorageService
             var blobfile = blobContainer.GetBlockBlobReference(localPath);
             if (!blobfile.Exists())
             {
-                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName))
+                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) && IsEnableAzureRootFolder(fileInfo.Tenant))
                 {
                     GetFileBlobContainerWithoutAzureFolder(fileInfo, out localPath, out blobContainer);
                     blobfile = blobContainer.GetBlockBlobReference(localPath);
@@ -266,6 +266,15 @@ namespace Logitude.Server.Tools.StorageService
 
 
             return blobfile.Exists();
+        }
+
+        private bool IsEnableAzureRootFolder(int tenant)
+        {
+            bool result = false;
+
+            result = FeatureToggleHelper.HasFeatureToggle("EZR", tenant);
+
+            return result;
         }
 
 

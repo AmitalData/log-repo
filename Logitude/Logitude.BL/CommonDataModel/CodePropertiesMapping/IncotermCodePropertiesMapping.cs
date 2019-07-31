@@ -35,7 +35,7 @@ namespace Logitude.BL.CommonDataModel.CodePropertiesMapping
             }
             else// if (!string.IsNullOrEmpty(CardProperties.Code))
             {
-                throw new NotImplementedException();
+                return null;
             }
         }
     }

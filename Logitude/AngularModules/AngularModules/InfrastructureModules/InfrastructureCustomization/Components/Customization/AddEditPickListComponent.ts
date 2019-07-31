@@ -26,6 +26,7 @@ export class AddEditPickListComponent extends BaseComponent {
     private myService: GeneralDomainService;
     public PickListsList: ObservableCollection;
     private loadedFields: ObjectFieldPM[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.myService = new GeneralDomainService();
@@ -160,7 +161,7 @@ export class AddEditPickListComponent extends BaseComponent {
     }
 
     CancelClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     ValidationErrorsList: any[];
     SaveChanges() {
@@ -181,7 +182,7 @@ export class AddEditPickListComponent extends BaseComponent {
             });
 
             if (this.ValidationErrorsList.length == 0) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving changes....");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving changes....");
                 if (this.GeneralEntitiesArgs == null) {
                     this.GeneralEntitiesArgs = new PickListGeneralEntitiesArgs();
                 }
@@ -194,8 +195,8 @@ export class AddEditPickListComponent extends BaseComponent {
                 });
                 if (this.isNew) {
                     this.myService.insertPickListGeneralEntities(this.GeneralEntitiesArgs).subscribe(myResult => {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindow();
                         CachedDataManager.RefreshTableData("CustomPickList", true);
                         //var myResponse: ServiceResponse = myResult;
                         //if (!myResponse.HasError) {
@@ -209,8 +210,8 @@ export class AddEditPickListComponent extends BaseComponent {
                 }
                 else {
                     this.myService.updatePickListGeneralEntities(this.GeneralEntitiesArgs).subscribe(myResult => {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindow();
                         CachedDataManager.RefreshTableData("CustomPickList", true);
 
                         this.GeneralEntitiesArgs = new PickListGeneralEntitiesArgs();

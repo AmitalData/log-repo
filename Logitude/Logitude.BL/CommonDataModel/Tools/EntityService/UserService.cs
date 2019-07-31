@@ -105,9 +105,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 newContactTenant = InseartNewContact(entityPm);
             }
 
-            #region newUser roles
 
-            UpdateUserRolesForHybrid(entityPM, newContactTenant);
+			#region newUser roles
+
+			UpdateUserRolesForHybrid(entityPM, newContactTenant);
 
             #endregion
 
@@ -570,7 +571,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPM.Email = entityPM.Email.ToLower();
 
             Contact newContact = new Contact();
-            MapUserToContact(entityPM, newContact);
+			newContact.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true; // Mohammad & Islam: related to bug 44449
+
+			MapUserToContact(entityPM, newContact);
 
             Contact adminContact = contactRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
             if (adminContact != null)
@@ -831,6 +834,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 int? totalUsers = 0;
                 bool isManageLicencesPerUser = false;
                 bool isMultiPackages = false;
+                bool mainAdditionalPackageApplied = false;
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -838,34 +842,66 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     TenantManagement tenantManagement = tenantMngmntRep.GetSingleTenantManagement(tenant);
 
                     isMultiPackages = tenantManagement.IsMultiPackage;
+                    mainAdditionalPackageApplied = tenantManagement.MainAdditionalPackageApplied;
+                    isManageLicencesPerUser = tenantManagement.ManageLicencesPerUser;
 
                     totalUsers = tenantManagement.NumberOfUsers;
                     if (tenantManagement.FreeUsers != null)
                     {
                         totalUsers += tenantManagement.FreeUsers;
                     }
-
-                    isManageLicencesPerUser = tenantManagement.ManageLicencesPerUser;
                 }
 
-                if (isMultiPackages)
+                IQueryable<User> allTenantUsers = entityRepository.GetUsers(tenant);
+                allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false);
+                int tenantUsers = allTenantUsers.Count();
+
+                if (mainAdditionalPackageApplied)
                 {
-                    canAddUser = true;
+                    if (tenantUsers < totalUsers)
+                    {
+                        canAddUser = true;
+                    }
+
+                    else
+                    {
+                        if (entityPm.AdditionalPackagesOnly)
+                        {
+                            canAddUser = true;
+                        }
+
+                        else
+                        {
+                            throw new Exception("You reached maximum number of users, mark the user as AdditionalPackagesOnly");
+                        }
+                    }
                 }
 
                 else
                 {
-                    IQueryable<User> allTenantUsers = entityRepository.GetUsers(tenant);
-                    int tenantUsers = 0;
-
-                    if (isManageLicencesPerUser)
+                    if (isMultiPackages)
                     {
-                        allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false && d.LicencedUser == true);
-                        tenantUsers = allTenantUsers.Count();
+                        canAddUser = true;
+                    }
 
-                        if (entityPm.LicencedUser)
+                    else
+                    {
+                        
+
+                        if (isManageLicencesPerUser)
                         {
-                            if (tenantUsers < totalUsers)
+                            allTenantUsers = allTenantUsers.Where(d => d.LicencedUser == true);
+                            tenantUsers = allTenantUsers.Count();
+
+                            if (entityPm.LicencedUser)
+                            {
+                                if (tenantUsers < totalUsers)
+                                {
+                                    canAddUser = true;
+                                }
+                            }
+
+                            else
                             {
                                 canAddUser = true;
                             }
@@ -873,18 +909,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         else
                         {
-                            canAddUser = true;
-                        }
-                    }
-
-                    else
-                    {
-                        allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false);
-                        tenantUsers = allTenantUsers.Count();
-
-                        if (tenantUsers < totalUsers)
-                        {
-                            canAddUser = true;
+                            if (tenantUsers < totalUsers)
+                            {
+                                canAddUser = true;
+                            }
                         }
                     }
                 }

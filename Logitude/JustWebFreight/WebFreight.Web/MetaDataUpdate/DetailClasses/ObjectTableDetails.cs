@@ -86,5 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool AllowedInQueues { get; set; }
         public string LovDisplayMemberPath { get; set; }
         public string LovDisplayMemberPathLocal { get; set; }
+        public bool IsTabsHidden { get; set; }
     }
 }

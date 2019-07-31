@@ -68,20 +68,20 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new ChartOfAccountsTypeDetails()
             {    
-                Code = "6", 
-                SearchFields = "6,Workersעובדים", 
-                Inactive = false, 
-                LocalName = "עובדים", 
-                EnglishName = "Workers", 
-			});
-			 
-            all.Add(new ChartOfAccountsTypeDetails()
-            {    
                 Code = "7", 
                 SearchFields = "7,Debtors And Creditorsחו''זים", 
                 Inactive = false, 
                 LocalName = "חו''זים", 
                 EnglishName = "Debtors And Creditors", 
+			});
+			 
+            all.Add(new ChartOfAccountsTypeDetails()
+            {    
+                Code = "6", 
+                EnglishName = "Works", 
+                LocalName = "עבודות", 
+                SearchFields = "6,Works,עבודות", 
+                Inactive = false, 
 			});
 			
             return all;

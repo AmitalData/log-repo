@@ -3,7 +3,7 @@ import { browser, by, element } from 'protractor';
 
 describe('Login Module', () => {
 
-  let page: LoginComp= new LoginComp();
+  let page: LoginComp = new LoginComp();
   beforeEach(() => {
     browser.driver.manage().window().maximize();
   });
@@ -11,8 +11,9 @@ describe('Login Module', () => {
 
   it('Login Success', function () {
     browser.ignoreSynchronization = true;
-    page.navigateTo();
-    page.DoLogin();
+      page.navigateTo(browser.params.Link);
+      page.DoLogin(browser.params.Login.Email, browser.params.Login.Password);
+      //page.navigateTo('http://localhost:4200/');
+      //page.DoLogin('sgautomation@pro.com', 'Sg0592463934!');
   });
 });
- 

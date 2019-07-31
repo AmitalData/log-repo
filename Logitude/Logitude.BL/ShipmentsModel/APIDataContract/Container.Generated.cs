@@ -48,6 +48,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string CommodityNumber { get; set; }
     
     public int? Pieces { get; set; }
+    
+    public string Reference4 { get; set; }
+    
+    public List<InsidePackage> InsidePackages { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

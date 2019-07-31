@@ -72,6 +72,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     MetodoPagoCode = a.Card.MetodoPagoCode,
                                     UsoCFDICode = a.Card.UsoCFDICode,
                                     IsINTTRARegistered = a.IsINTTRARegistered,
+                                    CAAT = a.CAAT,
+                                    CBSA = a.CBSA,
                                     INTTRARegistrationNotes = a.INTTRARegistrationNotes,
                                     Card = new CardPM()
                                     {
@@ -162,7 +164,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     UsoCFDICode = a.Card.UsoCFDICode,
                                     IsINTTRARegistered = a.IsINTTRARegistered,
                                     INTTRARegistrationNotes = a.INTTRARegistrationNotes,
-
+                                    CAAT = a.CAAT,
+                                    CBSA = a.CBSA,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -218,7 +221,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            UsoCFDICode = a.Card.UsoCFDICode,
                                                            IsINTTRARegistered = a.IsINTTRARegistered,
                                                            INTTRARegistrationNotes = a.INTTRARegistrationNotes,
-
+                                                           CAAT = a.CAAT,
+                                                           CBSA = a.CBSA,
                                                        };
             return shippingLines;
         }
@@ -272,6 +276,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              UsoCFDICode = a.Card.UsoCFDICode,
                              IsINTTRARegistered = a.IsINTTRARegistered,
                              INTTRARegistrationNotes = a.INTTRARegistrationNotes,
+                             CAAT = a.CAAT,
+                             CBSA = a.CBSA,
 
                          }).AsQueryable();
 
@@ -344,6 +350,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                       PrimaryContactName = a.PrimaryContactName,
                                                       PrimaryContactEmail = a.PrimaryContactEmail,
                                                       PrimaryContactPhone = a.PrimaryContactPhone,
+                                                      CAAT = a.CAAT,
+                                                      CBSA = a.CBSA,
                                                   };
             return result;
         }

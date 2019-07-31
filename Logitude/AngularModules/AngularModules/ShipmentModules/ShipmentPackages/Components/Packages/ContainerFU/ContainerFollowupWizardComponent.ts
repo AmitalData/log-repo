@@ -31,6 +31,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
     public TemplateComponent: ContainerFollowupWizardTemplate;
     @ViewChild('Child', { read: ViewContainerRef }) ChildViewContainerRef: ViewContainerRef; 
     private entityPMService: ShipmentPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.entityPMService = new ShipmentPMService();
@@ -48,7 +49,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
                         this.EntityId = entityId.split(':')[0];
                         this.Shipmentd = entityId.split(':')[1];
 
-                        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                        this.CurrentSession.StartBusyIndicatorLoading();
 
                         this.entityPMService.get(this.Shipmentd).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
@@ -74,7 +75,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
                                 this.ValidationErrorsList = myResponse.ErrorsArray;
                             }
 
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         });
                     }
                 });
@@ -124,7 +125,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityId);
+        this.CurrentSession.CloseCurrentWindowEmit(this.EntityId);
     }
     SaveClicked() {
         var isValid: boolean = this.Validate();
@@ -175,7 +176,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
     Save(myCommandCode: string = null) {
 
         if (this.ShipmentPM.IsDirty) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             this.entityPMService.update(this.ShipmentPM).subscribe((myResponse: ServiceResponse) => {
 
@@ -190,7 +191,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
                     this.OnSaveCompleted(myCommandCode);
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
             });
 
@@ -365,7 +366,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
         }
     }
     ViewShipmentClicked() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.ShipmentPM.Id, ObjectTableName: 'Shipment', BackButtonLabel: "Shipment: " + this.ShipmentPM.ShipmentNumber });

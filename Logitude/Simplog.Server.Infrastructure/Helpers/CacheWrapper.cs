@@ -20,7 +20,7 @@ namespace Simplog.Server.Infrastructure.Helpers
         {
             get { return cache.Count; }
         }
-
+         
         public long EffectivePercentagePhysicalMemoryLimit
         {
             get { return cache.EffectivePercentagePhysicalMemoryLimit; }
@@ -37,7 +37,9 @@ namespace Simplog.Server.Infrastructure.Helpers
         }
 
         public object Get(string key)
-        {
+        { 
+            if(CacheLogger.IsCacheLoggerEnabled)
+                CacheLogger.LogKey(key);
             return cache.Get(key);
         }
 

@@ -27,7 +27,7 @@ export class AccountingCustomFilesComponent
     public IsDisplayOnly: boolean = false;
 
     AccountingCustomFilesList: any[];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         this.AccountingCustomFilesList = [];
@@ -46,6 +46,6 @@ export class AccountingCustomFilesComponent
     public SelectedFile: string;
     OnSelectedFile(myArgs: string) {
         this.SelectedFile = myArgs;
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.SelectedFile);
+        this.CurrentSession.CloseCurrentWindowEmit(this.SelectedFile);
     }
 }

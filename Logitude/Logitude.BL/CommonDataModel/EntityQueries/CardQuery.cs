@@ -104,6 +104,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  StateName = card.StateName,
                                                  IsInternationalPartner = card.IsInternationalPartner,
                                                  IsAutonomy = card.IsAutonomy,
+                                                 CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
+                                                 CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
                                              });
 
 
@@ -818,6 +820,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StateName = entityPOCO.StateName,
                     IsInternationalPartner = entityPOCO.IsInternationalPartner,
                     IsAutonomy = entityPOCO.IsAutonomy,
+                    CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
+                    CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
                 };
 
                 if (entityPOCO.Customer != null)
@@ -1284,6 +1288,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StateName = oldTenantCard.StateName,
                     IsInternationalPartner = oldTenantCard.IsInternationalPartner,
                     IsAutonomy = oldTenantCard.IsAutonomy,
+                    ImageDetailId = oldTenantCard.ImageDetailId,
                 };
 
                 #region PaymentTerm

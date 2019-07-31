@@ -599,7 +599,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
         searchParams.RequestVIA = SendRequestVIA.Default;
         var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
 
         myIIGGeneralMessagesService.PostCustomFileCredit(searchParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
@@ -649,7 +649,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 else if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
                     this.AutoFillPaymentScreenByDefault();
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
             });
     }
 
@@ -812,7 +812,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.AddPaymentMethodClicked();
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
     }
     GetDeclarationStatusColor(statusCode: string) {
         var color = "#45494A";
@@ -924,7 +924,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.ErrorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.FuturePayment");
         }
 
-        var controller = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController;
+        var controller = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController;
         if (controller.InDisplayMode == true) {
             this.IsDisplayOnly = true;
             this.OkButtonEnabled = false;
@@ -958,11 +958,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.ShowStorageStatusMessage = false;
 
         //get declaration display only
-        declarationDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        declarationDisplayOnly = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayMode;
 
         if (declarationDisplayOnly) {
             this.IsDisplayOnly = true;
-            this.ErrorMessage = "לתצוגה בלבד - " + SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.ErrorMessage = "לתצוגה בלבד - " + SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
 
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(declarationDisplayOnly);
@@ -1273,7 +1273,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     ActivateUnifreightInstructionOK() {
         //if (!AppTool.IsNullOrEmpty(this.DeclarationPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
+            SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
 
             var myStoreViewUnifreightInstructionController
                 = new UnifreightController(this.DeclarationPM, "Logitude.Customs.ViewModels.DeclarationPayment.DeclarationPaymentTabViewModel.MyStoreViewUnifreightInstructionController");
@@ -1286,7 +1286,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     }
                     else {
                         this.instructionCancelled = true;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                     }
                     //myStoreViewUnifreightInstructionController.DisposeUnifreightMassaging();
 
@@ -1330,7 +1330,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         if (!response.HasError && !this.instructionCancelled) {
             this.saving = true;
             this.RefreshDeclaration();
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            SessionLocator.SelectedSession.CloseCurrentWindow();
         }
         else {
 
@@ -1435,7 +1435,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     SendMethodStep1() {
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
 
         if (this.entityCreated) {
             this.declarationPaymentPMService.insert(this.paymentPM).subscribe((response: ServiceResponse) => {
@@ -1447,7 +1447,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 if (!AppTool.IsNullOrEmpty(result)) {
                     this.CheckRequiredFields();
                 } else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                 }
             });
             this.entityCreated = false;
@@ -1461,7 +1461,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 if (!AppTool.IsNullOrEmpty(result)) {
                     this.CheckRequiredFields();
                 } else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                 }
 
             });
@@ -1475,7 +1475,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
             if (!AppTool.IsNullOrEmpty(customsRequiredFieldErrors)) {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (customsRequiredFieldErrors.RequiredFields.length == 0) {
 
                     //If Last Declaration was NOT Signed
@@ -1496,7 +1496,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     this.FillValidationErrors(TextCodeTranslator.Translate("Customs.General.O.RequiredFields"), customsRequiredFieldErrors);
                 }
             } else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
             }
 
         });
@@ -1510,7 +1510,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 var customsSetting = list[0];
 
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
 
                 var listCustomsAgentId: string[] = ["550221105", "511487241"];
                 if (SessionLocator.LoggedUserPM.IsCustomerCare
@@ -1561,7 +1561,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 this.ActualSend();
             }
             else {
-                SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
+                SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
 
                 var myStoreViewUnifreightInstructionController = new UnifreightController(
                     this.DeclarationPM,
@@ -1573,11 +1573,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                             this.ActualSend();
                         }
                         else {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            SessionLocator.SelectedSession.StopBusyIndicator();
 
                         }
                     });
-                SessionLocator.CurrentSession.StartBusyIndicator("");
+                SessionLocator.SelectedSession.StartBusyIndicator("");
                 myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_STORE");
 
             }
@@ -1621,16 +1621,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //this.declarationMessagesService.PostSendPaymentWithCheckCustomFileCredit(params)
         //    .subscribe((myServiceResponse: ServiceResponse) => {
         //        myCustomMessageProgressHelper.MessageArrived = true;
-        //        SessionLocator.CurrentSession.StopBusyIndicator();
+        //        SessionLocator.SelectedSession.StopBusyIndicator();
         //        var result: CustomFileCreditResponseData = myServiceResponse.Result;
         //        if (!AppTool.IsNullOrEmpty(result)) {
         //            var mess :string = this.AnalyzeResponseMessageSendPaymentWithCheckCustomFileCredit(result);
 
-        //            SessionLocator.CurrentSession.StopBusyIndicator();
+        //            SessionLocator.SelectedSession.StopBusyIndicator();
         //            if (!AppTool.IsNullOrEmpty(mess)) {
         //                let messWindow = new MessageWindow();
 
-        //                SessionLocator.CurrentSession.StopBusyIndicator();
+        //                SessionLocator.SelectedSession.StopBusyIndicator();
         //                messWindow.Show(mess);
         //                messWindow.WindowClosed.subscribe((event: any) => {
 
@@ -1639,8 +1639,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         //                        this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
         //                    {
         //                        this.RefreshDeclaration();
-        //                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        //                        if (SessionLocator.CurrentSession.CurrentWindow != null) SessionLocator.CurrentSession.CloseCurrentWindow()
+        //                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+        //                        if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow()
         //                    }
         //                });
 
@@ -1658,14 +1658,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     //    this.declarationMessagesService.PostCheckCustomFileCreditOnly(params)
     //        .subscribe((myServiceResponse: ServiceResponse) => {
     //            myCustomMessageProgressHelper.MessageArrived = true;
-    //            SessionLocator.CurrentSession.StopBusyIndicator();
+    //            SessionLocator.SelectedSession.StopBusyIndicator();
     //            let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result;
 
     //            if (!AppTool.IsNullOrEmpty(customFileCreditResponseData)) {
     //                if (customFileCreditResponseData.IsTRansGove) {
     //                    var confirmWindow = new ConfirmWindow();
     //                    confirmWindow.Show(customFileCreditResponseData.UserMessage);
-    //                    SessionLocator.CurrentSession.StopBusyIndicator();
+    //                    SessionLocator.SelectedSession.StopBusyIndicator();
     //                    confirmWindow.WindowClosed.subscribe((event: any) => {
     //                        if (confirmWindow.Yes) {
     //                            this.ActualSendToTransfer();
@@ -1682,11 +1682,11 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     //                    (params.PBId, "תחילת שליחה למכס- הגשת תשלום", false)
     //                    .then(res => {
 
-    //                        SessionLocator.CurrentSession.StopBusyIndicator();//// let it be ...
+    //                        SessionLocator.SelectedSession.StopBusyIndicator();//// let it be ...
     //                        let myPaymentResponseData: CustomFileCreditResponseData = res;
 
     //                        this.RefreshDeclaration();
-    //                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+    //                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
 
     //                        if (myPaymentResponseData.HasException || !myPaymentResponseData.Succeeded) {
     //                            //let mess = myPaymentResponseData.UserMessage || "Server return Error (Witout message????!!?!)";
@@ -1696,8 +1696,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     //                            //    messWindow.WindowClosed.subscribe((event: any) => {
 
     //                            //        this.RefreshDeclaration();
-    //                            //        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-    //                            //        //if (SessionLocator.CurrentSession.CurrentWindow != null) SessionLocator.CurrentSession.CloseCurrentWindow()
+    //                            //        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+    //                            //        //if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow()
 
     //                            //    });
 
@@ -1705,7 +1705,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     //                        } else {
 
-    //                            if (SessionLocator.CurrentSession.CurrentWindow != null) SessionLocator.CurrentSession.CloseCurrentWindow()
+    //                            if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow()
     //                        }
     //                    })
     //                    .catch(err => {
@@ -1734,14 +1734,14 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.declarationMessagesService.PostCheckCustomFileCreditOnly(params)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 myCustomMessageProgressHelper.MessageArrived = true;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result;
 
                 if (!AppTool.IsNullOrEmpty(customFileCreditResponseData)) {
                     if (customFileCreditResponseData.IsTRansGove) {
                         var confirmWindow = new ConfirmWindow();
                         confirmWindow.Show(customFileCreditResponseData.UserMessage);
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
                                 this.ActualSendToTransfer();
@@ -1753,7 +1753,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         var confirmWindow = new ConfirmWindow();
                         //confirmWindow.Width = 400;
                         confirmWindow.Show(customFileCreditResponseData.UserMessage);
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
                                 this.ActualSendToReTransfer();
@@ -1783,7 +1783,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                 } else {
 
                                     //if OK then  close Win !!
-                                    if (SessionLocator.CurrentSession.CurrentWindow != null) SessionLocator.CurrentSession.CloseCurrentWindow()
+                                    if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow()
                                 }
                             }
 
@@ -1797,16 +1797,16 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         ).then(res => {
                             var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
                             if (ResponseData && ResponseData.ContinueProcessInBackground) {
-                                SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                                SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
                             }
                             else if (this.Option == 'WB' || this.Option == 'D') { // work around itzik shall fix the undefined problem.
-                                SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+                                SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
                             }
-                            SessionLocator.CurrentSession.StopBusyIndicator();//// let it be ...
+                            SessionLocator.SelectedSession.StopBusyIndicator();//// let it be ...
                             let myPaymentResponseData: CustomFileCreditResponseData = res;
 
                             this.RefreshDeclaration();
-                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
 
                         })
                         .catch(err => {
@@ -1814,7 +1814,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                             let messWindow = new MessageWindow();
                             messWindow.Show(err);
                             messWindow.WindowClosed.subscribe(() => {
-                                SessionLocator.CurrentSession.CloseCurrentWindow();
+                                SessionLocator.SelectedSession.CloseCurrentWindow();
                             });
 
                         });
@@ -1868,13 +1868,13 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.declarationMessagesService.PostSendTransferRequest(params)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 myCustomMessageProgressHelper.MessageArrived = true;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
 
                 var result: CustomFileCreditResponseData = myServiceResponse.Result;
                 if (!AppTool.IsNullOrEmpty(CustomMessageProgressComponent.CurrCustomMessageProgressHelper)) {
                     CustomMessageProgressComponent.CurrCustomMessageProgressHelper.MessageArrived = true;
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.AnalyzeActualSendToTransfer(result);
             });
 
@@ -1895,8 +1895,8 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לאישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
                     {
                         this.RefreshDeclaration();
-                        if (SessionLocator.CurrentSession.CurrentWindow != null) {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();; // moran 17.8.16 - AMI-57900 - add not null check
+                        if (SessionLocator.SelectedSession.CurrentWindow != null) {
+                            SessionLocator.SelectedSession.CloseCurrentWindow();; // moran 17.8.16 - AMI-57900 - add not null check
                         }
                     }
 
@@ -1946,7 +1946,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 var result: CustomFileCreditResponseData = myServiceResponse.Result;
 
                 if (!AppTool.IsNullOrEmpty(result)) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                     var mess = this.AnalyzeResponseMessageForsendToReTransfer(result);
                     if (!AppTool.IsNullOrEmpty(mess)) {
                         let messWindow = new MessageWindow();
@@ -1954,7 +1954,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         messWindow.WindowClosed.subscribe((event: any) => {
                             if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || this._IsCloseScreen == true) {
                                 this.RefreshDeclaration();
-                                if (SessionLocator.CurrentSession.CurrentWindow != null) SessionLocator.CurrentSession.CloseCurrentWindow();
+                                if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow();
                             }
                         });
                         //    _CustomMassagingProgressService.Dispose();
@@ -2019,7 +2019,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Show(responseData.UserMessage);
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
                         this.ActualSendToTransfer();
@@ -2066,7 +2066,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 //}
 
                 var confirmWindow = new ConfirmWindow();
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 confirmWindow.Show(responseData.UserMessage);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
@@ -2437,7 +2437,7 @@ export class PaymentMethodModel extends BaseComponent {
         //searchParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
         //searchParams.RequestVIA = SendRequestVIA.WebServiceBatch;
         var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
             let allCustomBankList: CustomBankList[] = response.Result;
 
@@ -2459,12 +2459,12 @@ export class PaymentMethodModel extends BaseComponent {
                                 //    this.InternalBankId = bank.Id;
                                 //}
                                 this.SetInternalBankId(allCustomBankList, myCIM_AGENT_BANK);
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
                             });
 
 
                     } else {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                     }
 
                     //this.ResponseData = myServiceResponse.Result;

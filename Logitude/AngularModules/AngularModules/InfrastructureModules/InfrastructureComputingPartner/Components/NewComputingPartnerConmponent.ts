@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -24,6 +24,7 @@ export class NewComputingPartnerConmponent extends BaseComponent {
     public ObjectTableName: string = "ComputingPartner";
     public ItemSourceCollection: ObservableCollection;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.EntityPM = new ComputingPartnerPM();
@@ -48,15 +49,15 @@ export class NewComputingPartnerConmponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             var myService: ComputingPartnerPMService = new ComputingPartnerPMService();
             myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
 
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                    this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                 }
 
                 else {
@@ -90,7 +91,7 @@ export class NewComputingPartnerConmponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

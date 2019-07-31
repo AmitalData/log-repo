@@ -17,5 +17,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         
         public string QuotationDefaultTemplateId { get; set; }
         public ProductType ProductType { get; set; }
+
+        public string RoutingRQuoteDefaultTemplateId { get; set; }
+        
     }
 }

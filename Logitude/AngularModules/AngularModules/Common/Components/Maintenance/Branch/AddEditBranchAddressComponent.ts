@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AddressPM} from '../../../EntityPMs/AddressPM';
@@ -26,7 +26,7 @@ export class AddEditBranchAddressComponent extends BaseComponent {
     public ObjectTableName: string = "Address";
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -186,20 +186,20 @@ export class AddEditBranchAddressComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var isValid = this.Validate();
         if (!isValid) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
 
         else {
             if (!this.AddressPM.IsDirty) {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
 
             else {
@@ -237,13 +237,13 @@ export class AddEditBranchAddressComponent extends BaseComponent {
             myService.insert(this.AddressPM).subscribe(myResult => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.AddressPM.Id);
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindowEmit(this.AddressPM.Id);
                 }
 
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }
@@ -252,13 +252,13 @@ export class AddEditBranchAddressComponent extends BaseComponent {
             myService.update(this.AddressPM).subscribe(myResult => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.AddressPM.Id);
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindowEmit(this.AddressPM.Id);
                 }
 
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }

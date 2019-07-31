@@ -1,9 +1,16 @@
+import { CacheLogComponent } from './Components/Maintenance/CacheLogComponent';
 // Directives
 import {FocusMeDirective} from './Utilities/FocusMeDirective';
 import {LocationDirective} from './Utilities/LocationDirective';
 import {FixedPositionDirective} from './Utilities/FixedPositionDirective';
 
-// Pipes
+//rtl directives
+import {FloatStartDirective} from './Utilities/RTLDirectives/FloatStartDirective';
+import { FloatEndDirective } from './Utilities/RTLDirectives/FloatEndDirective';
+import { TextAlignStart } from './Utilities/RTLDirectives/TextAlignStart';
+import { TextAlignEnd } from './Utilities/RTLDirectives/TextAlignEnd';
+
+// Pipes.
 import {DateTimeToColorPipe} from './Pipes/DateTimePipes/DateTimeToColorPipe';
 import {NumbersPipe} from './Pipes/NumbersPipe';
 import {PaddingPipe} from './Pipes/PaddingPipe';
@@ -31,6 +38,7 @@ import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
 // Controls Components
 import {GeneralSendComponent} from './Components/LogitudeComponents/GeneralSendComponent';
 import {LogLabelComponent} from './Components/LogitudeComponents/LogLabelComponent';
+import {LogToolTipComponent} from './Components/LogitudeComponents/LogToolTip/LogToolTipComponent';
 import {LogTextBoxComponent} from './Components/LogitudeComponents/LogTextBoxComponent';
 import {MultilineTextBoxWindow} from './Components/LogitudeComponents/MultilineTextBoxWindow';
 import {LogTextBoxV2Component} from './Components/LogitudeComponents/LogTextBoxV2Component';
@@ -165,6 +173,11 @@ export const Directives =
         FocusMeDirective,
         LocationDirective,
         FixedPositionDirective,
+
+        FloatStartDirective,
+        FloatEndDirective,
+        TextAlignStart,
+        TextAlignEnd,
     ];
 export const Pipes =
     [
@@ -196,6 +209,7 @@ export const ControlsComponents =
     [
         GeneralSendComponent,
         LogLabelComponent,
+        LogToolTipComponent,
         LogTextBoxComponent,
         MultilineTextBoxWindow,
         LogTextBoxV2Component,
@@ -231,6 +245,7 @@ export const ControlsComponents =
         LogFooterTemplateComponent,
         LogFooterComponent,
         TipsComponent,
+        CacheLogComponent,
         ImageComponent,
         LogTabsComponent,
         LogBooleanComponent,
@@ -375,12 +390,13 @@ export class ModuleDeclarations {
             case 'btnUpdateComponent': { myResult = btnUpdateComponent; break; }
             case 'ToComponent': { myResult = ToComponent; break; }
             case 'DWLogSearchAddFieldsComponent': { myResult = DWLogSearchAddFieldsComponent; break; }
-                
+
             case 'NewEntityComponent': { myResult = NewEntityComponent; break; }
             case 'LogSearchWindowComponent': { myResult = LogSearchWindowComponent; break; }
             case 'DWLogSearchWindowComponent': { myResult = DWLogSearchWindowComponent; break; }
             case 'StimulsoftViewerComponent': { myResult = StimulsoftViewerComponent; break; }
             case 'TipsComponent': { myResult = TipsComponent; break; }
+            case 'CacheLogComponent': { myResult = CacheLogComponent; break; }
             case 'ChooseUserComponent': { myResult = ChooseUserComponent; break; }
 
             case 'ChooseDatesComponent': { myResult = ChooseDatesComponent; break; }

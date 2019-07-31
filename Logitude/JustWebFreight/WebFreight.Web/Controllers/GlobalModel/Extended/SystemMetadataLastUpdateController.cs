@@ -21,35 +21,31 @@ namespace WebFreight.Web.Controllers.GlobalModel
         {
             try
             {
-                MetaDataLastUpdateDates metadata = new MetaDataLastUpdateDates()
+                string entityName = "SystemMetadataLastUpdates_" + tenant;
+                MetaDataLastUpdateDates metadatalastUpdates = null;
+                if (CacheManager.CacheWrapper != null)
                 {
-                    Id = 1,
-                };
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
+                        metadatalastUpdates = GetSystemMetadataLastUpdateFromDB(tenant);
 
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
+                        if (CacheManager.CacheWrapper.Get(entityName) == null && metadatalastUpdates != null)
+                        {
+                            CacheManager.CacheWrapper.Insert(entityName, metadatalastUpdates, null, DateTime.UtcNow.AddMinutes(1), TimeSpan.Zero);
+                        }
+
+                    }
+                    else
+                    {
+                        metadatalastUpdates = (MetaDataLastUpdateDates)CacheManager.CacheWrapper.Get(entityName);
+                    }
+                }
+                else
                 {
-                    SystemMetadataLastUpdateRepository rep = new SystemMetadataLastUpdateRepository();
-                    SystemMetadataLastUpdate update = rep.GetSingleSystemMetadataLastUpdate("1");
-
-                    metadata.ObjectFieldsSystemUpdateDateGMT = (update != null ? update.ObjectFieldsUpdateDateGMT : DateTime.UtcNow);
-                    metadata.TranslationsSystemUpdateDateGMT = (update != null ? update.TranslationsUpdateDateGMT : DateTime.UtcNow);
-
-                    scope.Complete();
+                    metadatalastUpdates = GetSystemMetadataLastUpdateFromDB(tenant);
                 }
 
-                IWebFreightContext ObjectContext = WebFreightContext.GetContext(tenant);
-                ObjectFieldRepository objectFieldsRepository = new ObjectFieldRepository(ObjectContext);
-                TranslationRepository translationRepository = new Simplog.Data.InfrastructureModel.Repositories.TranslationRepository(ObjectContext);
-
-                ObjectFieldModification mod = objectFieldsRepository.GetLastObjectFieldModificationByTenant(tenant);
-                metadata.ObjectFieldsTenantUpdateDateGMT = (mod != null ? mod.UpdateDateGMT.Value : new DateTime(2015, 1, 1));
-
-                Translation translation = translationRepository.GetLastTranslationsByTenant(tenant);
-                metadata.TranslationsTenantUpdateDateGMT = (translation != null ? translation.UpdateDateGMT.Value : new DateTime(2015, 1, 1));
-
-                return Request.CreateResponse(HttpStatusCode.OK, metadata);
-
-
+                return Request.CreateResponse(HttpStatusCode.OK, metadatalastUpdates);
             }
             catch (Exception ex)
             {
@@ -57,6 +53,36 @@ namespace WebFreight.Web.Controllers.GlobalModel
             }
 
 
+        }
+
+        private MetaDataLastUpdateDates GetSystemMetadataLastUpdateFromDB(int tenant)
+        {
+            MetaDataLastUpdateDates metadata = new MetaDataLastUpdateDates()
+            {
+                Id = 1,
+            };
+
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
+            {
+                SystemMetadataLastUpdateRepository rep = new SystemMetadataLastUpdateRepository();
+                SystemMetadataLastUpdate update = rep.GetSingleSystemMetadataLastUpdate("1");
+
+                metadata.ObjectFieldsSystemUpdateDateGMT = (update != null ? update.ObjectFieldsUpdateDateGMT : DateTime.UtcNow);
+                metadata.TranslationsSystemUpdateDateGMT = (update != null ? update.TranslationsUpdateDateGMT : DateTime.UtcNow);
+
+                scope.Complete();
+            }
+
+            IWebFreightContext ObjectContext = WebFreightContext.GetContext(tenant);
+            ObjectFieldRepository objectFieldsRepository = new ObjectFieldRepository(ObjectContext);
+            TranslationRepository translationRepository = new Simplog.Data.InfrastructureModel.Repositories.TranslationRepository(ObjectContext);
+
+            ObjectFieldModification mod = objectFieldsRepository.GetLastObjectFieldModificationByTenant(tenant);
+            metadata.ObjectFieldsTenantUpdateDateGMT = (mod != null ? mod.UpdateDateGMT.Value : new DateTime(2015, 1, 1));
+
+            Translation translation = translationRepository.GetLastTranslationsByTenant(tenant);
+            metadata.TranslationsTenantUpdateDateGMT = (translation != null ? translation.UpdateDateGMT.Value : new DateTime(2015, 1, 1));
+            return metadata;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit}  from '@angular/core';
+import {Component, OnInit, AfterViewInit}  from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
@@ -36,6 +36,7 @@ export class UploadLogoComponent implements AfterViewInit {
     ShowUploadSharedLogisLogo: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     IsHideAreaCloseButton: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _imageLibraryService: ImageLibraryService) {
 
         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response=> {
@@ -61,7 +62,7 @@ export class UploadLogoComponent implements AfterViewInit {
             }
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicator("loading..."); 
+        this.CurrentSession.StartBusyIndicator("loading..."); 
     }
 
     ngAfterViewInit() {
@@ -84,7 +85,7 @@ export class UploadLogoComponent implements AfterViewInit {
     LoadLogo(isload: boolean) {
 
         if (isload) {
-            SessionLocator.CurrentSession.StartBusyIndicator("loading...");
+            this.CurrentSession.StartBusyIndicator("loading...");
 
         }
         this._imageLibraryService.DownloadFile("logo" + SessionInfo.LoggedUserTenant, "jpg", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
@@ -96,13 +97,13 @@ export class UploadLogoComponent implements AfterViewInit {
                     SetImage(this.logoHtmlId, result, false);
                
                 } else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     HideImage(this.logoHtmlId);
                 }
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 HideImage(this.logoHtmlId);
               
             }
@@ -110,7 +111,7 @@ export class UploadLogoComponent implements AfterViewInit {
 
             this._imageLibraryService.DownloadFile("smalllogo" + SessionInfo.LoggedUserTenant, "jpg", "logos", SessionInfo.LoggedUserTenant).subscribe((res: any) => {
                 var pmResponse: ServiceResponse = res;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!pmResponse.HasError) {
                     var result = pmResponse.Result;
@@ -146,7 +147,7 @@ export class UploadLogoComponent implements AfterViewInit {
     LoadMobileLogo(isload: boolean) {
 
         if (isload) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+            this.CurrentSession.StartBusyIndicator("Loading...");
         }
         this._imageLibraryService.DownloadFile("verysmalllogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
 
@@ -159,7 +160,7 @@ export class UploadLogoComponent implements AfterViewInit {
             } else HideImage(this.MobilelogoHtmlId);
 
             if (isload) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
         });
@@ -171,7 +172,7 @@ export class UploadLogoComponent implements AfterViewInit {
     LoadSharedLogtsitcsLogo(isload: boolean) {
 
         if (isload) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+            this.CurrentSession.StartBusyIndicator("Loading...");
            
         }
         this._imageLibraryService.DownloadFile("sharedLogtsitcslogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
@@ -185,7 +186,7 @@ export class UploadLogoComponent implements AfterViewInit {
             } else HideImage(this.SharedLogisticsLogoHtmlId);
 
             if (isload) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
         });
@@ -286,7 +287,7 @@ export class UploadLogoComponent implements AfterViewInit {
 
                 }
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
         });
 
@@ -330,7 +331,7 @@ export class UploadLogoComponent implements AfterViewInit {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

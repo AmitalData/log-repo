@@ -21,6 +21,7 @@ export class AddEditPayableComponent {
     public ValidationErrorsList: string[] = [];
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public IsOrangeInfoVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -80,7 +81,7 @@ export class AddEditPayableComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -136,7 +137,7 @@ export class AddEditPayableComponent {
             }
 
             this.DataContext.IsNewEntity = false;
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");            
+            this.CurrentSession.CloseCurrentWindowEmit("OK");            
         }
     }
 

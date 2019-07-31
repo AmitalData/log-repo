@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class ARPaymentStatusUpdateClass
@@ -171,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
+					  						DefaultText =  "Code",
 					  						HelpTextCode =  "Code",
 					  						Code =  "Code",
 					  						DependencyFilter3IsList =  false,
@@ -229,9 +233,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						HelpTextCode =  "Name",
 					  						Code =  "Name",
 					  						DependencyFilter3IsList =  false,
@@ -288,9 +292,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search codes/ names",
+					  						DefaultText =  "Search codes/ names",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: name",
+					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
 					  						Code =  "SearchFields",
 					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,

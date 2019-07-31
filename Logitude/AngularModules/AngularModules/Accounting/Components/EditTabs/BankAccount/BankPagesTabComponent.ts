@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -33,7 +33,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     // Filters
     dateFilter: FilterItem;
     searchFieldFilter: FilterItem;
-
+     preventSelect:boolean = false;
     // Services
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _entityListService: EntityListService = new EntityListService();
@@ -43,7 +43,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
 
     public isRTL: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -63,30 +63,39 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         this.FromDate = new Date(lastmonth);
         this.oldFromDate = new Date(lastmonth);
         //#endregion
+       
         this.Listen();
     }
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
                     }
                 });
             }
         }
+
+        
+        this.CurrentSession.SessionEvent.subscribe((res) => {
+            if (res == "noselect") {
+                this.preventSelect = true;
+            }
+        });
+        
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
@@ -207,8 +216,8 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     public columns: any[] = null;
 
     ReloadData() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
     }
@@ -294,7 +303,16 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageListTemplate',
             IsCustomTemplate: true
         });
-
+        this.columns.push({
+            FieldName: 'Event',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("AccountingPeriod.TH.Events"),
+            Styles: { width: '140px' },
+            HtmlListComponentName: 'ReconcileExternalPageListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ReconcileExternalPageListTemplate',
+            IsCustomTemplate: true
+        });
+       
         //this.CustomColumnsReady.emit(this.columns);
     }
 
@@ -340,6 +358,11 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     //#endregion
 
     //#region Buttons
+
+   
+
+    
+
     RefreshButtonClicked() {
         this.ReloadData();
     }
@@ -349,33 +372,60 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     //#endregion
 
     onRowSelected(item) {
-        if (!AppTool.IsNullOrEmpty(item)) {
-            var entity = item.rowData;
-            var entityId = entity.Id;
+        if (!this.preventSelect) {
+            if (!AppTool.IsNullOrEmpty(item)) {
+                var entity = item.rowData;
+                var entityId = entity.Id;
 
-            this.OpenWindow(entity);
+                this.OpenWindow(entity);
+            }
+           
         }
+        this.preventSelect = false;
     }
-
+    IsRestoreButtonVisibile: boolean = false;
+    message: string = null;
+    RestoreToolTipMessage: string = null;
     OpenWindow(entity: any = null) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (entity)
         {
             var entityPM;
             this._ReconcileExternalPagePMService.get(entity.Id).subscribe((myResult) => {
                 entityPM = myResult.Result;
-                this.ShowWindow(entityPM);
+
+                this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(entity.Id).subscribe((myResult) => {
+                    if (!myResult.HasError) { 
+                    if (myResult.Result == null) {
+                        this.EnableReconcileEditButton = true;
+                        this.message = null;
+                        }
+                    else {
+                        this.EnableReconcileEditButton = false;
+                        this.message = myResult.Result;
+                        }
+
+                        this.CheckRestorePossibility(entity.Id, entityPM);
+                      
+                }
+                    
+                });
+
+
+               
+
             });
         }
         else
         {
+            this.EnableReconcileEditButton = false;
             this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id).subscribe((myResult) =>
             {
                 var draftPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(draftPage))
                 {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                     var msg = new MessageWindow();
                     //msg.Title = "Error";
@@ -391,15 +441,43 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
             });
         }
     }
+    CheckRestorePossibility(id: string, entityPM: any) {
+
+        this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response) => {
+            if (!response.HasError) {
+                this.SetRestoreButtonVisibility(response.Result)
+               
+
+                this.ShowWindow(entityPM);
+            }
+
+        });
+
+    }
+
+    SetRestoreButtonVisibility(result: any) {
+
+        if (result == null) {
+            this.IsRestoreButtonVisibile = true;
+            this.RestoreToolTipMessage = null;
+        }
+        else {
+            this.RestoreToolTipMessage = result;
+            this.IsRestoreButtonVisibile = false;
+        }
+    }
+
+    EnableReconcileEditButton: boolean = false;
     ShowWindow(entity: any = null) {
 
         // get bank account, then open window
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._BankAccountPMService.get(this.EntityPM.Id).subscribe((myResult) =>
         {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             var bankAccount = myResult.Result;
 
+           
             if (!AppTool.IsNullOrEmpty(bankAccount))
             {
 
@@ -408,8 +486,12 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
                 var windowArgs: any = {};
                 windowArgs.entity = entity;
                 windowArgs.BankAccountId = this.EntityPM.Id;
+                windowArgs.IsRestoreButtonVisibile = this.IsRestoreButtonVisibile;
+                windowArgs.RestoreToolTipMessage = this.RestoreToolTipMessage;
+                windowArgs.EnableReconcileEditButton = this.EnableReconcileEditButton;
                 windowArgs.GLAccountId = bankAccount.GLAccountId;
                 windowArgs.BankAccount = bankAccount;
+                windowArgs.message = this.message;
                 var logWindow = new LogitudeWindow();
                 logWindow.Width = 1000;
                 logWindow.Height = 600;

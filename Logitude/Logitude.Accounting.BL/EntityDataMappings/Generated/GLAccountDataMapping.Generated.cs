@@ -64,7 +64,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DeductionTypeId, 
 	         ConsolidationVat, 
 	         IsEquipmentVendor, 
-	         ExcludeFromDeductionReport,
+	         ExcludeFromDeductionReport, 
+	         CreatedByUserId, 
+	         UpdatedByUserId, 
+	         CreateDate, 
+	         UpdateDate,
 	      }
 
 
@@ -161,7 +165,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DeductionTypeEnglishName, 
 	         TotalOpenChequesInLocalCur, 
 	         TotFutureOpenChequesInLocalCur, 
-	         CardId,
+	         CardId, 
+	         CreatedByUserId, 
+	         UpdatedByUserId, 
+	         CreateDate, 
+	         UpdateDate, 
+	         CreatedByUserName, 
+	         UpdatedByUserName, 
+	         UpdatedByLocalName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -378,6 +389,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromDeductionReport))
             {
 				entityPOCO.ExcludeFromDeductionReport = entityPM.ExcludeFromDeductionReport;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+				entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
+            {
+				entityPOCO.UpdatedByUserId = entityPM.UpdatedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+				entityPOCO.CreateDate = entityPM.CreateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
+            {
+				entityPOCO.UpdateDate = entityPM.UpdateDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -601,6 +632,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ExcludeFromDeductionReport = entityPOCO.ExcludeFromDeductionReport;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserId))
+            {
+					entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdatedByUserId))
+            {
+					entityPM.UpdatedByUserId = entityPOCO.UpdatedByUserId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDate))
+            {
+					entityPM.CreateDate = entityPOCO.CreateDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdateDate))
+            {
+					entityPM.UpdateDate = entityPOCO.UpdateDate;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
@@ -815,6 +866,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromDeductionReport))
             {
                 oldEntityPM.ExcludeFromDeductionReport = entityPM.ExcludeFromDeductionReport;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+            {
+                oldEntityPM.CreatedByUserId = entityPM.CreatedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
+            {
+                oldEntityPM.UpdatedByUserId = entityPM.UpdatedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+                oldEntityPM.CreateDate = entityPM.CreateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
+            {
+                oldEntityPM.UpdateDate = entityPM.UpdateDate;
             }
 			
 		}

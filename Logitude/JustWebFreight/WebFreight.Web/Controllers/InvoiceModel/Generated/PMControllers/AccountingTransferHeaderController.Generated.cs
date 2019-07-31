@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AccountingTransferHeader", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AccountingTransferHeader", entityPM.Tenant, authToken.Tenant);
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
                         AccountingTransferHeaderService service = new AccountingTransferHeaderService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AccountingTransferHeader", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AccountingTransferHeader", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "AccountingTransferHeader" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AccountingTransferHeaderPM" + entityPM.Id + entityPM.Tenant;

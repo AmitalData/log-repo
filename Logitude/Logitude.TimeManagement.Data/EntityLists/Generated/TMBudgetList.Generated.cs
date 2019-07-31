@@ -22,6 +22,8 @@ namespace Logitude.TimeManagement.Data.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string Name  { get; set; }
+       [DataMember]
+       public bool Inactive  { get; set; }
    }
 
 }

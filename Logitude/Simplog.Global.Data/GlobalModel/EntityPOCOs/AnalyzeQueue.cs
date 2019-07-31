@@ -32,6 +32,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string AckReason { get; set; }
         public DateTime? DoneDate { get; set; }
         public string FileName { get; set; }
+        public string Log { get; set; }
 
         [ForeignKey("Status")]
         public virtual AnalyzeQueueStatus AnalyzeQueueStatus { get; set; }

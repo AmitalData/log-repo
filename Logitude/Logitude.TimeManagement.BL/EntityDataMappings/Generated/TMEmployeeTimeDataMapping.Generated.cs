@@ -70,7 +70,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         ProratedDuration, 
 	         FullDuration, 
 	         NeedsProrating, 
-	         LocationName,
+	         LocationName, 
+	         SprintName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

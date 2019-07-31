@@ -15,7 +15,6 @@ import {PortList} from '../../../Common/EntityLists/PortList';
 import {CardList} from '../../../Common/EntityLists/CardList';
 import {AirlineList} from '../../../Common/EntityLists/AirlineList';
 import {AddressList} from '../../../Common/EntityLists/AddressList';
-import {IncotermList} from '../../../Common/EntityLists/IncotermList';
 import {PackageTypeList} from '../../../Common/EntityLists/PackageTypeList';
 import {PortListService} from '../../../Common/Services/StandardLists/PortListService';
 import {CardListService} from '../../../Common/Services/StandardLists/CardListService';
@@ -24,13 +23,12 @@ import {AddressListService} from '../../../Common/Services/StandardLists/Address
 import {IncotermListService} from '../../../Common/Services/StandardLists/IncotermListService';
 import {ShipmentPMService} from '../../Services/StandardPMs/ShipmentPMService';
 import {PartnersDomainService} from '../../../Common/Services/PartnersDomainService';
-import {NewShipmentComponentArgs} from '../../Args';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ShipmentDomainService} from '../../Services/ShipmentDomainService';
 import {AWBStackDomainService} from '../../../Common/Services/AWBStackDomainService';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 
 @Component({
     moduleId: module.id,
@@ -46,10 +44,10 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
     public ControlColumnWidth: number = 220;
     public ValidationErrorsList: string[] = [];
     public SessionIndex: number;
-    public IsResourcesReady: boolean = false;
     public OkButtonLabel: string;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
-    constructor(private entityResourceService: EntityResourceService) {
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor() {
         super();
         this.SessionIndex = SessionLocator.Index;
         this.InitializeServices();
@@ -58,35 +56,38 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         this.EntityPM.ShipmentLevelCode = "C";
         this.OkButtonLabel = TextCodeTranslator.Translate("Shipment.B.Create");
 
-        //this.BuildFiltersLists();
-        //this.OnFiltersChanged();
-        //this.LoadAllowedAirline();
-
-        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
-            this.IsResourcesReady = true;
-            this.BuildAdditionalFields();
-        });
+        this.BuildAdditionalFields();
     }
 
     ngOnInit() {
-        this.BuildFiltersLists();
+        var listservice: EntityListService = new EntityListService();
+        var loadPr = listservice.getMock("Port");
+        loadPr.then((res: any) => {
+            res.subscribe(resp => {
 
-        if (this.IsCopyFromShipment == false && this.IsBuildFromQuote == false) {
-            this.OnFiltersChanged();
-        }
+                this.BuildFiltersLists();
 
-        this.LoadAllowedAirline();
-        //this.ScreenIsReady = true;
+                if (this.IsCopyFromShipment == false && this.IsBuildFromQuote == false) {
+                    this.OnFiltersChanged();
+                }
+
+                this.LoadAllowedAirline();
+                //this.ScreenIsReady = true;
+            });
+        });
+
     }
 
     private SourceEntityPM: ShipmentPM;
     public IsBuildFromQuote: boolean = false;
     public IsCopyFromShipment: boolean = false;
+    public IsMasterCreatedFromHouse: boolean = false;
     SetWindowArgs(args: any) {
         if (args.IsNew == null) {
             this.SourceEntityPM = args.Shipment;
             this.IsCopyFromShipment = args.IsCopyFromShipment;
             this.IsBuildFromQuote = args.IsBuildFromQuote;
+            this.IsMasterCreatedFromHouse = args.IsMasterCreatedFromHouse;
 
             this.BuildFiltersLists();
             this.SetUIProperties();
@@ -137,8 +138,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
             }
         }
     }
-
-
+    
     public DirectionsList: FilterClass[] = [];
     public TransportModesList: FilterClass[] = [];
     public ShipmentTypesList: FilterClass[] = [];
@@ -242,8 +242,16 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetEnabled("AgentReference2", this.ObjectTableName, isScreenEnabled);
 
         // General
-        this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("MainCarriageToPortId", this.ObjectTableName, isScreenEnabled);
+        if (this.IsMasterCreatedFromHouse) {
+            this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("MainCarriageToPortId", this.ObjectTableName, false);
+        }
+
+        else {
+            this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, isScreenEnabled);
+            this.UIProperties.SetEnabled("MainCarriageToPortId", this.ObjectTableName, isScreenEnabled);
+        }
+                
         this.UIProperties.SetEnabled("MainCarriageCarrierId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MainCarriageCarrierNumber", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("Master", this.ObjectTableName, isScreenEnabled);
@@ -278,12 +286,42 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
     public IsFCLEntity: boolean = false;
     public IsInlandDomestic: boolean = false;
     OnFiltersChanged() {
+        if (!this.IsMasterCreatedFromHouse) {
+            this.IsDirectionListEnabled = true;
+            this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
+            this.IsMasterTypesListEnabled = true;
+        }
+
         this.SetScreenEnabled();
         this.SetUIProperties();        
         this.SetUnits();
         this.SetLabels();
         this.SetPartners();
         this.SetPrepaidCollect();
+    }
+
+    private isDirectionListEnabled: boolean = false;
+    get IsDirectionListEnabled() { return this.isDirectionListEnabled; }
+    set IsDirectionListEnabled(value: boolean) {
+        if (this.isDirectionListEnabled != value) {
+            this.isDirectionListEnabled = value;
+        }
+    }
+
+    private isTransportModesListEnabled: boolean = false;
+    get IsTransportModesListEnabled() { return this.isTransportModesListEnabled; }
+    set IsTransportModesListEnabled(value: boolean) {
+        if (this.isTransportModesListEnabled != value) {
+            this.isTransportModesListEnabled = value;
+        }
+    }
+
+    private isMasterTypesListEnabled: boolean = false;
+    get IsMasterTypesListEnabled() { return this.isMasterTypesListEnabled; }
+    set IsMasterTypesListEnabled(value: boolean) {
+        if (this.isMasterTypesListEnabled != value) {
+            this.isMasterTypesListEnabled = value;
+        }
     }
 
     get DirectionId() { return this.EntityPM.DirectionId; }
@@ -894,6 +932,13 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         }
     }
 
+    get Notes() { return this.EntityPM.Notes; }
+    set Notes(newValue: string) {
+        if (this.EntityPM.Notes != newValue) {
+            this.EntityPM.Notes = newValue;
+        }
+    }
+   
     get FreightPrepaidCollectId() { return this.EntityPM.FreightPrepaidCollectId; }
     set FreightPrepaidCollectId(newValue: string) {
         if (this.EntityPM.FreightPrepaidCollectId != newValue) {
@@ -1483,11 +1528,11 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating...");
+        this.CurrentSession.StartBusyIndicator("Creating...");
 
         this.SetDataOnFinish();
 
@@ -1518,7 +1563,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 
@@ -1536,8 +1581,8 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         this.SetInlandDomesticOnFinish();
     }
     SetPartnersOnFinish() {
-        if (this.IsCopyFromShipment == false) {
-            if (!AppTool.IsNullOrEmpty(this.AgentId)) {
+        if (!AppTool.IsNullOrEmpty(this.AgentId)) {
+            if (this.IsCopyFromShipment == false) {
                 if (this.DirectionId == "E") {
                     this.EntityPM.ConsigneeId = this.AgentId;
                     this.EntityPM.ConsigneeName = this.AgentName;
@@ -1558,6 +1603,34 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                     this.EntityPM.ShipperReference2 = this.AgentReference2;
                     this.EntityPM.ConsigneeId = SessionLocator.TenantPM.AgentId;
                     this.EntityPM.ConsigneeAddressId = SessionLocator.TenantPM.AddressId;
+                }
+            }
+
+            else {
+                if (this.DirectionId == "E") {
+                    if (this.EntityPM.ConsigneeId == null) {
+                        this.EntityPM.ConsigneeId = this.AgentId;
+                        this.EntityPM.ConsigneeName = this.AgentName;
+                        this.EntityPM.ConsigneeAddressId = this.AgentAddressId;
+                        this.EntityPM.ConsigneeContactId = this.AgentContactId;
+                        this.EntityPM.ConsigneeReference1 = this.AgentReference1;
+                        this.EntityPM.ConsigneeReference2 = this.AgentReference2;
+                        this.EntityPM.ShipperId = SessionLocator.TenantPM.AgentId;
+                        this.EntityPM.ShipperAddressId = SessionLocator.TenantPM.AddressId;
+                    }
+                }
+
+                else {
+                    if (this.EntityPM.ShipperId == null) {
+                        this.EntityPM.ShipperId = this.AgentId;
+                        this.EntityPM.ShipperName = this.AgentName;
+                        this.EntityPM.ShipperAddressId = this.AgentAddressId;
+                        this.EntityPM.ShipperContactId = this.AgentContactId;
+                        this.EntityPM.ShipperReference1 = this.AgentReference1;
+                        this.EntityPM.ShipperReference2 = this.AgentReference2;
+                        this.EntityPM.ConsigneeId = SessionLocator.TenantPM.AgentId;
+                        this.EntityPM.ConsigneeAddressId = SessionLocator.TenantPM.AddressId;
+                    }
                 }
             }
         }
@@ -1712,7 +1785,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
                         if (myResponse.HasError) {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
 
                         else {
@@ -1731,7 +1804,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                                 if (myStackPM.AirlineId == myAirlineId) {
                                     if (!AppTool.IsNullOrEmpty(myStackPM.AssignedToId) && myStackPM.AssignedToId != this.EntityPM.ShipperId) {
 
-                                        SessionLocator.CurrentSession.StopBusyIndicator();
+                                        this.CurrentSession.StopBusyIndicator();
 
                                         var messageWindow = new MessageWindow();
                                         messageWindow.Width = 450;
@@ -1758,7 +1831,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
                                             else {
                                                 this.Master = null;
-                                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                                this.CurrentSession.StopBusyIndicator();
                                             }
                                         });
                                     }
@@ -1798,7 +1871,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
         this.myShipmentPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -1814,7 +1887,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                     ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, activity);
                 }
 
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                this.CurrentSession.CloseCurrentWindowEmit('OK');
 
                 if (this.IsBuildFromQuote || this.IsCopyFromShipment) {
 
@@ -1831,18 +1904,18 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                         myBackSessionTextCode = "General.MH.Operations";
                     }
 
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: 'Shipment', BackButtonLabel: myBackButtonLabel });
 
-                            SessionLocator.CurrentSession.ChangeSessionHeader({ MenuTextCode: "General.MH.Operations" });
+                            this.CurrentSession.ChangeSessionHeader({ MenuTextCode: "General.MH.Operations" });
 
                             cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                                SessionLocator.CurrentSession.ChangeSessionHeader({ MenuTextCode: myBackSessionTextCode });
+                                this.CurrentSession.ChangeSessionHeader({ MenuTextCode: myBackSessionTextCode });
 
                                 if (this.IsBuildFromQuote) {
-                                    SessionLocator.CurrentSession.FireEvent("LoadConnectedShipments");
+                                    this.CurrentSession.FireEvent("LoadConnectedShipments");
                                 }
                             });
                         });

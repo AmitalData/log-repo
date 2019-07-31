@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CardExternalAccountsByProduct", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CardExternalAccountsByProduct", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         CardExternalAccountsByProductService service = new CardExternalAccountsByProductService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CardExternalAccountsByProduct", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CardExternalAccountsByProduct", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "CardExternalAccountsByProduct" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "CardExternalAccountsByProductPM" + entityPM.Id + entityPM.Tenant;

@@ -128,10 +128,10 @@ export class DeclarationFilterComponent
             }
         }
         this.DueChangeClearChildField(true);
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.FetchDeclaration(myResponse, true);
             });
 
@@ -150,10 +150,10 @@ export class DeclarationFilterComponent
         }
         this.DueChangeClearChildField(false);
 
-        SessionLocator.CurrentSession.StartBusyIndicator("")
+        SessionLocator.SelectedSession.StartBusyIndicator("")
         this._DeclarationExtendedListService.GetSingleDeclarationByNumber(this.DeclarationNumber, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
 
                 this.FetchDeclaration(myResponse, false);
 
@@ -271,7 +271,7 @@ export class DeclarationFilterComponent
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {

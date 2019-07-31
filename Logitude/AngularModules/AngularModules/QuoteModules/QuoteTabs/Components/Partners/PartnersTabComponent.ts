@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
 import {QuoteUtilities} from '../../../../Quote/../Quote/Utilities/QuoteUtilities';
@@ -28,6 +28,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     public ObjectTableName: string = "Quote";
     public ItemsCollection: PartnerItem[];
     public IsInlandDomestic: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.InitializeServices();
@@ -57,7 +58,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
 
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "QTPA") {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.UpdateScreen();
                 }
             });
@@ -179,7 +180,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
                     myPartnerItem.Reference1 = null;
                     myPartnerItem.Reference2 = null;
                     this.SetAddButtonsIsDisabled();
-                    SessionLocator.CurrentSession.FireEvent("QuotePartnersChanged");
+                    this.CurrentSession.FireEvent("QuotePartnersChanged");
                 }
             });
         }

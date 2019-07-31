@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("OpportunityClosingReason", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("OpportunityClosingReason", entityPM.Tenant, authToken.Tenant);
 	                    
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         OpportunityClosingReasonUpdateService service = new OpportunityClosingReasonUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -141,6 +142,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("OpportunityClosingReason", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("OpportunityClosingReason", entityPM.Tenant, authToken.Tenant);
 	
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         OpportunityClosingReasonUpdateService service = new OpportunityClosingReasonUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

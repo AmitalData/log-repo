@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -19,12 +19,13 @@ export class AWBWizardLoadComponent implements AfterViewInit
     public EntityId: string = null;
     public EntityPM: ShipmentPM;
     @ViewChild('WizardView', { read: ViewContainerRef }) target: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
 
     SetWindowArgs(entityId: string) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.EntityId = entityId;
         this.Load();
     }
@@ -52,7 +53,7 @@ export class AWBWizardLoadComponent implements AfterViewInit
                     }
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
@@ -70,7 +71,7 @@ export class AWBWizardLoadComponent implements AfterViewInit
             SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardComponent', this.target)
                 .then(cmpRef => {
                     cmpRef.instance.SetWindowArgs(myAWBWizardArgs);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
         }
 
@@ -82,7 +83,7 @@ export class AWBWizardLoadComponent implements AfterViewInit
             SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/FSRWizard/FSRWizardComponent', this.target)
                 .then(cmpRef => {
                     cmpRef.instance.SetWindowArgs(myFSRWizardArgs);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
         }
     }

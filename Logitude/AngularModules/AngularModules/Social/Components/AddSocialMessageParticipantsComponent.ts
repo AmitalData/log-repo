@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -33,6 +33,7 @@ export class AddSocialMessageParticipantsComponent implements OnInit {
     UserIds: string = "";
     ValidationErrorsList: string[] = [];
     ExcludedResult: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.conversationHeaderParticipantExtendedPMService = new ConversationHeaderParticipantExtendedPMService();
     }
@@ -62,14 +63,14 @@ export class AddSocialMessageParticipantsComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     ParticipantUserLists: any;
     UserList: string[] = [];
     SaveButtonClick() {
         this.ValidationErrorsList = [];
         if (!AppTool.IsNullOrEmpty(this.UserIds)) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             this.UserList = this.UserIds.split(';');
             var isNoName: boolean = false;
             this.ConversationHeaderParticipantPMLists = [];
@@ -84,7 +85,7 @@ export class AddSocialMessageParticipantsComponent implements OnInit {
 
             this.conversationHeaderParticipantExtendedPMService.SaveConversationHeaderParticipantPMLists(this.ConversationHeaderParticipantPMLists).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!pmResponse.HasError && pmResponse.Result) {
                     if (!isNoName) {
                         this.SocialMessageParticipantsComponent.BluidLists(pmResponse.Result);

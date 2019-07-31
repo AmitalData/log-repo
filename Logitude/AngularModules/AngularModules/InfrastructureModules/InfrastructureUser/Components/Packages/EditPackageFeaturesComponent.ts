@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {FeaturePM} from '../../../../Infrastructure/EntityPMs/FeaturePM';
 import {ObjectTablePM} from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
@@ -27,6 +27,7 @@ export class EditPackageFeaturesComponent {
     public SettingsList: PackageFeatureClass[] = [];
     public IsEventsButtonVisible: boolean = false;
     private myDomainService: InfrastructureDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myDomainService = new InfrastructureDomainService();
 
@@ -57,7 +58,7 @@ export class EditPackageFeaturesComponent {
     private allFeatures: FeaturePM[] = [];
     private allFeaturesItems: PackageFeatureClass[] = [];
     private LoadFeatures() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetSelectedAndUnselectedPackageFeatures(this.PackageCode).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -69,7 +70,7 @@ export class EditPackageFeaturesComponent {
             }
 
             this.BuildCollections();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     private BuildCollections() {
@@ -139,17 +140,17 @@ export class EditPackageFeaturesComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var items: FeaturePM[] = this.allFeatures.filter(f => f.IsDirty == true);
 
         if (items.length == 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
         else {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var myServiceHelper = new FeaturesUpdateHelper();
             myServiceHelper.Tenant = SessionLocator.Tenant;
@@ -160,20 +161,20 @@ export class EditPackageFeaturesComponent {
 
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
                     this.myDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse1: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (myResponse1.HasError) {
                             this.ValidationErrorsList = myResponse1.ErrorsArray;
                         }
 
                         else {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                            this.CurrentSession.CloseCurrentWindowEmit("Ok");
                         }
                     });
                 }

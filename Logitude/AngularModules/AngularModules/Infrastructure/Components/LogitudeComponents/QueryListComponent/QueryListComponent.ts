@@ -74,6 +74,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
 
     public NotSharedUserItemSource: any[];
     public SharedUserItemSource: any[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.Http;
@@ -83,7 +84,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         this.NotSharedUserItemSource = [];
         this.SharedUserItemSource = [];
 
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.ControlId = "QueryList_-1_-1";
             this.DropdownId = "QueryListDropdown_-1_-1";
             this.ListControlId = "QueryListList_-1_-1";
@@ -91,7 +92,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("ComboBox");
+            var idIndex = this.CurrentSession.GetNewId("ComboBox");
             this.ControlId = "QueryList_" + idIndex;
             this.DropdownId = "QueryListDropdown_" + idIndex;
             this.ListControlId = "QueryListList_" + idIndex;
@@ -349,14 +350,14 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         confirmWindow.Show(TextCodeTranslator.Translate("General.M.WantToDeleteThisQuery"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+                this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
                 var query = window.Queries.filter(q => q.Id == Item.Id)[0];
                 var myService: QueriesPMService = new QueriesPMService();
                 myService.setServiceArgs(this.serviceArgs);
 
                 myService.delete(query, SessionInfo.LoggedUserId).subscribe(myResult => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     window.Queries = window.Queries.filter(a => a.Id != query.Id);
                     var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
                     var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
@@ -384,7 +385,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         //confirmWindow.Show(TextCodeTranslator.Translate("General.M.WantToDeleteThisQuery"));
         //confirmWindow.WindowClosed.subscribe((event: any) => {
         //    if (confirmWindow.Yes) {
-        //        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        //        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         //        this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
         //        var myQCService: QueryColumnsPMService = new QueryColumnsPMService();
         //        myQCService.setServiceArgs(this.serviceArgs);
@@ -420,7 +421,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         //                myGeneralService.setServiceArgs(this.serviceArgs);
         //                myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
         //                    myService.delete(query).subscribe(myResult => {
-        //                        SessionLocator.CurrentSession.StopBusyIndicator();
+        //                        this.CurrentSession.StopBusyIndicator();
         //                        window.Queries = window.Queries.filter(a => a.Id != query.Id);
         //                        var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         //                        var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];

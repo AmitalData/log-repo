@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("LeadSource", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("LeadSource", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         LeadSourceService service = new LeadSourceService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("LeadSource", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("LeadSource", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "LeadSource" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "LeadSourcePM" + entityPM.Id + entityPM.Tenant;

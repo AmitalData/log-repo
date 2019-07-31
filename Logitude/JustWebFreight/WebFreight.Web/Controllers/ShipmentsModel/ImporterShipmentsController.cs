@@ -293,7 +293,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         NumberOfRetries = 1,
                         ObjectTableId = Objecttable.Id,
                         ExpirationDate = DateTime.Now.AddDays(90),
-                        Refrence = Shipment.CustomerShipmentNumber,
+                        Refrence = Shipment.ForwarderShipmentNumber,
                         Status = "I",
                         Tenant = Shipment.ImporterTenant
                     };
@@ -563,11 +563,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             }
 
-
-            if (entityAM.CustomsClearanceDate != null)
-            {
-                entityPM.IsDepositionCloseTask = true;
-            }
 
             entityPM.Tenant = entityAM.ImporterTenant;
             entityPM.GrossWeightUnitCode = "KG";
@@ -885,9 +880,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.OnCarriageATD = entityAM.OnCarriageATD;
             entityPM.PreCarriageATA = entityAM.PreCarriageATA;
             entityPM.PreCarriageATD = entityAM.PreCarriageATD;
-            entityPM.ExceptionDate = entityAM.ExceptionDate;
-            entityPM.ExceptionDescription = entityAM.ExceptionDescription;
-            entityPM.HasException = entityAM.HasException;
+           
             entityPM.DimensionsUnitCode = entityAM.DimensionsUnitCode;
             entityPM.GrossWeightUnitCode = entityAM.GrossWeightUnitCode;
             entityPM.ChargeableWeightUnitCode = entityAM.ChargeableWeightUnitCode;
@@ -912,6 +905,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.IsOperationalClosed = true;
             }
+            if (entityPM.CustomsClearanceDate == null)
+            {
+                entityPM.ExceptionDate = entityAM.ExceptionDate;
+                entityPM.ExceptionDescription = entityAM.ExceptionDescription;
+                entityPM.HasException = entityAM.HasException;
+            }
             if (entityPM.CustomsClearanceDate == null && entityAM.CustomsClearanceDate != null && entityAM.HasException == true)
             {
 
@@ -927,6 +926,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.VersionApproved = entityAM.VersionApproved;
             }
+      
             entityPM.CustomsClearanceDate = entityAM.CustomsClearanceDate;
             if (Partner != null)
             {

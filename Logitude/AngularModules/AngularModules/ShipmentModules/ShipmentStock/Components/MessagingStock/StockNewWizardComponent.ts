@@ -23,6 +23,7 @@ export class StockNewWizardComponent extends BaseComponent {
     public TenantsList: CodeNameClass[];
     public StockTypesList: CodeNameClass[];
     public EntityPM: MessagingStockPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TenantsList = [];
@@ -169,7 +170,7 @@ export class StockNewWizardComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -202,23 +203,23 @@ export class StockNewWizardComponent extends BaseComponent {
     }
 
     private SubmitCreating() {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
 
         var myService: MessagingStockPMService = new MessagingStockPMService();
         myService.insert(this.EntityPM).subscribe((myResult: any) => {
 
             var mm: any = myResult;
             if (!mm.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                this.CurrentSession.CloseCurrentWindowEmit('OK');
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         }
             , error => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var dd: any = error;
                 console.log(dd.text);
             });

@@ -45,7 +45,9 @@ namespace Logitude.WarehouseLib.Data
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             WarehouseContext context = new WarehouseContext(connection);
             return context;
         }
@@ -84,6 +86,8 @@ namespace Logitude.WarehouseLib.Data
 			modelBuilder.Entity<WarehouseEntry>().Property(x => x.TotalGrossWeight).HasPrecision(18, 3);
 				
 			modelBuilder.Entity<WarehouseEntry>().Property(x => x.TotalVolume).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<WarehouseEntry>().Property(x => x.TotalVolumetricWeight).HasPrecision(18, 3);
 				
 			modelBuilder.Entity<WarehouseEntryPackage>().Property(x => x.Weight).HasPrecision(16, 3);
 				

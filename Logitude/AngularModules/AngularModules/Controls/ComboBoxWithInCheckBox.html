@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+
+<style type="text/css">
     .ComboBox:focus ul {
         /*transition: height 0.35s ease;*/
     }
@@ -114,43 +115,37 @@
         pointer-events: none;
     }
 </style>
-<div tabindex="0" class="ToggleButton" (mousedown)="mousedown()"  >
 
+<div *ngIf="!IsAreasMenu" tabindex="0" class="ToggleButton" (mousedown)="mousedown()">
     <label class="TextTrimming" style="width: calc(100% - 10px);padding-right:5px;" [title]="TotalPickedItems">{{TotalPickedItems}}</label>
     <img src="./Images/ToggleIcon.png" />
     <div *ngIf="!WithinImage && !CheckBoxOnly" [id]="ControlId" class="ToggleButtonMenu" style="width: 200px;-webkit-box-sizing: border-box;">
         <div style="overflow-x: hidden;overflow-y: auto;height: 200px;z-index:10;background-color:white;border:solid;border-color:lightgray;border-width:1px" [attr.id]="DropdownId">
-                <table style="max-width:200px;height:1px">
-                    <tr style="height:10px">
-                        <td >
+            <table style="max-width:200px;height:1px">
+                <tr style="height:10px">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+'All'" [IsChecked]="IsAll" (Checked)="isAllClicked()"></RadioButton>
+                    </td>
+                </tr>
+            </table>
+            <table style="max-width:200px;height:1px">
+                <tr style="height:5px">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+ProductsSelectionType" [IsChecked]="!IsAll" (Checked)="isSelectedClicked()"></RadioButton>
+                    </td>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td  >
-                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+'All'" [IsChecked]="IsAll" (Checked)="isAllClicked()"></RadioButton>
-                        </td>                       
-                    </tr>
-                </table>
-                <table style="max-width:200px;height:1px">
-                    <tr style="height:5px">
-                        <td >
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >
-                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+ProductsSelectionType" [IsChecked]="!IsAll" (Checked)="isSelectedClicked()" ></RadioButton>
-                        </td>
-
-                                              
-                    </tr>
-                    <tr style="height:5px">
-                        <td >
-
-                        </td>
-                    </tr>
-                </table>
+                </tr>
+                <tr style="height:5px">
+                    <td></td>
+                </tr>
+            </table>
 
 
             <div *ngFor="let item of ItemsSource; let i = index" style="margin-left:25px">
@@ -175,14 +170,10 @@
                             </table>
 
 
-</td>
-                        <td>
-
                         </td>
-                       
-                        <td>
+                        <td></td>
 
-                        </td>
+                        <td></td>
                     </tr>
                 </table>
             </div>
@@ -198,9 +189,9 @@
                         <td colspan="2"></td>
                     </tr>
                     <tr>
-                        <td  style="width:100px">
-                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="'  '+'All'"  [IsChecked]="IsAll" (Checked)="isAllClicked()"></RadioButton>
-</td>
+                        <td style="width:100px">
+                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="'  '+'All'" [IsChecked]="IsAll" (Checked)="isAllClicked()"></RadioButton>
+                        </td>
                         <td></td>
                     </tr>
                 </table>
@@ -209,7 +200,7 @@
                 <table>
                     <tr>
                         <td style="width:100px">
-                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+ProductsSelectionType" [IsChecked]="!IsAll" (Checked)="isSelectedClicked()" ></RadioButton>
+                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+ProductsSelectionType" [IsChecked]="!IsAll" (Checked)="isSelectedClicked()"></RadioButton>
                         </td>
 
                         <td></td>
@@ -225,11 +216,17 @@
                     </tr>
                     <tr>
                         <td style="width:25px">
-                            <CheckBox (Checked)="clickItem(item,i)" [IsChecked]="item.Checked" [IsEnabled]="ShowSelected"></CheckBox>                         
+                            <CheckBox (Checked)="clickItem(item,i)" [IsChecked]="item.Checked" [IsEnabled]="ShowSelected"></CheckBox>
                         </td>
-                        <td style="padding-left:2px;width:25px"><img style="margin-top:2px;" class="CenterCenter" *ngIf="item.Code[0] && (item.Code[0]=='A' || item.Code[0]=='I' || item.Code[0]=='O')" [attr.src]="'./Images/TransportModes/' + item.Code[0] + '.png'" /></td>
-                        <td style="padding-left:2px;width:25px"><img style="margin-top:2px;" class="CenterCenter" *ngIf="item.Code[1]" [attr.src]="'./Images/Directions/' + item.Code[1] + '.png'" /></td>
-                        <td style="padding-left:2px"><label style="float:left;" [attr.for]="item.Code" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.Name}}</label></td>
+                        <td style="padding-left:2px;width:25px">
+                            <img style="margin-top:2px;" class="CenterCenter" *ngIf="item.Code[0] && (item.Code[0]=='A' || item.Code[0]=='I' || item.Code[0]=='O')" [attr.src]="'./Images/TransportModes/' + item.Code[0] + '.png'" />
+                        </td>
+                        <td style="padding-left:2px;width:25px">
+                            <img style="margin-top:2px;" class="CenterCenter" *ngIf="item.Code[1]" [attr.src]="'./Images/Directions/' + item.Code[1] + '.png'" />
+                        </td>
+                        <td style="padding-left:2px">
+                            <label style="float:left;" [attr.for]="item.Code" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.Name}}</label>
+                        </td>
                         <td></td>
                     </tr>
                 </table>
@@ -239,9 +236,9 @@
 
     <div *ngIf="CheckBoxOnly" [id]="ControlId" class="ToggleButtonMenu" style="width: calc(100% + 30px);z-index:1;-webkit-box-sizing: border-box;">
         <div style="overflow-x: hidden;overflow-y: auto;height: 200px;z-index:10;background-color:white;border:solid;border-color:lightgray;border-width:1px" [attr.id]="DropdownId">
-           
+
             <div style="z-index:1">
-         
+
                 <div *ngFor="let item of ItemsSource; let i = index" style="z-index:1">
                     <table>
                         <tr style="height:5px">
@@ -253,17 +250,62 @@
                                     <input class="CenterCenter" style="float:left;" [attr.id]="item.Code+i" (click)="clickItem(item,i)" type="checkbox" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" />
                                     <label style="float:left;padding-left:3px" [attr.for]="item.Code+i" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.Name}}</label>
                                 </div>
-</td>
-                          
+                            </td>
+
                             <td></td>
                         </tr>
                     </table>
                 </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div *ngIf="IsAreasMenu" tabindex="0" class="ToggleButton" (mousedown)="mousedown()">
+    <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+    Area
+
+    <div [id]="ControlId" class="ToggleButtonMenu" style="width: 200px;-webkit-box-sizing: border-box;">
+        <div style="overflow-x: hidden;overflow-y: auto; min-height:200px;z-index:10;background-color:white;border:solid;border-color:lightgray;border-width:1px" [attr.id]="DropdownId">
+            <table style="max-width:200px;height:1px">
+                <tr class="FormFieldRow">
+                    <td>
+                        <input type="text" [attr.id]="SearchAreasId" placeholder="Search" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;margin: 7px;width:200px;">
+                        <img *ngIf="SearchText" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 7px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
+                    </td>
+                </tr>
+            </table>
+
+            <div *ngFor="let item of ItemsSource; let i = index" style="margin-left:25px;">
+                <table>
+                    <tr>
+                        <td style="width:100px" (mouseover)="IsMouseOverInput = true;" (mouseleave)="IsMouseOverInput = false;">
+                            <table>
+                                <tr>
+                                    <td style="width:20px">
+                                        <CheckBox (Checked)="clickItem(item,i)" [IsChecked]="item.Checked"></CheckBox>
+
+                                    </td>
+
+                                    <td>
+                                        <label style="float:left;" [attr.for]="item.Code" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.Name}}</label>
+                                    </td>
+                                </tr>
+
+                                <tr style="height:3px">
+                                    <td><div></div></td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-
-
 </div>
-    </div>
 
 

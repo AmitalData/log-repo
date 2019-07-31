@@ -42,7 +42,7 @@ export class AgentObjectionComponent extends BaseComponent {
     //Services
     private declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService;
     private declarationPMService: DeclarationPMService = new DeclarationPMService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
        
@@ -65,7 +65,7 @@ export class AgentObjectionComponent extends BaseComponent {
     SendButtonClicked() {
         //1. save changes
         //this.declarationPMService.update(this.ConstraintPM).subscribe((myRespone: ServiceResponse) => {
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
 
         //2. send
         if (!AppTool.IsNullOrEmpty(this.ConstraintPM.AgentObjection)) {
@@ -79,7 +79,7 @@ export class AgentObjectionComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SendConstraintAgentObjectionMethod() {

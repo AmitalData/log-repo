@@ -15,7 +15,7 @@ import {PackageTypeListService} from '../../../../Common/Services/StandardLists/
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
+import { ShipmentDomainService, ExcelPackageFilter, ExcelPackage} from '../../../../Shipment/Services/ShipmentDomainService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
@@ -23,6 +23,10 @@ import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliver
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import {WarehouseReleasePackageListExtendedService} from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleasePackageListExtendedService';
 import {PickUpDeliveryPackageHarmonizePM} from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
+import { CountryListService } from '../../../../Common/Services/StandardLists/CountryListService';
+import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+declare var ResultAsArray: any;
 
 @Component({
     moduleId: module.id,
@@ -43,9 +47,11 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsCommodityNameVisible: boolean = false;
     public IsCommodityNumberVisible: boolean = false;
     public IsShippingInstructionsVisible: boolean = false;
+    public IsDeletePackagesButtonVisible: boolean = false;
+    public IsDownloadUploadPackagesVisible: boolean = false;
     @Output() ReloadDetails = new EventEmitter();
     warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -54,6 +60,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.TransportModeId = this.EntityPM.TransportModeId;
         this.ItemsSource = new ObservableCollection([]);
         this.Listen();
+        this.setDigits();
     }
 
     private SessionEvent: any = null;
@@ -61,11 +68,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null; 
     private CrossDockReleasesEvent: any = null;
+    private firstDigit: string = ",";
+    private secondDigit: string = ".";
 
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "AWBWizardClosed") {
                     this.SetUIProperties();
                     this.SetGenerateData();
@@ -75,19 +84,35 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
+                    
                     this.SetUIProperties();
                     this.SetGenerateData();
                     this.BuildItemsSource();
+
+                    if (this.dowonload) {
+                        this.dowonload = false;
+                        this.DownloadPackages();
+                    }
+
+                    if (this.saveAfterDeletePackages) {
+                        this.saveAfterDeletePackages = false;
+                        this.CreatePackagesFromExcel();
+                    }
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.SetUIProperties();
-                    this.SetGenerateData();
-                    this.BuildItemsSource();
+                    this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                    this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                    this.DirectionId = this.EntityPM.DirectionId;
+
+                    this.OnResourcesReady();
+                    //this.SetUIProperties();
+                    //this.SetGenerateData();
+                    //this.BuildItemsSource();
                 }
             });
 
@@ -98,26 +123,44 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             });
 
 
-            this.CrossDockReleasesEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.CrossDockReleasesEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "CrossDockReleases") {
                     this.SetGenerateData();
                 }
             });
         }
     }
+
+    private ChargeableWeightPasted: boolean = false;
+    ChargeableWeightPaste($event) {
+        this.ChargeableWeightPasted = true;
+    }
+
+    private GrossWeightPasted: boolean = false;
+    GrossWeightPaste($event) {
+        this.GrossWeightPasted = true;
+    }
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
-        AppTool.KillEventEmitter(this.CrossDockReleasesEvent);
-        
+        AppTool.KillEventEmitter(this.CrossDockReleasesEvent);        
     }
 
     ngOnInit() {
         if (this.EntityPM != null) {
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+
+            if (FeatureLocator.HasFeaturePermession("Shipment", "DELETEPACKAGES")) {
+                this.IsDeletePackagesButtonVisible = true;
+            }
+
+            if (this.IsFCLEntity && FeatureLocator.HasFeaturePermession("Shipment", "DOWNUPLPACAKGES")) {
+                this.IsDownloadUploadPackagesVisible = true;
+            }
 
             if (FeatureLocator.HasFeaturePermession("Shipment", "COMMODITYNUMBER")) {
                 this.IsCommodityNumberVisible = true;
@@ -154,10 +197,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsInsideButtonVisible: boolean = false;
     private AllPackageTypes: PackageTypeList[] = [];
     OnResourcesReady() {
+        var isInsideButtonVisible = true;
 
         if (this.IsFCLEntity) {
-            var isInsideButtonVisible = true;
-
             if (!AppTool.IsNullOrEmpty(this.EntityPM.ShipmentTypeId)) {
                 var myShipmentTypeId = this.EntityPM.ShipmentTypeId.toUpperCase();
                 if (myShipmentTypeId.indexOf("MYG") > -1) {
@@ -165,20 +207,23 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     isInsideButtonVisible = false;
                 }
             }
-
-            this.IsInsideButtonVisible = isInsideButtonVisible;
-
+            
             if (FeatureLocator.HasFeaturePermession("Shipment", "Area.ContainersFU")) {
                 this.IsContainersFUVisible = true;
             }
         }
+        else {
+            isInsideButtonVisible = false
+        }
 
-        this.SetLabels()
+        this.IsInsideButtonVisible = isInsideButtonVisible;
+
+        this.SetLabels();
         this.SetUIProperties();
         this.SetGenerateData();
         this.BuildItemsSource();
 
-        SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+        this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "UpdatePackagesTab") {
                 this.SetGenerateData();
             }
@@ -400,6 +445,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.ComputeDimFactor();
             this.OnMeasurmentsSettingsChanged();
+            this.ComputeChargeableWeight_Kg();
+
         }
     }
 
@@ -457,6 +504,30 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.EntityPM.GrossWeightInKG = weigh_Kg;
         this.EntityPM.GrossWeightPerTon = weigh_Ton;
     }
+    private ComputeChargeableWeight_Kg() {
+        var weigh_Kg: number = null;
+        var weigh_Ton: number = null;
+
+        if (this.ChargeableWeight != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.ChargeableWeightUnitCode)) {
+                switch (this.ChargeableWeightUnitCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.ChargeableWeight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+        }
+        this.EntityPM.ChargeableWeightInKG = weigh_Kg;
+    }
+    
     OnMeasurmentsSettingsChanged() {
         this.SetAttachedLabels();
         ShipmentTool.RecalculateShipmentFields(this.EntityPM);
@@ -485,9 +556,32 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
             this.EntityPM.Volume = AppTool.Round(newValue, 3);
+            this.ComputeVolume_CBM();
         }
     }
 
+    private ComputeVolume_CBM() {
+        var volume_CBM: number = null;
+
+        if (this.Volume != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.VolumeUnitCode)) {
+                switch (this.EntityPM.VolumeUnitCode.toUpperCase()) {
+                    case "CBM": { factorOfConvert = 1; break; }
+                    case "CBI": { factorOfConvert = 61024; break; }      // 1m³ = 61024in³
+                    case "CBF": { factorOfConvert = 35.315; break; }     // 1m³ = 35.315ft³
+                }
+            }
+
+            volume_CBM = this.Volume / factorOfConvert;
+        }
+
+        if (volume_CBM != null) {
+            volume_CBM = AppTool.Round(volume_CBM, 3);
+        }
+        this.EntityPM.VolumeInCBM = volume_CBM;
+    }
     get VolumetricWeight() { return this.EntityPM.VolumetricWeight == null ? 0 : this.EntityPM.VolumetricWeight; }
     set VolumetricWeight(newValue: number) {
         if (this.EntityPM.VolumetricWeight != newValue) {
@@ -527,7 +621,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set GrossWeight(newValue: number) {
         if (this.EntityPM.GrossWeight != newValue) {
             this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);
-
             this.ComputeGrossWeigh_Kg_Ton();
         }
     }
@@ -536,6 +629,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set ChargeableWeight(newValue: number) {
         if (this.EntityPM.ChargeableWeight != newValue) {
             this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
+            this.ComputeChargeableWeight_Kg();
         }
     }
 
@@ -574,7 +668,38 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    GrossWeightLostFocus(input: any) {
+    private setDigits() {
+        this.firstDigit = ",";
+        this.secondDigit = ".";
+        //switch (SessionLocator.TenantPM.NumberFormatCode) {
+        //    case "CD": {
+        //        this.firstDigit = ",";
+        //        this.secondDigit = ".";
+        //        break;
+        //    }
+
+        //    case "DC": {
+        //        this.firstDigit = ".";
+        //        this.secondDigit = ",";
+        //        break;
+        //    }
+
+        //    case "AD": {
+        //        this.firstDigit = "'";
+        //        this.secondDigit = ".";
+        //        break;
+        //    }
+
+        //    default:
+        //        {
+        //            this.firstDigit = ",";
+        //            this.secondDigit = ".";
+        //            break;
+        //        }
+        //}
+    }
+
+    GrossWeightLostFocus(input: any) {        
 
         var valueComputed: number = 0;
         var valueInserted: number = 0;
@@ -590,11 +715,14 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             valueInserted = Number(input);
         }
 
-        valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = valueInserted == 0 ? null : valueInserted;
-        this.GrossWeightEdited = !(valueComputed == valueInserted);
-        this.GrossWeight = valueInserted;
-        this.ComputeTotals();
+        valueComputed = valueComputed == null ? 0 : valueComputed;
+        valueInserted = valueInserted == null ? 0 : valueInserted;
+
+        if (valueComputed != valueInserted) {
+            this.GrossWeightEdited = true;
+            this.GrossWeight = valueInserted;
+            this.ComputeTotals();
+        }
     }
     ChargeableWeightLostFocus(input: any) {
 
@@ -606,13 +734,16 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         if (!AppTool.IsNullOrEmpty(input)) {
             input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
+            valueInserted = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
         }
 
-        valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = valueInserted == 0 ? null : valueInserted;
-        this.ChargeableWeightEdited = !(valueComputed == valueInserted);
-        this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
-        this.ComputeTotals();
+        valueComputed = valueComputed == null ? 0 : valueComputed;
+        valueInserted = valueInserted == null ? 0 : valueInserted;
+        if (valueComputed != valueInserted) {
+            this.ChargeableWeightEdited = true;
+            this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            this.ComputeTotals();
+        }
     }
     ResetGrossWeightEdited() {
         this.GrossWeightEdited = false;
@@ -673,20 +804,20 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                         }
                     }
                 }
-            })
-        }
+            });
 
-        this.TEU = myTEU;
-        this.NumberOfPackages = myQuantity;
-        this.Volume = AppTool.Round(myVolume, 3);
-        this.VolumetricWeight = AppTool.Round(myVolumetricWeight, 3);
+            this.TEU = myTEU;
+            this.NumberOfPackages = myQuantity;
+            this.Volume = AppTool.Round(myVolume, 3);
+            this.VolumetricWeight = AppTool.Round(myVolumetricWeight, 3);
 
-        if (!this.GrossWeightEdited) {
-            this.GrossWeight = AppTool.Round(myGrossWeight, 3);
-        }
+            if (!this.GrossWeightEdited) {
+                this.GrossWeight = AppTool.Round(myGrossWeight, 3);
+            }
 
-        if (!this.ChargeableWeightEdited) {
-            this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            if (!this.ChargeableWeightEdited) {
+                this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            }
         }
 
         this.SetUIProperties();
@@ -694,7 +825,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     // Generate
-
     public IsGenerateControlVisible: boolean = false;
     public GenerateButtonLabel: string;
     public IsGenerateButtonVisible: boolean = false;
@@ -738,8 +868,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }); 
     }
-
-
+    
     SetGenerateData() {
         this.IsGenerateControlVisible = this.EntityPM.ShipmentPackages.length == 0 ? true : false;
         if (this.IsGenerateControlVisible) {
@@ -812,10 +941,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.RefreshPackages();
      
     }
-
-
-
-
+    
     Generate_LCL() {
         if (this.EntityPM.ShipmentOrderPackages.length > 0) {
             this.EntityPM.ShipmentOrderPackages.forEach(item => {
@@ -892,8 +1018,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.RefreshPackages();
         }
     }
-
-
+    
     RefreshPackages() {
 
         this.BuildItemsSource();
@@ -918,17 +1043,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
     }
-
-
-
+       
     BuildButtonClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         var myDomainService = new ShipmentDomainService();
 
         myDomainService.GetShipmentConsolidationPackages(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse != null) {
                 if (!myResponse.HasError) {
@@ -1228,7 +1351,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         else {
             myPath = "./ShipmentModules/ShipmentPackages/Components/Packages/AddEditOceanPackageComponent";
             logWindow.Width = 940;
-            logWindow.Height = 550;
+            logWindow.Height = 610;
         }
 
         logWindow.DataContext = itemComponent;
@@ -1349,7 +1472,272 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             logitudeWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/LastStatusComponent");
         }
     }
+
+    DeletePackagesButtonClicked() {
+        if (this.EntityPM.ShipmentPackages.length > 0) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Are you sure you want to delete all packages?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.StartDelete();
+                }
+            });
+        }
+    }
+    private StartDelete() {
+        var numberOfPackages: number = this.EntityPM.ShipmentPackages.length;
+
+        for (var i = this.EntityPM.ShipmentPackages.length - 1; i >= 0; i--) {
+            var shipmentPackage = this.EntityPM.ShipmentPackages[i];
+
+            //Package items
+            if (shipmentPackage.ShipmentPackageItems != null && shipmentPackage.ShipmentPackageItems.length > 0) {
+                for (var j = shipmentPackage.ShipmentPackageItems.length - 1; j >= 0; j--) {
+                    shipmentPackage.RemoveShipmentPackageItemPM(shipmentPackage.ShipmentPackageItems[j]);
+                }
+            }
+
+            // Inside packages
+            if (shipmentPackage.InsideShipmentPackages != null && shipmentPackage.InsideShipmentPackages.length > 0) {
+                for (var k = shipmentPackage.InsideShipmentPackages.length - 1; k >= 0; k--) {
+                    shipmentPackage.RemoveInsideShipmentPackagePM(shipmentPackage.InsideShipmentPackages[k]);
+                }
+            }
+
+            // package harmonize
+            if (shipmentPackage.ShipmentPackageHarmonizes != null && shipmentPackage.ShipmentPackageHarmonizes.length > 0) {
+                for (var m = shipmentPackage.ShipmentPackageHarmonizes.length - 1; m >= 0; m--) {
+                    shipmentPackage.RemoveShipmentPackageHarmonizePM(shipmentPackage.ShipmentPackageHarmonizes[m]);
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(shipmentPackage.DeliveryId)) {
+                var delivery = this.EntityPM.ShipmentDeliveries.filter(f => f.Id == shipmentPackage.DeliveryId)[0];
+                if (delivery) {
+                    if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.length > 0) {
+                        for (var n = delivery.ShipmentPickUpDeliveryPackages.length - 1; n >= 0; n--) {
+                            var deliveryPackage = delivery.ShipmentPickUpDeliveryPackages[n]
+
+                            if (deliveryPackage) {
+                                if (deliveryPackage.PickUpDeliveryPackageHarmonizes != null && deliveryPackage.PickUpDeliveryPackageHarmonizes.length > 0) {
+                                    for (var f = deliveryPackage.PickUpDeliveryPackageHarmonizes.length - 1; f >= 0; f--) {
+                                        deliveryPackage.RemovePickUpDeliveryPackageHarmonizePM(deliveryPackage.PickUpDeliveryPackageHarmonizes[f]);
+                                    }
+                                }
+
+                                delivery.RemovePackage(deliveryPackage);
+                            }
+                        }
+                    }
+
+                    this.EntityPM.RemoveDelivery(delivery);
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(shipmentPackage.EmptyContainerReturnId)) {
+                var emptyContainer = this.EntityPM.ShipmentDeliveries.filter(f => f.Id == shipmentPackage.EmptyContainerReturnId)[0];
+                if (emptyContainer) {
+                    if (emptyContainer.ShipmentPickUpDeliveryPackages != null && emptyContainer.ShipmentPickUpDeliveryPackages.length > 0) {
+                        for (var n = emptyContainer.ShipmentPickUpDeliveryPackages.length - 1; n >= 0; n--) {
+                            var deliveryPackage = emptyContainer.ShipmentPickUpDeliveryPackages[n]
+
+                            if (deliveryPackage) {
+                                if (deliveryPackage.PickUpDeliveryPackageHarmonizes != null && deliveryPackage.PickUpDeliveryPackageHarmonizes.length > 0) {
+                                    for (var f = deliveryPackage.PickUpDeliveryPackageHarmonizes.length - 1; f >= 0; f--) {
+                                        deliveryPackage.RemovePickUpDeliveryPackageHarmonizePM(deliveryPackage.PickUpDeliveryPackageHarmonizes[f]);
+                                    }
+                                }
+
+                                emptyContainer.RemovePackage(deliveryPackage);
+                            }
+                        }
+                    }
+
+                    this.EntityPM.RemoveDelivery(emptyContainer);
+                }
+            }
+            
+            this.EntityPM.RemovePackage(shipmentPackage);
+        }
+
+        this.EntityPM.PackagesDeleted = true;
+        this.EntityPM.EventNote = numberOfPackages + " packages deleted";
+        this.ItemsSource = new ObservableCollection([]);
+        this.ComputeTotals();
+        this.SetUIProperties();
+        this.SetGenerateData();
+    }
+
+    private dowonload: boolean = false;
+    DownloadClicked() {
+        this.dowonload = true;
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+    }
+    private DownloadPackages() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Downloading Packages";
+        logWindow.Width = 500;
+        logWindow.Height = 200;
+        logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/DownloadPackagesFileComponent');
+        logWindow.ComponentLoaded.subscribe(comp => {
+            comp.Download(this.EntityPM.Id, this.EntityPM.ShipmentNumber);
+        });
+    }
+
+    OnFileChanged(fileEvent) {
+        var file = fileEvent.target.files[0];
+
+        if (file) {
+            var extension: string = file.name.split('.')[1];
+
+            if (extension.includes("xls")) {
+                this.SelectExcelFile(fileEvent);
+            }
+
+            else {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
+            }
+        }   
+    }
+    SelectExcelFile(fileEvent) {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        var file = fileEvent.target.files[0];
+
+        if (file && file.size > 0) {
+            var documentExtendedService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+            documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var myResult = response.Result;
+                    if (myResult) {
+                        this.StartUploadingExcelFile(file);
+                    }
+                }
+            });
+        }
+    }
+    StartUploadingExcelFile(file: any) {
+        if (file && file.size > 0) {
+            var filebuffer = file.slice(0, file.size);
+            this.ConvertArrayBufferToBase64(filebuffer, this);
+        }
+    }
+    ConvertArrayBufferToBase64(file: any, context: any) {
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(ResultAsArray(e));
+            var len = bytes.byteLength;
+
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+
+            var filter = new ExcelPackageFilter();
+            filter.FileData = window.btoa(binary);
+            filter.ShipmentId = context.EntityPM.Id;
+
+            context.SendExcelToServer(filter);
+        };
+
+        reader.onerror = function (e) {
+            console.log(e);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+    
+    private saveAfterDeletePackages: boolean = false;
+    private packages: ExcelPackage[];
+    SendExcelToServer(filter: any) {
+        var myDomainService: ShipmentDomainService = new ShipmentDomainService();
+
+        myDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.packages = response.Result;
+
+                if (this.packages.filter(d => d.HasErrors).length > 0) {
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("File contains errors, please validate the data and try again");                    
+                }
+
+                else {
+                    if (this.EntityPM.ShipmentPackages.length > 0) {
+                        this.CurrentSession.StopBusyIndicator();
+
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.Show("Uploading packages will result in deleting existing packages and all its data");
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
+                            if (confirmWindow.Yes) {
+                                this.saveAfterDeletePackages = true;
+                                this.StartDelete();
+                                this.CurrentSession.CurrentEditComponent.SaveChanges();
+                            }
+                        });
+                    }
+
+                    else {
+                        this.CreatePackagesFromExcel();
+                    }
+                }
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
+    
+    private CreatePackagesFromExcel() {
+        this.packages.forEach(item => {
+            var shipmentPackage = new ShipmentPackagePM(null);
+            shipmentPackage.Quantity = 1;
+            shipmentPackage.IsContainer = true;
+            shipmentPackage.Tenant = SessionLocator.Tenant;
+            shipmentPackage.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
+            shipmentPackage.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
+
+            shipmentPackage.PackageTypeId = item.ContainerTypeId;
+            shipmentPackage.PackageTypeCode = item.ContainerTypeCode;
+            shipmentPackage.PackageTypeName = item.ContainerTypeName;
+            shipmentPackage.ContainerNumber = item.ContainerNumber;
+            shipmentPackage.Volume = item.Volume;
+            shipmentPackage.Weight = item.GrossWeight;
+            shipmentPackage.Tare = item.Tare;
+            shipmentPackage.ShipperSeal = item.ShipperSeal;
+            shipmentPackage.CarrierSeal = item.CarrierSeal;
+            shipmentPackage.MarksAndNumbers = item.MarksAndNumbers;
+            shipmentPackage.Description = item.Description;
+            shipmentPackage.IsContainerRefrigerated = item.IsRefrigerated;
+
+            var ratio: number = this.EntityPM.Ratio;
+            if (AppTool.IsNullOrZero(ratio)) {
+                ratio = AppTool.GetRatio(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+            }
+
+            if (AppTool.IsNullOrZero(shipmentPackage.Volume)) {
+                shipmentPackage.Volume = AppTool.ComputePackageVolume(shipmentPackage.Quantity, shipmentPackage.Width, shipmentPackage.Height, shipmentPackage.Length, shipmentPackage.Weight, ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode);
+            }
+
+            shipmentPackage.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(shipmentPackage.Quantity, shipmentPackage.Width, shipmentPackage.Height, shipmentPackage.Length, shipmentPackage.Volume, shipmentPackage.Weight, ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode);
+
+            if (item.IsRefrigerated == false) {
+                shipmentPackage.NonActiveContainer = false;
+            }
+            
+            this.EntityPM.AddPackage(shipmentPackage);
+        });
+
+        this.BuildItemsSource();
+        this.ResetTotalEditedValues();
+        this.ComputeTotals();
+        this.CurrentSession.StopBusyIndicator();
+    }
 }
+
 export class ShipmentPackageItem extends BaseComponent {
     public EntityPM: ShipmentPackagePM;
     public ShipmentPM: ShipmentPM;
@@ -1363,6 +1751,9 @@ export class ShipmentPackageItem extends BaseComponent {
     public Row: any;
     public IsCommodityNameVisible: boolean = false;
     public IsCommodityNumberVisible: boolean = false;
+    public IsVehicleDetails: boolean = false;
+
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: ShipmentPackagePM, public fatherComponent: PackagesTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -1377,6 +1768,11 @@ export class ShipmentPackageItem extends BaseComponent {
         this.ValidateContainerNumber(this.ContainerNumber);
         this.BuildPackageItems();
         this.maxPackageItemsLineNumber = ArrayTool.Max(this.PackageItemsList.Collection, "LineNumber");
+
+        if (this.IsNewEntity) {
+            this.SetUIProperties_Cars(false);
+            this.IsVehicleDetails = false;
+        }
     }
 
     public IsEditingEnabled: boolean = false;
@@ -1395,7 +1791,6 @@ export class ShipmentPackageItem extends BaseComponent {
         }
 
         var isEditingFieldsEnabled = true;
-
         if (!this.IsEditingEnabled) {
             isEditingFieldsEnabled = false;
         }
@@ -1405,7 +1800,7 @@ export class ShipmentPackageItem extends BaseComponent {
             if (allPackages.length > 1) {
                 this.IsDeliveryConnectedWithMultiContainers = true;
             }
-        }        
+        }
 
         this.IsEditingFieldsEnabled = isEditingFieldsEnabled;
         this.IsConnectedToRouting = isConnectedToRouting;
@@ -1415,6 +1810,18 @@ export class ShipmentPackageItem extends BaseComponent {
         this.SetUIProperties_Dangerous();
         this.SetUIProperties_BuildButton();
         this.SetUIProperties_Harmonize();
+        if (!AppTool.IsNullOrEmpty(this.PackageTypeId)) {
+            var myService: PackageTypeListService = new PackageTypeListService();
+            myService.getSingle(this.PackageTypeId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var list: PackageTypeList = myResponse.Result;
+                    if (list != null) {
+                        this.SetUIProperties_Cars(this.IsEditingEnabled && list.IsVehicle);
+                        this.IsVehicleDetails = list.IsVehicle;
+                    }
+                }
+            });
+        }
     }
     SetUIProperties_Package() {
         if (this.ShipmentPM.TransportModeId == "A") {
@@ -1637,6 +2044,24 @@ export class ShipmentPackageItem extends BaseComponent {
 
         this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
     }
+    SetUIProperties_Cars(isEnabled: boolean) {
+        if (this.IsEditingEnabled && !isEnabled) {
+            this.Make = null;
+            this.Model = null;
+            this.Color = null;
+            this.Year = null;
+            this.CountryId = null;
+            this.ChassisNumber = null;
+            this.RegistrationNumber = null;
+        }
+        this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Model", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Color", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Year", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("CountryId", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("ChassisNumber", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("RegistrationNumber", this.ObjectTableName, isEnabled);
+    }
 
     public PackageTypeList: PackageTypeList;
     get PackageTypeTextCode() { return this.IsLCLEntity ? "ShipmentPackage.F.PackageTypeId" : "ShipmentPackage.F.ContainerTypeId"; }
@@ -1657,11 +2082,13 @@ export class ShipmentPackageItem extends BaseComponent {
                 this.IsContainerRefrigerated = false;
                 this.NonActiveContainer = false;
                 this.SetUIProperties_NonActiveContainer();
+                this.SetUIProperties_Cars(false);
+                this.IsVehicleDetails = false;
             }
 
             else {
                 var myService: PackageTypeListService = new PackageTypeListService();
-                myService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                myService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: PackageTypeList = myResponse.Result;
                         if (list != null) {
@@ -1679,6 +2106,12 @@ export class ShipmentPackageItem extends BaseComponent {
                             }
 
                             this.SetUIProperties_NonActiveContainer();
+                            this.SetUIProperties_Cars(list.IsVehicle);
+                            this.IsVehicleDetails = list.IsVehicle;
+                        }
+                        else {
+                            this.SetUIProperties_Cars(false);
+                            this.IsVehicleDetails = false;
                         }
                     }
                 });
@@ -1858,8 +2291,10 @@ export class ShipmentPackageItem extends BaseComponent {
 
             }
 
-            this.fatherComponent.ResetTotalEditedValues();
-            this.fatherComponent.ComputeTotals();
+            if (this.fatherComponent.ItemsSource.Collection.indexOf(this) > -1) {
+                this.fatherComponent.ResetTotalEditedValues();
+                this.fatherComponent.ComputeTotals();
+            }
         }
     }
 
@@ -1871,8 +2306,11 @@ export class ShipmentPackageItem extends BaseComponent {
                     this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
 
                     this.SetUIProperties();
-                    this.fatherComponent.ResetTotalEditedValues();
-                    this.fatherComponent.ComputeTotals();
+
+                    if (this.fatherComponent.ItemsSource.Collection.indexOf(this) > -1) {
+                        this.fatherComponent.ResetTotalEditedValues();
+                        this.fatherComponent.ComputeTotals();
+                    }
                 }
             }
         }
@@ -2281,7 +2719,7 @@ export class ShipmentPackageItem extends BaseComponent {
         item.PackageId = this.EntityPM.Id;
         item.LineNumber = this.maxPackageItemsLineNumber;
         this.PackageItemsList.Insert(new PackageItem(item, this, true));
-        //SessionLocator.CurrentSession.LogitudeGridHelper.ResetRowIndex();
+        //this.CurrentSession.LogitudeGridHelper.ResetRowIndex();
     }
     OnRowEnded($event) { 
         var errors = [];
@@ -2290,7 +2728,7 @@ export class ShipmentPackageItem extends BaseComponent {
         //if (errors != null && errors.length == 0) {
             if (($event) == this.PackageItemsList.Length) {
                 this.AddPackageItemMethod();
-                //SessionLocator.CurrentSession.ResetRowIndex();
+                //this.CurrentSession.ResetRowIndex();
             }
         //}
     }
@@ -2434,6 +2872,55 @@ export class ShipmentPackageItem extends BaseComponent {
             this.SetUIProperties_ValidateActualDates_R();
         }
     }
+    
+    get Make() { return this.EntityPM.Make; }
+    set Make(newValue: string) {
+        if (this.EntityPM.Make != newValue) {
+            this.EntityPM.Make = newValue;
+        }
+    }
+
+    get Model() { return this.EntityPM.Model; }
+    set Model(newValue: string) {
+        if (this.EntityPM.Model != newValue) {
+            this.EntityPM.Model = newValue;
+        }
+    }
+    
+    get Year() { return this.EntityPM.Year; }
+    set Year(newValue: string) {
+        if (this.EntityPM.Year != newValue) {
+            this.EntityPM.Year = newValue;
+        }
+    }
+
+    get Color() { return this.EntityPM.Color; }
+    set Color(newValue: string) {
+        if (this.EntityPM.Color != newValue) {
+            this.EntityPM.Color = newValue;
+        }
+    }
+
+    get ChassisNumber() { return this.EntityPM.ChassisNumber; }
+    set ChassisNumber(newValue: string) {
+        if (this.EntityPM.ChassisNumber != newValue) {
+            this.EntityPM.ChassisNumber = newValue;
+        }
+    }
+
+    get RegistrationNumber() { return this.EntityPM.RegistrationNumber ; }
+    set RegistrationNumber (newValue: string) {
+        if (this.EntityPM.RegistrationNumber  != newValue) {
+            this.EntityPM.RegistrationNumber  = newValue;
+        }
+    }
+
+    get CountryId() { return this.EntityPM.CountryId; }
+    set CountryId(newValue: string) {
+        if (this.EntityPM.CountryId != newValue) {
+            this.EntityPM.CountryId = newValue;
+        }
+    }
 
     private SaveCommandCode: string;
     private SaveCompletedEvent: any = null;
@@ -2520,7 +3007,7 @@ export class ShipmentPackageItem extends BaseComponent {
                 this.SaveCompletedEvent = null;
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
     ShowActionsWindow(typeCode: string) {
@@ -2776,13 +3263,21 @@ export class InsideShipmentPackageItem extends BaseComponent {
     public ShipmentPackagePM: ShipmentPackagePM;
     public ObjectTableName: string = "InsideShipmentPackage";
     public IsNewEntity: boolean = false;
+    public IsVehicleDetails: boolean = false;
+    public CountryListService: CountryListService;
+
     constructor(entity: InsideShipmentPackagePM, public fatherComponent: ShipmentPackageItem, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.ShipmentPM = fatherComponent.ShipmentPM;
         this.ShipmentPackagePM = fatherComponent.EntityPM;
         this.IsNewEntity = isNew;
+        this.CountryListService = new CountryListService();
         this.SetUIProperties();
+        if (this.IsNewEntity) {
+            this.SetUIPropertiesOfCars(false);
+            this.IsVehicleDetails = false;
+        }
     }
 
     public IsEditingEnabled: boolean = false;
@@ -2812,6 +3307,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
                     isDimensionEnabled = false;
                 }
             }
+           
         }
 
         this.UIProperties.SetEnabled("PackageTypeId", this.ObjectTableName, this.IsEditingEnabled);
@@ -2828,6 +3324,37 @@ export class InsideShipmentPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("Reference3", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Reference4", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CommodityNumber", this.ObjectTableName, this.IsEditingEnabled);
+
+        if (!AppTool.IsNullOrEmpty(this.PackageTypeId)) {
+            var myService: PackageTypeListService = new PackageTypeListService();
+            myService.getSingle(this.PackageTypeId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var list: PackageTypeList = myResponse.Result;
+                    if (list != null) {
+                        this.SetUIPropertiesOfCars(this.IsEditingEnabled && list.IsVehicle);
+                        this.IsVehicleDetails = list.IsVehicle;
+                    }
+                }
+            });
+        }
+    }
+    private SetUIPropertiesOfCars(isEnabled: boolean) {
+        if (this.IsEditingEnabled && !isEnabled) {
+            this.Make = null;
+            this.Model = null;
+            this.Color = null;
+            this.Year = null;
+            this.CountryId = null;
+            this.ChassisNumber = null;
+            this.RegistrationNumber = null;
+        }
+        this.UIProperties.SetEnabled("Make", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Model", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Color", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("Year", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("CountryId", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("ChassisNumber", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("RegistrationNumber", this.ObjectTableName, isEnabled);
     }
 
     get PackageTypeId() { return this.EntityPM.PackageTypeId; }
@@ -2837,16 +3364,25 @@ export class InsideShipmentPackageItem extends BaseComponent {
 
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.PackageTypeName = null;
+                this.SetUIPropertiesOfCars(false);
+                this.IsVehicleDetails = false;
             }
 
             else {
                 var myService: PackageTypeListService = new PackageTypeListService();
-                myService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
+                myService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: PackageTypeList = myResponse.Result;
                         if (list != null) {
-                            this.PackageTypeName = list.EnglishName;                            
+                            this.PackageTypeName = list.EnglishName;
+                            this.SetUIPropertiesOfCars(list.IsVehicle);
+                            this.IsVehicleDetails = list.IsVehicle;
                         }
+                        else {
+                            this.SetUIPropertiesOfCars(false);
+                            this.IsVehicleDetails = false;
+                        }
+
                     }
                 });
             }
@@ -3042,6 +3578,64 @@ export class InsideShipmentPackageItem extends BaseComponent {
 
         this.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.Volume, this.Weight, this.ShipmentPM.Ratio, this.ShipmentPM.DimensionsUnitCode, this.ShipmentPM.VolumeUnitCode, this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode);
     }
+
+    get Make() { return this.EntityPM.Make; }
+    set Make(newValue: string) {
+        if (this.EntityPM.Make != newValue) {
+            this.EntityPM.Make = newValue;
+        }
+    }
+
+    get Model() { return this.EntityPM.Model; }
+    set Model(newValue: string) {
+        if (this.EntityPM.Model != newValue) {
+            this.EntityPM.Model = newValue;
+        }
+    }
+
+
+    get Year() { return this.EntityPM.Year; }
+    set Year(newValue: string) {
+        if (this.EntityPM.Year != newValue) {
+            this.EntityPM.Year = newValue;
+        }
+    }
+
+    get Color() { return this.EntityPM.Color; }
+    set Color(newValue: string) {
+        if (this.EntityPM.Color != newValue) {
+            this.EntityPM.Color = newValue;
+        }
+    }
+
+    get ChassisNumber() { return this.EntityPM.ChassisNumber; }
+    set ChassisNumber(newValue: string) {
+        if (this.EntityPM.ChassisNumber != newValue) {
+            this.EntityPM.ChassisNumber = newValue;
+        }
+    }
+
+    get RegistrationNumber() { return this.EntityPM.RegistrationNumber; }
+    set RegistrationNumber(newValue: string) {
+        if (this.EntityPM.RegistrationNumber != newValue) {
+            this.EntityPM.RegistrationNumber = newValue;
+        }
+    }
+
+    get CountryId() { return this.EntityPM.CountryId; }
+    set CountryId(newValue: string) {
+        if (this.EntityPM.CountryId != newValue) {
+            this.EntityPM.CountryId = newValue;
+            this.CountryListService.getSingle(this.EntityPM.CountryId).subscribe(result => {
+                var country = result.Result;
+                if (country != null) {
+                    this.EntityPM.CountryCode = country.Code;
+                    this.EntityPM.CountryName = country.EnglishName;
+                }
+            });
+        }
+    }
+
     ChooseCommodityClicked() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 775;
@@ -3055,6 +3649,8 @@ export class PackageItem extends BaseComponent {
     public EntityPM: ShipmentPackageItemPM;
     public ObjectTableName: string = "ShipmentPackageItem";
     public IsNewEntity: boolean = false;
+
+
     constructor(entity: ShipmentPackageItemPM, public fatherComponent: ShipmentPackageItem, isNew: boolean = false) {
         super();
         this.EntityPM = entity;

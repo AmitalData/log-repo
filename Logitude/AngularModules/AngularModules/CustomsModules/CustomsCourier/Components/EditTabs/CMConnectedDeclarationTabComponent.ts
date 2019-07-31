@@ -82,27 +82,27 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
+            SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     this.LoadConnectedDeclarationGrid();
                     this.LoadNotConnectedDeclarationGrid();
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     //this.BuildColumns();
                     this.LoadConnectedItems();
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
                     if (tabCode == "COCD") {
 
                     }
@@ -391,7 +391,7 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
         this.DisplayOnlyCheck();
     }
 

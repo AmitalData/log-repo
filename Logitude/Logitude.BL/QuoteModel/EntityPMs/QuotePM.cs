@@ -17,7 +17,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string ConcurrencyGUID { get; set; }
         public string QuoteTemplateId { get; set; }
         public int LastVersionNumber { get; set; }
-
+        public string QuoteLevel { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteNumber { get; set; }
 
@@ -115,9 +115,11 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string DescriptionOfGoods { get; set; }
 
         public double? ChargeableWeight { get; set; }
+        public double? ChargeableWeightInKG { get; set; }
         public double? GrossWeight { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }
+        public double? VolumeInCBM { get; set; }
 
         public byte[] LastModified { get; set; }
         public bool IsClosed { get; set; }
@@ -158,6 +160,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsDangerous { get; set; }
         public int? ExpirationDays { get; set; }
         public DateTime? ExpirationDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public bool IsFreightBySteps { get; set; }
         public bool TotalPerContainer { get; set; }
@@ -308,6 +311,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string FromCountryName { get; set; }
         public string ToCountryCode { get; set; }
         public string ToCountryName { get; set; }
+        public bool ConvertToFCL { get; set; }
+        public bool ConvertToLCL { get; set; }
 
         public bool IsQuoteDataExternal { get; set; }
         public bool IsQuoteDocumentExternal { get; set; }
@@ -384,6 +389,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool DontExportQuotationsToIntegratedSystem { get; set; }
         public string QuotationSections { get; set; }
         public string SameOrFixed { get; set; }
+
+        public bool GrossWeightEdited { get; set; }
+        public bool ChargeableWeightEdited { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? NumberOfFollowUps { get; set; }

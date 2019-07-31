@@ -30,6 +30,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? GrossWeightInKG { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
+        public string OperationalClosedByUserId { get; set; }
 
         public string CurrentUserId { get; set; }
         public int Tenant { get; set; }
@@ -493,7 +494,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? Volume { get; set; }
         public string BranchName { get; set; }
         public string CustomsDeclarationNumber { get; set; }
-        
+        public string AgentComputed { get; set; }
+
+
         #region Booking
         public double? OrderGrossWeight { get; set; }
         public double? BookingVolume { get; set; }
@@ -696,6 +699,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string LastSharedEventNotes { get; set; }
         public DateTime? LastSharedEventDate { get; set; }
         public DateTime? FirstOperationalCloseDate { get; set; }
+        public DateTime? FirstAccountingCloseDate { get; set; }
 
         public double? GrossWeightPerTon { get; set; }
         public string LocalCustomsSentByUserId { get; set; }
@@ -706,6 +710,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? INTTRASIStatusDate { get; set; }
         public string INTTRASIStatusCode { get; set; }
         public string INTTRASIStatusName { get; set; }
+
+        public string INTTRABookingStatusCode { get; set; }
+        public string INTTRABookingStatusName { get; set; }
+        public string INTTRABookingTransStatusName { get; set; }
+        public string INTTRABookingTransStatusCode { get; set; }
+
 
         public string LastFinalDestination { get; set; }
         public DateTime? FirstPickupETD { get; set; }
@@ -718,5 +728,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string From { get; set; }
         public string To { get; set; }
         public string Origin { get; set; }
+        public string ARInvoices { get; set; }
+        public string ReleasingAgentId { get; set; }
+        public string ReleasingAgentName { get; set; }
+
+        public string ColoaderId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -33,6 +34,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
             entityPM.ReportNumber = CodeCounter.GetNumber("TaxDeductionReport", entityPM.Tenant).ToString();
 
+            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(entityPM.Tenant);
+            FullAccountingSettingPM setting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(entityPM.Tenant);
+
+            if(setting != null && setting.DeductionFileNumber == null)
+            {
+                ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
+                bool showLocals = !contact.DontShowLocal;
+                throw new Exception(TranslateTextsClass.Translate("Accounting.O.DeductionFileNumberNotFound", entityPM.Tenant, showLocals));
+
+
+            }
             Validate(entityPM);
         }
 

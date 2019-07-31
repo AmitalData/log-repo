@@ -1,4 +1,4 @@
-﻿
+
 declare var window: any;
 import {Component, OnInit, EventEmitter}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -35,7 +35,7 @@ export class SharedDocumentComponent implements OnInit {
 
     AttachmentsLists: AttachmentsList[];
     OnCloseSharedWithAgentsEvent = new EventEmitter();
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypePMExtendedService: DocumentTypePMExtendedService, public _agentSharedDocumentExtendedService: AgentSharedDocumentExtendedService) {
 
 
@@ -76,7 +76,7 @@ export class SharedDocumentComponent implements OnInit {
   
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.ShipmentShareDocumentsDataLists = [];
         this._documentTypePMExtendedService.GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.ShipmentNumber, this.ObjectTableId, this.EntityPM.ShipmentLevelCode, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
@@ -107,7 +107,7 @@ export class SharedDocumentComponent implements OnInit {
                 }
                     
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -197,8 +197,8 @@ export class SharedDocumentComponent implements OnInit {
    
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SelectedShipmentShareDocumentsDataLists: ShipmentShareDocumentsData[] = [];
@@ -247,7 +247,7 @@ export class SharedDocumentComponent implements OnInit {
 
                 if (this.SelectedShipmentShareDocumentsDataLists.length > 0) {
 
-                    SessionLocator.CurrentSession.StartBusyIndicator("Sharing Documnents...");
+                    this.CurrentSession.StartBusyIndicator("Sharing Documnents...");
                     this._agentSharedDocumentExtendedService.PostSharedDocuments(this.SelectedShipmentShareDocumentsDataLists, this.EntityPM.Id).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
                         var messageWindow: MessageWindow = new MessageWindow();
@@ -262,7 +262,7 @@ export class SharedDocumentComponent implements OnInit {
                                 messageWindow.Show(pmResponse.ErrorsArray[0].toString());
                             }
                         }
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
 
                 }

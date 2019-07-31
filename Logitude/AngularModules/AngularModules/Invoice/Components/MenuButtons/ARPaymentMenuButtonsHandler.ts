@@ -1,3 +1,4 @@
+import { ARPaymentEventManager } from './../../../Accounting/Utilities/ARPaymentEventManager';
 declare var window: any;
 import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -22,6 +23,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 export class ARPaymentMenuButtonsHandler {
     public EntityPM: ARPaymentPM;
     public entityArgs: EntityArgs
+    private CurrentSession = SessionLocator.SelectedSession;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -54,7 +56,7 @@ export class ARPaymentMenuButtonsHandler {
 
                     if (this.isCancelApproval) {
                         this.isCancelApproval = false;
-                       
+
                     }
 
                     if (this.isVoided) {
@@ -288,7 +290,7 @@ export class ARPaymentMenuButtonsHandler {
                     break;
                 }
             case "SENDToSAT":
-                { 
+                {
                     this.SaveSendToSAT();
                     break;
                 }
@@ -356,7 +358,7 @@ export class ARPaymentMenuButtonsHandler {
         }
         else {
             this.entityArgs.EditComponent.SaveChanges(Text);
-        }        
+        }
     }
 
 
@@ -442,12 +444,25 @@ export class ARPaymentMenuButtonsHandler {
 
         ////}
 
-       
+
     }
 
     // [Approval]
     ApprovalMethod() {
-        
+
+        // full accounting validation
+        //lines validation
+        if(SessionLocator.TenantPM.AccountingActivated){
+            var _edit = this.CurrentSession.CurrentEditComponent;
+            if(!_edit.IsEditValid){
+                _edit.ValidationErrorsList = [TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines')];
+                return;
+            }else{
+                _edit.ValidationErrorsList = [];
+            }
+
+        }
+
         if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
             var FlagNotTransfered: boolean = false;
             this.EntityPM.PaymentInvoices.forEach(item => {
@@ -484,7 +499,7 @@ export class ARPaymentMenuButtonsHandler {
     }
     else {
         this.ApprovingLogic();
-    }        
+    }
 }
     private ApprovingLogic() {
         var message = "";
@@ -507,6 +522,7 @@ export class ARPaymentMenuButtonsHandler {
                 //CommonContext.SubmitChanges();
             }
             this.entityArgs.EditComponent.SaveChanges();
+            ARPaymentEventManager.ARPaymentApproved.emit();
         }
         else {
             errors.forEach(item => {
@@ -534,7 +550,7 @@ export class ARPaymentMenuButtonsHandler {
         //cashBookLine.ARPChequeId = arPaymentcheque.Id;
         //cashBookLine.IsDeposited = false;
 
-        //// Create Journal 
+        //// Create Journal
         var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
         invoiceDomainService.PostARPaymentChequeAndCashBook(this.EntityPM).subscribe((response: ServiceResponse) => {
             if (response != null) {
@@ -546,7 +562,7 @@ export class ARPaymentMenuButtonsHandler {
                     messageWindow.Show(response.ErrorsArray.toString());
                 }
             }
-           
+
         });
     }
 
@@ -595,7 +611,7 @@ export class ARPaymentMenuButtonsHandler {
         myDocumentTypeCode = "ARP";
         myReference = this.EntityPM.PaymentNo;
         this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
-        
+
     }
     StartPrinting(myEntityId: string, myChildEntityId: string, myObjectTableName: string, mychildObjectTableId:string, myDocumentTypeCode: string, myReference: string) {
         var myPrintHelper = new GeneralPrintHelper(myObjectTableName, myDocumentTypeCode, myEntityId, myChildEntityId, myReference, mychildObjectTableId);
@@ -610,7 +626,7 @@ export class ARPaymentMenuButtonsHandler {
 
     // [Void]
     VoidMethod() {
-       
+
         var messageWindow: MessageWindow;
         if (!SessionLocator.AccountingSettingPM.AllowVoidARP) {
             var messageText = TextCodeTranslator.Translate("ARPayment.M.AccountingSettingsDontAllowVoid");

@@ -3,7 +3,6 @@ import {PackageList} from '../../../Common/EntityLists/PackageList';
 import {UserList} from '../../../Common/EntityLists/UserList';
 import {UserExtendedListService, UserExtendedList} from '../../../Common/Services/ExtendedLists/UserExtendedListService';
 import {UserLicensePM} from '../../../Common/EntityPMs/UserLicensePM';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {UserLicenseArgs} from '../../../Infrastructure/Args';
 import {AppTool, FontTool} from '../../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -23,14 +22,15 @@ export class LicensesManagementComponent implements OnDestroy {
     @Output() SearchFieldChangeEvent = new EventEmitter();
     public Columns: any[] = [];
     private dirtyItem: UserLicensePM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
+    public HeaderColumnWidth: number = 150;
     constructor() {
         this.Listen();
     }
 
     private ListenEvent: any = null;
     Listen() {
-        this.ListenEvent = SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
+        this.ListenEvent = this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
             if (res.Name == "Add") {
                 this.Add(res.User, res.PackageCode);
             }
@@ -50,6 +50,10 @@ export class LicensesManagementComponent implements OnDestroy {
     SetWindowArgs(args: UserLicenseArgs) {
         this.AllPackages = args.AllPackages;
         this.dirtyItem = null;
+
+        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+            this.HeaderColumnWidth = 240;
+        }
 
         this.InitColumns();
         this.LoadUserLicenses();
@@ -86,13 +90,13 @@ export class LicensesManagementComponent implements OnDestroy {
             return tempo;
         },
     };
-
+    
     private GetRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
 
-        filters.GetCount = getCount;
+        filters.GetCount = true;
         filters.PageIndex = skip;
         filters.PageSize = 100;
         filters.SortBy = sortingCol;
@@ -132,7 +136,7 @@ export class LicensesManagementComponent implements OnDestroy {
     public LicensesManagmentsList: LicensesManagementDataItem[];
     private BuildHeaders() {
         this.LicensesManagmentsList = [];
-
+        
         var index: number = 0;
         SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
             index++;
@@ -166,6 +170,19 @@ export class LicensesManagementComponent implements OnDestroy {
 
     private BuildAdditionalColumns() {
         this.DataLoaded = false;
+
+        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+            this.Columns.push({
+                FieldName: SessionLocator.TenantManagementJS.PackageCode + ",0" ,
+                DataTypeCode: 'Boolean',
+                Display: SessionLocator.TenantManagementJS.PackageName,
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+                Styles: { width: '100px' },
+                HtmlListComponentName: 'ColumnCheckBoxComponent',
+                HtmlListComponentUrl: './InfrastructureModules/InfrastructureUser/Components/ColumnCheckBoxComponent',
+            });
+        }
 
         var index: number = 0;
         SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
@@ -266,12 +283,12 @@ export class LicensesManagementComponent implements OnDestroy {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
     private RunSave() {
         if (this.dirtyItem != null) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var myServiceHelper = new UserLicenseUpdateHelper();
             myServiceHelper.Tenant = SessionLocator.Tenant;
@@ -280,7 +297,7 @@ export class LicensesManagementComponent implements OnDestroy {
             var generalService: CommonDomainService = new CommonDomainService();
             generalService.UpdateUserLicense(myServiceHelper).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
 
@@ -298,7 +315,7 @@ export class LicensesManagementComponent implements OnDestroy {
                     this.dirtyItem = null;
                     //this.LoadUserLicenses();
                     this.BuildHeaders();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }

@@ -21,6 +21,9 @@ export class BIReportList {
 	Inactive: boolean;
 	TypeCode: string;
 	AGGridOptionsXML: string;
+	BIReportFolderId: string;
+	CreatedByUserName: string;
+	UpdatedByUserName: string;
 	
 }
  

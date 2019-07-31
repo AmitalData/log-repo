@@ -1,4 +1,4 @@
-﻿ declare var System: any;
+ declare var System: any;
 declare var window: any;
 import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -48,7 +48,7 @@ export class UserSearchComponent {
     
     ToEmail: string;
 
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _entityListService: EntityListService, private cd: ChangeDetectorRef) {
 
         this.userExtendedPMService = new UserExtendedPMService();
@@ -56,11 +56,11 @@ export class UserSearchComponent {
         
         window.ToEmailLists = [];
         
-        if (AppTool.IsNullOrEmpty(SessionLocator.CurrentSession.Sessionkey)) {
-            SessionLocator.CurrentSession.Sessionkey = Guid.newGuid();
+        if (AppTool.IsNullOrEmpty(this.CurrentSession.Sessionkey)) {
+            this.CurrentSession.Sessionkey = Guid.newGuid();
         }
 
-        SessionLocator.CurrentSession.SessionEvent.subscribe((res) => {
+        this.CurrentSession.SessionEvent.subscribe((res) => {
 
             if (res && res.IsCheck) this.RefreshEmailList(res);
 
@@ -84,7 +84,7 @@ export class UserSearchComponent {
             this.filterAgrs.SortDirection = "Descending";
             this.onQueryChangeEvent.emit({ QueryId: "", Filters: this.filterAgrs });
 
-            ComponentArgs.AddComponent(new ParameterComponentArgs(SessionLocator.CurrentSession.Sessionkey + "SendTo", this));
+            ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "SendTo", this));
 
 
 
@@ -230,9 +230,9 @@ export class UserSearchComponent {
         var item = null;
         var index = 0;
 
-        if (!AppTool.IsNullOrEmpty(SessionLocator.CurrentSession.Sessionkey)) {
+        if (!AppTool.IsNullOrEmpty(this.CurrentSession.Sessionkey)) {
             if (ComponentArgs && ComponentArgs.ComponentLists) {
-                var sessionkey: string = SessionLocator.CurrentSession.Sessionkey + "SendTo";
+                var sessionkey: string = this.CurrentSession.Sessionkey + "SendTo";
                 var Component = ComponentArgs.ComponentLists.filter(d => d.key == sessionkey)[0];
                 if (Component) {
                     var myComponent = Component.Component;
@@ -300,7 +300,7 @@ export class UserSearchComponent {
     CloseButtonClicked() {
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];

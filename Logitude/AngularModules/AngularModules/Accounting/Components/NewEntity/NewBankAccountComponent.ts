@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -33,7 +33,7 @@ export class NewBankAccountComponent extends BaseComponent{
 
 public isRTL: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -137,6 +137,13 @@ public isRTL: boolean = false;
             this.EntityPM.EnglishName = value;
         }
     }
+
+    get CurrencyId() { return this.EntityPM.CurrencyId; }
+    set CurrencyId(value: string) {
+        if (this.EntityPM.CurrencyId != value) {
+            this.EntityPM.CurrencyId = value;
+        }
+    }
     //#endregion
 
     OkButtonClicked() {
@@ -166,7 +173,7 @@ public isRTL: boolean = false;
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SubmitChanges() {
@@ -174,12 +181,12 @@ public isRTL: boolean = false;
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                this.CurrentSession.CloseCurrentWindowEmit("ok");
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

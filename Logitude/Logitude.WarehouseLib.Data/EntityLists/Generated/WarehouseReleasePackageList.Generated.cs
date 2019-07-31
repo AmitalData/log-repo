@@ -68,6 +68,18 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public double? VolumetricWeight  { get; set; }
        [DataMember]
        public string ChargeableWeightUnitCode  { get; set; }
+       [DataMember]
+       public string Make  { get; set; }
+       [DataMember]
+       public string Model  { get; set; }
+       [DataMember]
+       public string Year  { get; set; }
+       [DataMember]
+       public string Color  { get; set; }
+       [DataMember]
+       public string ChassisNumber  { get; set; }
+       [DataMember]
+       public string RegistrationNumber  { get; set; }
    }
 
 }

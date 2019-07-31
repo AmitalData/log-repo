@@ -152,6 +152,54 @@
 
 
 
+
+                                <!-- AmountInPaymentCurrency -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'AmountInPaymentCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- BankAccountLiteId -->
+                                <tr class="FormFieldRow" *ngIf="!accountingActivated">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'BankAccountLiteId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'BankAccountLiteId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="BankAccountLiteId"
+                                                [LookUpTableName]="'BankAccountLite'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+                        <td style="width:40%">
+                            <table>
+
                                 <!-- MetodoPagoCode -->
                                 <tr style="height:22px;" *ngIf="DisplaySATSettings">
                                     <td style="width:120px; height:25px; ">
@@ -208,7 +256,7 @@
                                         </div>
                                         <HelpIcon style="float: left; padding-right: 10px;" [HideHeader]="true" [Text]="'ARPayment.TipoCadenaPagoHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
                                     </td>
-                                 
+
                                     <td>
                                         <div></div>
                                     </td>
@@ -234,13 +282,13 @@
                                 </tr>
 
                                 <!-- CertPago -->
-                                <tr style="height:22px;" *ngIf="DisplaySATSettings">
+                                <tr style="height:50px;" *ngIf="DisplaySATSettings">
                                     <td style="width:120px; height:25px; ">
                                         <LogLabel [ObjectFieldName]="'CertPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'CertPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox style="margin-top:5px;" [ObjectFieldName]="'CertPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                     </td>
 
                                     <td>
@@ -250,13 +298,13 @@
                                 </tr>
 
                                 <!-- SelloPago -->
-                                <tr style="height:22px;" *ngIf="DisplaySATSettings">
+                                <tr style="height:70px;" *ngIf="DisplaySATSettings">
                                     <td style="width:120px; height:25px; ">
                                         <LogLabel [ObjectFieldName]="'SelloPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'SelloPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox style="margin-top:5px;" [ObjectFieldName]="'SelloPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                     </td>
 
                                     <td>
@@ -265,49 +313,41 @@
 
                                 </tr>
 
-                                <!-- AmountInPaymentCurrency -->
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'AmountInPaymentCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <tr style="height:22px;" *ngIf="DisplayFechaPago">
+                                    <td style="width:120px; height:25px; ">
+                                        <LogLabel [ObjectFieldName]="'FechaPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                    </td>
+                                  <td>
+                                      <table>
+                                          <tr>
+                                              <td>
+                                                  <LogDatePicker [ObjectFieldName]="'FechaPago'" [SelectedDateValue]="FechaPago" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                              </td>
 
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
+                                              <td>
+                                                  <div></div>
+                                              </td>
 
-                                <!-- BankAccountLiteId -->
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'BankAccountLiteId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'BankAccountLiteId'"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [SelectedValue]="BankAccountLiteId"
-                                                [LookUpTableName]="'BankAccountLite'">
-                                        </LogLov>
-                                    </td>
+                                              <td>
+                                                  <LogDatePicker [ObjectFieldName]="'FechaPago'" [SelectedDateValue]="FechaPago" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="false" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                              </td>
+                                          </tr>
+                                      </table>
+                                  </td>
 
                                     <td>
                                         <div></div>
                                     </td>
+
                                 </tr>
 
                                 <tr>
-                                    <td>
+                                    <td colspan="7">
                                         <div></div>
                                     </td>
                                 </tr>
-
                             </table>
-
                         </td>
                     </tr>
                 </table>
@@ -324,7 +364,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'cance-AddARPayment' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -332,7 +372,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'ok-AddARPayment' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

@@ -54,9 +54,7 @@ import { AppComponent } from './AppComponent';
             { loadChildren: 'CRMModules/CRMOthers/ModuleCRMOthers#ModuleCRMOthers' },
             { loadChildren: 'CRMModules/CRMStages/ModuleCRMStages#ModuleCRMStages' },
             { loadChildren: 'CRMModules/CRMTickets/ModuleCRMTickets#ModuleCRMTickets' },
-
-
-
+            { loadChildren: 'CRMModules/CRMOccasion/ModuleCRMOccasion#ModuleCRMOccasion' },
             { loadChildren: 'Dashboard/Module_DASH#DashboardModule' },
 
             // Invoice Modules
@@ -66,7 +64,8 @@ import { AppComponent } from './AppComponent';
             { loadChildren: 'InvoiceModules/ARInvoice/ModuleARInvoice#ModuleARInvoice' },
             { loadChildren: 'InvoiceModules/ARPayment/ModuleARPayment#ModuleARPayment' },
             { loadChildren: 'InvoiceModules/Transfer/ModuleTransfer#ModuleTransfer' },
-            
+            { loadChildren: 'InvoiceModules/InvoiceStocks/ModuleInvoiceStocks#ModuleInvoiceStocks' },
+
             //Quote Modules
             { loadChildren: 'Quote/Module_QUOT#QuoteModule' },
             { loadChildren: 'QuoteModules/QuoteCharges/ModuleQuoteCharges#ModuleQuoteCharges' },
@@ -92,6 +91,7 @@ import { AppComponent } from './AppComponent';
             { loadChildren: 'Social/Module_SOCL#SocialModule' },
             { loadChildren: 'TimeManagement/Module_TIME#TimeManagementModule' },
             { loadChildren: 'Warehouse/Module_WARH#WarehouseModule' },
+            { loadChildren: 'TariffModule/Module_Tariff#Tariff_Module' },
 
             // Customs Module
             { loadChildren: 'Customs/Module_CUST#CustomsModule' }, //this should be only on customs.

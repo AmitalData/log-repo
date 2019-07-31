@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class AWBDescriptionOfGoodsUpdateClass
@@ -166,9 +170,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						HelpTextCode =  "Name",
 					  						Code =  "Name",
 					  						DependencyFilter3IsList =  false,
@@ -225,9 +229,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "ShortDescriptionOfGoods",
-					  						DefaultText =  @"Short Description of Goods",
+					  						DefaultText =  "Short Description of Goods",
 					  						ListFieldLable =  "ShortDescriptionOfGoodsListLable",
-					  						ListLableDefaultText =  @"Short Description of Goods",
+					  						ListLableDefaultText =  "Short Description of Goods",
 					  						HelpTextCode =  "ShortDescriptionOfGoods",
 					  						Code =  "ShortDescriptionOfGoods",
 					  						DependencyFilter3IsList =  false,
@@ -284,7 +288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search...",
+					  						DefaultText =  "Search...",
 					  						HelpTextCode =  "SearchFields",
 					  						Code =  "SearchFields",
 					  						DependencyFilter3IsList =  false,
@@ -342,7 +346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "AirlineCode",
-					  						DefaultText =  @"Airline Code",
+					  						DefaultText =  "Airline Code",
 					  						HelpTextCode =  "AirlineCode",
 					  						Code =  "AirlineCode",
 					  						DependencyFilter3IsList =  false,
@@ -400,7 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "ProductCode",
-					  						DefaultText =  @"Product Code",
+					  						DefaultText =  "Product Code",
 					  						HelpTextCode =  "ProductCode",
 					  						Code =  "ProductCode",
 					  						DependencyFilter3IsList =  false,
