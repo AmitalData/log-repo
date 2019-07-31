@@ -79,7 +79,7 @@ export class VehicleGeneralComponent extends BaseComponent {
                 SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.RefreshEntity();
+                        //this.RefreshEntity();
                     }
                 })
             );

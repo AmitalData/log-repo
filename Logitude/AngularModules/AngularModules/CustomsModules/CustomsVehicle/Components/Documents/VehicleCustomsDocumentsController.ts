@@ -19,6 +19,7 @@ import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelpe
 import { ConnectedToItem } from '../../../CustomsDocuments/Components/ConnectedToItem';
 import { Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+import { DeclarationPM } from "../../../../Customs/EntityPMs/DeclarationPM";
 
 export class VehicleCustomsDocumentsController implements ICustomsDocumentsController {
     private originalCustomsDocumentTicketViewModel: CustomsDocumentTicketViewModel[];
@@ -76,6 +77,20 @@ export class VehicleCustomsDocumentsController implements ICustomsDocumentsContr
             rresponse.Result = { IsDisplayOnly: false, DisplayOnlyMessage: "" };
             return Observable.of(rresponse);
         });
+        //var rresponse: ServiceResponse = new ServiceResponse();
+
+        //var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
+        //return Observable.defer(() => {
+        //    return declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(new DeclarationPM()).map((response: ServiceResponse) => {
+        //        var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
+        //        var isDisplayOnly: boolean = displayOnlyCheckResult.IsDisplayOnly;
+        //        var displayOnlyMessage = null;
+                
+        //        var rresponse: ServiceResponse = new ServiceResponse();
+        //        rresponse.Result = { IsDisplayOnly: isDisplayOnly, DisplayOnlyMessage: displayOnlyMessage };
+        //        return rresponse;
+        //    });
+        //});
     }
 
     CheckRequestsInProgress(documentsFilingId: string) {
@@ -158,7 +173,7 @@ export class VehicleCustomsDocumentsController implements ICustomsDocumentsContr
         this.GetCustomsInterfaceSettingsDocumentTypesCompleted.emit(serviceResponse);;
     }
     public GetRefreshFrom() {
-        return "d";
+        return "e";
     }
 
     public SelectionCompleted: EventEmitter<any> = new EventEmitter();
