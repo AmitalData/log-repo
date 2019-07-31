@@ -501,8 +501,7 @@ export class CustomsDocumentsComponent
     }
     else if (refreshFrom == "d") {
       this.RefreshButtonClicked(this.SelectedDocumentId);
-    }
-
+      }
   }
 
     EditCustomsDocumentsTicket(customsDocumentsTicket: CustomsDocumentTicketViewModel) {
