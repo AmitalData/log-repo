@@ -13,8 +13,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 import {WarehouseEntryPM} from '../../Warehouse/EntityPMs/WarehouseEntryPM';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {WarehouseEntryPackagePM} from '../../Warehouse/EntityPMs/WarehouseEntryPackagePM';
-import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
-import {EventTypeClass} from '../../Infrastructure/DataContracts/EventTypeArgs';
+
 
 import {ShipmentPM} from '../../Shipment/EntityPMs/ShipmentPM';
 
@@ -36,7 +35,6 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     warehouseHelper: WarehouseHelper = new WarehouseHelper();
     public ValidationErrorsList: string[];
 
-    EventTypeCodeList: EventTypeClass[];
     IsNotSetWarehouseIdForWarehouseLegShipment: boolean = false;
     DataContext: any = this;
     ShipmentPM: ShipmentPM;
@@ -54,8 +52,6 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         this.warehouseEntryPM = this.warehouseHelper.GetNewWarehouseEntry(this);
 
         this.validator = new ClassLevelValidator();
-        this.EventTypeCodeList = [];
- 
 
         var table = window.ObjectTables.filter(d=> d.Name == "WarehouseEntry")[0];
         if (table) this.ObjectTableId = table.Id;

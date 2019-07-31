@@ -48,7 +48,7 @@ import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadMana
     templateUrl: './QuotationComponent.html',
 })
 export class QuotationComponent extends BaseComponent implements OnInit {
-
+    IsShowDownloadTemplateButton: boolean = false;
     public IsDataReady: boolean = false;
     private QuotePM: QuotePM;
     quoteTemplatePMService: QuoteTemplatePMService;
@@ -85,6 +85,9 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             this.IsShowFromLibraryLink = true;
         }
 
+        if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+            this.IsShowDownloadTemplateButton = true;
+        }
 
     }
 
@@ -92,7 +95,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     ngOnInit() {
 
     }
-
+    private LoadCompletedEvent: any = null;
     private SendToCustomerEvent: any = null;
     Listen() {
         if (!this.SendToCustomerEvent) {
@@ -140,11 +143,20 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             });
         }
 
+        if (this.LoadCompletedEvent == null) {
+            this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.QuotePM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                }
+            });
+        }
+
+
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SendToCustomerEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent); 
         
-
     }
 
     LoadService() {
@@ -757,6 +769,14 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         });
 
     }
+
+
+    OnDownLoadTemplateButtonClick() {
+        if (!AppTool.IsNullOrEmpty(this.QuotePM.QuoteHTMLDocumentId)) {
+            DownloadManager.DownloadPage(this.QuotePM.QuoteHTMLDocumentId);
+        }
+    }
+
 
     OpenDocumentVersion(item: QuoteDocumentVersionPM) {
         if (item != null) {

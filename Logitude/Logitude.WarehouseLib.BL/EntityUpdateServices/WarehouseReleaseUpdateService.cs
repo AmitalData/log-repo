@@ -4,6 +4,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.WarehouseLib.BL.EntityPMs;
+using Logitude.WarehouseLib.BL.Helpers;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -59,6 +60,31 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
             base.UpdateComposition(entityPM);
            
         }
+
+      
+        protected override void OnUpdating(WarehouseReleasePM entityPM, WarehouseRelease entityPOCO)
+        {
+            AddTraceEvents(entityPM, entityPOCO);
+
+
+            base.OnUpdating(entityPM, entityPOCO);
+        }
+
+
+        private void AddTraceEvents(WarehouseReleasePM entityPM, WarehouseRelease entityPOCO)
+        {
+            List<string> eventCodeLists = new List<string>();
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert) eventCodeLists.Add("CRRE");
+            else eventCodeLists.Add("UPRE");
+            if (entityPM.ExpectedReleaseDate != entityPOCO.ExpectedReleaseDate) eventCodeLists.Add("EXRE");
+            if (entityPM.ActualReleaseDate != entityPOCO.ActualReleaseDate) eventCodeLists.Add("ENRE");
+
+            var eventTracerArgs =  new EventTracerArgs(){Tenant = entityPM.Tenant,UserId = entityPM.UpdatedByUserId,EntityId = entityPM.Id,ObjectTableName = "WarehouseRelease",};
+            WarehouseEntryReleaseHelper warehouseEntryReleaseHelper = new WarehouseEntryReleaseHelper();
+            warehouseEntryReleaseHelper.AddTraceEvents(eventCodeLists, eventTracerArgs);
+
+        }
+
 
         private void BuildActivityLog(string typeCode, WarehouseReleasePM entityPM)
         {
