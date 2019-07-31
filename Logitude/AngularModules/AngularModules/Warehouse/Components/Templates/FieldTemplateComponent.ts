@@ -35,9 +35,11 @@ export class FieldTemplateComponent {
                     this.BackgroudColor = this.transform(this.FieldValue, this.Entity['ExpectedEntryDate']);
                 }
 
-                //if (this.ObjectTableName == "WarehouseRelease" && this.FieldName == "ActualReleaseDate") {
-                //    this.BackgroudColor = this.transform(this.FieldValue, this.Entity['ExpectedReleaseDate']);
-                //}
+
+                if (this.ObjectTableName == "WarehouseEntry" && this.FieldName == "EntryReferencesAndDate") {
+                    this.FieldValue = this.Entity['ActualEntryDate'];
+                    this.BackgroudColor = this.transform(this.FieldValue, this.Entity['ExpectedEntryDate']);
+                }
 
                 if (this.ObjectTableName == "WarehouseRelease" && this.FieldName == "ReleaseDate") {
                     this.BackgroudColor = this.transform(this.Entity['ActualReleaseDate'], this.Entity['ExpectedReleaseDate']);
@@ -46,23 +48,19 @@ export class FieldTemplateComponent {
         }
     }
 
-    transform(actual: Date, expected: Date ): string {
+    transform(actual: Date, expected: Date): string {
 
         var myResult = FontTool.Black;
 
          if (actual != null) {
              myResult = FontTool.Green;
              this.WarehouseDateType = " (actual)";
-
-
         } else   if(expected != null) {
              myResult = FontTool.Red;
              this.WarehouseDateType = " (expected)";
-             var name = this.FieldName.replace("Actual", "Expected");
-             this.FieldValue = this.Entity[name];
+             var fieldDateName: string = this.ObjectTableName == "WarehouseRelease" ? "ExpectedReleaseDate" : "ExpectedEntryDate";
+             this.FieldValue = this.Entity[fieldDateName];
         }
-
-
 
         return myResult;
     }
