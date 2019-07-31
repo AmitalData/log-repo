@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("EmployeeGroup", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("EmployeeGroup", entityPM.Tenant, authToken.Tenant);
 	                    
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         EmployeeGroupUpdateService service = new EmployeeGroupUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -141,6 +142,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("EmployeeGroup", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("EmployeeGroup", entityPM.Tenant, authToken.Tenant);
 	
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         EmployeeGroupUpdateService service = new EmployeeGroupUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

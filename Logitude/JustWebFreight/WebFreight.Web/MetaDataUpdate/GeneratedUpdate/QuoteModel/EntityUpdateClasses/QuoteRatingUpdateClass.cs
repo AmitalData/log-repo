@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteRatingUpdateClass
@@ -172,9 +176,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
+					  						DefaultText =  "Code",
 					  						ListFieldLable =  "CodeLabel",
-					  						ListLableDefaultText =  @"Code",
+					  						ListLableDefaultText =  "Code",
 					  						HelpTextCode =  "Code",
 					  						Code =  "Code",
 					  						DependencyFilter3IsList =  false,
@@ -232,9 +236,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "NameLabel",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						HelpTextCode =  "Name",
 					  						Code =  "Name",
 					  						DependencyFilter3IsList =  false,
@@ -292,9 +296,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "IndexOrder",
-					  						DefaultText =  @"Index Order",
+					  						DefaultText =  "Index Order",
 					  						ListFieldLable =  "IndexOrderLabel",
-					  						ListLableDefaultText =  @"Index Order",
+					  						ListLableDefaultText =  "Index Order",
 					  						HelpTextCode =  "IndexOrder",
 					  						Code =  "IndexOrder",
 					  						DependencyFilter3IsList =  false,
@@ -351,7 +355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search code, name",
+					  						DefaultText =  "Search code, name",
 					  						HelpTextCode =  "SearchFields",
 					  						Code =  "SearchFields",
 					  						DependencyFilter3IsList =  false,

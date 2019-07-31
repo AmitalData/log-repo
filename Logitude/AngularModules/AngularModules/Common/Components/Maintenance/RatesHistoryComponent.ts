@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../Infrastructure/Components/LogitudeComponents/UIProperties'
@@ -21,7 +21,7 @@ export class RatesHistoryComponent extends BaseComponent {
     public LastRate: LastRate = new LastRate();
     private RatesTableListService: RatesTableListService;
     public count: number = 0;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -278,7 +278,7 @@ export class RatesHistoryComponent extends BaseComponent {
 
     // Commands
     public CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

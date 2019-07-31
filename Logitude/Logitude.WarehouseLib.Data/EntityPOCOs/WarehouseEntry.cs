@@ -165,6 +165,8 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public string ToPartnerId { get; set; }
         [Column("ChargeableWeightUnitCode")]
 	    public string ChargeableWeightUnitCode { get; set; }
+        [Column("TotalVolumetricWeight")]
+	    public decimal TotalVolumetricWeight { get; set; }
     }
 }
 	 

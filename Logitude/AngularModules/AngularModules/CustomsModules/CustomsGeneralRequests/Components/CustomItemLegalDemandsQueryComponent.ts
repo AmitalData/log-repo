@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
@@ -35,7 +35,7 @@ export class CustomItemLegalDemandsQueryComponent
     //_LastFetchDeclarationList: DeclarationList;
     public CustomItemLegalDemandsQueryObservableList: ObservableCollection;
     public CountriesExclusionListObservableList: ObservableCollection;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.CustomItemLegalDemandsQueryObservableList = new ObservableCollection([]);
@@ -189,7 +189,7 @@ export class CustomItemLegalDemandsQueryComponent
         }
         else {
             SessionLocator.SustainFocusOnCell = true;
-            SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, LogTextBoxId: customsItemTextBox.InputId });
+            this.CurrentSession.SessionEvent.emit({ FocusNow: true, LogTextBoxId: customsItemTextBox.InputId });
         }
 
     }

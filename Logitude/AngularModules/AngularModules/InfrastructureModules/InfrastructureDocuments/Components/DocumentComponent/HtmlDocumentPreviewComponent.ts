@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewInit}  from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, OnDestroy, AfterViewInit}  from '@angular/core';
 import {DocumentTypeTemplatePM} from '../../../../Common/EntityPMs/DocumentTypeTemplatePM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
@@ -85,7 +85,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     TemplateHeaderHeight: number;
     TemplateFooterHtml: any;
     TemplateFooterHeight: number;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, private cd: ChangeDetectorRef, public _htmlEditorService: HtmlEditorService) {
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
@@ -236,7 +236,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
         
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
 
 
@@ -266,11 +266,11 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                                 }
                             }
 
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                         } else this.LoadReportTemplateDate();               
 
-                    } else SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    } else this.CurrentSession.CurrentWindow.StopBusyIndicator();
                   
                 }
 
@@ -334,7 +334,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                         this.ReloadFroalaEditor();
                     }
                 }
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
 
         });
@@ -363,7 +363,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
 
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         });
     }
 
@@ -433,7 +433,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             }
 
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
 
     }
@@ -478,27 +478,27 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                 }
             }
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
         });
     }
 
     CloseButtonClicked() {
-       SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+       this.CurrentSession.CurrentWindow.StopBusyIndicator();
        this.DestroyfroalaEditor();
         var id = "";
         if (this.template) {
             id = this.template.Id;
         }
-        SessionLocator.CurrentSession.CurrentWindow.Close(id);
+        this.CurrentSession.CurrentWindow.Close(id);
 
     }
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
         this.DestroyfroalaEditor();
-        SessionLocator.CurrentSession.CurrentWindow.Close("");
+        this.CurrentSession.CurrentWindow.Close("");
 
 
     }
@@ -531,10 +531,10 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                 if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
                     this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
                 }
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.CloseButtonClicked();
         });
 
@@ -557,7 +557,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         filter.Processtype = this.PageType;
 
         this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res => {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -601,7 +601,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
     SaveButtonClicked() {
         if (this.PageType != "Preview") {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             if (this.PageType == "Signature") {
                 this.SaveSignatureData();
             }
@@ -611,21 +611,21 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                 if (!this.CheckIsValidEmail(this.From)) {
 
                     this.ShowMessage("From email is Invalid", "Logitude Message");
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     return;
                 }
 
                 if (!this.CheckIsValidEmail(this.ReplyTo)) {
 
                     this.ShowMessage("Reply-to email is iInvalid", "Logitude Message");
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     return;
                 }
 
                 if (!this.CheckIsValidEmails(this.CC)) {
 
                     this.ShowMessage("Some of Cc e-mails are Invalid", "Logitude Message");
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     return;
                 }
 
@@ -673,7 +673,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                             if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
                                 this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
                             }
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         }
 
 
@@ -719,7 +719,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
             if ($event) {
 
-                SessionLocator.CurrentSession.CurrentWindow.Close($event);
+                this.CurrentSession.CurrentWindow.Close($event);
                 
             }
         
@@ -867,7 +867,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
             //    confirmWindow.WindowClosed.subscribe((event: any) => {
             //        if (confirmWindow.Yes) {
-            //            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            //            this.CurrentSession.StartBusyIndicatorSaving();
 
             //            if (this.PageType != "ReportTemplate") {
             //                this.template.TemplateBodyHtml = templateByte;
@@ -875,7 +875,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             //                    this.IsOpenHeaderAndFooter = false;
             //                    this.IsDownLoadButtonClick = false;
             //                    this.OldDataTemplateByte = templateByte;
-            //                    SessionLocator.CurrentSession.StopBusyIndicator();
+            //                    this.CurrentSession.StopBusyIndicator();
             //                });
             //            }
 
@@ -886,7 +886,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             //                    this.IsOpenHeaderAndFooter = false;
             //                    this.IsDownLoadButtonClick = false;
             //                    this.OldDataTemplateByte = templateByte;
-            //                    SessionLocator.CurrentSession.StopBusyIndicator();
+            //                    this.CurrentSession.StopBusyIndicator();
             //                });
             //            }
             //        }

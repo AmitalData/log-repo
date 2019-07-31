@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -69,11 +69,12 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
 
     public DataContext: MonthlyConversionFilterComponent = this;
     public IsCRMTenant: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.IsStageDateId = this.IsStageDateId+SessionLocator.CurrentSession.GetNewId(this.IsStageDateId);
-        this.IsCreateDateId = this.IsCreateDateId + SessionLocator.CurrentSession.GetNewId(this.IsCreateDateId);
-        this.ShipmentTypeRadio = this.ShipmentTypeRadio + SessionLocator.CurrentSession.GetNewId(this.ShipmentTypeRadio);
+        this.IsStageDateId = this.IsStageDateId+this.CurrentSession.GetNewId(this.IsStageDateId);
+        this.IsCreateDateId = this.IsCreateDateId + this.CurrentSession.GetNewId(this.IsCreateDateId);
+        this.ShipmentTypeRadio = this.ShipmentTypeRadio + this.CurrentSession.GetNewId(this.ShipmentTypeRadio);
         this.reportDoaminService = new ReportsDomainService();
 
         if (SessionLocator.Tenant == 341) {

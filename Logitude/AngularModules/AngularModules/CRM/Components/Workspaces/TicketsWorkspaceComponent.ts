@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList, OnInit} from '@angular/core';
+import {Component, ViewChildren, QueryList, OnInit} from '@angular/core';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -15,7 +15,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 export class TicketsWorkspaceComponent implements OnInit{
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public IsMenuVisible: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         this.RunComponent();
     }
@@ -112,7 +112,7 @@ export class TicketsWorkspaceComponent implements OnInit{
                             break;
                         }
                     }
-                    SessionLocator.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.Ticket") + "\\" + this.GetPageName() });
+                    this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.Ticket") + "\\" + this.GetPageName() });
                 }
             }
         }

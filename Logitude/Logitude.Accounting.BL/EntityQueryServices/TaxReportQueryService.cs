@@ -31,7 +31,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             reportCounters.ExcemptTransactions = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount == 0).Count();
             reportCounters.InputEquipments = lines.Where(d => d.OutputOrInput == "I" && d.IsEquipment == true).Count();
             reportCounters.InputOthers = lines.Where(d => d.OutputOrInput == "I" && d.IsEquipment == false).Count();
-
+        
             return reportCounters;
         }
 
@@ -52,6 +52,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     where a.TaxReportId == taxReportId && a.Tenant == tenant
                     select a);
             return query;
+        }
+
+        public List<TaxReport> GetFutureActiveReports(DateTime dateTime, int tenant) // not cancelled
+        {
+            TaxReportRepository reportsRepo = new TaxReportRepository(context);
+
+            IQueryable<TaxReport> reports = reportsRepo.GetFutureReports(dateTime, tenant);
+
+            return reports.Where(d=>d.IsCancelled == false).ToList();
         }
 
 

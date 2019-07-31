@@ -30,10 +30,10 @@ namespace Logitude.Accounting.BL.Validators
 
         public const string M_YouShouldHaveOneLineAtLeast = "Journal.M.YouShouldHaveOneLineAtLeast";
         public const string M_ClosedMonth = "ARInvoice.M.ClosedMonth"; //"AccountingPeriod.F.ClosedMonth";
-        public const string M_ExternalNoAlreadyExists_1 = "Journals.O.ExternalNoAlreadyExists_1";
-        public const string M_ExternalNoAlreadyExists_2 = "Journals.O.ExternalNoAlreadyExists_2";
-        public const string M_ExternalNoAlreadyExists_3 = "Journals.O.ExternalNoAlreadyExists_3";
-        public const string M_ExternalNoAlreadyExists_4 = "Journals.O.ExternalNoAlreadyExists_4";
+        public const string M_ExternalNoAlreadyExists_1 = /*"Journals.O.ExternalNoAlreadyExists_1"*/"There is a Journal(";
+        public const string M_ExternalNoAlreadyExists_2 = /*"Journals.O.ExternalNoAlreadyExists_2"*/ ") with the same ExternalNo And ExternalSystem";
+        //public const string M_ExternalNoAlreadyExists_3 = "Journals.O.ExternalNoAlreadyExists_3";
+        //public const string M_ExternalNoAlreadyExists_4 = "Journals.O.ExternalNoAlreadyExists_4";
         public const string M_ExchangeRateEmpty = "Journal.M.ExchangeRateEmpty";
         // ForeignAmount Allowed ...  public const string M_ForeignAmountNotZero = "Journal.M.ForeignAmountNotZero";
         public const string M_LocalAmountNotZero = "Allowed  !!!Journal.M.LocalAmountNotZero"; // LocalAmountNotZero   Allowed  
@@ -48,12 +48,16 @@ namespace Logitude.Accounting.BL.Validators
         public const string M_LineSequence = "Check for missing Line number in sequence ";
 
         public const string M_GetGLAccountReturnNull = "myGLAccountDataProvider.GetGLAccount return null";
-        public const string M_BlockedGLAccount = "Blocked GLAccounts(Inactive=True)";
+        public const string M_BlockedGLAccount = "Journal.M.AccountIsBlocked";//"Blocked GLAccounts(Inactive=True)";
 
         public const string M_GLAccountIsControl = "GLAccount IsControl=True";
-        public const string M_ButAccountCurrencyisDifferent =
-            ///" But Account Currency is Different ";
-            "Accounting.General.O.ButAccountCurrencyDifferent";
+        
+        //public const string M_ButAccountCurrencyisDifferent =
+        //    ///" But Account Currency is Different ";
+        //    "Accounting.General.O.ButAccountCurrencyDifferent";
+
+        public const string M_PaymentBankAccountCurrencyDifferent =
+        "Accounting.General.O.PaymentBankAccountCurrencyDifferent";
 
         public const string M_JLAccountingDateMustWithinJournalMonth = "Journal.M.JLAccountingDateMustWithinJournalMonth";
 
@@ -158,21 +162,25 @@ namespace Logitude.Accounting.BL.Validators
 
                 if (clientExists == true)
                 {
-                    string basic_text_ExternalExist = TranslateMyTextCode(M_ExternalNoAlreadyExists_1, myJournalPM.Tenant)
-                            + myJournalPM.ExternalNo
-                            + TranslateMyTextCode(M_ExternalNoAlreadyExists_2, myJournalPM.Tenant)
-                            + myJournalPM.ExternalSystem
-                            + TranslateMyTextCode(M_ExternalNoAlreadyExists_3, myJournalPM.Tenant);
+                    string basic_text_ExternalExist =
+                        //"There is a Journal ("+ journalNumber + ") with the same ExternalNo And ExternalSystem";
+                        M_ExternalNoAlreadyExists_1 + journalNumber + M_ExternalNoAlreadyExists_2;
+                    errorsList.Add(basic_text_ExternalExist);
+                    //TranslateMyTextCode(M_ExternalNoAlreadyExists_1, myJournalPM.Tenant)
+                    //    + myJournalPM.ExternalNo
+                    //    + TranslateMyTextCode(M_ExternalNoAlreadyExists_2, myJournalPM.Tenant)
+                    //    + myJournalPM.ExternalSystem
+                    //    + TranslateMyTextCode(M_ExternalNoAlreadyExists_3, myJournalPM.Tenant);
 
-                    if (String.IsNullOrWhiteSpace(myJournalPM.JournalNumber))
-                    {
-                        errorsList.Add(basic_text_ExternalExist);
-                    }
-                    else
-                    {
-                        errorsList.Add(basic_text_ExternalExist + journalNumber
-                            + TranslateMyTextCode(M_ExternalNoAlreadyExists_4, myJournalPM.Tenant));
-                    }
+                    //if (String.IsNullOrWhiteSpace(myJournalPM.JournalNumber))
+                    //{
+                    //    errorsList.Add(basic_text_ExternalExist);
+                    //}
+                    //else
+                    //{
+                    //    //errorsList.Add(basic_text_ExternalExist + journalNumber
+                    //    //    + TranslateMyTextCode(M_ExternalNoAlreadyExists_4, myJournalPM.Tenant));
+                    //}
                 }
             }
 
@@ -214,7 +222,7 @@ namespace Logitude.Accounting.BL.Validators
                 errorsList.Add(TranslateMyTextCode(M_JLAccountingDateMustWithinJournalMonth, myJournalPM.Tenant));
             }
 
-            onRegilarJournalAvoidTheSameReference4DebitOrCredit_DochMaaam(errorsList,myJournalPM);
+            //47045 onRegilarJournalAvoidTheSameReference4DebitOrCredit_DochMaaam(errorsList,myJournalPM);
 
             if (myJournalPM.JournalLines.Any(l => l.AccountingDate == DateTime.MinValue))
             {
@@ -285,10 +293,16 @@ namespace Logitude.Accounting.BL.Validators
                 {
                     if (currJournalLinePM.ExchangeRate.GetValueOrDefault() != 0)
                     {
-                        var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
-                        //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
-                        mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
-                        errorsList.Add(mM_FAMltiExchangerateNELA);
+                        ///Task 51197: Cancel the validation -Which checks that a local amount multiplied by a currency exchange rate is equal to the amount in the foreign currency
+                        ///
+                        bool Task51197 = true;
+                        if (!Task51197)
+                        {
+                            var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
+                            //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
+                            mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
+                            errorsList.Add(mM_FAMltiExchangerateNELA);
+                        }
                     }
                 }
                 //{{"JournalId":"1-736052","Tenant":1,"Line":1,"ActionCode":"1-1","DebitControlAccountId":null,"DebitAccountId":null,"CreditControlAccountId":"1-5","CreditAccountId":"1-19152","DocumentDate":"2016-11-22T09:35:38.5272647+02:00","AccountingDate":"2017-01-23T00:00:00","DueDate":"2017-01-16T00:00:00","LocalAmount":0.0,"CurrencyId":"1-7","ForeignAmount":1.0,"ExchangeRate":0.0,"Reference1":null,"Reference2":null,"Reference3":null,"ActionName":"Credit","DebitControlAccountName":null,"CreditAccountName":null,"DebitAccountName":null,"CreditControlAccountName":null,"CreditControlAccountNumber":null,"DebitControlAccountNumber":null,"CreditAccountNumber":null,"DebitAccountNumber":null,"CurrencyName":null,"Notes":null,"CurrencyCode":null,"ActionTypeCode":"1","ExternalOpenAmount":null,"IsCreditAccountMulti":null,"IsDebitAccountMulti":null,"ActionTypeCodeEnum":1,"ChangeSetOp":1,"EncodeBase64NVARCHARFieldsBy":null}}
@@ -296,10 +310,17 @@ namespace Logitude.Accounting.BL.Validators
                 {
                     if (currJournalLinePM.ExchangeRate.GetValueOrDefault() != 0)
                     {
-                        var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
-                        //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
-                        mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
-                        errorsList.Add(mM_FAMltiExchangerateNELA);
+
+                        ///Task 51197: Cancel the validation -Which checks that a local amount multiplied by a currency exchange rate is equal to the amount in the foreign currency
+                        ///
+                        bool Task51197 = true;
+                        if (!Task51197)
+                        {
+                            var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
+                            //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
+                            mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
+                            errorsList.Add(mM_FAMltiExchangerateNELA);
+                        }
                     }
                 }
                 else
@@ -325,10 +346,17 @@ namespace Logitude.Accounting.BL.Validators
                             if (newrate != currJournalLinePM.ExchangeRate)
                             {
                                 //foreign amount (33.33) multiplied by the exchange rate (1.4) does not equal the local amount (46.67)
-                                var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
-                                //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
-                                mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
-                                errorsList.Add(mM_FAMltiExchangerateNELA);
+
+                                ///Task 51197: Cancel the validation -Which checks that a local amount multiplied by a currency exchange rate is equal to the amount in the foreign currency
+                                ///
+                                bool Task51197 = true;
+                                if (!Task51197)
+                                {
+                                    var mM_FAMltiExchangerateNELA = TranslateMyTextCode(M_FAMltiExchangerateNELA, myJournalPM.Tenant);
+                                    //mM_FAMltiExchangerateNELA=mM_FAMltiExchangerateNELA??"Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})";
+                                    mM_FAMltiExchangerateNELA = String.Format(mM_FAMltiExchangerateNELA, currJournalLinePM.ForeignAmount, currJournalLinePM.ExchangeRate, currJournalLinePM.LocalAmount);
+                                    errorsList.Add(mM_FAMltiExchangerateNELA);
+                                }
                             }
                         }
                     }
@@ -563,6 +591,10 @@ namespace Logitude.Accounting.BL.Validators
             bool? SuppressCheckGLAccountIsMultiCurrencyWI40640
             )
         {
+
+            ContactPM loggedUser = GetLoggedContact(myJournalPM.Tenant);
+            bool showLocal = !((bool)loggedUser?.DontShowLocal);
+
             var tenant=myJournalPM.Tenant;
             if (String.IsNullOrWhiteSpace(glAccId))
             {
@@ -616,10 +648,15 @@ namespace Logitude.Accounting.BL.Validators
 
             if (pmAcc.Inactive.GetValueOrDefault())
             {
-                errorsList.Add(TranslateMyTextCode(M_BlockedGLAccount,tenant) + 
-                    //glAccId
-                    GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant)
-                    );
+                string msg = TranslateMyTextCode(M_BlockedGLAccount, tenant);
+                msg = msg.Replace("%name", GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant, showLocal));
+                errorsList.Add(msg);
+
+                //errorsList.Add(TranslateMyTextCode(M_BlockedGLAccount,tenant) + 
+                //    //glAccId
+                //    GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant) + "-  " + glAccId
+                //    );
+
                 return;
             }
             if (pmAcc.AccountTypeCode == "1")// card    1	כרטיס	Card
@@ -675,10 +712,13 @@ namespace Logitude.Accounting.BL.Validators
 
             if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)
             {
-                errorsList.Add(
-                    TranslateMyTextCode("Accounting.General.O.CurrentCurrency",0) + " " + GetCurrencyCode(myGLAccountDataProvider, jlCurrencyId, myJournalPM.Tenant) 
-                    + TranslateMyTextCode(M_ButAccountCurrencyisDifferent/*"Accounting.General.O.ButAccountCurrencyDifferent"*/, 0) + " " + GetCurrencyCode(myGLAccountDataProvider, pmAcc.CurrencyId, myJournalPM.Tenant)
-                    + " ( " + TranslateMyTextCode("Accounting.General.O.GLAccountIs",0) + " " + GetAccountName(myGLAccountDataProvider, pmAcc.Id, myJournalPM.Tenant) + " )");
+                //errorsList.Add(
+                //    TranslateMyTextCode("Accounting.General.O.CurrentCurrency",0) + " " + GetCurrencyCode(myGLAccountDataProvider, jlCurrencyId, myJournalPM.Tenant) 
+                //    + TranslateMyTextCode(M_ButAccountCurrencyisDifferent/*"Accounting.General.O.ButAccountCurrencyDifferent"*/, 0) + " " + GetCurrencyCode(myGLAccountDataProvider, pmAcc.CurrencyId, myJournalPM.Tenant)
+                //    + " ( " + TranslateMyTextCode("Accounting.General.O.GLAccountIs",0) + " " + GetAccountName(myGLAccountDataProvider, pmAcc.Id, myJournalPM.Tenant) + " )");
+
+                // WI:48580
+                errorsList.Add(TranslateMyTextCode("Accounting.General.O.PaymentBankAccountCurrencyDifferent", myJournalPM.Tenant));
             }
             if (pmAcc.IsMultiCurrency.GetValueOrDefault())
             {
@@ -695,7 +735,7 @@ namespace Logitude.Accounting.BL.Validators
                     {
                         //on streaming its must 
                         errorsList.Add("Using cards that do not match their currency is not allowed =Current MultiCurrencyAccount is  " +
-                            GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant) +
+                            GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant, showLocal) +
                             " ,for Currency " +
 
                             GetCurrencyCode(myGLAccountDataProvider, jlCurrencyId, myJournalPM.Tenant)
@@ -709,7 +749,7 @@ namespace Logitude.Accounting.BL.Validators
 
         }
 
-        private static string GetAccountName(IJournalValidatorContextDataProvider myGLAccountDataProvider, string accId, int tenant)
+        private static string GetAccountName(IJournalValidatorContextDataProvider myGLAccountDataProvider, string accId, int tenant, bool showLocal = true)
         {
             if (myGLAccountDataProvider == null) return accId;
             var pm = myGLAccountDataProvider.GetGLAccount(accId, tenant);
@@ -717,7 +757,8 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return accId;
             }
-            return pm.DisplayNumber + "-" + pm.LocalName;
+
+            return pm.DisplayNumber + "-" + (showLocal ? pm.LocalName : pm.EnglishName);
         }
 
         private static string GetCurrencyCode(IJournalValidatorContextDataProvider myGLAccountDataProvider,

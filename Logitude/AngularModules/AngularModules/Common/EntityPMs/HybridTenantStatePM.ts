@@ -36,7 +36,9 @@ export class HybridTenantStatePM {
     public get LastUpdateDateTime() { return this.lastUpdateDateTime; }
     public set LastUpdateDateTime(newValue: Date) { this.lastUpdateDateTime = newValue; this.MarkAsDirty(); }
        
-	 
+	private lastQueueDateTime: Date;
+    public get LastQueueDateTime() { return this.lastQueueDateTime; }
+    public set LastQueueDateTime(newValue: Date) { this.lastQueueDateTime = newValue; this.MarkAsDirty(); }
 
     public OldEntityPM: HybridTenantStatePM;
 		

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {ShipmentTool, RoutingHelper} from '../../../../Shipment/Tools';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -35,6 +35,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public FatherComponent: RoutingsTabComponent;
     IsShowNewWarehouseEntryButton: Boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -314,7 +315,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -354,7 +355,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
         if (errors.length == 0) {
             this.FatherComponent.BuildItemsCollection();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
@@ -437,7 +438,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.EntityPM.AddShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
 
         this.myCloner.RejectChanges();

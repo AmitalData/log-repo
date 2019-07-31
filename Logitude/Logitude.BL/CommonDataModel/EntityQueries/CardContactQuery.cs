@@ -53,6 +53,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              IsCustomsImport = a.IsCustomsImport,
                                              IsInlandDomestic = a.IsInlandDomestic,
                                          }).FirstOrDefault();
+
+            CardContactProductRepository cardContactProductRepository = new CardContactProductRepository(repository.context);
+            CardContactProductQuery cardContactProductQuery = new CardContactProductQuery(cardContactProductRepository);
+            cardcontact.CardContactProducts = cardContactProductQuery.GetCardContactProductPMsByCardContactId(cardcontact.Id, cardcontact.Tenant).ToList();
+
             return cardcontact;
         }
 
@@ -129,6 +134,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              IsCustomsImport = a.IsCustomsImport,
                                              IsInlandDomestic = a.IsInlandDomestic,
                                          }).FirstOrDefault();
+
+            CardContactProductRepository cardContactProductRepository = new CardContactProductRepository(repository.context);
+            CardContactProductQuery cardContactProductQuery = new CardContactProductQuery(cardContactProductRepository);
+            cardcontact.CardContactProducts = cardContactProductQuery.GetCardContactProductPMsByCardContactId(cardcontact.Id, cardcontact.Tenant).ToList();
+
             return cardcontact;
         }
 

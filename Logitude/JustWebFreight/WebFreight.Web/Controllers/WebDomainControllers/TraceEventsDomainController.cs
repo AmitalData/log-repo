@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     TraceEventRepository traceEventsRepository = new TraceEventRepository(tenant);
                     TraceEventQuery traceEventQuery = new TraceEventQuery(traceEventsRepository);
                     IQueryable<TraceEventPM> myResult = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTableId).OrderByDescending(s => s.LogDateTime);
-
+                  
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
@@ -124,7 +124,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage Put(TraceEventsServiceArgs args)
+        public HttpResponseMessage PutDeleteTraceEvent(TraceEventsServiceArgs args)
         {
             try
             {

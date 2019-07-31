@@ -16,6 +16,7 @@ export class AddEditInsidePackageComponent {
     public DataContext: InsideShipmentPackageItem;
     public ObjectTableName: string = "InsideShipmentPackage";
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -42,7 +43,7 @@ export class AddEditInsidePackageComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -75,7 +76,7 @@ export class AddEditInsidePackageComponent {
 
             this.DataContext.IsNewEntity = false;
             this.DataContext.fatherComponent.ComputeFromInsidePackages();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
@@ -97,7 +98,13 @@ export class AddEditInsidePackageComponent {
         this.myCloner.AddField('Reference2');
         this.myCloner.AddField('Reference3');
         this.myCloner.AddField('Reference4'); 
-        
+        this.myCloner.AddField('Make');
+        this.myCloner.AddField('Model');
+        this.myCloner.AddField('Year');
+        this.myCloner.AddField('Color');
+        this.myCloner.AddField('ChassisNumber');
+        this.myCloner.AddField('RegistrationNumber');
+        this.myCloner.AddField('CountryId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPackagePM);

@@ -29,7 +29,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? LocalCustomsTransmissionsStatusDate { get; set; }
         public string LocalCustomsSentByUserId { get; set; }
         public string LocalCustomsSentByUserName { get; set; }
-
+        public string OperationalClosedByUserId { get; set; }
         public string ComputedStatusId { get; set; }
         public DateTime? ComputedStatusDate { get; set; }
         public  string ComputedStatusName { get; set; }
@@ -57,6 +57,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string TruckNumber { get; set; }
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageCarrierName { get; set; }
+        public string AgentComputed { get; set; }
         public string CustomFieldId { get; set; }
         public string FromPortId { get; set; }
         public string FromPort { get; set; }
@@ -87,6 +88,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool IsAccountingClosed { get; set; }
         public bool IsOperationalClosed { get; set; }
         public DateTime LastUpdate { get; set; }
+
+        public string ComputedShipmentNumber { get; set; }
 
         public string Field1Id { get; set; }     
         public string Field1 { get; set; }
@@ -462,6 +465,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         #endregion 
 
         public DateTime? FirstOperationalCloseDate { get; set; }
+        public DateTime? FirstAccountingCloseDate { get; set; }
         public DateTime? AMSClosingDate { get; set; }
         public string UpdatedByPartner { get; set; }
 
@@ -477,6 +481,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool SIHasAttachList { get; set; }
         public bool INTTRAIsFreighted { get; set; }
         public string INTTRADocumentTypeCode { get; set; }
+        public string INTTRABookingTransStatusCode { get; set; }
+        public string INTTRABookingStatusCode { get; set; }
+        public string INTTRABookingTransStatusName { get; set; }
+        public string INTTRABookingStatusName { get; set; }
 
         public string From { get; set; }
         public string To { get; set; }
@@ -509,6 +517,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool IsDepositionRequired { get; set; }
         public string ImporterDepositionRequestDetails { get; set; }
         public string ForwarderPartnerId { get; set; }
+        public string ARInvoices { get; set; }
 
     }
 }

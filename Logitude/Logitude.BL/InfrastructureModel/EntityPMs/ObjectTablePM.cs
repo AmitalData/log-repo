@@ -67,5 +67,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool AllowedInQueues { get; set; }
         public string LovDisplayMemberPath { get; set; }
         public string LovDisplayMemberPathLocal { get; set; }
+		public string DisplayName { get; set; }
+        public bool IsTabsHidden { get; set; }
+
     }
 }

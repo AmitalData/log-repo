@@ -1,4 +1,4 @@
-﻿
+
 import {Component} from '@angular/core';
 import {StagePM} from '../../../CRM/EntityPMs/StagePM';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
@@ -15,14 +15,15 @@ export class StageGeneralTabComponent extends BaseComponent {
     public EntityPM: StagePM;
     public ObjectTableName: string = "Stage";
     public DataContext = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
 
         if (this.entityArgs.EntityPM != null)
             this.EntityPM = this.entityArgs.EntityPM;
-        else if (SessionLocator.CurrentSession.CurrentWindow.WindowArgs.EntityPM != null)
-            this.EntityPM = SessionLocator.CurrentSession.CurrentWindow.WindowArgs.EntityPM;
+        else if (this.CurrentSession.CurrentWindow.WindowArgs.EntityPM != null)
+            this.EntityPM = this.CurrentSession.CurrentWindow.WindowArgs.EntityPM;
         else
             this.EntityPM = new StagePM();
         this.SetUIProperties();

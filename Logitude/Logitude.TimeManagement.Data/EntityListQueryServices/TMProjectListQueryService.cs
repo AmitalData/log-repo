@@ -45,6 +45,12 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
                                                    BudgetId = a.BudgetId,
                                                    CategoryId = a.CategoryId,
                                                    IsProrated = a.IsProrated, 
+                                                   CategoryName=a.TMProjectCategory!=null?a.TMProjectCategory.Name:null,
+                                                   DayOffTypeCode = a.DayOffTypeCode,
+                                                   ExcludeFromProrating = a.ExcludeFromProrating,
+                                                   BudgetName = a.TMBudget != null ? a.TMBudget.Name : null,
+                                                   BlockedForDataEntry = a.BlockedForDataEntry,
+                                                   DayOffTypeName = a.DayOffType != null ? a.DayOffType.Name : null,
                                                });
             return query;
         }

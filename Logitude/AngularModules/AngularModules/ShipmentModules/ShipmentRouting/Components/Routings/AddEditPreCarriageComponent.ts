@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {ShipmentTool, RoutingHelper} from '../../../../Shipment/Tools';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -28,6 +28,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public FatherComponent: RoutingsTabComponent;
     public IsConnectedHouse: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.InitServices();
@@ -315,7 +316,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = []; 
@@ -348,7 +349,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
 
         if (errors.length == 0) {
             this.FatherComponent.BuildItemsCollection();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
@@ -408,7 +409,6 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.entityCloner.AddField('MainCarriageFromPortName');
         this.entityCloner.AddField('MainCarriageFromPortCountryCode');
         this.entityCloner.AddField('MainCarriageFromPortCountryName');
-        this.entityCloner.AddField('MainCarriageFromPortCountryEC');
         this.entityCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {
@@ -439,7 +439,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
                 this.EntityPM.AddShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
 
         this.myCloner.RejectChanges();

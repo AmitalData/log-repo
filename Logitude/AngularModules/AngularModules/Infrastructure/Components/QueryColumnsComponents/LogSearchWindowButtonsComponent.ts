@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, ViewContainerRef, OnInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
@@ -31,6 +31,7 @@ export class LogSearchWindowButtonsComponent implements OnInit {
     public LookUpTableName: any;
     public LookUpTable: ObjectTablePM;
     private PartnerTypes: Array<any> = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef, private _entityListService: EntityListService) {
     }
 
@@ -62,7 +63,7 @@ export class LogSearchWindowButtonsComponent implements OnInit {
     }
     
     EditButtonClicked22() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit(this.LookUpTable.Name);
+        this.CurrentSession.PseventRowSelectEvent.emit(this.LookUpTable.Name);
         var id = this.rowData['Id'];
         if (!AppTool.IsNullOrEmpty(id) && !AppTool.IsNullOrEmpty(this.LookUpTableName)) {
             console.log("Editing: " + this.LookUpTableName + " " + id); 
@@ -78,7 +79,7 @@ export class LogSearchWindowButtonsComponent implements OnInit {
     }
 
     EditButtonClicked() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit(this.LookUpTable.Name);
+        this.CurrentSession.PseventRowSelectEvent.emit(this.LookUpTable.Name);
         var id = this.rowData['Id'];
         if (!AppTool.IsNullOrEmpty(id) && !AppTool.IsNullOrEmpty(this.LookUpTableName)) {
             if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "UPDATE") && this.LookUpTable.EnableSecurity) {
@@ -110,7 +111,7 @@ export class LogSearchWindowButtonsComponent implements OnInit {
     }
 
     public OnEditCompleted() {
-        SessionLocator.CurrentSession.SessionEvent.emit(this.rowData['Id']);
+        this.CurrentSession.SessionEvent.emit(this.rowData['Id']);
     }
 
     private GetObjectTableNameForDependency(dependency: string, parentObjectName: string) {

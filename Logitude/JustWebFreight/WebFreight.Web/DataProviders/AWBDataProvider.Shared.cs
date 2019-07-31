@@ -47,6 +47,7 @@ namespace WebFreight.Web.DataProviders
         public string WeightUnit { get; set; }
         public string RateTypeCode { get; set; }//custom
         public string ChargeableWeight { get; set; }
+        public string ChargeableWeightInKG { get; set; }
         public string MAWBRate { get; set; }
         public string TotalFreight { get; set; }//39*40
         public string DescriptionOfGoods { get; set; }
@@ -213,6 +214,19 @@ namespace WebFreight.Web.DataProviders
         public string Notify2ATTN { get; set; }
         public string AgentATTN { get; set; }
 
+        public string ShipperContactDetails { get; set; }
+        public string ConsigneeContactDetails { get; set; }
+        public string Notify1ContactDetails { get; set; }
+        public string Notify2ContactDetails { get; set; }
+        public string ShipperNotExporterContactDetails { get; set; }
+
+        public string ShipperPrimaryContactName { get; set; }
+        public string ShipperPrimaryContactPhone { get; set; }
+        public string ConsigneePrimaryContactName { get; set; }
+        public string ConsigneePrimaryContactPhone { get; set; }
+
+        public string ConsolidatorName { get; set; }
+        public string MainCarriageLeg2_MAWB { get; set; }
     }
 
     public class CommodityLine
@@ -224,6 +238,7 @@ namespace WebFreight.Web.DataProviders
         public string GrossWeight { get; set; }
         public string GrossWeightInKG { get; set; }
         public string ChargeableWeight { get; set; }
+        public string ChargeableWeightInKG { get; set; }
         public string MAWBRate { get; set; }
         public string TotalFreight { get; set; }
     }

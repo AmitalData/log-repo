@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, FormatTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -25,6 +25,7 @@ export class GroupageContainerComponent extends BaseComponent {
     public DataContext = this;
     public ValidationErrorsList: string[];
     public WarningErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -173,7 +174,7 @@ export class GroupageContainerComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -208,7 +209,7 @@ export class GroupageContainerComponent extends BaseComponent {
             this.FatherComponent.BuildToggleItems();
             newItem.UpdateItem();
             newItem.ComputeFromInsidePackages();
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 }

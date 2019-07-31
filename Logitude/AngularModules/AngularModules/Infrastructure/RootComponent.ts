@@ -172,8 +172,8 @@ export class RootComponent implements OnInit {
                 .then(cmpRef => {
 
                     cmpRef.instance.Blocking.subscribe(s => {
-                        SessionLocator.BlockType = s;
-                        this.LoadBlockingScreen();
+                        //SessionLocator.BlockType = s;
+                        //this.LoadBlockingScreen();
                     });
 
                     cmpRef.instance.LoginCompleted.subscribe(s => {

@@ -10,7 +10,7 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
- 
+
 namespace Logitude.BookingLib.Data.EntityPOCOs
 {
    

@@ -20,6 +20,7 @@ import { FormGroup } from '@angular/forms';
 import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { timer } from 'rxjs/observable/timer';
+//import { timer } from 'rxjs';
 import { timeInterval, pluck, take } from 'rxjs/operators';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
 
@@ -39,6 +40,7 @@ export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descr
         }
     }
 }
+
 @Component({
     moduleId: module.id,
 
@@ -49,7 +51,7 @@ export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descr
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewInit, OnDestroy {
+export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewInit, OnDestroy {
     public AllowPercentage: boolean;
     public IsAccumulative: boolean;
     public ShowHelp: boolean = false;
@@ -66,6 +68,9 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     public DigitsAfterPoint: number;
     public IsRatioBox: boolean = false;
     CopyValueSubs: any;
+    public textboxHeight: string = '100%';
+
+
     @Output() KeyUp = new EventEmitter();
     @Output() ValueChanged = new EventEmitter();
     @Output() LostFocus = new EventEmitter();
@@ -82,15 +87,34 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     @Input() NoValidation: boolean = false;
     @Input() Placeholder: string = "";
     @Input() AlignTextToRight: boolean = false;
-    @Input() AlignTextToLeft: boolean = false;
-
     public DontAllowAutoSelect: boolean = false;
     @Input() AddCommasToNumbers: boolean = true;
     @Input() Max: number;
     @Input() Min: number;
-    @Input() RowsCount: number = 2;
-    public textboxHeight: string = '100%';
+    @Input() RowsCount: number;
+    // @Input() ForceDirection: string; // for now, its working only for multiline textbox,
 
+
+    private _ForceDirection : string;
+    @Input() public get ForceDirection(): string { return this._ForceDirection; }
+    public set ForceDirection(v : string) {
+        this._ForceDirection = v;
+        this.isRTL = this.ForceDirection == "rtl";
+    }
+
+    private _ForceDisable : boolean;
+    @Input() public get ForceDisable(): boolean { return this._ForceDisable; }
+    public set ForceDisable(v : boolean) {
+        this._ForceDisable = v;
+        if(v == true)
+            this.SetDisabled();
+        else
+            this.SetEnabled();
+    }
+
+
+    private firstDigit: string = ",";
+    private secondDigit: string = ".";
     isFirstTime: boolean = true;
     private text: any;
     @Input() public get Text() {
@@ -180,6 +204,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
 
     @Input() DebounceTime: number;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private ngzone: NgZone, private cd: ChangeDetectorRef,
         private appref: ApplicationRef) {
         this.show = false;
@@ -187,8 +212,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-        //SessionLocator.CurrentSession.isShiftClicked = false;
-        //SessionLocator.CurrentSession.isTabWithShiftClicked = false;
+        this.setDigits();
+        //this.CurrentSession.isShiftClicked = false;
+        //this.CurrentSession.isTabWithShiftClicked = false;
+
     }
     keydown: boolean;
     isCtrlKeyDown: boolean = false;
@@ -249,13 +276,13 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                     //    if (element) {
                                     //        element.focus();
                                     //    }
-                                    //    SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true });
+                                    //    this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true });
                                     //}
                                 }
                             });
                             //this.TextValueChanges(this.TextValue);
-                            var isDestroyed: boolean = this.cd && this.cd['destroyed'];
-                            if (!isDestroyed) {
+                            var isDestroyed: boolean = this.cd["destroyed"];
+                            if (this.cd && isDestroyed == false) {
                                 this.cd.detectChanges();
                             }
                         }
@@ -265,7 +292,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     });
         });
 
-        if (this.IsDisabled) {
+        if (this.IsDisabled || this.ForceDisable) {
             this.SetDisabled();
         }
         else {
@@ -276,7 +303,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             var element = document.getElementById(this.InputId);
             element.focus();
 
-            SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IdentityKey: this.IdentityKey });
+            this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IdentityKey: this.IdentityKey });
             this.timerToken = setTimeout(() => {
                 if (typeof (SelectingElement) === "undefined") {
                 } else {
@@ -286,30 +313,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
         }
 
-
-        //check rowscount
-        // if (this.IsMultiline) {
-            setTimeout(() => {
-
-                if (this.RowsCount) {
-
-                    //calculate height: (rowcount * 18 row height) + 8 padding
-                    this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
-                } else {
-                    var _element = document.getElementById(this.InputId)
-                    var elHeight = _element.clientHeight;
-                    var calculatedRowsCount = (elHeight / 18);
-                    var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
-
-                    this.RowsCount = ___roundedCalculatedRowsCountHaha;
-                    this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
-
-                }
-
-            }, 100);
-        // }
+        this.setRowsCount();
 
     }
+
 
     RunComponent() {
         var input = document.getElementById(this.InputId);
@@ -337,8 +344,38 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }
     }
 
+
+    private setDigits() {
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+            case "CD": {
+                this.firstDigit = ",";
+                this.secondDigit = ".";
+                break;
+            }
+
+            case "DC": {
+                this.firstDigit = ".";
+                this.secondDigit = ",";
+                break;
+            }
+
+            case "AD": {
+                this.firstDigit = "'";
+                this.secondDigit = ".";
+                break;
+            }
+
+            default:
+                {
+                    this.firstDigit = ",";
+                    this.secondDigit = ".";
+                    break;
+                }
+        }
+    }
+
     ngOnInit() {
-        //this.uiProperty = new UIProperty(this.ObjectFieldName, this.ObjectTableName);
+
         if (this.IsRatioBox == true) {
             this.DigitsAfterPoint = 1;
             this.InputDivStyle = {};
@@ -365,29 +402,23 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         this.SetControlIds(baseIdCombination);
 
         if (this.FocusOnMe) {// it means it is inside a grid.
-            this.CopyValueSubs = SessionLocator.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
+            this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
                 if (id == this.InputId) {
-                    //SessionLocator.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
-                    this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
-                    SessionLocator.CurrentSession.CopiedCell = null;
+                    //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+                    this.CurrentSession.CopiedCell = null;
                 }
             });
 
-            if (SessionLocator.CurrentSession.CopiedCell) {
-                //this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
-                //SessionLocator.CurrentSession.CopiedCell = null;
+            if (this.CurrentSession.CopiedCell) {
+                //this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+                //this.CurrentSession.CopiedCell = null;
             }
         }
 
         var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
         if (table) {
             this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.ObjectFieldName)[0];
-            //console.log(
-            //    "LogTextBox Objectfield: ",
-            //    this.ObjectField.Id,
-            //    this.ObjectField.FieldName,
-            //    this.ObjectField.EnableFullscreenTextBox
-            //);
 
             if (!this.ObjectField) {
                 objectFieldAvailable = false;
@@ -412,7 +443,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
         this.IsDisabled = !this.uiProperty.IsEnabled;
 
-        if (this.IsDisabled) {
+        if (this.IsDisabled || this.ForceDisable) {
             this.SetDisabled();
         }
         else {
@@ -514,17 +545,13 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     public ngxBeforeOnDestroy() {
         //console.log('1. BEFORE ONDESTROY INVOKE METHOD (await 2 sec)');
         return new Promise((resolve) => {
-            setTimeout(() => this.WaitFunction(resolve), 100);
+            setTimeout(() => this.WaitFunction(resolve), 2000);
         });
     }
 
-    //async MyFunc() {
-    //    await this.ngxBeforeOnDestroy();
-    //}
-    //@BeforeOnDestroy
-    async ngOnDestroy() {
-        await this.ngxBeforeOnDestroy();
-        //this.MyFunc();
+
+    @BeforeOnDestroy
+    ngOnDestroy() {
         console.log("LogTextBox:ngOnDestroy");
         this.cd = null;
         if (this._debounceTimeSub) {
@@ -537,8 +564,9 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     }
 
     private WaitFunction(resolve) {
+        //console.log('2. EXECUTE HEAVY FUNCTION (3 sec)');
 
-        const sourcef = timer(100)
+        const sourcef = timer(3000)
             .pipe(take(1))
             .subscribe(() => {
                 resolve();
@@ -594,8 +622,17 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
         // this.TextValue = this.DataContext[this.ObjectFieldName];
         this.keydown = false;
+
+        this.HandleMinusOnlyValue();
+
         this.GetValueFormatted(this.TextValue);
         this.LostFocus.emit(this.TextValue);
+    }
+
+    HandleMinusOnlyValue() {
+        if (this.TextValue + "" == '-' && this.InputType.toLowerCase() == 'sigdouble') {
+            this.TextValue = "0";
+        }
     }
 
     OnKeyUp(event) {
@@ -603,8 +640,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         var CTRL = 17;
         var key = event.keyCode;
         //if (key == SHIFT) {
-        //    SessionLocator.CurrentSession.isShiftClicked = false;
-        //    SessionLocator.CurrentSession.isTabWithShiftClicked = false;
+        //    this.CurrentSession.isShiftClicked = false;
+        //    this.CurrentSession.isTabWithShiftClicked = false;
         //    console.log("isTabWithShiftClicked = false;")
         //}
         if (key == SHIFT) {
@@ -631,19 +668,19 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             if (this.FocusOnMe) {
                 //var element = document.getElementById(this.InputId);
                 //element.focus();
-                //SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true, IdentityKey: this.IdentityKey });
+                //this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true, IdentityKey: this.IdentityKey });
             }
         }
         //if (key == SHIFT) {
-        //    SessionLocator.CurrentSession.isShiftClicked = true;
+        //    this.CurrentSession.isShiftClicked = true;
         //}
         if (key == TAB) {
-            //if (SessionLocator.CurrentSession.isShiftClicked == true) {
-            //    SessionLocator.CurrentSession.isTabWithShiftClicked = true;
+            //if (this.CurrentSession.isShiftClicked == true) {
+            //    this.CurrentSession.isTabWithShiftClicked = true;
             //    //console.log("isTabWithShiftClicked = true;");
             //}
             //else {
-            //    SessionLocator.CurrentSession.AllowShiftTab = true;
+            //    this.CurrentSession.AllowShiftTab = true;
             //}
         }
         var result = this.CheckKey(key, keyChar);
@@ -976,6 +1013,14 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     }
 
                     else {
+
+                        if (!AppTool.IsNullOrEmpty(this.TextValue)) {
+                            var selection = window.getSelection().toString();
+                            if (selection == this.TextValue) {
+                                return key;
+                            }
+                        }
+
                         if (keyChar == "+") {
                             if (selectionStart(input) == 0) {
                                 if (!AppTool.IsNullOrEmpty(this.TextValue)) {
@@ -1076,7 +1121,6 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                             }
                         }
                     }
-
 
                     if (isOk) {
                         return key;
@@ -1189,30 +1233,25 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                     if (AppTool.IsNullOrEmpty(this.DigitsAfterPoint)) {
                                         this.DigitsAfterPoint = 3;
                                     }
+                                    this.TextValue = val.toFixed(this.DigitsAfterPoint);
+                                }
+                            }
 
-                                    if (!this.AllowPercentage || (this.TextValue + "").indexOf('%') == -1) {
-                                        this.TextValue = val.toFixed(this.DigitsAfterPoint);
-                                    }
-                                    else {
-                                        this.TextValue = val + "";
-                                    }
+                            if (this.AddCommasToNumbers) {
+                                var txtNum: number;
 
+                                if ((this.TextValue + "").indexOf(',') > -1) {
+                                    var txtval = this.TextValue.replace(/,/g, "");
+                                    txtNum = Number(txtval);
+                                }
+                                else {
+                                    txtNum = Number(this.TextValue);
                                 }
 
-                                if (this.AddCommasToNumbers) {
-                                    var txtNum: number;
-
-                                    if ((this.TextValue + "").indexOf(',') > -1) {
-                                        var txtval = this.TextValue.replace(/,/g, "");
-                                        txtNum = Number(txtval);
-                                    }
-                                    else {
-                                        txtNum = Number(this.TextValue);
-                                    }
-
-                                    if (this.DataContext[this.ObjectFieldName] != txtNum) {
-                                        this.TextValueChanges(this.TextValue);
-                                    }
+                                if (this.DataContext[this.ObjectFieldName] != txtNum) {
+                                    this.TextValueChanges(this.TextValue);
+                                }
+                                if (this.firstDigit == ",") {
                                     var textWithCommas: string = numberWithCommas(this.TextValue);
                                     if (textWithCommas.indexOf('.') > -1) {
                                         var textWithCommasArr: string[] = textWithCommas.split('.');
@@ -1226,8 +1265,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
                                     this.TextValue = textWithCommas;
                                 }
-
                             }
+
                             break;
                         }
                     case 'unsinteger':
@@ -1266,14 +1305,13 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                             //}
                             break;
                         }
-                    case "integertext":
-                        {
-                            if (isNaN(Number(this.TextValue))) {
-                                this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
-                            }
-
-                            break;
+                    case "integertext": {
+                        if (isNaN(Number(this.TextValue))) {
+                            this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         }
+
+                        break;
+                    }
                     default:
                         {
                             break;
@@ -1315,6 +1353,11 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                             else {
                                 value = Number(this.TextValue);
                             }
+
+
+                            if (this.TextValue + "" == '-' && this.InputType.toLowerCase() == 'sigdouble')
+                                this.DataContext[this.ObjectFieldName] = 0;
+
                             if (!isNaN(value)) {
                                 var isok: boolean = true;
                                 if (this.InputType == 'unsdecimal' || this.InputType == 'unsinteger' || this.InputType == 'double') {
@@ -1335,7 +1378,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                         this.DataContext[this.ObjectFieldName] = customFieldClass;
                                     }
                                     else {
-                                        this.DataContext[this.ObjectFieldName] = value;
+
+                                            this.DataContext[this.ObjectFieldName] = value;
                                     }
                                 }
                             }
@@ -1505,6 +1549,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.add("TextAreaDisabled");
+                inputDiv.classList.add("InputDivDisabled");
+
             }
         }
     }
@@ -1518,6 +1564,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.remove("TextAreaDisabled");
+                inputDiv.classList.remove("InputDivDisabled");
+
             }
         }
     }
@@ -1537,7 +1585,6 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     if ((this.TextValue + "").indexOf(',') == -1) {
                         val = Number(this.TextValue);
                     }
-
                     if (this.AddCommasToNumbers) {
                         if ((this.TextValue + "").indexOf(',') > -1) {
                             var txtval = this.TextValue.replace(/,/g, "");
@@ -1545,14 +1592,9 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                         }
                     }
 
-
-                    if (this.AllowPercentage && this.TextValue.indexOf('%') > -1) {
-                        var txtval2 = this.TextValue.replace('%', '');
-                        val = Number(txtval2);
-                    }
-
-
-                    if (this.TextValue && isNaN(Number(val))) {
+                    if(this.InputType.toLowerCase() == 'sigdouble' && ((this.TextValue + "") == '-')){
+                        // skip for minus only
+                    } else if (isNaN(Number(val))) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         suppressValidation = true;
                     }
@@ -1564,6 +1606,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
             }
         }
+
 
         if (!this.NoValidation && this.uiProperty != null && !suppressValidation) {
             var errors = null;
@@ -1641,24 +1684,14 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
         //this.isExpanded = !this.isExpanded;
 
-        if (this.ObjectField) {
-            this.showMultiLineWindow();
-        } else {
-            var _resSrvc = new EntityResourceService();
-            _resSrvc.getEntityResourceByTableName(this.ObjectTableName)
-                .subscribe((response: any) => {
-                    var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
-                    this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.ObjectFieldName)[0];
-                    this.showMultiLineWindow();
-                });
-        }
+        this.showMultiLineWindow();
 
 
 
 
 
 
-        // if(SessionLocator.CurrentSession.CurrentWindow){
+        // if(this.CurrentSession.CurrentWindow){
         //     var wd = document.getElementsByClassName("LogitudeWindow")[0];
         // }
 
@@ -1689,10 +1722,11 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     showMultiLineWindow() {
         // show window
         var windowArgs: any = {};
-        windowArgs.ObjectTableName = this.ObjectTableName;
-        windowArgs.ObjectFieldName = this.ObjectFieldName;
+        // windowArgs.ObjectTableName = this.ObjectTableName;
+        // windowArgs.ObjectFieldName = this.ObjectFieldName;
         windowArgs.TextValue = this.TextValue;
         windowArgs.RowsCount = this.RowsCount;
+        windowArgs.IsTextBoxRTL = this.isRTL;
 
         var wind = new LogitudeWindow();
         // wind.IsFullScreen = true;
@@ -1715,4 +1749,26 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         });
     }
 
+    setRowsCount() {
+        //check rowscount
+        // if (this.IsMultiline) { // commented due single line expand window
+
+        setTimeout(() => {
+            if (this.RowsCount) {
+                //calculate height: (rowcount * 18 row height) + 8 padding
+                this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+            }
+            else {
+                var _element = document.getElementById(this.InputId);
+                var elHeight = _element.clientHeight;
+                var calculatedRowsCount = (elHeight / 18);
+                var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
+                this.RowsCount = ___roundedCalculatedRowsCountHaha;
+                this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+            }
+        }, 100);
+    }
+
+
 }
+

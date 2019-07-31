@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -18,6 +18,7 @@ export class AddEditPriceStepComponent extends BaseComponent {
     public DataContext: QuoteStepItem;
     public ObjectTableName: string = "QuotePriceSteps";
     public EntityPM: QuotePriceStepsPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -31,7 +32,7 @@ export class AddEditPriceStepComponent extends BaseComponent {
     
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -54,7 +55,7 @@ export class AddEditPriceStepComponent extends BaseComponent {
             }
 
             this.DataContext.fatherComponent.BuildStepItemsSource();
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 

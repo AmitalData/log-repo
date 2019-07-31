@@ -34,7 +34,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
     _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -69,6 +69,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     set TransmitStatusCode(value: string) {
         if (this.TaxReportLinePM.TransmitStatusCode != value) {
             this.TaxReportLinePM.TransmitStatusCode = value;
+            this.SetUIProperties();
         }
     }
 
@@ -110,14 +111,25 @@ export class EditTaxReportLineComponent extends BaseComponent {
     SetUIProperties() {
         if (this.TaxReportLinePM.OutputOrInput == "O") {
             this.UIProperties.SetEnabled("TransmitStatusCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Reference", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ReferecneGroup", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ReferenceDate", this.ObjectTableName, false);
+
         }
-        this.UIProperties.SetRequired("TransmitStatusCode", this.ObjectTableName, true);
+        else {
+
+            this.UIProperties.SetEnabled("Reference", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ReferecneGroup", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ReferenceDate", this.ObjectTableName, false);
+
+        }
+        this.UIProperties.SetRequired("TransmitStatusCode", this.ObjectTableName, !this.TransmitStatusCode);
     }
 
     //#region Buttons
     OkButtonClicked() {
 
-        if(!this.TaxReportLinePM.TransmitStatusCode){
+        if (!this.TaxReportLinePM.TransmitStatusCode) {
             var fieldName: string = TextCodeTranslator.Translate('TaxReportLine.F.TransmitStatusCode');
             var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
             var fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
@@ -134,29 +146,42 @@ export class EditTaxReportLineComponent extends BaseComponent {
         this.TaxReportPM.NeedsRebulid = true;
 
         // save(reprot)
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-        this._TaxReportPMService.update(this.TaxReportPM).subscribe(myResult => {
+        this.CurrentSession.StartBusyIndicatorSaving();
+        this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
-            if (!mm.HasError)
-            {
-                this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe(myResult => {
+            if (!mm.HasError) {
+                // this.CurrentSession.CloseCurrentWindowEmit("ok");
+                this._TaxReportPMService.update(this.TaxReportPM).subscribe(myResult => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                        // this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe(myResult => {
+
+                        //     var mm: ServiceResponse = myResult;
+                        //     if (!mm.HasError) {
+                        //         this.CurrentSession.CloseCurrentWindowEmit("ok");
+                        //     }
+                        //     else {
+                        //         this.ValidationErrorsList = mm.ErrorsArray;
+                        //         this.CurrentSession.StopBusyIndicator();
+                        //     }
+                        // });
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
+
+
 
     }
     CancelButtonClicked() {
@@ -167,7 +192,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
         this.ReferecneGroup = this.OldReferecneGroup;
         this.ReferenceDate = this.OldReferenceDate;
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     //#endregion
 

@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "6f017912-8642-4845-b703-3dc5354b3a85",
+		"name": "DocumentDownloadTokenKey",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ViewDocumentWithExpiredTokenFail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00cd8ee2-1ce2-4b68-b828-2aee9f4e4d34",
+						"exec": [
+							"pm.test(\"ViewDocumentWithExpiredTokenFail\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(pm.response.text()).to.include(\"Sorry, your download link has expired.\");",
+							"",
+							"  ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL}}/WebPages/DownloadPage.aspx?securityId={{DocsInSecurityId}}&tempId={{InvalidDocumentToken}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"WebPages",
+						"DownloadPage.aspx"
+					],
+					"query": [
+						{
+							"key": "securityId",
+							"value": "{{DocsInSecurityId}}"
+						},
+						{
+							"key": "tempId",
+							"value": "{{InvalidDocumentToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

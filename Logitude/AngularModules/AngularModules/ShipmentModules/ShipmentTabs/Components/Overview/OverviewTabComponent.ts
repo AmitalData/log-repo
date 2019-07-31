@@ -1,4 +1,5 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+declare var window: any;
+import { Component, OnDestroy } from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {AppTool, DateTool, ArrayTool} from '../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -21,6 +22,7 @@ export class OverviewTabComponent implements OnDestroy {
     public ContainersList: Container[] = [];
     public FollowupsList: FollowupClass[] = [];
     public IsVisibile: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public entityResourceService: EntityResourceService) {
         entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe(response=> {
            
@@ -48,7 +50,7 @@ export class OverviewTabComponent implements OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "FollowupsChanged") {
                     this.BuildFollowups();
                 }
@@ -95,6 +97,8 @@ export class OverviewTabComponent implements OnDestroy {
     get MainCarriageCarrierName() { return this.EntityPM.MainCarriageCarrierName; }
     get MainCarriageCarrierNumber() { return this.EntityPM.MainCarriageCarrierNumber; }
     get MasterDepartureDate() { return this.EntityPM.MainCarriageATD != null ? this.EntityPM.MainCarriageATD : this.EntityPM.MainCarriageETD; }
+    get ConnectedHousesCount() { return this.EntityPM.ShipmentConsoleShipments.length; }
+
     public MasterLabel: string = "";
     public CarrierLabel: string = "";
     public CarrierNoLabel: string = "";
@@ -315,6 +319,12 @@ export class OverviewTabComponent implements OnDestroy {
 
         this.BuildMoneyData();
     }
+
+    ConnectedHousesClicked() {
+        if (this.CurrentSession.CurrentEditComponent.TabsItemsSource.filter(p => p.Code == "SHCO")[0] != null) {
+            this.CurrentSession.CurrentEditComponent.SelectionChanged(this.CurrentSession.CurrentEditComponent.TabsItemsSource.filter(p => p.Code == "SHCO")[0]);
+        }
+    }
 }
 class Container {
     public Quantity: number;
@@ -336,9 +346,10 @@ class FollowupClass {
     public ListItemHeight: number = 40;
     public TooltipHeight: number = 130;
     public TooltipWidth: number = 270;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityPM: ShipmentFollowUpPM) {
         this.EntityPM = entityPM;
-        var idIndex = SessionLocator.CurrentSession.GetNewId("FollowupItem");
+        var idIndex = this.CurrentSession.GetNewId("FollowupItem");
         this.ItemId = "FollowupItem_" + idIndex;
         this.ItemTooltipId = "FollowupItemTooltip_" + idIndex;
 

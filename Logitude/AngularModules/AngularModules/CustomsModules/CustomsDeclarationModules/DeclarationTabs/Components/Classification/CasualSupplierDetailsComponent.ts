@@ -88,15 +88,15 @@ export class CasualSupplierDetailsComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        SessionLocator.SelectedSession.CloseCurrentWindowEmit("cancel");
     }
 
     
     OkButtonClicked() {
         
 
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
 
 
 

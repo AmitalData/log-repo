@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {OpportunityPM} from '../../EntityPMs/OpportunityPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -16,6 +16,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 export class OpportunityShortTitleComponent {
     public EntityPM: OpportunityPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
     }
@@ -34,7 +35,7 @@ export class OpportunityShortTitleComponent {
                 });
             }
             else {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: this.EntityPM.CustomerId, ObjectTableName: "Customer", BackButtonLabel: "Opportunity" });

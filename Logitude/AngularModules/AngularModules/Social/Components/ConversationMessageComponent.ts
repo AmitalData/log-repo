@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ComponentRef}  from '@angular/core';
+import {Component, OnInit, ComponentRef}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -50,6 +50,7 @@ export class ConversationMessageComponent implements OnInit {
     MessageListsId: string = Guid.newGuid();
     IsLoadedMessages: boolean = false;
     ShowCheckBoxWaitingForResponse: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.conversationHeaderMessageExtendedPMService = new ConversationHeaderMessageExtendedPMService();
         this.conversationHeaderParticipantExtendedPMService = new ConversationHeaderParticipantExtendedPMService();
@@ -204,7 +205,7 @@ export class ConversationMessageComponent implements OnInit {
                 this.ConversationHeader.ForegroundMessageParticipants = "#000000";
                 this.ConversationHeader.MarkAsReadLable = "Mark as Unread";
                 this.ConversationHeader.FontWeightbody = "normal";
-                SessionLocator.CurrentSession.FireEvent("SociaMessagesCountRefresh");
+                this.CurrentSession.FireEvent("SociaMessagesCountRefresh");
             }
 
         });
@@ -256,7 +257,7 @@ export class ConversationMessageComponent implements OnInit {
                     }
                 }
               
-                SessionLocator.CurrentSession.FireEvent("SociaMessagesCountRefresh");
+                this.CurrentSession.FireEvent("SociaMessagesCountRefresh");
             }
 
         });
@@ -280,7 +281,7 @@ export class ConversationMessageComponent implements OnInit {
                             this.BackButtonClicked();
                         } else if (this.ConversationHeader.Area == "Inbox") {
 
-                            SessionLocator.CurrentSession.FireEvent("RemoveItemFromInboxMessagesRefresh");
+                            this.CurrentSession.FireEvent("RemoveItemFromInboxMessagesRefresh");
                         }
 
                     }
@@ -473,7 +474,7 @@ export class ConversationMessageComponent implements OnInit {
             this.SocialMessagesComponent.IsViewMessage = false;
             if (this.ConversationHeader.IsChange) {
 
-                SessionLocator.CurrentSession.FireEvent("SociaMessagesCountRefresh");
+                this.CurrentSession.FireEvent("SociaMessagesCountRefresh");
 
             }
 

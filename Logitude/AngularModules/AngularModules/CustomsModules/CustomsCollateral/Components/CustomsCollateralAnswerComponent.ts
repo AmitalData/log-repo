@@ -24,6 +24,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
     collateralPM: CustomsCollateralPM;
     answerFileFilterItems: ApiQueryFilters;
     IsClosed: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -33,8 +34,8 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
         this.EntityPM = args.EntityPM;
         this.collateralPM = args.Parent;
         this.IsClosed = this.collateralPM.IsClosed;
-        SessionLocator.CurrentSession.SubscriptionAdd(
-        SessionLocator.CurrentSession.CollateralAnswerRefreshEvent.subscribe((res) => {
+        this.CurrentSession.SubscriptionAdd(
+        this.CurrentSession.CollateralAnswerRefreshEvent.subscribe((res) => {
             this.SetClosedCollateralScreesn(res.IsClosed);
           
         })

@@ -239,8 +239,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
         //        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
         //        int tenant = authToken.Tenant;
-        //        if (filters.Tenant != null)
-        //            tenant = filters.Tenant.Value;
+      
 
         //        QueryOperations queryOperations = new QueryOperations()
         //        {
@@ -354,8 +353,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
         //        #region filters
 
         //        int tenant = authToken.Tenant;
-        //        if (filters.Tenant != null)
-        //            tenant = filters.Tenant.Value;
+
 
         //        QueryOperations queryOperations = new QueryOperations()
         //        {

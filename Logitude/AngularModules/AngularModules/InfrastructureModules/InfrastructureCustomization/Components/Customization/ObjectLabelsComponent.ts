@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {GeneralDomainService, FieldsTranslations, FieldsUpdateHelper} from '../../../../Infrastructure/Services/GeneralDomainService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
@@ -32,6 +32,7 @@ export class ObjectLabelsComponent extends BaseComponent {
     public CountText: number = 0;
     public ObjectTablePM: ObjectTablePM;
     public ValidationErrorsList: Array<String> = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.myService = new EntityResourceService();   
@@ -105,13 +106,13 @@ export class ObjectLabelsComponent extends BaseComponent {
 
        this.CountText = 0;
        var myService: GeneralDomainService = new GeneralDomainService();
-       SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+       this.CurrentSession.StartBusyIndicatorLoading();
 
        myService.GetTranslationsByParam(Item.Code, this.ObjecttableId, InfraSettings.TenantPM.Language).subscribe((myResult: ServiceResponse) => {
            if (myResult) {
                this.list = myResult.Result;
                this.FillList();
-               SessionLocator.CurrentSession.StopBusyIndicator();
+               this.CurrentSession.StopBusyIndicator();
            }
        });       
    }
@@ -138,12 +139,12 @@ export class ObjectLabelsComponent extends BaseComponent {
        this.CountText = this.TabsList.Length;
    }
 
-   CancelClicked() { SessionLocator.CurrentSession.CloseCurrentWindow(); }
+   CancelClicked() { this.CurrentSession.CloseCurrentWindow(); }
 
 
    SaveClicked() {
        if (this.DirtyItems.length > 0) {
-           SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+           this.CurrentSession.StartBusyIndicatorSaving();
 
            var myServiceHelper = new FieldsUpdateHelper();
            myServiceHelper.Tenant = SessionLocator.Tenant;
@@ -152,12 +153,12 @@ export class ObjectLabelsComponent extends BaseComponent {
            var generalService: GeneralDomainService = new GeneralDomainService();
            generalService.UpdateFieldsTranslations(myServiceHelper).subscribe((myResponse: ServiceResponse) => {
                if (myResponse.HasError) {
-                   SessionLocator.CurrentSession.StopBusyIndicator();
+                   this.CurrentSession.StopBusyIndicator();
                }
 
                else {
-                   SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
-                   SessionLocator.CurrentSession.StopBusyIndicator();
+                   this.CurrentSession.CloseCurrentWindowEmit("Ok");
+                   this.CurrentSession.StopBusyIndicator();
                }
            });
        }
@@ -186,6 +187,7 @@ export class ObjectLabelsComponent extends BaseComponent {
 export class FieldsTranslationsItem extends BaseComponent {
     public DataContext: FieldsTranslationsItem = this;
     public Entity: FieldsTranslations;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: FieldsTranslations, public fatherComponent: ObjectLabelsComponent) {
         super();
         this.Entity = entity;

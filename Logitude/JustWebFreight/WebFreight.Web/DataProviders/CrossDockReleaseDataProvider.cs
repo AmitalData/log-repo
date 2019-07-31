@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,22 +7,17 @@ namespace WebFreight.Web.DataProviders
 {
     public class CrossDockReleaseDataProvider
     {
-
         public string CustomerName { get; set; }
         public string CustomerRef1 { get; set; }
         public string CustomerRef2 { get; set; }
         public string SpecialInstruction { get; set; }
         public string IntenalNotes { get; set; }
-
         public DateTime? ExpectedReleaseDate { get; set; }
-
         public DateTime? ActualReleaseDate { get; set; }
-
         public string UpdatedBy { get; set; }
         public string ReleaseBy { get; set; }
         public string Master { get; set; }
         public string House { get; set; }
-
         public string WarehouseCode { get; set; }
         public string WarehouseName { get; set; }
         public string WarehouseAddress1 { get; set; }
@@ -32,27 +25,21 @@ namespace WebFreight.Web.DataProviders
         public string WarehouseCity { get; set; }
         public string WarehouseState { get; set; }
         public string WarehouseZipCode { get; set; }
-
         public string WarehouseCountry { get; set; }
         public string WraehousePhone { get; set; }
-
-        public List<ReleasePackage> ReleasePackages { get; set; }
-
         public string Origin { get; set; }
         public string Destination { get; set; }
         public string TenantAddress { get; set; }
         public byte[] TenantLogo { get; set; }
         public string MainCarriageCarrierName { get; set; }
-
         public string ShipperName { get; set; }
         public string ShipperAddress { get; set; }
         public string ShipmentNumber { get; set; }
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress { get; set; }
 
+        public List<ReleasePackage> ReleasePackages { get; set; }
     }
-
-
 
     public class ReleasePackage
     {
@@ -67,10 +54,14 @@ namespace WebFreight.Web.DataProviders
         public string DescriptionOfGoods { get; set; }
         public string ContainerNumber { get; set; }
         public string Seal { get; set; }
-
         public double? VolumetricWeight { get; set; }
         public string VolumetricWeightUnit { get; set; }
-
-
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Year { get; set; }
+        public string Color { get; set; }
+        public string ChassisNumber { get; set; }
+        public string RegistrationNumber { get; set; }
+        public string CountryName { get; set; }
     }
 }

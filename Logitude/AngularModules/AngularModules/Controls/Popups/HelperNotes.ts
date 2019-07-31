@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {QuotePM} from '../../Quote/EntityPMs/QuotePM';
@@ -29,8 +29,9 @@ export class HelperNotes implements OnInit, OnDestroy {
     public IconPath: string;
     public IconOpacity: number = 1;
     @Output() TextChanged: EventEmitter<string> = new EventEmitter<string>();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("HelperNotes");
+        var idIndex = this.CurrentSession.GetNewId("HelperNotes");
         this.ComponentId = "HelperNotes_" + idIndex;
         this.ComponentButtonId = "HelperNotesButton_" + idIndex;
         this.ComponentContentId = "HelperNotesContent_" + idIndex;
@@ -46,7 +47,7 @@ export class HelperNotes implements OnInit, OnDestroy {
     private HelperNotesChangedEvent: any = null;
     Listen() {
         if (!this.HelperNotesChangedEvent) {
-            this.HelperNotesChangedEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.HelperNotesChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 switch (s) {
                     case "QuotePartnersChanged":
                     case "ShipmentPartnersChanged":

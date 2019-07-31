@@ -32,6 +32,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.PrimaryContactName = entityPM.PrimaryContactName;
             entityPOCO.PrimaryContactEmail = entityPM.PrimaryContactEmail;
             entityPOCO.PrimaryContactPhone = entityPM.PrimaryContactPhone;
+            entityPOCO.CBSA = entityPM.CBSA;
+            entityPOCO.CAAT = entityPM.CAAT;
 
             entityCard.UpdateDate = entityPM.UpdateDate;
             entityCard.UpdatedByUserId = entityPM.UpdatedByUserId;
@@ -66,6 +68,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             {
                 entityCard.PrimaryContactId = entityPM.PrimaryContactId;
             }
+            
 
             BuildSearchFields(entityPM, entityCard);
         }

@@ -21,7 +21,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 {
     public class CrossDockReleaseDataProviderHelper
     {
-
         public byte[] LoadDataToCrossDockReleaseDataProvider(string entityId, int tenant)
         {
             CrossDockReleaseDataProvider dataprovider = LoadCrossDockReleaseDataProvider(entityId, tenant);
@@ -33,7 +32,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             string content = reader.ReadToEnd();
             byte[] bytearray = memstream.ToArray();
             return bytearray;
-
         }
 
         private CrossDockReleaseDataProvider LoadCrossDockReleaseDataProvider(string entityId, int tenant)
@@ -54,8 +52,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 dataProvider.IntenalNotes = warehouseReleasePM.Notes;
                 dataProvider.SpecialInstruction = warehouseReleasePM.SpecialInstruction;
                 dataProvider.ReleaseBy = warehouseReleasePM.ReleaseBy;
-
-
+                
                 if (!string.IsNullOrEmpty(warehouseReleasePM.UpdatedByUserId))
                 {
                     ContactQuery contactQuery = new ContactQuery(warehouseReleasePM.Tenant);
@@ -85,15 +82,12 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                         dataProvider.WarehouseCity = entityAddress.City;
                         dataProvider.WarehouseState = entityAddress.StateEnglishName;
                     }
-
-
                 }
 
                 if (warehouseReleasePM.WarehouseReleasePackages != null && warehouseReleasePM.WarehouseReleasePackages.Count > 0)
                 {
                     dataProvider.ReleasePackages = FullPackage(warehouseReleasePM);
                 }
-
 
                 dataProvider.TenantLogo = DataProviders.General.GetLogo(tenant);
 
@@ -109,8 +103,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     {
                         dataProvider.TenantAddress = DataProviders.General.GetAddress(address);
                     }
-
                 }
+
                 if (!string.IsNullOrEmpty(warehouseReleasePM.ShipmentId))
                 {
                     ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
@@ -122,6 +116,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                             dataProvider.Origin = shipmentDataView.MainCarriageFromCity;
                             dataProvider.Destination = shipmentDataView.MainCarriageToCity;
                         }
+
                         else
                         {
                             dataProvider.Origin = shipmentDataView.FromPortName;
@@ -151,15 +146,10 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                                 dataProvider.ConsigneeAddress = DataProviders.General.GetAddress(address);
                             }
                         }
-
-
                     }
-
                 }
-
-
-
             }
+
             return dataProvider;
         }
 
@@ -183,16 +173,28 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 item.VolumetricWeight = package.VolumetricWeight;
                 item.VolumetricWeightUnit = warehouseReleasePM.ChargeableWeightUnitCode;
 
+                #region Car Details
+                item.Make = package.Make;
+                item.Model = package.Model;
+                item.Year = package.Year;
+                item.Color = package.Color;
+                item.ChassisNumber = package.ChassisNumber;
+                item.RegistrationNumber = package.RegistrationNumber;
+
+                if (!string.IsNullOrEmpty(package.CountryId))
+                {
+                    Country country = CountryRepository.GetSingleCountry(package.CountryId, warehouseReleasePM.Tenant, true);
+                    if (country != null)
+                    {
+                        item.CountryName = country.EnglishName;
+                    }
+                }
+                #endregion
+
                 result.Add(item);
             }
 
             return result;
         }
-
-
-
-
-
-
     }
 }

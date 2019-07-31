@@ -6,6 +6,8 @@ using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure;
+using System.Collections.Generic;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -25,11 +27,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardContactPM entityPm;
         private ICommonDataContext objectContext;
         private CardContactRepository entityRepository;
+        private CardContactProductRepository productRepository;
         public CardContactService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.ObjectContext = objectContext;
             this.entityRepository = new CardContactRepository(objectContext);
+            this.productRepository = new CardContactProductRepository(objectContext);
+        }
+
+        private List<CardContactProductPM> productsChangeSet;
+        public void SetChangeSet(List<CardContactProductPM> productsChangeSet)
+        {
+            this.productsChangeSet = productsChangeSet;
         }
 
         public void Create(CardContactPM entityPM)
@@ -39,6 +49,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm.Id = IdCounter.GetNumber("CardContact", tenant).ToString();
             this.Poco = new CardContact();
             this.Poco.Id = this.entityPm.Id;
+
+            foreach (CardContactProductPM item in entityPM.CardContactProducts)
+            {
+                this.CreateProduct(item);
+            }
 
             CardContactValidating.Validate(entityPM);
             if (!entityPM.IsHybrid)
@@ -56,14 +71,83 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleCardContact(entityPM.Id , entityPm.Tenant);
 
+            this.UpdateProductsCollection();
+
             CardContactValidating.Validate(entityPM);
             if (!entityPM.IsHybrid)
             {
                 CardContactTracing.Trace(entityPM, Poco, isNewEntity);
             }
+
             CardContactMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+        }
+
+        private void UpdateProductsCollection()
+        {
+            if (productsChangeSet != null)
+            {
+                foreach (CardContactProductPM itemPM in productsChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateProduct(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateProduct(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteProduct(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+        private void CreateProduct(CardContactProductPM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("CardContactProduct", tenant).ToString();
+            itemPM.CardContactId = this.entityPm.Id;
+            itemPM.Tenant = tenant;
+
+            CardContactProduct itemPoco = new CardContactProduct()
+            {
+                Id = itemPM.Id,
+                CardContactId = itemPM.CardContactId,
+                ProductTypeCode = itemPM.ProductTypeCode,
+                Tenant = tenant
+            };
+
+            CardContactProductMapping.MapEntity(itemPM, itemPoco, true);
+            productRepository.Add(itemPoco);
+        }
+        private void UpdateProduct(CardContactProductPM itemPM)
+        {
+            CardContactProduct itemPoco = productRepository.GetSingleCardContactProduct(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                CardContactProductMapping.MapEntity(itemPM, itemPoco, false);
+                productRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteProduct(CardContactProductPM itemPM)
+        {
+            CardContactProduct itemPoco = productRepository.GetSingleCardContactProduct(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                productRepository.Remove(itemPoco);
+            }
         }
     }
 }

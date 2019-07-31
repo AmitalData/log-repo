@@ -22,7 +22,8 @@ export class ConfirmWindow {
     LayoutDirection: string = 'ltr';
     @Output() WindowClosed = new EventEmitter();
     public IsChecked: boolean = false;
-    public IsYesEnabled: boolean = true;  
+    public IsYesEnabled: boolean = true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         this.Title = TextCodeTranslator.Translate("General.O.Confirm");
@@ -36,14 +37,14 @@ export class ConfirmWindow {
     public Show(message: string) {
         this.Message = message;
 
-        var viewContainerRefLocation: ViewContainerRef = SessionLocator.CurrentSession.SessionLocation.viewContainerRef;
+        var viewContainerRefLocation: ViewContainerRef = this.CurrentSession.SessionLocation.viewContainerRef;
 
         if (this.IsOverAll) {
             viewContainerRefLocation = SessionLocator.ApplicationLocation;
         }
 
-        else if (SessionLocator.CurrentSession.CurrentWindow) {
-            if (SessionLocator.CurrentSession.CurrentWindow.IsOverAll) {
+        else if (this.CurrentSession.CurrentWindow) {
+            if (this.CurrentSession.CurrentWindow.IsOverAll) {
                 this.IsOverAll = true;
                 viewContainerRefLocation = SessionLocator.ApplicationLocation;
             }
@@ -106,7 +107,8 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
     public ShowWarningImage: boolean = false;
     LayoutDirection: string = 'ltr';
     public ShowCheckBox: boolean = false;
-    public IsYesEnabled: boolean = true;   
+    public IsYesEnabled: boolean = true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         this.Title = TextCodeTranslator.Translate("General.O.Confirm");
@@ -159,10 +161,10 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
     }
 
     private CreateDynamicIds() {
-        this.WindowId = "ConfirmWindow_" + SessionLocator.CurrentSession.SessionIndex;
-        this.NoButtonId = "ConfirmWindow_No_" + SessionLocator.CurrentSession.SessionIndex;
-        this.YesButtonId = "ConfirmWindow_Yes_" + SessionLocator.CurrentSession.SessionIndex;
-        this.CancelButtonId = "ConfirmWindow_Cancel_" + SessionLocator.CurrentSession.SessionIndex;
+        this.WindowId = "ConfirmWindow_" + this.CurrentSession.SessionIndex;
+        this.NoButtonId = "ConfirmWindow_No_" + this.CurrentSession.SessionIndex;
+        this.YesButtonId = "ConfirmWindow_Yes_" + this.CurrentSession.SessionIndex;
+        this.CancelButtonId = "ConfirmWindow_Cancel_" + this.CurrentSession.SessionIndex;
         this.Focus();
     }
 

@@ -46,6 +46,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
     IsDisplayOnly: boolean;
     vendorMessagesService: VendorMessagesService = new VendorMessagesService();
     customsVendorPMService: CustomsVendorPMService = new CustomsVendorPMService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this._PeriodDeclarationList = new ObservableCollection([]);
@@ -232,17 +233,17 @@ export class VendorExtendedSearchComponent extends BaseComponent {
     public SelectedRow: any = null;
     OnItemRowSelected(selected: any) {
         this.SelectedRow = selected.rowData;
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("close");
+        this.CurrentSession.CloseCurrentWindowEmit("close");
     }
 
     CancelButtonClicked() {
 
         //if (this.SelectedRow) {
-        //    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.SelectedRow.VendorId);
+        //    this.CurrentSession.CloseCurrentWindowEmit(this.SelectedRow.VendorId);
         //}
 
         //else {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
         //  }
     }
 
@@ -276,7 +277,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
     _HavePeriodDecResult: boolean = false;
     UpdateImporterDeposition() {
         this.searchText = "";
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         let customSendOptionsArgs: CustomSendOptionsArgs = new CustomSendOptionsArgs();
         //var month = new Date().getMonth();
         //var Year = new Date().getFullYear();
@@ -302,7 +303,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
         currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.ImporterNumber = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.ImporterCode;
+        currRequestParams.ImporterNumber = this.CurrentSession.CurrentEditComponent.EntityPM.ImporterCode;
         currRequestParams.IsByExpireDate = true;
         currRequestParams.DeclarationExpire = date;// new Date(Year + 1, month, day);
 
@@ -342,7 +343,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
 
                 }
                 //this.LoadData();
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
     }
     SearchAddVendorRequest(rowData) {
@@ -378,7 +379,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
                 if (!AppTool.IsNullOrEmpty(response)) {
                     var VendorResults: any[] = response.VendorResults;
                     if (response.IsCustomWarning) {
-                        //SessionLocator.CurrentSession.CloseCurrentWindow();
+                        //this.CurrentSession.CloseCurrentWindow();
                     }
                 }
             }).catch((err) => {
@@ -432,7 +433,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
         var errors = [];
         //this.ValidationErrorsList = errors;
 
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
         var newVendor = new CustomsVendorPM();
         newVendor.Tenant = SessionLocator.Tenant;
@@ -481,12 +482,12 @@ export class VendorExtendedSearchComponent extends BaseComponent {
                     confirmWindow.Show(res.ErrorsArray[0]);
                     //this.ValidationErrorsList = res.ErrorsArray;
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
 
         }
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             //this.ValidationErrorsList = errors;
             let confirmWindow = new ConfirmWindow();
             confirmWindow.Show(errors[0]);
@@ -501,7 +502,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
             messageWindow.Show("ספק לא הוקם ");
         } else {
             this.SelectedRow = item;
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("close");
+            this.CurrentSession.CloseCurrentWindowEmit("close");
             //periodDec.DBVendorID = dbVendor.Id;
             //periodDec.DBCountryCode = dbVendor.CountryCode;
         }

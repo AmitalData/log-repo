@@ -66,7 +66,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     public IsDSVConnectEnable: boolean = false;
     public IsHebrewSettings = false;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.entityResourceService = new EntityResourceService();
@@ -87,7 +87,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             this.CheckDigitalSign();
         }
         this.Id = Guid.newGuid();
-        var divId = SessionLocator.CurrentSession.GetNewId("PreviewDiv");
+        var divId = this.CurrentSession.GetNewId("PreviewDiv");
         this.PreviewDivId = "PreviewDiv_" + divId;
         this.DontShowInboxToolTip = SessionLocator.LoggedUserPM.ShowInboxToolTip;
         this.DontShowAgain = SessionLocator.LoggedUserPM.ShowInboxToolTip;
@@ -221,7 +221,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
 
     private MenuEvent: any = null;
     Listen() {
-        this.MenuEvent = SessionLocator.CurrentSession.MainMenuComponent.SelectionChanging.subscribe((isSelectionChanging: boolean) => {
+        this.MenuEvent = this.CurrentSession.MainMenuComponent.SelectionChanging.subscribe((isSelectionChanging: boolean) => {
             if (isSelectionChanging) {
                 this.ShowUnsaveChanges();
             }
@@ -271,7 +271,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         }
     }
     ChangeMenu() {
-        SessionLocator.CurrentSession.MainMenuComponent.ChangeMenu();
+        this.CurrentSession.MainMenuComponent.ChangeMenu();
     }
 
     public Id: string;
@@ -1173,7 +1173,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     }
 
     ViewUser() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -1207,7 +1207,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     }
     FileButtonClicked() {
         if (this.SelectedFilingInbox != null) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Filing ...");
+            this.CurrentSession.StartBusyIndicator("Filing ...");
             var summary: FilingInboxSummary = new FilingInboxSummary();
             var objectTableName = this.EntityObjectTableName;
             if (this.EntityObjectTableName == "Master") {
@@ -1250,7 +1250,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 if (isValid && isDescriptionFilled) {
                     if (!AppTool.IsNullOrEmpty(this.EntityNumber)) {
                         if (!AppTool.IsNullOrEmpty(docsErrorMsg)) {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             if (docsErrorMsg.match(/,/g).length == 1) {
                                 docsErrorMsg = docsErrorMsg.replace(/,/g, '');
                                 docsErrorMsg = "The document " + docsErrorMsg + " is already filled";
@@ -1274,12 +1274,12 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                         }
                     }
                     else {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         this.ShowMessage("Please Enter Entity number");
                     }
                 }
                 else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var msg = "";
                     if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
                         if (!isDescriptionFilled) {
@@ -1293,14 +1293,14 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 }
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.ShowMessage("Please Enter Entity number");
             }
         }
     }
     FileAndDeleteButtonClicked(arg: boolean) {
         if (this.SelectedFilingInbox != null) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Filing & Delete...");
+            this.CurrentSession.StartBusyIndicator("Filing & Delete...");
             var summary: FilingInboxSummary = new FilingInboxSummary();
             var objectTableName = this.EntityObjectTableName;
             if (this.EntityObjectTableName == "Master") {
@@ -1346,7 +1346,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 if (isValid && isDescriptionFilled) {
                     if (!AppTool.IsNullOrEmpty(this.EntityNumber)) {
                         if (!AppTool.IsNullOrEmpty(docsErrorMsg)) {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             if (docsErrorMsg.match(/,/g).length == 1) {
                                 docsErrorMsg = docsErrorMsg.replace(/,/g, '');
                                 docsErrorMsg = "The document " + docsErrorMsg + " is already filled";
@@ -1370,12 +1370,12 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                         }
                     }
                     else {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         this.ShowMessage("Please Enter Entity number");
                     }
                 }
                 else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var msg = "";
                     if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
                         if (!isDescriptionFilled) {
@@ -1390,7 +1390,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 }
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.ShowMessage("Please Enter Entity number");
             }
         }
@@ -1405,7 +1405,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 this.IsVisible = false;
                 this.LoadAllData();
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
 
         if (arg == true) {
@@ -1423,7 +1423,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                             else {
                                 hasSharedDocs = true;
                             }
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             var newWindow = new LogitudeWindow();
                             newWindow.Width = 1050;
                             newWindow.Height = 700;

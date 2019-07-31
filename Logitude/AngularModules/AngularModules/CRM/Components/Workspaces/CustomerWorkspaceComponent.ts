@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -27,6 +27,7 @@ export class CustomerWorkspaceComponent extends BaseComponent {
     public QuickSearchItemsCount: number = 0;
     public QuickSearchItems: CustomerList[] = [];
     @Output() ReloadUserQueries = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.SearchBoxWatermark = TextCodeTranslator.Translate("Card.F.SearchFields");
@@ -651,17 +652,17 @@ export class CustomerWorkspaceComponent extends BaseComponent {
             listArgs.ObjectTableName = objectTableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });;
         }
     }
     EditCustomer(entityId: string) {                
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'Customer', BackButtonLabel: "Customers" });
@@ -682,7 +683,7 @@ export class CustomerWorkspaceComponent extends BaseComponent {
         }
 
         else {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customer', BackButtonLabel: "Customers" });

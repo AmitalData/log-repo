@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef, OnInit} from '@angular/core';
+import {Component, ChangeDetectorRef, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -33,7 +33,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     private ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
 
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -47,7 +47,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
         this.GetClosedMonth();
 
-              
+
     }
 
     SetWindowArgs(args: any) {
@@ -69,6 +69,8 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {
             this.EntityPM.AccountingDate = value;
+
+            this.EntityPM.DepositDate = value;
         }
     }
 
@@ -109,15 +111,15 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
     OkButtonClicked() {
         var errors: string[] = [];
-        
+
 
         // Required check
         if (AppTool.IsNullOrEmpty(this.DepositBankAccountId) || AppTool.IsNullOrEmpty(this.CashBookId)) {
             errors.push(TextCodeTranslator.Translate("Accounting.General.O.AllFieldsRequired"));
         }
         if (this.EntityPM.DepositCurrencyId != SessionLocator.TenantPM.CurrencyId) {
-            //check rate 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("...");
+            //check rate
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("...");
             this.ratesTableExtendedListService.getClosestRate(SessionLocator.TenantPM.CurrencyId, this.EntityPM.DepositCurrencyId).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
@@ -129,7 +131,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
                         else {
                             this.ValidationErrorsList = [];
                             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.NoExchangeRateForLocalCurrency"));
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         }
                     }
                 }
@@ -137,7 +139,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
             if (errors.length > 0) {
                 this.ValidationErrorsList = errors;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
         } else {
             //continu saving
@@ -147,7 +149,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     AccountingDateLostFocus() {
@@ -174,13 +176,13 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
                         } else {
                             this.ValidationErrorsList = [];
                             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.noChequesinCashbook"));
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         }
                     } else if (entityPm.CashBookTypeCode == "1") { // 1-cash
                         if (AppTool.IsNullOrZero(entityPm.TotalAmount)) {
                             this.ValidationErrorsList = [];
                             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.noCashICashbook"));
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         } else {
                             this.SubmitChanges();
                         }
@@ -190,19 +192,19 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
             } else {
                 console.log("error");
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             }
         });
 
-        
+
     }
 
     SubmitChanges() {
 
         var errors: string[] = [];
 
-        
+
         //#region currency check
         if (this.bankAccount.GLAccountCurrencyId != null && this.bankAccount.GLAccountCurrencyId != "multi") {
             if (this.bankAccount.GLAccountCurrencyId != this.cashbook.CurrencyId) {
@@ -212,12 +214,12 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
             console.warn("maybe the glaccount of bank account is multi or null!");
         }
         this.EntityPM.IsCashDeposit = this.CashBook.CashBookTypeCode == "1";
-        //#endregion 
+        //#endregion
 
         //closed month check
         var isValid = this.IsMonthOpenForAccountingDate();
         if (!isValid) errors.push(TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth")); // closed month
-        
+
 
         if (errors.length == 0) {
 
@@ -225,9 +227,9 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
             this.EntityPM.BankAccountNumber = this.DepositBankAccount.AccountNumber;
 
             if (this.EntityPM != null) {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTableName: 'BankDeposit' });
@@ -239,7 +241,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
         } else {
             this.ValidationErrorsList = errors;
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
     }
 
@@ -264,14 +266,14 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
             //errorsList.Add(transText);
         }
         else {
-            var accountingDateMonth = this.EntityPM.AccountingDate.getMonth() + 1; 
+            var accountingDateMonth = this.EntityPM.AccountingDate.getMonth() + 1;
 
             if (accountingDateMonth > this.accountingPeriod.ClosedMonth) {
                 //Valid ... AccountingDateMonth must be greater than close Mounth
             }
             else {
                 //Not Valid ... AccountingDateMonth must be greater than close Mounth
-                //not valid  8>=8 
+                //not valid  8>=8
                 //not valid  0>=1 - Must Open mounth before work on year !!
                 valid = false;
                 //errorsList.Add(transText); //ClosedMonth Must B

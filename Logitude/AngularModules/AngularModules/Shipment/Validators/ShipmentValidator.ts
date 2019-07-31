@@ -119,16 +119,6 @@ export class ShipmentValidator implements IShipmentValidator {
                 var textCode = ShipmentTool.GetToPortTextCode(this.entityPM.TransportModeId, this.entityPM.ShipmentLevelCode);
                 this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate(textCode)));
             }
-
-            if (this.entityPM.DirectionId == "D") {
-                if (!AppTool.IsNullOrEmpty(this.entityPM.MainCarriageFromPortId) && !AppTool.IsNullOrEmpty(this.entityPM.MainCarriageToPortId)) {
-                    if (this.entityPM.FromCountryId != this.entityPM.ToCountryId) {
-                        if (this.entityPM.FromCountryIsEC == false || this.entityPM.ToCountryIsEC == false) {
-                            this.Errors.push("Both Ports must be in the same country since the direction is Domestic");
-                        }
-                    }
-                }
-            }
         }
     }   
     private ValidateInlandDomestic() {
@@ -140,17 +130,6 @@ export class ShipmentValidator implements IShipmentValidator {
             else if (this.entityPM.ShipmentLevelCode == "H") {
                 this.Errors.push("House inland domestic shipments are not allowed");
             }
-
-            if (this.entityPM.ShipmentLevelCode != "C") {
-                if (!AppTool.IsNullOrEmpty(this.entityPM.ShipperId) && !AppTool.IsNullOrEmpty(this.entityPM.ConsigneeId)) {
-                    if (this.entityPM.FromCountryId != this.entityPM.ToCountryId) {
-                        if (this.entityPM.FromCountryIsEC == false || this.entityPM.ToCountryIsEC == false) {
-                            this.Errors.push("Both Addresses must be in the same country since the direction is Domestic");
-                        }
-                    }
-                }
-            }
-
         }
     }
     private ValidatePickup() {

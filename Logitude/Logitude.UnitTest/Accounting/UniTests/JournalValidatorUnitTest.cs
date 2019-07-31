@@ -299,8 +299,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             ValidationResult validationresult = JournalValidator.IsJournalValid(myJournalPM, myNewJournalValidatorContext);
             var errList = new List<String>(validationresult.MemberNames);
             string basic_text = basic_text_ExternalExist(myJournalPM);
-
-            var mExist = errList.Contains(basic_text);
+            var mExist = errList.Any(r=> r.StartsWith(JournalValidator.M_ExternalNoAlreadyExists_1) && r.EndsWith(JournalValidator.M_ExternalNoAlreadyExists_2));
             var LocalDefaultText = "פקודת יומן עם מספר חיצוני ";
             Assert.IsTrue(mExist, "Expected Have Line But Get Error Of " + LocalDefaultText);
 
@@ -359,7 +358,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_4));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_2));
             var LocalDefaultText = "פקודת יומן עם מספר חיצוני ";
             Assert.IsFalse(mExist, "Expected Have Line But Get Error Of " + LocalDefaultText);
 
@@ -367,11 +366,17 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
         private static string basic_text_ExternalExist(JournalPM myJournalPM)
         {
+            //string basic_text = JournalValidator.M_ExternalNoAlreadyExists_1
+            //                + myJournalPM.ExternalNo
+            //                + JournalValidator.M_ExternalNoAlreadyExists_2
+            //                + myJournalPM.ExternalSystem
+            //                + JournalValidator.M_ExternalNoAlreadyExists_3;
+
             string basic_text = JournalValidator.M_ExternalNoAlreadyExists_1
-                            + myJournalPM.ExternalNo
+                            + myJournalPM.JournalNumber
                             + JournalValidator.M_ExternalNoAlreadyExists_2
-                            + myJournalPM.ExternalSystem
-                            + JournalValidator.M_ExternalNoAlreadyExists_3;
+                            
+                            ;
             return basic_text;
         }
 
@@ -400,7 +405,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_4));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_2));
             var LocalDefaultText = " כפקודת יומן מספר ";
             Assert.IsTrue(mExist, "Expected Have Line But Get Error Of " + LocalDefaultText);
 
@@ -431,7 +436,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var errList = new List<String>(validationresult.MemberNames);
 
 
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_4));
+            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_ExternalNoAlreadyExists_2));
             var LocalDefaultText = "פקודת יומן עם מספר חיצוני ";
             Assert.IsFalse(mExist, "Expected Have Line But Get Error Of " + LocalDefaultText);
 

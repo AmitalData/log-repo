@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -22,6 +22,7 @@ export class ArtemusSettingsComponent extends BaseComponent {
     public DataContext: ArtemusSettingsComponent = this;
     public ValidationErrorsList: string[] = [];
     private myFTPService: FTPDetailPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.myFTPService = new FTPDetailPMService();
@@ -153,7 +154,7 @@ export class ArtemusSettingsComponent extends BaseComponent {
     
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -162,7 +163,7 @@ export class ArtemusSettingsComponent extends BaseComponent {
         
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+            this.CurrentSession.CloseCurrentWindowEmit("ok");
         }
     }
 

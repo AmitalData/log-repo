@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../Customs/Args';
@@ -41,7 +41,7 @@ export class ClientSearchByIDComponent
     public AuthorizerList: ObservableCollection;
     public ExportRequestList: ObservableCollection;
     public IndicationPerClassificationList: ObservableCollection;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.CustomerActivityList = new ObservableCollection([]);
@@ -178,7 +178,7 @@ export class ClientSearchByIDComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     EditCustomerIndicationCommand(item) {

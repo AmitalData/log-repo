@@ -27,6 +27,62 @@ namespace Logitude.Infrastructure.BL
                 Name = "Test Toggle", 
                 SearchFields = "TST,Test Toggle", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "EnableAzureRootFolder", 
+                SearchFields = "EZR,EnableAzureRootFolder", 
+                Code = "EZR", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "LEX", 
+                Name = "LogBoxExport", 
+                SearchFields = "LEX,LogBoxExport", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "URT", 
+                Name = "Unicargo Report Toggle", 
+                SearchFields = "URT,Unicargo Report Toggle", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BDR", 
+                Name = "Build Document Report Service", 
+                SearchFields = "BDR,Build Document Report Service", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "QuotationRoutingRatesQuotes", 
+                Code = "QRR", 
+                SearchFields = "QRR,QuotationRoutingRatesQuotes", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "RRW", 
+                Name = "Run Report Via WorkerRole", 
+                SearchFields = "RRW,Run Report Via WorkerRole", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "FPG", 
+                Name = "ARPayment Fetcha Pago", 
+                SearchFields = "FPG,ARPayment Fetcha Pago", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TJC", 
+                Name = "Ticket Jumping Counter", 
+                SearchFields = "TJC,Ticket Jumping Counter", 
+			});
 			
             return all;
        }

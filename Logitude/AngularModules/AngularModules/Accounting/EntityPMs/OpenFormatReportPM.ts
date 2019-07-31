@@ -100,6 +100,16 @@ export class OpenFormatReportPM {
     public set StatusLocalName(newValue: string) { if (this.statusLocalName != newValue) { this.statusLocalName = newValue; this.MarkAsDirty("StatusLocalName"); } }
        
 	 
+    private testingMode: boolean;
+    public get TestingMode() { return this.testingMode; }
+    public set TestingMode(newValue: boolean) { if (this.testingMode != newValue) { this.testingMode = newValue; this.MarkAsDirty("TestingMode"); } }
+       
+	 
+    private pDFRerportXML: string;
+    public get PDFRerportXML() { return this.pDFRerportXML; }
+    public set PDFRerportXML(newValue: string) { if (this.pDFRerportXML != newValue) { this.pDFRerportXML = newValue; this.MarkAsDirty("PDFRerportXML"); } }
+       
+	 
 
     public OldEntityPM: OpenFormatReportPM;
 		

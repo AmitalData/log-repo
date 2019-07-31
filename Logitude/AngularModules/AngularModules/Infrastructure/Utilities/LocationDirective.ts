@@ -1,4 +1,4 @@
-﻿import {ViewContainerRef, Directive, Input, Output, EventEmitter, AfterViewInit} from '@angular/core';
+import {ViewContainerRef, Directive, Input, Output, EventEmitter, AfterViewInit} from '@angular/core';
 
 @Directive({
     selector: '[LocationDirective]'
@@ -14,6 +14,6 @@ export class LocationDirective implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.DirectiveLoaded.emit('Directive Loaded');
+        //this.DirectiveLoaded.emit('Directive Loaded');
     }
 }

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
@@ -24,6 +24,7 @@ export class AddEditHouseRoutingComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public FatherComponent: RoutingsTabComponent;
     private myPortListService: PortListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.myPortListService = new PortListService();
@@ -119,7 +120,7 @@ export class AddEditHouseRoutingComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -137,7 +138,7 @@ export class AddEditHouseRoutingComponent extends BaseComponent {
 
         if (errors.length == 0) {
             this.FatherComponent.BuildItemsCollection();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("PaymentTerm", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("PaymentTerm", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         PaymentTermService service = new PaymentTermService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("PaymentTerm", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("PaymentTerm", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "PaymentTerm" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "PaymentTermPM" + entityPM.Id + entityPM.Tenant;

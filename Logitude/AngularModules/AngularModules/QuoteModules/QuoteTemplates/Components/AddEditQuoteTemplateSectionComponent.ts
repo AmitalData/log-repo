@@ -29,13 +29,13 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
     froalaEditorSetting: FroalaEditorSetting;
     public ValidationErrorsList: string[];
     IsNewQuoteTemplateSession: boolean;
-    private _entityResourceService: EntityResourceService = new EntityResourceService();  
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
     QuoteTemplateId: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.quoteTemplateSectionPMService = new QuoteTemplateSectionPMService();
-        this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();      
+        this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
     }
 
     ngOnInit() {
@@ -54,7 +54,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
         if (this.IsNewQuoteTemplateSession) this.QuoteTemplateSectionViewModel = this.GetNewInstance();
         this.Name = this.QuoteTemplateSectionViewModel.Name;
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
 
 
 
@@ -64,7 +64,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
 
         this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, sectionDocId, "", "", "", "", SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.ReloadFroalaEditor(pmResponse.Result);
             }
@@ -113,7 +113,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
         this.name = newValue;
     }
 
-    UpdateQuoteTemplateSession(item: QuoteTemplateSectionPM , type:string) {
+    UpdateQuoteTemplateSession(item: QuoteTemplateSectionPM, type: string) {
         this.quoteTemplateSectionPMService.update(item).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -131,8 +131,8 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
                     }
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.Close("Refresh");
             }
 
             else {
@@ -147,29 +147,29 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
         if (table) tableId = table.Id;
 
         this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe(response => {
-                this._entityResourceService.getEntityResourceByTableName("Quote").subscribe(response => {
-                    var windowArgs: any = {};
-                    windowArgs.InSertDataFieldType = "FroalaEditor";
-                    windowArgs.ObjectTableId = tableId;
+            this._entityResourceService.getEntityResourceByTableName("Quote").subscribe(response => {
+                var windowArgs: any = {};
+                windowArgs.InSertDataFieldType = "FroalaEditor";
+                windowArgs.ObjectTableId = tableId;
 
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Width = 500;
-                    logWindow.Height = 600;
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 500;
+                logWindow.Height = 600;
 
-                    logWindow.Title = "Insert Data Field";
-                    logWindow.WindowArgs = windowArgs;
-                    logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentObjectFieldsComponent');
-                    logWindow.WindowClosed.subscribe(($event: any) => {
+                logWindow.Title = "Insert Data Field";
+                logWindow.WindowArgs = windowArgs;
+                logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentObjectFieldsComponent');
+                logWindow.WindowClosed.subscribe(($event: any) => {
 
-                        if ($event) {
+                    if ($event) {
 
-                            if (this.froalaEditorSetting.froalaEditorComponent) {
-                                this.froalaEditorSetting.froalaEditorComponent.InSertHtml($event);
-                                this.ReloadFroalaEditor();
-                            }
+                        if (this.froalaEditorSetting.froalaEditorComponent) {
+                            this.froalaEditorSetting.froalaEditorComponent.InSertHtml($event);
+                            this.ReloadFroalaEditor();
                         }
-                    });
+                    }
                 });
+            });
         });
     }
 
@@ -179,18 +179,19 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
             this.ValidationErrorsList.push("Name field is required");
         }
         else if (this.Name.length > 60) this.ValidationErrorsList.push("Name field must be less than 60 and more than 1");
-   
+
 
         if (this.ValidationErrorsList.length == 0) {
 
             var htmlbody: string = this.froalaEditorSetting.froalaEditorComponent.getHtml();
             var quotetemplateSectionBody = StringToBase64(htmlbody);
             this.QuoteTemplateSectionViewModel.Name = this.Name;
+            this.QuoteTemplateSectionViewModel.DisplayName = this.Name;
 
             if (this.IsNewQuoteTemplateSession) {
-        
-      
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+
+
+                this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
 
 
@@ -207,7 +208,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
                         this.FatherComponent.SelectQuoteTemplateSection = this.QuoteTemplateSectionViewModel;
 
                         var footerItem = this.FatherComponent.AllQuoteTemplateSectionLists.filter(d => d.QuoteTemplateSectionTypeCode == "PF")[0];
-                        this.UpdateQuoteTemplateSession(footerItem.EntityPM,"Footer");
+                        this.UpdateQuoteTemplateSession(footerItem.EntityPM, "Footer");
                     } else this.CloseButtonClicked();
 
                 });
@@ -217,7 +218,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
                 this.QuoteTemplateSectionViewModel.EntityPM.IschangeBodySection = this.QuoteTemplateSectionViewModel.HtmlBody != htmlbody ? true : false;
 
                 if (this.QuoteTemplateSectionViewModel.EntityPM.IsDirty || this.QuoteTemplateSectionViewModel.EntityPM.IschangeBodySection) {
-                    SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+                    this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
                     this.QuoteTemplateSectionViewModel.Templatedata = quotetemplateSectionBody;
 
@@ -225,7 +226,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
 
                     this.QuoteTemplateSectionViewModel.HtmlBody = "";
                     this.QuoteTemplateSectionViewModel.IsLoaded = false;
-                    this.UpdateQuoteTemplateSession(this.QuoteTemplateSectionViewModel.EntityPM,"Section");
+                    this.UpdateQuoteTemplateSession(this.QuoteTemplateSectionViewModel.EntityPM, "Section");
                 }
                 else this.CloseButtonClicked();
 
@@ -245,7 +246,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
             this.QuoteTemplateSectionViewModel.Order = footerItem.Order;
             this.QuoteTemplateSectionViewModel.HtmlBody = "";
             this.QuoteTemplateSectionViewModel.IsLoaded = false;
-           
+
 
             var index = this.FatherComponent.AllQuoteTemplateSectionLists.indexOf(footerItem);
             if (index != -1) this.FatherComponent.AllQuoteTemplateSectionLists.splice(index, 1);
@@ -253,15 +254,15 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
             this.FatherComponent.AllQuoteTemplateSectionLists.push(this.QuoteTemplateSectionViewModel);
             this.FatherComponent.AllQuoteTemplateSectionLists.push(footerItem);
 
-         
+
         }
 
 
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
-        SessionLocator.CurrentSession.CurrentWindow.Close("");
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.CurrentWindow.Close("");
     }
 }
 

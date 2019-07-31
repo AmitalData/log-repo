@@ -34,19 +34,19 @@ export var BranchGeneralTabComponent = (function (_super) {
     }
     BranchGeneralTabComponent.prototype.Listen = function () {
         var _this = this;
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(function (isSaveSuccess) {
+                this.SaveCompletedEvent = SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe(function (isSaveSuccess) {
                     if (isSaveSuccess) {
-                        _this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        _this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                         _this.LoadAddress();
                     }
                 });
             }
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(function (isLoadSuccess) {
+                this.LoadCompletedEvent = SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe(function (isLoadSuccess) {
                     if (isLoadSuccess) {
-                        _this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        _this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                         _this.LoadAddress();
                     }
                 });
@@ -141,8 +141,8 @@ export var BranchGeneralTabComponent = (function (_super) {
             }
             logWindow.Show('./Common/Components/Maintenance/Branch/AddEditBranchAddressComponent');
             logWindow.WindowClosed.subscribe(function (s) {
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                //SessionLocator.CurrentSession.FireEvent("LoadAddress");
+                SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+                //SessionLocator.SelectedSession.FireEvent("LoadAddress");
             });
         });
     };

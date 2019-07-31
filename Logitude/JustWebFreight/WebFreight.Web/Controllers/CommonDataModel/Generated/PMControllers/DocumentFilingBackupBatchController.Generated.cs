@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("DocumentFilingBackupBatch", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("DocumentFilingBackupBatch", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         DocumentFilingBackupBatchService service = new DocumentFilingBackupBatchService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("DocumentFilingBackupBatch", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("DocumentFilingBackupBatch", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "DocumentFilingBackupBatch" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "DocumentFilingBackupBatchPM" + entityPM.Id + entityPM.Tenant;

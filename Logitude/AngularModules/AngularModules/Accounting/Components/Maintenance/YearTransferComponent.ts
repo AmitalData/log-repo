@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
@@ -18,6 +18,8 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 
 @Component({
@@ -33,7 +35,8 @@ export class YearTransferComponent extends BaseComponent {
     _JournalOpService: JournalOpService;
     public ValidationErrorsList: string[];
     
-
+    private CurrentSession = SessionLocator.SelectedSession;
+    _CancelYearTransfer: boolean;
     constructor(private _entityResourceService: EntityResourceService, public entityArgs: EntityArgs) {
         super();
         this._JournalOpService = new JournalOpService();
@@ -41,9 +44,16 @@ export class YearTransferComponent extends BaseComponent {
         this.UIProperties.SetRequired("Year", this.ObjectTableName, true);
         this._entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("JournalLine").subscribe((response: any) => { });
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
-
+    SetWindowArgs(arg: any) {
+        this._CancelYearTransfer = arg.CancelYearTransfer;
+        if (!this._CancelYearTransfer) {
+            this.myOperation = "Check_CreateQBatchTaskYearTransfer";
+        } else {
+            this.myOperation = "CheckCancelYear";
+        }
+    }
     // Properties
     private year;
     get Year() { return this.year; }
@@ -72,6 +82,8 @@ export class YearTransferComponent extends BaseComponent {
 
         }
     }
+    myOperation: string="";
+    lastYearTransferJournalPMId: string="";
     _JournalPM: JournalPM = null;
     OkButtonClicked() {
         
@@ -79,29 +91,73 @@ export class YearTransferComponent extends BaseComponent {
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
+        
         this._JournalOpService
-            .GetYearTransferJournal(this.year)
+            .GetYearTransferJournal(this.year, this.myOperation, this.lastYearTransferJournalPMId)
             .subscribe(
             (res: ServiceResponse) => {
+                
                 if (res.HasError) {
                     this.ValidationErrorsList = res.ErrorsArray;
                         
                 } else {
-                    this._JournalPM = res.Result;
+                    switch (this.myOperation) {
+                        case"Check_CreateQBatchTaskYearTransfer":
+                            {
+                                let obj: any = res.Result;
+                                let BatchTaskYearTransferId = obj.BatchTaskYearTransferId;
+                                var winMessage = new MessageWindow()
+                                winMessage.Show("העברת השנה תבוצע בתהליך רקע ");
+                                winMessage.WindowClosed.subscribe(($event: any) => {
+                                    this.CancelButtonClicked();
+                                });
+                            }
+                            break;
+                        case "CheckCancelYear":
+                            {
+                                let obj: any = res.Result;
+                                let lastYearTransferJournalPMId = obj.lastYearTransferJournalPMId;
+                                let confirmWindow = new ConfirmWindow()
+                                //Are you sure you want to cancel the year transfer (YY)?   “האם אתה בטוח שברצונך לבטל את העברת השנה (YY)?”
+                                confirmWindow.Show("האם אתה בטוח שברצונך לבטל את העברת השנה (" + this.year +")");
+                                confirmWindow.WindowClosed.subscribe((event: any) => {
+                                    if (confirmWindow.Yes) {
+                                        this.myOperation = "DoCancelYear"
+                                        this.lastYearTransferJournalPMId = lastYearTransferJournalPMId;
+                                        this.OkButtonClicked()
+                                    }
+                                    else if (confirmWindow.No) {
+                                        this.CancelButtonClicked();
+                                    }
+                                });
+                            }
+                            break;
+                        case "DoCancelYear":
+                            {
+                                this._JournalPM = res.Result;
+                            }
+                            break;
+                        default:
+                            {
+
+                            }
+                            break;
+                    }
+                    
                 }
             },
             (err) => {
                 alert(err);
             },
             () => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         );
     }
     OpenJournal() {
         if (!AppTool.IsNullOrEmpty(this._JournalPM.Id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this._JournalPM.Id, ObjectTableName: 'Journal' });
@@ -111,7 +167,7 @@ export class YearTransferComponent extends BaseComponent {
         }
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OnKeyUp(key) {
         if (!AppTool.IsNullOrEmpty(key)) {

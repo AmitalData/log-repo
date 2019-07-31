@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { QuestionnairePM } from '../../../../CRM/EntityPMs/QuestionnairePM';
 import { QuestionnaireQuestionPM } from '../../../../CRM/EntityPMs/QuestionnaireQuestionPM';
@@ -21,7 +21,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
     providers: [QuestionnairePMService],
 })
 export class AddEditQuestionnaireComponent extends BaseComponent{
-
+    private CurrentSession = SessionLocator.SelectedSession;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     public ValidationErrorsList: string[] = [];
@@ -134,12 +134,12 @@ export class AddEditQuestionnaireComponent extends BaseComponent{
                 }
                 else {
 
-                    SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+                    this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
                     this._QuestionnairePMService.get(args.EntityId).subscribe(response => {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                         this.EntityPM = response.Result;
-                        //SessionLocator.CurrentSession.CurrentWindow.Title = this.EntityPM.Name;
+                        //this.CurrentSession.CurrentWindow.Title = this.EntityPM.Name;
                         this.CurrentVersionNumber = this.EntityPM.VersionNumber;
                         this.ItemsSource = new ObservableCollection([]);
                         this.BuildItemsSource();
@@ -311,13 +311,13 @@ export class AddEditQuestionnaireComponent extends BaseComponent{
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             if (this.IsNewEntity) {
                 this._QuestionnairePMService.insert(this.EntityPM).subscribe(response => {
 
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (!response.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit(response.Result.Id);
+                        this.CurrentSession.CloseCurrentWindowEmit(response.Result.Id);
                     }
                     else {
                         this.ValidationErrorsList = response.ErrorsArray;
@@ -327,9 +327,9 @@ export class AddEditQuestionnaireComponent extends BaseComponent{
             } else {
                 this._QuestionnairePMService.update(this.EntityPM).subscribe(response => {
 
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (!response.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit(response.Result.Id);
+                        this.CurrentSession.CloseCurrentWindowEmit(response.Result.Id);
                     }
                     else {
                         this.ValidationErrorsList = response.ErrorsArray;
@@ -341,7 +341,7 @@ export class AddEditQuestionnaireComponent extends BaseComponent{
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 
@@ -512,4 +512,3 @@ export class QuestionnaireQuestionViewModel extends BaseComponent {
     }
 
 }
- 

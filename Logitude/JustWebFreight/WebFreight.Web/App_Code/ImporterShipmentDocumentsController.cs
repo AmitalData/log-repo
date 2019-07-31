@@ -315,6 +315,10 @@ namespace WebFreight.Web.App_Code
                 //SecurityUtility.CheckContactFeature("DocumentsFiling", "UPDATE", EntityAM.ImporterTenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(EntityAM.ImporterTenant);
                 DocumentsFilingPM ImporterDocumentFilingPM = documentsFilingQuery.GetSinglePM(EntityAM.CustomerDocumentId, EntityAM.ImporterTenant);
+                if (ImporterDocumentFilingPM == null)
+                {
+                    ImporterDocumentFilingPM = documentsFilingQuery.GetSinglePMByForwarderId(EntityAM.ForwarderDocumentId, EntityAM.ImporterTenant);
+                }
                 APIException Result = MapEntityAMToEntityPM(EntityAM, ImporterDocumentFilingPM);
 
                 bool IsNewLog = false;

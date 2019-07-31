@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class AccountingTransferLineUpdateClass
@@ -168,7 +172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "EntityId",
-					  						DefaultText =  @"Entity",
+					  						DefaultText =  "Entity",
 					  						HelpTextCode =  "EntityId",
 					  						Code =  "EntityId",
 					  						DependencyFilter3IsList =  false,
@@ -225,7 +229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "AccountingTransferHeaderId",
-					  						DefaultText =  @"Accounting Transfer Header",
+					  						DefaultText =  "Accounting Transfer Header",
 					  						HelpTextCode =  "AccountingTransferHeaderId",
 					  						Code =  "AccountingTransferHeaderId",
 					  						DependencyFilter3IsList =  false,
@@ -282,7 +286,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search..",
+					  						DefaultText =  "Search..",
 					  						HelpTextCode =  "SearchFields",
 					  						Code =  "SearchFields",
 					  						DependencyFilter3IsList =  false,
@@ -339,7 +343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "EntityReference",
-					  						DefaultText =  @"Entity",
+					  						DefaultText =  "Entity",
 					  						HelpTextCode =  "EntityReference",
 					  						Code =  "EntityReference",
 					  						DependencyFilter3IsList =  false,

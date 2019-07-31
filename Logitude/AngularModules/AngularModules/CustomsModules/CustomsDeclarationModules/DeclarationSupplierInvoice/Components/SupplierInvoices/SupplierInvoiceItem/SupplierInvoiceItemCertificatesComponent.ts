@@ -43,7 +43,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
     IsDisplayOnly: boolean;
     IsHeaderVisible: boolean = false;
     IsFromCustomsAnswers: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -297,14 +297,14 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
                 }
                 else {
                     this.RejectChanges();
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
 
             });
 
         }
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
+            this.CurrentSession.CloseCurrentWindowEmit('cancel');
         }
 
 
@@ -410,7 +410,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
                             this.supplierInvoicePMService.update(this.invoice).subscribe((response: any) => {
                                 var result = response.Result;
                                 console.log("[response/supplierInvoicePMService.update]", result);
-                                SessionLocator.CurrentSession.CloseCurrentWindow();
+                                this.CurrentSession.CloseCurrentWindow();
                                 if (!AppTool.IsNullOrEmpty(result)) {
 
                                 } else {
@@ -418,10 +418,10 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
                             });
 
                         } else {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
                         }
 
-                        //SessionLocator.CurrentSession.CloseCurrentWindow();
+                        //this.CurrentSession.CloseCurrentWindow();
                     }
                     else {
                         this.ValidationErrorsList = errors;
@@ -464,7 +464,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
                     this.supplierInvoicePMService.update(this.invoice).subscribe((response: any) => {
                         var result = response.Result;
                         console.log("[response/supplierInvoicePMService.update]", result);
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                         if (!AppTool.IsNullOrEmpty(result)) {
 
                         } else {
@@ -473,7 +473,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
 
                 }
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
                
             }

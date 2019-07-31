@@ -41,9 +41,9 @@ export class ActivitiesModule {
     public CreateActivity() {
         var activityNo = this.GeneralFun.RandomNum();
 
+        this.editTask.EditTask('Task # ' + activityNo);
         this.addTask.CreateNewTask('Task # ' + activityNo);
         this.GeneralFun.QuickSearchTextBox('Activity_Search', 'Task # ' + activityNo);
-        this.editTask.EditTask('Task # ' + activityNo);
 
         this.addPhoneCall.CreateNewPhoneCall('Phone Call # ' + activityNo);
         this.GeneralFun.QuickSearchTextBox('Activity_Search', 'Phone Call # ' + activityNo);
@@ -57,8 +57,11 @@ export class ActivitiesModule {
     }
     
 
-
+ 
 }
 
+this.addPhoneCall.CreateNewTask('task#'+activityNo);
+this.QuickSearchBox('activity','task#'+activityNo);
+this.editPhoneCall.EditPhoneCall("")
 
 

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {EscalationArgs} from './NewSLAComponent';
@@ -19,7 +19,7 @@ export class AddEditEscalationComponent extends BaseComponent {
     public DataContext: EscalationArgs;
     public ValidationErrorsList: string[] = [];
     public EntityPM: SLAEscalationPM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -33,7 +33,7 @@ export class AddEditEscalationComponent extends BaseComponent {
     // Commands
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors = [];
@@ -115,7 +115,7 @@ export class AddEditEscalationComponent extends BaseComponent {
             if (this.DataContext.EscalationFor == "RW") {
                 this.DataContext.trigger.FillResolveEscalationList();
             }
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 

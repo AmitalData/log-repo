@@ -764,12 +764,18 @@ export class ShipmentPM {
     public get GrossWeightEdited() { return this.grossWeightEdited; }
     public set GrossWeightEdited(newValue: boolean) { if (this.grossWeightEdited != newValue) { this.grossWeightEdited = newValue; this.MarkAsDirty("GrossWeightEdited"); } }
        
-	 
+    private orderGrossWeightEdited: boolean;
+    public get OrderGrossWeightEdited() { return this.orderGrossWeightEdited; }
+    public set OrderGrossWeightEdited(newValue: boolean) { if (this.orderGrossWeightEdited != newValue) { this.orderGrossWeightEdited = newValue; this.MarkAsDirty("OrderGrossWeightEdited"); } }
+
     private chargeableWeightEdited: boolean;
     public get ChargeableWeightEdited() { return this.chargeableWeightEdited; }
     public set ChargeableWeightEdited(newValue: boolean) { if (this.chargeableWeightEdited != newValue) { this.chargeableWeightEdited = newValue; this.MarkAsDirty("ChargeableWeightEdited"); } }
        
-	 
+    private orderChargeableWeightEdited: boolean;
+    public get OrderChargeableWeightEdited() { return this.orderChargeableWeightEdited; }
+    public set OrderChargeableWeightEdited(newValue: boolean) { if (this.orderChargeableWeightEdited != newValue) { this.orderChargeableWeightEdited = newValue; this.MarkAsDirty("OrderChargeableWeightEdited"); } }
+
     private volumeUnitCode: string;
     public get VolumeUnitCode() { return this.volumeUnitCode; }
     public set VolumeUnitCode(newValue: string) { if (this.volumeUnitCode != newValue) { this.volumeUnitCode = newValue; this.MarkAsDirty("VolumeUnitCode"); } }
@@ -1937,16 +1943,7 @@ export class ShipmentPM {
     public set MainCarriageToPortCountryName(newValue: string) { if (this.mainCarriageToPortCountryName != newValue) { this.mainCarriageToPortCountryName = newValue; this.MarkAsDirty("MainCarriageToPortCountryName"); } }
        
 	 
-    private mainCarriageFromPortCountryEC: boolean;
-    public get MainCarriageFromPortCountryEC() { return this.mainCarriageFromPortCountryEC; }
-    public set MainCarriageFromPortCountryEC(newValue: boolean) { if (this.mainCarriageFromPortCountryEC != newValue) { this.mainCarriageFromPortCountryEC = newValue; this.MarkAsDirty("MainCarriageFromPortCountryEC"); } }
-       
-	 
-    private mainCarriageToPortCountryEC: boolean;
-    public get MainCarriageToPortCountryEC() { return this.mainCarriageToPortCountryEC; }
-    public set MainCarriageToPortCountryEC(newValue: boolean) { if (this.mainCarriageToPortCountryEC != newValue) { this.mainCarriageToPortCountryEC = newValue; this.MarkAsDirty("MainCarriageToPortCountryEC"); } }
-       
-	 
+
     private mainCarriageVesselId: string;
     public get MainCarriageVesselId() { return this.mainCarriageVesselId; }
     public set MainCarriageVesselId(newValue: string) { if (this.mainCarriageVesselId != newValue) { this.mainCarriageVesselId = newValue; this.MarkAsDirty("MainCarriageVesselId"); } }
@@ -2317,21 +2314,18 @@ export class ShipmentPM {
     public set Transshipment3ToPortCountryName(newValue: string) { if (this.transshipment3ToPortCountryName != newValue) { this.transshipment3ToPortCountryName = newValue; this.MarkAsDirty("Transshipment3ToPortCountryName"); } }
        
 	 
-    private transshipment1ToPortCountryEC: boolean;
-    public get Transshipment1ToPortCountryEC() { return this.transshipment1ToPortCountryEC; }
-    public set Transshipment1ToPortCountryEC(newValue: boolean) { if (this.transshipment1ToPortCountryEC != newValue) { this.transshipment1ToPortCountryEC = newValue; this.MarkAsDirty("Transshipment1ToPortCountryEC"); } }
-       
+ 
 	 
-    private transshipment2ToPortCountryEC: boolean;
-    public get Transshipment2ToPortCountryEC() { return this.transshipment2ToPortCountryEC; }
-    public set Transshipment2ToPortCountryEC(newValue: boolean) { if (this.transshipment2ToPortCountryEC != newValue) { this.transshipment2ToPortCountryEC = newValue; this.MarkAsDirty("Transshipment2ToPortCountryEC"); } }
-       
+   
 	 
-    private transshipment3ToPortCountryEC: boolean;
-    public get Transshipment3ToPortCountryEC() { return this.transshipment3ToPortCountryEC; }
-    public set Transshipment3ToPortCountryEC(newValue: boolean) { if (this.transshipment3ToPortCountryEC != newValue) { this.transshipment3ToPortCountryEC = newValue; this.MarkAsDirty("Transshipment3ToPortCountryEC"); } }
+    private fromCountryIsEC: boolean;
+    public get FromCountryIsEC() { return this.fromCountryIsEC; }
+    public set FromCountryIsEC(newValue: boolean) { if (this.fromCountryIsEC != newValue) { this.fromCountryIsEC = newValue; this.MarkAsDirty("FromCountryIsEC"); } }
        
-	 
+    private toCountryIsEC: boolean;
+    public get ToCountryIsEC() { return this.toCountryIsEC; }
+    public set ToCountryIsEC(newValue: boolean) { if (this.toCountryIsEC != newValue) { this.toCountryIsEC = newValue; this.MarkAsDirty("ToCountryIsEC"); } }
+
     private finalDistenationPortId: string;
     public get FinalDistenationPortId() { return this.finalDistenationPortId; }
     public set FinalDistenationPortId(newValue: string) { if (this.finalDistenationPortId != newValue) { this.finalDistenationPortId = newValue; this.MarkAsDirty("FinalDistenationPortId"); } }
@@ -3288,16 +3282,6 @@ export class ShipmentPM {
     public set FromCountryId(newValue: string) { if (this.fromCountryId != newValue) { this.fromCountryId = newValue; this.MarkAsDirty("FromCountryId"); } }
        
 	 
-    private toCountryIsEC: boolean;
-    public get ToCountryIsEC() { return this.toCountryIsEC; }
-    public set ToCountryIsEC(newValue: boolean) { if (this.toCountryIsEC != newValue) { this.toCountryIsEC = newValue; this.MarkAsDirty("ToCountryIsEC"); } }
-       
-	 
-    private fromCountryIsEC: boolean;
-    public get FromCountryIsEC() { return this.fromCountryIsEC; }
-    public set FromCountryIsEC(newValue: boolean) { if (this.fromCountryIsEC != newValue) { this.fromCountryIsEC = newValue; this.MarkAsDirty("FromCountryIsEC"); } }
-       
-	 
     private copyFromShipmentId: string;
     public get CopyFromShipmentId() { return this.copyFromShipmentId; }
     public set CopyFromShipmentId(newValue: string) { if (this.copyFromShipmentId != newValue) { this.copyFromShipmentId = newValue; this.MarkAsDirty("CopyFromShipmentId"); } }
@@ -3710,8 +3694,7 @@ export class ShipmentPM {
     private mAWBStackAirlineId: string;
     public get MAWBStackAirlineId() { return this.mAWBStackAirlineId; }
     public set MAWBStackAirlineId(newValue: string) { if (this.mAWBStackAirlineId != newValue) { this.mAWBStackAirlineId = newValue; this.MarkAsDirty("MAWBStackAirlineId"); } }
-       
-	 
+     	 
     private dontAddToImportersQueue: boolean;
     public get DontAddToImportersQueue() { return this.dontAddToImportersQueue; }
     public set DontAddToImportersQueue(newValue: boolean) { if (this.dontAddToImportersQueue != newValue) { this.dontAddToImportersQueue = newValue; this.MarkAsDirty("DontAddToImportersQueue"); } }
@@ -3735,27 +3718,27 @@ export class ShipmentPM {
     private firstOperationalCloseDate: Date;
     public get FirstOperationalCloseDate() { return this.firstOperationalCloseDate; }
     public set FirstOperationalCloseDate(newValue: Date) { if (this.firstOperationalCloseDate != newValue) { this.firstOperationalCloseDate = newValue; this.MarkAsDirty("FirstOperationalCloseDate"); } }
+    
+    private firstAccountingCloseDate: Date;
+    public get FirstAccountingCloseDate() { return this.firstAccountingCloseDate; }
+    public set FirstAccountingCloseDate(newValue: Date) { if (this.firstAccountingCloseDate != newValue) { this.firstAccountingCloseDate = newValue; this.MarkAsDirty("FirstAccountingCloseDate"); } }
 
     private accountingCloseDate: Date;
     public get AccountingCloseDate() { return this.accountingCloseDate; }
     public set AccountingCloseDate(newValue: Date) { if (this.accountingCloseDate != newValue) { this.accountingCloseDate = newValue; this.MarkAsDirty("AccountingCloseDate"); } }
-       
-	 
+      	 
     private fromCountryCode: string;
     public get FromCountryCode() { return this.fromCountryCode; }
     public set FromCountryCode(newValue: string) { if (this.fromCountryCode != newValue) { this.fromCountryCode = newValue; this.MarkAsDirty("FromCountryCode"); } }
-       
-	 
+     	 
     private toCountryCode: string;
     public get ToCountryCode() { return this.toCountryCode; }
     public set ToCountryCode(newValue: string) { if (this.toCountryCode != newValue) { this.toCountryCode = newValue; this.MarkAsDirty("ToCountryCode"); } }
-       
-	 
+     	 
     private convertToCustomFile: boolean;
     public get ConvertToCustomFile() { return this.convertToCustomFile; }
     public set ConvertToCustomFile(newValue: boolean) { if (this.convertToCustomFile != newValue) { this.convertToCustomFile = newValue; this.MarkAsDirty("ConvertToCustomFile"); } }
-       
-	 
+     	 
     private customerTenantNumber: number;
     public get CustomerTenantNumber() { return this.customerTenantNumber; }
     public set CustomerTenantNumber(newValue: number) { if (this.customerTenantNumber != newValue) { this.customerTenantNumber = newValue; this.MarkAsDirty("CustomerTenantNumber"); } }
@@ -4054,6 +4037,24 @@ export class ShipmentPM {
     public get INTTRASIStatusName() { return this.iNTTRASIStatusName; }
     public set INTTRASIStatusName(newValue: string) { this.iNTTRASIStatusName = newValue; this.MarkAsDirty(); }
 
+
+    private iNTTRABookingStatusCode: string;
+    public get INTTRABookingStatusCode() { return this.iNTTRABookingStatusCode; }
+    public set INTTRABookingStatusCode(newValue: string) { this.iNTTRABookingStatusCode = newValue; this.MarkAsDirty(); }
+
+    private iNTTRABookingStatusName: string;
+    public get INTTRABookingStatusName() { return this.iNTTRABookingStatusName; }
+    public set INTTRABookingStatusName(newValue: string) { this.iNTTRABookingStatusName = newValue; this.MarkAsDirty(); }
+
+    private iNTTRABookingTransStatusCode: string;
+    public get INTTRABookingTransStatusCode() { return this.iNTTRABookingTransStatusCode; }
+    public set INTTRABookingTransStatusCode(newValue: string) { this.iNTTRABookingTransStatusCode = newValue; this.MarkAsDirty(); }
+
+    private iNTTRABookingTransStatusName: string;
+    public get INTTRABookingTransStatusName() { return this.iNTTRABookingTransStatusName; }
+    public set INTTRABookingTransStatusName(newValue: string) { this.iNTTRABookingTransStatusName = newValue; this.MarkAsDirty(); }
+
+
     private iNTTRASIStatusDate: string;
     public get INTTRASIStatusDate() { return this.iNTTRASIStatusDate; }
     public set INTTRASIStatusDate(newValue: string) { this.iNTTRASIStatusDate = newValue; this.MarkAsDirty(); }
@@ -4205,6 +4206,59 @@ export class ShipmentPM {
             this.MarkAsDirty("HasContainerException");
         }
     }
+
+
+    private originMainCarriageFromPortId: string;
+    public get OriginMainCarriageFromPortId() { return this.originMainCarriageFromPortId; }
+    public set OriginMainCarriageFromPortId(newValue: string) {
+        if (this.originMainCarriageFromPortId != newValue) {
+            this.originMainCarriageFromPortId = newValue;
+            this.MarkAsDirty("OriginMainCarriageFromPortId");
+        }
+    }
+
+    private originFinalDestinationPortId: string;
+    public get OriginFinalDestinationPortId() { return this.originFinalDestinationPortId; }
+    public set OriginFinalDestinationPortId(newValue: string) {
+        if (this.originFinalDestinationPortId != newValue) {
+            this.originFinalDestinationPortId = newValue;
+            this.MarkAsDirty("HasContainerException");
+        }
+    }
+
+    private aRInvoices: string;
+    public get ARInvoices() { return this.aRInvoices; }
+    public set ARInvoices(newValue: string) {
+        if (this.aRInvoices != newValue) {
+            this.aRInvoices = newValue;
+            this.MarkAsDirty("ARInvoices");
+        }
+    }
+
+    private masterCreatedFromHouseId: string;
+    public get MasterCreatedFromHouseId() { return this.masterCreatedFromHouseId; }
+    public set MasterCreatedFromHouseId(newValue: string) {
+        if (this.masterCreatedFromHouseId != newValue) {
+            this.masterCreatedFromHouseId = newValue;
+            this.MarkAsDirty("MasterCreatedFromHouseId");
+        }
+    }
+
+    private convertShipmentToLCL: boolean;
+    public get ConvertShipmentToLCL() { return this.convertShipmentToLCL; }
+    public set ConvertShipmentToLCL(newValue: boolean) { if (this.convertShipmentToLCL != newValue) { this.convertShipmentToLCL = newValue; this.MarkAsDirty("ConvertShipmentToLCL"); } }
+    
+    private convertShipmentToFCL: boolean;
+    public get ConvertShipmentToFCL() { return this.convertShipmentToFCL; }
+    public set ConvertShipmentToFCL(newValue: boolean) { if (this.convertShipmentToFCL != newValue) { this.convertShipmentToFCL = newValue; this.MarkAsDirty("ConvertShipmentToFCL"); } }
+
+    private shipmentDirectionConverted: boolean;
+    public get ShipmentDirectionConverted() { return this.shipmentDirectionConverted; }
+    public set ShipmentDirectionConverted(newValue: boolean) { if (this.shipmentDirectionConverted != newValue) { this.shipmentDirectionConverted = newValue; this.MarkAsDirty("ShipmentDirectionConverted"); } }
+
+    private packagesDeleted: boolean;
+    public get PackagesDeleted() { return this.packagesDeleted; }
+    public set PackagesDeleted(newValue: boolean) { if (this.packagesDeleted != newValue) { this.packagesDeleted = newValue; this.MarkAsDirty("PackagesDeleted"); } }
 
     public OldEntityPM: ShipmentPM;
 

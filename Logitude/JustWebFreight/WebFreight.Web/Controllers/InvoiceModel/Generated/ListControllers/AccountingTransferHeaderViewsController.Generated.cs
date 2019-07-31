@@ -128,8 +128,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				if(filters.Tenant != null)
-					tenant = filters.Tenant.Value;
 				                
 				SecurityUtility.CheckContactFeature("AccountingTransferHeader", "READ", authToken.Tenant);
 	

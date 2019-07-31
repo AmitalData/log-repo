@@ -260,7 +260,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             {
 
 
-                int iMTKR = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + "MTKR", fullAccountingSetting.Tenant);
+                int iMTKR = (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + "MTKR", fullAccountingSetting.Tenant);
 
 
                 us.Update(new Def.EntityPMs.GLAccountPM()
@@ -308,7 +308,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
             while (tot++ < buildGLAccountEachType)
             {
-                int iSPDR = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + "SPDR", fullAccountingSetting.Tenant);
+                int iSPDR = (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + "SPDR", fullAccountingSetting.Tenant);
 
 
                 us.Update(new Def.EntityPMs.GLAccountPM()
@@ -364,7 +364,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             while (tot++ < timeLimit)
             {
 
-                int iRevenues = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Revenues.ToIntString(), fullAccountingSetting.Tenant);
+                int iRevenues = (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Revenues.ToIntString(), fullAccountingSetting.Tenant);
                 us.Update(new Def.EntityPMs.GLAccountPM()
                 {
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -412,7 +412,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             while (tot++ < timeLimit)
             {
                 int iExpenses =
-            CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Expenses.ToIntString(), fullAccountingSetting.Tenant);
+            (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Expenses.ToIntString(), fullAccountingSetting.Tenant);
 
 
                 us.Update(new Def.EntityPMs.GLAccountPM()
@@ -444,9 +444,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             ChartOfAccountProvider chartOfAccountProvider,
             DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int times)
         {
-
-
-            var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
+            GLAccountUpdateService us = GetGLAccountUpdateService(accountingContext, fullAccountingSetting);
             //for (int i =
             //    displayNumberProvider
             //    .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
@@ -461,7 +459,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
 
-                    int iClient = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
+                    int iClient = (new CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + GLAccountTypeEnum.Client.ToIntString(), fullAccountingSetting.Tenant);
                     us.Update(new Def.EntityPMs.GLAccountPM()
                     {
                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -484,9 +482,20 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     }, true);
                     scope.Complete();
                 }
-                
+
             }
-            
+
+        }
+        int _CountGLAccountUpdateService = 0;
+        private GLAccountUpdateService GetGLAccountUpdateService(IAccountingContext accountingContext, FullAccountingSetting fullAccountingSetting)
+        {
+            if (_CountGLAccountUpdateService > 100)
+            {
+                accountingContext = AccountingContext.GetContext(fullAccountingSetting.Tenant);
+                _CountGLAccountUpdateService = 0;
+            }
+            _CountGLAccountUpdateService++;
+            return new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
         }
 
         bool amount2addMore = false;
@@ -507,7 +516,8 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             ChartOfAccountProvider chartOfAccountProvider,
             DisplayNumberProvider displayNumberProvider, FullAccountingSetting fullAccountingSetting, int amount)
         {
-            var us = new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), fullAccountingSetting.Tenant);
+            var us = //new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), 
+                GetGLAccountUpdateService(accountingContext, fullAccountingSetting);
             //for (int i = displayNumberProvider
             //    .GetMaxDisplayNumberOfType(ChartOfAccountsTypeEnum.Customers.ToIntString(), fullAccountingSetting.Tenant)
             //    ; i < times; i++)
@@ -519,7 +529,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             while (tot++ < amount)
             {
 
-                int iVendors = CodeCounter.GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Vendors.ToIntString(), fullAccountingSetting.Tenant);
+                int iVendors =  (new  CodeCounterWrapper(true)).GetNumber(/*DummyTenantProvider*/ "DummyTP:" + ChartOfAccountsTypeEnum.Vendors.ToIntString(), fullAccountingSetting.Tenant);
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
 
@@ -780,9 +790,10 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 DateTime DueDate = dueDate;//DateTime.Now.AddDays(_Rand.Next(-600, 180));
                 decimal localAm = _Rand.Next(201, 5000000) / 100m;
                 decimal foreignAm = localAm / 3 + ((int)accDate1.Subtract(forMonth).TotalDays / 100);
-
-                JLCreditDebitVatProfile journalLinesProfile = (JLCreditDebitVatProfile)Enum.ToObject(typeof(JLCreditDebitVatProfile), _Rand.Next(4));
-
+                
+                //Task 48370: Transactions service -Load Test & Performance - change logic - Create only journal lines 1 - credit or - 2 - debit
+                //JLCreditDebitVatProfile journalLinesProfile = (JLCreditDebitVatProfile)Enum.ToObject(typeof(JLCreditDebitVatProfile), _Rand.Next(4));
+                JLCreditDebitVatProfile journalLinesProfile = JLCreditDebitVatProfile.CreditDebitInTwoLine;
                 switch (journalLinesProfile)
                 {
                     case JLCreditDebitVatProfile.CreditDebitOneLine:

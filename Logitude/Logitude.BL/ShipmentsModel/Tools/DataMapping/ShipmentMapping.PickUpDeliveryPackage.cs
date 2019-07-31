@@ -30,6 +30,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.Length = itemPM.Length;
             itemPoco.OriginalShipmentPackageId = itemPM.OriginalShipmentPackageId;
             itemPoco.IsMultiHarmonize = itemPM.IsMultiHarmonize;
+            itemPoco.Make = itemPM.Make;
+            itemPoco.Year = itemPM.Year;
+            itemPoco.Color = itemPM.Color;
+            itemPoco.Model = itemPM.Model;
+            itemPoco.ChassisNumber = itemPM.ChassisNumber;
+            itemPoco.RegistrationNumber = itemPM.RegistrationNumber;
+            itemPoco.CountryId = itemPM.CountryId;
         }
     }
 }

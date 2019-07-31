@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
@@ -22,7 +22,7 @@ export class NewChartOfAccountComponent extends BaseComponent{
     public TenantPM: TenantPM;
     public ValidationErrorsList: string[] = [];
     myService: ChartOfAccountPMService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -104,7 +104,7 @@ export class NewChartOfAccountComponent extends BaseComponent{
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SubmitChanges() {
@@ -112,12 +112,12 @@ export class NewChartOfAccountComponent extends BaseComponent{
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                this.CurrentSession.CloseCurrentWindowEmit("ok");
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

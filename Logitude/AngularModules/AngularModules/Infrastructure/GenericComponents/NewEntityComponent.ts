@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, AfterViewInit, ViewChild, ViewContainerRef, ChangeDetectorRef, QueryList, ViewChildren} from '@angular/core';
 import {EntityArgs} from '../DataContracts/EntityArgs';
 import {SessionLocator} from '../Utilities/SessionLocator';
@@ -27,6 +27,7 @@ export class NewEntityComponent {
     public ValidationErrorsList: string[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     LayoutDirection: string = 'ltr';
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs,private entityPMService: EntityPMService, private CD: ChangeDetectorRef, private _entityResourceService: EntityResourceService) {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
     }
@@ -86,19 +87,20 @@ export class NewEntityComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+      
         this.SaveEntityChanges();
     }
     private SaveEntityChanges() {
-        if (this.EntityPM.IsDirty) {
+        //if (this.EntityPM.IsDirty) {
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
                 res.subscribe(response => {
 
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                     var mm: EntityPMServiceResponse = response;
                     if (!mm.HasError) {
@@ -117,12 +119,12 @@ export class NewEntityComponent {
                                     SessionLocator.AllVatTypesGroups = myResponse.Result;
                                 }
 
-                                SessionLocator.CurrentSession.CloseCurrentWindowEmit(mm.Result["Id"]);
+                                this.CurrentSession.CloseCurrentWindowEmit(mm.Result["Id"]);
                             });
                         }
 
                         else {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit(mm.Result["Id"]);
+                            this.CurrentSession.CloseCurrentWindowEmit(mm.Result["Id"]);
                         }
                     }
 
@@ -136,12 +138,12 @@ export class NewEntityComponent {
                     //this.ValidationErrorsList = allErrors;
 
                     console.log("Error===========>", error);
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 });
             });
-        }
+       // }
     }
-
+     
     private InitEntityPM() {
 
         switch (this.ObjectTableName) {

@@ -103,6 +103,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          AllowedInQueues = a.AllowedInQueues,
                                          LovDisplayMemberPath=a.LovDisplayMemberPath,
                                          LovDisplayMemberPathLocal=a.LovDisplayMemberPathLocal,
+                                         IsTabsHidden = a.IsTabsHidden,
                                      }).ToList();
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -173,6 +174,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     AllowedInQueues = a.AllowedInQueues,
                                     LovDisplayMemberPath = a.LovDisplayMemberPath,
                                     LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
+                                    IsTabsHidden = a.IsTabsHidden,
                                 }).ToList();
             }
 
@@ -251,6 +253,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            AllowedInQueues = a.AllowedInQueues,
                                            LovDisplayMemberPath = a.LovDisplayMemberPath,
                                            LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
+                                           IsTabsHidden = a.IsTabsHidden,
                                        }).ToList();
             }
             if (tenant != 0)
@@ -323,6 +326,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             AllowedInQueues = a.AllowedInQueues,
                                             LovDisplayMemberPath = a.LovDisplayMemberPath,
                                             LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
+                                            IsTabsHidden = a.IsTabsHidden,
                                         }).ToList();
                 }
             }
@@ -412,6 +416,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        AllowedInQueues = a.AllowedInQueues,
                                                        LovDisplayMemberPath = a.LovDisplayMemberPath,
                                                        LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
+                                                       IsTabsHidden = a.IsTabsHidden,
                                                    }).ToList();
                             scope.Complete();
                         }
@@ -492,6 +497,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowedInQueues = a.AllowedInQueues,
                                                    LovDisplayMemberPath = a.LovDisplayMemberPath,
                                                    LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
+                                                   IsTabsHidden = a.IsTabsHidden,
                                                }).ToList();
                         scope.Complete();
                     }
@@ -569,6 +575,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowedInQueues = a.AllowedInQueues,
                                                    LovDisplayMemberPath = a.LovDisplayMemberPath,
                                                    LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
+                                                   IsTabsHidden = a.IsTabsHidden,
                                                }).ToList();
 
                         scope.Complete();
@@ -651,6 +658,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             AllowedInQueues = a.AllowedInQueues,
                                             LovDisplayMemberPath = a.LovDisplayMemberPath,
                                             LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
+                                            IsTabsHidden = a.IsTabsHidden,
                                         }).ToList();
 
 
@@ -796,6 +804,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      NameField = a.NameField,
                                                      LovDisplayMemberPath = a.LovDisplayMemberPath,
                                                      LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
+                                                     IsTabsHidden = a.IsTabsHidden,
                                                  };
             return result;
         }  
@@ -852,6 +861,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowedInQueues = a.AllowedInQueues,
                                                    LovDisplayMemberPath = a.LovDisplayMemberPath,
                                                    LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
+                                                   IsTabsHidden = a.IsTabsHidden,
                                                }).FirstOrDefault();
 
 

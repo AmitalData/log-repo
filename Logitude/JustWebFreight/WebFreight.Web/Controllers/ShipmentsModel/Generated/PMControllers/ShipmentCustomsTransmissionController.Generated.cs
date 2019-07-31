@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ShipmentCustomsTransmission", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ShipmentCustomsTransmission", entityPM.Tenant, authToken.Tenant);
                 
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentCustomsTransmissionService service = new ShipmentCustomsTransmissionService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ShipmentCustomsTransmission", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ShipmentCustomsTransmission", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "ShipmentCustomsTransmission" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ShipmentCustomsTransmissionPM" + entityPM.Id + entityPM.Tenant;

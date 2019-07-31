@@ -1,4 +1,4 @@
-﻿import {ErrorHandler} from '@angular/core';
+import {ErrorHandler} from '@angular/core';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 import {Guid} from '../Utilities/Guid';
 import {SessionInfo} from '../Utilities/SessionInfo';
@@ -6,6 +6,7 @@ import {SessionLocator} from '../Utilities/SessionLocator';
 declare var window, OrginalError, Contexting: any;
 
 export class LogitudeErrorHandler implements ErrorHandler {
+    private CurrentSession = SessionLocator.SelectedSession;
     private _console: Console = console;
     //private rethrowError = true;
     //constructor(rethrowError?: boolean) {
@@ -28,8 +29,8 @@ export class LogitudeErrorHandler implements ErrorHandler {
 
     DisplayErrorMessage(error: any) {
         try {
-            if (SessionLocator.CurrentSession) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+            if (this.CurrentSession) {
+                this.CurrentSession.StopBusyIndicator();
 
                 if (error.message) {
 

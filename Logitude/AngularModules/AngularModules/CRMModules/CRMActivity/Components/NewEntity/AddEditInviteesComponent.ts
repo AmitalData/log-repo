@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef, Output} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -33,18 +33,18 @@ export class AddEditInviteesComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() SearchFieldchangeevent = new EventEmitter();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _entityListService: EntityListService, private cd: ChangeDetectorRef) {
         super();
-        SessionLocator.CurrentSession.SessionEvent.subscribe((res) => {
+        this.CurrentSession.SessionEvent.subscribe((res) => {
             if (res.Name == "InviteeCheckBoxComponent") {
                 this.RefreshEmailList(res.select);
             }
         });
     }
     SetWindowArgs(args: InviteeArgs) {
-        if (!SessionLocator.CurrentSession.Sessionkey) {
-            SessionLocator.CurrentSession.Sessionkey = Guid.newGuid();
+        if (!this.CurrentSession.Sessionkey) {
+            this.CurrentSession.Sessionkey = Guid.newGuid();
         }
         this.InitializeLists();
         this.entityPM = args.Entity;
@@ -66,7 +66,7 @@ export class AddEditInviteesComponent extends BaseComponent {
         if (this.SelectedPartnerItem == null) {
             this.SelectedPartnerItem = this.PartnersObslist.filter(r => r.PartnerType == "All")[0];
         }
-        ComponentArgs.AddComponent(new ParameterComponentArgs(SessionLocator.CurrentSession.Sessionkey + "SendActivity", this));
+        ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "SendActivity", this));
     }
     BuildRequiredEmailList() {
         this.RequiredBoxText = "";
@@ -97,9 +97,9 @@ export class AddEditInviteesComponent extends BaseComponent {
     RefreshEmailList(res: any) {
         var item = null;
         var index = 0;
-        if (!AppTool.IsNullOrEmpty(SessionLocator.CurrentSession.Sessionkey)) {
+        if (!AppTool.IsNullOrEmpty(this.CurrentSession.Sessionkey)) {
             if (ComponentArgs && ComponentArgs.ComponentLists) {
-                var sessionkey: string = SessionLocator.CurrentSession.Sessionkey + "SendActivity";
+                var sessionkey: string = this.CurrentSession.Sessionkey + "SendActivity";
                 var Component = ComponentArgs.ComponentLists.filter(d => d.key == sessionkey)[0];
                 if (Component) {
                     var myComponent = Component.Component;
@@ -295,7 +295,7 @@ export class AddEditInviteesComponent extends BaseComponent {
 
     // Commands
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     private errors = [];
     SaveButtonClicked() {
@@ -304,7 +304,7 @@ export class AddEditInviteesComponent extends BaseComponent {
         this.CheckIsValidEmails(this.OptionalEmailBoxText);
         this.ValidationErrorsList = this.errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

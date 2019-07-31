@@ -49,7 +49,8 @@
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <HyperlinkQuery (click)="ViewReportClicked(item.GroupList, Report)">{{showLocal ? (Report.LocalName?Report.LocalName:Report.Name) : Report.Name}}</HyperlinkQuery>
+                    
+                                                        <HyperlinkQuery id="{{'View' + Report.Code+ 'Reportbtn' | IdGeneratorPipe}}" (click)="ViewReportClicked(item.GroupList, Report)">{{showLocal ? (Report.LocalName?Report.LocalName:Report.Name) : Report.Name}}</HyperlinkQuery>
                                                     </td>
                                                     <td style="width:5px;" *ngIf="Report.Code == 'DSCA'">
                                                         <div></div>

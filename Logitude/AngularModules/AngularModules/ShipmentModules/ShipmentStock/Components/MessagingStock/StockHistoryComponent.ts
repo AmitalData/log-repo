@@ -11,6 +11,7 @@ import { MessagingStockUsageHistoryList } from '../../../../Shipment/EntityLists
 
 export class StockHistoryComponent {
     public ItemsSource: MessagingStockUsageHistoryList[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ItemsSource = [];        
     }
@@ -25,7 +26,7 @@ export class StockHistoryComponent {
     private LoadData(stockId: string) {
         
         this.ItemsSource = [];
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myDomainService == null) {
             this.myDomainService = new ShipmentDomainService();
@@ -34,11 +35,11 @@ export class StockHistoryComponent {
         this.myDomainService.GetLoggedTenantMessagingStockUsageHistoryLists(stockId).subscribe((myResult:any) => {
             this.ItemsSource = myResult;
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

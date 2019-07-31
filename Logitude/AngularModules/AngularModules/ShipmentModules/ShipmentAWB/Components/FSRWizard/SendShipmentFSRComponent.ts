@@ -26,6 +26,7 @@ export class SendShipmentFSRComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "Master";
     public EntityPM: ShipmentPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ValidationErrorsList = [];
@@ -211,7 +212,7 @@ export class SendShipmentFSRComponent extends BaseComponent implements OnInit {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SendButtonClicked() {
@@ -250,7 +251,7 @@ export class SendShipmentFSRComponent extends BaseComponent implements OnInit {
 
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicator("Sending...");
+            this.CurrentSession.StartBusyIndicator("Sending...");
 
             if (this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "D") {
                 this.EntityPM.ShipperId = this.EntityPM.IssuingCarrierAgentId;
@@ -275,7 +276,7 @@ export class SendShipmentFSRComponent extends BaseComponent implements OnInit {
         var myService = new FSRWebService()
         myService.SendFSRShipment(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;

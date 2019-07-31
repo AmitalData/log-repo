@@ -35,28 +35,28 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent extends BaseCompone
         super();
 
         this.ValidationErrors = [];
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
                 }
             });
         }
@@ -74,7 +74,7 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent extends BaseCompone
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     selectedTab: LogTab;
@@ -128,18 +128,18 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent extends BaseCompone
             return;
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this.EntityPM.ContinuousRequestTypeCode = this.ContinuousRequestTypeCode;
         this.EntityPM.Explanation = this.Explanation;
         if (this.IsNewEntity) {
             this._ClaimsRelatedEntityExtendedPMService.insert(this.EntityPM).subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.SendContinuousRequestOnClaimMessage(customSendOptionsArgs);
             });
         }
         else {
             this._ClaimsRelatedEntityExtendedPMService.update(this.EntityPM).subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.SendContinuousRequestOnClaimMessage(customSendOptionsArgs);
             });
         }
@@ -147,7 +147,7 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent extends BaseCompone
 
     SendContinuousRequestOnClaimMessage(customSendOptionsArgs: CustomSendOptionsArgs) {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         var currRequestParams = new ContinuousRequestOnClaimFileRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;

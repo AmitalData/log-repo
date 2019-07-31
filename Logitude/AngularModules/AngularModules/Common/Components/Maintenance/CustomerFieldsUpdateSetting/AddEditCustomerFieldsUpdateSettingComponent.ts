@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit} from '@angular/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -35,7 +35,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
      
     entityResourceService: EntityResourceService;
     public IsResourcesReady: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -109,10 +109,10 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
                     }
                     else {
 
-                        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+                        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
                         if (!AppTool.IsNullOrEmpty(this.EntityId)) {
                             this.customerFieldsUpdateSettingPMService.get(this.EntityId).subscribe(response => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
 
                                 var pmResponse: ServiceResponse = response;
                                 if (!pmResponse.HasError && pmResponse.Result) {
@@ -148,13 +148,13 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
             this.ValidationErrorsList = errors;
        // }
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             if (this.IsNewEntity) {
                 this.customerFieldsUpdateSettingPMService.insert(this.EntityPM).subscribe(response => {
 
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (!response.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit(response.Result.Id);
+                        this.CurrentSession.CloseCurrentWindowEmit(response.Result.Id);
                     }
                     else {
                         this.ValidationErrorsList = response.ErrorsArray;
@@ -164,9 +164,9 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
             } else {
                 this.customerFieldsUpdateSettingPMService.update(this.EntityPM).subscribe(response => {
 
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (!response.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit(response.Result.Id);
+                        this.CurrentSession.CloseCurrentWindowEmit(response.Result.Id);
                     }
                     else {
                         this.ValidationErrorsList = response.ErrorsArray;
@@ -178,7 +178,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 

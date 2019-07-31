@@ -9,11 +9,11 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 })
 
 export class btnComponentComputingPartner   {
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) { }
     MoreDetails() {
         var ServiceContact: ContactListService = new ContactListService();
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         ServiceContact.getSingle(this.rowData.CreatedByUserId).subscribe(res => {
             if (!res.HasError) {
                 if (res.Result != null)
@@ -24,7 +24,7 @@ export class btnComponentComputingPartner   {
                     if (res.Result != null)
                         this.rowData.UpdatedByUserName = res.Result.EnglishName;
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 var logWindow = new LogitudeWindow();
                 logWindow.Width = 500;

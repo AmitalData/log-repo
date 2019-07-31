@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -34,20 +34,20 @@ export class BankDepositExtendedListService {
         });
     }
 
-    //GetBankDepositsSummary() {
-    //    var authHeader = new Headers();
-    //    authHeader.append('Token', sessionStorage.getItem("Token"));
+    GetBankDepositsSummary() {
+        var authHeader = new Headers();
+       
+        authHeader.append('Token', SessionInfo.Token);
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetBankDepositsSummary?', {
+                headers: authHeader
+            }).map(response => {
 
-    //    return Observable.defer(() => {
-    //        return this._http.get(this._apiUrl + '/GetBankDepositsSummary?', {
-    //            headers: authHeader
-    //        }).map(response => {
-
-    //            var allLists = response.json();
-    //            return allLists;
-    //        });
-    //    });
-    //}
+                var allLists = response.json();
+                return allLists;
+            });
+        });
+    }
 
     MapJsonToEntityList(jsonList: any) {
 

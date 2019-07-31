@@ -16,7 +16,7 @@ export class PhysicalCheckMenuButtonsHandler {
     isButtonClicked: boolean = false;
     MenuButtonCode: string = null;
     public EntityPM: PhysicalCheckPM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     private _PhysicalCheckWebService: PhysicalCheckWebService = new PhysicalCheckWebService;
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -25,16 +25,16 @@ export class PhysicalCheckMenuButtonsHandler {
     }
 
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
         }
@@ -42,7 +42,7 @@ export class PhysicalCheckMenuButtonsHandler {
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
-            if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.CurrentSession.CurrentEditComponent != null) {
 
                 var table = window.ObjectTables.filter(d => d.Name === 'Shipment')[0];
 
@@ -101,7 +101,7 @@ export class PhysicalCheckMenuButtonsHandler {
                 this._PhysicalCheckWebService.PostClosePhysicalCheck(this.EntityPM.Id, this.EntityPM.Tenant)
                     .subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             let messageWindow = new MessageWindow();
                             messageWindow.Width = 300;
                             messageWindow.Height = 180;

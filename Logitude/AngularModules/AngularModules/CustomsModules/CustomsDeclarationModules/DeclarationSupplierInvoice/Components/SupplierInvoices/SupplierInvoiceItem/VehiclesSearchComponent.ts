@@ -20,6 +20,7 @@ export class VehiclesSearchComponent extends BaseComponent {
     public selectedVehicles = new ObservableCollection([]);
 
     DataContext: any = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef) {
         super();
        
@@ -77,14 +78,14 @@ export class VehiclesSearchComponent extends BaseComponent {
 
     CancelButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
         
 
 
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
         this.Parent.SelectVehicleCompleted(this.SelectedRows);
 
    

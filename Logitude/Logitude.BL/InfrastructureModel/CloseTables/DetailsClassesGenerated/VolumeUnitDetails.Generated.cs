@@ -41,13 +41,6 @@ namespace Logitude.BL.InfrastructureModel
                 Code = "CBM", 
                 Name = "CBM", 
 			});
-			 
-            all.Add(new VolumeUnitDetails()
-            {    
-                SearchFields = "TES,TES", 
-                Code = "TES", 
-                Name = "TES", 
-			});
 			
             return all;
        }

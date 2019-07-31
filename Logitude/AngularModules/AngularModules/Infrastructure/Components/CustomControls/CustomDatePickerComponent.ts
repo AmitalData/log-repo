@@ -51,17 +51,18 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     mouseOver: boolean = false;
     public IsDisabled: boolean = false;
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder) {
         super();
         this.myForm = fb.group({});
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.ControlId = "ComboBox_-1_-1";
             this.DropdownId = "Dropdown_-1_-1";
             this.ListControlId = "List_-1_-1";
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("ComboBox");
+            var idIndex = this.CurrentSession.GetNewId("ComboBox");
             this.ControlId = "ComboBox_" + idIndex;
             this.DropdownId = "Dropdown_" + idIndex;
             this.ListControlId = "List_" + idIndex;

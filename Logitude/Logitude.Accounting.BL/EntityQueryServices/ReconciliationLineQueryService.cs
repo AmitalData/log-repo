@@ -16,5 +16,48 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return this.repository.IsReconciledBy(tenant, transactionIdList);
         }
+
+        public ReconciliationLine GetLineByTransactionId(string transId, int tenant)
+        {
+            ReconciliationLine recoLine = (from a in context.ReconciliationLines
+                                           where a.TransactionId == transId && a.Tenant == tenant
+                                           select a).FirstOrDefault();
+            //var pm = GetEntityPM(recoLine);
+            return recoLine;
+        }
+        public List<ReconciliationLinePM> GetLineByTransactionIds(List<string> transId, int tenant)
+        {
+            List<ReconciliationLine> recoLines = (from a in context.ReconciliationLines
+                                           where transId.Contains(a.TransactionId) && a.Tenant == tenant
+                                           select a).ToList();
+
+            List<ReconciliationLinePM> pms = recoLines.Select(poco => GetEntityPM(poco)).ToList();
+
+            return pms;
+        }
+        public List<ReconciliationLinePM> GetLinesByReconciledWithTransactionId(string transId, int tenant)
+        {
+            List<ReconciliationLine> recoLines = (from a in context.ReconciliationLines
+                                                  where a.ReconciledWithTransactionId == transId && a.Tenant == tenant
+                                                  select a).ToList();
+
+            List<ReconciliationLinePM> pms = recoLines.Select(poco => GetEntityPM(poco)).ToList();
+
+            return pms;
+        }
+
+        public List<ReconciliationLinePM> GetLinesByTransactionId(string transId, int tenant)
+        {
+            List<ReconciliationLine> recoLines = (from a in context.ReconciliationLines
+                                                  where a.TransactionId == transId && a.Tenant == tenant
+                                                  select a).ToList();
+
+            List<ReconciliationLinePM> pms = recoLines.Select(poco => GetEntityPM(poco)).ToList();
+
+            return pms;
+        }
+
+
+
     }
 }

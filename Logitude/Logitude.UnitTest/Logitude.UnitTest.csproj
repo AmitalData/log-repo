@@ -44,6 +44,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -76,6 +79,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files (x86)\Microsoft SDKs\RIA Services\v1.0\Libraries\Server\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -91,6 +95,7 @@
     <Compile Include="Accounting\IntegrationTests\JournalLineUpdateUnitTest.cs" />
     <Compile Include="Accounting\IntegrationTests\JournalUpdateUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountCustomDataMappingUnitTest.cs" />
+    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountTraceEventServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankDeposit\BankDepositOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\EntityMapping\ChartOfAccountDataMappingUnderTest.cs" />
     <Compile Include="Accounting\UniTests\JournalDataMappingUnitTest.cs" />
@@ -103,6 +108,7 @@
     <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeDataMappingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnUpdatingServiceUnitTest.cs" />
+    <Compile Include="Accounting\UniTests\Reconciliation\ReconciliationValidatorUnitTest.cs" />
     <Compile Include="Accounting\UniTests\Report\LedgerTransactionBalanceServiceUnderTest.cs" />
     <Compile Include="Accounting\UniTests\CashBookOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\CashBookOnUpdatingServiceUnitTest.cs" />
@@ -112,6 +118,8 @@
     <Compile Include="Accounting\UniTests\Report\LedgerTransactionBalanceServiceUnderTest.DateTypeCode.cs" />
     <Compile Include="Accounting\UniTests\CreateAutoReconcileWhileStreamingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\YearTransferUnitTest.cs" />
+    <Compile Include="ItzikTest\TransactionUnitTest.cs" />
+    <Compile Include="ItzikTest\LinqUnitTest.cs" />
     <Compile Include="SimplogDataFakeFactory.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="TestingTestingUnitTest.cs" />

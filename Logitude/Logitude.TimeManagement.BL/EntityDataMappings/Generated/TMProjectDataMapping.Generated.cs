@@ -39,7 +39,10 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         BudgetId, 
 	         CategoryId, 
 	         IsProrated, 
-	         ExternalProjectNumber,
+	         ExternalProjectNumber, 
+	         ExcludeFromProrating, 
+	         DayOffTypeCode, 
+	         BlockedForDataEntry,
 	      }
 
 
@@ -65,7 +68,13 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         BudgetId, 
 	         CategoryId, 
 	         IsProrated, 
-	         ExternalProjectNumber,
+	         ExternalProjectNumber, 
+	         CategoryName, 
+	         ExcludeFromProrating, 
+	         DayOffTypeCode, 
+	         BlockedForDataEntry, 
+	         BudgetName, 
+	         DayOffTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -157,6 +166,21 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalProjectNumber))
             {
 				entityPOCO.ExternalProjectNumber = entityPM.ExternalProjectNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromProrating))
+            {
+				entityPOCO.ExcludeFromProrating = entityPM.ExcludeFromProrating;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DayOffTypeCode))
+            {
+				entityPOCO.DayOffTypeCode = entityPM.DayOffTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BlockedForDataEntry))
+            {
+				entityPOCO.BlockedForDataEntry = entityPM.BlockedForDataEntry;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -255,6 +279,21 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 					entityPM.ExternalProjectNumber = entityPOCO.ExternalProjectNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExcludeFromProrating))
+            {
+					entityPM.ExcludeFromProrating = entityPOCO.ExcludeFromProrating;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DayOffTypeCode))
+            {
+					entityPM.DayOffTypeCode = entityPOCO.DayOffTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BlockedForDataEntry))
+            {
+					entityPM.BlockedForDataEntry = entityPOCO.BlockedForDataEntry;
+            }
+
 		}
 
 		public void PMToOldPM(TMProjectPM entityPM, TMProjectPM oldEntityPM)
@@ -344,6 +383,21 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalProjectNumber))
             {
                 oldEntityPM.ExternalProjectNumber = entityPM.ExternalProjectNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromProrating))
+            {
+                oldEntityPM.ExcludeFromProrating = entityPM.ExcludeFromProrating;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DayOffTypeCode))
+            {
+                oldEntityPM.DayOffTypeCode = entityPM.DayOffTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BlockedForDataEntry))
+            {
+                oldEntityPM.BlockedForDataEntry = entityPM.BlockedForDataEntry;
             }
 			
 		}

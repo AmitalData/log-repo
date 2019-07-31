@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
@@ -22,7 +22,7 @@ export class AddEditClassificationComponent {
     public DataContext: any;
     public ObjectTableName: string = "TicketClassification";
     public ValidationErrorsList: string[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -36,7 +36,7 @@ export class AddEditClassificationComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -60,12 +60,12 @@ export class AddEditClassificationComponent {
         }
     }
     private InsertClassification() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         var service = new TicketClassificationPMService();
         service.insert(this.entityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
             }
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -75,12 +75,12 @@ export class AddEditClassificationComponent {
         });
     }
     private UpdateClassification() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         var service = new TicketClassificationPMService();
         service.update(this.entityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
             }
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;

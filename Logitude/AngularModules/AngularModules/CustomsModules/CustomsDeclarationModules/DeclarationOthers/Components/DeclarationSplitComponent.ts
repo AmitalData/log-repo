@@ -87,7 +87,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                 }
 
                 //// 2- get metadata values then
-                //SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                 //this.custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
                 //    this.MetadataValues = response2.Result;
 
@@ -96,7 +96,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
 
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
 
 
             //    });
@@ -175,7 +175,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
             console.log("Load Page: ", index);
 
-            //SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
             //if (this.IsConnectedToUniFreight)
             //    var index = this.CurrentPageIndex;
@@ -196,7 +196,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                     this.pagesCount = result.Count;
 
                     if (!AppTool.IsNullOrEmpty(result.Page)) {
-                        //SessionLocator.CurrentSession.StopBusyIndicator();
+                        //SessionLocator.SelectedSession.StopBusyIndicator();
 
                         this.base64Image = "data:image/png;base64," + result.Page;
 
@@ -217,14 +217,14 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
                 } else {
                     this.CurrentPageIndex = 0;
-                    //SessionLocator.CurrentSession.StopBusyIndicator();
+                    //SessionLocator.SelectedSession.StopBusyIndicator();
                     this.base64Image = null;
                         this.img.src = this.base64Image;
                         this.renderImage();
                         var t = setTimeout(() => { this.renderImage(); },20);
                         return;
                 }
-                //SessionLocator.CurrentSession.StopBusyIndicator();
+                //SessionLocator.SelectedSession.StopBusyIndicator();
                 this.CurrentPageIndex = index;
             });
         }
@@ -243,13 +243,13 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     //#endregion
 
     LoadDocuments() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
 
         this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.DeclarationPM.Id, null, objecttable.Id, "I", this.DeclarationPM.CustomFileNo, this.DocumentFilterSelectedValue)
             .subscribe((response: ServiceResponse) => {
                 console.log("[response] GetDocumentsFilingsForRelatedDocuments:", response);
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
 
                 if (!AppTool.IsNullOrEmpty(response)) {
 

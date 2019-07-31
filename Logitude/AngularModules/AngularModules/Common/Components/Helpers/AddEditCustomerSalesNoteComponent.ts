@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {CustomerPM} from '../../EntityPMs/CustomerPM';
 import {CustomerSalesNotePM} from '../../EntityPMs/CustomerSalesNotePM';
@@ -22,6 +22,7 @@ export class AddEditCustomerSalesNoteComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
     private oldNotesField: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
     }
@@ -54,7 +55,7 @@ export class AddEditCustomerSalesNoteComponent extends BaseComponent {
         this.CreateDateString = "(" + DateTool.GetDateFormats(this.EntityPM.CreateDate).DateString + ")";
         this.UpdateDateString = "(" + DateTool.GetDateFormats(this.EntityPM.UpdateDate).DateString + ")";
 
-        var width: number = SessionLocator.CurrentSession.CurrentWindow.Width - 10;
+        var width: number = this.CurrentSession.CurrentWindow.Width - 10;
         this.CreateDateStringWidth = AppTool.GetTextWidth(this.CreateDateString, 11) + 5;
         this.UpdateDateStringWidth = AppTool.GetTextWidth(this.UpdateDateString, 11) + 5;
 
@@ -84,7 +85,7 @@ export class AddEditCustomerSalesNoteComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -135,8 +136,8 @@ export class AddEditCustomerSalesNoteComponent extends BaseComponent {
                 }
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
-            SessionLocator.CurrentSession.FireEvent("CustomerSalesNotesChanged");
+            this.CurrentSession.CloseCurrentWindowEmit("Ok");
+            this.CurrentSession.FireEvent("CustomerSalesNotesChanged");
         }
     }
 

@@ -7,6 +7,8 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+
+import {AutomationResultEmailRecipientPM} from './AutomationResultEmailRecipientPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -135,7 +137,27 @@ export class AutomationPM {
     public set AutomatedDataBackup(newValue: string) { if (this.automatedDataBackup != newValue) { this.automatedDataBackup = newValue; this.MarkAsDirty("AutomatedDataBackup"); } }
        
 	 
-    private isChangeAutomationXaml: boolean;
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+       
+	 
+     
+	private automationResultEmailRecipientLists: AutomationResultEmailRecipientPM[];
+    get  AutomationResultEmailRecipientLists() {
+        if (this.automationResultEmailRecipientLists == null) {
+            this.automationResultEmailRecipientLists = [];
+        }
+
+        return this.automationResultEmailRecipientLists;
+    }
+    set  AutomationResultEmailRecipientLists(newValue: AutomationResultEmailRecipientPM[]) {
+        if (this.automationResultEmailRecipientLists != newValue) {
+            this.automationResultEmailRecipientLists = newValue;
+        }
+    }
+    //public AutomationResultEmailRecipientLists: Array<AutomationResultEmailRecipientPMPM>= [];
+     private isChangeAutomationXaml: boolean;
     public get IsChangeAutomationXaml() { return this.isChangeAutomationXaml; }
     public set IsChangeAutomationXaml(newValue: boolean) { if (this.isChangeAutomationXaml != newValue) { this.isChangeAutomationXaml = newValue; this.MarkAsDirty("IsChangeAutomationXaml"); } }
        

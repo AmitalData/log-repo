@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -36,11 +36,11 @@ export class ReleaseGoodsComponent
     //_IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
 
     GoodsItemsList: ObservableCollection;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.GoodsItemsList = new ObservableCollection([]);
-        SessionLocator.CurrentSession.entityResourceService.getEntityResourceByTableName("Customs.ReleaseGoods").subscribe(response => {
+        this.CurrentSession.entityResourceService.getEntityResourceByTableName("Customs.ReleaseGoods").subscribe(response => {
 
         });
 
@@ -227,7 +227,7 @@ export class ReleaseGoodsComponent
 
     //#region General Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) { }

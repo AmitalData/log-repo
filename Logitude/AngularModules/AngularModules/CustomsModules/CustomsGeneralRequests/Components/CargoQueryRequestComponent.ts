@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { DeclarationRestoreArgs } from '../../../Customs/Args';
 import { DeclarationPM } from '../../../Customs/EntityPMs/DeclarationPM';
@@ -52,6 +52,7 @@ export class CargoQueryRequestComponent
     DeliveryOrderResultList: ObservableCollection;
     CargosVersionResultList: ObservableCollection;
     CargoItemResultList: ObservableCollection;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
         this.DeliveryOrderResultList = new ObservableCollection([]);
@@ -135,20 +136,20 @@ export class CargoQueryRequestComponent
             this.NoConnectedConsignmentEnableField();
         }
         else {
-            SessionLocator.CurrentSession.StartBusyIndicator("")
+            this.CurrentSession.StartBusyIndicator("")
             this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
                 .subscribe((myDeclarationResponse: ServiceResponse) => {
                 
-SessionLocator.CurrentSession.StopBusyIndicator();
+this.CurrentSession.StopBusyIndicator();
                     
                     this._LastFetchDeclarationList = myDeclarationResponse.Result;
                     if (AppTool.IsNullOrEmpty(this._LastFetchDeclarationList)) {
                         this.NoConnectedConsignmentEnableField();
                     } else {
-                    SessionLocator.CurrentSession.StartBusyIndicator("")
+                    this.CurrentSession.StartBusyIndicator("")
                         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                             .subscribe((myResponse: ServiceResponse) => {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
 
                                 this.FetchConsignment(myResponse, false);
 
@@ -195,10 +196,10 @@ SessionLocator.CurrentSession.StopBusyIndicator();
 
             this.DeclarationNumber = this._LastFetchDeclarationList.DeclarationNumber;
 
-            //SessionLocator.CurrentSession.StartBusyIndicator("")
+            //this.CurrentSession.StartBusyIndicator("")
             //this._DeclarationExtendedListService.GetSingleDeclarationByNumber(this.CustomFileNo)
             //    .subscribe((myResponse: ServiceResponse) => {
-            //        SessionLocator.CurrentSession.StopBusyIndicator();
+            //        this.CurrentSession.StopBusyIndicator();
 
             //        this.FetchConsignment(myResponse, false);
 
@@ -484,8 +485,8 @@ SessionLocator.CurrentSession.StopBusyIndicator();
             .then((res) => {
                 this.ResponseData = res;
                 if (this._IsFromDeclaration && this.ResponseData.HasException == false) {
-                    if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    if (this.CurrentSession.CurrentEditComponent != null) {
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 }
                 this.OnMassageDisplayMethod();
@@ -563,15 +564,15 @@ SessionLocator.CurrentSession.StopBusyIndicator();
     CancelButtonClicked() {
         if (this._IsFromDeclaration) {
             if (this.ValidationErrorsList.length) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("");
+                this.CurrentSession.CloseCurrentWindowEmit("");
             }
             else {
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ReloadEntity");
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CloseCurrentWindowEmit("ReloadEntity");
             }
         }
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 

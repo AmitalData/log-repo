@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ConversationHeaderParticipant", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("ConversationHeaderParticipant", entityPM.Tenant, authToken.Tenant);
 	                    
                         ISocialContext MyContext = SocialContext.GetContext(entityPM.Tenant);
                         ConversationHeaderParticipantUpdateService service = new ConversationHeaderParticipantUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ConversationHeaderParticipant", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("ConversationHeaderParticipant", entityPM.Tenant, authToken.Tenant);
 	
                         ISocialContext MyContext = SocialContext.GetContext(entityPM.Tenant);
                         ConversationHeaderParticipantUpdateService service = new ConversationHeaderParticipantUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

@@ -125,6 +125,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual Card CustomerCard { get; set; }
         public bool IsCustomerTenantShare { get; set; }
         public bool CustomerTenantShareImportFile { get; set; }
+        public bool CustomerTenantShareExportFile { get; set; }
+
 
         public bool IsPotentialTelRequired { get; set; }
         public bool IsPotentialFaxRequired { get; set; }
@@ -166,6 +168,21 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int TenantEmailSendingQuota { get; set; }
         public bool AutoArchiveOnInvoice { get; set; }
 
+        public string NumberFormatCode { get; set; }
 
+        [ForeignKey("NumberFormatCode")]
+        public virtual NumberFormat NumberFormat { get; set; }
+
+        public string EcommerceSupportEmail { get; set; }
+
+        public string CBSA { get; set; }
+        public string CAAT { get; set; }
+        public bool IsTestTenant { get; set; }
+
+        [ForeignKey("CheckDigitControlAlgorithmCode")]
+        public virtual CheckDigitControlAlgorithm CheckDigitControlAlgorithm { get; set; }
+        public string CheckDigitControlAlgorithmCode { get; set; }
+
+        public bool ApplyVATForAllPartners { get; set; }
     }
 }

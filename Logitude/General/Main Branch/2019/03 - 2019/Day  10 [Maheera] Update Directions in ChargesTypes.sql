@@ -1,0 +1,1 @@
+update ChargesTypes set IsDrop = '1', IsDomestic = '1' , IsImport = '1', IsExport = '1'

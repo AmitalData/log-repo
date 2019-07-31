@@ -1,12 +1,15 @@
+import { GLAccountsPageComponent } from './Components/Workspaces/GLAccounts/GLAccountsPageComponent';
 import { AccountingNoteComponent } from './Components/Others/AccountingNoteComponent';
 import { IntegrityCheckTabComponent } from './Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent';
 import {AccountingWorkspaceComponent} from './Components/Workspaces/AccountingWorkspaceComponent';
-import {GLAccountPageComponent} from './Components/Workspaces/Main/GLAccountPageComponent';
+import {MainPageComponent} from './Components/Workspaces/Main/MainPageComponent';
 import {JournalPageComponent} from './Components/Workspaces/Journal/JournalPageComponent';
 import {ReceivablePageComponent} from './Components/Workspaces/Receivable/ReceivablePageComponent';
 import {PayablePageComponent} from './Components/Workspaces/Payable/PayablePageComponent';
 import {BanksPageComponent} from './Components/Workspaces/Banks/BanksPageComponent';
-import {MiscPageComponent} from './Components/Workspaces/Misc/MiscPageComponent';
+import { MiscPageComponent } from './Components/Workspaces/Misc/MiscPageComponent';
+
+
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -34,6 +37,10 @@ import {YearTransferComponent} from './Components/Maintenance/YearTransferCompon
 import { NewTaxReportComponent } from './Components/NewEntity/NewTaxReportComponent';
 import { NewOpenFormatReportComponent } from './Components/NewEntity/NewOpenFormatReportComponent';
 import { AccountingLoadTestComponent } from './Components/Maintenance/AccountingLoadTestComponent';
+import { LoadRecoExPageComponent } from './Components/NewEntity/LoadRecoExPageComponent';
+import { Generate1000Component } from './Components/Maintenance/Generate1000Component';
+import { Receiving1000Component } from './Components/Maintenance/Receiving1000Component';
+import { AccountingFunctionalTestComponent } from './Components/Maintenance/AccountingFunctionalTestComponent';
 
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
@@ -52,6 +59,8 @@ import {GLAccountTaxWithholdingTabComponent} from './Components/EditTabs/GLAccou
 import {BankCodeGeneralTabComponent} from './Components/EditTabs/BankCode/BankCodeGeneralTabComponent';
 import {ExternalRecoDetailsTabComponent} from './Components/EditTabs/ExternalReconciliation/ExternalRecoDetailsTabComponent';
 import { OpenFormatReportLogTabComponent } from './Components/EditTabs/OpenFormatReport/OpenFormatReportLogTabComponent';
+import { TaxDeductionReportGeneralTabComponent } from './Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabComponent';
+import { BankPageEventsComponent } from './Components/EditTabs/BankAccount/BankPageEventsComponent';
 
 import {GlAccountLedgerTransactionsListTemplate} from './Components/ListTemplates/GlAccountLedgerTransactionsListTemplate';
 import {ReconcileExternalPageListTemplate} from './Components/ListTemplates/ReconcileExternalPageListTemplate';
@@ -94,13 +103,14 @@ export const Components =
     [
         //Workspaces
         AccountingWorkspaceComponent,
-        GLAccountPageComponent,
+        MainPageComponent,
+        GLAccountsPageComponent,
         JournalPageComponent,
         ReceivablePageComponent,
         PayablePageComponent,
         BanksPageComponent,
         MiscPageComponent,
-
+       
         //New Entites
         NewGLAccountComponent,
         NewChartOfAccountComponent,
@@ -114,6 +124,7 @@ export const Components =
         NewConnectedGLAccountComponent,
         NewPaymentChequeComponent,
         NewOpenFormatReportComponent,
+        LoadRecoExPageComponent,
         //Maintenance
         NewCategory1Component,
         NewCategory2Component,
@@ -127,6 +138,9 @@ export const Components =
         NewTaxWithholdingAssessingOfficeComponent,
         YearTransferComponent,
         AccountingLoadTestComponent,
+        Generate1000Component,
+        Receiving1000Component,
+        AccountingFunctionalTestComponent,
 
         //Edit Tabs
         GLAccountGeneralTabComponent,
@@ -152,6 +166,8 @@ export const Components =
         EditTaxReportLineComponent,
         TaxDeductionReportLogTabComponent,
         OpenFormatReportLogTabComponent,
+        TaxDeductionReportGeneralTabComponent,
+        BankPageEventsComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -194,13 +210,14 @@ export class ModuleDeclarations {
 
             //Workspaces
             case "AccountingWorkspaceComponent": { myResult = AccountingWorkspaceComponent; break; }
-            case "GLAccountPageComponent": { myResult = GLAccountPageComponent; break; }
+            case "MainPageComponent": { myResult = MainPageComponent; break; }
+            case "GLAccountsPageComponent": { myResult = GLAccountsPageComponent; break; }
             case "JournalPageComponent": { myResult = JournalPageComponent; break; }
             case "ReceivablePageComponent": { myResult = ReceivablePageComponent; break; }
             case "PayablePageComponent": { myResult = PayablePageComponent; break; }
             case "BanksPageComponent": { myResult = BanksPageComponent; break; }
             case "MiscPageComponent": { myResult = MiscPageComponent; break; }
-
+            
             //New Entites
             case "NewGLAccountComponent": { myResult = NewGLAccountComponent; break; }
             case "NewChartOfAccountComponent": { myResult = NewChartOfAccountComponent; break; }
@@ -216,6 +233,8 @@ export class ModuleDeclarations {
             case "NewTaxReportComponent": { myResult = NewTaxReportComponent; break; }
             case "NewTaxDeductionReportComponent": { myResult = NewTaxDeductionReportComponent; break; }
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
+            case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
+
             //Maintenance
             case "NewCategory1Component": { myResult = NewCategory1Component; break; }
             case "NewCategory2Component": { myResult = NewCategory2Component; break; }
@@ -229,6 +248,10 @@ export class ModuleDeclarations {
             case "AccountingPeriodEventComponent": { myResult = AccountingPeriodEventComponent; break; }
             case "NewTaxWithholdingAssessingOfficeComponent": { myResult = NewTaxWithholdingAssessingOfficeComponent; break; }
             case "AccountingLoadTestComponent": { myResult = AccountingLoadTestComponent; break; }
+            case "Generate1000Component": { myResult = Generate1000Component; break; }
+            case "Receiving1000Component": { myResult = Receiving1000Component; break; }
+            case "AccountingFunctionalTestComponent": { myResult = AccountingFunctionalTestComponent; break; }
+                
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
@@ -253,6 +276,8 @@ export class ModuleDeclarations {
             case "EditTaxReportLineComponent": { myResult = EditTaxReportLineComponent; break; }
             case "TaxDeductionReportLogTabComponent": { myResult = TaxDeductionReportLogTabComponent; break; }
             case "OpenFormatReportLogTabComponent": { myResult = OpenFormatReportLogTabComponent; break; }
+            case "TaxDeductionReportGeneralTabComponent": { myResult = TaxDeductionReportGeneralTabComponent; break; }
+            case "BankPageEventsComponent": { myResult = BankPageEventsComponent; break; }
             //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }

@@ -193,16 +193,29 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 item.Seal = package.Seal;
                 item.VolumetricWeight = package.VolumetricWeight;
                 item.VolumetricWeightUnit = warehouseEntryPM.ChargeableWeightUnitCode;
+
+                #region Car Details
+                item.Make = package.Make;
+                item.Model = package.Model;
+                item.Year = package.Year;
+                item.Color = package.Color;
+                item.ChassisNumber = package.ChassisNumber;
+                item.RegistrationNumber = package.RegistrationNumber;
+
+                if (!string.IsNullOrEmpty(package.CountryId))
+                {
+                    Country country = CountryRepository.GetSingleCountry(package.CountryId, warehouseEntryPM.Tenant, true);
+                    if (country != null)
+                    {
+                        item.CountryName = country.EnglishName;
+                    }
+                }
+                #endregion
+
                 result.Add(item);
             }
            
             return result;
         }
-
-
-
-
-
-
     }
 }

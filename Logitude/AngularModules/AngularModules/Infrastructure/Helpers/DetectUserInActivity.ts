@@ -17,6 +17,7 @@ export class DetectUserInActivity {
     timeoutId: any;
     IsSignout: boolean = false;
     IsTokenExpiration: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(isTokenExpiration: boolean = false) {
         this.IsTokenExpiration = isTokenExpiration;
     }
@@ -70,6 +71,8 @@ export class DetectUserInActivity {
 
     DoInactive(viewModeil: any) {
 
+        if (this.CurrentSession == null) this.CurrentSession = SessionLocator.SelectedSession;
+
         if (viewModeil.IsSignout) {
             if (!SessionLocator.IsSiguOut) {
                 SessionLocator.IsSiguOut = true;
@@ -79,7 +82,7 @@ export class DetectUserInActivity {
                 messageWindow.IsOverAll = true;
                 var message: string = this.IsTokenExpiration ? "Your session has expired, Please login again" :"Logged out due to inactivity, you can login again to enter the system";
                 messageWindow.Show(message);
-
+                SessionLocator.StopApplicationTimers();
                 messageWindow.WindowClosed.subscribe(s => {
                     if (s) {
                         SessionLocator.HomeComponent.SignoutClicked();
@@ -88,7 +91,7 @@ export class DetectUserInActivity {
                 });
             }
         }
-        else if (SessionLocator.CurrentSession != null && SessionLocator.CurrentSession.SessionLocation != null) {
+        else if (this.CurrentSession != null && this.CurrentSession.SessionLocation != null) {
             viewModeil.ShowMessage(viewModeil);
             window.clearTimeout(viewModeil.timeoutId)
             viewModeil.StartTimer(viewModeil, viewModeil.WarningTimeInMiliseconds);

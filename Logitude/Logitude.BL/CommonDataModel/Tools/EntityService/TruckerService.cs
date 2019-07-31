@@ -97,7 +97,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            TruckerValidating.Validate(entityPM);
 
             foreach (AddressPM itemPM in entityPM.Addresses)
             {
@@ -120,6 +119,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             TruckerMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+            TruckerValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
@@ -144,7 +144,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            TruckerValidating.Validate(entityPM);
             if (mapComposition)
             {
                 this.SetChangeSet(this.entityPM.CardExternalCodeByCurrencies);
@@ -172,6 +171,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             TruckerMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+            TruckerValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);

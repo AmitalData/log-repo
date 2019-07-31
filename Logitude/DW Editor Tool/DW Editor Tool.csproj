@@ -57,7 +57,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>dlls\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>D:\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -128,6 +128,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Files\DIM_Currencies.dwml" />
+    <None Include="Files\DIM_CustomPickLists.dwml" />
     <None Include="Files\DIM_Dates.dwml" />
     <None Include="Files\DIM_Departments.dwml" />
     <None Include="Files\DIM_Directions.dwml" />
@@ -172,6 +173,9 @@
     <Content Include="dlls\Simplog.Data.Global.dll" />
     <Content Include="dlls\Simplog.Server.Infrastructure.dll" />
     <Content Include="dlls\System.Windows.Interactivity.dll" />
+    <None Include="Files\DIM_MoveTypes.dwml" />
+    <None Include="Files\DIM_SpecialServicesTypes.dwml" />
+    <None Include="Files\DIM_Vessesl.dwml" />
     <Content Include="Generated Scripts\dw_objecttables_fields.generated.sql" />
     <Content Include="Templates\DWObjectTablesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

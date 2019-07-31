@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 //import {GetStackWindowArgs} from '../../../../Args';
@@ -27,10 +27,11 @@ export class FBLStackSelectionComponent {
     public SelectedItem: FBLStockPM = null;
     public ObjectTableName: string = "FBLStock";
     public IsResourcesReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.ItemsSource = [];
         this.FBLStockExtenedPMService = new FBLStockExtenedPMService();
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading FBL Numbers");
+        this.CurrentSession.StartBusyIndicator("Loading FBL Numbers");
     }
 
     private args: GetStackWindowArgs;
@@ -53,7 +54,7 @@ export class FBLStackSelectionComponent {
                 var data: FBLStockPM[] = response.Result;
                 this.ItemsSource = data.sort((a, b) => { return a.Number - b.Number });
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
 
         this.FBLStockExtenedPMService.GetAllFBLStockPMsCountByTenant(SessionLocator.Tenant).subscribe((response: any) => {
@@ -65,13 +66,13 @@ export class FBLStackSelectionComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
         if (this.SelectedItem != null) {
             this.args.SelectedFBLStock = this.SelectedItem;
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
 
         }
     }

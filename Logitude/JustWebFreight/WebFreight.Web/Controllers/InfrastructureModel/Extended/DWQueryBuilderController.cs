@@ -53,17 +53,26 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string tenantWhere = ".[Parent Tenant] = ";
+                var DWSettings = new DWHSettingRepository(authToken.Tenant);
+                var temp = DWSettings.GetSingleDWHSetting(authToken.Tenant);
+                if (temp != null && temp.Tenant != temp.ParentTenant)
+                {
+                    tenantWhere = ".[Source Tenant] = ";
+                }
+
+
                 if (SQL.Contains("where"))
                 {
-                    SQL = SQL.Replace("where", "where " + Table + ".[Parent Tenant] = " + authToken.Tenant + " and");
+                    SQL = SQL.Replace("where", "where " + Table + tenantWhere + authToken.Tenant + " and");
                 }
                 else if (SQL.Contains("group by"))
                 {
-                    SQL = SQL.Replace("group by", "where " + Table + ".[Parent Tenant] = " + authToken.Tenant + " group by");
+                    SQL = SQL.Replace("group by", "where " + Table + tenantWhere + authToken.Tenant + " group by");
                 }
                 else
                 {
-                    SQL = SQL + " where " + Table + ".[Parent Tenant] = " + authToken.Tenant;
+                    SQL = SQL + " where " + Table + tenantWhere + authToken.Tenant;
                 }
 
                 using (var scope = TransactionFactory.GetNewTransaction())
@@ -123,10 +132,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     string dbConnectionInfo = currentDb.SharedDWConnection;
                     DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
                     var dataTable = new DataTable();
-
+                    string TenantWhere = ".[Parent Tenant] = ";
+                    var DWSettings = new DWHSettingRepository(authToken.Tenant);
+                    var temp = DWSettings.GetSingleDWHSetting(authToken.Tenant);
+                    if (temp != null && temp.Tenant != temp.ParentTenant)
+                    {
+                        TenantWhere = ".[Source Tenant] = ";
+                    }
                     using (SqlConnection sourceConnection = new SqlConnection(connection.ConnectionString))
                     {
-                        var SQL = "select DISTINCT top 10 " + Field + " from " + Tabel + " where " + (!IsClosed ? (Tabel + ".[Parent Tenant] = " + authToken.Tenant + " and " + Field + " like '%" + SearchData + "'") : (Field + " like '%" + SearchData + "'"));
+                        var SQL = "select DISTINCT top 10 " + Field + " from " + Tabel + " where " + (!IsClosed ? (Tabel + TenantWhere + authToken.Tenant + " and " + Field + " like '%" + SearchData + "'") : (Field + " like '%" + SearchData + "'"));
                         sourceConnection.Open();
                         SqlCommand commandSourceData = new SqlCommand(SQL, sourceConnection);
                         SqlDataReader reader = commandSourceData.ExecuteReader();
@@ -194,13 +209,22 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                 if (!string.IsNullOrEmpty(SearchData))
                 {
-                    WhereStmt = WhereStmt + " and " + (Field + " like '" + SearchData + "%'");
+                    WhereStmt = WhereStmt + " and (" + (Field + " like '" + SearchData + "%')");
                 }
+                
                 if (!IsClosed)
                 {
+                    string tenantWhere = ".[Parent Tenant] = ";
+                    var DWSettings = new DWHSettingRepository(authToken.Tenant);
+                    var isParentTenant = DWSettings.IsParentTenant(authToken.Tenant);
+                    if (!isParentTenant)
+                    {
+                        tenantWhere = ".[Source Tenant] = ";
+                    }
+
                     if (Tabel != "DIM_Tenants" && Tabel != "DIM_Dates")
                     {
-                        WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Parent Tenant] = " + authToken.Tenant); //authToken.Tenant
+                        WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + tenantWhere + authToken.Tenant); //authToken.Tenant
                     }
                     if (Tabel == "DIM_Dates")
                     {
@@ -271,6 +295,59 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                                 }
                                 index++;
 
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(SearchData))
+                        {
+                            if (!string.IsNullOrEmpty(Field1))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field1 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field2))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field2 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field3))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field3 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field4))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field4 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field5))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field5 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field6))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field6 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field7))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field7 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field8))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field8 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field9))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field9 + " like '" + SearchData + "%')");
+                            }
+                            if (!string.IsNullOrEmpty(Field10))
+                            {
+                                WhereStmt = WhereStmt.Replace(")", "");
+                                WhereStmt = WhereStmt + " or " + (Field10 + " like '" + SearchData + "%')");
                             }
                         }
                         SQL = SQL + " from " + Tabel + WhereStmt + PagingString;
@@ -413,8 +490,44 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 DataTable MyData = QBHelper.GetDWQueryData(MySqlString);
                 DWQueryDataResult myResult = new DWQueryDataResult();
                 myResult.SQLDataResult = MyData;
+                var DWSettings = new DWHSettingRepository(authToken.Tenant);
+                var temp = DWSettings.GetSingleDWHSetting(authToken.Tenant);
+                myResult.IsParentTenant = DWSettings.IsParentTenant(authToken.Tenant);
                 myResult.SQLString = MySqlString;
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        [ActionName("PostGetDateFilterSample")]
+        public HttpResponseMessage PostGetDateFilterSample(DWObjectFieldsDetails filter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                //SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
+                string DateSample = "";
+
+                DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
+                if (filter != null)
+                {
+                    DateSample = dataWarehouseHelper.ResolveWarehoueDateField("", filter.OperationCode, filter.TextValue.ToString(), authToken.Tenant,true);
+                }
+                //DateSample = DateSample.Replace("'","");
+                //DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(authToken.Tenant);
+                //string MySqlString = QBHelper.GetQuerySQL(DWQueryParam);
+                //DataTable MyData = QBHelper.GetDWQueryData(MySqlString);
+                //DWQueryDataResult myResult = new DWQueryDataResult();
+                //myResult.SQLDataResult = MyData;
+                //myResult.SQLString = MySqlString;
+                return Request.CreateResponse(HttpStatusCode.OK, DateSample);
 
             }
 
@@ -425,7 +538,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
         }
 
-        
+
 
     }
 

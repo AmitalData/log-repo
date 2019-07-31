@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {AirlinePM} from '../../../../Common/EntityPMs/AirlinePM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -24,6 +24,7 @@ export class AddEditAirlineAdaptationItemComponent extends BaseComponent {
     public DataContext: AddEditAirlineAdaptationItemComponent = this;
     public IsNew: boolean;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -67,7 +68,7 @@ export class AddEditAirlineAdaptationItemComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private myService;
@@ -81,7 +82,7 @@ export class AddEditAirlineAdaptationItemComponent extends BaseComponent {
             this.SetService();
 
             if (this.IsNew) {
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
                 this.myService.insert(this.EntityPM).subscribe(Result => {
 
                     var mm: ServiceResponse = Result;
@@ -92,13 +93,13 @@ export class AddEditAirlineAdaptationItemComponent extends BaseComponent {
 
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
                 this.myService.update(this.EntityPM).subscribe(Result => {
 
                     var mm: ServiceResponse = Result;
@@ -109,7 +110,7 @@ export class AddEditAirlineAdaptationItemComponent extends BaseComponent {
 
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }
@@ -117,8 +118,8 @@ export class AddEditAirlineAdaptationItemComponent extends BaseComponent {
     }
 
     private Close(event: any) {
-        SessionLocator.CurrentSession.StopBusyIndicator();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.CloseCurrentWindowEmit("ok");
     }
 
     private SetService() {

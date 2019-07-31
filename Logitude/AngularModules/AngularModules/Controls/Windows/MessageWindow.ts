@@ -17,6 +17,7 @@ export class MessageWindow {
     public ShowSuccessIcon: boolean = false;
     public ShowErrorIcon: boolean = false;
     public ShowWarningIcon: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         this.Title = TextCodeTranslator.Translate("General.O.Message");
@@ -42,10 +43,13 @@ export class MessageWindow {
     private InstanceComponent: MessageWindowTemplateComponent = null;
     public Show(message: string) {
         this.Message = message;
+        if (!this.CurrentSession) {
+            this.CurrentSession = SessionLocator.SelectedSession;
+        }
 
-        if (SessionLocator.CurrentSession.SessionLocation)
+        if (this.CurrentSession.SessionLocation)
         {
-            var viewContainerRefLocation: ViewContainerRef = SessionLocator.CurrentSession.SessionLocation.viewContainerRef;
+            var viewContainerRefLocation: ViewContainerRef = this.CurrentSession.SessionLocation.viewContainerRef;
         }
 
         else {
@@ -56,8 +60,8 @@ export class MessageWindow {
             viewContainerRefLocation = SessionLocator.ApplicationLocation;
         }
 
-        else if (SessionLocator.CurrentSession.CurrentWindow) {
-            if (SessionLocator.CurrentSession.CurrentWindow.IsOverAll) {
+        else if (this.CurrentSession.CurrentWindow) {
+            if (this.CurrentSession.CurrentWindow.IsOverAll) {
                 this.IsOverAll = true;
                 viewContainerRefLocation = SessionLocator.ApplicationLocation;
             }
@@ -108,6 +112,7 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
     public ShowErrorIcon: boolean = false;
     public ShowWarningIcon: boolean = false;
     public RTL: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         this.Title = TextCodeTranslator.Translate("General.O.Message");
@@ -146,8 +151,8 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
     }
 
     private CreateDynamicIds() {
-        this.WindowId = "MessageWindow_" + SessionLocator.CurrentSession.SessionIndex;
-        this.OkButtonId = "MessageWindow_Ok_" + SessionLocator.CurrentSession.SessionIndex;
+        this.WindowId = "MessageWindow_" + this.CurrentSession.SessionIndex;
+        this.OkButtonId = "MessageWindow_Ok_" + this.CurrentSession.SessionIndex;
         this.Focus();
     }
 

@@ -607,7 +607,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
 
-
+        [Ignore]
         [TestMethod]
         public void IsJournalValid07x01_regJornal2rowsSameOppositeAccountSameReference1_ErrorContainsM()
         {
@@ -708,7 +708,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
         }
 
 
-
+        [Ignore]
         [TestMethod]
         public void IsJournalValid07x02_NotRegJornal2rowsSameOppositeAccountSameReference1_NotContainsErrorContainsM()
         {

@@ -116,7 +116,94 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 return 0;
 
         }
+        public bool CheckLastApprovedBankPage(ReconcileExternalPagePM page, int tenant)
+        {
+            //
+            ReconcileExternalPagePM reconcileExternalPage = GetLastApprovedBankPage(page.BankAccountId, tenant); 
 
+            if (reconcileExternalPage != null && (reconcileExternalPage.Id == page.Id))
+            { return true; }
+            else return false;
+        }
+
+        //public ReconcileExternalPagePM GetLastCancelledBankPage(string bankAccountId, int tenant)
+        //{
+        //    //
+        //    ReconcileExternalPagePM ReconcileExternalPage= GetLastCancelledBankPage(bankAccountId, tenant);
+
+        //    return ReconcileExternalPage;
+
+        //}
+
+
+        public ReconcileExternalPagePM GetLastApprovedBankPage(string bankAccountId, int tenant)
+        {
+            ReconcileExternalPage reconcileExternalPage = (from a in context.ReconcileExternalPages
+                                                           where a.BankAccountId == bankAccountId && a.Tenant == tenant && a.StatusCode == "2"
+                                                           orderby a.PageNo descending
+                                                           select a).FirstOrDefault();
+            return GetEntityPM(reconcileExternalPage); ;
+        }
+
+
+        public bool CheckFirstCancelledBankPage(string bankAccountId, int pageNo, int tenant)
+        {
+            int LastPageNo= GetLastPageNo(bankAccountId, tenant);
+            List<ReconcileExternalPage> reconcileExternalPages = GetBankAccountBankPages(bankAccountId, tenant);
+
+            if (LastPageNo == pageNo)
+            {
+                bool previouseCancelledPageExist = CheckPreviousBankPageStatus(reconcileExternalPages, pageNo );
+                if(previouseCancelledPageExist)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                bool nextUncancelledBankPageExist = ChecNextUnCancelledBankPges(reconcileExternalPages, pageNo );
+                if (nextUncancelledBankPageExist)
+                {
+                    return false;
+
+                }
+                else
+                {
+                    return true;
+                }
+            }
+          
+        }
+
+        private  List<ReconcileExternalPage> GetBankAccountBankPages(string  bankAccountId, int tenant)
+        {
+
+            return (from a in context.ReconcileExternalPages
+                    where a.BankAccountId == bankAccountId && a.Tenant == tenant select a).ToList();
+
+
+        }
+        private  bool CheckPreviousBankPageStatus(List<ReconcileExternalPage> reconcileExternalPages, int pageNo)
+        {
+            pageNo = pageNo - 1;
+            return (from a in reconcileExternalPages 
+                    where a.StatusCode == "3"   && a.PageNo == pageNo
+                    select a).Any();
+        }
+
+        private bool ChecNextUnCancelledBankPges(List<ReconcileExternalPage > reconcileExternalPages , int pageNo)
+        {
+
+           return (from a in reconcileExternalPages
+             where  a.PageNo > pageNo && a.StatusCode != "3"
+
+             select a).Any();
+
+        }
     }
 
 }

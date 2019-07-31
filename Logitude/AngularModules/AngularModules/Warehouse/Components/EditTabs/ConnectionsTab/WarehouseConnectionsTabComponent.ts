@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -19,7 +19,7 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
     public ObjectTableName: string;
     private warehouseEntryPMExtendedService: WarehouseEntryPMExtendedService;
     public ItemsSource: any[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -37,7 +37,7 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
     IsShowMessageNoConnectedEntity: boolean = false;
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.ItemsSource = [];
         this.warehouseEntryPMExtendedService.GetWarehouseConnectedEntitiesByEntityId(this.EntityPM.ShipmentId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -48,7 +48,7 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
                     } else this.IsShowMessageNoConnectedEntity = false;
                 }
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -56,7 +56,7 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
 
         var backLabel = this.ObjectTableName == "WarehouseEntry" ? "Entry " + this.EntityPM.EntryNumber : "Release " + this.EntityPM.ReleaseNumber;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.EntityPM.ShipmentId, ObjectTableName: "Shipment", BackButtonLabel: backLabel });

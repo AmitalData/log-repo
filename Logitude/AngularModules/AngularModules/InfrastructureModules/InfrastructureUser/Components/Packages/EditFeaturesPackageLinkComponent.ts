@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {PackageFeatureClass} from './EditPackageFeaturesComponent';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
@@ -10,6 +10,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 export class EditFeaturesPackageLinkComponent {
     public ItemsSource: PackageFeatureClass[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -21,10 +22,10 @@ export class EditFeaturesPackageLinkComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 
     private AllCloners: Cloner[] = [];

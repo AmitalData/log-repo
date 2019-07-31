@@ -11,8 +11,7 @@ using System.Configuration;
 namespace Simplog.Global.Data.GlobalModel.Helpers
 {
     public class GlobalDbHelper
-    {
-
+    { 
         public static GlobalDB GetGlobalDB(int tenant)
         {
             GlobalDB currentDb = null;
@@ -124,7 +123,8 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                 DBConnection = currentDb.DBConnection,
                 Id = currentDb.Id,
                 IsActive = currentDb.IsActive,
-                IsUpgrading = currentDb.IsUpgrading
+                IsUpgrading = currentDb.IsUpgrading,
+                SecondaryAzureDBConnection = currentDb.SecondaryAzureDBConnection
             };
             return currentDbCacheWithoutProxy;
         }

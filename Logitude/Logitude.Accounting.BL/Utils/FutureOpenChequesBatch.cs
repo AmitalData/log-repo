@@ -112,7 +112,7 @@ namespace Logitude.Accounting.BL.Utils
                                                 {
                                                     if (moreDataPM.TotalOpenChequesInLocalCur == null) moreDataPM.TotalOpenChequesInLocalCur = 0;
                                                     if (moreDataPM.TotFutureOpenChequesInLocalCur == null) moreDataPM.TotFutureOpenChequesInLocalCur = 0;
-                                                    if ((paymentCheque.StatusCode == "2") || (paymentCheque.StatusCode == "1" && paymentCheque.ValueDate > TenantServerConfigration.GetCurrentDateTime(tenant.Id)))
+                                                    if ( paymentCheque.ValueDate > TenantServerConfigration.GetCurrentDateTime(tenant.Id))
                                                     {
                                                         moreDataPM.TotFutureOpenChequesInLocalCur += paymentCheque.LocalAmount;
 

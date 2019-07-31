@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ChangeDetectorRef, AfterViewInit, EventEmitter, Output}  from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, AfterViewInit, EventEmitter, Output}  from '@angular/core';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {SessionInfo} from '../../Utilities/SessionInfo';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -107,6 +107,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
     ShowInactiveCheckBoxKey: string;
     IsCheckedInActive: boolean = false;
     AttrTitleShowTemplateList: string = "Expand";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor( public _documentOutPMService: DocumentOutPMService, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentExtendedService: DocumentExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService, public _htmlEditorService: HtmlEditorService,  private cd: ChangeDetectorRef) {
      
         this.AttachmentListId = Guid.newGuid();
@@ -178,7 +179,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
 
         var filter = new SendHtmlDocumentFilter();
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Sending...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Sending...");
         filter.HtmlString = this.froalaEditorSetting.froalaEditorComponent.getHtml();
 
         filter.InternalDocumentId = this.DocumentOutId ? this.DocumentOutId : null;
@@ -199,7 +200,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
 
         if (!filter.ToEmail) {
             this.ShowMessage("Please specify at least one recepient", "Logitude Message");
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             return;
         }
 
@@ -207,20 +208,20 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         if (!this.CheckIsValidEmails(filter.ToEmail)) {
 
             this.ShowMessage("some of To e- mails are Invalid", "Logitude Message");
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             return;
         }
 
 
         if (filter.Cc != null && !this.CheckIsValidEmails(filter.Cc)) {
             this.ShowMessage("Some of Cc e-mails are Invalid", "Logitude Message");
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             return;
         }
 
         if (filter.Bcc != null && !this.CheckIsValidEmails(filter.Bcc)) {
             this.ShowMessage("Some of Bcc e-mails are Invalid", "Logitude Message");
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             return;
         }
 
@@ -241,7 +242,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         if (totalsize > 15) {
             this.ShowMessage("The maximum size of documents you can attach is 15 MB. Please send the documents in separated emails", "Attachment Limit");
          //   this.ShowMessage("The file you are trying to send exceeds the 15 MB attachment limit.", "Attachment Limit");
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             return;
         }
 
@@ -253,7 +254,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
                 this.CloseButtonClicked();
             }
             else {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
                     this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
                 }
@@ -265,7 +266,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -933,10 +934,10 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
             this.reportPMService = new ReportPMService();
             this.IsShowTemplateArea = true;
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
             this.reportPMService.get(this.EntityId).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (!pmResponse.HasError) {
                     this.EntityPM = pmResponse.Result;
                     this.LoadTemplateLists(null);
@@ -996,7 +997,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
             this.ReloadFroalaEditor();
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
 
             this.From = !AppTool.IsNullOrEmpty(this.SelectedTemplate.EntityPM.From) ? this.SelectedTemplate.EntityPM.From : "";
@@ -1036,7 +1037,7 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
 
                 }
 
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             });
         }
 
@@ -1045,14 +1046,14 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
     SelectId: string;
 
     LoadTemplateLists(selectId: string) {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.SelectId = selectId;
         this.ReportTemplates = new Array<TemplateClassData>();
         this.AllReportTemplates = new Array<TemplateClassData>();
         this.reportsTemplatePMExtendedService.GetReportsTemplatePMsByReportId(this.EntityPM.Id , "M").subscribe((res: any) => {
 
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
@@ -1221,11 +1222,11 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
     }
 
     UpdateReportPM() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.reportPMService.update(this.EntityPM).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {
@@ -1237,11 +1238,11 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
     }
 
     UpdateReportTemplatePM(item:any) {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.reportsTemplatePMService.update(item).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {

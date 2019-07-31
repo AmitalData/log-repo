@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 declare var System: any;
 import {Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterViewInit} from '@angular/core';
 //import {NgForm, NgStyle, NgFormControl, CORE_DIRECTIVES, FORM_DIRECTIVES,  FormBuilder, ControlGroup, Validators, Control} from '@angular/common';
@@ -95,13 +95,14 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     IsAddUSWarehouseVisible: boolean = false;
     DisplayFieldsFromList: string = null;
     PseventRowSelectEventSub: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this._entityListService = new EntityListService;
         this.entityPMService = new EntityPMService;
         this.TenantPM = InfraSettings.TenantPM;
-        //SessionLocator.CurrentSession.SubscriptionAdd(
-        this.PseventRowSelectEventSub=  SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
+        //this.CurrentSession.SubscriptionAdd(
+        this.PseventRowSelectEventSub=  this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
                 if (res == this.ObjectTableName) {
                     this.preventSelect = true;
                 }
@@ -116,7 +117,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
     ngOnDestroy() {
         this.PseventRowSelectEventSub.unsubscribe();
-        //SessionLocator.CurrentSession.PseventRowSelectEvent.unsubscribe(); // this line commented, it cause object unsubscribed error
+        //this.CurrentSession.PseventRowSelectEvent.unsubscribe(); // this line commented, it cause object unsubscribed error
     } 
 
     SetWindowArgs(args: CustomEntityArgs) {
@@ -278,7 +279,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
                 ServerSideSortable: true,
             });
         }
-        SessionLocator.CurrentSession.SessionEvent.subscribe(($event: any) => {
+        this.CurrentSession.SessionEvent.subscribe(($event: any) => {
             if ($event == 'ok from LSWBC') {
                 this.SearchFieldchangeevent.emit("");
             }
@@ -729,8 +730,8 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
 
     CloseButtonClicked() {
-        //SessionLocator.CurrentSession.CloseCurrentWindow();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(null);
+        //this.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindowEmit(null);
 
     }
     TextChanged(searchtext) {
@@ -755,7 +756,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
                 this.Args.SelectedItem = entityList;
                 var args = selectedEntityId + ',' + entityList.Tenant;
                 // Close windoew with Args
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit(args);
+                this.CurrentSession.CloseCurrentWindowEmit(args);
             } 
         }
         else {

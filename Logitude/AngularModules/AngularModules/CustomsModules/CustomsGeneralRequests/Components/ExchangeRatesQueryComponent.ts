@@ -31,7 +31,7 @@ export class ExchangeRatesQueryComponent
 
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
     public ExchangeRatesQueryObservableList: ObservableCollection;
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ExchangeRatesQueryObservableList = new ObservableCollection([]);
@@ -169,7 +169,7 @@ export class ExchangeRatesQueryComponent
 
         this._IIGGeneralMessagesService.PostExchangeRatesQuery(currRequestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
-                //SessionLocator.CurrentSession.StopBusyIndicator();
+                //this.CurrentSession.StopBusyIndicator();
                 //console.log(myServiceResponse);
                 //this.ResponseData = myServiceResponse.Result;
                 //this.OnMassageDisplayMethod();

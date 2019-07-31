@@ -29,7 +29,7 @@ export class CourierPendingReasonGeneralComponent extends BaseComponent {
     ValidationErrorsList: any[] = [];
     _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     _IsNewPending: boolean = true;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -39,9 +39,9 @@ export class CourierPendingReasonGeneralComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.CourierHawb = args.CourierHawb;
             if (args.Mode == "FromDeclaration") {
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
                 this._DeclarationCourierStatusPMService.get(args.DeclarationId).subscribe((response: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var declarationCourierStatusPM: DeclarationCourierStatusPM = response.Result;
                     if (declarationCourierStatusPM != null) {
                         this.DeclarationsList.push(declarationCourierStatusPM);
@@ -97,19 +97,19 @@ export class CourierPendingReasonGeneralComponent extends BaseComponent {
 
     OkButtonClicked() {
        
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.DeclarationsList.forEach((declarationCourierStatusPM: DeclarationCourierStatusPM) => {
             declarationCourierStatusPM.CourierPendingReasonCode = this.CourierPendingReasonCode;
             declarationCourierStatusPM.PendingRemarks = this.PendingRemarks;
             this._DeclarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindow();
             });
         });
 
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

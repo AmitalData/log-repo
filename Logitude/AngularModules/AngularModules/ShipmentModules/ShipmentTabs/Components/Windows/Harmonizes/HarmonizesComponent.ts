@@ -18,6 +18,7 @@ export class HarmonizesComponent {
     public ItemsSource: HarmonizeCodeList[] = [];
     public HarmonizesCount: number = 0;
     private myService: HarmonizeCodeListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myService = new HarmonizeCodeListService();
         this.LoadAllData();
@@ -95,6 +96,6 @@ export class HarmonizesComponent {
     }
 
     Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

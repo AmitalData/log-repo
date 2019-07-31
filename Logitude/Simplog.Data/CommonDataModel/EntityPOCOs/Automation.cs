@@ -32,10 +32,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string FromEmail { get; set; }
         public int Order { get; set; }
         public bool IsAutomationDone { get; set; }
-        //public int DelaytimeIndicator { get; set; }
-        //public int Type { get; set; }
+        public string Code { get; set; }
 
-    
+
         [ForeignKey("UpdatedByUserId")]
         public virtual User UpdatedByUser { get; set; }
 

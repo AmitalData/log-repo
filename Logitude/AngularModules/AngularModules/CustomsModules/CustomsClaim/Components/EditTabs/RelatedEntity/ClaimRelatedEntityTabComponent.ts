@@ -40,7 +40,7 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
     takenItems: number; 
     WindowTitle: string;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef) {
         super();
 
@@ -222,8 +222,8 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.ClaimPM.RejectChanges();
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CloseCurrentWindowEmit('cancel');
     }
 
     //#region Save Code
@@ -246,7 +246,7 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
     }
 
     private SaveChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         //if (this.IsNewEntity) {
         //    this.ClaimPMService.insert(this.ClaimPM).subscribe(myResult => {
         //        var res: ServiceResponse = myResult;
@@ -254,13 +254,13 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
         //            var entity = res.Result;
         //            console.log("..Saved Successfully ", entity);
         //            if (this.closeWindow) {
-        //                SessionLocator.CurrentSession.CloseCurrentWindow();
+        //                this.CurrentSession.CloseCurrentWindow();
         //            }
         //        }
         //        else {
         //            this.ValidationErrorsList = res.ErrorsArray;
         //        }
-        //        SessionLocator.CurrentSession.StopBusyIndicator();
+        //        this.CurrentSession.StopBusyIndicator();
         //        return false;
         //    });
 
@@ -270,25 +270,25 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
 
 
         //this.ClaimPMService.update(this.ClaimPM)
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(myResult => {
+        this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(myResult => {
             var res: ServiceResponse = myResult;
             if (!res.HasError) {
                 var entity = res.Result;
 
                 console.log("..Saved Successfully ", entity);
                 if (this.closeWindow) {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit('ok');
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.CloseCurrentWindowEmit('ok');
                 }
             }
             else {
                 this.ValidationErrorsList = res.ErrorsArray;
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             return false;
         });
 
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
 
         //}
     }

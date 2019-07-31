@@ -73,6 +73,15 @@ namespace Logitude.TimeManagement.Data.EntityPOCOs
 	    public bool IsProrated { get; set; }
         [Column("ExternalProjectNumber")]
 	    public string ExternalProjectNumber { get; set; }
+        [Column("ExcludeFromProrating")]
+	    public bool ExcludeFromProrating { get; set; }
+        [ForeignKey("DayOffType")]
+        [Column("DayOffTypeCode")]
+	    public string DayOffTypeCode { get; set; }
+	      
+        public virtual TMDayOffType DayOffType { get; set; }
+        [Column("BlockedForDataEntry")]
+	    public bool BlockedForDataEntry { get; set; }
     }
 }
 	 

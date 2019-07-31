@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 declare var SelectingElement: any;
 import {
     Directive,
@@ -192,7 +192,7 @@ export class LogDatePickerComponent
 
     LayoutDirection: string = "ltr";
     isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef) {
         this.show = false;
 
@@ -246,7 +246,7 @@ export class LogDatePickerComponent
         if (this.FocusOnMe) {
             var element = document.getElementById(this.DatePickerInputId);
             element.focus();
-            SessionLocator.CurrentSession.SessionEvent.emit({
+            this.CurrentSession.SessionEvent.emit({
                 IsCell: true,
                 Id: element.id,
                 OnBlurEvent: this.OnBlurEvent
@@ -254,7 +254,7 @@ export class LogDatePickerComponent
             this.timerToken = setTimeout(() => {
                 SelectingElement(element);
             }, 1);
-            //SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id });
+            //this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id });
         }
     }
     initialized: boolean = false;
@@ -290,20 +290,20 @@ export class LogDatePickerComponent
 
         if (this.FocusOnMe) {
             // it means it is inside a grid.
-            this.CopyValueSubs = SessionLocator.CurrentSession.CopyCellIntoMemory.subscribe(
+            this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe(
                 id => {
                     if (id == this.DatePickerInputId) {
-                        //SessionLocator.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                        //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
                         this.DataContext[this.ObjectFieldName] =
-                            SessionLocator.CurrentSession.CopiedCell;
-                        SessionLocator.CurrentSession.CopiedCell = null;
+                            this.CurrentSession.CopiedCell;
+                        this.CurrentSession.CopiedCell = null;
                     }
                 }
             );
 
-            if (SessionLocator.CurrentSession.CopiedCell) {
-                //this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
-                //SessionLocator.CurrentSession.CopiedCell = null;
+            if (this.CurrentSession.CopiedCell) {
+                //this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+                //this.CurrentSession.CopiedCell = null;
             }
         }
 

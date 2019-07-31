@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnInit, QueryList, Directive, ViewChildren, ContentChildren, ViewChild, TemplateRef, ContentChild, forwardRef, ElementRef, AfterViewInit, ViewContainerRef } from '@angular/core'; 
+import { Component, Input, OnInit, QueryList, Directive, ViewChildren, ContentChildren, ViewChild, TemplateRef, ContentChild, forwardRef, ElementRef, AfterViewInit, ViewContainerRef } from '@angular/core'; 
 import {LogCellTemplateComponent} from './LogCellTemplateComponent';
 import {LogFooterComponent} from './LogFooterComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -53,6 +53,7 @@ export class LogColumnComponent implements AfterViewInit {
     IgnoreColumn: boolean = false;
     EditableLogGridComponent: EditableLogGridComponent;
     FooterContentTemplate: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         //this.EditableLogGridComponent = ELG;
     }
@@ -63,7 +64,7 @@ export class LogColumnComponent implements AfterViewInit {
     //private navComponent: LogCellTemplateComponent;
     //@ViewChildren(LogCellTemplateComponent) cellChildren: QueryList<LogCellTemplateComponent>;
     ngAfterContentInit() {
-        this.ColId = SessionLocator.CurrentSession.LogitudeGridHelper.GetColumnId();
+        this.ColId = this.CurrentSession.LogitudeGridHelper.GetColumnId();
         var temp = this.childChildren;
         if (temp) {
             this.hasFootertemplate = true;
@@ -81,8 +82,8 @@ export class LogColumnComponent implements AfterViewInit {
         this.hastemplate = this.innerContentTpl.length == 0 ? false : true;  
         this.hasHeadertemplate = this.innerContentTpl.length < 2 ? false : true;
         // var temp = this.navComponent;
-        SessionLocator.CurrentSession.SubscriptionAdd(
-            SessionLocator.CurrentSession.SessionEvent.subscribe((res) => {
+        this.CurrentSession.SubscriptionAdd(
+            this.CurrentSession.SessionEvent.subscribe((res) => {
                 if (res.IsCell) {
                     if (res.IsEnterCLicked == true) {
                         var element = document.getElementById(res.Id);
@@ -93,7 +94,7 @@ export class LogColumnComponent implements AfterViewInit {
             })
         ); 
         //if (this.hastemplate) {
-        //    this.Editindex = SessionLocator.CurrentSession.GetEditCellIndex();
+        //    this.Editindex = this.CurrentSession.GetEditCellIndex();
         //}
     }
     //@ContentChildren(TemplateRef) contentTpl: any;
@@ -104,7 +105,7 @@ export class LogColumnComponent implements AfterViewInit {
 
     }
     ngOnInit() {
-        //SessionLocator.CurrentSession.LogitudeGridHelper.SetColumnsCount(false, this.LogGridId);
+        //this.CurrentSession.LogitudeGridHelper.SetColumnsCount(false, this.LogGridId);
         //this.headerStyle = {
         //    'width': (this.ViewWidth) + 'px',
         //    'min-width': (this.ViewWidth) + 'px'

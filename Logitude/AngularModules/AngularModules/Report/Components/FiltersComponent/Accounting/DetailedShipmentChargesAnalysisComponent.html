@@ -12,10 +12,6 @@
                 <tr>
                     <td style="width: 80px; color:#1B90CB; font-size:15px; line-height: 15px;">Filter By:</td>
 
-                    <td style="width: 1px;">
-                        <CheckBox [IsChecked]="IsByCreateDate" (Checked)="IsByCreateDate = $event" [Text]="'By create date'"></CheckBox>
-                    </td>
-
                     <td>
                         <div></div>
                     </td>
@@ -28,7 +24,14 @@
         <td>
             <table>
                 <tr>
+                    <td style="width:10px;"><div></div></td>
+                    <td style="width:40px;" class="Label">Date:</td>
+                    <td style="width:150px;">
+                        <ComboBox [ItemsSource]="DateFilterList" [Binding]="'Name'" [SelectedItem]="SelectedDateFilter" (SelectedItemChanged)="SelectedDateFilter = $event"></ComboBox>
+                    </td>
+
                     <!-- From Date -->
+                    <td style="width:20px;"><div></div></td>
                     <td style="width: 1px; padding-right: 5px;" class="Label">From Date:</td>
                     <td style="width: 180px;">
                         <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [SelectedDateValue]="FromDate" [DataContext]="DataContext"></LogDatePicker>
@@ -40,7 +43,25 @@
                         <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [SelectedDateValue]="ToDate" [DataContext]="DataContext"></LogDatePicker>
                     </td>
 
+                    <td style="width:10px"><div></div></td>
+                    <td style="width: 90px;">
+                        <button class="GreenButton" (click)="RunButtonClicked()">Run Report</button>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td>
+            <table>
+                <tr>
                     <!-- Currency -->
+                    <td style="width:10px;"><div></div></td>
                     <td style="width: 1px;  padding-right: 5px;" class="Label">Currency:</td>
                     <td style="width: 66px;">
                         <ul class="FiltersMenu">
@@ -52,7 +73,6 @@
                             </li>
                         </ul>
                     </td>
-
 
                     <td style="width: 10px;">
                         <div></div>
@@ -78,14 +98,9 @@
                         <CheckBox [IsChecked]="IncludeCancelledShipments" (Checked)="IncludeCancelledShipments = $event" [Text]="'Include Cancelled Shipments'"></CheckBox>
                     </td>
 
-                    <td style="width:10px"><div></div></td>
-                    <td style="width: 90px;">
-                        <button class="GreenButton" (click)="RunButtonClicked()">Run Report</button>
-                    </td>
                     <td>
                         <div></div>
                     </td>
-
 
                 </tr>
             </table>

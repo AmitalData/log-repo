@@ -16,6 +16,7 @@ export class ARInvoiceList {
 		BillToPartnerName: string;
 		BillToId: string;
 		BillToName: string;
+		BillToLocalName: string;
 		BillToCode: string;
 		BillToAddressId: string;
 		VatNumber: string;
@@ -128,5 +129,7 @@ export class ARInvoiceList {
 		TotalVAT: number;
 		SATApprovalDate: Date;
 		IsFullAccounting: boolean;
+		ARInvoiceStockId: string;
+		IsInvoiceNumberFromStock: boolean;
 	
 }

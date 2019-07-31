@@ -29,7 +29,7 @@ export class ItemTaxesMoreFieldsComponent{// implements OnInit {
     public EntityPM: SupplierInvoiceItemsTaxList;
     public ObjectTableName = "Customs.SupplierInvoiceItemsTax";
     public DataContext: ItemTaxesMoreFieldsComponent = this;
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         
     }
@@ -46,7 +46,7 @@ export class ItemTaxesMoreFieldsComponent{// implements OnInit {
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     get DefinedPerUnitMeasure() { return this.EntityPM == null ? null : this.EntityPM.DefinedPerUnitMeasure; }

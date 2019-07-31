@@ -45,7 +45,7 @@ export class DecCargoSplitConsPackDetComponent extends BaseComponent {
     IsHeaderVisible: boolean = false;
     IsChanged: boolean = false;
     //IsFromCustomsAnswers: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -222,14 +222,14 @@ export class DecCargoSplitConsPackDetComponent extends BaseComponent {
                 }
                 else {
                     this.RejectChanges();
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
 
             });
 
         }
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
+            this.CurrentSession.CloseCurrentWindowEmit('cancel');
         }
         
     }
@@ -310,13 +310,13 @@ export class DecCargoSplitConsPackDetComponent extends BaseComponent {
                         var isSave = 1;
                         if (isSave == 1) {
                             this.OriginalItemPM.ChangeSetOp = "Update";
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
                             /*
                             this.declarationCargoSplitPMService.update(this.declarationCargoSplitPM).subscribe((response: any) => {
                                 var result = response.Result;
                                 this.IsChanged = false;
                                 console.log("[response/declarationCargoSplitPMService.update]", result);
-                                SessionLocator.CurrentSession.CloseCurrentWindow();
+                                this.CurrentSession.CloseCurrentWindow();
                                 if (!AppTool.IsNullOrEmpty(result)) {
 
                                 } else {
@@ -325,7 +325,7 @@ export class DecCargoSplitConsPackDetComponent extends BaseComponent {
                             */
                         }
                         else {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
                         }
                     }
 
@@ -347,15 +347,15 @@ export class DecCargoSplitConsPackDetComponent extends BaseComponent {
                 var isSave = 1;
                 if (isSave == 1) {
                     this.OriginalItemPM.ChangeSetOp = "Update";
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
-                    //SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    //this.CurrentSession.CloseCurrentWindow();
                     /*
                     this.declarationCargoSplitPMService.update(this.declarationCargoSplitPM).subscribe((response: any) => {
                         var result = response.Result;
                         this.IsChanged = false;
                         console.log("[response/declarationCargoSplitPMService.update]", result);
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                         if (!AppTool.IsNullOrEmpty(result)) {
 
                         } else {
@@ -364,7 +364,7 @@ export class DecCargoSplitConsPackDetComponent extends BaseComponent {
                     */
                 }
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             }
 
@@ -405,6 +405,7 @@ export class DecCargoSplitConsPackDetLine extends BaseComponent {
     public entityPM: DecCargoSplitConsPackDetPM;
     public decCargoSplitConsItem: DecCargoSplitConsItemPM;
     public parent: DecCargoSplitConsPackDetComponent;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(EntityPM: DecCargoSplitConsPackDetPM, Parent: DecCargoSplitConsPackDetComponent) {
         super();
         this.entityPM = EntityPM;
@@ -534,7 +535,7 @@ export class DecCargoSplitConsPackDetLine extends BaseComponent {
 
         if (this.valid != true) {
             SessionLocator.SustainFocusOnCell = true;
-            SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: packageQuantityTextBox.InputId });
+            this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: packageQuantityTextBox.InputId });
 
         }
         //this.PackageQuantity = newValue;
@@ -572,7 +573,7 @@ export class DecCargoSplitConsPackDetLine extends BaseComponent {
         }
         if (this.valid != true) {
             SessionLocator.SustainFocusOnCell = true;
-            SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: grossMassMeasureTextBox.InputId });
+            this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: grossMassMeasureTextBox.InputId });
 
         }
     }

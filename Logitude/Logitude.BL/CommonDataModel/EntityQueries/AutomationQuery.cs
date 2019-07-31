@@ -53,6 +53,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         From = a.From,
                                                         FromEmail = a.FromEmail,
                                                         Order = a.Order,
+                                                        Code = a.Code,
                                                     };
             return Automationes;
         }
@@ -82,7 +83,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              From = a.From,
                              FromEmail = a.FromEmail,
                              Order = a.Order,
-
+                             Code = a.Code,
                          }).FirstOrDefault();
             return query;
         }
@@ -91,42 +92,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public string GetAutomationXmalById(string id, int tenant)
         {
 
-            string result = "";
-            var query = (from a in repository.context.Automations
+         
+            string result = (from a in repository.context.Automations
                          where a.Tenant == tenant && a.Id == id
-                         select new AutomationPM()
-                         {
-                             Id = a.Id,
-                             Name = a.Name,
-                             CreateDate = a.CreateDate,
-                             CreatedByUserId = a.CreatedByUserId,
-                             Description = a.Description,
-                             ResultCode = a.ResultCode,
-                             Type = a.Type,
-                             UpdateDate = a.UpdateDate,
-                             UpdatedByUserId = a.UpdatedByUserId,
-                             Inactive = a.Inactive,
-                             Tenant = a.Tenant,
-                             ObjectTableId = a.ObjectTableId,
-                             Version = a.Version,
-                             AutomationXML = a.AutomationXML,
-                             From = a.From,
-                             FromEmail = a.FromEmail,
-                             Order = a.Order,
+                        select a.AutomationXML).FirstOrDefault();
 
-                         }).FirstOrDefault();
-
-
-            if (query != null)
-            {
-                result = query.AutomationXML;
-            }
             return result;
         }
-
-
-
-
 
 
         public IQueryable<AutomationList> GetIQueryableEntityList(IQueryable<Automation> iQueryable)
@@ -151,6 +123,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     From = a.From,
                                                     FromEmail = a.FromEmail,
                                                     Order = a.Order,
+                                                    Code = a.Code,
                                                 };
             return result;
         }
@@ -192,6 +165,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       From = a.From,
                                       FromEmail = a.FromEmail,
                                       Order = a.Order,
+                                      Code = a.Code,
 
                                   }).ToList();
             }
@@ -222,11 +196,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       FromEmail = a.FromEmail,
                                       Order = a.Order,
                                       AutomationXML = a.AutomationXML,
+                                      Code = a.Code,
                                   }).ToList();
             }
             return automationlist;
         }
 
-
+        public List<string> GetAutomationCodeLists(int tenant)
+        {
+            List<string> automationCodeLists = (from a in repository.context.Automations
+                                                where a.Tenant == tenant
+                                                select a.Code).ToList();
+            return automationCodeLists;
+        }
     }
 }

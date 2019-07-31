@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainService';
@@ -14,6 +14,7 @@ export class LoadSampleDataComponent {
     public ShipmentNumbersList: number[] = [];
     public ErrorsMessage: string;
     private myService: GlobalDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ShipmentNumbersList.push(100);
         this.ShipmentNumbersList.push(1000);
@@ -35,11 +36,11 @@ export class LoadSampleDataComponent {
     ButtonClicked(myCommand: string) {
         if (!AppTool.IsNullOrEmpty(myCommand)) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             this.myService.UpdateTenantZeroService(myCommand).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 var messageWindow = new MessageWindow();
 
@@ -65,7 +66,7 @@ export class LoadSampleDataComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {

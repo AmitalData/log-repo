@@ -43,7 +43,7 @@ export class ConstraintsDetailsComponent extends BaseComponent {
 
     //Services
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
        
@@ -72,6 +72,6 @@ export class ConstraintsDetailsComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

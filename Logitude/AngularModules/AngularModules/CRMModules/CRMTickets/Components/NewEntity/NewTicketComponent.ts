@@ -53,6 +53,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
     public EntityNumberTitle = "Shipment Number";
 
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -574,7 +575,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     public ValidationErrorsList: string[];
     OkButtonClicked() {
@@ -601,7 +602,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
         }
     }
     SubmitCreatingTicket() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating...");
+        this.CurrentSession.StartBusyIndicator("Creating...");
 
         var myService: CRMDomainService = new CRMDomainService();
         myService.InserNewTicket(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
@@ -612,12 +613,12 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
                         this.WindowArgs.TicketNumber = this.EntityPM.TicketNumber;
                     }
 
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
 
                 else {
                     this.ValidationErrorsList = myRespone.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });

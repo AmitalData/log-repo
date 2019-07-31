@@ -189,7 +189,7 @@
 //    }
 //    CancelButtonClicked() {
 //        this.EntityPM.RejectChanges();
-//        SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
+//        this.CurrentSession.CloseCurrentWindowEmit('cancel');
 //    }
 
 //    //#region Save Code
@@ -205,7 +205,7 @@
 //    }
 
 //    SaveButtonClicked() {
-//        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+//        this.CurrentSession.StartBusyIndicatorSaving();
 
 //        var valid = this.PreSaveAndNewValidate();
 //        var checkFreightValues = true;
@@ -234,7 +234,7 @@
 //                if (this.EntityPM.IncotermCode != null && (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F"))) {
 //                    if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 || this.EntityPM.InsuranceAmount == null) {
 
-//                        SessionLocator.CurrentSession.StopBusyIndicator();
+//                        this.CurrentSession.StopBusyIndicator();
 
 //                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
 //                        var confirmWindow = new ConfirmWindow();
@@ -260,9 +260,9 @@
 
 //                else if (this.EntityPM.IncotermCode != null && (this.EntityPM.IncotermCode == "CPT" || this.EntityPM.IncotermCode == "CFR")) {
 //                    if (this.EntityPM.InsuranceAmount == null) {
-//                        SessionLocator.CurrentSession.StopBusyIndicator();
+//                        this.CurrentSession.StopBusyIndicator();
 
-//                        SessionLocator.CurrentSession.StopBusyIndicator();
+//                        this.CurrentSession.StopBusyIndicator();
 
 //                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
 //                        var confirmWindow = new ConfirmWindow();
@@ -315,7 +315,7 @@
 
 //        }
 //        else {
-//            SessionLocator.CurrentSession.StopBusyIndicator();
+//            this.CurrentSession.StopBusyIndicator();
 
 //        }
 //    }
@@ -337,7 +337,7 @@
 //                else {
 //                    this.ValidationErrorsList = res.ErrorsArray;
 //                }
-//                SessionLocator.CurrentSession.StopBusyIndicator();
+//                this.CurrentSession.StopBusyIndicator();
 //                return false;
 //            });
 
@@ -356,7 +356,7 @@
 //                else {
 //                    this.ValidationErrorsList = res.ErrorsArray;
 //                }
-//                SessionLocator.CurrentSession.StopBusyIndicator();
+//                this.CurrentSession.StopBusyIndicator();
 //                return false;
 //            });
 
@@ -374,13 +374,13 @@
 //                        console.log("..Saved Successfully ", entity);
 //                        resolve(true);
 //                        if (this.closeWindow) {
-//                            SessionLocator.CurrentSession.CloseCurrentWindow();
+//                            this.CurrentSession.CloseCurrentWindow();
 //                        }
 //                    }
 //                    else {
 //                        this.ValidationErrorsList = res.ErrorsArray;
 //                    }
-//                    SessionLocator.CurrentSession.StopBusyIndicator();
+//                    this.CurrentSession.StopBusyIndicator();
 //                    resolve(false);
 //                });
 
@@ -394,13 +394,13 @@
 //                        console.log("..Saved Successfully ", entity);
 //                        resolve(true);
 //                        if (this.closeWindow) {
-//                            SessionLocator.CurrentSession.CloseCurrentWindow();
+//                            this.CurrentSession.CloseCurrentWindow();
 //                        }
 //                    }
 //                    else {
 //                        this.ValidationErrorsList = res.ErrorsArray;
 //                    }
-//                    SessionLocator.CurrentSession.StopBusyIndicator();
+//                    this.CurrentSession.StopBusyIndicator();
 //                    resolve(false);
 //                });
 //            }
@@ -457,14 +457,14 @@
 
 
 //            //                    //resolveInsuranceCallback("ok")
-//            //                    SessionLocator.CurrentSession.StopBusyIndicator();
+//            //                    this.CurrentSession.StopBusyIndicator();
 //            //                    resolve(true);
 
 
 //            //                }
 //            //                else {
 //            //                    this.ValidationErrorsList = res.ErrorsArray;
-//            //                    SessionLocator.CurrentSession.StopBusyIndicator();
+//            //                    this.CurrentSession.StopBusyIndicator();
 //            //                    resolve(false);
 //            //                }
 
@@ -489,7 +489,7 @@
 
 //            .catch(finish => {
 //                this.LogMe("catch(finish !!")
-//                SessionLocator.CurrentSession.StopBusyIndicator();
+//                this.CurrentSession.StopBusyIndicator();
 //                this._IsInitiateNewInstance = this.closeWindow = false;
 //            });
 
@@ -500,7 +500,7 @@
 //    FinishPromiseDoWhatPlanned() {
 //        this.LogMe("FinishPromiseDoWhatPlanned");
 //        if (this.closeWindow) {
-//            SessionLocator.CurrentSession.CloseCurrentWindow();
+//            this.CurrentSession.CloseCurrentWindow();
 //            this._IsInitiateNewInstance = this.closeWindow = false;
 //            //return Promise.reject(new Error('Finish CloseCurrentWindow'));
 //            throw new Error('Finish CloseCurrentWindow')
@@ -684,7 +684,7 @@
 
 //    CloseWindowAfterSaveIfNeeded() {
 //        if (this.closeWindow === true) {
-//            SessionLocator.CurrentSession.CloseCurrentWindow();
+//            this.CurrentSession.CloseCurrentWindow();
 //        }
 //    }
 

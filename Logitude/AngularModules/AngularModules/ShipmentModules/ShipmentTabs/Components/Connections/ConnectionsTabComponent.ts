@@ -1,18 +1,18 @@
-﻿import {Component, OnInit, OnDestroy}  from '@angular/core';
+import {Component, OnInit, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentDomainService, ShipmentConnectedEntity} from '../../../../Shipment/Services/ShipmentDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
-import {WarehouseEntryPM} from '../../../../Warehouse/EntityPMs/WarehouseEntryPM';
-import {WarehouseReleasePM} from '../../../../Warehouse/EntityPMs/WarehouseReleasePM';
 import {AppTool, DateTool, FontTool} from '../../../../Infrastructure/Tools'
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ShipmentAssemblyPM} from '../../../../Shipment/EntityPMs/ShipmentAssemblyPM';
-import {WarehouseHelper} from '../../../../Warehouse/Helpers/WarehouseHelper';
+import { WarehouseHelper } from '../../../../Warehouse/Helpers/WarehouseHelper';
+import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
 
 @Component({
     moduleId: module.id,
@@ -40,7 +40,9 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public IsNewWarehouseReleaseVisible: boolean = false;
     public IsAssembliesVisivle: boolean = false;
     public IsDisconnectQuoteVisible: boolean = false;
-
+    public IsMasterGridVisible: boolean = false;
+    public IsNewMasterVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -66,6 +68,14 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             this.IsDisconnectQuoteVisible = true;
         }
 
+        if (this.EntityPM.ShipmentLevelCode == "H") {
+            this.IsMasterGridVisible = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "NEWMASTERFROMHOUSE")) {
+            this.IsNewMasterVisible = true;
+        }
+
         this.Listen();
         this.LoadData();
     }
@@ -85,24 +95,36 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
+    private SessionEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent) {
-
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    if (this.IsNewWarehouseEntryRequested) this.ShowWarehouseScreen("Entry");
-                    else if (this.IsNewWarehouseReleaseRequested) this.ShowWarehouseScreen("Release");
+
+                    if (this.IsNewWarehouseEntryRequested) {
+                        this.ShowWarehouseScreen("Entry");
+                    }
+
+                    else if (this.IsNewWarehouseReleaseRequested) {
+                        this.ShowWarehouseScreen("Release");
+                    }
+
+                    else if (this.isNewMasterClicked) {
+                        this.RunNewMasterWizard();
+                    }
+
                     else {
                         this.LoadData();
                         this.FillAssemblies();
                     }
                 }
+
                 this.IsOpenWarehouseEntryScreen = false;
                 this.IsOpenWarehouseReleaseScreen = false;
                 this.IsNewWarehouseEntryRequested = false;
                 this.IsNewWarehouseReleaseRequested = false;
-
+                this.isNewMasterClicked = false;
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -120,14 +142,24 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                 }
             });
         }
+
+        //this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            //if (s == "RefreshConnections") {
+            //    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+            //    this.LoadData();
+            //}
+        //});
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.TabSelectedEvent);
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetShipmentConnectedEntities(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -136,7 +168,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                     this.FillItemSources(list);
                 }
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -146,7 +178,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     public TicketsGridHeight: number = 90;
 
     public IsQuoteGridVisible: boolean = false;
-    public IsMasterGridVisible: boolean = false;
     public IsCustomFileGridVisible: boolean = false;
     public IsTicketsGridVisible: boolean = false;
     private FillItemSources(list: ShipmentConnectedEntity[]) {
@@ -170,7 +201,6 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
         this.TicketsItemsSource = this.ItemsSource.filter(d => d.EntityType == "Ticket");
 
         this.IsQuoteGridVisible = this.QuotesItemsSource.length == 0 ? false : true;
-        this.IsMasterGridVisible = this.MastersItemsSource.length == 0 ? false : true;
         this.IsCustomFileGridVisible = this.CustomFilesItemsSource.length == 0 ? false : true;
         this.IsTicketsGridVisible = this.TicketsItemsSource.length == 0 ? false : true;
 
@@ -204,10 +234,23 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     ViewEntity(item: ShipmentConnectedEntityItem) {
         var myBackButtonLabel = "Shipment: " + this.EntityPM.ShipmentNumber;
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: item.EntityId, ObjectTableName: item.ObjectTableName, BackButtonLabel: myBackButtonLabel, EntityParentPM: this.EntityPM });
+
+                let isEditComponentSaved = false;
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (isEditComponentSaved) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
+                });
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
             });
     }
 
@@ -219,7 +262,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
             if (this.EntityPM && this.EntityPM.IsDirty) {
                 this.IsNewWarehouseEntryRequested = true;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
             else {
                 this.ShowWarehouseScreen("Entry");
@@ -235,7 +278,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
             if (this.EntityPM && this.EntityPM.IsDirty) {
                 this.IsNewWarehouseReleaseRequested = true;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
             else {
                 this.ShowWarehouseScreen("Release");
@@ -326,8 +369,9 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
                 this.myDomainService.DisconnectQuote(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse != null) {
                         if (!myResponse.HasError) {
+                            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
                             this.entityArgs.EditComponent.ReloadEntityPM();
-                            SessionLocator.CurrentSession.FireEvent("LoadConnectedShipments");
+                            this.CurrentSession.FireEvent("LoadConnectedShipments");
                             this.LoadData();
                         }
                     }
@@ -335,10 +379,73 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
             }
         });
     }
+
+    private isNewMasterClicked: boolean = false;
+    NewMasterButtonClicked() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show("House shipment already connected to a Master, in order to connect to another please disconnect it first");
+        }
+
+        else {
+            if (this.EntityPM.IsDirty) {
+                this.isNewMasterClicked = true;
+                this.entityArgs.EditComponent.SaveChanges();
+            }
+
+            else {
+                this.RunNewMasterWizard();
+            }
+        }
+    }
+    private RunNewMasterWizard() {
+        var args = new NewShipmentComponentArgs();
+        args.IsMasterCreatedFromHouse = true;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = args;
+        logWindow.Title = "New Master";
+        logWindow.Show('./Shipment/Components/NewShipment/NewMasterComponent');
+
+        logWindow.ComponentLoaded.subscribe(cmp => {
+            var myShipmentTypeId = this.EntityPM.ShipmentTypeId;
+            if (this.EntityPM.ShipmentTypeName) {
+                if (this.EntityPM.ShipmentTypeName.toLowerCase().indexOf("my groupage") > -1) {
+                    if (this.EntityPM.TransportModeId == "O") {
+                        myShipmentTypeId = "LCLD"
+                    }
+
+                    else {
+                        myShipmentTypeId = "LTL"
+                    }
+                }
+            }
+
+            cmp.DirectionId = this.EntityPM.DirectionId;
+            cmp.TransportModeId = this.EntityPM.TransportModeId;
+            cmp.ShipmentTypeId = myShipmentTypeId;
+            cmp.MainCarriageFromPortId = this.EntityPM.FromPortId;
+            cmp.MainCarriageToPortId = this.EntityPM.ToPortId;
+            cmp.SalesmanUserId = this.EntityPM.SalesmanUserId;
+            cmp.EntityPM.BranchId = this.EntityPM.BranchId;
+            cmp.EntityPM.DepartmentId = this.EntityPM.DepartmentId;
+            cmp.EntityPM.SCI = this.EntityPM.SCI;
+            cmp.EntityPM.MasterCreatedFromHouseId = this.EntityPM.Id;
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    //this.isMasterCreated = true;
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+            });
+        });
+    }
 }
 
 class ShipmentConnectedEntityItem {
     private myEntity: ShipmentConnectedEntity = new ShipmentConnectedEntity();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: ShipmentConnectedEntity, public fatherComponent: ConnectionsTabComponent) {
         this.myEntity = entity;
 

@@ -9,7 +9,7 @@ import {AutomationQueuedTask} from './AutomationQueuedTask';
 
 export class AutomatedBackup {
 
-    public Id: string;
+
     public CreateDate: Date;
     public UpdateDate: Date;
     public Name: string;

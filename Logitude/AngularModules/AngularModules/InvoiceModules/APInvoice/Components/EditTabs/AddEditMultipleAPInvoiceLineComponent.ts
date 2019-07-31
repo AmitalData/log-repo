@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {APInvoiceLinePM} from '../../../../Invoice/EntityPMs/APInvoiceLinePM';
 import {APInvoiceLineShortItem} from './EditMultipleShipmentComponent';
@@ -20,7 +20,7 @@ export class AddEditMultipleAPInvoiceLineComponent {
     public DataContext: APInvoiceLineShortItem;
     public ValidationErrorsList: string[] = [];
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
     }
@@ -34,7 +34,7 @@ export class AddEditMultipleAPInvoiceLineComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -74,7 +74,7 @@ export class AddEditMultipleAPInvoiceLineComponent {
                 this.DataContext.IsChecked = true;
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

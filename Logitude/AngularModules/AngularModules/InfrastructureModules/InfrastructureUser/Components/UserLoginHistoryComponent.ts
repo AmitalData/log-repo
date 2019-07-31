@@ -1,4 +1,4 @@
-﻿
+
 
 
 import { Response} from '@angular/http';
@@ -22,6 +22,7 @@ export class UserLoginHistoryComponent implements OnInit {
     SelectedUserLoginHistory: UserLoginLogList;
     public UserLoginHistoryLists: UserLoginLogList[];
     Username: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _userExtendedPMService: UserExtendedPMService) {
 
 
@@ -37,7 +38,7 @@ export class UserLoginHistoryComponent implements OnInit {
 
     SetDataContext(usersWorkspaceRecentItem: any) {
         this.Username = usersWorkspaceRecentItem.Username;
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.LoadData(usersWorkspaceRecentItem.Id);
     }
 
@@ -58,7 +59,7 @@ export class UserLoginHistoryComponent implements OnInit {
 
             }
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
 
 
@@ -68,7 +69,7 @@ export class UserLoginHistoryComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

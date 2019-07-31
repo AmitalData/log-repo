@@ -108,12 +108,14 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      BluesnapCRMContractId = a.BluesnapCRMContractId,
                                                      BluesnapEAWBContractId = a.BluesnapEAWBContractId,
                                                      BluesnapEAWBSContractId = a.BluesnapEAWBSContractId,
-                                                     BluesnapOneTimeContractId = a.BluesnapOneTimeContractId,
+                                                     BluesnapOneTimeContract = a.BluesnapOneTimeContract,
                                                      BluesnapContractQTY = a.BluesnapContractQTY,
                                                      BluesnapCRMContractQTY = a.BluesnapCRMContractQTY,
                                                      BluesnapEAWBContractQTY = a.BluesnapEAWBContractQTY,
                                                      BluesnapEAWBSContractQTY = a.BluesnapEAWBSContractQTY,
                                                      BluesnapOneTimeContractQTY = a.BluesnapOneTimeContractQTY,
+                                                     BluesnapInttraStockContractQTY=a.BluesnapInttraStockContractQTY,
+                                                     BluesnapInttraStockContractId=a.BluesnapInttraStockContractId,
                                                      //BluesnapContractId = a.BluesnapContract == null ? null : a.BluesnapContract.ContractId,
                                                      AWBMessagesCCSTypeCode = a.AWBMessagesCCSTypeCode,
                                                      PIMA = a.PIMA,
@@ -165,6 +167,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                                      PackageCodeSearchField = a.PackageCodeSearchField,
                                                      IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
+                                                     MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -181,6 +184,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                             tenant.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                             tenant.DocumentShareAsDefault = ten.DocumentShareAsDefault;
                             tenant.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
+                            tenant.IsTestTenant = ten.IsTestTenant;
                         }
 
                         GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -273,12 +277,14 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   BluesnapCRMContractId = a.BluesnapCRMContractId,
                                                   BluesnapEAWBContractId = a.BluesnapEAWBContractId,
                                                   BluesnapEAWBSContractId = a.BluesnapEAWBSContractId,
-                                                  BluesnapOneTimeContractId = a.BluesnapOneTimeContractId,
+                                                  BluesnapOneTimeContract = a.BluesnapOneTimeContract,
                                                   BluesnapContractQTY=a.BluesnapContractQTY,
                                                   BluesnapCRMContractQTY=a.BluesnapCRMContractQTY,
                                                   BluesnapEAWBContractQTY=a.BluesnapEAWBContractQTY,
                                                   BluesnapEAWBSContractQTY=a.BluesnapEAWBSContractQTY,
                                                   BluesnapOneTimeContractQTY=a.BluesnapOneTimeContractQTY,
+                                                  BluesnapInttraStockContractQTY = a.BluesnapInttraStockContractQTY,
+                                                  BluesnapInttraStockContractId = a.BluesnapInttraStockContractId,
                                                   //     BluesnapContractId = a.BluesnapContract == null ? null : a.BluesnapContract.ContractId,
                                                   AWBMessagesCCSTypeCode = a.AWBMessagesCCSTypeCode,
                                                   PIMA = a.PIMA,
@@ -330,6 +336,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   PackageCodeSearchField = a.PackageCodeSearchField,
                                                   IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                                   IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
+                                                  MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -347,6 +354,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         tenant1.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                         tenant1.DocumentShareAsDefault = ten.DocumentShareAsDefault;
                         tenant1.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
+                        tenant1.IsTestTenant = ten.IsTestTenant;
                     }
 
                     GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -437,12 +445,14 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         BluesnapCRMContractId = a.BluesnapCRMContractId,
                         BluesnapEAWBContractId = a.BluesnapEAWBContractId,
                         BluesnapEAWBSContractId = a.BluesnapEAWBSContractId,
-                        BluesnapOneTimeContractId = a.BluesnapOneTimeContractId,
+                        BluesnapOneTimeContract = a.BluesnapOneTimeContract,
                         BluesnapContractQTY = a.BluesnapContractQTY,
                         BluesnapCRMContractQTY = a.BluesnapCRMContractQTY,
                         BluesnapEAWBContractQTY = a.BluesnapEAWBContractQTY,
                         BluesnapEAWBSContractQTY = a.BluesnapEAWBSContractQTY,
                         BluesnapOneTimeContractQTY = a.BluesnapOneTimeContractQTY,
+                        BluesnapInttraStockContractQTY = a.BluesnapInttraStockContractQTY,
+                        BluesnapInttraStockContractId = a.BluesnapInttraStockContractId,
                         //BluesnapContractId = a.BluesnapContract == null ? null : a.BluesnapContract.ContractId,
                         AWBMessagesCCSTypeCode = a.AWBMessagesCCSTypeCode,
                         PIMA = a.PIMA,
@@ -494,6 +504,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         StockTypeCode = a.StockTypeCode,
                         IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                         IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
+                        MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -568,12 +579,14 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     BluesnapCRMContractId = entity.BluesnapCRMContractId,
                     BluesnapEAWBContractId = entity.BluesnapEAWBContractId,
                     BluesnapEAWBSContractId = entity.BluesnapEAWBSContractId,
-                    BluesnapOneTimeContractId = entity.BluesnapOneTimeContractId,
+                    BluesnapOneTimeContract = entity.BluesnapOneTimeContract,
                     BluesnapContractQTY = entity.BluesnapContractQTY,
                     BluesnapCRMContractQTY = entity.BluesnapCRMContractQTY,
                     BluesnapEAWBContractQTY = entity.BluesnapEAWBContractQTY,
                     BluesnapEAWBSContractQTY = entity.BluesnapEAWBSContractQTY,
                     BluesnapOneTimeContractQTY = entity.BluesnapOneTimeContractQTY,
+                    BluesnapInttraStockContractQTY = entity.BluesnapInttraStockContractQTY,
+                    BluesnapInttraStockContractId = entity.BluesnapInttraStockContractId,
                     AWBMessagesCCSTypeCode = entity.AWBMessagesCCSTypeCode,
                     PIMA = entity.PIMA,
                     LastFFRSentDate = entity.LastFFRSentDate,
@@ -617,6 +630,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     IsINTTRAStockPrepaid = entity.IsINTTRAStockPrepaid,
                     PackageCodeSearchField = entity.PackageCodeSearchField,
                     IsINTTRAOnlyDemo = entity.IsINTTRAOnlyDemo,
+                    MainAdditionalPackageApplied = entity.MainAdditionalPackageApplied,
                 };
             }
 
@@ -693,12 +707,14 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        BluesnapCRMContractId = a.BluesnapCRMContractId,
                        BluesnapEAWBContractId = a.BluesnapEAWBContractId,
                        BluesnapEAWBSContractId = a.BluesnapEAWBSContractId,
-                       BluesnapOneTimeContractId = a.BluesnapOneTimeContractId,
+                       BluesnapOneTimeContract = a.BluesnapOneTimeContract,
                        BluesnapContractQTY = a.BluesnapContractQTY,
                        BluesnapCRMContractQTY = a.BluesnapCRMContractQTY,
                        BluesnapEAWBContractQTY = a.BluesnapEAWBContractQTY,
                        BluesnapEAWBSContractQTY = a.BluesnapEAWBSContractQTY,
                        BluesnapOneTimeContractQTY = a.BluesnapOneTimeContractQTY,
+                       BluesnapInttraStockContractQTY = a.BluesnapInttraStockContractQTY,
+                       BluesnapInttraStockContractId = a.BluesnapInttraStockContractId,
                        AWBMessagesCCSTypeCode = a.AWBMessagesCCSTypeCode,
                        PIMA = a.PIMA,
                        LastFFRSentDate = a.LastFFRSentDate,
@@ -739,6 +755,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                        PackageCodeSearchField = a.PackageCodeSearchField,
                        IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
+                       MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                    };
         }
 
@@ -943,6 +960,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                              PackageCodeSearchField = a.PackageCodeSearchField,
                                              IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
+                                             MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                          }).FirstOrDefault();
 
             return tenant;

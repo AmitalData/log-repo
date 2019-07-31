@@ -44,15 +44,15 @@ export class AccountPayablesComponent {
     public ItemsSource: ObservableCollection;
     @Output() ReloadUserQueries = new EventEmitter();
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         }
         this.TenantPM = SessionLocator.TenantPM;
         this.myViewsQueryVisibility = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
-        this.PayablesChartMoneyInOutId += SessionLocator.CurrentSession.GetChartId();
-        this.PayablesChartId += SessionLocator.CurrentSession.GetChartId();
+        this.PayablesChartMoneyInOutId += this.CurrentSession.GetChartId();
+        this.PayablesChartId += this.CurrentSession.GetChartId();
         this.myChartsService = new ChartsService();
         this.ItemsSource = new ObservableCollection([]);
         this.FillFilters();
@@ -156,8 +156,8 @@ export class AccountPayablesComponent {
 
     InitComponent() {
         this.LoadAllScreenData();
-        this.APInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ErrorInTransfer")) ? true : false;
-        this.APPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ErrorInTransfer")) ? true : false;
+        this.APInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APInvoice", "ErrorInTransfer")) ? true : false;
+        this.APPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("APPayment", "ErrorInTransfer")) ? true : false;
     }
 
     LoadAllScreenData() {
@@ -350,12 +350,12 @@ export class AccountPayablesComponent {
             listArgs.ObjectTableName = objectTableName;
             listArgs.BackButtonTitle = backButtonTitle;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -398,7 +398,7 @@ export class AccountPayablesComponent {
 
         }
 
-         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: editedPartnerId,  ObjectTableName: objectTableName });
@@ -448,7 +448,7 @@ export class AccountPayablesComponent {
         newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
 
         var backButtonLabel = TextCodeTranslator.Translate("General.MH.Accounting");
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: newApPaymentPM.Id, EntityPM: newApPaymentPM, BackButtonLabel: backButtonLabel, ObjectTableName: 'APPayment'});
@@ -465,7 +465,7 @@ export class AccountPayablesComponent {
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityPM: comp.EntityPM, ObjectTableName: 'APInvoice', BackButtonLabel: TextCodeTranslator.Translate("General.MH.Accounting") });

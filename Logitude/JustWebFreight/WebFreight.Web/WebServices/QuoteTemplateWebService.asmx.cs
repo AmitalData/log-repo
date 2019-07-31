@@ -119,6 +119,21 @@ namespace WebFreight.Web.WebServices
                 quotePM = helper.BuildingQuotePM();
             }
 
+
+            QuoteTemplateBuildArges quoteTemplateBuildArges = new QuoteTemplateBuildArges();
+            quoteTemplateBuildArges.Tenant = tenant;
+            quoteTemplateBuildArges.SectionTypeCode = sectionTypeCode;
+            quoteTemplateBuildArges.QuotePM = quotePM;
+            quoteTemplateBuildArges.QuoteTemplatePM = template;
+            quoteTemplateBuildArges.QuoteTemplateSettingPM = setting;
+            quoteTemplateBuildArges.QuoteTemplateTextCodePMLists = textcodes;
+            quoteTemplateBuildArges.QuoteTemplateTableDesignsLists = quoteTemplateTableDesignsList;
+            quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists = quoteTemplateTextDesignsList;
+            quoteTemplateBuildArges.QuotePM = quotePM;
+            quoteTemplateBuildArges.QuoteTemplateSectionPMLists = templateSections;
+            quoteTemplateBuildArges.Tenant = tenant;
+
+
             byte[] bodyData = null;
 
             switch (sectionTypeCode)
@@ -128,25 +143,25 @@ namespace WebFreight.Web.WebServices
                     break;
 
                 case "PH":
-                    bodyData = helper.GetQuoteTemplatePageHeaderFooter(template, setting, quoteTemplateTextDesignsList, tenant, false, "Header");//GetQuoteTemplatePageHeader(quoteTemplateId, tenant);
+                    bodyData = helper.GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);//GetQuoteTemplatePageHeader(quoteTemplateId, tenant);
                     break;
 
 
                 case "QH":
-                    bodyData = helper.GetQuoteTemplateHeader(template, quotePM, setting, quoteTemplateTextDesignsList, quoteTemplateTableDesignsList, textcodes, tenant);//GetQuoteTemplateHeader(quoteTemplateId, tenant, settingId, quoteId);
+                    bodyData = helper.GetQuoteTemplateHeader(quoteTemplateBuildArges);//GetQuoteTemplateHeader(quoteTemplateId, tenant, settingId, quoteId);
                     break;
 
                 case "QD":
-                    bodyData = helper.GetQuoteTemplateDetails(template, quotePM, setting, quoteTemplateTextDesignsList, quoteTemplateTableDesignsList, textcodes, tenant);//GetQuoteTemplateDetails(quoteTemplateId, tenant, settingId, quoteId);
+                    bodyData = helper.GetQuoteTemplateDetails(quoteTemplateBuildArges);//GetQuoteTemplateDetails(quoteTemplateId, tenant, settingId, quoteId);
                     break;
 
                 case "PP":
                 case "PC":
-                    bodyData = helper.GetQuoteTemplatePricingHtmlData(sectionTypeCode, quotePM, template, setting, quoteTemplateTextDesignsList, quoteTemplateTableDesignsList, tenant);//GetQuoteTemplatePricingHtmlData(sectionTypeCode, quoteId, quoteTemplateId, tenant);
+                    bodyData = helper.GetQuoteTemplatePricingHtmlData(quoteTemplateBuildArges);//GetQuoteTemplatePricingHtmlData(sectionTypeCode, quoteId, quoteTemplateId, tenant);
                     break;
 
                 case "PF":
-                    bodyData = helper.GetQuoteTemplatePageHeaderFooter(template, setting, quoteTemplateTextDesignsList, tenant,false,"Footer");
+                    bodyData = helper.GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
                     break;
 
                 default:

@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList} from '@angular/core';
+import {Component, ViewChildren, QueryList} from '@angular/core';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -13,10 +13,18 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 })
 
 export class CRMWorkspaceComponent {
+    public IsOccasionVisible: boolean = false;
     public IsContactsVisible: boolean = false;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
+
         this.RunComponent();
+
+        if (FeatureLocator.HasFeaturePermession("Occasion", "Module")) {
+            this.IsOccasionVisible = true;
+        }
 
         if (FeatureLocator.HasFeaturePermession("General", "CONTACTS")) {
             this.IsContactsVisible = true;
@@ -71,6 +79,7 @@ export class CRMWorkspaceComponent {
     private Page_OPP: any = null;
     private Page_CON: any = null;
     private Page_DAS: any = null;
+    private Page_OCC: any = null;
     SelectionChanged() {
         if (this.isLoaderReady) {
             if (this.SelectedItem != null) {
@@ -178,9 +187,22 @@ export class CRMWorkspaceComponent {
 
                             break;
                         }
+
+                        case "OCC": {
+                            if (this.Page_OCC == null) {
+                                this._entityResourceService.getEntityResourceByTableName("Occasion", 0).subscribe(response => {
+                                    SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/OccasionWorkspaceComponent', myLocation.viewContainerRef)
+                                        .then(cmpRef => {
+                                            this.Page_OCC = cmpRef.instance;
+                                        });
+                                });
+                            }
+
+                            break;
+                        }
                     }
 
-                    SessionLocator.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.CRM") + "\\" + this.GetPageName() });
+                    this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.CRM") + "\\" + this.GetPageName() });
                 }
             }
         }
@@ -197,6 +219,7 @@ export class CRMWorkspaceComponent {
             case "OPP": { myResult = "Opportunities"; break; }
             case "CON": { myResult = TextCodeTranslator.Translate("General.MH.Contacts"); break; }
             case "DAS": { myResult = "Dashboard"; break; }
+            case "OCC": { myResult = "Occasion"; break; }
         }
 
         return myResult;

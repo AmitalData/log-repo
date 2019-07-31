@@ -1,0 +1,173 @@
+
+<style type="text/css">
+    .TariffsSectionHead {
+        height: 20px;
+        line-height: 20px;
+        font-size: 18px;
+        color: #1B90CB;
+    }
+
+    .TariffsSection:not(:first-child) {
+        margin-top: 10px;
+    }
+</style>
+
+<table>
+    <tr style="height:1px;">
+        <td>
+            <div class="TariffsSectionHead">Tariffs</div>
+        </td>
+    </tr>
+
+    <tr style="height:10px">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height:10px;">
+        <td>
+
+            <table>
+                <tr>
+                    <td style="width:180px">
+                        <div style="width:180px">
+                            <HyperlinkQuery (click)="TariffSettingsClicked()">Tariff Settings</HyperlinkQuery>
+                        </div>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height:10px">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:180px">
+                        <div>
+                            <HyperlinkQuery (click)="ViewTariffs('A')">Air Freight Costs ({{AirFreightCount}})</HyperlinkQuery>
+                        </div>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:20px">
+                        <button class="Button" (click)="NewTariff('A')">New</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+    <tr style="height:10px">
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:180px">
+                        <div>
+                            <HyperlinkQuery (click)="ViewTariffs('AS')">Air Surcharges Costs ({{AirSurchargeCount}})</HyperlinkQuery>
+                        </div>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:20px">
+                        <button class="Button" (click)="NewTariff('AS')">New</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:1px">
+                    <td>
+                        <div class="QueriesSection">
+                            <div>Tariffs Generator</div>
+                            <div>
+                                <p class="QueryLink" (click)="GenerateTariffsClicked()">Generate</p>
+                            </div>
+                            <div style="padding-left:5px;">
+                                <input class="QueryLink" style="display: none;float:left;background-color:white"
+                                       type="file" (change)="GenerateExcelTariffsClicked($event)"
+                                       (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
+                                       #fileInput>
+                                <a href="#" style="text-decoration:none;float:left;background-color:white">
+                                    <button style="background-color:white" (click)="fileInput.click()">Generate From Excel</button>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height:10px">
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="QueriesSection">
+                            <div>
+                                Tariffs Search
+                            </div>
+                            <div>
+                                <p class="QueryLink" (click)="CheckAirfreightCost()">Price Check</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+
+
+            </table>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td class="CellStretch">
+            <div></div>
+        </td>
+    </tr>
+</table>

@@ -62,7 +62,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string SaleMeasurementId { get; set; }
         public string SaleMeasurementCode { get; set; }
         public string SaleMeasurementShortName { get; set; }
+        public string SaleMeasurementLocalName { get; set; }
 
+        
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CostCurrencyId { get; set; }
         public string CostCurrencyCode { get; set; }
@@ -151,6 +153,13 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? CostAmountInSaleCurrency { get; set; }
 
         public bool IsBackToBack { get; set; }
+
+        public string MarkUpText { get; set; }
+        public string ContainerType1MarkUpText { get; set; }
+        public string ContainerType2MarkUpText { get; set; }
+        public string ContainerType3MarkUpText { get; set; }
+        public string ContainerType4MarkUpText { get; set; }
+        public string ContainerType5MarkUpText { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
 

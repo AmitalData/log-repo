@@ -56,22 +56,25 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-					ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+                    int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+					SecurityUtility.AuthenticateAPICall(tenant);
+                  
+
+                    ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, tenant);
                     string computingPartnerCode = "";
                     if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                     {
                         computingPartnerCode = entity.ComputingPartnerCode;//loggedContactInfo.ComputingPartnerCode;
                     }
 
-                    ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+                    ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                     CardRepository cardRepository = new CardRepository(MyContext);
 
                     if (!string.IsNullOrEmpty(entity.Code))
                     {
-                        bool exist = (from a in cardRepository.GetCards(authToken.Tenant)
-                                      where a.PartnerTypeId == "VD" && a.Code == entity.Code && a.Tenant == authToken.Tenant
+                        bool exist = (from a in cardRepository.GetCards(tenant)
+                                      where a.PartnerTypeId == "VD" && a.Code == entity.Code && a.Tenant == tenant
                                       select a).Any();
 
                         if (exist)
@@ -80,8 +83,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                     }
 
-                    VendorQueryService mappingService = new VendorQueryService(authToken.Tenant);
-                    VendorPM entityPM = mappingService.VendorCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
+                    VendorQueryService mappingService = new VendorQueryService(tenant);
+                    VendorPM entityPM = mappingService.VendorCustomDataMappingAndValidating(entity, tenant, computingPartnerCode);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
@@ -103,24 +106,24 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
                         }
 
-                        VendorService service = new VendorService(MyContext, authToken.Tenant);
+                        VendorService service = new VendorService(MyContext, tenant);
                         service.Create(entityPM);
 
                         #region GLAccount
                         if (entity.GLAccount != null)
                         {
                             FullAccountingHelper fullAccountingHelper = new FullAccountingHelper();                            
-                            Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(entityPM.Id, authToken.Tenant);
+                            Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(entityPM.Id, tenant);
                             if (card != null)
                             {
                                 GLAccountPM gLAccountEntity = new GLAccountPM();
-                                gLAccountEntity.Tenant = authToken.Tenant;
+                                gLAccountEntity.Tenant = tenant;
                                 gLAccountEntity.PassedFromAPI = true;
                                 gLAccountEntity.ChartOfAccountsTypeCode = "4";
                                 gLAccountEntity.RevenueExpenseType = "3";
                                 gLAccountEntity.AccountTypeCode = "3";
                                 gLAccountEntity.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-
+                                gLAccountEntity.InternalNumber = entity.GLAccount.InternalNumber;
                                 //DisplayNumber
                                 if (string.IsNullOrEmpty(entity.GLAccount.DisplayNumber))
                                 {
@@ -158,16 +161,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 }
                                 else
                                 {
-                                    ChartOfAccountRepository chartOfAccountRepository = new ChartOfAccountRepository(authToken.Tenant);
+                                    ChartOfAccountRepository chartOfAccountRepository = new ChartOfAccountRepository(tenant);
                                     ChartOfAccount chartOfAccount = new ChartOfAccount();
 
                                     if (!string.IsNullOrEmpty(entity.GLAccount.ChartOfAccount.Id))
                                     {
-                                        chartOfAccount = chartOfAccountRepository.GetSingle(entity.GLAccount.ChartOfAccount.Id, authToken.Tenant);
+                                        chartOfAccount = chartOfAccountRepository.GetSingle(entity.GLAccount.ChartOfAccount.Id, tenant);
                                     }
                                     else
                                     {
-                                        chartOfAccount = chartOfAccountRepository.GetSingleByCode(entity.GLAccount.ChartOfAccount.Code, authToken.Tenant);
+                                        chartOfAccount = chartOfAccountRepository.GetSingleByCode(entity.GLAccount.ChartOfAccount.Code, tenant);
                                     }
 
                                     if (chartOfAccount == null)
@@ -197,7 +200,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     else
                                     {
                                         CurrencyRepository currencyRepository = new CurrencyRepository(MyContext);
-                                        Currency currency = currencyRepository.GetSingleCurrencyByCode(entity.GLAccount.Currency.Code, authToken.Tenant);
+                                        Currency currency = currencyRepository.GetSingleCurrencyByCode(entity.GLAccount.Currency.Code, tenant);
                                         if (currency == null)
                                         {
                                             throw new ApplicationException("Currency with Code " + entity.GLAccount.Currency.Code + " doesn't exist");
@@ -215,7 +218,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     }
                                     else
                                     {
-                                        ReconcileMethodRepository reconcileMethodRepository = new ReconcileMethodRepository(authToken.Tenant);
+                                        ReconcileMethodRepository reconcileMethodRepository = new ReconcileMethodRepository(tenant);
                                         ReconcileMethod reconcileMethod = reconcileMethodRepository.GetSingle(entity.GLAccount.ReconcileMethod.Code);
                                         if (reconcileMethod == null)
                                         {
@@ -243,8 +246,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         scope.Complete();
                     }
 
-                    var result = mappingService.GetVendorById(entityPM.Id, authToken.Tenant);
-                    APIHelper.AddCommunicationLog("D", entity, result, "Vendor", entityPM.Id, "Vendor API", authToken.Tenant);
+                    var result = mappingService.GetVendorById(entityPM.Id, tenant);
+                    APIHelper.AddCommunicationLog("D", entity, result, "Vendor", entityPM.Id, "Vendor API", tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
 

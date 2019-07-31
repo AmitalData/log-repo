@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
@@ -21,6 +21,7 @@ export class AddEditAddressComponent implements OnInit {
     public DataContext: AddressItemClass;
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -50,20 +51,20 @@ export class AddEditAddressComponent implements OnInit {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var isValid = this.Validate();
         if (!isValid) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
 
         else {
             if (!this.EntityPM.IsDirty) {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
 
             else {
@@ -156,7 +157,7 @@ export class AddEditAddressComponent implements OnInit {
 
         this.DomainService.PostPartnerAddress(args).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -166,13 +167,13 @@ export class AddEditAddressComponent implements OnInit {
                 this.DataContext.EntityPM = myResponse.Result.Address;
 
                 if (!this.LoadCompletedEvent) {
-                    this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isSuccess: boolean) => {
+                    this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isSuccess: boolean) => {
 
                         AppTool.KillEventEmitter(this.LoadCompletedEvent);
                         this.LoadCompletedEvent = null;
 
                         if (isSuccess == false) {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
 
                         else {
@@ -180,18 +181,18 @@ export class AddEditAddressComponent implements OnInit {
                                 this.DataContext.fatherComponent.DomainService.GetAllAddressesPMsbyCardId(this.EntityPM.CardId).subscribe((myResult: any) => {
                                     this.DataContext.fatherComponent.AllAddresses = myResult;
                                     this.DataContext.fatherComponent.BuildItemsSource();
-                                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                                    this.CurrentSession.CloseCurrentWindow();
                                 });
                             }
 
                             else {
                                 this.DataContext.fatherComponent.BuildItemsSource();
-                                SessionLocator.CurrentSession.CloseCurrentWindow();
+                                this.CurrentSession.CloseCurrentWindow();
                             }
                         }                       
                     });
 
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 }
             }            
         });

@@ -1,4 +1,4 @@
-﻿declare var JSZip: any;
+declare var JSZip: any;
 declare var window: any;
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
@@ -288,7 +288,7 @@ export class EntityResourceService {
                                     else
                                         console.log(objectTableName + " Object Fields already loaded in the memory");
 
-                                    if (!list || (list && list.length <= 0)) {
+                                    if (!list || (list && list.length <= 0) && objectTableName != "General") {
                                         console.warn(objectTableName + " Unzipped local cache Object Fields are Empty!!")
                                     }
                                     break;
@@ -387,7 +387,7 @@ export class EntityResourceService {
                                 console.log(entityName + " Closed Table Data stored to memory");
                             }
                         }
-                        console.error(storagefileName + " Failed to be written on the storage!!!!!");
+                        console.warn(storagefileName + " Failed to be written on the storage!!!!!");
                     }
                     if (entityName == parentEntityName && type != "ClosedData") {  // decompress the files for the requested entity to the memory
 

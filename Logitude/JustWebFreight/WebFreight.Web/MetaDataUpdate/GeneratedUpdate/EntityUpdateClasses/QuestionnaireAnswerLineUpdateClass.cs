@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuestionnaireAnswerLineUpdateClass
@@ -145,9 +149,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuestionnaireAnswerId",
-					  						DefaultText =  @"Questionnaire Answer Id",
+					  						DefaultText =  "Questionnaire Answer Id",
 					  						ListFieldLable =  "QuestionnaireAnswerIdListLable",
-					  						ListLableDefaultText =  @"Questionnaire Answer Id",
+					  						ListLableDefaultText =  "Questionnaire Answer Id",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -187,10 +191,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QuestionNumber",
-					  						DefaultText =  @"Question Number",
+					  						DefaultText =  "Question Number",
 					  						ListFieldLable =  "QuestionNumberListLable",
-					  						ListLableDefaultText =  @"Question Number",
-					  						ListLocalDefaultText =  @"Question Number",
+					  						ListLableDefaultText =  "Question Number",
+					  						ListLocalDefaultText =  "Question Number",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -230,10 +234,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AnswerValue",
-					  						DefaultText =  @"Answer Value",
+					  						DefaultText =  "Answer Value",
 					  						ListFieldLable =  "AnswerValueListLable",
-					  						ListLableDefaultText =  @"Answer Value",
-					  						ListLocalDefaultText =  @"Answer Value",
+					  						ListLableDefaultText =  "Answer Value",
+					  						ListLocalDefaultText =  "Answer Value",
 					  						IsMaxLength =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);

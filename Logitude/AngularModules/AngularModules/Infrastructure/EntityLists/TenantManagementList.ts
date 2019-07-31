@@ -76,12 +76,14 @@ export class TenantManagementList {
 		BluesnapCRMContractId: string;
 		BluesnapEAWBContractId: string;
 		BluesnapEAWBSContractId: string;
-		BluesnapOneTimeContractId: string;
+		BluesnapOneTimeContract: string;
+		BluesnapInttraStockContractId: string;
 		BluesnapContractQTY: number;
 		BluesnapCRMContractQTY: number;
 		BluesnapEAWBContractQTY: number;
 		BluesnapEAWBSContractQTY: number;
 		BluesnapOneTimeContractQTY: number;
+		BluesnapInttraStockContractQTY: number;
 		AWBMessagesCCSTypeCode: string;
 		PIMA: string;
 		IsEAWBOnlyDemo: boolean;
@@ -127,5 +129,6 @@ export class TenantManagementList {
 		IsINTTRAStockPrepaid: boolean;
 		PackageCodeSearchField: string;
 		IsINTTRAOnlyDemo: boolean;
+		IsTestTenant: boolean;
 	
 }

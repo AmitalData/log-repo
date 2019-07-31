@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {EmployeeGroupPM} from '../../../../CRM/EntityPMs/EmployeeGroupPM';
@@ -20,7 +20,7 @@ export class NewEmployeeComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     private entityPM: EmployeeGroupPM;
     public EmployeeGroupLines: EmployeeGroupLineData[];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.entityPM = new EmployeeGroupPM();
@@ -62,7 +62,7 @@ export class NewEmployeeComponent extends BaseComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -77,12 +77,12 @@ export class NewEmployeeComponent extends BaseComponent {
        
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             var service = new EmployeeGroupPMService();
             service.insert(this.entityPM).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit('ok');
+                    this.CurrentSession.CloseCurrentWindowEmit('ok');
                 }
                 else {
                     this.ValidationErrorsList = myResponse.ErrorsArray;

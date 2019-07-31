@@ -237,7 +237,9 @@ namespace Logitude.BL.Helpers
                 value = value.Trim();
 
                 var base64EncodedBytes = System.Convert.FromBase64String(value);
-                myResult = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+                //myResult = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+                Encoding hebrewEncoding = Encoding.GetEncoding("Windows-1255");
+                myResult = hebrewEncoding.GetString(base64EncodedBytes);
             }
 
             else

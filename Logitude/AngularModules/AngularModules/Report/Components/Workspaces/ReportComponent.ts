@@ -22,7 +22,7 @@ export class ReportComponent {
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     IsViewReport: boolean = false;
     showLocal: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
         this.LoadData();
@@ -54,7 +54,7 @@ export class ReportComponent {
                             
                             myResult.forEach((item) => {
                                 if (item.Code == "AREX") {
-                                    if (SessionLocator.Tenant == 1212) {
+                                    if (SessionLocator.Tenant == 1212 || FeatureLocator.IsPackage_DVMT()) {
                                         if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                             this.reportList.push(item);
                                         }
@@ -62,7 +62,7 @@ export class ReportComponent {
                                 }
 
                                 else if (item.Code == "DSCA") {
-                                    if (SessionLocator.Tenant != 1212) {
+                                    if (SessionLocator.Tenant != 1212 || FeatureLocator.IsPackage_DVMT()) {
                                         if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                             this.reportList.push(item);
                                         }
@@ -70,15 +70,22 @@ export class ReportComponent {
                                 }
 
                                 else if (item.Code == "VDK") {
-                                    if (SessionLocator.Tenant == 1495) {
+                                    if (SessionLocator.Tenant == 1495 || SessionLocator.TenantManagementJS.PackageCode =="DVMT") {
                                         if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                             this.reportList.push(item);
                                         }
                                     }
                                 }
 
+                                else if (item.Code == "UNER") {
+                                    var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "URT" && d.TenantNumber == SessionLocator.Tenant)[0];
+                                    if (FeatureToggle) {
+                                        this.reportList.push(item);
+                                    }
+                                }
+
                                 else if (item.Code == "SHID") {
-                                    if (SessionLocator.Tenant == 1526 || SessionLocator.Tenant == 1525 || SessionLocator.Tenant == 1524 || SessionLocator.Tenant == 1523 || SessionLocator.Tenant == 1608 || SessionLocator.Tenant == 1609 || SessionLocator.Tenant == 1684 ) {
+                                    if (SessionLocator.Tenant == 1526 || SessionLocator.Tenant == 1525 || SessionLocator.Tenant == 1524 || SessionLocator.Tenant == 1523 || SessionLocator.Tenant == 1608 || SessionLocator.Tenant == 1609 || SessionLocator.Tenant == 1684 || SessionLocator.TenantManagementJS.PackageCode == "DVMT"  ) {
                                         this.reportList.push(item);
                                     }
 
@@ -88,6 +95,16 @@ export class ReportComponent {
                                         }
                                     }
                                 }
+                                else if (item.Code == "SHEL") {
+                                 
+                                    if (SessionLocator.TenantManagementJS.PackageCode == "DVMT" || SessionLocator.Tenant == 1609 || SessionLocator.Tenant == 1608 || SessionLocator.Tenant == 1523 || SessionLocator.Tenant == 1524 || SessionLocator.Tenant == 1525 || SessionLocator.Tenant == 1526) {
+                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                            this.reportList.push(item);
+                                        }
+                                    }
+                                }
+
+
 
                                 else {
                                     if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
@@ -108,7 +125,7 @@ export class ReportComponent {
         this.ItemsSourceTemp = [];
 
         this.groupList.forEach(item => {
-            var myItem: ReportsGrpupClass = new ReportsGrpupClass(item, this);
+            var myItem: ReportsGrpupClass = new ReportsGrpupClass(item, this, this.showLocal);
             this.ItemsSourceTemp.push(myItem);
         });
     }
@@ -194,7 +211,7 @@ export class ReportComponent {
     LoadComplete(groupList: ReportGroupList, reportList: ReportList) {
 
         if (!this.IsLoadSettingWorkerRoleRuning && !this.IsLoadReportsTemplateListRuning) {
-            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates, this.ReportsRunUsingWR);
@@ -215,9 +232,15 @@ export class ReportsGrpupClass {
     public ItemsSource: ReportList[] = [];
     public GroupList: ReportGroupList;
     public IsDataLoaded: boolean = false;
-    constructor(private list: ReportGroupList, private fatherComponent: ReportComponent) {
+    constructor(private list: ReportGroupList, private fatherComponent: ReportComponent, showLocal:boolean) {
         this.GroupList = list;
-        this.Name = list.EnglishName;
+        if (!showLocal) {
+            this.Name = list.EnglishName;
+        }
+        else {
+            this.Name = list.LocalName;
+        }
+     
 
         this.FillData();
     }

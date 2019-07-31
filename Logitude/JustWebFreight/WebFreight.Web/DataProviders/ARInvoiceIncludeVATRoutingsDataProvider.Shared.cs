@@ -55,6 +55,9 @@ namespace WebFreight.Web.DataProviders
         public double? VAT2Amount { get; set; }
         public double? VAT3Amount { get; set; }
         public double? VAT4Amount { get; set; }
+
+        public double? ProfitInLocalCurrency { get; set; }
+        public double? ProfitInProfitCurrency { get; set; }
     }
 
     public class InvoiceVATRoutingTotals

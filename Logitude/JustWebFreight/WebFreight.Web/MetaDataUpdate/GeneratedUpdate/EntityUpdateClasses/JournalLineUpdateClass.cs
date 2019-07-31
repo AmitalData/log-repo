@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalLineUpdateClass
@@ -113,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שורת פקודה",
 			      				    DefaultText =  "Journal Line",
-			      				    Code =  "6434",
+			      				    Code =  "cea1",
 			      				    Name =  "JournalLine Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -124,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -173,11 +178,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "JournalId",
-					  						DefaultText =  @"Journal Id",
-					  						FullLocalDefaultText =  @"קוד יומן",
+					  						DefaultText =  "Journal Id",
+					  						FullLocalDefaultText =  "קוד יומן",
 					  						ListFieldLable =  "JournalIdListLable",
-					  						ListLableDefaultText =  @"Journal Id",
-					  						ListLocalDefaultText =  @"קוד יומן",
+					  						ListLableDefaultText =  "Journal Id",
+					  						ListLocalDefaultText =  "קוד יומן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -187,6 +192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -233,11 +239,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Line",
-					  						DefaultText =  @"Line",
-					  						FullLocalDefaultText =  @"שורה",
+					  						DefaultText =  "Line",
+					  						FullLocalDefaultText =  "שורה",
 					  						ListFieldLable =  "LineListLable",
-					  						ListLableDefaultText =  @"Line",
-					  						ListLocalDefaultText =  @"שורה",
+					  						ListLableDefaultText =  "Line",
+					  						ListLocalDefaultText =  "שורה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -247,6 +253,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -295,11 +302,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActionCode",
-					  						DefaultText =  @"Action Code",
-					  						FullLocalDefaultText =  @"חובה/זכות",
+					  						DefaultText =  "Action Code",
+					  						FullLocalDefaultText =  "חובה/זכות",
 					  						ListFieldLable =  "ActionCodeListLable",
-					  						ListLableDefaultText =  @"Action Code ",
-					  						ListLocalDefaultText =  @"חובה/זכות",
+					  						ListLableDefaultText =  "Action Code ",
+					  						ListLocalDefaultText =  "חובה/זכות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -309,6 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -357,11 +365,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DebitControlAccountId",
-					  						DefaultText =  @"Debit Control Account Id",
-					  						FullLocalDefaultText =  @"חשבון מרכז חובה",
+					  						DefaultText =  "Debit Control Account Id",
+					  						FullLocalDefaultText =  "חשבון מרכז חובה",
 					  						ListFieldLable =  "DebitControlAccountIdListLable",
-					  						ListLableDefaultText =  @"Debit Control Account Id",
-					  						ListLocalDefaultText =  @"חשבון מרכז חובה",
+					  						ListLableDefaultText =  "Debit Control Account Id",
+					  						ListLocalDefaultText =  "חשבון מרכז חובה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -371,6 +379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -419,11 +428,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DebitAccountId",
-					  						DefaultText =  @"Debit Account Id",
-					  						FullLocalDefaultText =  @"חשבון חובה",
+					  						DefaultText =  "Debit Account Id",
+					  						FullLocalDefaultText =  "חשבון חובה",
 					  						ListFieldLable =  "DebitAccountIdListLable",
-					  						ListLableDefaultText =  @"Debit Account Id",
-					  						ListLocalDefaultText =  @"חשבון חובה",
+					  						ListLableDefaultText =  "Debit Account Id",
+					  						ListLocalDefaultText =  "חשבון חובה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -433,6 +442,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -481,11 +491,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditControlAccountId",
-					  						DefaultText =  @"Credit Control Account",
-					  						FullLocalDefaultText =  @"חשבון זכות",
+					  						DefaultText =  "Credit Control Account",
+					  						FullLocalDefaultText =  "חשבון זכות",
 					  						ListFieldLable =  "CreditControlAccountIdListLable",
-					  						ListLableDefaultText =  @"Credit Control Account",
-					  						ListLocalDefaultText =  @"חשבון זכות",
+					  						ListLableDefaultText =  "Credit Control Account",
+					  						ListLocalDefaultText =  "חשבון זכות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -495,6 +505,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -543,11 +554,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditAccountId",
-					  						DefaultText =  @"Cridet Account Id",
-					  						FullLocalDefaultText =  @"חשבון זכות",
+					  						DefaultText =  "Cridet Account Id",
+					  						FullLocalDefaultText =  "חשבון זכות",
 					  						ListFieldLable =  "CreditAccountIdListLable",
-					  						ListLableDefaultText =  @"Credit Account Id",
-					  						ListLocalDefaultText =  @"חשבון זכות",
+					  						ListLableDefaultText =  "Credit Account Id",
+					  						ListLocalDefaultText =  "חשבון זכות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -557,6 +568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -604,11 +616,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DocumentDate",
-					  						DefaultText =  @"Ref. Date",
-					  						FullLocalDefaultText =  @"תאריך אסמכתא",
+					  						DefaultText =  "Ref. Date",
+					  						FullLocalDefaultText =  "תאריך אסמכתא",
 					  						ListFieldLable =  "DocumentDateListLable",
-					  						ListLableDefaultText =  @"Ref. Date",
-					  						ListLocalDefaultText =  @"תאריך אסמכתא",
+					  						ListLableDefaultText =  "Ref. Date",
+					  						ListLocalDefaultText =  "תאריך אסמכתא",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -618,6 +630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -665,11 +678,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingDate",
-					  						DefaultText =  @"Accounting Date",
-					  						FullLocalDefaultText =  @"תאריך חשבונאי",
+					  						DefaultText =  "Accounting Date",
+					  						FullLocalDefaultText =  "תאריך חשבונאי",
 					  						ListFieldLable =  "AccountingDateListLable",
-					  						ListLableDefaultText =  @"Accounting Date",
-					  						ListLocalDefaultText =  @"תאריך חשבונאי",
+					  						ListLableDefaultText =  "Accounting Date",
+					  						ListLocalDefaultText =  "תאריך חשבונאי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -679,6 +692,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -726,11 +740,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DueDate",
-					  						DefaultText =  @"Due Date",
-					  						FullLocalDefaultText =  @"תאריך ערך",
+					  						DefaultText =  "Due Date",
+					  						FullLocalDefaultText =  "תאריך פרעון",
 					  						ListFieldLable =  "DueDateListLable",
-					  						ListLableDefaultText =  @"Due Date",
-					  						ListLocalDefaultText =  @"תאריך ערך",
+					  						ListLableDefaultText =  "Due Date",
+					  						ListLocalDefaultText =  "תאריך פרעון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -740,6 +754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -788,11 +803,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalAmount",
-					  						DefaultText =  @"Amount",
-					  						FullLocalDefaultText =  @"סכום",
+					  						DefaultText =  "Amount",
+					  						FullLocalDefaultText =  "סכום",
 					  						ListFieldLable =  "LocalAmountListLable",
-					  						ListLableDefaultText =  @"Local Amount",
-					  						ListLocalDefaultText =  @"סכום",
+					  						ListLableDefaultText =  "Local Amount",
+					  						ListLocalDefaultText =  "סכום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -802,6 +817,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -850,11 +866,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyId",
-					  						DefaultText =  @"Currency Id",
-					  						FullLocalDefaultText =  @"קוד מטבע",
+					  						DefaultText =  "Currency Id",
+					  						FullLocalDefaultText =  "קוד מטבע",
 					  						ListFieldLable =  "CurrencyIdListLable",
-					  						ListLableDefaultText =  @"Currency Id",
-					  						ListLocalDefaultText =  @"קוד מטבע",
+					  						ListLableDefaultText =  "Currency Id",
+					  						ListLocalDefaultText =  "קוד מטבע",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -864,6 +880,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -912,11 +929,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignAmount",
-					  						DefaultText =  @"F. Amount",
-					  						FullLocalDefaultText =  @"סכום במטז",
+					  						DefaultText =  "F. Amount",
+					  						FullLocalDefaultText =  "סכום במטז",
 					  						ListFieldLable =  "ForeignAmountListLable",
-					  						ListLableDefaultText =  @"F. Amount",
-					  						ListLocalDefaultText =  @"סכום במטז",
+					  						ListLableDefaultText =  "F. Amount",
+					  						ListLocalDefaultText =  "סכום במטז",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -926,6 +943,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -974,11 +992,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExchangeRate",
-					  						DefaultText =  @"Exchange Rate",
-					  						FullLocalDefaultText =  @"שער המרה",
+					  						DefaultText =  "Exchange Rate",
+					  						FullLocalDefaultText =  "שער המרה",
 					  						ListFieldLable =  "ExchangeRateListLable",
-					  						ListLableDefaultText =  @"Exchange Rate",
-					  						ListLocalDefaultText =  @"שער המרה",
+					  						ListLableDefaultText =  "Exchange Rate",
+					  						ListLocalDefaultText =  "שער המרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -988,6 +1006,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1034,11 +1053,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference1",
-					  						DefaultText =  @"Reference1",
-					  						FullLocalDefaultText =  @"אסמכתא 1",
+					  						DefaultText =  "Reference1",
+					  						FullLocalDefaultText =  "אסמכתא 1",
 					  						ListFieldLable =  "Reference1ListLable",
-					  						ListLableDefaultText =  @"Reference1",
-					  						ListLocalDefaultText =  @"אסמכתא 1",
+					  						ListLableDefaultText =  "Reference1",
+					  						ListLocalDefaultText =  "אסמכתא 1",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1048,6 +1067,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1094,11 +1114,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference2",
-					  						DefaultText =  @"Reference2",
-					  						FullLocalDefaultText =  @"אסמכתא 2",
+					  						DefaultText =  "Reference2",
+					  						FullLocalDefaultText =  "אסמכתא 2",
 					  						ListFieldLable =  "Reference2ListLable",
-					  						ListLableDefaultText =  @"Reference2",
-					  						ListLocalDefaultText =  @"אסמכתא 2",
+					  						ListLableDefaultText =  "Reference2",
+					  						ListLocalDefaultText =  "אסמכתא 2",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1108,6 +1128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1154,11 +1175,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference3",
-					  						DefaultText =  @"Reference3",
-					  						FullLocalDefaultText =  @"אסמכתא 3",
+					  						DefaultText =  "Reference3",
+					  						FullLocalDefaultText =  "אסמכתא 3",
 					  						ListFieldLable =  "Reference3ListLable",
-					  						ListLableDefaultText =  @"Reference3",
-					  						ListLocalDefaultText =  @"אסמכתא 3",
+					  						ListLableDefaultText =  "Reference3",
+					  						ListLocalDefaultText =  "אסמכתא 3",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1168,6 +1189,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1215,11 +1237,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActionName",
-					  						DefaultText =  @"Action Name",
-					  						FullLocalDefaultText =  @"חובה/זכות",
+					  						DefaultText =  "Action Name",
+					  						FullLocalDefaultText =  "חובה/זכות",
 					  						ListFieldLable =  "ActionNameListLable",
-					  						ListLableDefaultText =  @"Action Name",
-					  						ListLocalDefaultText =  @"חובה/זכות",
+					  						ListLableDefaultText =  "Action Name",
+					  						ListLocalDefaultText =  "חובה/זכות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1229,6 +1251,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1276,11 +1299,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DebitControlAccountName",
-					  						DefaultText =  @"Debit Control Account Name",
-					  						FullLocalDefaultText =  @"שם מרכז חובה",
+					  						DefaultText =  "Debit Control Account Name",
+					  						FullLocalDefaultText =  "שם מרכז חובה",
 					  						ListFieldLable =  "DebitControlAccountNameListLable",
-					  						ListLableDefaultText =  @"Debit Control Account Name",
-					  						ListLocalDefaultText =  @"שם חשבון מרכז חובה",
+					  						ListLableDefaultText =  "Debit Control Account Name",
+					  						ListLocalDefaultText =  "שם חשבון מרכז חובה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1290,6 +1313,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1337,11 +1361,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditAccountName",
-					  						DefaultText =  @"C. Account",
-					  						FullLocalDefaultText =  @"חשבון זכות",
+					  						DefaultText =  "C. Account",
+					  						FullLocalDefaultText =  "חשבון זכות",
 					  						ListFieldLable =  "CreditAccountNameListLable",
-					  						ListLableDefaultText =  @"C. Account ",
-					  						ListLocalDefaultText =  @"שם חשבון זכות",
+					  						ListLableDefaultText =  "C. Account ",
+					  						ListLocalDefaultText =  "שם חשבון זכות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1351,6 +1375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1398,11 +1423,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DebitAccountName",
-					  						DefaultText =  @"D. Account",
-					  						FullLocalDefaultText =  @"חשבון חובה",
+					  						DefaultText =  "D. Account",
+					  						FullLocalDefaultText =  "חשבון חובה",
 					  						ListFieldLable =  "DebitAccountNameListLable",
-					  						ListLableDefaultText =  @"D. Account",
-					  						ListLocalDefaultText =  @"חשבון חובה",
+					  						ListLableDefaultText =  "D. Account",
+					  						ListLocalDefaultText =  "חשבון חובה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1412,6 +1437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1459,11 +1485,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditControlAccountName",
-					  						DefaultText =  @"Credit Control Account Name",
-					  						FullLocalDefaultText =  @"שם חשבון מרכז זכות",
+					  						DefaultText =  "Credit Control Account Name",
+					  						FullLocalDefaultText =  "שם חשבון מרכז זכות",
 					  						ListFieldLable =  "CreditControlAccountNameListLable",
-					  						ListLableDefaultText =  @"Credit Control Account Name",
-					  						ListLocalDefaultText =  @"שם חשבון מרכז זכות",
+					  						ListLableDefaultText =  "Credit Control Account Name",
+					  						ListLocalDefaultText =  "שם חשבון מרכז זכות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1473,6 +1499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1520,11 +1547,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditControlAccountNumber",
-					  						DefaultText =  @"Credit Control Account Number",
-					  						FullLocalDefaultText =  @" מספר חשבון מרכז זכות",
+					  						DefaultText =  "Credit Control Account Number",
+					  						FullLocalDefaultText =  " מספר חשבון מרכז זכות",
 					  						ListFieldLable =  "CreditControlAccountNumberListLable",
-					  						ListLableDefaultText =  @"Credit Control Account Number",
-					  						ListLocalDefaultText =  @" מספר חשבון מרכז זכות",
+					  						ListLableDefaultText =  "Credit Control Account Number",
+					  						ListLocalDefaultText =  " מספר חשבון מרכז זכות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1534,6 +1561,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1581,11 +1609,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DebitControlAccountNumber",
-					  						DefaultText =  @"Debit Control Account Number",
-					  						FullLocalDefaultText =  @"מספר חשבון מרכז חובה",
+					  						DefaultText =  "Debit Control Account Number",
+					  						FullLocalDefaultText =  "מספר חשבון מרכז חובה",
 					  						ListFieldLable =  "DebitControlAccountNumberListLable",
-					  						ListLableDefaultText =  @"Debit Control Account Number",
-					  						ListLocalDefaultText =  @"מספר חשבון מרכז חובה",
+					  						ListLableDefaultText =  "Debit Control Account Number",
+					  						ListLocalDefaultText =  "מספר חשבון מרכז חובה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1595,6 +1623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1642,11 +1671,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditAccountNumber",
-					  						DefaultText =  @"Credit Account Number",
-					  						FullLocalDefaultText =  @"מספר חשבון זכות",
+					  						DefaultText =  "Credit Account Number",
+					  						FullLocalDefaultText =  "מספר חשבון זכות",
 					  						ListFieldLable =  "CreditAccountNumberListLable",
-					  						ListLableDefaultText =  @"Credit Account Number",
-					  						ListLocalDefaultText =  @"מספר חשבון זכות",
+					  						ListLableDefaultText =  "Credit Account Number",
+					  						ListLocalDefaultText =  "מספר חשבון זכות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1656,6 +1685,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1703,11 +1733,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DebitAccountNumber",
-					  						DefaultText =  @"Debit Account Number",
-					  						FullLocalDefaultText =  @"מספר חשבון חובה",
+					  						DefaultText =  "Debit Account Number",
+					  						FullLocalDefaultText =  "מספר חשבון חובה",
 					  						ListFieldLable =  "DebitAccountNumberListLable",
-					  						ListLableDefaultText =  @"Debit Account Number",
-					  						ListLocalDefaultText =  @"מספר חשבון חובה",
+					  						ListLableDefaultText =  "Debit Account Number",
+					  						ListLocalDefaultText =  "מספר חשבון חובה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1717,6 +1747,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1764,11 +1795,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyName",
-					  						DefaultText =  @"Currency Name",
-					  						FullLocalDefaultText =  @"שם מטבע",
+					  						DefaultText =  "Currency Name",
+					  						FullLocalDefaultText =  "שם מטבע",
 					  						ListFieldLable =  "CurrencyNameListLable",
-					  						ListLableDefaultText =  @"Currency Name",
-					  						ListLocalDefaultText =  @"שם מטבע",
+					  						ListLableDefaultText =  "Currency Name",
+					  						ListLocalDefaultText =  "שם מטבע",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1778,6 +1809,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1824,11 +1856,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  @"Notes",
-					  						FullLocalDefaultText =  @"הערות",
+					  						DefaultText =  "Notes",
+					  						FullLocalDefaultText =  "הערות",
 					  						ListFieldLable =  "NotesListLable",
-					  						ListLableDefaultText =  @"Notes",
-					  						ListLocalDefaultText =  @"הערות",
+					  						ListLableDefaultText =  "Notes",
+					  						ListLocalDefaultText =  "הערות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1838,6 +1870,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1885,11 +1918,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyCode",
-					  						DefaultText =  @"Currency",
-					  						FullLocalDefaultText =  @"קוד מטבע",
+					  						DefaultText =  "Currency",
+					  						FullLocalDefaultText =  "קוד מטבע",
 					  						ListFieldLable =  "CurrencyCodeListLable",
-					  						ListLableDefaultText =  @"Currency Code",
-					  						ListLocalDefaultText =  @"קוד מטבע",
+					  						ListLableDefaultText =  "Currency Code",
+					  						ListLocalDefaultText =  "קוד מטבע",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1899,6 +1932,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1946,11 +1980,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActionTypeCode",
-					  						DefaultText =  @"Action Type Code",
-					  						FullLocalDefaultText =  @"חובה/זכות",
+					  						DefaultText =  "Action Type Code",
+					  						FullLocalDefaultText =  "חובה/זכות",
 					  						ListFieldLable =  "ActionTypeCodeListLable",
-					  						ListLableDefaultText =  @"Action Type Code",
-					  						ListLocalDefaultText =  @"חובה/זכות",
+					  						ListLableDefaultText =  "Action Type Code",
+					  						ListLocalDefaultText =  "חובה/זכות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1960,6 +1994,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2008,11 +2043,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExternalOpenAmount",
-					  						DefaultText =  @"External Open Amount",
-					  						FullLocalDefaultText =  @"סכום פתוח חיצוני",
+					  						DefaultText =  "External Open Amount",
+					  						FullLocalDefaultText =  "סכום פתוח חיצוני",
 					  						ListFieldLable =  "ExternalOpenAmountListLable",
-					  						ListLableDefaultText =  @"External Open Amount",
-					  						ListLocalDefaultText =  @"סכום פתוח חיצוני",
+					  						ListLableDefaultText =  "External Open Amount",
+					  						ListLocalDefaultText =  "סכום פתוח חיצוני",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2022,6 +2057,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2068,9 +2104,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCreditAccountMulti",
-					  						DefaultText =  @"Is Credit Account Multi",
+					  						DefaultText =  "Is Credit Account Multi",
 					  						ListFieldLable =  "IsCreditAccountMultiListLable",
-					  						ListLableDefaultText =  @"Is Credit Account Multi",
+					  						ListLableDefaultText =  "Is Credit Account Multi",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2080,6 +2116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2126,9 +2163,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsDebitAccountMulti",
-					  						DefaultText =  @"Is DebitAccount Multi",
+					  						DefaultText =  "Is DebitAccount Multi",
 					  						ListFieldLable =  "IsDebitAccountMultiListLable",
-					  						ListLableDefaultText =  @"IsDebitAccountMulti",
+					  						ListLableDefaultText =  "IsDebitAccountMulti",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2138,6 +2175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2184,11 +2222,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExternalReconcileNumber",
-					  						DefaultText =  @"External Reconcile Number",
-					  						FullLocalDefaultText =  @"מספר התאמה חיצונית",
+					  						DefaultText =  "External Reconcile Number",
+					  						FullLocalDefaultText =  "מספר התאמה חיצונית",
 					  						ListFieldLable =  "ExternalReconcileNumberListLable",
-					  						ListLableDefaultText =  @"External Reconcile Number",
-					  						ListLocalDefaultText =  @"מספר התאמה חיצונית",
+					  						ListLableDefaultText =  "External Reconcile Number",
+					  						ListLocalDefaultText =  "מספר התאמה חיצונית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2198,6 +2236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2244,11 +2283,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsExternalReconcile",
-					  						DefaultText =  @"Is External Reconcile",
-					  						FullLocalDefaultText =  @"מותאם חיצונית",
+					  						DefaultText =  "Is External Reconcile",
+					  						FullLocalDefaultText =  "מותאם חיצונית",
 					  						ListFieldLable =  "IsExternalReconcileListLable",
-					  						ListLableDefaultText =  @"Is External Reconcile",
-					  						ListLocalDefaultText =  @"מותאם חיצונית",
+					  						ListLableDefaultText =  "Is External Reconcile",
+					  						ListLocalDefaultText =  "מותאם חיצונית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2258,6 +2297,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  

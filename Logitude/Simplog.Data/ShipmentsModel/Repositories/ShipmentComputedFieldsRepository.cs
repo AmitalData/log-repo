@@ -91,5 +91,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+
+
+        public IQueryable<ShipmentComputedFields> GetShipmentComputedFieldsByIds( List<string> ids ,int tenant)
+        {
+            return context.ShipmentComputedFields.Where(s => s.Tenant == tenant && ids.Contains(s.Id));
+        }
+
     }
 }

@@ -30,6 +30,8 @@ namespace Logitude.TimeManagement.Data.EntityMapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(70).IsUnicode(true);
+
+            this.Property(t => t.Inactive).HasColumnName("Inactive").IsRequired();
         }
     }
 }

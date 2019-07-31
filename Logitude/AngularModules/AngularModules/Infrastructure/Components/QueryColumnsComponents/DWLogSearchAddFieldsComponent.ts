@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, ViewContainerRef, OnInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
 
@@ -22,7 +22,7 @@ export class DWLogSearchAddFieldsComponent implements OnInit {
     //@Output() Toevent = new EventEmitter();
     public rowData: any;
     public fieldName: any;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef, private _entityListService: EntityListService) {
 
 
@@ -45,7 +45,7 @@ export class DWLogSearchAddFieldsComponent implements OnInit {
         if (item) {
 
             this.Destroyed();
-            SessionLocator.CurrentSession.SessionEvent.emit({ Item: item, ComponentName: "DWLogSearchAddFieldsComponent", IsFirstRequest:true });
+            this.CurrentSession.SessionEvent.emit({ Item: item, ComponentName: "DWLogSearchAddFieldsComponent", IsFirstRequest:true });
         }
     } 
 

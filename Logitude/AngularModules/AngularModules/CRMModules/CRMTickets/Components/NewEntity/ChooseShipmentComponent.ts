@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ShipmentList} from '../../../../Shipment/EntityLists/ShipmentList';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -19,7 +19,7 @@ export class ChooseShipmentComponent {
     public AllShipmentsCount: number = 0;
     private myService: ShipmentListService;
     private DomainService: ShipmentDomainService;
-   
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.DomainService = new ShipmentDomainService();
         this.myService = new ShipmentListService();
@@ -123,6 +123,6 @@ export class ChooseShipmentComponent {
 
     Close() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

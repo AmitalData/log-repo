@@ -37,6 +37,7 @@ export class SendVehicleComponent {
     //------------------------------------------------------//
 
     ObjectTableName = "Customs.Vehicle";
+    private static CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityPMService: EntityPMService) {
 
     }
@@ -58,26 +59,26 @@ export class SendVehicleComponent {
 
     public static SaveEntityChanges(customSendOptionsArgs, EntityPM: VehiclePM, isDelete: boolean) {
         EntityPM.Tenant = SessionLocator.Tenant;
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         //this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(EntityPM.Id)) {
             //this.CancelButtonClicked();
             return;
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
         //if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
         //this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
-        //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges()
+        //this.CurrentSession.CurrentEditComponent.SaveChanges()
         let entityPMService = new EntityPMService();
         entityPMService.update("Customs.Vehicle", EntityPM).then((res: any) => {
             res.subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     //this.SaveCompleted.emit(false);
                 }
 
@@ -87,7 +88,7 @@ export class SendVehicleComponent {
 
                         var myErrors: string[] = [];
                         myErrors.push("this.EntityPM.Id is null");
-                        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList  = myErrors;
+                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList  = myErrors;
                     } else {
                         if (customSendOptionsArgs == null) {
                             //this.CancelButtonClicked();
@@ -108,7 +109,7 @@ export class SendVehicleComponent {
                                     //this.CancelButtonClicked();
                                 }
                                 ).catch((err) => {
-                                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(err);
+                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(err);
                                     //this.CancelButtonClicked();
                                 });
 
@@ -116,7 +117,7 @@ export class SendVehicleComponent {
 
                             myIIGGeneralMessagesService.PostVehicleRequest(currRequestParams)
                                 .subscribe((myServiceResponse: ServiceResponse) => {
-                                    //SessionLocator.CurrentSession.StopBusyIndicator();
+                                    //this.CurrentSession.StopBusyIndicator();
 
                                     //this.ResponseData = myServiceResponse.Result;
                                     //this.OnMassageDisplayMethod();
@@ -127,10 +128,10 @@ export class SendVehicleComponent {
                 }
 
             }, error => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var myErrors: string[] = [];
                 myErrors.push(error.message);
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myErrors;
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myErrors;
                 
             });
         });
@@ -158,10 +159,10 @@ export class SendVehicleComponent {
     }
 
     PostSendVehicleAndPrecalculations(customSendOptionsArgs) {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this._VehicleExtendedPMService.GetIsVehicleAttachmentNumberIsMoreThenAllow(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             if (!AppTool.IsNullOrEmpty(response.Result) && response.Result == true) {
-                SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                SessionLocator.SelectedSession.CurrentEditComponent.StopBusyIndicator();
                 this.ValidationErrors.push("לא ניתן לשלוח ריכבית עם מעל 5 מסמכים ");
                 this.FillValidationErrors();
                 return;

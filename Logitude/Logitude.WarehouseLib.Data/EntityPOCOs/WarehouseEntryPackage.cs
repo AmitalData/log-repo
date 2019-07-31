@@ -77,6 +77,25 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public bool IsConnectedToShipment { get; set; }
         [Column("VolumetricWeight")]
 	    public double? VolumetricWeight { get; set; }
+        [Column("Make")]
+	    public string Make { get; set; }
+        [Column("Model")]
+	    public string Model { get; set; }
+        [Column("Year")]
+	    public string Year { get; set; }
+        [Column("Color")]
+	    public string Color { get; set; }
+        [Column("ChassisNumber")]
+	    public string ChassisNumber { get; set; }
+        [Column("RegistrationNumber")]
+	    public string RegistrationNumber { get; set; }
+        [ForeignKey("Country")]
+        [Column("CountryId")]
+	    public string CountryId { get; set; }
+	      
+        public virtual Country Country { get; set; }
+        [Column("CommodityNumber")]
+	    public string CommodityNumber { get; set; }
     }
 }
 	 

@@ -97,15 +97,16 @@ namespace WebFreight.Web
                         emailDetails.StrippedBodyPlain = result;
                     }
 
-                    if (string.IsNullOrWhiteSpace(emailDetails.StrippedBodyPlain))
+                    if (string.IsNullOrWhiteSpace(emailDetails.StrippedBodyPlain) || string.IsNullOrEmpty(emailDetails.StrippedBodyPlain))
                     {
                         emailDetails.StrippedBodyPlain = "Empty Body";
                     }
 
-                    if (string.IsNullOrWhiteSpace(emailDetails.FullBodyPlain))
+                    if (string.IsNullOrWhiteSpace(emailDetails.FullBodyPlain) || string.IsNullOrEmpty(emailDetails.FullBodyPlain))
                     {
                         emailDetails.FullBodyPlain = "Empty Body";
                     }
+
                     emailDetails.AttachmentsFiles = helper.FillAttachments();
                     InsertNewAnalyzeQueue(emailDetails);
                 }

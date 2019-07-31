@@ -15,6 +15,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string BillToPartnerName { get; set; }       
         public string BillToId { get; set; }
         public string BillToName { get; set; }
+        public string BillToLocalName { get; set; }
         public string BillToCode { get; set; }
         public string BillToAddressId { get; set; }
         public string VatNumber { get; set; }       
@@ -132,7 +133,8 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? SATApprovalDate { get; set; }
 
         public bool IsFullAccounting { get; set; }
-
+        public string ARInvoiceStockId { get; set; }
+        public bool IsInvoiceNumberFromStock { get; set; }
         #region Ayman: it is a very bad code to add properties this way
         //public bool IsDueDateColorRed
         //{

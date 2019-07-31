@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 
 import {Component, OnInit, Output}  from '@angular/core';
@@ -37,9 +37,10 @@ export class NewReportsTemplateComponent implements OnInit {
     ReportTemplateFileId: string = Guid.NewRandomString();
     validator: ClassLevelValidator;
     Area: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.reportsTemplatePMService = new ReportsTemplatePMService();
-        this.NewReportTypeRadio += SessionLocator.CurrentSession.GetNewId("RadioButton");
+        this.NewReportTypeRadio += this.CurrentSession.GetNewId("RadioButton");
         this.reportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
         this._documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
         this.validator = new ClassLevelValidator();
@@ -124,7 +125,7 @@ export class NewReportsTemplateComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveButtonClicked() {
@@ -151,7 +152,7 @@ export class NewReportsTemplateComponent implements OnInit {
                 this.ReportsTemplatePM.TemplateData = null;
             }
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
           
             if (this.NewReportTypeRadioChoice == "FromFile" && this.TemplateType == "M") {
@@ -193,7 +194,7 @@ export class NewReportsTemplateComponent implements OnInit {
 
         this.reportsTemplatePMExtendedService.CreateReportTemplate(this.ReportsTemplatePM).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {

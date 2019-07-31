@@ -111,7 +111,19 @@ namespace WebFreight.Web.DataProviders
         public string OBLType { get; set; }
         public DateTime? DocumentsClosingDate { get; set; }
         public string AWBHandlingInformation { get; set; }
+
+        public string ConsolidatorName { get; set; }
+        public string ConsolidatorAddress { get; set; }
+        public string ReleasingAgentName { get; set; }
+        public string ReleasingAgentAddress { get; set; }
+
+        public string AgentPhoneNumber { get; set; }
+        public string AgentContactName { get; set; }
+        public int NumberOfHBLs { get; set; }
+
         #endregion
+
+
 
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
         public List<NewManifestDetailsClass> NewManifestDetails { get; set; }
@@ -208,6 +220,10 @@ namespace WebFreight.Web.DataProviders
         public string OBLType { get; set; }
         public DateTime? DocumentsClosingDate { get; set; }
         public string AWBHandlingInformation { get; set; }
+
+        public string ShipperContactName { get; set; } // (main contact English name for the shipper) 
+        public string ConsigneeContactName { get; set; }// (main contact English name for the consignee ) 
+        public string ITNumber { get; set; } //(from the house\customs tab ) 
 
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
     }
@@ -332,7 +348,9 @@ namespace WebFreight.Web.DataProviders
         public string Reference1 { get; set; }
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
+        public string Reference4 { get; set; }
         public string CommodityNumber { get; set; }
+        public string Notes { get; set; }
     }
 
     public class GroupedContainersClass

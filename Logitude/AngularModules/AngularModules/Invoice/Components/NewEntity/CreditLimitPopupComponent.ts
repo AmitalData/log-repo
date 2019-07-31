@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -18,6 +18,7 @@ export class CreditLimitPopupComponent {
     public IsOkButtonVisible: boolean = false;
     public LocalCurrencyCode: string;
     public HasCreditOverrideFeature: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.HasCreditOverrideFeature = FeatureLocator.HasFeaturePermession("CreditLimitSetting", "Override");
@@ -54,10 +55,10 @@ export class CreditLimitPopupComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 }

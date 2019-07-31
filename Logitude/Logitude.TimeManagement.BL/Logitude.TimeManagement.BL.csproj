@@ -70,10 +70,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloseTables\DetailsClassesGenerated\TMDayOffTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TMLocationDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TMDayOffTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TMLocationStruct.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SprintDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TMBudgetDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TMDayOffTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TMEmployeeTimeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TMLocationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TMOfficeHourDataMapping.Generated.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="EntityDataMappings\Generated\TMReleaseDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\SprintDataMapping.cs" />
     <Compile Include="EntityDataMappings\TMBudgetDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TMDayOffTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TMEmployeeTimeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TMLocationDataMapping.cs" />
     <Compile Include="EntityDataMappings\TMOfficeHourDataMapping.cs" />
@@ -90,6 +94,7 @@
     <Compile Include="EntityDataMappings\TMReleaseDataMapping.cs" />
     <Compile Include="EntityPMs\Generated\SprintPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TMBudgetPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TMDayOffTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TMEmployeeTimePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TMLocationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TMOfficeHourPM.Generated.cs" />
@@ -98,6 +103,7 @@
     <Compile Include="EntityPMs\Generated\TMReleasePM.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SprintQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TMBudgetQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TMDayOffTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TMEmployeeTimeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TMLocationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TMOfficeHourQueryService.Generated.cs" />
@@ -109,6 +115,7 @@
     <Compile Include="EntityQueryServices\TMOfficeHourQuery.cs" />
     <Compile Include="EntityUpdateServices\Generated\SprintUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TMBudgetUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TMDayOffTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TMEmployeeTimeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TMLocationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TMOfficeHourUpdateService.Generated.cs" />
@@ -122,6 +129,7 @@
     <Compile Include="EntityUpdateServices\TMProjectCategoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TMProjectUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TraceEvents\TMProjectTracing.cs" />
     <Compile Include="Validators\TimeManagementClassLevelValidator.cs" />
     <Compile Include="Validators\TimeManagementTranslateTextsClass.cs" />
     <Compile Include="Validators\TimeManagementValidationClass.cs" />
@@ -130,7 +138,6 @@
     <Folder Include="APIDataContract\QueryService\" />
     <Folder Include="DataContracts\" />
     <Folder Include="Helpers\" />
-    <Folder Include="TraceEvents\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -147,6 +154,10 @@
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
+      <Project>{9FFC5B97-F09A-4EED-A66E-D4160374AE6E}</Project>
+      <Name>Logitude.SystemLogs</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.TimeManagement.Data\Logitude.TimeManagement.Data.csproj">
       <Project>{68f57541-574a-4ee9-b3fe-8c535c74456a}</Project>

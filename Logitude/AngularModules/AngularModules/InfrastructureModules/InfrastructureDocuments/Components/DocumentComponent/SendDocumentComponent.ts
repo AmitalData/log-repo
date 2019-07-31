@@ -77,7 +77,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     public AreaAttachmentMargin: any;
     public AreaAttachmentWidth: string = "600px";
     public CommunicationAttachmentPMs: CommunicationAttachmentPM[];
-    
+
 
     public CommunicationLogs: CommunicationLogPMViewModel[];
 
@@ -118,7 +118,9 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     IsEnableLinkDocOout: boolean = true;
     IsEnableLinkDocsSharedWithAgents: boolean = true;
     IsEnableLinkDocIn: boolean = true;
-    
+    IsSendDocumentSucceeded: boolean;
+    IsSendDocumentFailed: boolean;
+
     table: Element;
     table2: Element;
     div: Element;
@@ -139,6 +141,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     From: string = "";
     ReplyTo: string = "";
     IsShowLinkDocsSharedWithAgents: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _communicationLogExtendedPMService: CommunicationLogExtendedPMService, public _communicationAttachmentExtendedPMService: CommunicationAttachmentExtendedPMService, public _documentOutPMService: DocumentOutPMService, public _documentExtendedService: DocumentExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService, public _documentTypePMService: DocumentTypePMExtendedService, private cd: ChangeDetectorRef, public _documentTypeListService: DocumentTypeListService) {
 
         if (this.documentTypeTemplatePMService == null) {
@@ -156,7 +159,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         this.froalaEditorSetting.PageType = "Send";
         this.froalaEditorSetting.Id = Guid.newGuid();
         this.ShowInactiveCheckBoxKey = Guid.newGuid();
- 
+
         this.AttachmentListId = Guid.newGuid();
         this.AttachmentsLists = new Array<AttachmentsList>();
         this.DocumentTypeTemplatePMLists = [];
@@ -180,7 +183,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
         if (this.SelectedInternalDocument && this.IsSendEditMode && this.SelectedInternalDocument.TemplateType.toUpperCase() != "M") {
 
-            var copy = this.SelectedInternalDocument.CurrentDocument.DocumentOutCopies.filter(d=> d.Id == this.SelectedInternalDocument.documentOutCopyId)[0];
+            var copy = this.SelectedInternalDocument.CurrentDocument.DocumentOutCopies.filter(d => d.Id == this.SelectedInternalDocument.documentOutCopyId)[0];
             if (copy) {
                 var attachment = new AttachmentsList();
                 attachment.Tenant = this.SelectedInternalDocument.CurrentDocument.Tenant;
@@ -204,7 +207,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 attachmentsList.push(attachment);
 
                 this.AttachmentsLists = attachmentsList;
-                this.BliudAttachmentList(attachmentsList, false,false);
+                this.BliudAttachmentList(attachmentsList, false, false);
             }
         }
 
@@ -230,27 +233,27 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         }
        
         if (!dataContext.DocumentTypePM && !AppTool.IsNullOrEmpty(dataContext.Id)) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+            this.CurrentSession.StartBusyIndicator("Loading...");
             this._documentTypePMService.GetSinglePMWithOutInclude(dataContext.Id, SessionLocator.Tenant).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     dataContext.DocumentTypePM = pmResponse.Result;
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.Start(dataContext);
             });
 
         }
         else this.Start(dataContext);
-        
 
-       
+
+
     }
 
 
     Start(item: DocsOutDataViewModel) {
         this.SelectedInternalDocument = item;
-  
+
         this.EntityId = this.SelectedInternalDocument.EntityId;
         this.DocumentOutCopyId = this.SelectedInternalDocument.documentOutCopyId;
 
@@ -273,7 +276,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         this.ChildEntityId = this.SelectedInternalDocument.ChildEntityId ? this.SelectedInternalDocument.ChildEntityId : "";
         this.ChildObjectTableId = this.SelectedInternalDocument.ChildObjectTableId ? this.SelectedInternalDocument.ChildObjectTableId : "";
 
-    
+
         if (AppTool.IsNullOrEmpty(this.ChildObjectTableId)) {
             if (this.SelectedInternalDocument && this.SelectedInternalDocument.DocumentTypePM) {
                 var table = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];
@@ -325,7 +328,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     ViewCommunicationLog() {
         if (this.SelectedInternalDocument.SelectedCommunicationLogViewMode) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.Cc = this.SelectedInternalDocument.SelectedCommunicationLogViewMode.CC;
             this.ToEmail = this.SelectedInternalDocument.SelectedCommunicationLogViewMode.To;
             this.Subject = this.SelectedInternalDocument.SelectedCommunicationLogViewMode.Subject;
@@ -382,7 +385,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                                     var myResult = pmResponse.Result;
                                                     if (myResult) {
                                                         var document: any = myResult;
-                                          
+
                                                         var fileName: string = !AppTool.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
                                                         var attachmentlog = this.GetAttachmentList(fileName, document.Id, document.FileSize, attachment.Tenant);
                                                         if (attachmentlog) {
@@ -394,7 +397,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                                             this.AttachmentsLists = attachmentsLogList;
                                                             if (attachmentsLogList) {
                                                                 this.BliudAttachmentList(attachmentsLogList);
-                                      
+
                                                             }
                                                         }
                                                     }
@@ -402,18 +405,18 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                                 }
 
                                                 if (count == numberOfAttachment) {
-                                                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                                     this.CurrentSession.StopBusyIndicator();
                                                 }
 
-                            
+
 
                                             });
                                         });
 
                                     }
                                     else {
-                                    //start region
-                                    
+                                        //start region
+
                                         var documentOutCopies = new Array<DocumentOutCopyPM>();
 
                                         if (this.SelectedInternalDocument.DocsOutTabComponent) {
@@ -435,7 +438,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                         }
 
 
-                    
+
                                         logAttachments.forEach((attachment) => {
                                             if (attachment.CommunicationLogId == this.SelectedInternalDocument.SelectedCommunicationLogViewMode.Id) {
 
@@ -483,13 +486,13 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                             this.BliudAttachmentList(attachmentsLogList);
                                         }
 
-                                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                         this.CurrentSession.StopBusyIndicator();
                                     //end region 
                                     }
-                         
+
                                 }
                                 else {
-                                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                     this.CurrentSession.StopBusyIndicator();
                                 }
 
                             }
@@ -497,7 +500,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         }
 
                         else {
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                             this.CurrentSession.StopBusyIndicator();
                         }
 
 
@@ -507,13 +510,13 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
                 }
                 else {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+
                     if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
                         this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
                     }
                 }
 
-
+                this.CurrentSession.StopBusyIndicator();
                 this.ShowBusyIndicator = false;
             });
 
@@ -544,24 +547,24 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.ReplyTo = this.SelectedDocumentTypeTemplateViewModel.ReplyTo;
             this.Subject = this.SelectedDocumentTypeTemplateViewModel.TemplateSubject;
             this.Cc = this.SelectedDocumentTypeTemplateViewModel.TemplateCc;
-			
-			if(!AppTool.IsNullOrEmpty(this.Cc))this.AddCcClick();
-			
+
+            if (!AppTool.IsNullOrEmpty(this.Cc)) this.AddCcClick();
+
             this.ReloadFroalaEditor();
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.StartBusyIndicatorLoading();
             var docoutId = this.DocumentOutId;
             if (templateId) docoutId = "";
-        
+
             if (this.SelectedDocumentTypeTemplateViewModel != null && this.SelectedDocumentTypeTemplateViewModel.Entity) {
                 this.From = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.From) ? this.SelectedDocumentTypeTemplateViewModel.Entity.From : "";
                 this.ReplyTo = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.ReplyTo) ? this.SelectedDocumentTypeTemplateViewModel.Entity.ReplyTo : "";
-				this.Cc = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.CC) ? this.SelectedDocumentTypeTemplateViewModel.Entity.CC : "";
+                this.Cc = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.CC) ? this.SelectedDocumentTypeTemplateViewModel.Entity.CC : "";
 
             }
 
-        
+
 
             this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, true, templateId, "", "", this.From, this.ReplyTo, this.Cc).subscribe(res => {
 
@@ -576,13 +579,13 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                             this.SelectedDocumentTypeTemplateViewModel.IsLoad = true;
                             this.SelectedDocumentTypeTemplateViewModel.From = !AppTool.IsNullOrEmpty(myResult.From) ? myResult.From : "";
                             this.SelectedDocumentTypeTemplateViewModel.ReplyTo = !AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
-							 this.SelectedDocumentTypeTemplateViewModel.TemplateCc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
+                            this.SelectedDocumentTypeTemplateViewModel.TemplateCc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
 
                             if (!AppTool.IsNullOrEmpty(myResult.Subject)) {
-                               this.SelectedDocumentTypeTemplateViewModel.TemplateSubject = myResult.Subject;
+                                this.SelectedDocumentTypeTemplateViewModel.TemplateSubject = myResult.Subject;
                             }
                             else {
-                               this.SelectedDocumentTypeTemplateViewModel.TemplateSubject = this.SelectedInternalDocument.CurrentDocument.DocumentTypeSubject != null ? this.SelectedInternalDocument.CurrentDocument.DocumentTypeSubject : this.SelectedInternalDocument.CurrentDocument.DocumentTypeName;
+                                this.SelectedDocumentTypeTemplateViewModel.TemplateSubject = this.SelectedInternalDocument.CurrentDocument.DocumentTypeSubject != null ? this.SelectedInternalDocument.CurrentDocument.DocumentTypeSubject : this.SelectedInternalDocument.CurrentDocument.DocumentTypeName;
                             }
 
 
@@ -590,14 +593,14 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
                         this.From = !AppTool.IsNullOrEmpty(myResult.From) ? myResult.From : "";
                         this.ReplyTo = !AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
-						this.Cc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
-						if(!AppTool.IsNullOrEmpty(this.Cc))this.AddCcClick();
-                      
-					    if (!AppTool.IsNullOrEmpty(myResult.Subject)) {
+                        this.Cc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
+                        if (!AppTool.IsNullOrEmpty(this.Cc)) this.AddCcClick();
+
+                        if (!AppTool.IsNullOrEmpty(myResult.Subject)) {
                             this.Subject = myResult.Subject;
                         }
                         else {
-                            this.Subject =  this.SelectedInternalDocument.CurrentDocument.DocumentTypeSubject != null ? this.SelectedInternalDocument.CurrentDocument.DocumentTypeSubject : this.SelectedInternalDocument.CurrentDocument.DocumentTypeName;
+                            this.Subject = this.SelectedInternalDocument.CurrentDocument.DocumentTypeSubject != null ? this.SelectedInternalDocument.CurrentDocument.DocumentTypeSubject : this.SelectedInternalDocument.CurrentDocument.DocumentTypeName;
                         }
 
 
@@ -612,23 +615,25 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
                     }
                 }
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.ShowBusyIndicator = false;
+
+
             });
         }
-        
+
     }
 
     LoadDocumentTypeTemplates(selectId: string) {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.SelectId = selectId;
         this.ReportTemplates = new Array<DocumentTypeTemplateViewModel>();
         this.DocumenttypetemplateLists = new Array<DocumentTypeTemplateViewModel>();
         this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.CurrentDocumentType.Id, this.CurrentDocumentType.Tenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
@@ -651,7 +656,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                             this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates.filter(r => r.Id == selectId)[0];
 
                         }
-                     
+
                         if (!this.SelectedDocumentTypeTemplateViewModel) {
 
                             this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates[0];
@@ -746,7 +751,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.ReportTemplates = this.DocumenttypetemplateLists;
         }
         else {
-    
+
             this.ReportTemplates = this.DocumenttypetemplateLists.filter(d => d.InActive == false || d.IsDefault == true || (this.SelectedDocumentTypeTemplateViewModel && this.SelectedDocumentTypeTemplateViewModel.Id == d.Id));
 
 
@@ -756,7 +761,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     }
 
     CheckIsValidEmails(mailsList: string) {
-    
+
         var IsOk = true;
         var EMAIL_REGEXP1 = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
         var EMAIL_REGEXP2 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -781,7 +786,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         }
         if (IsOk) {
 
-           
+
         }
 
 
@@ -790,12 +795,14 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
 
     SendDocumentHtml() {
+        this.IsSendDocumentSucceeded = false;
+        this.IsSendDocumentFailed = false;
 
         ServiceLocator.SendTotangoUserActivity(this.ObjecttableName, "SendDocByEmail");
 
         var filter = new SendHtmlDocumentFilter();
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Sending...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Sending...");
         filter.HtmlString = this.froalaEditorSetting.froalaEditorComponent.getHtml();
 
         var html = filter.HtmlString;
@@ -819,10 +826,10 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         filter.Bcc = this.Bcc;
         filter.Attachments = "";
         filter.ExportQuotationsToIntegratedSystem = this.SelectedInternalDocument.ExportQuotationsToIntegratedSystem;
-        filter.ObjectTableName = this.ObjecttableName; 
+        filter.ObjectTableName = this.ObjecttableName;
         if (this.SelectedInternalDocument.IsCrm) {
             filter.EventTypeCode = this.SelectedInternalDocument.EventTypeCode;
-            filter.CustomerId = this.SelectedInternalDocument.EntityPM ? this.SelectedInternalDocument.EntityPM.CustomerId:"";
+            filter.CustomerId = this.SelectedInternalDocument.EntityPM ? this.SelectedInternalDocument.EntityPM.CustomerId : "";
             filter.DocumentTypeCode = this.SelectedInternalDocument.DocumentTypePM.Code;
             filter.IsCRM = this.SelectedInternalDocument.IsCrm;
 
@@ -840,12 +847,12 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
 
 
-           filter.From = !AppTool.IsNullOrEmpty(this.From) ? this.From:"";
-           filter.ReplyTo = !AppTool.IsNullOrEmpty(this.ReplyTo) ? this.ReplyTo : "";
+        filter.From = !AppTool.IsNullOrEmpty(this.From) ? this.From : "";
+        filter.ReplyTo = !AppTool.IsNullOrEmpty(this.ReplyTo) ? this.ReplyTo : "";
 
         if (!filter.ToEmail) {
             this.ShowMessage("Please specify at least one recepient", "Logitude Message");
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             return;
         }
 
@@ -853,20 +860,20 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         if (!this.CheckIsValidEmails(filter.ToEmail)) {
 
             this.ShowMessage("Some of To e- mails are Invalid", "Logitude Message");
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             return;
         }
 
 
         if (filter.Cc != null && !this.CheckIsValidEmails(filter.Cc)) {
             this.ShowMessage("Some of Cc e-mails are Invalid", "Logitude Message");
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             return;
         }
 
         if (filter.Bcc != null && !this.CheckIsValidEmails(filter.Bcc)) {
             this.ShowMessage("Some of Bcc e-mails are Invalid", "Logitude Message");
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             return;
         }
 
@@ -885,16 +892,16 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         if (totalsize > 15) {
             this.ShowMessage("The maximum size of documents you can attach is 15 MB. Please send the documents in separated emails", "Attachment Limit");
             //this.ShowMessage("The file you are trying to send exceeds the 15 MB attachment limit.", "Attachment Limit");
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             return;
         }
 
-       
+
         this._htmlEditorService.sendDocumentHtml(filter).subscribe(res => {
             var response: ServiceResponse = res;
 
             if (!response.HasError) {
-
+                this.IsSendDocumentSucceeded = true;
                 this._communicationLogExtendedPMService.getCommunicationLogPMsByEntityIdAndDocumentOutId(this.EntityId, this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -928,11 +935,11 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
 
                             if (!AppTool.IsNullOrEmpty(this.EventRefreshName)) {
-                                SessionLocator.CurrentSession.FireEvent(this.EventRefreshName);
+                                this.CurrentSession.FireEvent(this.EventRefreshName);
                             }
 
 
-                            SessionLocator.CurrentSession.CurrentWindow.Close("SendEnd");
+                            this.CurrentSession.CurrentWindow.Close("SendEnd");
 
                         });
                     }
@@ -947,7 +954,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 });
             }
             else {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                 this.CurrentSession.StopBusyIndicator();
+                this.IsSendDocumentFailed = true;
                 if (response.ErrorsArray && response.ErrorsArray.length > 0) {
                     this.ShowMessage(response.ErrorsArray[0], "Logitude Message");
                 }
@@ -967,7 +975,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         //});
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -1033,50 +1041,50 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         //else {
         this.DocumentOutLists = new Array<DocumentOutPM>();
         var childEntityId: string = this.ChildEntityId;
-            var mychildObjectTable = window.ObjectTables.filter(d => d.Id == this.ChildObjectTableId)[0];
-            var childObjectTableName: string = "";
-            if (mychildObjectTable) {
-                if (mychildObjectTable.Name == "ARInvoice" || mychildObjectTable.Name == "APInvoice") childEntityId = "";
-            }
+        var mychildObjectTable = window.ObjectTables.filter(d => d.Id == this.ChildObjectTableId)[0];
+        var childObjectTableName: string = "";
+        if (mychildObjectTable) {
+            if (mychildObjectTable.Name == "ARInvoice" || mychildObjectTable.Name == "APInvoice") childEntityId = "";
+        }
 
-            var table: any = ""; 
+        var table: any = "";
 
-            if (AppTool.IsNullOrEmpty(this.ChildObjectTableId)) {
-                childEntityId = "";
-            }
+        if (AppTool.IsNullOrEmpty(this.ChildObjectTableId)) {
+            childEntityId = "";
+        }
 
-            this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, childEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, childEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe(res => {
 
-                var pmResponse: ServiceResponse = res;
-                if (!pmResponse.HasError) {
-                    var myResult = pmResponse.Result;
-                    if (myResult) {
-                        this.DocumentOutLists = myResult;
-                        this.DocumentOutLists.forEach((documentout) => {
-                            if (documentout.DocumentOutCopies) {
-                                documentout.DocumentOutCopies.forEach((copy) => {
-                                    this.currentDocTypeList = this.DocTypeLists.filter(d => d.Id == documentout.DocumentTypeId)[0];
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+                if (myResult) {
+                    this.DocumentOutLists = myResult;
+                    this.DocumentOutLists.forEach((documentout) => {
+                        if (documentout.DocumentOutCopies) {
+                            documentout.DocumentOutCopies.forEach((copy) => {
+                                this.currentDocTypeList = this.DocTypeLists.filter(d => d.Id == documentout.DocumentTypeId)[0];
 
-                                    if (this.currentDocTypeList) {
+                                if (this.currentDocTypeList) {
 
-                                        if (!(this.currentDocTypeList.IsDocumentOneTimePrintLimited == true && this.currentDocTypeList.LimitedPrintCopyId == copy.DocumentTypeCopyId && !AppTool.IsNullOrEmpty(copy.LastPrintedByUserId))) {
-                                            this.DocumentCopiesList.push(new DocumentOutCopyViewModel(copy));
-                                        }
+                                    if (!(this.currentDocTypeList.IsDocumentOneTimePrintLimited == true && this.currentDocTypeList.LimitedPrintCopyId == copy.DocumentTypeCopyId && !AppTool.IsNullOrEmpty(copy.LastPrintedByUserId))) {
+                                        this.DocumentCopiesList.push(new DocumentOutCopyViewModel(copy));
                                     }
+                                }
 
-                                });
-                            }
+                            });
+                        }
 
-                        });
+                    });
 
-
-                    }
 
                 }
 
-                this.ViewAttachDocsOut(this.DocumentCopiesList);
+            }
 
-            });
+            this.ViewAttachDocsOut(this.DocumentCopiesList);
+
+        });
         //}
 
 
@@ -1110,7 +1118,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     ShowAttachExternal() {
         this.IsCloseAttachmentUploader = false;
         this.IsEnableLinkAttachExternal = false;
-  
+
         var windowArgs: any = {};
         windowArgs.EntityId = this.EntityId;
         windowArgs.ObjectTableId = this.ObjectTableId;
@@ -1144,7 +1152,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             item.ShowRemoveLink = true;
             var attachmentsLists = this.AttachmentsLists;
             if (!attachmentsLists) attachmentsLists = new Array<AttachmentsList>();
-            attachmentsLists = attachmentsLists.filter(d=> d.Id != item.Id);
+            attachmentsLists = attachmentsLists.filter(d => d.Id != item.Id);
             attachmentsLists.push(item);
             this.BliudAttachmentList(attachmentsLists);
 
@@ -1170,7 +1178,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 if (myResult) {
                     this.documentInPMs = myResult;
                     if (this.documentInPMs.length > 0) {
-                   
+
                         this.IsCloseAttachmentDocsIn = false;
                         this.OnCloseAttachmentDocsInEvent.subscribe(($event: any) => {
 
@@ -1184,13 +1192,13 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
                                 }
                                 this.ReloadFroalaEditor();
-                           
+
                             }
 
 
                         });
 
-                        
+
                         var windowArgs: any = {};
                         windowArgs.DocumentsFilingList = this.documentInPMs;
                         windowArgs.OnCloseAttachmentDocsInEvent = this.OnCloseAttachmentDocsInEvent;
@@ -1276,7 +1284,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         if (attachmentsLists.length > 0) {
 
             attachmentsLists.forEach((item) => {
-                this.AttachmentsLists = this.AttachmentsLists.filter(d=> d.Id != item.Id);
+                this.AttachmentsLists = this.AttachmentsLists.filter(d => d.Id != item.Id);
                 this.AttachmentsLists.push(item);
             });
 
@@ -1284,7 +1292,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.CreateAttachmentList(isChangeHeightFroalaEditor);
 
         }
-       
+
 
 
 
@@ -1361,7 +1369,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         }
 
         if (isChangeHeightFroalaEditor) this.ReloadFroalaEditor();
-        
+
 
         var element = document.getElementById(this.AttachmentListId);
 
@@ -1411,7 +1419,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
 
         element.appendChild(this.table);
-       
+
 
 
 
@@ -1451,7 +1459,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
         name += "." + documentPM.Extension
 
-        if (!SendControl.IsSendEditMode) name += " , " ;
+        if (!SendControl.IsSendEditMode) name += " , ";
 
 
         var cellText = document.createTextNode(name);
@@ -1471,7 +1479,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
                 SendControl.RemoveHeightAttachmentsListsFromWindow(SendControl);
 
-                SendControl.AttachmentsLists = SendControl.AttachmentsLists.filter(d=> d.Id != a.id);
+                SendControl.AttachmentsLists = SendControl.AttachmentsLists.filter(d => d.Id != a.id);
                 if (SendControl.AttachmentsLists != null && SendControl.AttachmentsLists.length > 0) {
                     htmlComponentProparitiesTrue(a);
 
@@ -1541,7 +1549,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         windowArgs.ObjectTableId = this.ObjectTableId;
         windowArgs.EntityId = this.EntityId;
         windowArgs.ChildObjectTableId = this.ChildObjectTableId;
-    
+
         var widthwindow = window.innerWidth;
         var heighthwindow = window.innerHeight;
 
@@ -1558,7 +1566,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.RefreshTemplateId = $event;
             if (this.RefreshTemplateId) {
                 if (!this.SelectedDocumentTypeTemplateViewModel) this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates.filter(d => d.Id == this.RefreshTemplateId)[0];
-               
+
                 if (this.SelectedDocumentTypeTemplateViewModel) {
                     if (this.SelectedDocumentTypeTemplateViewModel.Id != this.RefreshTemplateId) this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates.filter(d => d.Id == this.RefreshTemplateId)[0];
                 }
@@ -1575,6 +1583,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                     }
 
                     this.ShowBusyIndicator = true;
+                    this.CurrentSession.StartBusyIndicatorLoading();
                     this.SelectedDocumentTypeTemplateViewModel.IsLoad = false;
                     this.LoadHtmlTemplateData(this.RefreshTemplateId);
 
@@ -1632,7 +1641,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                     });
 
 
-                    this._documentTypePMService.putDocumentType(this.CurrentDocumentType).subscribe(res=> {
+                    this._documentTypePMService.putDocumentType(this.CurrentDocumentType).subscribe(res => {
                     });
 
                 }
@@ -1642,7 +1651,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
             this.ShowMessage("Please note that you can't set an inactive template as default");
         }
-    
+
 
         //////End////
     }
@@ -1678,7 +1687,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 }
 
 
-                var item = this.DocumentTypeTemplatePMLists.filter(d=> d.Id == selectitem.Id)[0];
+                var item = this.DocumentTypeTemplatePMLists.filter(d => d.Id == selectitem.Id)[0];
 
 
                 if (item) {
@@ -1688,7 +1697,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
                 else {
 
-                    this.documentTypeTemplatePMService.get(selectitem.Id).subscribe(res=> {
+                    this.documentTypeTemplatePMService.get(selectitem.Id).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
                             var myResult = pmResponse.Result;
@@ -1740,7 +1749,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     UpdateDocumentTypeTemplate(item: any) {
 
-        this.documentTypeTemplatePMService.update(item).subscribe(myResult=> {
+        this.documentTypeTemplatePMService.update(item).subscribe(myResult => {
 
         });
     }
@@ -1757,7 +1766,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
 
 
-  
+
     IsCloseSendToContact: boolean = false;
 
     IsOpenWidnow: boolean = false;
@@ -1767,12 +1776,12 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.IsOpenWidnow = true;
             if (!this.PartnersObslist) {
 
-                var childEntityId: string = !AppTool.IsNullOrEmpty(this.SelectedInternalDocument.ChildEntityId) ? this.SelectedInternalDocument.ChildEntityId:"";
+                var childEntityId: string = !AppTool.IsNullOrEmpty(this.SelectedInternalDocument.ChildEntityId) ? this.SelectedInternalDocument.ChildEntityId : "";
                 var childObjectTableName: string = !AppTool.IsNullOrEmpty(this.SelectedInternalDocument.ChildObjectTableName) ? this.SelectedInternalDocument.ChildObjectTableName : "";
 
-                this._documentOutPMService.GetEntityPartners(this.EntityId, this.ObjecttableName, childEntityId , childObjectTableName).subscribe(res => {
+                this._documentOutPMService.GetEntityPartners(this.EntityId, this.ObjecttableName, childEntityId, childObjectTableName).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
-                 
+
                     if (!pmResponse.HasError) {
                         this.PartnersObslist = [];
                         var myResult = pmResponse.Result;
@@ -1814,7 +1823,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         this.OnCloseSendToContactsEvent.subscribe(($event: any) => {
             if (!this.IsCloseSendToContact && $event) {
                 this.IsCloseSendToContact = true;
-                
+
                 this.ToEmail = "";
                 this.Cc = "";
                 this.Bcc = "";
@@ -1887,7 +1896,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             else {
                 this.AreaAttachmentWidth = (width + "px");
             }
-       
+
         }
         else {
 
@@ -1923,7 +1932,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             }
 
             if (this.SelectedInternalDocument) {
-                   windowArgs.ChildEntityId = this.ChildEntityId;
+                windowArgs.ChildEntityId = this.ChildEntityId;
             }
 
             windowArgs.ChildObjectTableId = ""; //this.ChildObjectTableId;

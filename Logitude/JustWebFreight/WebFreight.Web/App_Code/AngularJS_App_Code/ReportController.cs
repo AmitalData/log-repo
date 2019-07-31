@@ -34,6 +34,7 @@ using System.Xml.Serialization;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
 using WebFreight.Web.Security;
@@ -108,60 +109,31 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern = datetimeformat;
                 Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortTimePattern = "HH:mm";
+                ReportHelper reportHelper = new ReportHelper();
 
-                string urlImage = "";
                 CustomerPotentialActualDataProvider myData = null;
-
+                string urlImage = "";
 
                 if (string.IsNullOrEmpty(reportFliter.ReportKey) || reportFliter.ProcessType == "GenerateReport")
                 {
-
                     if (reportFliter.ReportCode == "CUPA" || !reportFliter.ReportsRunUsingWR)
                     {
-                        ReportHelper reportHelper = new ReportHelper();
-                        byte[] filters = reportHelper.GetReportFilters(reportFliter.QueryFilterItemLists);
+                        BuildReportDataResult buildReportDataResult = reportHelper.BuildReport(reportFliter);
 
-                        LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
-
-                        byte[] dataProvider = reportHelper.BuildReportDataProvider(reportFliter, filters);
-
-                   
-                        if (dataProvider == null)
+                        if (buildReportDataResult.Exception != null)
                         {
-                            throw new Exception("Data Provider is missing");
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(buildReportDataResult.Exception));
                         }
-
                         else
                         {
-                            if (reportFliter.ReportCode == "CUPA")
-                            {
-                                MemoryStream memorystream = new MemoryStream(dataProvider);
-                                XmlSerializer serializer = new XmlSerializer(typeof(CustomerPotentialActualDataProvider));
-                                myData = (CustomerPotentialActualDataProvider)serializer.Deserialize(memorystream);
-                            }
-
-                            else
-                            {
-                                ReportsTemplatesWebService reportsTemplatesWebService = new ReportsTemplatesWebService();
-                                ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(reportFliter.tenant);
-                                string reportDocumentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(reportFliter.DefaultTemplateId, reportFliter.tenant);
-                                byte[] template = reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
-
-                                if (template == null)
-                                {
-                                    throw new Exception("Report Template is missing");
-                                }
-
-                                else
-                                {
-                                    urlImage = reportHelper.GetReportStimulsoftViewer(dataProvider, template,  reportFliter);
-                                }
-                            }
+                            urlImage = buildReportDataResult.UrlImage;
+                            myData = buildReportDataResult.myData;
                         }
+
                     }
                     else
                     {
-                        return BuildReportData(reportFliter);
+                        return Request.CreateResponse(HttpStatusCode.OK, reportHelper.BuildReportDataViewWorkerRole(reportFliter));
                     }
 
                 }
@@ -170,16 +142,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     urlImage = GetReportAsImageFromStorage(reportFliter);
                 }
 
+
                 if (reportFliter.ReportCode == "CUPA")
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, myData);
                 }
-
                 else
                 {
                     if (string.IsNullOrEmpty(urlImage))
                     {
-                        throw new Exception("Can't find file (" + reportFliter.ReportKey +  "@" +reportFliter.ReportName+ ")");
+                        string exceptionMessage = "Can't find file (" + reportFliter.ReportKey + "@" + reportFliter.ReportName + ")";
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception(exceptionMessage)));
                     }
 
                     List<EditableFieldPosition> editableFieldPositionList = new List<EditableFieldPosition>();
@@ -202,9 +175,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-
-
+                
                 string extension = "";
                 MemoryStream memoryStream = new MemoryStream();
                 Document document = null;
@@ -326,46 +297,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
 
-        private HttpResponseMessage BuildReportData(ReportFliter reportFliter)
-        {
-            try
-            {
-                
-                ReportExecutionLogRepository reportExecutionLogRepository = new ReportExecutionLogRepository(reportFliter.tenant);
-                reportFliter.ReportKey = Guid.NewGuid().ToString();
-
-                ReportExecutionLog reportExecutionLog = new ReportExecutionLog()
-                {
-                    Id = reportFliter.ReportKey,
-                    CreateDate = TenantServerConfigration.GetCurrentDateTime(reportFliter.tenant),
-                    CreatedByUserId = reportFliter.UserId,
-                    ReportFilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(reportFliter) ,
-                    Tenant = reportFliter.tenant,
-                    StatusCode = "W",
-                    ReportId = reportFliter.ReportId,
-                    ReportTemplateId = reportFliter.DefaultTemplateId,
-                  
-                };
-
-                reportExecutionLogRepository.Add(reportExecutionLog);
-                reportExecutionLogRepository.SubmitChanges();
-                
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("ReportExecutionLogQueue", reportExecutionLog.Tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "ReportExecutionLogId", reportExecutionLog.Id }, { "Tenant", reportExecutionLog.Tenant.ToString() } }, null, null, null, null);
-
-                return Request.CreateResponse(HttpStatusCode.OK, reportFliter);
-           
-            }
-           catch (Exception ex)
-            {
-
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
+       
 
 
-        public HttpResponseMessage GetCheckIfStimualReportIsBuilt(string reportKey, int tenant)
+        public HttpResponseMessage GetCheckIfStimulSoftReportIsBliud(string reportKey, int tenant)
         {
             try
             {
@@ -378,12 +313,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ReportBuildResult result = new ReportBuildResult();
                 if (reportExecutionLog != null)
                 {
+                  //  UpdateStatusReportExecutionLog(authToken, reportExecutionLogRepository, reportExecutionLog);
+
                     result.StatusCode = reportExecutionLog.StatusCode;
                     if (result.StatusCode == "F")
                     {
                         result.HasError = true;
-                        result.ExceptionMessage = reportExecutionLog.ExceptionMessage;
+                        result.ExceptionMessage = GetUnderStandableMessageFromMessageException(reportExecutionLog.ExceptionMessage);
                     }
+
                 }
                 else
                 {
@@ -397,6 +335,33 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             {
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private string GetUnderStandableMessageFromMessageException(string exceptionMessage)
+        {
+            string result = string.Empty;
+            if (!string.IsNullOrEmpty(exceptionMessage))
+            {
+                string[] lines = exceptionMessage.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                result = lines[0];
+            }
+            return result;
+        }
+
+        private static void UpdateStatusReportExecutionLog(AuthenticationToken authToken, ReportExecutionLogRepository reportExecutionLogRepository, ReportExecutionLog reportExecutionLog)
+        {
+            if (reportExecutionLog.StatusCode == "W")
+            {
+                var nowDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                if (reportExecutionLog.CreateDate.AddMinutes(10) < nowDate)
+                {
+                    reportExecutionLog.StatusCode = "F";
+                    reportExecutionLog.ExceptionMessage = "the request has timed out";
+                    reportExecutionLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                    //reportExecutionLogRepository.Update(reportExecutionLog);
+                    //reportExecutionLogRepository.SubmitChanges();
+                }
             }
         }
 

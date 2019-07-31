@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -19,6 +19,7 @@ export class AdvancedAccountingComponent extends BaseComponent {
     public LabelColumnWidth: number = 160;
     public ControlColumnWidth: number = 100;
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -300,7 +301,7 @@ export class AdvancedAccountingComponent extends BaseComponent {
     // Commands
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
 
@@ -365,7 +366,7 @@ export class AdvancedAccountingComponent extends BaseComponent {
         }
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+            this.CurrentSession.CloseCurrentWindowEmit("ok");
         }
     }
 

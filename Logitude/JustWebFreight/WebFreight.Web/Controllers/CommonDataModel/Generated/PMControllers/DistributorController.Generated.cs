@@ -75,7 +75,118 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 
          
 		
+
+        public HttpResponseMessage Post(DistributorPM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("Distributor", "NEW", authToken.Tenant);
+                
+                        ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+                        DistributorService service = new DistributorService(MyContext, authToken.Tenant);
+                        service.Create(entityPM);
+				
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(authToken.Tenant);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Distributor", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        // ContactRepository contactRepository = new ContactRepository(authToken.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, authToken.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //    ActivityLog.AddAcitivityLog(entityPM.Code, objectTable.Id, authToken.Tenant, "U", loggedContact.Id);
+                        //}
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            { 
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+
+        public HttpResponseMessage Put(DistributorPM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("Distributor", "UPDATE", authToken.Tenant);
+                
+                        ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+                        DistributorService service = new DistributorService(MyContext, authToken.Tenant);
+ 
+                        service.Update(entityPM);
+
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(authToken.Tenant);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Distributor", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        //ContactRepository contactRepository = new ContactRepository(authToken.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, authToken.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //   ActivityLog.AddAcitivityLog(entityPM.Code, objectTable.Id, authToken.Tenant, "U", loggedContact.Id);
+                        //}
+
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            { 
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        // DELETE api/<controller>/5
+        public void Delete(int id)
+        {
+        }
+	    
+
+
 		
+          
+			
+			 
+		  
+        
+
+		
+			 		
       
     }
 }

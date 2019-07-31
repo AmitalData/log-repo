@@ -85,7 +85,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             Assert.IsNull(validationresult, "validationresult = null");
         }
 
-
+        [Ignore]
         [TestMethod]
         public void IsJournalValid0602_ForeignAmountIsNotEqualAndBadRate_ErrContains_FAMltiExchangerateNELA()
         {

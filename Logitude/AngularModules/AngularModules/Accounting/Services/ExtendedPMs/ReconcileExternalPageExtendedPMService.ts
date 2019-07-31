@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -9,6 +9,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ReconcileExternalPagePM} from '../../EntityPMs/ReconcileExternalPagePM';
 import {ReconcileExternalPageLinePM} from '../../EntityPMs/ReconcileExternalPageLinePM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
 
 @Injectable()
 
@@ -17,10 +18,10 @@ export class ReconcileExternalPageExtendedPMService {
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPages';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPagesExtended';
     }
 
-    
+
     GetBankPageByPageNo(pageNumber: string, bankAccountId: string) {
 
         return Observable.defer(() => {
@@ -42,6 +43,7 @@ export class ReconcileExternalPageExtendedPMService {
 
 
     }
+    
 
     GetPrevPageByPageNo(pageNumber: number, bankAccountId: string) {
 
@@ -65,6 +67,72 @@ export class ReconcileExternalPageExtendedPMService {
 
     }
 
+
+    LoadBankPages(fileUploadParamerter: ImageParameter) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + '/PostLoadBankPages', JSON.stringify(fileUploadParamerter), {
+                headers: authHeader,
+
+            }).map(response => {
+                var result = response.json();
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+
+                pmresponse.Result = result;
+                return pmresponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
+
+    }
+
+
+    CheckLastApprovedBankPageAndReconciledLine(reconcileExternalPageId: string) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+            return Observable.defer(() => {
+                return this._http.get(this._apiUrl + '/GetCheckLastApprovedBankPageAndReconciledLine?reconcileExternalPageId=' + reconcileExternalPageId, { headers: authHeader })
+                    .map(response => {
+                        var res = response.json();
+
+                        return res;
+                    }).catch(ServiceHelper.HandleServiceError);
+            });
+        });
+
+
+    }
+    CheckRestorePossibility(reconcileExternalPageId: string) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+            return Observable.defer(() => {
+                return this._http.get(this._apiUrl + '/GetCheckRestorePossibility?reconcileExternalPageId=' + reconcileExternalPageId, { headers: authHeader })
+                    .map(response => {
+                        var res = response.json();
+
+                        return res;
+                    }).catch(ServiceHelper.HandleServiceError);
+            });
+        });
+
+
+    }
     GetDraftPage(bankAccountId: string) {
 
         return Observable.defer(() => {
@@ -86,8 +154,6 @@ export class ReconcileExternalPageExtendedPMService {
 
 
     }
-
-
     //MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReconcileExternalPagePM = null) {
 
 
@@ -195,6 +261,6 @@ export class ReconcileExternalPageExtendedPMService {
 
     //    return entityPM;
     //}
-    
+
 
 }

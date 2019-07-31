@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {PartnerItem} from './WarehouseEntryPartnersTabComponent';
 import {WarehouseEntryPM} from '../../../EntityPMs/WarehouseEntryPM';
@@ -19,6 +19,7 @@ export class AddEditPartnerComponent extends BaseComponent implements OnInit {
     public DataContext: PartnerItem;
     public ObjectTableName: string = "WarehouseEntry";
     private isMyCustomer: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -45,7 +46,7 @@ export class AddEditPartnerComponent extends BaseComponent implements OnInit {
 
     CancelButtonClicked() {
         this.DataContext.ResetOriginData();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -106,7 +107,7 @@ export class AddEditPartnerComponent extends BaseComponent implements OnInit {
                 }
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 }

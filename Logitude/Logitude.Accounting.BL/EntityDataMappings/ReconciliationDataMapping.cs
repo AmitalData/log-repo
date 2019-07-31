@@ -59,7 +59,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
                     entityPM.AccountName = account.LocalName;
                     entityPM.AccountNumber = account.DisplayNumber;
+                    entityPM.AccountCurrencyId = account.CurrencyId;
                     entityPM.CurrencyCode = account.CurrencyCode;
+                    entityPM.AccountReconcileMethodCode = account.ReconcileMethodCode;
                 }
             }
 

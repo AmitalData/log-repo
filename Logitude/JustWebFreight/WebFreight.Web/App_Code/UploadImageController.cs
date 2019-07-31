@@ -91,6 +91,12 @@ namespace WebFreight.Web.App_Code
                 {
                     DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                     documentTypeId = result.DocumentTypeId = documentTypeRepository.GetDocumentTypeIdByCode(filters.DocumentType, tenant);
+                    if(string.IsNullOrEmpty(documentTypeId) && filters.DocumentType!="POD" && filters.IsReadDocumentFromBarCode)
+                    {
+                        filters.DocumentType = "POD";
+                        documentTypeId = result.DocumentTypeId = documentTypeRepository.GetDocumentTypeIdByCode(filters.DocumentType, tenant);
+                    }
+
                     if (string.IsNullOrEmpty(documentTypeId))
                     {
                         result.IsScceed = false;

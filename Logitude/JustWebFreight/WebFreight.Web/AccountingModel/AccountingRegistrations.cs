@@ -29,6 +29,7 @@ namespace WebFreight.Web.AccountingModel
             ContainerAccessor.Container.RegisterType<IBankCodeUpdateServiceExt, BankCodeUpdateServiceExt>("BankCodeUpdateServiceExt", new InjectionFactory(c => new BankCodeUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IGLAccountUpdateServiceExt, GLAccountUpdateServiceExt>("GLAccountUpdateServiceExt", new InjectionFactory(c => new GLAccountUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IPaymentChequeUpdateServiceExt, PaymentChequeUpdateServiceExt>("PaymentChequeUpdateServiceExt", new InjectionFactory(c => new PaymentChequeUpdateServiceExt()));
+            ContainerAccessor.Container.RegisterType<IReconciliationServiceExt, ReconciliationServiceExt>("ReconciliationServiceExt", new InjectionFactory(c => new ReconciliationServiceExt()));
 
 
             // Query Service

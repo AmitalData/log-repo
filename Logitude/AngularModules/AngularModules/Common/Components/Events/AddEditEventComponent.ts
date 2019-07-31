@@ -19,6 +19,7 @@ export class AddEditEventComponent {
     public DataContext: EventItemClass;
     private myPMService: TraceEventPMService = null;
     private myDomainService: WebFreightDomainService = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -31,7 +32,7 @@ export class AddEditEventComponent {
 
     CancelButtonClicked() {
         this.EntityPM.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -41,7 +42,7 @@ export class AddEditEventComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.DataContext.IsNewEntity) {
                 if (this.myDomainService == null) {
@@ -58,24 +59,24 @@ export class AddEditEventComponent {
                             var myResult: NewTraceEventResult = myResponse.Result;
 
                             if (myResult.StatusChanged) {
-                                if (SessionLocator.CurrentSession.CurrentEditComponent) {
-                                    if (SessionLocator.CurrentSession.CurrentEditComponent.EntityId == myResult.EntityId) {
-                                        switch (SessionLocator.CurrentSession.CurrentEditComponent.ObjectTableName) {
+                                if (this.CurrentSession.CurrentEditComponent) {
+                                    if (this.CurrentSession.CurrentEditComponent.EntityId == myResult.EntityId) {
+                                        switch (this.CurrentSession.CurrentEditComponent.ObjectTableName) {
                                             case "Shipment":
                                             case "Master": {
-                                                var isEntityDirty = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty;
-                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.StatusId = myResult.StatusId;
-                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.StatusName = myResult.StatusName;
-                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.StatusDate = myResult.StatusDate;
-                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.StatusLocation = myResult.StatusLocation;
-                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.LastStatusLogDate = myResult.LastStatusLogDate;
-                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventId = myResult.LastSharedEventId;
-                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventLocation = myResult.LastSharedEventLocation;
-                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventNotes = myResult.LastSharedEventNotes;
-                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventDate = myResult.LastSharedEventDate;
-                                                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = isEntityDirty;
-                                                SessionLocator.CurrentSession.CurrentEditComponent.BuildHeaderScreen();
-                                                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
+                                                var isEntityDirty = this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty;
+                                                this.CurrentSession.CurrentEditComponent.EntityPM.StatusId = myResult.StatusId;
+                                                this.CurrentSession.CurrentEditComponent.EntityPM.StatusName = myResult.StatusName;
+                                                this.CurrentSession.CurrentEditComponent.EntityPM.StatusDate = myResult.StatusDate;
+                                                this.CurrentSession.CurrentEditComponent.EntityPM.StatusLocation = myResult.StatusLocation;
+                                                this.CurrentSession.CurrentEditComponent.EntityPM.LastStatusLogDate = myResult.LastStatusLogDate;
+                                                this.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventId = myResult.LastSharedEventId;
+                                                this.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventLocation = myResult.LastSharedEventLocation;
+                                                this.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventNotes = myResult.LastSharedEventNotes;
+                                                this.CurrentSession.CurrentEditComponent.EntityPM.LastSharedEventDate = myResult.LastSharedEventDate;
+                                                this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = isEntityDirty;
+                                                this.CurrentSession.CurrentEditComponent.BuildHeaderScreen();
+                                                this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
                                                 break;
                                             }
                                         }
@@ -83,12 +84,12 @@ export class AddEditEventComponent {
                                 }
                             }
 
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
                             this.DataContext.father.LoadData();
                         }
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
@@ -104,12 +105,12 @@ export class AddEditEventComponent {
                         }
 
                         else {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
                             this.DataContext.father.LoadData();
                         }
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
         }

@@ -44,6 +44,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
     IsShipmentEditComponent: boolean = true;
     WareHouseRelaseCustomerId: string;
     WareHouseRelaseWareHouseId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private entityResourceService: EntityResourceService) {
         this.myCardListService = new CardListService();   
@@ -152,16 +153,16 @@ export class AddEditDeliveryComponent implements OnDestroy {
             }
 
             if (errors.length == 0) {
-                if (SessionLocator.CurrentSession.CurrentEditComponent != null && this.IsShipmentEditComponent) {
+                if (this.CurrentSession.CurrentEditComponent != null && this.IsShipmentEditComponent) {
                     if (!this.SaveCompletedEvent) {
-                        this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                        this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                             if (isSaveSuccess) {
-                                this.ShipmentPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                                this.ShipmentPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                                 this.Clone();
                                 this.InitializeWareHousReleaseWindow();
 
                             } else {
-                                this.ValidationErrorsList = SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                                this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
                             }
 
                             AppTool.KillEventEmitter(this.SaveCompletedEvent);
@@ -169,17 +170,17 @@ export class AddEditDeliveryComponent implements OnDestroy {
                         });
                     }
 
-                    SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
                 }
 
                 else if (this.IsContainerFollowup || !this.IsShipmentEditComponent) {
 
-                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    this.CurrentSession.StartBusyIndicatorSaving();
 
                     var entityPMService = new ShipmentPMService();
                     entityPMService.update(this.ShipmentPM).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (myResponse.HasError) {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -425,7 +426,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
     }
     CloseWindow() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         this.Save(false);
@@ -446,32 +447,32 @@ export class AddEditDeliveryComponent implements OnDestroy {
                 this.isEntityAdded = true;
             }
 
-            if (SessionLocator.CurrentSession.CurrentEditComponent != null && this.IsShipmentEditComponent) {
+            if (this.CurrentSession.CurrentEditComponent != null && this.IsShipmentEditComponent) {
                 if (!this.SaveCompletedEvent) {
-                    this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                         this.OnSaveCompleted(isSaveSuccess, isClosingWindow, SavedEntityId, SavedEntityNumber);
                     });
 
-                    SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
                 }
             }
 
             else {
                 if (this.IsContainerFollowup || !this.IsShipmentEditComponent) {
 
-                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    this.CurrentSession.StartBusyIndicatorSaving();
 
                     var entityPMService = new ShipmentPMService();
                     entityPMService.update(this.ShipmentPM).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (myResponse.HasError) {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
                         }
 
                         else {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit(myResponse.Result);
+                            this.CurrentSession.CloseCurrentWindowEmit(myResponse.Result);
                         }
                     });
                 }
@@ -696,11 +697,11 @@ export class AddEditDeliveryComponent implements OnDestroy {
             }
 
             if (isClosingWindow) {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
 
             else {
-                this.ShipmentPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                this.ShipmentPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
                 if (SavedEntityId) {
                     this.EntityPM = this.ShipmentPM.ShipmentDeliveries.filter(f => f.Id == SavedEntityId)[0];
@@ -731,7 +732,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
         }
 
         else {
-            this.ValidationErrorsList = SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+            this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
         }
 
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
@@ -859,7 +860,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
                     this.ShipmentPM.AddShipmentFollowUp(item);
                 });
 
-                SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+                this.CurrentSession.FireEvent("FollowupsChanged");
             }
 
             if (this.isEntityAdded) {

@@ -50,6 +50,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public LocalCurrencyCode: string;
     public AllInMatchText: string;
     IsShowTotalPerContainer: boolean = true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -84,7 +85,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "FCLPackagesChanged") {
                     this.SetUIProperties();
                     this.BuildItemsSource();
@@ -112,6 +113,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "QTCH") {
+                    if (this.IsAdhoc) {
+                        if (this.ItemsSource.Collection.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
+                            this.CheckUpdateQuantities();
+                        }
+
+                        else {
+                            this.UpdateQuantitiesClicked();
+                        }
+                    }
+
                     this.SetLabelsAttached();
                     this.SetUIProperties();
                     this.UpdateCharges();
@@ -226,6 +237,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public CostMaxAmountHeader: any = [];
     public SaleMinAmountHeader: any = [];
     public SaleMaxAmountHeader: any = [];
+    public Cost1HeaderTooltip: string = null;
+    public Cost2HeaderTooltip: string = null;
+    public Cost3HeaderTooltip: string = null;
+    public Cost4HeaderTooltip: string = null;
+    public Cost5HeaderTooltip: string = null;
+    public Sale1HeaderTooltip: string = null;
+    public Sale2HeaderTooltip: string = null;
+    public Sale3HeaderTooltip: string = null;
+    public Sale4HeaderTooltip: string = null;
+    public Sale5HeaderTooltip: string = null;
     SetLabels() {
         this.CostQuentityHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostQuantity").split('%n');
         this.CostPriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostPrice").split('%n');
@@ -239,7 +260,18 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.SetLabelsAttached();
     }
     SetLabelsAttached() {
+        var myCostString = TextCodeTranslator.Translate("Quote.O.Charges.Cost");
         var mySaleCurrencyCode = AppTool.IsNullOrEmpty(this.SaleCurrencyCode) ? "" : this.SaleCurrencyCode;
+
+        if (this.EntityPM.IsSaleCurrencySameAsCost) {
+            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
+            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
+        }
+
+        else {
+            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", mySaleCurrencyCode).split('%n');
+            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", mySaleCurrencyCode).split('%n');
+        }
 
         this.Cost1Header = [2];
         this.Cost2Header = [2];
@@ -267,6 +299,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             var item = this.AllPackageTypes.filter(d => d.Id == this.EntityPM.PackageType1Id)[0];
             if (item) {
                 p1 = item.Code;
+
+                var value1 = q1 + " " + item.EnglishName;
+                this.Cost1HeaderTooltip = myCostString + " " + q1 + value1;
+                this.Sale1HeaderTooltip = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").replace("%n", " ").replace("\n"," ") + " " + value1;
             }
         }
 
@@ -274,6 +310,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             var item = this.AllPackageTypes.filter(d => d.Id == this.EntityPM.PackageType2Id)[0];
             if (item) {
                 p2 = item.Code;
+
+                var value2 = q2 + " " + item.EnglishName;
+                this.Cost2HeaderTooltip = myCostString + " " + value2;
+                this.Sale2HeaderTooltip = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").replace("%n", " ").replace("\n", " ") + " " + value2;
             }
         }
 
@@ -281,6 +321,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             var item = this.AllPackageTypes.filter(d => d.Id == this.EntityPM.PackageType3Id)[0];
             if (item) {
                 p3 = item.Code;
+
+                var value3 = q3 + " " + item.EnglishName;
+                this.Cost3HeaderTooltip = myCostString + " " + value3;
+                this.Sale3HeaderTooltip = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").replace("%n", " ").replace("\n", " ") + " " + value3;
             }
         }
 
@@ -288,6 +332,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             var item = this.AllPackageTypes.filter(d => d.Id == this.EntityPM.PackageType4Id)[0];
             if (item) {
                 p4 = item.Code;
+
+                var value4 = q4 + " " + item.EnglishName;
+                this.Cost4HeaderTooltip = myCostString + " " + value4;
+                this.Sale4HeaderTooltip = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").replace("%n", " ").replace("\n", " ") + " " + value4;
             }
         }
 
@@ -295,20 +343,12 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             var item = this.AllPackageTypes.filter(d => d.Id == this.EntityPM.PackageType5Id)[0];
             if (item) {
                 p5 = item.Code;
+
+                var value5 = q5 + " " + item.EnglishName;
+                this.Cost5HeaderTooltip = myCostString + " " + value5;
+                this.Sale5HeaderTooltip = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").replace("%n", " ").replace("\n", " ") + " " + value5;
             }
         }
-
-        if (this.EntityPM.IsSaleCurrencySameAsCost) {
-            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
-            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
-        }
-
-        else {
-            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", mySaleCurrencyCode).split('%n');
-            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", mySaleCurrencyCode).split('%n');
-        }
-
-        var myCostString = TextCodeTranslator.Translate("Quote.O.Charges.Cost");
 
         this.Cost1Header[0] = myCostString;
         this.Cost2Header[0] = myCostString;
@@ -394,14 +434,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
         if (this.IsEditingEnabled) {
             if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
-                isExchangeRateEnabled = true;
-
-                if (AppTool.IsNullOrEmpty(this.SaleCurrencyId)) {
-                    isExchangeRateEnabled = false;
-                }
-
-                else if (this.SaleCurrencyId == SessionLocator.LocalCurrencyId) {
-                    isExchangeRateEnabled = false;
+                if (this.SaleCurrencyId) {
+                    if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
+                        isExchangeRateEnabled = false;
+                    }
                 }
             }
         }
@@ -982,9 +1018,29 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     CheckUpdateQuantities() {
         if (this.IsAdhoc) {
             var updateMessage = null;
+            var entityQuantity: number = null;
+            var isDifferentOrders: boolean = false;
+
+
+            entityQuantity = this.EntityPM.TEU;
+            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "BTEU" && f.CostQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "BTEU" && f.SaleQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+
+
+            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != entityQuantity).length > 0) {
+                isDifferentOrders = true;
+            }
+
 
             if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
-                if (this.EntityPM.QuoteCharges.filter(d => d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods).length > 0) {
+                if (this.EntityPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods) || (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods)).length > 0) {
                     updateMessage = "You have updated the Value of Goods, apply the new values?";
                 }
 
@@ -993,9 +1049,14 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 }
             }
 
+
+            if (isDifferentOrders) {
+                updateMessage = "You have updated the expected order details, apply the new values?";
+            }
+
             this.UpdateQuantitiesMessage = updateMessage;
             this.UpdateQuantitiesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
-            this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+            this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;        
         }
     }
     UpdateQuantitiesClicked() {
@@ -1316,7 +1377,9 @@ export class FCLQuoteChargeItem extends BaseComponent {
             switch (this.CostMeasurementCode) {
                 //case "GRWT":
                 case "CHWT":
-                //case "VOLU":
+                case "CWKG":
+                case "GWKG":
+                case "VCBM":
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
@@ -1383,24 +1446,17 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
         if (this.IsEditingEnabled) {
             if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
-                isEnabled = true;
-
-                if (AppTool.IsNullOrEmpty(this.CostCurrencyId)) {
-                    isEnabled = false;
-                }
-
-                else if (this.CostCurrencyId == SessionLocator.LocalCurrencyId) {
-                    isEnabled = false;
-                }
-
-                else if (this.CostCurrencyId == this.fatherComponent.SaleCurrencyId) {
-                    isEnabled = false;
+                if (this.CostCurrencyId) {
+                    if (this.CostCurrencyId != SessionLocator.LocalCurrencyId) {
+                        if (this.CostCurrencyId != this.fatherComponent.SaleCurrencyId) {
+                            isEnabled = true;
+                        }
+                    }
                 }
             }
         }
 
-        //this.IsEnabled_CostExchangeRate = isEnabled;
-        this.IsEnabled_CostExchangeRate = true;
+        this.IsEnabled_CostExchangeRate = isEnabled;
         this.UIProperties.SetEnabled("CostExchangeRate", this.ObjectTableName, isEnabled);
     }
 
@@ -1425,7 +1481,9 @@ export class FCLQuoteChargeItem extends BaseComponent {
             switch (this.SaleMeasurementCode) {
                 //case "GRWT":
                 case "CHWT":
-                //case "VOLU":
+                case "CWKG":
+                case "GWKG":
+                case "VCBM":
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
@@ -1822,12 +1880,18 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.CostMeasurementId = !AppTool.IsNullOrEmpty(list.ContainerMeasurementId) ? list.ContainerMeasurementId : list.MeasurementId;
             this.EntityPM.IsBackToBack = list.IsBackToBack;
 
-            if (this.ChargesGroupCode == "FRT" || this.ChargesGroupCode == "SCH") {
-                this.CostCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-            }
 
+            if (!AppTool.IsNullOrEmpty(list.PayablesDefaultCurrencyId)) {
+                this.CostCurrencyId = list.PayablesDefaultCurrencyId;
+            }
             else {
-                this.CostCurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                if (this.ChargesGroupCode == "FRT" || this.ChargesGroupCode == "SCH") {
+                    this.CostCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                }
+
+                else {
+                    this.CostCurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                }
             }
         }
 
@@ -2128,6 +2192,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.CostQuantity != value) {
             this.EntityPM.CostQuantity = AppTool.Round(value, 2);
             this.ComputeCostAmounts();
+            this.fatherComponent.CheckUpdateQuantities();
         }
     }
 
@@ -2143,6 +2208,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
             this.ComputeCostAmounts();
             this.ComputeCostInSalePrice();
+            this.fatherComponent.CheckUpdateQuantities();
+
         }        
     }
 
@@ -2378,6 +2445,9 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfContainers; break; }
+                case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
+                case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
+                case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
 
                 default:
                     {
@@ -2444,19 +2514,19 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     myTotalAmount = this.CostQuantity * this.CostUnitPrice;
                 }
             }
+        }
 
-            /* MinMax */
-            if (myTotalAmount != null) {
-                if (this.CostMinAmount != null) {
-                    if (myTotalAmount < this.CostMinAmount) {
-                        myTotalAmount = this.CostMinAmount;
-                    }
+        /* MinMax */
+        if (myTotalAmount != null) {
+            if (this.CostMinAmount != null) {
+                if (myTotalAmount < this.CostMinAmount) {
+                    myTotalAmount = this.CostMinAmount;
                 }
+            }
 
-                if (this.CostMaxAmount != null) {
-                    if (myTotalAmount > this.CostMaxAmount) {
-                        myTotalAmount = this.CostMaxAmount;
-                    }
+            if (this.CostMaxAmount != null) {
+                if (myTotalAmount > this.CostMaxAmount) {
+                    myTotalAmount = this.CostMaxAmount;
                 }
             }
         }
@@ -2482,7 +2552,9 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.ComputeCostInSaleAmount();
         }
 
+        this.SetUIProperties_CostMinMax();                
         this.fatherComponent.ComputeTotals();
+        this.fatherComponent.CheckUpdateQuantities();
     }
     ComputeCostInSaleAmount() {
         var myResult = null;
@@ -2641,6 +2713,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
             this.SetSaleQuantity();
             this.SetUIProperties_SaleFields();
+            this.fatherComponent.CheckUpdateQuantities();
+
         }
     }
 
@@ -2672,6 +2746,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.SaleQuantity != value) {
             this.EntityPM.SaleQuantity = AppTool.Round(value, 2);
             this.ComputeSaleAmounts();
+            this.fatherComponent.CheckUpdateQuantities();
         }
     }
 
@@ -2680,6 +2755,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.SaleUnitPrice != value) {
             this.EntityPM.SaleUnitPrice = AppTool.Round(value, 3);
             this.ComputeSaleAmounts();
+            this.fatherComponent.CheckUpdateQuantities();
+
         }
     }
 
@@ -2731,6 +2808,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
             if (this.ChargesGroupCode == "FRT") {
                 this.fatherComponent.OnFreightAmountChanged();
             }
+
+            this.SetUIProperties_SaleMinMax();
         }
     }
 
@@ -2738,6 +2817,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
     set SaleTotalAmountLocal(value: number) {
         if (this.EntityPM.SaleTotalAmountLocal != value) {
             this.EntityPM.SaleTotalAmountLocal = AppTool.Round(value, 2);
+            this.SetUIProperties_SaleMinMax();
         }
     }
 
@@ -2779,7 +2859,9 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfContainers; break; }
-
+                case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
+                case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
+                case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.SaleMeasurementId)) {
@@ -2845,19 +2927,19 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     myTotalAmount = this.SaleQuantity * this.SaleUnitPrice;
                 }
             }
+        }
 
-            /* MinMax */
-            if (myTotalAmount != null) {
-                if (this.SaleMinAmount != null) {
-                    if (myTotalAmount < this.SaleMinAmount) {
-                        myTotalAmount = this.SaleMinAmount;
-                    }
+        /* MinMax */
+        if (myTotalAmount != null) {
+            if (this.SaleMinAmount != null) {
+                if (myTotalAmount < this.SaleMinAmount) {
+                    myTotalAmount = this.SaleMinAmount;
                 }
+            }
 
-                if (this.SaleMaxAmount != null) {
-                    if (myTotalAmount > this.SaleMaxAmount) {
-                        myTotalAmount = this.SaleMaxAmount;
-                    }
+            if (this.SaleMaxAmount != null) {
+                if (myTotalAmount > this.SaleMaxAmount) {
+                    myTotalAmount = this.SaleMaxAmount;
                 }
             }
         }
@@ -2870,7 +2952,10 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.fatherComponent.OnFreightAmountChanged();
         }
 
+        this.SetUIProperties_SaleMinMax();
         this.fatherComponent.ComputeTotals();
+        this.fatherComponent.CheckUpdateQuantities();
+
     }
     ComputeSalePrice() {
         if (AppTool.IsNullOrEmpty(this.CostUnitPriceInSaleCurrency)) {

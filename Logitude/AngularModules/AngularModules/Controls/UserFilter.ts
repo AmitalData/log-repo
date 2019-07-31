@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
 
@@ -27,15 +27,16 @@ export class UserFilter {
     public FilterId_A_Feature: boolean = false;
 
     @Output() SelectedValueChanged = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.SetVisibilityOfFilters();
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.FilterId_M = "LocationFilter_M_-1_-1";
             this.FilterId_A = "LocationFilter_A_-1_-1";
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("UserFilter");
+            var idIndex = this.CurrentSession.GetNewId("UserFilter");
             this.FilterId_M = "LocationFilter_M_" + idIndex;
             this.FilterId_A = "LocationFilter_A_" + idIndex;
         }

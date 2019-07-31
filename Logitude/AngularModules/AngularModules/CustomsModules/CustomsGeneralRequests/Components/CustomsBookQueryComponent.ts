@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
@@ -36,7 +36,7 @@ export class CustomsBookQueryComponent
 
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
     _CustomsBookListService: CustomsBookListService = new CustomsBookListService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -191,7 +191,7 @@ export class CustomsBookQueryComponent
         this._IIGGeneralMessagesService.PostCustomsBookInRequestParams(currRequestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 
-                //SessionLocator.CurrentSession.StopBusyIndicator();
+                //this.CurrentSession.StopBusyIndicator();
                 //console.log(myServiceResponse);
                 this.ResponseData = myServiceResponse.Result;
                 if (this.ResponseData) {

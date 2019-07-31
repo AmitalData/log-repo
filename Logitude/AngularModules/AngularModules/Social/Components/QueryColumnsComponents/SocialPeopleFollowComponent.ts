@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -18,6 +18,7 @@ export class SocialPeopleFollowComponent implements OnInit {
     IsFollowed: boolean = false;
     rowData: any;
     followerExtendedPMService: FollowerExtendedPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef) {
         this.followerExtendedPMService = new FollowerExtendedPMService();
     }
@@ -51,10 +52,10 @@ export class SocialPeopleFollowComponent implements OnInit {
 
     AddDeleteFollower(user: any) {
         var isdelete: boolean = user.IsFollowed;
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.followerExtendedPMService.AddDeleteFollower(user.Id, SessionLocator.LoggedUserId, isdelete, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (!pmResponse.HasError) {
                 this.rowData.IsFollowed = !isdelete;

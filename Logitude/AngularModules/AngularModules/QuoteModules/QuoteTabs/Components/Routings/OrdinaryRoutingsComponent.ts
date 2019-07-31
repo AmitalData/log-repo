@@ -1,6 +1,6 @@
-﻿import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
-import {QuoteDomainService, QuoteSubjectArgs} from '../../../../Quote/Services/QuoteDomainService';
+import {QuoteDomainService} from '../../../../Quote/Services/QuoteDomainService';
 import {QuoteUtilities} from '../../../../Quote/Utilities/QuoteUtilities';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -154,11 +154,7 @@ export class OrdinaryRoutingsComponent extends BaseComponent implements OnDestro
 
             myQuoteDomainService.ComputeQuoteAutomaticSubject(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    var myArgs: QuoteSubjectArgs = myResponse.Result;
-
-                    if (myArgs != null) {
-                        this.EntityPM.Subject = myArgs.Subject;
-                    }
+                    this.EntityPM.Subject = myResponse.Result;
                 }
             });
         }

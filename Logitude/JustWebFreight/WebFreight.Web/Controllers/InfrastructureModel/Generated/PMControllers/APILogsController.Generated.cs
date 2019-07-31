@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("APILogs", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("APILogs", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         APILogsService service = new APILogsService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("APILogs", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("APILogs", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "APILogs" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "APILogsPM" + entityPM.Id + entityPM.Tenant;

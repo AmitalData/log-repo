@@ -61,14 +61,15 @@ export class PaymentOrdersGeneralTabComponent extends BaseComponent {
     public customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
 
     imgNgStyle = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.LinesList = new ObservableCollection([]);
         this.MethodsList = new ObservableCollection([]);
         this.ProtestsList = new ObservableCollection([]);
         this.banksList = [];
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.StartBusyIndicator("");
         this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe(response => {
@@ -82,7 +83,7 @@ export class PaymentOrdersGeneralTabComponent extends BaseComponent {
                             }
                             this.Listen();
                             this.isTranslationLoaded = true;
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             });
                         });
                     });
@@ -93,31 +94,31 @@ export class PaymentOrdersGeneralTabComponent extends BaseComponent {
     }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            this.currentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            this.currentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.EntityPM.CustomerChanged = false;
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.DisplayOnlyCheck();
                         this.BuildPaymentOrderMethods();
                     }
                 })
             );
 
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (this.currentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (this.currentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "POGN") {
 
                         }
@@ -370,7 +371,7 @@ export class PaymentOrdersGeneralTabComponent extends BaseComponent {
         }
 
         var errorMessage = "";
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
         if (AppTool.IsNullOrEmpty(this.AccountingCustomFile)) {
             return;
@@ -380,7 +381,7 @@ export class PaymentOrdersGeneralTabComponent extends BaseComponent {
             if (!(this.customFilesList.indexOf(this.AccountingCustomFile) > -1)) {
                 errorMessage = "יש לבחור תיק עמילות מהרשימה!";
                 this.MessageAccountingCardWindow(errorMessage);
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
                 return;
             }
         }
@@ -390,7 +391,7 @@ export class PaymentOrdersGeneralTabComponent extends BaseComponent {
                     if (myResponse.Result == null || (myResponse.Result != null && AppTool.IsNullOrEmpty(myResponse.Result.Id))) {
                         errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.Didntfindcustomfile");
                         this.MessageAccountingCardWindow(errorMessage);
-                        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
+                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(errorMessage);
                         this.AccountingCustomFile = "";
                         return;
                     }
@@ -434,7 +435,7 @@ export class PaymentOrdersGeneralTabComponent extends BaseComponent {
     private BuildAccountingCustomFilesList() {
         this.paymentOrderConnectionTableExtendedPMService.GetAccountingCustomFileNumbers(this.EntityPM.Id, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.BuildAccountingCustomFilesListOp_Completed(myResponse, false);
             });
     }

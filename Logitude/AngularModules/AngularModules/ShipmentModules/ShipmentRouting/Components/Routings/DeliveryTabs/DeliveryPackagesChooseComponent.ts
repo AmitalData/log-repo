@@ -26,6 +26,7 @@ export class DeliveryPackagesChooseComponent {
     public ItemsSource: DeliveryPackagesChooseItem[] = [];
     public IsOkButtonEnabled: boolean = false;
     private fatherComponent: DeliveryPackagesTabComponent;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -92,7 +93,7 @@ export class DeliveryPackagesChooseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -125,7 +126,7 @@ export class DeliveryPackagesChooseComponent {
         });
 
         this.fatherComponent.BuildItemsSource();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 }
 export class DeliveryPackagesChooseItem {
@@ -133,6 +134,7 @@ export class DeliveryPackagesChooseItem {
     public InsideEntityPM: InsideShipmentPackagePM;
     public IsContainer: boolean = false;
     public HarmonizeList: ShipmentPackageHarmonizePM[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: ShipmentPackagePM, InsideEntityPM: InsideShipmentPackagePM, private fatherComponent: DeliveryPackagesChooseComponent) {
         this.EntityPM = entity;
         this.InsideEntityPM = InsideEntityPM;

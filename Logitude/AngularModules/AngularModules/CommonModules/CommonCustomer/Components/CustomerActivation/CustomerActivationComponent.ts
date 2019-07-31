@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {AddressList} from '../../../../Common/EntityLists/AddressList';
 import {CountryList} from '../../../../Common/EntityLists/CountryList';
@@ -32,6 +32,7 @@ export class CustomerActivationComponent extends BaseComponent {
     private partnersDomainService: PartnersDomainService;
     private customerService: CustomerPMService;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.partnersDomainService = new PartnersDomainService();
@@ -381,8 +382,8 @@ export class CustomerActivationComponent extends BaseComponent {
     
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
-        var test = SessionLocator.CurrentSession.CurrentEditComponent;
+        this.CurrentSession.CloseCurrentWindow();
+        var test = this.CurrentSession.CurrentEditComponent;
 
     }
 
@@ -509,22 +510,22 @@ export class CustomerActivationComponent extends BaseComponent {
 
     private Save(msg: string) {
         if (msg == "Activated") {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
         }
 
         this.customerService.update(this.EntityPM).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 if (msg == "Activated") {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(msg);
-                    SessionLocator.CurrentSession.FireEvent("EntityActivated");
+                    this.CurrentSession.CloseCurrentWindowEmit(msg);
+                    this.CurrentSession.FireEvent("EntityActivated");
                 }
                 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }    

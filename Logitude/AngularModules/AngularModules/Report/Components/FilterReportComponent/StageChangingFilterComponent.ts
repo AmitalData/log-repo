@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -70,11 +70,12 @@ export class StageChangingFilterComponent extends BaseComponent  {
     public SelectedViewItem: any;    
     public IsStageDateId: string = "IsStageDateId_";
     public DataContext: StageChangingFilterComponent = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.ShipmentTypeRadio += this.ShipmentTypeRadio + SessionLocator.CurrentSession.GetNewId(this.ShipmentTypeRadio);
-        this.IsOpportunitesDateId += this.IsOpportunitesDateId + SessionLocator.CurrentSession.GetNewId(this.IsOpportunitesDateId);
-        this.IsStageDateId += this.IsStageDateId + SessionLocator.CurrentSession.GetNewId(this.IsStageDateId);
+        this.ShipmentTypeRadio += this.ShipmentTypeRadio + this.CurrentSession.GetNewId(this.ShipmentTypeRadio);
+        this.IsOpportunitesDateId += this.IsOpportunitesDateId + this.CurrentSession.GetNewId(this.IsOpportunitesDateId);
+        this.IsStageDateId += this.IsStageDateId + this.CurrentSession.GetNewId(this.IsStageDateId);
         this.reportDomainService = new ReportsDomainService();
         
     }

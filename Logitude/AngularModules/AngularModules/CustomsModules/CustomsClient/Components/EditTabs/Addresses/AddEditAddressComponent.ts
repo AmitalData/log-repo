@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ClientsAddressCommTypePM} from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
@@ -37,7 +37,7 @@ export class AddEditAddressComponent extends BaseComponent{
 
    public ValidationErrorsList: string[] = [];
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
       
@@ -261,8 +261,8 @@ export class AddEditAddressComponent extends BaseComponent{
     CancelButtonClicked() {
 
         this.entityPM.RejectChanges();
-        //SessionLocator.CurrentSession.CloseCurrentWindow();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        //this.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 
 
@@ -270,7 +270,7 @@ export class AddEditAddressComponent extends BaseComponent{
 
         this.clientPM.AddClientAddress(this.entityPM);
       
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
  
 
@@ -294,7 +294,7 @@ export class AddEditAddressComponent extends BaseComponent{
                 this.operationType = OperationTypes.Add;
             }
             if (!this.isNewClient) {
-                SessionLocator.CurrentSession.StartBusyIndicator("");
+                this.CurrentSession.StartBusyIndicator("");
 
                 
                 var currRequestParams = new AddAddressContactForClientRequestParams();
@@ -375,10 +375,10 @@ export class AddEditAddressComponent extends BaseComponent{
                             this.clientPM.AddClientAddress(this.entityPM);
                         }
                         if (myServiceResponse.Result.Succeeded == true && myServiceResponse.Result.HasException == false) {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ReloadEntity");
+                            this.CurrentSession.CloseCurrentWindowEmit("ReloadEntity");
                         }
                         else {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
                         }
                     });
             }       

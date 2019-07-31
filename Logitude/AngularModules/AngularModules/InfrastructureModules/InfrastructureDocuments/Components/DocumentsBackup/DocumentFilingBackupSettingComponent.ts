@@ -1,4 +1,4 @@
-﻿import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
@@ -23,6 +23,7 @@ export class DocumentFilingBackupSettingComponent extends BaseComponent implemen
     IsNewDocumentFilingBackupSetting: boolean = false;
     documentFilingBackupSettingPM: DocumentFilingBackupSettingPM;
     private myFTPService: FTPDetailPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -67,7 +68,7 @@ export class DocumentFilingBackupSettingComponent extends BaseComponent implemen
             }
 
             this.IsLoad = true;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
 
     }
@@ -125,7 +126,7 @@ export class DocumentFilingBackupSettingComponent extends BaseComponent implemen
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     ValidationErrorsList: string[];
@@ -133,13 +134,13 @@ export class DocumentFilingBackupSettingComponent extends BaseComponent implemen
         this.ValidationErrorsList = [];
         if (this.documentFilingBackupSettingPM) {
             if (this.ValidationErrorsList.length == 0) {
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
                 if (this.IsNewDocumentFilingBackupSetting) {
                     this.documentFilingBackupSettingPMService.insert(this.documentFilingBackupSettingPM).subscribe(res => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         if (!res.HasError) {
                             this.IsNewDocumentFilingBackupSetting = false;
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
        
                         } else if (res.ErrorsArray && res.ErrorsArray.length > 0) {
                             var messageWindow: MessageWindow = new MessageWindow();
@@ -151,9 +152,9 @@ export class DocumentFilingBackupSettingComponent extends BaseComponent implemen
 
                 } else {
                     this.documentFilingBackupSettingPMService.update(this.documentFilingBackupSettingPM).subscribe(res => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         if (!res.HasError) {
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
                         } else if (res.ErrorsArray && res.ErrorsArray.length > 0) {
                             var messageWindow: MessageWindow = new MessageWindow();
                             messageWindow.Show(res.ErrorsArray[0]);

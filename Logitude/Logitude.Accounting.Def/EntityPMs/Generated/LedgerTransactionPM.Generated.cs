@@ -1124,6 +1124,75 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string recoNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RecoNumber  
+	   {
+	    
+	     get
+		{
+		   return recoNumber;
+		 }
+		 set
+		 {
+		   if(recoNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RecoNumber",OldValue=recoNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   recoNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string reconciliationId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReconciliationId  
+	   {
+	    
+	     get
+		{
+		   return reconciliationId;
+		 }
+		 set
+		 {
+		   if(reconciliationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReconciliationId",OldValue=reconciliationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   reconciliationId=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? paymentReconciledAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? PaymentReconciledAmount  
+	   {
+	    
+	     get
+		{
+		   return paymentReconciledAmount;
+		 }
+		 set
+		 {
+		   if(paymentReconciledAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentReconciledAmount",OldValue=paymentReconciledAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   paymentReconciledAmount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

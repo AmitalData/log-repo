@@ -11,7 +11,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Code).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.PrintAs).HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.PrintAs).IsRequired().HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.EnglishName).IsRequired().HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.LocalName).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(true);
@@ -39,6 +39,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.MeasurementId).HasColumnName("MeasurementId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.IsRefrigerated).HasColumnName("IsRefrigerated");
+            this.Property(t => t.IsVehicle).HasColumnName("IsVehicle");
 
             // Relationships
             this.HasOptional(t => t.Measurement).WithMany().HasForeignKey(d => d.MeasurementId);

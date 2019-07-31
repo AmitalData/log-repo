@@ -21,7 +21,7 @@
 //            //alert(SessionLocator.AllSessions.length);
 //            //let myEditTab: SessionTabItem = this.Tabs[1];
 //            if (SessionLocator.AllSessions.length == 2 &&
-//                SessionLocator.AllSessions[0] != SessionLocator.CurrentSession) {
+//                SessionLocator.AllSessions[0] != this.CurrentSession) {
 //                //myEditTab no need to Check !!!
 //                this._ControllerOn = false;
 //                resolve(this._ControllerOn);
@@ -60,7 +60,7 @@
 //                    if (ResponseInstructionCancel) {
 //                        this.ToCancell = true;
 //                        resolve(this._ControllerOn);
-//                        //SessionLocator.CurrentSession.RealCloseCurrentEditComponent();
+//                        //this.CurrentSession.RealCloseCurrentEditComponent();
 //                        return;
 //                    }
 //                    this._InDisplayModeCFIFILMLockMMessage = "";
@@ -74,7 +74,7 @@
 //                        }
 
 //                        resolve(this._ControllerOn);
-//                        //SessionLocator.CurrentSession.RealCloseCurrentEditComponent();
+//                        //this.CurrentSession.RealCloseCurrentEditComponent();
 //                        return;
 //                    }
 //                    this._UnifaceExclusiveAlreadyLocked = this.InDisplayMode = false;

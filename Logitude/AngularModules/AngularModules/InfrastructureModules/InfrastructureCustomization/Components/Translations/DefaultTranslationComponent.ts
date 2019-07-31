@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {TextCodePM} from '../../../../Infrastructure/EntityPMs/TextCodePM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {CodeNameClass} from '../../../../Infrastructure/DataContracts/CodeNameClass';
@@ -23,10 +23,11 @@ export class DefaultTranslationComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public ComponentId: string;
     private myService: DefaultTranslationService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
-        this.ComponentId = "DefaultTranslation_" + SessionLocator.CurrentSession.GetNewId("DefaultTranslation");
+        this.ComponentId = "DefaultTranslation_" + this.CurrentSession.GetNewId("DefaultTranslation");
         this.myService = new DefaultTranslationService();
         this.ItemsSource = new ObservableCollection([]);
         this.BuildFilters();
@@ -163,7 +164,7 @@ export class DefaultTranslationComponent extends BaseComponent {
     }
     LoadTextCodes(isNewSearching: boolean = false) {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.ItemsSource.Clear();
 
@@ -196,19 +197,19 @@ export class DefaultTranslationComponent extends BaseComponent {
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
             else {
                 this.OnDataLoaded(myResponse.Result);
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     SaveChanges(isClosing: boolean = false) {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         if (this.SkipDigit < 0) {
             this.SkipDigit = 0;
@@ -241,7 +242,7 @@ export class DefaultTranslationComponent extends BaseComponent {
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
             else {
@@ -254,7 +255,7 @@ export class DefaultTranslationComponent extends BaseComponent {
                 }
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     OnDataLoaded(myResultHelper: DefaultTranslationAPIHelper) {
@@ -357,7 +358,7 @@ export class DefaultTranslationComponent extends BaseComponent {
         }
     }
     CloseWindow() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     GetDirtyTextCodes() {
         var myResult: TextCodePM[] = [];

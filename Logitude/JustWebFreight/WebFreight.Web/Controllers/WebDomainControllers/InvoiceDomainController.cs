@@ -447,9 +447,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 DateTime? AutoCreditDate = DateHelper.GetDate(AutoCreditDateString);
                 IInvoiceContext objectContext = InvoiceContext.GetContext(tenant);
                 ARInvoiceService service = new ARInvoiceService(objectContext, tenant);
-                string AutoCreditId = service.CreateAutoCredit(entityId, IsInvoiceNumberManuallySet, AutoCreditManualNumber, AutoCreditDate);
+                //string AutoCreditId = service.CreateAutoCredit(entityId, IsInvoiceNumberManuallySet, AutoCreditManualNumber, AutoCreditDate);
 
-                return Request.CreateResponse(HttpStatusCode.OK, AutoCreditId);
+                return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
             catch (Exception ex)
@@ -457,10 +457,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCheckVendor_NumberDuplication(string vendorId, string invoiceNumber, string entityId)
+
+        public HttpResponseMessage PostAPInvoiceNumberDuplicationCheck(APInvoiceNumberDuplicationCheckArgs args)
         {
             try
             {
+                string vendorId = args.VendorId;
+                string entityId = args.EntityId;
+                string invoiceNumber = args.InvoiceNumber;
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
@@ -491,6 +496,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
         public HttpResponseMessage GetARPaymentCashBook(string paymentMethod, string currency, string branch)
         {
             try
@@ -1630,5 +1636,55 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
 
+        public HttpResponseMessage GetListOfARInvoiceStockPM()
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        string loggedUserEmail = authToken.Email;
+                        int tenant = authToken.Tenant;
+
+                        ARInvoiceStockQuery aRInvoiceStockQuery = new ARInvoiceStockQuery(tenant);
+                        ARInvoiceStockLineQuery aRInvoiceStockLineQuery = new ARInvoiceStockLineQuery(tenant);
+
+                        List<ARInvoiceStockPM> aRInvoiceStocks = aRInvoiceStockQuery.GetARInvoiceStockPMsByTenant(tenant).ToList();
+                        if(aRInvoiceStocks != null)
+                        {
+                            aRInvoiceStocks = aRInvoiceStocks.Where(a => a.StatusCode != "E" && a.StatusCode != "U" && a.StatusCode != "C" && (a.StartDate == null || a.StartDate <= TenantServerConfigration.GetCurrentDateTime(a.Tenant))).ToList();
+                        }
+                        foreach (var item in aRInvoiceStocks)
+                        {
+                            item.ARInvoiceStockLines = aRInvoiceStockLineQuery.GetARInvoiceStockLinePMsByStockId(item.Id, item.Tenant).Where(a=>!a.IsUsed).ToList();
+                            item.LinesCount = item.ARInvoiceStockLines != null ? item.ARInvoiceStockLines.Count() != 0 ? item.ARInvoiceStockLines.Count() + "" : "" : "";
+                        }
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, aRInvoiceStocks);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+
+    }
+    public class APInvoiceNumberDuplicationCheckArgs
+    {
+        public string VendorId { get; set; }
+        public string EntityId { get; set; }
+        public string InvoiceNumber { get; set; }
     }
 }

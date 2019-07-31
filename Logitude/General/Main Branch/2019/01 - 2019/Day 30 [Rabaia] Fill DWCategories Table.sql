@@ -5,6 +5,7 @@ INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Partners','Part
 INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Packages','Packages',50)
 INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Money','Money',60)
 INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Dates','Dates',70)
+INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('CustomFields','Custom Fields',80)
 
 
 

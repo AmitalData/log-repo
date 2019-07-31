@@ -272,8 +272,8 @@
                                                 </td>
 
                                                 <td *ngIf="FullAccounting  && IsCashBookValid">
-                                                    <div [style.text-align]="isRTL ? 'right' : 'left'" [style.float]="isRTL ? 'right' : 'left'" style="display: block;">
-                                                        Cashbook: {{CashBookName}} (
+                                                    <div [style.text-align]="isRTL ? 'right' : 'left'" float-start style="display: block;">
+                                                        {{ 'Cashbook.O.Name'|TextCodeTranslationPipe }}: {{CashBookName}} (
                                                         <span (click)="EditGLAccount('CB')" class="hyperlink"> {{BranchGLAccountNumber}} </span>)
                                                     </div>
                                                 </td>
@@ -345,7 +345,7 @@
                                                 </td>
 
                                                 <td *ngIf="FullAccounting && AccountingPaymentMethodCode == 'CH'" style="width:150px; left: -10px;">
-                                                    <LogLabel [Text]="'Cheque Status'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [Text]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe"  [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
@@ -673,27 +673,27 @@
                                 <tr style="width:100%;">
                                     <td style="vertical-align: middle;">
 
-                                        <div [style.float]="isRTL ? 'right' : 'left'" style="display:block; text-align:center;">
+                                        <div float-start style="display:block; text-align:center;">
                                             <div style="font-size: 24px; text-align: center;color:#282E30">{{Summary_Amount | NumbersPipe:'N2'}}</div>
                                             <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">{{'ARPayment.F.AmountInPaymentCurrency' | TextCodeTranslationPipe}}</div>
                                         </div>
 
-                                        <div [style.float]="isRTL ? 'right' : 'left'" style="display:block; text-align:center;">
+                                        <div float-start style="display:block; text-align:center;">
                                             <div style="font-size: 24px; text-align: center;color:#282E30; margin-left:15px;margin-right:15px;">  -  </div>
                                             <div></div>
                                         </div>
 
-                                        <div [style.float]="isRTL ? 'right' : 'left'" style="display:block;text-align:center;">
+                                        <div float-start style="display:block;text-align:center;">
                                             <div style="font-size: 24px; text-align: center;" [ngStyle]="{color: Summary_AmountPaidColor}">{{Summary_AmountPaid | NumbersPipe:'N2'}}</div>
                                             <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">{{'ARPayment.S.Details.AmountToPay' | TextCodeTranslationPipe}}</div>
                                         </div>
 
-                                        <div [style.float]="isRTL ? 'right' : 'left'" style="display:block;  text-align:center;">
+                                        <div float-start style="display:block;  text-align:center;">
                                             <div style="font-size: 24px; text-align: center;color:#282E30;margin-left:15px;margin-right:15px;"> = </div>
                                             <div></div>
                                         </div>
 
-                                        <div [style.float]="isRTL ? 'right' : 'left'" style="display:block;">
+                                        <div float-start style="display:block;">
                                             <div style="font-size: 24px;color:#282E30">{{OpenAmount | NumbersPipe:'N2'}}</div>
                                             <div style="vertical-align:top;">
                                                 <div class="Label" style="vertical-align:top;margin-top:-5px;display:inline-block;font-size:11px;color:#282E30;width:auto;color:#6E7172;">{{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}</div>

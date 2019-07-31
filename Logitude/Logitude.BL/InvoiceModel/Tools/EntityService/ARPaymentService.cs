@@ -35,13 +35,14 @@ using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.BLExt;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
     public class ARPaymentService
     {
         private int tenant;
-        public ARPayment payment { get; set; }
+        public ARPayment newPayment { get; set; }
         private ARPaymentPM entityPM;
         private IInvoiceContext objectContext;
         private ICommonDataContext myCommonContext;
@@ -74,7 +75,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
             this.accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
             this.changedList = new List<ARPaymentInvoicePM>();
-            this.loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
+
+            loggedContact = GetLoggedContactPM(tenant);
+
             this.GetAccountingSystem();
         }
 
@@ -88,59 +91,136 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
         }
 
-        public void Create(ARPaymentPM theEntityPm)
+        /*
+         *  CREATE
+         */
+        public void Create(ARPaymentPM _arpaymentPM)
         {
-            this.isNewEntity = true;
-            this.entityPM = theEntityPm;
-            this.changedList = theEntityPm.PaymentInvoices;
-            this.payment = new ARPayment();
-            isVoidingInvoice = this.entityPM.SetVoided;
-            this.InitializeComponent();
 
-            ARPaymentValidator.Validate(theEntityPm, cashBook);
-            ARPaymentTracing.Trace(theEntityPm, payment, isNewEntity);
+            _arpaymentPM.IsFullAccounting = IsFullAccActivated();
 
-            foreach (ARPaymentInvoicePM item in theEntityPm.PaymentInvoices)
-            {
-                item.ChangeSetOp = ChangeSetOperation.Insert;
-                this.CreatePaymentInvoice(item);
-            }
 
-            this.InitializeTransferComponents();
-            var setApproved = theEntityPm.SetApproved;
-            var setCancelApproved = theEntityPm.SetCancelApproval;
-            var setVoided = theEntityPm.SetVoided;
+            isNewEntity = true;
+            entityPM = _arpaymentPM;
+            isVoidingInvoice = entityPM.SetVoided;
+            changedList = _arpaymentPM.PaymentInvoices;
 
-            ARPaymentMapping.MapEntity(theEntityPm, payment, isNewEntity);
-            paymentRepository.Add(payment);
+            newPayment = new ARPayment();
+
+            InitializeComponent();
+
+            ARPaymentValidator.Validate(_arpaymentPM, cashBook);
+            ARPaymentTracing.Trace(_arpaymentPM, newPayment, isNewEntity);
+
+
+            InitializeTransferComponents();
+
+            //will reset in mapentity()
+            var setApproved = _arpaymentPM.SetApproved;
+            var setCancelApproved = _arpaymentPM.SetCancelApproval;
+            var setVoided = _arpaymentPM.SetVoided;
+
+            ARPaymentMapping.MapEntity(_arpaymentPM, newPayment, isNewEntity);
+
+            paymentRepository.Add(newPayment);
             paymentRepository.SubmitChanges();
-            invoicePaymentRepository.SubmitChanges();
+            SubmitPaymentInvoices(_arpaymentPM);
 
-            this.UpdatePaymentOpenAmount();
+            UpdatePaymentOpenAmount();
+
             ARPaymentHelper service = new ARPaymentHelper();
-            service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, payment,this.objectContext,this.myCommonContext, isVoidingInvoice, setCancelApproved);
-            this.BuildSearchFields();
+            service.ARPaymentQuickbooksValidating(_arpaymentPM, setApproved, false, newPayment, objectContext, myCommonContext, isVoidingInvoice, setCancelApproved, _arpaymentPM.SetReSendQBO);
 
-            AccountingPaymentMethodRepository ARPaymentMethodRepository = new AccountingPaymentMethodRepository(objectContext);
-            AccountingPaymentMethod ARPaymentMethod = ARPaymentMethodRepository.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
+            BuildSearchFields();
 
-            if (ARPaymentMethod != null && ARPaymentMethod.Code == "CH" && IsInternalAccountingSystem(theEntityPm.Tenant))//"CH" == Cheque
+            AccountingPaymentMethod ARPaymentMethod = GetARPaymentMethod();
+
+            if (ARPaymentMethod != null && ARPaymentMethod.Code == "CH" && IsInternalAccountingSystem(_arpaymentPM.Tenant))//"CH" == Cheque
             {
-                CreateChequeInCashBook(theEntityPm);
+                CreateChequeInCashBook(_arpaymentPM);
             }
 
-            paymentRepository.Update(payment);
+
+            paymentRepository.Update(newPayment);
             paymentRepository.SubmitChanges();
-            this.TraceConnected();
+
+            TraceConnected();
+
+            FillFullAccountingPaymentInvoices(_arpaymentPM);
+
+            ValidateFullAccounting(_arpaymentPM); // depends on Payment.PaymentInvoices
+
 
             // PaymentCheque And CashBook
-            this.AddARPaymentChequeAndCashBook(theEntityPm, setApproved);
-            this.GetForeignFields();
-            this.BuildEntitiesNumbers();
-            this.VoidARPaymentInFullAccounting(theEntityPm, setVoided);
+            AddARPaymentChequeAndCashBook(_arpaymentPM, setApproved);
+
+            GetPaymentForeignFields();
+
+            BuildEntitiesNumbers();
+
+            VoidARPaymentInFullAccounting(_arpaymentPM, setVoided);
 
             // DropBox
-            this.CreateARInvoiceMessage(setApproved);
+            CreateARInvoiceMessage(setApproved);
+
+            //// Full Accounting => Reconciliation
+            //if (theEntityPm.IsFullAccounting == true)
+            //{
+            //    //check glaccountid
+            //    if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
+            //    {
+            //        throw new ApplicationException("Hey! no glaccount provided!!"); // this case shouldn't be correct because glaccountid should be filled in the client, otherwise check client
+            //    }
+
+            //    //CreateReconciliationService _recoSvc = new CreateReconciliationService();
+            //    CreateReconciliationForARPayment(theEntityPm);
+
+            //    UpdateTransactions(theEntityPm);
+            //}
+
+        }
+
+        private void FillFullAccountingPaymentInvoices(ARPaymentPM _arpaymentPM)
+        {
+            GLAccountPM gla = FillGLAccountFields(_arpaymentPM);
+
+            // Full Accounting => Reconciliation
+            if (_arpaymentPM.IsFullAccounting == true)
+            {
+                if (string.IsNullOrEmpty(_arpaymentPM.GLAccountId))
+                    throw new ApplicationException("Hey! no glaccount provided!!");
+
+                FillPaymentInvoicesFromInvoicesTransactions(_arpaymentPM, (bool)gla.IsMultiCurrency);
+            }
+        }
+
+        private AccountingPaymentMethod GetARPaymentMethod()
+        {
+            AccountingPaymentMethodRepository ARPaymentMethodRepository = new AccountingPaymentMethodRepository(objectContext);
+            AccountingPaymentMethod ARPaymentMethod = ARPaymentMethodRepository.GetSingleAccountingPaymentMethod(newPayment.AccountingPaymentMethodId, tenant);
+            return ARPaymentMethod;
+        }
+
+        private void SubmitPaymentInvoices(ARPaymentPM _arpaymentPM)
+        {
+            foreach (ARPaymentInvoicePM item in _arpaymentPM.PaymentInvoices)
+            {
+                item.ChangeSetOp = ChangeSetOperation.Insert;
+                CreatePaymentInvoice(item);
+            }
+
+            invoicePaymentRepository.SubmitChanges();
+
+        }
+
+        private bool IsFullAccActivated()
+        {
+            bool isFullAccountingActivated = false;
+            // Full Accounting
+            TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
+            if (tenantPM != null && tenantPM.AccountingActivated == true)
+                isFullAccountingActivated = true;
+            return isFullAccountingActivated;
         }
 
         public void SetChangedList(List<ARPaymentInvoicePM> list)
@@ -148,21 +228,32 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.changedList = list;
         }
 
+
+        /*
+         *  UPDATE
+         */
         public void Update(ARPaymentPM theEntityPm, bool mapComposition = false)
         {
+            ContactPM loggedUser = GetLoggedContactPM(theEntityPm.Tenant);
+            theEntityPm.UpdatedByUserId = loggedUser?.Id;
+
+            ValidateFullAccounting(theEntityPm);
+
+            //get glaccount fields
+            GLAccountPM gla = FillGLAccountFields(theEntityPm);
 
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
             this.SetVoided = theEntityPm.SetVoided;
 
-            this.payment = paymentRepository.GetSingleARPayment(theEntityPm.Id);
+            this.newPayment = paymentRepository.GetSingleARPayment(theEntityPm.Id);
 
             this.ValidateHigherStatus();
 
             this.InitializeComponent();
 
             ARPaymentValidator.Validate(theEntityPm, cashBook);
-            ARPaymentTracing.Trace(theEntityPm, payment, isNewEntity);
+            ARPaymentTracing.Trace(theEntityPm, newPayment, isNewEntity);
 
             if (mapComposition)
             {
@@ -213,17 +304,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (this.entityPM.SetCancelApproval)
                 {
-                    if (payment.SATTransferStatusCode == "TD")
-                        this.sATInterfaceHelper.SendPaymentSATCancellationRequest(entityPM, payment);
-                    else if (payment.SATTransferStatusCode == "TG")
+                    if (newPayment.SATTransferStatusCode == "TD")
+                        this.sATInterfaceHelper.SendPaymentSATCancellationRequest(entityPM, newPayment);
+                    else if (newPayment.SATTransferStatusCode == "TG")
                         throw new ApplicationException("Can't cancel payment while being transfered to SAT");
                 }
 
                 if (theEntityPm.SetVoided)
                 {
-                    if (payment.SATTransferStatusCode == "TG")
+                    if (newPayment.SATTransferStatusCode == "TG")
                         throw new ApplicationException("Can't void payment while being transfered to SAT");
-                    else if (payment.SATTransferStatusCode == "TE" && !string.IsNullOrEmpty(payment.SATXML))
+                    else if (newPayment.SATTransferStatusCode == "TE" && !string.IsNullOrEmpty(newPayment.SATXML))
                         throw new ApplicationException("Can't void payment because it wasn't cancelled by SAT");
 
                 }
@@ -235,44 +326,66 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setVoided = theEntityPm.SetVoided;
             var SetReSendQBO = theEntityPm.SetReSendQBO;
 
+            //update amounts
+            if (theEntityPm.IsFullAccounting == true)
+                UpdateFullAccountPaymentAmount(theEntityPm, gla.ReconcileMethodCode == "0");
+
+
             // PaymentCheque And CashBook
             this.AddARPaymentChequeAndCashBook(theEntityPm, theEntityPm.SetApproved);
             this.VoidARPaymentInFullAccounting(theEntityPm, setVoided);
 
             this.InitializeTransferComponents();
 
-            ARPaymentMapping.MapEntity(theEntityPm, payment, isNewEntity);
-            paymentRepository.Update(payment);
+            ARPaymentMapping.MapEntity(theEntityPm, newPayment, isNewEntity);
+            paymentRepository.Update(newPayment);
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
 
-            this.UpdatePaymentOpenAmount();
+            if (!theEntityPm.IsFullAccounting)
+                UpdatePaymentOpenAmount();
+
+
             ARPaymentHelper service = new ARPaymentHelper();
-            if (payment.ExternalAccountingEntityId != null || SetReSendQBO)
+            if (newPayment.ExternalAccountingEntityId != null || SetReSendQBO)
             {
-                service.ARPaymentQuickbooksValidating(theEntityPm, true, false, payment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved);
+                service.ARPaymentQuickbooksValidating(theEntityPm, true, false, newPayment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO);
             }
             else
             {
-                service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, payment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved);
+                service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, newPayment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO);
             }
 			this.BuildSearchFields();
 
             // DropBox
             this.CreateARInvoiceMessage(setApproved);
 
-            paymentRepository.Update(payment);
+
+            paymentRepository.Update(newPayment);
             paymentRepository.SubmitChanges();
+
+            // Full Accounting => Reconciliation
+            if (theEntityPm.IsFullAccounting == true)
+            {
+                if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
+                    throw new ApplicationException("Hey! no glaccount provided!!");
+
+                if (theEntityPm.StatusCode != "VD")
+                    CreateReconciliationForARPayment(theEntityPm);
+            }
+
             this.TraceConnected();
-            this.GetForeignFields();
+            this.GetPaymentForeignFields();
             this.BuildEntitiesNumbers();
         }
+
+
 
         private void ValidateHigherStatus()
         {
             if (!isNewEntity)
             {
-                if (this.payment.StatusCode == "AD")
+                if (this.newPayment.StatusCode == "AD")
                 {
                     bool throwException = false;
 
@@ -330,10 +443,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
                 else
                 {
-                    this.payment = paymentRepository.GetSingleARPayment(this.entityPM.Id);
+                    this.newPayment = paymentRepository.GetSingleARPayment(this.entityPM.Id);
                     List<ARPayment> entities = new List<ARPayment>();
-                    entities.Add(this.payment);
-                    ARPaymentMessageHelper myHelper = new ARPaymentMessageHelper(entities, this.payment.PaymentNo + ".xml", tenant, true);
+                    entities.Add(this.newPayment);
+                    ARPaymentMessageHelper myHelper = new ARPaymentMessageHelper(entities, this.newPayment.PaymentNo + ".xml", tenant, true);
                     myHelper.Transfer();
                 }
             }
@@ -347,7 +460,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.Id = IdCounter.GetNumber("ARPayment", entityPM.Tenant).ToString();
             }
 
-            if (string.IsNullOrEmpty(entityPM.PaymentNo))
+            if (!entityPM.IsExternalEntity && string.IsNullOrEmpty(entityPM.PaymentNo))
             {
                 entityPM.PaymentNo = TableCounter.GetNumber(entityPM.Tenant, "ARPT", "DR", null).ToString();
             }
@@ -358,6 +471,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 {
                     entityPM.StatusCode = "AD";
+                    entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    entityPM.ApprovedByUserId = loggedContact.Id;
                 }
 
                 UpdateDocOutNeedsRebuild();
@@ -413,6 +528,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     cashBookMethodType = "2";
                 }
                 cashBook = cashBookQuery.GetByPaymentAndCurrencyAndBranch(entityPM.PaymentCurrencyId, cashBookMethodType , entityPM.BranchId, tenant);
+                if(cashBook != null)
+                {
+
+                    entityPM.CashbookId = cashBook.Id;
+                }
             }
         }
 
@@ -527,10 +647,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
-            payment.IsClosed = entityPM.IsClosed = isClosed;
-            payment.StatusCode = entityPM.StatusCode = StatusCode;
-            payment.OpenAmount = entityPM.OpenAmount = OpenAmount;
-            payment.AmountInPaymentCurrency = entityPM.AmountInPaymentCurrency = Amount;
+            newPayment.IsClosed = entityPM.IsClosed = isClosed;
+            newPayment.StatusCode = entityPM.StatusCode = StatusCode;
+            newPayment.OpenAmount = entityPM.OpenAmount = OpenAmount;
+            newPayment.AmountInPaymentCurrency = entityPM.AmountInPaymentCurrency = Amount;
 
             if (this.SetVoided)
             {
@@ -700,7 +820,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             #endregion
 
             entityPM.SearchFields = mySearchFields;
-            payment.SearchFields = mySearchFields;
+            newPayment.SearchFields = mySearchFields;
         }
         #endregion
 
@@ -865,7 +985,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             int tenant = theEntityPm.Tenant;
             ARPaymentChequePM arPaymentcheque = new ARPaymentChequePM();
-            if (setApproved)
+            if (setApproved || theEntityPm.IsExternalEntity)
             {
                 if (tenantPOCO != null && tenantPOCO.AccountingActivated)
                 {
@@ -887,49 +1007,79 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
                             else
                             {
-                                arPaymentcheque.PaymentId = theEntityPm.Id;
-                                arPaymentcheque.Tenant = tenant;
-                                arPaymentcheque.LineNumber = 1;
-                                arPaymentcheque.ChequeNumber = theEntityPm.ChequeOrPaymentRef;
-                                arPaymentcheque.ValueDate = theEntityPm.ValueDate.Value;
-                                arPaymentcheque.BankBranch = theEntityPm.BankBranch;
-                                arPaymentcheque.BankAccount = theEntityPm.Account;
-                                //arPaymentcheque.BankId = getBankCode(theEntityPm.Tenant);// "1-1";
-                                arPaymentcheque.BankId = theEntityPm.Bank;
-                                arPaymentcheque.CurrencyId = theEntityPm.PaymentCurrencyId;
-                                arPaymentcheque.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency.Value;
-                                arPaymentcheque.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency.Value;
-                                arPaymentcheque.ChangeSetOp = ChangeSetOperation.Insert;
-                                arPaymentcheque.StatusCode = "1"; // In Cashbook  
-                                arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
-                                arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
-
-                               IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
-                                paymentUpdate.Update(arPaymentcheque);
-
-                                CashBookLinePM cashBookLine = new CashBookLinePM();
-                                cashBookLine.CashBookId = cashBook.Id;
-                                cashBookLine.Tenant = tenant;
-                                cashBookLine.ARPChequeId = arPaymentcheque.Id;
-                                cashBookLine.ChangeSetOp = ChangeSetOperation.Insert;
-                                cashBookLine.IsDeposited = false;
-
-                                ICashBookLineUpdateServiceExt cashBookLineUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookLineUpdateServiceExt), "CashBookLineUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookLineUpdateServiceExt;
-                                cashBookLineUpdate.Update(cashBookLine);
-
-                                // Update Total Amount
-                                ICashBookUpdateServiceExt cashBookUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookUpdateServiceExt), "CashBookUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookUpdateServiceExt;
-                                if (cashBook.TotalAmount == null)
+                                if (theEntityPm.ARPaymentChequeReplicas.Count > 0)
                                 {
-                                    cashBook.TotalAmount = 0;
-                                }
-                                cashBook.TotalAmount += arPaymentcheque.ForeignAmount;
-                                cashBook.ChangeSetOp = ChangeSetOperation.Update;
-                                cashBookUpdate.Update(cashBook);
-                            }
+                                    foreach (ARPaymentChequeReplicaPM item in theEntityPm.ARPaymentChequeReplicas)
+                                    {
+                                         arPaymentcheque = new ARPaymentChequePM();
 
-                            // Create Journal with lines for cash or cheque
-                            this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
+                                        arPaymentcheque.PaymentId = theEntityPm.Id;
+                                        arPaymentcheque.Tenant = tenant;
+                                        arPaymentcheque.LineNumber = 1;
+                                        arPaymentcheque.ChequeNumber = theEntityPm.ChequeOrPaymentRef;
+                                        arPaymentcheque.ValueDate = theEntityPm.ValueDate.Value;
+                                        arPaymentcheque.BankBranch = theEntityPm.BankBranch;
+                                        arPaymentcheque.BankAccount = theEntityPm.Account;
+                                        //arPaymentcheque.BankId = getBankCode(theEntityPm.Tenant);// "1-1";
+                                        arPaymentcheque.BankId = theEntityPm.Bank;
+                                        arPaymentcheque.CurrencyId = theEntityPm.PaymentCurrencyId;
+                                        arPaymentcheque.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency.Value;
+                                        arPaymentcheque.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency.Value;
+                                        arPaymentcheque.ChangeSetOp = ChangeSetOperation.Insert;
+                                        arPaymentcheque.StatusCode = "1"; // In Cashbook  
+                                        arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
+                                        arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
+
+                                        IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
+                                        paymentUpdate.Update(arPaymentcheque);
+                                      //  CreateCashBook(arPaymentcheque);
+                                        CashBookLinePM cashBookLine = new CashBookLinePM();
+                                        cashBookLine.CashBookId = cashBook.Id;
+                                        cashBookLine.Tenant = tenant;
+                                        cashBookLine.ARPChequeId = arPaymentcheque.Id;
+                                        cashBookLine.ChangeSetOp = ChangeSetOperation.Insert;
+                                        cashBookLine.IsDeposited = false;
+
+                                        ICashBookLineUpdateServiceExt cashBookLineUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookLineUpdateServiceExt), "CashBookLineUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookLineUpdateServiceExt;
+                                        cashBookLineUpdate.Update(cashBookLine);
+
+                                        // Update Total Amount
+                                        ICashBookUpdateServiceExt cashBookUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookUpdateServiceExt), "CashBookUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookUpdateServiceExt;
+                                        if (cashBook.TotalAmount == null)
+                                        {
+                                            cashBook.TotalAmount = 0;
+                                        }
+                                        cashBook.TotalAmount += arPaymentcheque.ForeignAmount;
+                                        cashBook.ChangeSetOp = ChangeSetOperation.Update;
+                                        cashBookUpdate.Update(cashBook);
+                                    }
+                                }
+                                else
+                                {
+                                    arPaymentcheque.PaymentId = theEntityPm.Id;
+                                    arPaymentcheque.Tenant = tenant;
+                                    arPaymentcheque.LineNumber = 1;
+                                    arPaymentcheque.ChequeNumber = theEntityPm.ChequeOrPaymentRef;
+                                    arPaymentcheque.ValueDate = theEntityPm.ValueDate.Value;
+                                    arPaymentcheque.BankBranch = theEntityPm.BankBranch;
+                                    arPaymentcheque.BankAccount = theEntityPm.Account;
+                                    //arPaymentcheque.BankId = getBankCode(theEntityPm.Tenant);// "1-1";
+                                    arPaymentcheque.BankId = theEntityPm.Bank;
+                                    arPaymentcheque.CurrencyId = theEntityPm.PaymentCurrencyId;
+                                    arPaymentcheque.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency.Value;
+                                    arPaymentcheque.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency.Value;
+                                    arPaymentcheque.ChangeSetOp = ChangeSetOperation.Insert;
+                                    arPaymentcheque.StatusCode = "1"; // In Cashbook  
+                                    arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
+                                    arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
+
+                                    IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
+                                    paymentUpdate.Update(arPaymentcheque);
+                                    //CreatenCashBook(arPaymentcheque);
+                                }
+                                // Create Journal with lines for cash or cheque
+                                this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
+                            }
                         }
                     }
                     else
@@ -1001,7 +1151,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalLine.Line = ++counter;
                 journalLine.ActionCode = "2";
                 journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
-                journalLine.DocumentDate = arPaymentcheque.ValueDate;
+                journalLine.DocumentDate = theEntityPm.RegisterDate.Value;
                 journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
                 journalLine.DueDate = arPaymentcheque.ValueDate;
                 journalLine.LocalAmount = arPaymentcheque.LocalAmount;
@@ -1040,20 +1190,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
 
+
             if (theEntityPm.PaymentInvoices.Any())
             {
                 var AutoReconcileARPaymentServiceExt = ContainerAccessor.Container.Resolve(typeof(IAutoReconcileServiceExt), "AutoReconcileServiceExt", new ParameterOverride("", 1)) as IAutoReconcileServiceExt;
-                
 
+             
                 var AutoReconcileRecordList = new List<AutoReconcileRecord>();
                 theEntityPm.PaymentInvoices.ForEach(r =>
                 {
+                    //JournalPM invoiceJournal=  GetJournalByInvoiceNumber(r);
                     var item = new AutoReconcileRecord()
                     {
                         AccountingEntityId = r.ARInvoiceId,
                         LocalAmountToReconcile = Convert.ToDecimal(r.LocalAmount.GetValueOrDefault()),
                         ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()),
-                        ForeignCurrencyIdReconcile = r.ForeignCurrencyId
+                        ForeignCurrencyIdReconcile = r.ForeignCurrencyId,
+                        
+                      
                     };
                     AutoReconcileRecordList.Add(item);
                 }
@@ -1066,7 +1220,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalUpdate.Update(journal);
         }
 
-  
+        private JournalPM GetJournalByInvoiceNumber(ARPaymentInvoicePM paymentInvoice)
+        {
+            ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(paymentInvoice.Tenant);
+            ARInvoicePM invoicePM = invoiceQuery.GetSingleInvoiceByInvoiceNumber(paymentInvoice.ARInvoiceNumber, paymentInvoice.Tenant);
+
+            return null;
+
+        }
 
         private GLAccountPM getGLAccount(string billToId, int tenant)
         {
@@ -1130,19 +1291,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #endregion 
 
 
-        private void GetForeignFields()
+        private void GetPaymentForeignFields()
         {
-            if (payment.StatusCode != null)
+            if (newPayment.StatusCode != null)
             {
                 ARPaymentStatusRepository myRepository = new ARPaymentStatusRepository(objectContext);
-                ARPaymentStatus status = myRepository.GetSingleARPaymentStatus(payment.StatusCode);
+                ARPaymentStatus status = myRepository.GetSingleARPaymentStatus(newPayment.StatusCode);
                 entityPM.StatusName = status.Name;
             }
 
-            if (payment.TransferStatusCode != null)
+            if (newPayment.TransferStatusCode != null)
             {
                 ARPaymentTransferStatusRepository myRepository = new ARPaymentTransferStatusRepository(objectContext);
-                ARPaymentTransferStatus status = myRepository.GetSingleARPaymentTransferStatus(payment.TransferStatusCode);
+                ARPaymentTransferStatus status = myRepository.GetSingleARPaymentTransferStatus(newPayment.TransferStatusCode);
                 entityPM.TransferStatusName = status.Name;
             }
 
@@ -1182,9 +1343,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.InvoiceNumber = invoiceNumber;
                 entityPM.ShipmentNumber = shipmentNumber;
-                payment.InvoiceNumber = entityPM.InvoiceNumber;
-                payment.ShipmentNumber = entityPM.ShipmentNumber;
-                paymentRepository.Update(payment);
+                newPayment.InvoiceNumber = entityPM.InvoiceNumber;
+                newPayment.ShipmentNumber = entityPM.ShipmentNumber;
+                paymentRepository.Update(newPayment);
                 paymentRepository.SubmitChanges();
             }
         }
@@ -1207,14 +1368,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 isInitializing = true;
             }
 
-            else if (payment.TransferStatusCode == "TR")
+            else if (newPayment.TransferStatusCode == "TR")
             {
                 isInitializing = false;
                 entityPM.TransferError = null;
                 entityPM.TransferStatusCode = "TR";
             }
 
-            else if (payment.TransferStatusCode == "IP")
+            else if (newPayment.TransferStatusCode == "IP")
             {
                 isInitializing = false;
                 entityPM.TransferError = null;
@@ -1232,10 +1393,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 #region
                 bool isReady = true;
                 string myError = null;
-                CardRepository cardRep = new CardRepository(payment.Tenant);
-                CurrencyRepository currencyRep = new CurrencyRepository(payment.Tenant);
-                Card card = cardRep.GetSingleCard(payment.BillToId, payment.Tenant);
-                Currency currency = currencyRep.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant);
+                CardRepository cardRep = new CardRepository(newPayment.Tenant);
+                CurrencyRepository currencyRep = new CurrencyRepository(newPayment.Tenant);
+                Card card = cardRep.GetSingleCard(newPayment.BillToId, newPayment.Tenant);
+                Currency currency = currencyRep.GetSingleCurrency(newPayment.PaymentCurrencyId, newPayment.Tenant);
                 string currencyError = "Currency External Id is missing";
                 if (currency != null && !string.IsNullOrEmpty(currency.Code))
                 {
@@ -1283,7 +1444,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void UpdateDocOutNeedsRebuild()
         {
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(myCommonContext);
-            DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(payment.Id, null);
+            DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(newPayment.Id, null);
             if (docOut != null)
             {
                 docOut.NeedsRebuild = true;
@@ -1343,14 +1504,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             List<ARPaymentChequePM> aRPaymentCheques = query.GetListByPaymentId(entityPm.Id, tenant);
                             if (aRPaymentCheques != null)
                             {
-                                var list = aRPaymentCheques.Where(a => a.StatusCode == "6" || a.StatusCode == "3").ToList();
+                                var list = aRPaymentCheques.Where(a => a.StatusCode == "6" || a.StatusCode == "3" || a.StatusCode == "2").ToList(); // 2-In bank / 6 (ReDeemed-נפרע) or 3- In bank account 
                                 if (list != null && list.Count() != 0)
                                 {
-                                    string msg = TranslateTextsClass.Translate("ARPayment.M.CANTCancelARPayment", entityPm.Tenant, useLocal) + "{ ";
-                                    foreach (var item in list)
-                                    {
-                                        msg += "Cheque No.: " + item.ChequeNumber + ", Status: " + item.StatusName;
-                                    }
+                                    string msg = TranslateTextsClass.Translate("ARPayment.M.CANTCancelARPayment", entityPm.Tenant, useLocal);
+                                    //    + "{ ";
+                                    //foreach (var item in list)
+                                    //{
+                                    //    msg += "Cheque No.: " + item.ChequeNumber + ", Status: " + item.StatusName;
+                                    //}
                                     throw new ApplicationException(msg);
                                 }
                                 else
@@ -1358,6 +1520,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
                                     foreach (var item in aRPaymentCheques)
                                     {
+                                        item.ChangeSetOp = ChangeSetOperation.Update;
                                         item.StatusCode = "5";
                                         paymentUpdate.Update(item);
                                         CreateVoidedARPaymentEvent("Returned To Customer - Cheque Number: " + item.ChequeNumber);
@@ -1390,15 +1553,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
         private void ValidateVoidedARPaymentFullAccounting(ARPaymentPM entityPm)
@@ -1469,5 +1627,292 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 });
             }
         }
+
+        #region Full Accounting
+        public void CreateReconciliationForARPayment(ARPaymentPM paymentPM)
+        {
+            IAccountingContext ctx = AccountingContext.GetContext(paymentPM.Tenant);
+            ReconciliationPM _reco = new ReconciliationPM();
+            _reco.ChangeSetOp = ChangeSetOperation.Insert;
+            _reco.Number = "get";
+            _reco.Tenant = paymentPM.Tenant;
+            _reco.AccountId = paymentPM.GLAccountId;
+            _reco.AccountReconcileMethodCode = paymentPM.GLAccountRecoMethodCode;
+            _reco.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
+
+            GLAccountListQueryService glaQuery = new GLAccountListQueryService(ctx);
+            GLAccountList gla = glaQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
+            if (gla != null)
+            {
+                _reco.AccountCurrencyId = gla.CurrencyId;
+                _reco.CurrencyCode = gla.CurrencyCode;
+            }
+
+            // get payment line LT
+            LedgerTransactionListQueryService ltListQuery = new LedgerTransactionListQueryService(ctx);
+            List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(paymentPM.GLAccountId, paymentPM.Tenant);
+            LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
+            if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
+
+            if (paymentPM.InvoicesLedgerTransactions.Count == 0)
+                return;
+
+            // reco payment line
+            var _recoPYLine = CreatePaymentRecoLine(paymentPM);
+            _recoPYLine.TransactionId = paymentTransaction.Id;
+            _reco.ReconciliationLines.Add(_recoPYLine);
+
+            // invoices lines
+            int line = 2;
+            foreach (LedgerTransactionPM invoiceLT in paymentPM.InvoicesLedgerTransactions)
+            {
+                var _recoInLine = CreateInvoiceRecoLine(paymentPM, invoiceLT, line++);
+                _reco.ReconciliationLines.Add(_recoInLine);
+            }
+
+            //call reco service
+            var recoService = ContainerAccessor.Container.Resolve(typeof(IReconciliationServiceExt), "ReconciliationServiceExt", new ParameterOverride("", 1)) as IReconciliationServiceExt;
+            recoService.CreateReconciliation(_reco);
+
+
+        }
+        public void UpdateTransactions(ARPaymentPM paymentPM)
+        {
+            foreach (LedgerTransactionPM invoiceLT in paymentPM.InvoicesLedgerTransactions)
+            {
+                //update ledger transaction
+                ///....
+
+            }
+        }
+        private ReconciliationLinePM CreatePaymentRecoLine(ARPaymentPM paymentPM)
+        {
+            ReconciliationLinePM _paymentLine = new ReconciliationLinePM();
+            _paymentLine.ChangeSetOp = ChangeSetOperation.Insert;
+            _paymentLine.Tenant = paymentPM.Tenant;
+            _paymentLine.Line = 1;
+
+            // validate
+            if (string.IsNullOrEmpty(paymentPM.GLAccountRecoMethodCode))
+                throw new ApplicationException("No reco method provided in payment!");
+
+            bool useLocalRecoMethod = paymentPM.GLAccountRecoMethodCode == "0";
+
+
+            //amount
+            decimal invoiceAmountToReconcileSum = paymentPM.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);
+            _paymentLine.ReconciliationAmount = invoiceAmountToReconcileSum * -1;
+
+            //currency
+            _paymentLine.CurrencyId = useLocalRecoMethod ? paymentPM.LocalCurrencyId : paymentPM.PaymentCurrencyId;
+
+            //isPartial
+            _paymentLine.IsPartial = Convert.ToDecimal(paymentPM.OpenAmount) == _paymentLine.ReconciliationAmount;
+
+            //GroupNumber
+            _paymentLine.GroupNumber = 1;
+
+            return _paymentLine;
+        }
+        private ReconciliationLinePM CreateInvoiceRecoLine(ARPaymentPM paymentPM, LedgerTransactionPM invoiceTransactionPM, int line)
+        {
+            ReconciliationLinePM _invoiceLine = new ReconciliationLinePM();
+            _invoiceLine.ChangeSetOp = ChangeSetOperation.Insert;
+            _invoiceLine.Tenant = paymentPM.Tenant;
+            _invoiceLine.TransactionId = invoiceTransactionPM.Id;
+            _invoiceLine.Line = line;
+
+            // validate
+            if (string.IsNullOrEmpty(paymentPM.GLAccountRecoMethodCode))
+                throw new ApplicationException("No reco method provided in payment!");
+
+            bool useLocalRecoMethod = paymentPM.GLAccountRecoMethodCode == "0";
+
+            //amount
+            _invoiceLine.ReconciliationAmount = invoiceTransactionPM.AmountToReconcile;
+
+            //currency
+            _invoiceLine.CurrencyId = useLocalRecoMethod ? paymentPM.LocalCurrencyId : paymentPM.PaymentCurrencyId;
+
+            //isPartial
+            _invoiceLine.IsPartial = invoiceTransactionPM.AmountToReconcile != CalculateInvoiceAmount(invoiceTransactionPM, useLocalRecoMethod);
+
+            //GroupNumber
+            _invoiceLine.GroupNumber = 1;
+
+            return _invoiceLine;
+        }
+
+        private decimal CalculateInvoiceAmount(LedgerTransactionPM transaction, bool useLocalRecoMethod)
+        {
+
+            if (useLocalRecoMethod)
+            { // 0-local currency
+
+                if (transaction.LocalAmountCredit == 0)
+                {
+                    return transaction.LocalAmountDebit;
+                }
+                else
+                {
+                    return -1 * transaction.LocalAmountCredit;
+                }
+
+            }
+            else
+            { // 1-foreign currency
+
+                if (transaction.ForeignAmountCredit == 0)
+                {
+                    return transaction.ForeignAmountDebit;
+                }
+                else
+                {
+                    return -1 * transaction.ForeignAmountCredit;
+                }
+
+            }
+
+        }
+
+        GLAccountPM FillGLAccountFields(ARPaymentPM paymentPM)
+        {
+            GLAccountPM gla = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
+            if (gla != null)
+            {
+                paymentPM.GLAccountId = gla.Id;
+                paymentPM.GLAccountRecoMethodCode = gla.ReconcileMethodCode;
+            }
+            return gla;
+        }
+
+        void FillPaymentInvoicesFromInvoicesTransactions(ARPaymentPM paymentPM, bool isMultiCurrency)
+        {
+            bool useLocalRecoMethod = paymentPM.GLAccountRecoMethodCode == "0";
+
+            foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesLedgerTransactions)
+            {
+                ARPaymentInvoicePM payInvPM;
+                if (useLocalRecoMethod || isMultiCurrency)
+                {
+                    payInvPM = new ARPaymentInvoicePM()
+                    {
+                        ARInvoiceId = invTrans.SourceId,
+                        LocalAmount = (double)invTrans.AmountToReconcile,
+                        ForeignAmount = (double)(invTrans.AmountToReconcile / invTrans.ExchangeRate),
+                        ForeignCurrencyId = invTrans.CurrencyId
+                    };
+                }
+                else
+                {
+                    payInvPM = new ARPaymentInvoicePM()
+                    {
+                        ARInvoiceId = invTrans.SourceId,
+                        LocalAmount = Convert.ToDouble(invTrans.AmountToReconcile * invTrans.ExchangeRate),
+                        ForeignAmount = (double)invTrans.AmountToReconcile,
+                        ForeignCurrencyId = invTrans.CurrencyId
+                    };
+                }
+
+                paymentPM.PaymentInvoices.Add(payInvPM);
+            }
+        }
+
+        private void ValidateFullAccounting(ARPaymentPM _payment)
+        {
+            if (_payment.IsFullAccounting)
+            {
+                CheckLinesAmountToReconcileLimit(_payment);
+                CheckLinesAmountToReconcileTotal(_payment);
+            }
+
+        }
+
+        private void CheckLinesAmountToReconcileLimit(ARPaymentPM _payment)
+        {
+            ContactPM loggedContact = GetLoggedContactPM(_payment.Tenant);
+            bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
+
+            // Validate lines amount to reconcile
+            if (_payment.InvoicesLedgerTransactions
+                .Any(d =>
+                    d.AmountToReconcile > CalculateInvoiceAmount(d, _payment.GLAccountRecoMethodCode == "0")
+                ))
+                throw new ApplicationException(TextCodesTranslator.TranslateText("Reconciliations.O.ErrorsInSelectedLines", _payment.Tenant, showLocal));
+        }
+
+        private void CheckLinesAmountToReconcileTotal(ARPaymentPM _payment)
+        {
+
+            ContactPM loggedContact = GetLoggedContactPM(_payment.Tenant);
+            bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
+
+
+            decimal amount2reconcile = GetAmountToReconcileTotalFromPaymentInvoices(_payment);
+
+            //decimal amount2reconcile = _payment.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);
+            if (_payment.OpenAmount == null)
+            {
+                _payment.OpenAmount = 0;
+            }
+
+            if (amount2reconcile > (decimal)_payment.OpenAmount)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.O.ARP.paymentAmount2reconcileMSG", _payment.Tenant, showLocal));
+        }
+
+        private static decimal GetAmountToReconcileTotalFromPaymentInvoices(ARPaymentPM _payment)
+        {
+            bool useLocalRecoMethod = _payment.GLAccountRecoMethodCode == "0";
+            decimal amount2reconcile = 0;
+
+            if (useLocalRecoMethod)
+                amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.LocalAmount);   // amount to reconcile = Local Amount
+            else
+                amount2reconcile = (decimal)_payment.PaymentInvoices.Sum(d => d.ForeignAmount); // amount to reconcile = Foreign Amount
+            return amount2reconcile;
+        }
+
+        void UpdateFullAccountPaymentAmount(ARPaymentPM paymentPM, bool useLocalRecoMethod)
+        {
+            //
+            // update payment amount:
+            decimal amount2reconcile = paymentPM.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);
+            //paymentPM.OpenAmount
+            //    = (useLocalRecoMethod ? paymentPM.AmountInLocalCurrency : paymentPM.AmountInPaymentCurrency)
+            //       - (double) amount2reconcile;
+
+            // amount sent updated from clientt
+            //paymentPM.OpenAmount = paymentPM.OpenAmount - (double)amount2reconcile;
+
+
+            //
+            // update invoices amount
+            //foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
+            //{
+            //    //get invoice
+            //    ARInvoice invoice = GetInvoice(invTrans.SourceId, tenant);
+
+            //    //update
+            //    double? invoiceAmountDue = MethodHelper.Round((invoice.AmountDue - (double)invTrans.AmountToReconcile), 2);
+
+            //    invoice.AmountDue = invoiceAmountDue;
+            //    invoice.AmountDueInLocalCurrency = MethodHelper.Round(invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate, 2);
+            //    invoice.AmountDueInProfitCurrency = MethodHelper.Round(invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate, 2);
+
+            //    invoiceRepository.Update(invoice);
+            //}
+
+
+
+
+
+        }
+
+        public ContactPM GetLoggedContactPM(int tenant)
+        {
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
+        #endregion
     }
 }

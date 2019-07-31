@@ -67,6 +67,7 @@
                                 <table>
                                     <tr>
 
+                                        <td style="width: 120px; min-width: 120px;max-width: 120px">{{'DocumentTypeCustomField.F.Name' | TextCodeTranslationPipe}}</td>
                                         <td style="width: 120px; min-width: 120px;max-width: 120px">{{'DocumentTypeCustomField.F.FieldCode' | TextCodeTranslationPipe}}</td>
                                         <td style="width: 70px; min-width: 70px;max-width: 70px">{{'DocumentTypeCustomField.F.FieldDataTypeCode' | TextCodeTranslationPipe}}</td>
                                         <td style="width: 120px; min-width: 120px;max-width: 120px">{{'DocumentTypeCustomField.F.DefaultValue' | TextCodeTranslationPipe}}</td>
@@ -91,7 +92,10 @@
                                                         <table>
                                                             <tr style="height:25px;" (click)="SelectedDocumentTypeCustomFieldsViewModel=item" [class.RowSelected]="item === SelectedDocumentTypeCustomFieldsViewModel">
 
+                                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
+                                                                    {{item.Name}}
 
+                                                                </td>
 
                                                                 <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; position: relative;">
                                                                     {{item.FieldCode}}

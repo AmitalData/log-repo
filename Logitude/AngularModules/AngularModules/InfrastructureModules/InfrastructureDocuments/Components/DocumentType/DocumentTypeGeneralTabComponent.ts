@@ -54,10 +54,11 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
 
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, public entityArgs: EntityArgs, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService) {
         super();
         this.myForm = fb.group({});
-       SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+       this.CurrentSession.StartBusyIndicatorLoading();
     }
 
     ngOnInit() {
@@ -354,7 +355,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
                 }
             }
             this.IsLoadTemplate = true;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
 
         });

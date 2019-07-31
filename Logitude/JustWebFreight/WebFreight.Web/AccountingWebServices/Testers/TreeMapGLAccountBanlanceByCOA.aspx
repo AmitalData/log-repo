@@ -112,6 +112,7 @@
 
         
         $(document).ready(function () {
+            ///alert(222);
             var listChartOfAccountBalanceM = JSON.parse(myJson);
             DrawTable("#myTreeMap", listChartOfAccountBalanceM);///Must $(document).ready(function () {
         });

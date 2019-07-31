@@ -184,6 +184,31 @@ export class BankAccountPM {
     public set TransferGLAcccountEnglishName(newValue: string) { if (this.transferGLAcccountEnglishName != newValue) { this.transferGLAcccountEnglishName = newValue; this.MarkAsDirty("TransferGLAcccountEnglishName"); } }
        
 	 
+    private isBankPageEvent: boolean;
+    public get IsBankPageEvent() { return this.isBankPageEvent; }
+    public set IsBankPageEvent(newValue: boolean) { if (this.isBankPageEvent != newValue) { this.isBankPageEvent = newValue; this.MarkAsDirty("IsBankPageEvent"); } }
+       
+	 
+    private currencyId: string;
+    public get CurrencyId() { return this.currencyId; }
+    public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
+       
+	 
+    private currencyName: string;
+    public get CurrencyName() { return this.currencyName; }
+    public set CurrencyName(newValue: string) { if (this.currencyName != newValue) { this.currencyName = newValue; this.MarkAsDirty("CurrencyName"); } }
+       
+	 
+    private currencyCode: string;
+    public get CurrencyCode() { return this.currencyCode; }
+    public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
+       
+	 
+    private currencySign: string;
+    public get CurrencySign() { return this.currencySign; }
+    public set CurrencySign(newValue: string) { if (this.currencySign != newValue) { this.currencySign = newValue; this.MarkAsDirty("CurrencySign"); } }
+       
+	 
 
     public OldEntityPM: BankAccountPM;
 		

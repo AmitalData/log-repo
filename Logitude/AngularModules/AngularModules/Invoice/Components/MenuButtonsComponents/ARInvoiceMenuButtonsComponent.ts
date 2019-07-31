@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {ARInvoicePM} from '../../EntityPMs/ARInvoicePM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -24,7 +24,7 @@ export class ARInvoiceMenuButtonsComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public isRTL: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -104,7 +104,7 @@ export class ARInvoiceMenuButtonsComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -126,12 +126,12 @@ export class ARInvoiceMenuButtonsComponent extends BaseComponent {
         if (errors.length == 0) {
 
             if (this.EventCode == "AutoCreditManualNumber") {
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
 
                 var myService = new InvoiceDomainService();
                 myService.IsARInvoiceNumberExists(this.ManualNumber).subscribe((myResponse: ServiceResponse) => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (!myResponse.HasError) {
                         var isExists: boolean = myResponse.Result;
@@ -141,14 +141,14 @@ export class ARInvoiceMenuButtonsComponent extends BaseComponent {
                         }
 
                         else {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
                     }
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
             }
         }
     }

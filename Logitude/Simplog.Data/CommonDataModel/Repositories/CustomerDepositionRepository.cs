@@ -114,6 +114,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from a in context.CustomerDepositions where a.CustomsShipperId == customsShipperId && a.DepositionNumber == depositionNumber && a.Tenant == tenant select a).FirstOrDefault();
         }
 
+
+
+          public CustomerDeposition GetValidityCustomerDepositionByCustomsShipperId(string customsShipperId, int tenant)
+        {
+            return (from a in context.CustomerDepositions where a.CustomsShipperId == customsShipperId &&  a.Tenant == tenant select a).OrderByDescending(d=>d.ValidityEndDate).FirstOrDefault();
+        }
+
+
+
     }
 }
 

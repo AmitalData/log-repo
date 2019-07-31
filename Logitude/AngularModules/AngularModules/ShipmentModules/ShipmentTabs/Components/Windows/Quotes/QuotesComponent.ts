@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -26,6 +26,7 @@ export class QuotesComponent {
     public ItemsSource: QuoteItem[] = [];
     public IsNoData: boolean = false;
     private myService: QuoteListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myService = new QuoteListService();        
     }
@@ -44,6 +45,15 @@ export class QuotesComponent {
         }
     }
 
+    private isShowingUsedSpotRateQuotes: boolean = false;
+    get IsShowingUsedSpotRateQuotes() { return this.isShowingUsedSpotRateQuotes; }
+    set IsShowingUsedSpotRateQuotes(value: boolean) {
+        if (this.isShowingUsedSpotRateQuotes != value) {
+            this.isShowingUsedSpotRateQuotes = value;
+            this.LoadData();
+        }
+    }
+
     private isGeneratePayables: boolean = true;
     get IsGeneratePayables() { return this.isGeneratePayables; }
     set IsGeneratePayables(value: boolean) {
@@ -53,8 +63,8 @@ export class QuotesComponent {
     }
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.IsNoData = false;
         this.ItemsSource = [];        
         this.BaseQuote = null;
         this.SelectedItem = null;
@@ -71,6 +81,7 @@ export class QuotesComponent {
         filters.addAdditionalFilter("CustomerId", this.EntityPM.CustomerId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("FromPortId", this.EntityPM.MainCarriageFromPortId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("ToPortId", this.EntityPM.MainCarriageFinalDestinationPortId, null, null, "StartsWith", false, false, false, "string");
+        filters.addAdditionalFilter("IsShowingUsedSpotRateQuotes", this.IsShowingUsedSpotRateQuotes, null, null, "Equals", true, false, false, "Boolean");
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.AgentId)) {
             filters.addAdditionalFilter("RoutingRatesAgentId", this.EntityPM.AgentId, null, null, "StartsWith", true, false, false, "string");
@@ -100,7 +111,7 @@ export class QuotesComponent {
                 }
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -128,7 +139,7 @@ export class QuotesComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     GenerateButtonClicked() {
@@ -148,12 +159,12 @@ export class QuotesComponent {
     LoadQuotePM(QuoteId: string) {
         if (!AppTool.IsNullOrEmpty(QuoteId)) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             var myService = new QuotePMService();
             myService.get(QuoteId).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -164,7 +175,7 @@ export class QuotesComponent {
                     }
 
                     else {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }
             });
@@ -184,7 +195,7 @@ export class QuotesComponent {
                 Generator.GeneratePayablesFromQuote(this.BaseQuote);                
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 }
@@ -208,6 +219,8 @@ class QuoteItem {
     get CarrierName() { return this.Entity.CarrierName; }
     get ChargeableWeight() { return this.Entity.ChargeableWeight; }
     get GrossWeight() { return this.Entity.GrossWeight; }
+    get UsageCount() { return this.Entity.UsageCount == 0 ? null : this.Entity.UsageCount; }
+
     get Notes() { return this.Entity.Notes; }
 
     public WeightDiffernece: number = 0;

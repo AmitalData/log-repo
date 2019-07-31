@@ -18,6 +18,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Data.Entity.Core;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.ShipmentsModel;
 
 namespace Logitude.BL.QuoteModel.Tools.Validating
 {
@@ -39,7 +40,6 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 ValidateToPort(entityPM);
             }
 
-
             if (isNewEntity)
             {
                 ValidateProductTypePermission(entityPM);
@@ -57,8 +57,24 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
             ValidateAirlineRestriction(entityPM);
             ValidateMultiVatPercentages(entityPM, myCommonContext);
+            ValidateConvertQuote(entityPM);
+            ValidateFCLDuplicatedPackages(entityPM);
+            ValidateDomesticQuote(entityPM);
         }
 
+        private static void ValidateConvertQuote(QuotePM entityPM)
+        {
+            if (entityPM.ConvertToLCL || entityPM.ConvertToFCL)
+            {
+                IShipmentsContext MyContext = ShipmentsContext.GetContext(entityPM.Tenant);
+                bool ExistConnectedShipments = MyContext.Shipments.Where(p => p.Tenant == entityPM.Tenant && p.QuoteId == entityPM.Id).FirstOrDefault() != null;
+                if (ExistConnectedShipments)
+                {
+                    throw new ApplicationException("Cannot change quote type when connected to shipments");
+                }
+
+            }
+        }
         private static void ValidateAirlineRestriction(QuotePM entityPM)
         {
             if (entityPM.TransportModeId == "A")
@@ -270,6 +286,166 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 }
             }
         }
+        private static void ValidateFCLDuplicatedPackages(QuotePM entityPM)
+        {
+            bool isFCLQuote = false;
 
+            if (entityPM.TransportModeId != null)
+            {
+                entityPM.TransportModeId = entityPM.TransportModeId.ToUpper();
+            }
+
+            if (entityPM.ShipmentTypeId != null)
+            {
+                entityPM.ShipmentTypeId = entityPM.ShipmentTypeId.ToUpper();
+            }
+
+            if (entityPM.TransportModeId == "O" && (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "MYGO"))
+            {
+                isFCLQuote = true;
+            }
+
+            else if (entityPM.TransportModeId == "I" && (entityPM.ShipmentTypeId == "FTL" || entityPM.ShipmentTypeId == "MYGI"))
+            {
+                isFCLQuote = true;
+            }
+
+            if (isFCLQuote)
+            {
+                List<string> list = new List<string>();
+
+                if (!string.IsNullOrEmpty(entityPM.PackageType1Id))
+                {
+                    list.Add(entityPM.PackageType1Id);
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.PackageType2Id))
+                {
+                    list.Add(entityPM.PackageType2Id);
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.PackageType3Id))
+                {
+                    list.Add(entityPM.PackageType3Id);
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.PackageType4Id))
+                {
+                    list.Add(entityPM.PackageType4Id);
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.PackageType5Id))
+                {
+                    list.Add(entityPM.PackageType5Id);
+                }
+
+                var listGroup = (from d in list
+                                 group d by d into g
+                                 select new
+                                 {
+                                     PackageTypeId = g,
+                                     Count = g.Count(),
+                                 }).ToList();
+
+                if (listGroup.Where(d => d.Count > 1).Any())
+                {
+                    throw new ApplicationException("Cannot add the same container type twice. You can adjust the QTY for one of them");
+                }
+            }
+        }
+        private static void ValidateDomesticQuote(QuotePM entityPM)
+        {
+            if (entityPM.DirectionId.ToUpper() == "D")
+            {
+                bool isInlandDomestic = entityPM.TransportModeId.ToUpper() == "I" && entityPM.DirectionId == "D" ? true : false;
+
+                if (isInlandDomestic)
+                {
+                    List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
+                    AddDomesticAddress(iDomesticCountries, entityPM.FromPartnerAddressId, entityPM.Tenant);
+                    AddDomesticAddress(iDomesticCountries, entityPM.ToPartnerAddressId, entityPM.Tenant);
+
+                    if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
+                    {
+                        bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
+                        bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+
+                        if (!isAllPortsEC && !isAllPortsNA)
+                        {
+                            throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
+                        }
+                    }
+                }
+                else
+                {
+                    List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
+                    AddDomesticPort(iDomesticCountries, entityPM.FromPortId, entityPM.Tenant);
+                    AddDomesticPort(iDomesticCountries, entityPM.ToPortId, entityPM.Tenant);
+   
+                    if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
+                    {
+                        bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
+                        bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+
+                        if (!isAllPortsEC && !isAllPortsNA)
+                        {
+                            throw new ApplicationException("All Ports must be in the same country since the direction is Domestic");
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iPortId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iPortId).Any())
+                {
+                    PortPM iPort = PortQuery.GetSinglePort(iTenant, iPortId, true);
+
+                    if (iPort != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iPort.Id,
+                            CountryId = iPort.CountryId,
+                            CountryIsEC = iPort.CountryEC,
+                            CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
+                        });
+                    }
+                }
+            }
+        }
+        private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iAddressId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iAddressId).Any())
+                {
+                    AddressRepository addressRepository = new AddressRepository(iTenant);
+                    Address iAddress = addressRepository.GetSingleAddress(iAddressId, iTenant);
+
+                    if (iAddress != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iAddress.Id,
+                            CountryId = iAddress.CountryId,
+                            CountryIsEC = iAddress.Country.EC,
+                            CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    public class DomesticCountry
+    {
+        public string Id { get; set; }
+        public string CountryId { get; set; }
+        public bool CountryIsEC { get; set; }
+        public bool CountryIsNorthAmerica { get; set; }
     }
 }

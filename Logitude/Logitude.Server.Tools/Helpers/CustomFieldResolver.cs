@@ -145,8 +145,15 @@ namespace Logitude.BL.Helpers
 
                                 definedObjects.Add(insideTypePath, insideEntityRepository);
                             }
-
-                            MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
+                            MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
+                            if (insideMethodInfo == null)
+                            {
+                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM"); 
+                            }
+                            if (insideMethodInfo == null)
+                            {
+                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingle");
+                            }
                             object insideEntity = null;
 
                             if (insideMethodInfo != null)
@@ -403,7 +410,12 @@ namespace Logitude.BL.Helpers
                                 definedObjects.Add(insideTypePath, insideEntityRepository);
                             }
 
-                            MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
+                            MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
+                            
+                            if (insideMethodInfo == null)
+                            {
+                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
+                            }
                             if (insideMethodInfo == null)
                             {
                                 insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingle");

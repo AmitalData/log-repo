@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 
 import {Component, OnInit, Output}  from '@angular/core';
@@ -33,6 +33,7 @@ export class ReportsTemplateRestoreComponent implements OnInit {
     ReportsTemplatesVersionLists: ReportsTemplateRestoreItem[] = [];
     ReportsTemplatePM: ReportsTemplatePM;
     RestoreButtonLable: string = "Restore";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.reportsTemplatePMService = new ReportsTemplatePMService();
         this.reportsTemplatesVersionListExtendedService = new ReportsTemplatesVersionListExtendedService();
@@ -79,11 +80,11 @@ export class ReportsTemplateRestoreComponent implements OnInit {
 
 
     Restore(item: ReportsTemplateRestoreItem) {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.reportsTemplatesVersionPMExtendedService.GetRestoreReportsTemplatesVersion(item.Id, SessionLocator.LoggedUserId).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {
@@ -91,7 +92,7 @@ export class ReportsTemplateRestoreComponent implements OnInit {
                         this.DataViewModel.IsChange = true;
                         this.DataViewModel.Refresh();
                     }
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             }
 
@@ -132,7 +133,7 @@ export class ReportsTemplateRestoreComponent implements OnInit {
 
     LoadReportsTemplatesVersionLists() {
         this.ReportsTemplatesVersionLists = [];
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.reportsTemplatesVersionListExtendedService.getReportsTemplatesVersionListsByReportTemplateId(this.ReportsTemplatePM.Id).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -151,7 +152,7 @@ export class ReportsTemplateRestoreComponent implements OnInit {
                 }
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
 
         });
@@ -161,7 +162,7 @@ export class ReportsTemplateRestoreComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     //MouseEvent

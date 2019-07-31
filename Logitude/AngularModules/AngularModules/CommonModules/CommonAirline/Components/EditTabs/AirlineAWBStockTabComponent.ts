@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AirlinePM} from '../../../../Common/EntityPMs/AirlinePM';
 import {MAWBStackPM} from '../../../../Common/EntityPMs/MAWBStackPM';
@@ -25,6 +25,7 @@ export class AirlineAWBStockTabComponent {
     public IsVisibile: boolean = false;
     private StackDomainService: AWBStackDomainService;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         this._entityResourceService.getEntityResourceByTableName("MAWBStack", 0).subscribe(response=> {
             this.IsVisibile = true;
@@ -35,7 +36,7 @@ export class AirlineAWBStockTabComponent {
     }
 
     private LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.SelectedItem = null;
 
@@ -44,7 +45,7 @@ export class AirlineAWBStockTabComponent {
                 this.BuildItemsSource(myResponse.Result);
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     private BuildItemsSource(items: MAWBStackPM[]) {
@@ -145,11 +146,11 @@ export class AirlineAWBStockTabComponent {
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
 
-                        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                        this.CurrentSession.StartBusyIndicatorSaving();
 
                         this.StackDomainService.DeleteMAWBStacksOperation(this.SelectedItem.Id, this.SelectedItem.AirlineId, isDeletingSeries).subscribe((myResponse: ServiceResponse) => {
 
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
 
                             if (myResponse != null) {
                                 if (myResponse.HasError) {

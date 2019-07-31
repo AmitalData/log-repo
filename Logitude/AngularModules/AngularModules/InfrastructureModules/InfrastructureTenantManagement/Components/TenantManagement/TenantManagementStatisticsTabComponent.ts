@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -19,6 +19,7 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
     public DataContext: TenantManagementStatisticsTabComponent = this;
     public ObjectTableName: string = "TenantManagement";
     public EntityPM: TenantManagementPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -261,7 +262,7 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
 
 
     RefreshClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Refreshing....");
+        this.CurrentSession.StartBusyIndicator("Refreshing....");
         var service: TenantManagementPMService = new TenantManagementPMService();
         service.get(this.EntityPM.Id).subscribe((response:ServiceResponse) => {
             if (!response.HasError) {
@@ -272,7 +273,7 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
                 }
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 

@@ -15,7 +15,7 @@ export class ReconcileExternalPageExtendedListService {
 
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPages';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPagesExtended';
     }
 
 
@@ -30,7 +30,7 @@ export class ReconcileExternalPageExtendedListService {
         // Parse Filters into URI
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
-        var callTime = new Date(); 
+        var callTime = new Date();
         for (var i in mykeys) {
             var propName = mykeys[i];
             var propValue = filters[propName];
@@ -54,7 +54,7 @@ export class ReconcileExternalPageExtendedListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
         // End Parse
-       
+
 
         var callUrl = url.concat(urlparameters);
 
@@ -76,7 +76,7 @@ export class ReconcileExternalPageExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        var params: string = ""; 
+        var params: string = "";
         for (var id of Ids) {
             params += "Ids[]=" + id + "&";
         }

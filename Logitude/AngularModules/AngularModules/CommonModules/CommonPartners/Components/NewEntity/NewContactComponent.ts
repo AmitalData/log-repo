@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ContactPM} from '../../../../Common/EntityPMs/ContactPM';
 import {ContactPMService} from '../../../../Common/Services/StandardPMs/ContactPMService';
@@ -16,6 +16,7 @@ export class NewContactComponent {
     public ValidationErrorsList: string[] = [];
     private myService: ContactPMService;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.EntityPM = new ContactPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
@@ -78,21 +79,21 @@ export class NewContactComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
+        this.CurrentSession.CloseCurrentWindowEmit('cancel');
     }
 
     OkButtonClicked() {
         this.ValidationErrorsList = this.ContactTemplate.Validate();
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                    this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                 }
 
                 else {

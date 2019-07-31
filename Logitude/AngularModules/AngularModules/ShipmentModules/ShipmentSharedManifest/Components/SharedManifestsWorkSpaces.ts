@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -41,14 +41,14 @@ export class SharedManifestsWorkSpaces extends BaseComponent {
     AgentSharedManifestsInlandVisibility: boolean = false;
 
     public SharedManinfestInDashboardId: string = "SharedManinfestDashboardId_";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedAgentManifestService: SharedAgentManifestService) {
         super();
         if (FeatureLocator.HasFeaturePermession("AgentSharedDocument", "NEW")) {
             this.IsShareDocumentsButtonVisible = true;
         }
 
-        this.SharedManinfestInDashboardId = this.SharedManinfestInDashboardId + SessionLocator.CurrentSession.GetChartId();
+        this.SharedManinfestInDashboardId = this.SharedManinfestInDashboardId + this.CurrentSession.GetChartId();
 
 
     }
@@ -147,11 +147,11 @@ export class SharedManifestsWorkSpaces extends BaseComponent {
             listArgs.ObjectTableName = "AgentSharedManifest";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = "Shared Manifests";
-            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/ListComponent/ListComponent", SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/ListComponent/ListComponent", this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllData());
 
                 });
@@ -531,11 +531,11 @@ export class SharedManifestsWorkSpaces extends BaseComponent {
                 listArgs.ObjectTableName = "AgentSharedManifest";
                 listArgs.DisplayTitle = displayTitle;
                 listArgs.BackButtonTitle = "Shared Manifests";
-                SessionLocator.DynamicLoader.Load("./Infrastructure/Components/ListComponent/ListComponent", SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load("./Infrastructure/Components/ListComponent/ListComponent", this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllData());
 
                     });

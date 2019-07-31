@@ -36,7 +36,7 @@ export class DocumentsPanelComponent {
     private _CustomDocumentViewerService: CustomDocumentViewerService = new CustomDocumentViewerService();
     private custDocsMetadataWebService: CustDocMetaDataValuesWebService = new CustDocMetaDataValuesWebService();
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         var counter = ControlsIdCounter.GetNextControlIdCounter("DocumentListWrapperId");
         this.DocumentListWrapperId = "DocumentListWrapperId" + counter;
@@ -60,13 +60,13 @@ export class DocumentsPanelComponent {
     public RelatedDocuments: RelatedDocumentViewModel[];
 
     LoadDocuments() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
 
         this.custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this.EntityPM.Id, null, objecttable.Id, "I", this.EntityPM.CustomFileNo, this.DocumentFilterSelectedValue)
             .subscribe((response: ServiceResponse) => {
                 console.log("[response] GetDocumentsFilingsForRelatedDocuments:", response);
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!AppTool.IsNullOrEmpty(response)) {
 

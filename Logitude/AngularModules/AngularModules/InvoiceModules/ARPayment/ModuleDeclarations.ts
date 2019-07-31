@@ -1,11 +1,12 @@
 ﻿import {NewARPaymentComponent} from './Components/NewEntity/NewARPaymentComponent';
+import {ARPaymentGeneralTabComponent} from './Components/EditTabs/ARPaymentGeneralTabComponent';
 import {ARPaymentDetailsTabComponent} from './Components/EditTabs/ARPaymentDetailsTabComponent';
 import {ARPaymentDocsInTabComponent} from './Components/EditTabs/ARPaymentDocsInTabComponent';
 import {ARPaymentDocsOutTabComponent} from './Components/EditTabs/ARPaymentDocsOutTabComponent';
 import {ARPaymentTransferTabComponent} from './Components/EditTabs/ARPaymentTransferTabComponent';
 import {ARPaymentTransferTemplate} from './Components/NewEntity/ARPaymentTransferTemplate';
 import {EditMultiCurrency} from './Components/EditTabs/EditMultiCurrency';
-import {ARPaymentGeneralTabComponent} from './Components/EditTabs/ARPaymentGeneralTabComponent';
+import {ARPaymentDetailsFullAccountingTab} from './Components/EditTabs/ARPaymentDetailsFullAccountingTab';
 
 export const Components =
     [
@@ -17,6 +18,7 @@ export const Components =
         ARPaymentTransferTemplate,
         EditMultiCurrency,
         ARPaymentGeneralTabComponent,
+        ARPaymentDetailsFullAccountingTab,
     ];
 
 export class ModuleDeclarations {
@@ -32,7 +34,8 @@ export class ModuleDeclarations {
             case "ARPaymentTransferTabComponent": { myResult = ARPaymentTransferTabComponent; break; }
             case "ARPaymentTransferTemplate": { myResult = ARPaymentTransferTemplate; break; }
             case "EditMultiCurrency": { myResult = EditMultiCurrency; break; }
-            case "ARPaymentGeneralTabComponent": { myResult = ARPaymentGeneralTabComponent; break; } 
+            case "ARPaymentGeneralTabComponent": { myResult = ARPaymentGeneralTabComponent; break; }
+            case "ARPaymentDetailsFullAccountingTab": { myResult = ARPaymentDetailsFullAccountingTab; break; }
         }
 
         return myResult;

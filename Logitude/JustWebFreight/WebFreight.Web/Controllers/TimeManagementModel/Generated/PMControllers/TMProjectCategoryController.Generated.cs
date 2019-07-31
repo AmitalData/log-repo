@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TMProjectCategory", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TMProjectCategory", entityPM.Tenant, authToken.Tenant);
 	                    
                         ITimeManagementContext MyContext = TimeManagementContext.GetContext(entityPM.Tenant);
                         TMProjectCategoryUpdateService service = new TMProjectCategoryUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -141,6 +142,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TMProjectCategory", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TMProjectCategory", entityPM.Tenant, authToken.Tenant);
 	
                         ITimeManagementContext MyContext = TimeManagementContext.GetContext(entityPM.Tenant);
                         TMProjectCategoryUpdateService service = new TMProjectCategoryUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

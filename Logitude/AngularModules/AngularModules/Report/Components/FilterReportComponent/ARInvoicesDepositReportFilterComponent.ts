@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -103,16 +103,17 @@ export class ARInvoicesDepositReportFilterComponent extends BaseComponent   {
 
 
     public DataContext: ARInvoicesDepositReportFilterComponent = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.LocalCurrency = "Local_-1_-1";
             this.InvoiceCurrency = "Invoice_-1_-1";
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("RadioButton");
+            var idIndex = this.CurrentSession.GetNewId("RadioButton");
 
             this.LocalCurrency = "Local_" + idIndex;
             this.InvoiceCurrency = "Invoice_" + idIndex;

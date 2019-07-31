@@ -27,215 +27,215 @@ using Path = System.IO.Path;
 
 namespace MetaDataGenerator
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
-
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(TableName.Text) && cmbModels.SelectedItem == null)
-            {
-                MessageBox.Show("Please Fill Object Table Name or Model Name.");
-                return;
-            }
-            List<ObjectTable> tables = new List<ObjectTable>();
-            ObjectFieldRepository rep = new ObjectFieldRepository(0);
-            if (cmbModels.SelectedItem == null)
-            {
-                tables = (from a in rep.context.ObjectTables
-                          where !a.Name.Contains(".Customs")
-                          && a.Name == TableName.Text
-                          select a).ToList();
-            }
-            else
-            {
-                string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-                DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
-                string solutionDirectory = solutionDir.FullName;
-
-                string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles\"; //@"C:\LogitudeWorld\main\Logitude.MetaData\EntityFiles\";
-                DirectoryInfo d = new DirectoryInfo(dir);
-
-                string infradir = dir + "InfrastructureModel";
-                d = new DirectoryInfo(infradir);
-                string[] infraFiles = d.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-
-                string globaldir = dir + "GlobalModel";
-                d = new DirectoryInfo(globaldir);
-                string[] globalFiles = d.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-
-                string commdir = dir + "CommonDataModel";
-                d = new DirectoryInfo(commdir);
-                string[] commFiles = d.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-
-
-
-                string modelName = cmbModels.SelectionBoxItem.ToString();
-                switch (modelName)
-                {
-                    case "Shipment":
-                        tables = (from a in rep.context.ObjectTables
-                                  where !a.Name.Contains(".Customs")
-                                  && a.ClientModuleName == modelName || (a.Name == "AWBOCI") || (a.Name == "CommodityPackage")
-                                  || (a.Name == "FBLStock") || (a.Name == "InsideShipmentPackage") || (a.Name == "ShipmentAWBPrintOnly")
-                                  || (a.Name == "ShipmentCommodity") || (a.Name == "ShipmentPackage") || (a.Name == "ShipmentPayable")
-                                  || (a.Name == "ShipmentReceivable")
-                                  select a).ToList();
-                        break;
-                    case "Quote":
-                        tables = (from a in rep.context.ObjectTables
-                                  where !a.Name.Contains(".Customs")
-                                  && a.ClientModuleName == modelName || (a.Name == "MarkUpType")
-                                  select a).ToList();
-                        break;
-                    case "Invoice":
-                        tables = (from a in rep.context.ObjectTables
-                                  where !a.Name.Contains(".Customs")
-                                  && a.ClientModuleName == modelName || (a.Name == "AccountingSystemsSetting") || (a.Name == "AccountingSystemsSyncStatus")
-                                  select a).ToList();
-                        break;
-                    case "Common":
-
-                        tables = (from a in rep.context.ObjectTables
-                                  where !a.Name.Contains(".Customs")
-                                  && a.ClientModuleName == modelName || (commFiles.Contains(a.Name))
-                                  select a).ToList();
-
-                        break;
-
-                    case "Infrastructure":
-                        tables = (from a in rep.context.ObjectTables
-                                  where (!a.Name.Contains(".Customs")
-                                  && (a.ClientModuleName == modelName || (infraFiles.Contains(a.Name))) && !globalFiles.Contains(a.Name) && !commFiles.Contains(a.Name)
-                                  ) || a.Name == "General"
-                                  select a).ToList();
-                        break;
-
-                    case "Global":
-                        tables = (from a in rep.context.ObjectTables
-                                  where !a.Name.Contains(".Customs")
-                                  && globalFiles.Contains(a.Name)
-                                  select a).ToList();
-
-                        break;
-                    default:
-                        tables = (from a in rep.context.ObjectTables
-                                  where !a.Name.Contains(".Customs")
-                                  && a.ClientModuleName == modelName
-                                  select a).ToList();
-                        break;
-
-                        //
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : Window
+	{
+		public MainWindow()
+		{
+			InitializeComponent();
+
+		}
+
+		private void Button_Click_1(object sender, RoutedEventArgs e)
+		{
+			if (string.IsNullOrEmpty(TableName.Text) && cmbModels.SelectedItem == null)
+			{
+				MessageBox.Show("Please Fill Object Table Name or Model Name.");
+				return;
+			}
+			List<ObjectTable> tables = new List<ObjectTable>();
+			ObjectFieldRepository rep = new ObjectFieldRepository(0);
+			if (cmbModels.SelectedItem == null)
+			{
+				tables = (from a in rep.context.ObjectTables
+						  where !a.Name.Contains(".Customs")
+						  && a.Name == TableName.Text
+						  select a).ToList();
+			}
+			else
+			{
+				string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+				DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+				string solutionDirectory = solutionDir.FullName;
+
+				string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles\"; //@"C:\LogitudeWorld\main\Logitude.MetaData\EntityFiles\";
+				DirectoryInfo d = new DirectoryInfo(dir);
+
+				string infradir = dir + "InfrastructureModel";
+				d = new DirectoryInfo(infradir);
+				string[] infraFiles = d.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+
+				string globaldir = dir + "GlobalModel";
+				d = new DirectoryInfo(globaldir);
+				string[] globalFiles = d.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+
+				string commdir = dir + "CommonDataModel";
+				d = new DirectoryInfo(commdir);
+				string[] commFiles = d.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+
+
+
+				string modelName = cmbModels.SelectionBoxItem.ToString();
+				switch (modelName)
+				{
+					case "Shipment":
+						tables = (from a in rep.context.ObjectTables
+								  where !a.Name.Contains(".Customs")
+								  && a.ClientModuleName == modelName || (a.Name == "AWBOCI") || (a.Name == "CommodityPackage")
+								  || (a.Name == "FBLStock") || (a.Name == "InsideShipmentPackage") || (a.Name == "ShipmentAWBPrintOnly")
+								  || (a.Name == "ShipmentCommodity") || (a.Name == "ShipmentPackage") || (a.Name == "ShipmentPayable")
+								  || (a.Name == "ShipmentReceivable")
+								  select a).ToList();
+						break;
+					case "Quote":
+						tables = (from a in rep.context.ObjectTables
+								  where !a.Name.Contains(".Customs")
+								  && a.ClientModuleName == modelName || (a.Name == "MarkUpType")
+								  select a).ToList();
+						break;
+					case "Invoice":
+						tables = (from a in rep.context.ObjectTables
+								  where !a.Name.Contains(".Customs")
+								  && a.ClientModuleName == modelName || (a.Name == "AccountingSystemsSetting") || (a.Name == "AccountingSystemsSyncStatus")
+								  select a).ToList();
+						break;
+					case "Common":
+
+						tables = (from a in rep.context.ObjectTables
+								  where !a.Name.Contains(".Customs")
+								  && a.ClientModuleName == modelName || (commFiles.Contains(a.Name))
+								  select a).ToList();
+
+						break;
+
+					case "Infrastructure":
+						tables = (from a in rep.context.ObjectTables
+								  where (!a.Name.Contains(".Customs")
+								  && (a.ClientModuleName == modelName || (infraFiles.Contains(a.Name))) && !globalFiles.Contains(a.Name) && !commFiles.Contains(a.Name)
+								  ) || a.Name == "General"
+								  select a).ToList();
+						break;
+
+					case "Global":
+						tables = (from a in rep.context.ObjectTables
+								  where !a.Name.Contains(".Customs")
+								  && globalFiles.Contains(a.Name)
+								  select a).ToList();
+
+						break;
+					default:
+						tables = (from a in rep.context.ObjectTables
+								  where !a.Name.Contains(".Customs")
+								  && a.ClientModuleName == modelName
+								  select a).ToList();
+						break;
+
+						//
 
-                }
+				}
 
-            }
+			}
 
-            string error = "";
-            DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
-            foreach (ObjectTable table in tables)
-            {
-                //List<ObjectField> fields = (from a in allFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
-                //                            where a.ObjectTableId == table.Id
-                //                            select a).ToList();
+			string error = "";
+			DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
+			foreach (ObjectTable table in tables)
+			{
+				//List<ObjectField> fields = (from a in allFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
+				//                            where a.ObjectTableId == table.Id
+				//                            select a).ToList();
 
-                if (table.Name == "DescriptionOfGood")
-                {
-                    table.Name = "DescriptionOfGoods";
-                    table.DBTableName = "DescriptionOfGoods";
-                }
+				if (table.Name == "DescriptionOfGood")
+				{
+					table.Name = "DescriptionOfGoods";
+					table.DBTableName = "DescriptionOfGoods";
+				}
 
-                //List<TextCode> tableTextCodes = allTextCodes.Where(t => t.ObjectTableId == table.Id).ToList();
+				//List<TextCode> tableTextCodes = allTextCodes.Where(t => t.ObjectTableId == table.Id).ToList();
 
-                bool success = dbToXmlGeneratorFrom.GenerateNewEntityLXML(table);//, fields, tableTextCodes);
-                if (!success)
-                    error += (table.Name + " not generated!" + Environment.NewLine);
-            }
-            if (string.IsNullOrEmpty(error))
-                MessageBox.Show("Export completed successfully");
-            else
-            {
-                MessageBox.Show(error);
-            }
-        }
+				bool success = dbToXmlGeneratorFrom.GenerateNewEntityLXML(table);//, fields, tableTextCodes);
+				if (!success)
+					error += (table.Name + " not generated!" + Environment.NewLine);
+			}
+			if (string.IsNullOrEmpty(error))
+				MessageBox.Show("Export completed successfully");
+			else
+			{
+				MessageBox.Show(error);
+			}
+		}
 
-        private void btnUpdateModelLXMLs_Click(object sender, RoutedEventArgs e)
-        {
+		private void btnUpdateModelLXMLs_Click(object sender, RoutedEventArgs e)
+		{
 
 
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 
-                if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
-                {
-                    List<ObjectTable> tables = new List<ObjectTable>();
-                    ObjectFieldRepository rep = new ObjectFieldRepository(0);
+				if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+				{
+					List<ObjectTable> tables = new List<ObjectTable>();
+					ObjectFieldRepository rep = new ObjectFieldRepository(0);
 
-                    DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
-                    string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-
-                    tables = (from a in rep.context.ObjectTables
-                              where allFiles.Contains(a.Name)
-                              select a).OrderBy(t => t.Name).ToList();
+					DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
+					string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+
+					tables = (from a in rep.context.ObjectTables
+							  where allFiles.Contains(a.Name)
+							  select a).OrderBy(t => t.Name).ToList();
 
-                    DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
-                    dbToXmlGeneratorFrom.AppendExistingModelEntityLXMLs(tables, dialog.SelectedPath);
-                    MessageBox.Show("Export completed successfully");
+					DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
+					dbToXmlGeneratorFrom.AppendExistingModelEntityLXMLs(tables, dialog.SelectedPath);
+					MessageBox.Show("Export completed successfully");
 
-                }
-            }
-        }
+				}
+			}
+		}
 
-        private void btnUpdate_Old_ModelLXMLs_Click(object sender, RoutedEventArgs e)
-        {
+		private void btnUpdate_Old_ModelLXMLs_Click(object sender, RoutedEventArgs e)
+		{
 
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-                DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
-                string solutionDirectory = solutionDir.FullName;
+			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+				DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+				string solutionDirectory = solutionDir.FullName;
 
-                string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
-                dialog.SelectedPath = dir;
+				string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
+				dialog.SelectedPath = dir;
 
-                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 
-                if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
-                {
-                    List<ObjectTable> tables = new List<ObjectTable>();
-                    ObjectFieldRepository rep = new ObjectFieldRepository(0);
+				if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+				{
+					List<ObjectTable> tables = new List<ObjectTable>();
+					ObjectFieldRepository rep = new ObjectFieldRepository(0);
 
-                    DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
-                    string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+					DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
+					string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
 
-                    tables = (from a in rep.context.ObjectTables
-                              where allFiles.Contains(a.Name)
-                              select a).OrderBy(t => t.Name).ToList();
+					tables = (from a in rep.context.ObjectTables
+							  where allFiles.Contains(a.Name)
+							  select a).OrderBy(t => t.Name).ToList();
 
-                    string errors = "";
-                    DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
-                    dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs(tables, dialog.SelectedPath, ref errors);
+					string errors = "";
+					DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
+					dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs(tables, dialog.SelectedPath, ref errors);
 
-                    if (string.IsNullOrEmpty(errors))
-                        MessageBox.Show("Export completed successfully");
-                    else
-                    {
-                        MessageBox.Show(errors);
-                    }
+					if (string.IsNullOrEmpty(errors))
+						MessageBox.Show("Export completed successfully");
+					else
+					{
+						MessageBox.Show(errors);
+					}
 
 
 
-                }
-            }
-        }
+				}
+			}
+		}
 
 
 
@@ -243,87 +243,112 @@ namespace MetaDataGenerator
 
 
 
-        private void BtnRegenerateTag_Click(object sender, RoutedEventArgs e)
-        {
-            if (cmbMetaTagName.SelectionBoxItem != null)
-            {
-                string tagName = cmbMetaTagName.SelectionBoxItem.ToString().ToLower();
-                GenerateLXMLItems(tagName);
-            }
-            else
-            {
-                MessageBox.Show("Select a tag to regenerate!");
-            }
-        }
+		private void BtnRegenerateTag_Click(object sender, RoutedEventArgs e)
+		{
+			if (cmbMetaTagName.SelectionBoxItem != null)
+			{
+				string tagName = cmbMetaTagName.SelectionBoxItem.ToString().ToLower();
+				GenerateLXMLItems(tagName);
+			}
+			else
+			{
+				MessageBox.Show("Select a tag to regenerate!");
+			}
+		}
 
-        private static void GenerateLXMLItems(string tagName)
-        {
-            //GenerateLXMLItems("closedtables");
-            // GenerateLXMLItems("menus");
-            //  GenerateLXMLItems("tabs");
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-                DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
-                string solutionDirectory = solutionDir.FullName;
+		private static void GenerateLXMLItems(string tagName)
+		{
+			//GenerateLXMLItems("closedtables");
+			// GenerateLXMLItems("menus");
+			//  GenerateLXMLItems("tabs");
+			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+				DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+				string solutionDirectory = solutionDir.FullName;
 
-                string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
-                dialog.SelectedPath = dir;
+				string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
+				dialog.SelectedPath = dir;
 
-                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 
-                if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
-                {
-                    DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
-                    List<ObjectTable> tables = new List<ObjectTable>();
-                    ObjectFieldRepository rep = new ObjectFieldRepository(0);
-                    string errors = "";
-                    var directories = Directory.GetDirectories(dialog.SelectedPath);
-                    if (directories.Length == 0)
-                    {
-                        DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
-                        string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+				if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+				{
+					DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
+					List<ObjectTable> tables = new List<ObjectTable>();
+					ObjectFieldRepository rep = new ObjectFieldRepository(0);
+					string errors = "";
+					var directories = Directory.GetDirectories(dialog.SelectedPath);
+					if (directories.Length == 0)
+					{
+						DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
+						string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
 
 
 
-                        tables = (from a in rep.context.ObjectTables.Include("DescriptionTextCode").Include("NewButtonTextCode")
-                                  where allFiles.Contains(a.Name)
-                                  select a).OrderBy(t => t.Name).ToList();
+						tables = (from a in rep.context.ObjectTables.Include("DescriptionTextCode").Include("NewButtonTextCode")
+								  where allFiles.Contains(a.Name)
+								  select a).OrderBy(t => t.Name).ToList();
 
 
-                        dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs_Specific(tables, dialog.SelectedPath, ref errors, tagName);
-                    }
-                    else
-                    {
-                        foreach (string dirPath in directories)
-                        {
-                            DirectoryInfo dirInfo = new DirectoryInfo(dirPath);
-                            string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+						dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs_Specific(tables, dialog.SelectedPath, ref errors, tagName);
+					}
+					else
+					{
+						foreach (string dirPath in directories)
+						{
+							DirectoryInfo dirInfo = new DirectoryInfo(dirPath);
+							string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
 
 
 
-                            tables = (from a in rep.context.ObjectTables
-                                      where allFiles.Contains(a.Name)
-                                      select a).OrderBy(t => t.Name).ToList();
+							tables = (from a in rep.context.ObjectTables
+									  where allFiles.Contains(a.Name)
+									  select a).OrderBy(t => t.Name).ToList();
 
 
 
-                            dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs_Specific(tables, dirPath, ref errors, tagName);
-                        }
-                    }
-                    if (string.IsNullOrEmpty(errors))
-                        MessageBox.Show("Export completed successfully");
-                    else
-                    {
-                        MessageBox.Show(errors);
-                    }
-                }
-            }
+							dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs_Specific(tables, dirPath, ref errors, tagName);
+						}
+					}
+					if (string.IsNullOrEmpty(errors))
+						MessageBox.Show("Export completed successfully");
+					else
+					{
+						MessageBox.Show(errors);
+					}
+				}
+			}
 
 
-        }
+		}
 
-    }
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			string error = "";
+			
+			ObjectFieldRepository rep = new ObjectFieldRepository(0);
+
+			ObjectTable table = (from a in rep.context.ObjectTables
+						  where !a.Name.Contains(".Customs")
+						  && a.Name == TableName.Text
+						  select a).First();
+
+			DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator(table);
+
+
+			bool success = dbToXmlGeneratorFrom.GenerateNewEntityLXML(table);//, fields, tableTextCodes);
+			if (!success)
+				error += (table.Name + " not generated!" + Environment.NewLine);
+
+			if (string.IsNullOrEmpty(error))
+				MessageBox.Show("Export completed successfully");
+			else
+			{
+				MessageBox.Show(error);
+			}
+		}
+	}
 }
 /*
  * 

@@ -25,6 +25,14 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CommodityNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.CommodityName).HasMaxLength(250).IsUnicode(false);
 
+            this.Property(t => t.Make).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.Model).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.Year).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.Color).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.ChassisNumber).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.RegistrationNumber).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.CountryId).HasMaxLength(15).IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("InsideShipmentPackages");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -48,6 +56,15 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CommodityNumber).HasColumnName("CommodityNumber");
             this.Property(t => t.CommodityName).HasColumnName("CommodityName");
 
+            this.Property(t => t.Make).HasColumnName("Make");
+            this.Property(t => t.Model).HasColumnName("Model");
+            this.Property(t => t.Year).HasColumnName("Year");
+            this.Property(t => t.Color).HasColumnName("Color");
+            this.Property(t => t.ChassisNumber).HasColumnName("ChassisNumber");
+            this.Property(t => t.RegistrationNumber).HasColumnName("RegistrationNumber");
+            this.Property(t => t.CountryId).HasColumnName("CountryId");
+
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -69,6 +86,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasRequired(t => t.ShipmentPackage)
                 .WithMany()
                 .HasForeignKey(d => d.ShipmentPackageId);
+            this.HasOptional(t => t.Country).WithMany().HasForeignKey(d => d.CountryId);
 
         }
     }

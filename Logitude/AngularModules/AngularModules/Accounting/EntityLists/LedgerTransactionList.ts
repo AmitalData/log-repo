@@ -56,6 +56,9 @@ export class LedgerTransactionList {
 	OppositeAccountEnglishName: string;
 	OppositeAccountLocalName: string;
 	OppositeAccountDisplayNumber: string;
+	RecoNumber: string;
+	ReconciliationId: string;
+	PaymentReconciledAmount: number;
 	
 }
  

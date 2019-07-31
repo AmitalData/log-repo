@@ -141,6 +141,11 @@ export class PackageTypePM {
     public set IsRefrigerated(newValue: boolean) { if (this.isRefrigerated != newValue) { this.isRefrigerated = newValue; this.MarkAsDirty("IsRefrigerated"); } }
        
 	 
+    private isVehicle: boolean;
+    public get IsVehicle() { return this.isVehicle; }
+    public set IsVehicle(newValue: boolean) { if (this.isVehicle != newValue) { this.isVehicle = newValue; this.MarkAsDirty("IsVehicle"); } }
+       
+	 
 
     public OldEntityPM: PackageTypePM;
 		

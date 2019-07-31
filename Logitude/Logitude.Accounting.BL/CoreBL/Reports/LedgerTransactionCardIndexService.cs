@@ -75,15 +75,15 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 //                    var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
 //                        _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.IncludeChildAccounts);
                     var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsTypeCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
-                        _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.IncludeChildAccounts);
+                        _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts);
                     _allIdAccounts = new List<string>(hashsetallIdAccounts);
                 }
 
 
 
                 var query =
-                    ledgerTransactionRepository.GetQueryOrderAccDateAndIdByRec(_Param.Tenant, _allIdAccounts, _Param.From, _Param.To,
-                    _Param.CurrencyId, _SearchByFilter, _Param.IsReconciled);
+                    ledgerTransactionRepository.GetQueryOrderByDateTypeAndIdByRec(_Param.Tenant, _allIdAccounts, _Param.From, _Param.To,
+                    _Param.CurrencyId, _SearchByFilter, _Param.IsReconciled, _Param.DateTypeCode);
 
 
 

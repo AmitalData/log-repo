@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList,ViewEncapsulation} from '@angular/core';
+import {Component, ViewChildren, QueryList,ViewEncapsulation} from '@angular/core';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -61,16 +61,16 @@ export class ByInProgressComponent extends BaseComponent {
     }
 
     private InitializeIds() {
-        this.NewCustomersDashboardId = "NewCustomersDashboardId_" + SessionLocator.CurrentSession.GetNewId("NewCustomerDashboard");
-        this.NewOpportunitiesDashboardId = "NewOpportunitiesDashboardId_" + SessionLocator.CurrentSession.GetNewId("NewOpportunitiesDashboard");
-        this.NewQuotesDashboardId = "NewQuotesDashboardId_" + SessionLocator.CurrentSession.GetNewId("NewQuotesDashboard");
-        this.NewActivitiesDashboardId = "NewActivitiesDashboardId_" + SessionLocator.CurrentSession.GetNewId("NewActivitiesDashboard");
-        this.NewActivitiesTDId = "NewActivitiesTDId_" + SessionLocator.CurrentSession.GetNewId("NewActivitiesTDId");
-        this.NewOpportunityBySalesmanLegendId = "NewOpportunityBySalesmanLegendId__" + SessionLocator.CurrentSession.GetNewId("NewOpportunityBySalesmanLegendId");
-        this.NewQuotesBySalesmanLegendId = "NewQuotesBySalesmanLegendId__" + SessionLocator.CurrentSession.GetNewId("NewQuotesBySalesmanLegendId");        
+        this.NewCustomersDashboardId = "NewCustomersDashboardId_" + this.CurrentSession.GetNewId("NewCustomerDashboard");
+        this.NewOpportunitiesDashboardId = "NewOpportunitiesDashboardId_" + this.CurrentSession.GetNewId("NewOpportunitiesDashboard");
+        this.NewQuotesDashboardId = "NewQuotesDashboardId_" + this.CurrentSession.GetNewId("NewQuotesDashboard");
+        this.NewActivitiesDashboardId = "NewActivitiesDashboardId_" + this.CurrentSession.GetNewId("NewActivitiesDashboard");
+        this.NewActivitiesTDId = "NewActivitiesTDId_" + this.CurrentSession.GetNewId("NewActivitiesTDId");
+        this.NewOpportunityBySalesmanLegendId = "NewOpportunityBySalesmanLegendId__" + this.CurrentSession.GetNewId("NewOpportunityBySalesmanLegendId");
+        this.NewQuotesBySalesmanLegendId = "NewQuotesBySalesmanLegendId__" + this.CurrentSession.GetNewId("NewQuotesBySalesmanLegendId");        
     }
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.InitializeIds();
@@ -399,12 +399,12 @@ export class ByInProgressComponent extends BaseComponent {
         listArgs.DisplayTitle = "Opportunities";
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
 
@@ -431,12 +431,12 @@ export class ByInProgressComponent extends BaseComponent {
         listArgs.DisplayTitle = "Quotes";
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
     }
@@ -466,12 +466,12 @@ export class ByInProgressComponent extends BaseComponent {
         listArgs.DisplayTitle = "Customers";
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
 
@@ -514,12 +514,12 @@ export class ByInProgressComponent extends BaseComponent {
         listArgs.DisplayTitle = typeName;
         listArgs.BackButtonTitle = "CRM";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
     }

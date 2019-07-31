@@ -63,6 +63,16 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Utils;
 using System.Data.Common;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using System.Text.RegularExpressions;
+using Logitude.Server.Tools.QueueService;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Simplog.Data.InvoiceModel;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 
 namespace Logitude.Update
 {
@@ -84,6 +94,10 @@ namespace Logitude.Update
                 LogitudeSettings.Id = setting.Id;
                 LogitudeSettings.ChampEnv = setting.ChampEnv;
                 LogitudeSettings.ChampURL = setting.ChampURL;
+                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
                 LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
                 LogitudeSettings.DeploymentStage = setting.DeploymentStage;
                 LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
@@ -110,7 +124,7 @@ namespace Logitude.Update
                 string storageServiceMode = "fs";
                 string queueServiceMode = "azure";
                 Logitude.Server.Tools.ContainerAccessor.InitContainer();
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil,null);
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil,null, null);
 
                 CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
             }
@@ -3345,7 +3359,6 @@ User/Pass",
                 {
                     JournalId = line.Id,
                     Line = 1,
-                    TaxReportId = null,
                     Tenant = 1,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     GeneralData = "empty",
@@ -3361,6 +3374,9 @@ User/Pass",
         {
             Application.Exit();
         }
+
+
+
 
         private void btnUpdateTenantZeroNew_Click(object sender, EventArgs e)
         {
@@ -3381,9 +3397,9 @@ User/Pass",
             //if (contact != null)
             //{
 
-               var logitudeUser = (from a in commonDataContext.Users
+            var logitudeUser = (from a in commonDataContext.Users
                                 where a.Id == "1-149534"
-                                   select a).FirstOrDefault();
+                                select a).FirstOrDefault();
 
             //    if (logitudeUser != null)
             //    {
@@ -3523,6 +3539,286 @@ User/Pass",
             addStatesForm.Show();
 
         }
+
+        private void btnCompareData_Click(object sender, EventArgs e)
+        {
+            string connectionString1 = "LogitudeMain_Copy,logitudemanager,!LO852456,ebup282itq.database.windows.net";//"LogitudeMain_PreR1,logitudemanager,!LO009008,logitudetest.database.windows.net";// "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
+            DbConnection Logitudeconnection1 = DatabaseInitializer.GetConnection(connectionString1);
+            CommonDataContext Logitudecontext1 = new CommonDataContext(Logitudeconnection1);
+
+            //List<Feature> preFeatures = (from a in Logitudecontext1.Features
+            //							 where a.IsOld == false
+            //							 select a).ToList();
+
+
+            string productionConnectionString = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
+            DbConnection productionConnection = DatabaseInitializer.GetConnection(productionConnectionString);
+            CommonDataContext productionLogitudeContext = new CommonDataContext(productionConnection);
+
+            WebFreightContext webFreightContext = new WebFreightContext(productionConnection);
+            List<ObjectTable> allTables = (from a in webFreightContext.ObjectTables
+                                           select a).ToList();
+
+
+            List<MyFeature> onlineFeatureCodes = (from a in productionLogitudeContext.Features.Include("NameTextCode")
+                                                  select
+                                               new MyFeature()
+                                               {
+                                                   Id = a.Id,
+                                                   Tenant = a.Tenant,
+                                                   Code = a.Code,
+                                                   ObjectTableId = a.ObjectTableId,
+                                                   Name = a.NameTextCode.DefaultText,
+                                                   FeatureTypeCode = a.FeatureTypeCode,
+                                                   Packagable = a.Packagable,
+                                                   IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
+                                                   IsCoreFeature = a.IsCoreFeature,
+
+                                               }).ToList();
+
+            //featureDetails.Code + featureDetails.ObjectTableId
+            //List<Feature> onlineFeatures = (from a in Logitudecontext2.Features
+            //								select a).ToList();
+
+            //List<Feature> newlyAddedFeatures = preFeatures.Where(f => !onlineFeatureCodes.Any(pf => pf == (f.Code + f.ObjectTableId))).ToList();
+
+            List<MyFeature> backupFeatures = (from a in Logitudecontext1.Features.Include("NameTextCode")
+                                              select
+                                              new MyFeature()
+                                              {
+                                                  Id = a.Id,
+                                                  Tenant = a.Tenant,
+                                                  Code = a.Code,
+                                                  ObjectTableId = a.ObjectTableId,
+                                                  Name = a.NameTextCode.DefaultText,
+                                                  FeatureTypeCode = a.FeatureTypeCode,
+                                                  Packagable = a.Packagable,
+                                                  IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
+                                                  IsCoreFeature = a.IsCoreFeature,
+
+                                              }).ToList();
+
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var f in backupFeatures)
+            {
+                MyFeature prodFeature = onlineFeatureCodes.FirstOrDefault(o => o.Code == f.Code && o.ObjectTableId == f.ObjectTableId);
+                if (prodFeature != null)
+                {
+                    sb.Append(f.Code);
+                    sb.Append(",");
+                    sb.Append(f.Name);
+                    sb.Append(",");
+                    sb.Append(f.FeatureTypeCode);
+                    sb.Append(",");
+                    sb.Append(allTables.First(t => t.Id == f.ObjectTableId).Name);
+                    sb.Append(",");
+
+                    sb.Append(f.Packagable);
+                    sb.Append(",");
+                    sb.Append(prodFeature.Packagable);
+                    sb.Append(",");
+
+                    sb.Append(f.IsBusinessUnitEnabled);
+                    sb.Append(",");
+                    sb.Append(prodFeature.IsBusinessUnitEnabled);
+                    sb.Append(",");
+
+                    sb.Append(f.IsCoreFeature);
+                    sb.Append(",");
+                    sb.Append(prodFeature.IsCoreFeature);
+                    sb.Append(",");
+
+                    sb.AppendLine();
+                }
+
+            }
+
+            //foreach (var f in newlyAddedFeatures)
+            //{
+
+
+            //	sb.Append(f.Code);
+            //	sb.Append(",");
+            //	sb.Append(f.NameTextCode);
+            //	sb.Append(",");
+            //	sb.Append(f.FeatureTypeCode);
+            //	sb.Append(",");
+            //	sb.Append(allTables.First(t => t.Id == f.ObjectTableId).Name);
+            //	sb.Append(",");
+            //	sb.AppendLine();
+
+            //}
+
+            Encoding currentEncoding = Encoding.GetEncoding(Encoding.UTF8.CodePage);
+            byte[] sbByte = currentEncoding.GetBytes(sb.ToString());
+            //string encodedString = currentEncoding.GetString(sbByte);
+
+
+
+            File.WriteAllBytes("ComparingFeatures.csv", sbByte); // Requires System.IO
+        }
+
+        private void button41_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "TariffModule", lblUTariffModule));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void rtlBtn_Click(object sender, EventArgs e)
+        {
+            ChangeTenantLayoutDirection("rtl");
+        }
+
+        private void ChangeTenantLayoutDirection(string dir)
+        {
+            CommonDataContext Context = CommonDataContext.GetContextByDBId("0");
+            string connectionString = Context.GetConnection().ConnectionString;
+            SqlConnection sqlConnection1 = new SqlConnection(connectionString);
+
+            int tenant = Convert.ToInt32(tenantTxtBox.Text);
+
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = String.Format("UPDATE Tenants set LayoutDirection = '{1}' where Id = {0}", tenant, dir),
+                Connection = sqlConnection1
+            };
+
+            try
+            {
+                sqlConnection1.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                sqlConnection1.Close();
+
+                MessageBox.Show(string.Format("Tenant {0}: {1}",tenant, dir));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Failed! Tenant {0}: {1} \n {2}", tenant, dir, ex.Message));
+                throw;
+            }
+        }
+
+        private void ltrBtn_Click(object sender, EventArgs e)
+        {
+            ChangeTenantLayoutDirection("ltr");
+            
+        }
+
+        private void button42_Click_FixingDouplicated(object sender, EventArgs e)
+        {
+
+            //string text = "APP4030";
+
+            //string input = "1030-015849-1";
+            //input = input.Replace("-", "");
+            //var array = Regex.Matches(input, @"\D+|\d+")
+            //                 .Cast<Match>()
+            //                 .Select(m => m.Value)
+            //                 .ToArray();
+
+            //TaxReportQueryService taxReportQueryService = new TaxReportQueryService(1064);
+            //TaxReportPM taxReportPM = taxReportQueryService.GetSingle("1-1913", false, false);
+            //TaxReportService.CreateTaxReportLines(taxReportPM, 1064);
+
+
+        }
+
+        private void button42_Click(object sender, EventArgs e)
+        {
+            //DocumentRepository DocR = new DocumentRepository(0); 
+            var result = new List<DocumentsFiling>();
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                DbConnection connection = DatabaseInitializer.GetConnection("logbox-main,logboxadmin,London2015!London2015!,logboxdbs.database.windows.net");// "Main,sa,Saas256,amitaldata.cloudapp.net");
+                CommonDataContext context = new CommonDataContext(connection);
+                result = (from a in context.Documents
+                          join b in context.DocumentsFilings on a.Id equals b.DocumentId
+                          where b.ForwarderDocumentId != null && b.IsDeleted == false && a.HasFile == false
+                          select b).ToList();
+                scope.Complete();
+            }
+
+            foreach (var item1 in result)
+            {
+                DocumentRepository DocR = new DocumentRepository(0);
+                var item = (from a in DocR.context.DocumentsFilings
+                            where a.Id == item1.ForwarderDocumentId
+                            select a).FirstOrDefault();
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
+                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+            }
+        }
+
+        private void button43_Click(object sender, EventArgs e)
+        {
+            //GlobalContact contact = null;
+            IGlobalContext globalObjectContext = GlobalContext.GetContext();
+            ContactPasswordRepository GCRepo = new ContactPasswordRepository(globalObjectContext);
+            var Tenants = new List<int>() { 493, 839, 1177, 558, 570, 545, 286, 996, 1264, 1573, 1402, 1427, 1245, 1604, 796, 1275, 1326, 1333, 42, 1256, 877, 1423, 1293, 2043 };
+            foreach (var tenant in Tenants)
+            {
+                var contacts = globalObjectContext.GlobalContacts.Where(c => c.GlobalTenantId == tenant && (c.IsUser == true) && c.InActive == false).ToList();
+                foreach (var contact in contacts)
+                {
+                    ContactPassword contactPassword = globalObjectContext.ContactPasswords.Where(a => a.Email == contact.Email).FirstOrDefault();//AuthenticationUtil.VerifyContactPassword(contact.Email, "123", globalObjectContext);
+                    if (contactPassword != null)
+                    {
+                        string HashedPass = PasswordGenerator.GetBCryptHashedPassword(contact.Email, "123");
+                        contactPassword.Password = HashedPass;
+                        contactPassword.IsBCrypt = true;
+                        GCRepo.SubmitChanges();
+                    }
+
+                }
+            }
+        }
+
+        private void button44_Click(object sender, EventArgs e)
+        {
+            IInvoiceContext context = InvoiceContext.GetContext(1);
+            APInvoiceQuery service = new APInvoiceQuery(1);
+                APInvoicePM invoice = service.GetSinglePM("1-18", 1);
+            byte[] serialized = LogitudeXmlSerializer.SerializeObject(invoice);
+            using (MemoryStream ms = new MemoryStream(serialized))
+            {
+                StreamWriter writer = new StreamWriter(ms);
+
+                writer.WriteLine("asdasdasasdfasdasd");
+                writer.Flush();
+
+                //You have to rewind the MemoryStream before copying
+                ms.Seek(0, SeekOrigin.Begin);
+
+                using (FileStream fs = new FileStream("m_output.txt", FileMode.OpenOrCreate))
+                {
+                    ms.CopyTo(fs);
+                    fs.Flush();
+                }
+            }
+
+        }
+    }
+
+
+
+    public class MyFeature
+    {
+
+        public string Id { get; set; }
+        public int Tenant { get; set; }
+        public string Code { get; set; }
+        public string ObjectTableId { get; set; }
+        public string Name { get; set; }
+        public string FeatureTypeCode { get; set; }
+        public bool Packagable { get; set; }
+        public bool IsBusinessUnitEnabled { get; set; }
+        public bool IsOld { get; set; }
+        public bool IsCoreFeature { get; set; }
+
     }
 
 

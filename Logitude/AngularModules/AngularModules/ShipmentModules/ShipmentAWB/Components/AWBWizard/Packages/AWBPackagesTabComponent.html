@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr>
         <td>
@@ -181,7 +181,7 @@
                                                         </td>
 
                                                         <td style="width: 115px;">
-                                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'GrossWeight'" [Text]="GrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="GrossWeightLostFocus($event)"></LogTextBox>
+                                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'GrossWeight'" [Text]="GrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (paste)="GrossWeightPaste($event)" (LostFocus)="GrossWeightLostFocus($event)"></LogTextBox>
                                                         </td>
 
                                                         <td style="width: 20px; vertical-align:middle;">
@@ -197,7 +197,7 @@
                                                         </td>
 
                                                         <td style="width: 115px;">
-                                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'ChargeableWeight'" [Text]="ChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="ChargeableWeightLostFocus($event)" [DontUseTimer]="'true'"></LogTextBox>
+                                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'ChargeableWeight'" [Text]="ChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (paste)="ChargeableWeightPaste($event)" (LostFocus)="ChargeableWeightLostFocus($event)" [DontUseTimer]="'true'"></LogTextBox>
                                                         </td>
 
                                                         <td style="width: 20px; vertical-align:middle;">

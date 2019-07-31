@@ -1,0 +1,37 @@
+﻿
+<table style="height:60px">
+
+    <tr style="height:25px">
+        <td>
+            <table>
+                <tr>
+
+                    <td style="width:5px;"><div style="width:5px;"></div></td>
+                    <td><div style="color:#1B90CB;font-size:14px;">Filter By:</div></td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:20px"></td>
+                    <!--IsException-->
+                    <td style="width: 120px;">
+                        <CheckBox  id="{{'IsExceptionCheckBox' | IdGeneratorPipe}}" [IsChecked]="IsException" (Checked)="IsException = $event" [Text]="'Is Exception'"></CheckBox>
+                    </td>
+
+
+                    <td style="width: 80px;">
+                        <button id="{{'RunReportButton' | IdGeneratorPipe}}" class="GreenButton" (click)="RunReport(true)">Run Report</button>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+</table>

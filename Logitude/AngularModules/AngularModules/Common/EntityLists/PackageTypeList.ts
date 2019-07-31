@@ -29,5 +29,6 @@ export class PackageTypeList {
 		SearchFields: string;
 		PrintAs: string;
 		IsRefrigerated: boolean;
+		IsVehicle: boolean;
 	
 }

@@ -1,4 +1,4 @@
-﻿
+declare var CopyText: any;
 
 import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
@@ -17,8 +17,7 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ShipmentComputedFieldExtendedService} from '../../../../Shipment/Services/ExtendedPMs/ShipmentComputedFieldExtendedService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
-
-
+import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 @Component({
     moduleId: module.id,
     templateUrl: './DepositionRequestComponent.html',
@@ -29,7 +28,8 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
 
    shipmentComputedFieldExtendedService: ShipmentComputedFieldExtendedService;
     ShipmentId: string;
-
+    VendorCodeId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
   
@@ -47,6 +47,7 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
     DirectionId: string;
     ForwarderPartnerId: string;
     SetWindowArgs(args: any) {
+        this.VendorCodeId = Guid.newGuid();
         this.ShipmentId = !AppTool.IsNullOrEmpty(args.ShipmentId) ? args.ShipmentId : null;
         this.ForwardershipmentNumber = !AppTool.IsNullOrEmpty(args.ForwarderShipmentNumber) ? args.ForwarderShipmentNumber : null;
         this.DirectionId = !AppTool.IsNullOrEmpty(args.DirectionId) ? args.DirectionId : null;
@@ -59,11 +60,17 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
                 this.VendorName = result.length > 1 ? result[1]:"";
             }
         }
+
+
+
     }
 
-
+    CopyTextButtonClicked() {
+ 
+        CopyText(this.VendorCodeId);
+    }
     NewDepositionFormClcik() {
-
+        ServiceLocator.SendTotangoUserActivity("CustomsShipper", "Deposition Link");
         var link = "https://forms.gov.il/globaldata/getsequence/getHtmlForm.aspx?formType=SOVE01_hasava@taxes.gov.il";
         var win = window.open(link, '_blank');
         win.focus();
@@ -71,13 +78,13 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
 
     MarkAsComplete() {
         if (!AppTool.IsNullOrEmpty(this.ShipmentId)) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
             this.shipmentComputedFieldExtendedService.GetMarkCompleteDepositionRequest(this.ShipmentId, this.DirectionId , this.ForwardershipmentNumber , this.ForwarderPartnerId).subscribe(myResult => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var pmResponse: ServiceResponse = myResult;
                 if (!pmResponse.HasError) {
-                    SessionLocator.CurrentSession.CurrentWindow.Close("DepositionRequest");
+                    this.CurrentSession.CurrentWindow.Close("DepositionRequest");
                 } else {
                   
                     if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
@@ -94,7 +101,7 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

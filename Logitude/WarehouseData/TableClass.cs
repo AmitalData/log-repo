@@ -18,15 +18,17 @@ namespace WarehouseData
         public bool HasDimensionTable { get; set; }
         public string FieldsDBName { get; set; }
         public bool DispayInScreen { get; set; }
-        public bool IsUpdated { get; set; }
+        public bool IsUpdated { get; set; } 
         public int UpdatedCount { get; set; }
         public bool IsCloseTable { get; set; }
         public string BuildScriptName { get; set; }
         public string IncrementalScriptName { get; set; }
-
+        public string ObjectTableId { get; set; }
         public string DWObjectTableCode { get; set; }
         public List<DWObjectFieldDB> DWObjectFieldDBLists { get; set; }
-
+        
+        public string FieldIndexes { get; set; }
+        public string RefreshIds { get; set; }
     }
 
     public class DWObjectFieldDB

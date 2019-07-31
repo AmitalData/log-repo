@@ -124,6 +124,36 @@ export class TMProjectPM {
     public set ExternalProjectNumber(newValue: string) { if (this.externalProjectNumber != newValue) { this.externalProjectNumber = newValue; this.MarkAsDirty("ExternalProjectNumber"); } }
        
 	 
+    private categoryName: string;
+    public get CategoryName() { return this.categoryName; }
+    public set CategoryName(newValue: string) { if (this.categoryName != newValue) { this.categoryName = newValue; this.MarkAsDirty("CategoryName"); } }
+       
+	 
+    private excludeFromProrating: boolean;
+    public get ExcludeFromProrating() { return this.excludeFromProrating; }
+    public set ExcludeFromProrating(newValue: boolean) { if (this.excludeFromProrating != newValue) { this.excludeFromProrating = newValue; this.MarkAsDirty("ExcludeFromProrating"); } }
+       
+	 
+    private dayOffTypeCode: string;
+    public get DayOffTypeCode() { return this.dayOffTypeCode; }
+    public set DayOffTypeCode(newValue: string) { if (this.dayOffTypeCode != newValue) { this.dayOffTypeCode = newValue; this.MarkAsDirty("DayOffTypeCode"); } }
+       
+	 
+    private blockedForDataEntry: boolean;
+    public get BlockedForDataEntry() { return this.blockedForDataEntry; }
+    public set BlockedForDataEntry(newValue: boolean) { if (this.blockedForDataEntry != newValue) { this.blockedForDataEntry = newValue; this.MarkAsDirty("BlockedForDataEntry"); } }
+       
+	 
+    private budgetName: string;
+    public get BudgetName() { return this.budgetName; }
+    public set BudgetName(newValue: string) { if (this.budgetName != newValue) { this.budgetName = newValue; this.MarkAsDirty("BudgetName"); } }
+       
+	 
+    private dayOffTypeName: string;
+    public get DayOffTypeName() { return this.dayOffTypeName; }
+    public set DayOffTypeName(newValue: string) { if (this.dayOffTypeName != newValue) { this.dayOffTypeName = newValue; this.MarkAsDirty("DayOffTypeName"); } }
+       
+	 
 
     public OldEntityPM: TMProjectPM;
 		

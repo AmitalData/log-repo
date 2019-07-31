@@ -25,7 +25,7 @@ export class btnUpdateComponent implements OnInit {
     public TenantPM: TenantPM;
     public entityId: string;
     public InUseVisibile: boolean = true;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef, private _entityListService: EntityListService) {
         this.TenantPM = InfraSettings.TenantPM;
         this.LoadShippingLineListMethod();
@@ -108,7 +108,7 @@ export class btnUpdateComponent implements OnInit {
     }
 
     public FireEvent(eventArgs: any) {
-        SessionLocator.CurrentSession.SessionEvent.emit(eventArgs);
+        this.CurrentSession.SessionEvent.emit(eventArgs);
     }
 
 
@@ -145,10 +145,10 @@ export class btnUpdateComponent implements OnInit {
     }
 
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 }

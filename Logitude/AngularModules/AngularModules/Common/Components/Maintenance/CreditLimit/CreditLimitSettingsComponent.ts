@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CreditLimitSettingPM} from '../../../EntityPMs/CreditLimitSettingPM';
 import {CreditLimitSettingPMService} from '../../../Services/StandardPMs/CreditLimitSettingPMService';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -19,6 +19,7 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
     private myService: CreditLimitSettingPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myService = new CreditLimitSettingPMService();
@@ -82,21 +83,21 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
 
         if (this.EntityPM.IsDirty) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.EntityPM.Id == null) {
                 this.myService.insert(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (!myRespone.HasError) {
                         ObjectsLocator.CreditLimitSettingPM = this.EntityPM;
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }
 
                     else {
@@ -107,11 +108,11 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
 
             else {
                 this.myService.update(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (!myRespone.HasError) {
                         ObjectsLocator.CreditLimitSettingPM = this.EntityPM;
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }
 
                     else {
@@ -122,7 +123,7 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
         }
 
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }        
     }
 }

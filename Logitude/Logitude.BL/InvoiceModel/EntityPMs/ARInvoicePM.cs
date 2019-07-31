@@ -28,6 +28,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BillToId { get; set; }
         public string BillToName { get; set; }
+        public string BillToLocalName { get; set; }
         public string BillToType { get; set; }
         public string BillToPartnerTypeId { get; set; }
         public string BillToCode { get; set; }
@@ -334,9 +335,16 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string CreditARInvoice { get; set; }
         public Decimal? TotalAmountForTaxReport { get; set; }
         public Decimal? TotaVatableAmountForTaxReport { get; set; }
-        public Decimal? TotalVAT { get; set; }
+        public Decimal TotalVAT { get; set; }
 
         public bool IsFullAccounting { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConcurrencyGUID { get; set; }
+        public string NewConcurrencyGUID { get; set; }
+        public string ARInvoiceStockId { get; set; }
+        public bool IsInvoiceNumberFromStock { get; set; }
+
+        public string BatchTaskExecutionId { get; set; }
     }
 }

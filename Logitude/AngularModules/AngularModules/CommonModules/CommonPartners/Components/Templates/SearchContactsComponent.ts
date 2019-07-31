@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ContactList} from '../../../../Common/EntityLists/ContactList';
 import {ContactListService} from '../../../../Common/Services/StandardLists/ContactListService';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -16,6 +16,7 @@ export class SearchContactsComponent {
     public ItemsSource: ContactList[] = [];
     public MyContactsCount: number = 0;
     private myService: ContactListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myService = new ContactListService();
         this.LoadAllData();
@@ -80,6 +81,6 @@ export class SearchContactsComponent {
     }
 
     Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

@@ -20,7 +20,11 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         [DataMember]
         public string EntityId { get; set; }
-           
+
+        [DataMember]
+        public string EntityNumber { get; set; }
+
+
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string EventTypeId { get; set; }
@@ -93,5 +97,13 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Location { get; set; }
+
+        //[DataMember]
+        //[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        //public string EventDateTime1 { get; set; }
+
+        //[DataMember]
+        //[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        //public string EventDateTime2 { get; set; }
     }
 }

@@ -76,12 +76,14 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string BluesnapCRMContractId { get; set; }
         public string BluesnapEAWBContractId { get; set; }
         public string BluesnapEAWBSContractId { get; set; }
-        public string BluesnapOneTimeContractId { get; set; }
+        public string BluesnapOneTimeContract { get; set; }
+        public string BluesnapInttraStockContractId { get; set; }
         public int BluesnapContractQTY { get; set; }
         public int BluesnapCRMContractQTY { get; set; }
         public int BluesnapEAWBContractQTY { get; set; }
         public int BluesnapEAWBSContractQTY { get; set; }
         public int BluesnapOneTimeContractQTY { get; set; }
+        public int BluesnapInttraStockContractQTY { get; set; }
 
         public string AWBMessagesCCSTypeCode { get; set; }
         public string PIMA { get; set; }
@@ -133,6 +135,8 @@ namespace Logitude.BL.GlobalModel.EntityLists
 
         public string PackageCodeSearchField { get; set; }
         public bool IsINTTRAOnlyDemo { get; set; }
+        public bool IsTestTenant { get; set; }
+        public bool MainAdditionalPackageApplied { get; set; }
 
     }
 }

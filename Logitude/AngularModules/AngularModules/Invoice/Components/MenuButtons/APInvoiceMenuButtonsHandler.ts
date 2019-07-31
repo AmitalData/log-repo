@@ -15,12 +15,16 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 
 export class APInvoiceMenuButtonsHandler {
+    private CurrentSession = SessionLocator.SelectedSession;
     public EntityPM: APInvoicePM;
     public entityArgs: EntityArgs
+    isFullAccounting: boolean = false;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();
+
+        this.isFullAccounting = SessionLocator.TenantPM.AccountingActivated;
     }
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
@@ -98,16 +102,21 @@ export class APInvoiceMenuButtonsHandler {
 
                         case "ReTransfer":
                             {
-                                myButtonIsDisabled = true;
+                                if (this.isFullAccounting) {
+                                    button.IsHidden = true;
+                                } else {
 
-                                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
-                                    if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
-                                        if (this.EntityPM.TransferStatusCode == "TR") {
-                                            myButtonIsDisabled = false;
+                                    myButtonIsDisabled = true;
+
+                                    if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
+                                        if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
+                                            if (this.EntityPM.TransferStatusCode == "TR") {
+                                                myButtonIsDisabled = false;
+                                            }
                                         }
                                     }
-                                }
 
+                                }
                                 break;
                             }
 
@@ -306,7 +315,7 @@ export class APInvoiceMenuButtonsHandler {
             });
         }
 
-        this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {        
+        this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
             if (isLoadSuccess) {
                 this.EntityPM = this.entityArgs.EditComponent.EntityPM;
             }
@@ -385,7 +394,7 @@ export class APInvoiceMenuButtonsHandler {
                         this.ContinueSaving();
                     }
                 }
-            
+
         });
     }
     ContinueSaving() {
@@ -439,12 +448,12 @@ export class APInvoiceMenuButtonsHandler {
 
             if (this.isValid) {
                 if (this.EntityPM.MainEntityId) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
 
                     var myService = new InvoiceDomainService();
                     myService.GetShipmentIsAccountingClosed(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myResponse.HasError) {
                             var IsAccountingClosed = myResponse.Result;
@@ -474,13 +483,13 @@ export class APInvoiceMenuButtonsHandler {
             else {
                 this.StopFlags();
             }
-        }       
+        }
     }
-   
 
-           
-        
-    
+
+
+
+
     CancelApprovalClickedProccess() {
         this.EntityPM.SetVoided = false;
         this.EntityPM.SetApproved = false;
@@ -522,12 +531,12 @@ export class APInvoiceMenuButtonsHandler {
             if (this.isValid) {
 
                 if (this.EntityPM.MainEntityId) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
 
                     var myService = new InvoiceDomainService();
                     myService.GetShipmentIsAccountingClosed(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myResponse.HasError) {
                             var IsAccountingClosed = myResponse.Result;

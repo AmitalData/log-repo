@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnDestroy} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -33,6 +33,7 @@ export class EventsTabComponent implements OnDestroy {
     public TabHeaderTextCode: string;
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.TabHeaderTextCode = entityArgs.ObjectTableName + ".TH.Events";
 
@@ -77,7 +78,7 @@ export class EventsTabComponent implements OnDestroy {
     private SaveCompletedEvent: any = null;
     Listen() {
 
-        this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "LoadEventTabData") {
                 this.LoadData();
             }
@@ -86,7 +87,7 @@ export class EventsTabComponent implements OnDestroy {
         if (this.entityArgs.EditComponent) {
 
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
-                var textcode = SessionLocator.CurrentSession.CurrentEditComponent.SelectedTab.TextCode;
+                var textcode = this.CurrentSession.CurrentEditComponent.SelectedTab.TextCode;
                 if (textcode && textcode.includes("TH.Event")) {
                     this.LoadData();
                 }

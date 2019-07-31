@@ -57,7 +57,9 @@ namespace Simplog.Data.InfrastructureModel
 
             // }
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context;
@@ -109,6 +111,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new AccountingPaymentMethodMap());
             modelBuilder.Configurations.Add(new ARPaymentMap());
             modelBuilder.Configurations.Add(new ARPaymentStatuMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStocksStatusMap());
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
             modelBuilder.Configurations.Add(new AWBStatuMap());
@@ -350,6 +353,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new TaskSchedulerHistoryMap());
             modelBuilder.Configurations.Add(new DWObjectTableMap());
             modelBuilder.Configurations.Add(new DWObjectFieldMap());
+            
 
             modelBuilder.Configurations.Add(new DWQueryMap());
             modelBuilder.Configurations.Add(new DWSubQueryMap());
@@ -359,6 +363,8 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
+            modelBuilder.Configurations.Add(new SchedulerLogsMap());
+            modelBuilder.Configurations.Add(new SchedulerProcedureMap());
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
@@ -810,6 +816,18 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<SharedUserQuery> SharedUserQueries
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<SchedulerLogs> SchedulerLogs
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<SchedulerProcedure> SchedulerProcedures
         {
             get;
             set;

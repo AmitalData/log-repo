@@ -1,4 +1,4 @@
-﻿/// <reference path="../../infrastructure/locators/servicelocator.ts" />
+/// <reference path="../../infrastructure/locators/servicelocator.ts" />
 /// <reference path="../../infrastructure/utilities/infragenericfilter.ts" />
 /// <reference path="../../shipment/entitypms/shipmentpm.ts" />
 
@@ -24,6 +24,7 @@ export class WarehouseHelper {
     validator: ClassLevelValidator;
     public _warehouseEntryPMService: WarehouseEntryPMService;
     public traceEventExtendedPMService: TraceEventExtendedPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
       
         
@@ -68,14 +69,14 @@ export class WarehouseHelper {
                                     }
 
 
-                                    if (SessionLocator.CurrentSession.CurrentEditComponent) {
-                                        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                                    if (this.CurrentSession.CurrentEditComponent) {
+                                        this.CurrentSession.CurrentEditComponent.SaveChanges();
                                     }
 
                                     if (!isShipmentDirty) shipmentPM.IsDirty = false;
 
                               
-                                    SessionLocator.CurrentSession.FireEvent("RefreshWareHouseLeg");
+                                    this.CurrentSession.FireEvent("RefreshWareHouseLeg");
 
                                 }
                             }
@@ -230,7 +231,7 @@ export class WarehouseHelper {
                 }
 
 
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
 
                 if (this._warehouseEntryPMService == null) this._warehouseEntryPMService = new WarehouseEntryPMService();
                 if (this.traceEventExtendedPMService == null) this.traceEventExtendedPMService = new TraceEventExtendedPMService();
@@ -258,13 +259,13 @@ export class WarehouseHelper {
 
                                 this.UpdateEventType(viewModel.ObjectTableId, entityPM.Id, eventTypeCodeList);
                             }
-                            else SessionLocator.CurrentSession.StopBusyIndicator();
+                            else this.CurrentSession.StopBusyIndicator();
                         } else {
                             pmResponse.ErrorsArray.forEach((item) => {
                                 viewModel.ValidationErrorsList.push(item);
                             });
 
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
 
 
@@ -288,15 +289,15 @@ export class WarehouseHelper {
             traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
 
             this.traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.Close("Refresh");
 
             });
 
         }
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.Close("Refresh");
         }
 
     }

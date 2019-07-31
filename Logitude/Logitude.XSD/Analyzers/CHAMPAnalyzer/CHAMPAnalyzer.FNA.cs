@@ -90,7 +90,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
                     case "FVR":
                         {
-                            this.myRequestDetails = XSDHelper.GetFlightsSchedulesRequestDetails(myFNA, myCommonContext, myTenant);
+                            this.myRequestDetails = XSDHelper.GetFlightsSchedulesRequestDetails(myFNA, iCommonContext, myTenant);
                             break;
                         }
 
@@ -113,6 +113,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     //        break;
                     //    }
                 }
+            }
+
+            if (!string.IsNullOrEmpty(myPrefix) && !string.IsNullOrEmpty(myMaster))
+            {
+                myLongMaster = myPrefix + "-" + myMaster;
             }
         }
 
@@ -263,7 +268,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                 {
                                     if (entityItem.ScheduleAndAvailabilityInformationRequestDetails != null)
                                     {
-                                        this.myRequestDetails = XSDHelper.GetFlightsSchedulesRequestDetails(entityItem.ScheduleAndAvailabilityInformationRequestDetails, myCommonContext, myTenant);
+                                        this.myRequestDetails = XSDHelper.GetFlightsSchedulesRequestDetails(entityItem.ScheduleAndAvailabilityInformationRequestDetails, iCommonContext, myTenant);
                                     }
                                 }
 

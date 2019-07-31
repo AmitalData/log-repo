@@ -94,7 +94,7 @@ namespace CommunicationWorkerRole
         }
         public override void Run()
         {
-            
+
 
             while (IsRunning)
             {
@@ -104,10 +104,19 @@ namespace CommunicationWorkerRole
                     try
                     {
                         int tenant = 0;
-                        queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+                        queueservice = new DbQueueService(queueName, 0);
+                        //if (queueName == "EmailQueue")
+                        //{
+                        //    queueservice = new DbQueueService(queueName, 0);
+                        //}
+                        //else
+                        //{
+                        //    queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+                        //}
+
                         var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
                         LastActivity = DateTime.UtcNow;
-                        
+
                         if (response.MessageId != null)
                         {
 
@@ -118,77 +127,91 @@ namespace CommunicationWorkerRole
                             CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
 
                             bool processEnebled = true;//IsCommunicationLogProcessEnabled(communicationLogId, tenant); since there is queueservice.delay(timespan).... ihab mohammad jalal
-
-                            if (processEnebled)
+                            try
                             {
-                                if (cl != null)
+                                if (processEnebled)
                                 {
-                                    if (cl.CommunicationStatusTypeCode == "D")
+                                    if (cl != null)
                                     {
-                                        queueservice.Complete();
+
+                                        if (cl.CommunicationStatusTypeCode == "D")
+                                        {
+                                            queueservice.Complete();
+                                        }
+                                        else
+                                        {
+                                            var sendingEmailQuotaResult = EmailLimitationHelper.CheckEmailSendingQuotaForTenant(tenant);
+                                            if (sendingEmailQuotaResult.IsQuotaExceeded)
+                                            {
+                                                cl.CommunicationStatusTypeCode = "F";
+                                                cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
+                                                cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
+                                                communicationLogRep.Update(cl);
+                                                communicationLogRep.SubmitChanges();
+                                            }
+                                            else SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
+
+                                            queueservice.Complete();
+                                            LogDoneItemInMemory();
+
+                                        }
                                     }
                                     else
                                     {
-                                        var sendingEmailQuotaResult = EmailLimitationHelper.CheckEmailSendingQuotaForTenant(tenant);
-                                        if (sendingEmailQuotaResult.IsQuotaExceeded)
+                                        if (response.RetryNumber <= 4)
                                         {
-                                            cl.CommunicationStatusTypeCode = "F";
-                                            cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
-                                            cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
-                                            communicationLogRep.Update(cl);
-                                            communicationLogRep.SubmitChanges();
-                                        }
-                                        else SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
+                                            if (response.RetryNumber <= 1)
+                                            {
+                                                queueservice.Delay(new TimeSpan(0, 0, 0, 40));
+                                            }
 
-                                        queueservice.Complete();
-                                        LogDoneItemInMemory();
+                                            if (response.RetryNumber >= 2 && response.RetryNumber < 3)
+                                            {
+                                                queueservice.Delay(new TimeSpan(0, 0, 1, 0));
+                                            }
 
-                                    }
-                                }
-                                else
-                                {
-                                    if (response.RetryNumber <= 11)
-                                    {
-                                        if (response.RetryNumber < 3)
-                                        {
-                                            queueservice.Delay(new TimeSpan(0, 0, 0, 1));
-                                        }
+                                            //if (response.RetryNumber > 5 && response.RetryNumber <= 10)
+                                            //{
 
-                                        if (response.RetryNumber >= 3 && response.RetryNumber <= 5)
-                                        {
-                                            queueservice.Delay(new TimeSpan(0, 0, 0, 5));
-                                        }
+                                            //    queueservice.Delay(new TimeSpan(0, 0, 0, 10));
+                                            //    AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
+                                            //        + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
+                                            //    Thread.Sleep(3000);
+                                            //}
+                                            if (response.RetryNumber == 3)
+                                            {
 
-                                        if (response.RetryNumber > 5 && response.RetryNumber <= 10)
-                                        {
-                                            
-                                            queueservice.Delay(new TimeSpan(0, 0, 0, 10));
-                                            AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber 
+                                                queueservice.Delay(new TimeSpan(0, 0, 2, 0));
+                                                AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
                                                 + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                                            Thread.Sleep(3000);
-                                        }
-                                        if (response.RetryNumber == 11)
-                                        {
-                                            
-                                            queueservice.Delay(new TimeSpan(0, 0, 2,0));
-                                            AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
-                                            + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                                            Thread.Sleep(10000);
+                                                //Thread.Sleep(10000);
 
+                                            }
                                         }
-                                    }
-                                    else
-                                    {
-                                        queueservice.Complete();
-                                        AzureLog.SaveLogsInStorage("couldn't find communication log and the message is completed: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
-                                            + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
+                                        else
+                                        {
+
+                                            //cl.CommunicationStatusTypeCode = "F";
+                                            //cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
+                                            //cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
+                                            //communicationLogRep.Update(cl);
+                                            //communicationLogRep.SubmitChanges();
+
+                                            queueservice.Complete();
+                                            AzureLog.SaveLogsInStorage("couldn't find communication log and the message is completed: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
+                                                + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
+                                        }
                                     }
                                 }
+                            }
+                            catch (Exception insideEx)
+                            {
+                                HandleEmailsExceptionRetries(response, insideEx);
                             }
                         }
                     }
                     catch (Exception ex)
-                    { 
+                    {
                         ConnectClient();
                         ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "email worker role start", null, null);
                         Thread.Sleep(10000);
@@ -200,6 +223,35 @@ namespace CommunicationWorkerRole
                     Thread.Sleep(60000);
                 }
             }
+        }
+
+        private void HandleEmailsExceptionRetries(QueueResponse response, Exception insideEx)
+        {
+            string errorMessage = insideEx.Message + Environment.NewLine;
+
+            if (insideEx.InnerException != null)
+            {
+
+                errorMessage = errorMessage + " (" + (insideEx.InnerException.InnerException != null ? insideEx.InnerException.InnerException.Message : insideEx.InnerException.Message) + ")" + Environment.NewLine;
+
+            }
+
+            errorMessage = errorMessage + insideEx.StackTrace + Environment.NewLine;
+            var msg = insideEx.Message + DateTime.Now;
+            if (response.RetryNumber <= 1)
+            {
+                queueservice.Delay(new TimeSpan(0, 0, 0, 5));
+            }
+
+            if (response.RetryNumber > 1 && response.RetryNumber <= 3)
+            {
+                queueservice.Delay(new TimeSpan(0, 0, 0, 10));
+            }
+            if (response.RetryNumber >= 4)
+            {
+                queueservice.CompleteAsFailed();
+            }
+            ExceptionHandler.HandleException(insideEx, DateTime.Now, 0, null, "email worker role HandleEmailsExceptions", null, null);
         }
 
         public bool IsCommunicationLogProcessEnabled(string communicationLogId, int tenant)
@@ -371,11 +423,11 @@ namespace CommunicationWorkerRole
                         //blobfile.DownloadToStream(memstream);
                         Encoding encoding = Encoding.UTF8;
                         xmlfile = encoding.GetString(datainByte);
-                     
+
                     }
-                  
-                   // using (MemoryStream memstream = new MemoryStream())
-                   // {
+
+                    // using (MemoryStream memstream = new MemoryStream())
+                    // {
                     //    switch (waitingCommLog.CommunicationLogTypeCode)
                     //    {
                     //        case "E":
@@ -440,7 +492,28 @@ namespace CommunicationWorkerRole
 
                                                             foreach (string iTenantString in iTenantsList)
                                                             {
-                                                                if (waitingCommLog.Tenant.ToString() == iTenantString.Trim()){
+                                                                if (waitingCommLog.Tenant.ToString() == iTenantString.Trim())
+                                                                {
+                                                                    isUsingRestAPI = true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    if (!isUsingRestAPI)
+                                                    {
+                                                        if (iAppSettings["ChampRestAPITenantKey"] != null)
+                                                        {
+                                                            int tenant = waitingCommLog.Tenant;
+                                                            string ConfigurationString = iAppSettings["ChampRestAPITenantKey"].ToString();
+
+                                                            int ConfigurationNumber = 0;
+                                                            if (int.TryParse(ConfigurationString, out ConfigurationNumber))
+                                                            {
+                                                                int TenanLastNumber = int.Parse(tenant.ToString().Substring(tenant.ToString().Length - 1));
+
+                                                                if (ConfigurationNumber >= TenanLastNumber)
+                                                                {
                                                                     isUsingRestAPI = true;
                                                                 }
                                                             }
@@ -542,7 +615,7 @@ namespace CommunicationWorkerRole
                 {
                     sentByUser = "";
                 }
-            } 
+            }
 
             //attachements
             List<Attachment> attachements = new List<Attachment>();
@@ -562,7 +635,7 @@ namespace CommunicationWorkerRole
                     byte[] dataByte = null;
                     if (ca.Document.HasFile)
                     {
-                        
+
                         IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                         BlobFileInfo fileInfo = new BlobFileInfo()
                         {
@@ -591,12 +664,12 @@ namespace CommunicationWorkerRole
 
                         string name = ca.DocumentId;
                         string calculatedFileName = "";
-                        if (ca.Document!=null && !string.IsNullOrEmpty(ca.Document.CalculatedFileName))
+                        if (ca.Document != null && !string.IsNullOrEmpty(ca.Document.CalculatedFileName))
                         {
-                            calculatedFileName = ca.Document.CalculatedFileName.Replace(" ", "") + "."+ ca.Document.Extension;
+                            calculatedFileName = ca.Document.CalculatedFileName.Replace(" ", "") + "." + ca.Document.Extension;
                         }
-                        
-                       else if (docCopy != null)
+
+                        else if (docCopy != null)
                         {
                             DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(docCopy.DocumentOutId, ca.Tenant);
                             DocumentType documentType = documentTypeRepository.GetSingleDocumentTypes(documentOut.DocumentsFiling.DocumentTypeId, ca.Tenant);
@@ -649,7 +722,7 @@ namespace CommunicationWorkerRole
                 Tenant = currentLog.Tenant,
                 Body = htmlTemplate.ToString(),
                 SentByUser = sentByUser,
-                Subject = currentLog.Subject, 
+                Subject = currentLog.Subject,
                 Retries = currentLog.Retries,
             };
 
@@ -664,11 +737,11 @@ namespace CommunicationWorkerRole
                     parameters.ReplyToList.Add(replyto);
                 }
 
-               
+
             }
 
             string contactName = "";
-          
+
             if (!string.IsNullOrEmpty(parameters.From) && parameters.From.Contains('@'))
             {
                 ContactRepository contactRepository = new ContactRepository(currentLog.Tenant);
@@ -701,7 +774,8 @@ namespace CommunicationWorkerRole
             {
                 currentLog.CommunicationStatusTypeCode = "C";
             }
-            else {
+            else
+            {
                 currentLog.CommunicationStatusTypeCode = "D";
             }
             currentLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(currentLog.Tenant);
@@ -810,8 +884,8 @@ namespace CommunicationWorkerRole
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
             //ThreadId = Thread.CurrentThread.ManagedThreadId.ToString();
-            
-            
+
+
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "EmailOut-" + queueName;
             DoneItemsInRange = new Dictionary<DateTime, int>();
@@ -844,7 +918,7 @@ namespace CommunicationWorkerRole
                 //client = StorageAcountDetails.CreateServiceBusQueueClient(emailQueueName);
 
 
-                queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+                queueservice = new DbQueueService(queueName, 0);//QueueServiceManager.GetQueueService(queueName, 0);
                 //queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
             }
             catch (Exception ex)
@@ -855,7 +929,7 @@ namespace CommunicationWorkerRole
 
         private void RoleEnvironmentChanging(object sender, RoleEnvironmentChangingEventArgs e)
         {
-            
+
             // If a configuration setting is changing
             if (e.Changes.Any(change => change is RoleEnvironmentConfigurationSettingChange))
             {
@@ -980,6 +1054,20 @@ namespace CommunicationWorkerRole
 
         private async void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfileText)
         {
+            string iSendingURL = null;
+            string iSendingPassword = null;
+
+            if (LogitudeSettings.ChampEnv == "PROD")
+            {
+                iSendingURL = LogitudeSettings.ChampProdAPIURL;
+                iSendingPassword = LogitudeSettings.ChampProdAPIPassword;
+            }
+            else
+            {
+                iSendingURL = LogitudeSettings.ChampTestAPIURL;
+                iSendingPassword = LogitudeSettings.ChampTestAPIPassword;
+            }
+
             bool isTestingCode = false;
 
             if (waitingCommLog.CreatedByUserId == "1-77675")
@@ -1021,16 +1109,13 @@ namespace CommunicationWorkerRole
             }
 
             // https://stackoverflow.com/questions/25352462/how-to-send-xml-content-with-httpclient-postasync
-
             //string iSendingURL = "https://community.champ.aero:8444/logitude/test/NO_WAIT";
-            string iSendingURL = "https://community.champ.aero:8443/logitude/prod/NO_WAIT";
 
             StringContent content = new StringContent(xmlfileText, Encoding.ASCII, "application/xml");
-
             using (var client = new HttpClient())
             {
                 //client.DefaultRequestHeaders.Add("password", "logitudett");
-                client.DefaultRequestHeaders.Add("password", "logitudepp");
+                client.DefaultRequestHeaders.Add("password", iSendingPassword);
 
                 //var iResponse = client.PostAsync(iSendingURL, content);
                 //System.Threading.Tasks.Task iResponse = client.PostAsync(iSendingURL, content);

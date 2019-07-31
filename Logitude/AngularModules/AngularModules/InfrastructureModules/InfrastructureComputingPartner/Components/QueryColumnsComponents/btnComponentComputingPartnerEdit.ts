@@ -1,4 +1,4 @@
-﻿import {Component, ViewContainerRef, OnInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
+import {Component, ViewContainerRef, OnInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {CommonDomainService, CustomApiQueryFilters} from '../../../../Common/Services/CommonDomainService';
@@ -12,7 +12,7 @@ declare var window: any;
 })
 
 export class btnComponentComputingPartnerEdit {
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) { }
     public $event: any;
     Edit() {
@@ -35,7 +35,7 @@ export class btnComponentComputingPartnerEdit {
 
     OnBackFromEdit(selectedEntityId, $event) {
 
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit({ Name: 'btnComponentComputingPartnerEdit', Value: this.rowData, RowIndex: this.AdditionalData.rowIndex}); 
+        this.CurrentSession.PseventRowSelectEvent.emit({ Name: 'btnComponentComputingPartnerEdit', Value: this.rowData, RowIndex: this.AdditionalData.rowIndex}); 
 
     }
     public rowData: any;

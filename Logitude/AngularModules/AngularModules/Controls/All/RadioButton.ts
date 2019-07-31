@@ -119,6 +119,7 @@ export class RadioButton implements OnInit {
     public TextColor: string = FontTool.Gray;
     public IsComboBoxWithCheck: boolean = false;
     @Output() Checked: EventEmitter<boolean> = new EventEmitter<boolean>();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -128,7 +129,7 @@ export class RadioButton implements OnInit {
 
         this.ControlId = pipe.transform(this.Text + "_" + this.Name);
         this.ControlId2 = this.ControlId + "_LBL";
-        this.Name += SessionLocator.CurrentSession.GetNewId("RadioButton");
+        this.Name += this.CurrentSession.GetNewId("RadioButton");
     }
 
     private name: string;

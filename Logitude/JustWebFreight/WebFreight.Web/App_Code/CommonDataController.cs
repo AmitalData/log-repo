@@ -249,6 +249,9 @@ namespace WebFreight.Web
             if (sharedLogisticsSetting != null)
             {
                 myResult.IsInvoicesMenuEnabled = sharedLogisticsSetting.IsInvoicesMenuEnabled;
+                myResult.IsAgentShared = sharedLogisticsSetting.IsAgentShared;
+                myResult.IsShipperShared = sharedLogisticsSetting.IsShipperShared;
+                myResult.IsConsigneeShared = sharedLogisticsSetting.IsConsigneeShared;
             }
 
             return myResult;

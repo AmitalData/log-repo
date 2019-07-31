@@ -56,7 +56,7 @@ namespace CommunicationWorkerRole
     class ReportExecutionLogWorkerRole : WorkerEntryPoint
     {
 
-        IQueueService queueservice;
+        DbQueueService queueservice;
         int tenant = 0;
       
 
@@ -135,30 +135,27 @@ namespace CommunicationWorkerRole
 
                                 if (reportFliter != null)
                                 {
-                                    Thread thread = new Thread(() => BuildReport(reportFliter, reportExecutionLog, reportExecutionLogRepository));
+                                    Thread thread = new Thread(() => BuildReport(reportFliter, reportExecutionLog, reportExecutionLogRepository, queueservice, response));
                                     thread.IsBackground = true;
                                     thread.Start();
                           
                                 }
                                 else
                                 {
-                                    this.UpdateReportExecutionLog(null, reportExecutionLog, reportExecutionLogRepository, "F" , "Report fliter not found");
-
+                                    UpdateReportExecutionLogArgs updateReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository,  ExceptionMessage = "Report fliter not found", queueservice = queueservice, StatusCode = "F" };
+                                    this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
+                                    //queueservice.Complete();
+                                    LogDoneItemInMemory();
                                 }
-
-
                                 queueservice.Complete();
 
-                                LogDoneItemInMemory();
                             }
                             catch (Exception ex)
                             {
-                                #region HandleException
-                                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
-                                this.UpdateReportExecutionLog(ex, reportExecutionLog, reportExecutionLogRepository, "F");
-                                queueservice.CompleteAsFailed();
 
-                                #endregion
+                                UpdateReportExecutionLogArgs updateReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, Exception = ex, queueservice = queueservice, StatusCode = "F",response = response};
+                                HandleReportExecutionException(updateReportExecutionLogArgs);
+
                             }
 
 
@@ -184,6 +181,7 @@ namespace CommunicationWorkerRole
             }
         }
 
+
         private void ConnectClient()
         {
             try
@@ -198,56 +196,123 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void BuildReport(ReportFliter reportFliter, ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository)
+        private void BuildReport(ReportFliter reportFliter, ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository, DbQueueService queueservice , QueueResponse response)
         {
 
             try
             {
                 ReportHelper reportHelper = new ReportHelper();
-                reportHelper.BuildReport(reportFliter);
-                this.UpdateReportExecutionLog(null, reportExecutionLog, reportExecutionLogRepository, "D");
+                BuildReportDataResult buildReportDataResult = reportHelper.BuildReport(reportFliter);
+                UpdateReportExecutionLogArgs handleReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, Exception = buildReportDataResult.Exception, queueservice = queueservice, StatusCode = "F" , response = response ,IsInternalException = buildReportDataResult.IsInternalException };
+                
+                if (buildReportDataResult.Exception == null)
+                {
+                    handleReportExecutionLogArgs.StatusCode = "D";
+                    this.UpdateReportExecutionLog(handleReportExecutionLogArgs);
+                    //queueservice.Complete();
+                    LogDoneItemInMemory();
+                }
+                else
+                {
+                    HandleReportExecutionException(handleReportExecutionLogArgs , true);
+                }
+
             }
             catch (Exception ex)
             {
-                if (reportExecutionLog != null && reportExecutionLogRepository != null)
-                {
-                    this.UpdateReportExecutionLog(ex, reportExecutionLog, reportExecutionLogRepository,"F");
-                }
+
+                UpdateReportExecutionLogArgs handleReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, Exception = ex, queueservice = queueservice, StatusCode = "F" , response = response };
+                HandleReportExecutionException(handleReportExecutionLogArgs);
+
             }
         }
 
 
-        private void UpdateReportExecutionLog(Exception ex , ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository, string statusCode , string exception = null)
+        private void HandleReportExecutionException(UpdateReportExecutionLogArgs updateReportExecutionLogArgs, bool isupdateReportExecutionLog = false)
         {
-            if (reportExecutionLog != null && reportExecutionLogRepository!=null)
+            if (!updateReportExecutionLogArgs.IsInternalException)
             {
-                if (statusCode != "D" && (ex!=null || !string.IsNullOrEmpty(exception))) {
-                    var exceptionMessage = exception;
+                ExceptionHandler.HandleException(updateReportExecutionLogArgs.Exception, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
+            }
 
-                    if (ex != null)
+            if (updateReportExecutionLogArgs.response != null && updateReportExecutionLogArgs.response.MessageValues.Keys.Contains("ReportExecutionLogId") && !updateReportExecutionLogArgs.IsInternalException)
+            {
+                if (updateReportExecutionLogArgs.response.RetryNumber <= 1)
+                {
+                    updateReportExecutionLogArgs.queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), updateReportExecutionLogArgs.response.MessageId);
+                }
+
+                if (updateReportExecutionLogArgs.response.RetryNumber >= 2)
+                {
+                    queueservice.CompleteAsFailed();
+                    if (isupdateReportExecutionLog) this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
+
+                }
+            }
+            else
+            {
+                queueservice.CompleteAsFailed();
+                if (isupdateReportExecutionLog) this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
+            }
+
+         
+         
+        }
+
+
+
+        private void UpdateReportExecutionLog(UpdateReportExecutionLogArgs updateReportExecutionLogArgs)
+        {
+            if (updateReportExecutionLogArgs.ReportExecutionLog != null && updateReportExecutionLogArgs.ReportExecutionLogRepository != null)
+            {
+                if (updateReportExecutionLogArgs.StatusCode != "D" && (updateReportExecutionLogArgs.Exception != null || !string.IsNullOrEmpty(updateReportExecutionLogArgs.ExceptionMessage)))
+                {
+                    var exceptionMessage = updateReportExecutionLogArgs.ExceptionMessage;
+
+                    if (updateReportExecutionLogArgs.Exception != null)
                     {
-                        exceptionMessage = ex.Message;
-                        if (ex.InnerException != null)
+                        exceptionMessage = updateReportExecutionLogArgs.Exception.Message;
+                        if (updateReportExecutionLogArgs.Exception.InnerException != null)
                         {
-                            exceptionMessage = exceptionMessage + Environment.NewLine + ex.InnerException;
+                            exceptionMessage = exceptionMessage + Environment.NewLine + updateReportExecutionLogArgs.Exception.InnerException;
                         }
-                        if (ex.StackTrace != null)
+                        if (updateReportExecutionLogArgs.Exception.StackTrace != null)
                         {
-                            exceptionMessage = exceptionMessage + Environment.NewLine + "Stack trace: " + ex.StackTrace;
+                            exceptionMessage = exceptionMessage + Environment.NewLine + "Stack trace: " + updateReportExecutionLogArgs.Exception.StackTrace;
                         }
                     }
 
 
-                    reportExecutionLog.ExceptionMessage = exceptionMessage;
+                    updateReportExecutionLogArgs.ReportExecutionLog.ExceptionMessage = exceptionMessage;
                 }
 
-                reportExecutionLog.StatusCode = statusCode;
-                reportExecutionLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                reportExecutionLogRepository.Update(reportExecutionLog);
-                reportExecutionLogRepository.SubmitChanges();
+                if (!string.IsNullOrEmpty(updateReportExecutionLogArgs.ReportExecutionLog.ExceptionMessage) && updateReportExecutionLogArgs.ReportExecutionLog.ExceptionMessage.Length >= 4000)
+                {
+                    updateReportExecutionLogArgs.ReportExecutionLog.ExceptionMessage = updateReportExecutionLogArgs.ReportExecutionLog.ExceptionMessage.Substring(0, 3999);
+
+                }
+
+                updateReportExecutionLogArgs.ReportExecutionLog.StatusCode = updateReportExecutionLogArgs.StatusCode;
+                updateReportExecutionLogArgs.ReportExecutionLog.DoneDate = DateTime.Now;
+                updateReportExecutionLogArgs.ReportExecutionLogRepository.Update(updateReportExecutionLogArgs.ReportExecutionLog);
+                updateReportExecutionLogArgs.ReportExecutionLogRepository.SubmitChanges();
             }
         }
 
+
+    }
+
+    public class UpdateReportExecutionLogArgs
+    {
+        public Exception Exception { get; set; }
+        public ReportExecutionLog ReportExecutionLog { get; set; }
+        public ReportExecutionLogRepository ReportExecutionLogRepository { get; set; }
+        public string StatusCode { get; set; }
+        public string ExceptionMessage { get; set; }
+        public DbQueueService queueservice { get; set; }
+        public bool IsInternalException { get; set; }
+        public QueueResponse response { get; set; }
+        
 
     }
 }

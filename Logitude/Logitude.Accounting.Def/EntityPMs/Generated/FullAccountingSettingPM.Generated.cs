@@ -963,6 +963,75 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isPaymentChequesActivated ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPaymentChequesActivated  
+	   {
+	    
+	     get
+		{
+		   return isPaymentChequesActivated;
+		 }
+		 set
+		 {
+		   if(isPaymentChequesActivated != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPaymentChequesActivated",OldValue=isPaymentChequesActivated,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPaymentChequesActivated=value;
+		   }
+			
+		 }
+	   }
+	  private int? gLAccounterCounterLength ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? GLAccounterCounterLength  
+	   {
+	    
+	     get
+		{
+		   return gLAccounterCounterLength;
+		 }
+		 set
+		 {
+		   if(gLAccounterCounterLength != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccounterCounterLength",OldValue=gLAccounterCounterLength,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   gLAccounterCounterLength=value;
+		   }
+			
+		 }
+	   }
+	  private string paymentChequesLogoId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PaymentChequesLogoId  
+	   {
+	    
+	     get
+		{
+		   return paymentChequesLogoId;
+		 }
+		 set
+		 {
+		   if(paymentChequesLogoId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentChequesLogoId",OldValue=paymentChequesLogoId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   paymentChequesLogoId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

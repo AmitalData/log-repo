@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CreditLimitSettingUpdateClass
@@ -170,7 +174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "IsCreditLimitEnabled",
-					  						DefaultText =  @"Is Credit Limit Enabled",
+					  						DefaultText =  "Is Credit Limit Enabled",
 					  						HelpTextCode =  "IsCreditLimitEnabled",
 					  						Code =  "IsCreditLimitEnabled",
 					  						DependencyFilter3IsList =  false,
@@ -228,7 +232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "InvoiceCreationWarning",
-					  						DefaultText =  @"Invoice Creation Warning",
+					  						DefaultText =  "Invoice Creation Warning",
 					  						HelpTextCode =  "InvoiceCreationWarning",
 					  						Code =  "InvoiceCreationWarning",
 					  						DependencyFilter3IsList =  false,
@@ -286,7 +290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "InvoiceCreationBlock",
-					  						DefaultText =  @"Invoice Creation Block",
+					  						DefaultText =  "Invoice Creation Block",
 					  						HelpTextCode =  "InvoiceCreationBlock",
 					  						Code =  "InvoiceCreationBlock",
 					  						DependencyFilter3IsList =  false,
@@ -347,7 +351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipmentCreationBlock",
-					  						DefaultText =  @"Shipment Creation Block",
+					  						DefaultText =  "Shipment Creation Block",
 					  						HelpTextCode =  "ShipmentCreationBlock",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -370,6 +374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable CreditLimitSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CreditLimitSetting" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature CreditLimitSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CreditLimitSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CreditLimitSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

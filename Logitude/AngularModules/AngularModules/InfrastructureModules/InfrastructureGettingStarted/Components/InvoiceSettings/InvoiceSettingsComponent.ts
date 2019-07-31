@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -25,6 +25,7 @@ export class InvoiceSettingsComponent extends BaseComponent implements OnInit {
     public IsVisible = false;
 
     private tenantPM: TenantPM = new TenantPM();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -53,7 +54,7 @@ export class InvoiceSettingsComponent extends BaseComponent implements OnInit {
     GetAccountingSettings() {
         var accountingSettingPMService = new AccountingSettingPMService();
         accountingSettingPMService.get(SessionLocator.AccountingSettingPM.Id).subscribe((myResult: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResult.HasError) {
                 this.accountingSettings = myResult.Result;
                 this.isAccountingSettingFinished = true;
@@ -84,7 +85,7 @@ export class InvoiceSettingsComponent extends BaseComponent implements OnInit {
         this.accountingSettings.AllowManualInvoiceNumber = value;
 
         if (value) {
-            this.IsChronologicalDates = false;
+            this.IsARInvoiceChronologicalDates = false;
         }
     }
 
@@ -95,16 +96,16 @@ export class InvoiceSettingsComponent extends BaseComponent implements OnInit {
         this.accountingSettings.IsVatNumberMandatoryInAR = value;
     }
 
-    get IsChronologicalDates() {
-        return this.accountingSettings.IsChronologicalDates;
+    get IsARInvoiceChronologicalDates() {
+        return this.accountingSettings.IsARInvoiceChronologicalDates;
     }
-    set IsChronologicalDates(value: boolean) {
-        this.accountingSettings.IsChronologicalDates = value;
+    set IsARInvoiceChronologicalDates(value: boolean) {
+        this.accountingSettings.IsARInvoiceChronologicalDates = value;
     }
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -112,14 +113,14 @@ export class InvoiceSettingsComponent extends BaseComponent implements OnInit {
         Validator.TryValidateObject(this.tenantPM, this.DataContext.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             var tenantService = new TenantPMService();
             tenantService.update(this.tenantPM).subscribe((myResult:ServiceResponse) => {
                 if (!myResult.HasError) { // Success
                     this.UpdateAccountingSettings();
                 }
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             });
         }
@@ -128,15 +129,15 @@ export class InvoiceSettingsComponent extends BaseComponent implements OnInit {
     UpdateAccountingSettings() {
         var accountingSettingPMService = new AccountingSettingPMService();
         accountingSettingPMService.update(this.accountingSettings).subscribe((myResult: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResult.HasError) { // Success
 
                 ObjectsUpdater.UpdateTenantPM(this.tenantPM);
                 ObjectsUpdater.UpdateAccountingSettingPM(this.accountingSettings);
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
         });
     }

@@ -12,7 +12,7 @@ describe('Operations Module', () => {
 
   it('ShipmentTabs', function () {
     page.GoToShipment();
-    page.EditTabs('314971','D','');
+ //   page.EditTabs('314971','D','');
        // this.QuickSearch.UseQuickSearch('4445364363');
         // this.EditShipmentTabs.EditTabs('4445364363',LogitudeShipType, ShipmentType);
 

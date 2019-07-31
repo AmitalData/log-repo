@@ -39,16 +39,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<HybridTenantStateList> GetHybridTenantState(int tenant)
         {
             List<HybridTenantStateList> hybridTenantStateLists = (from a in repository.context.HybridTenantStates
-                         select new HybridTenantStateList()
-                         {
-                             Tenant = a.Tenant,
-                             WaitingQueue = a.WaitingQueue,
-                             LastUpdateDateTime = a.LastUpdateDateTime,
-                             FailedQueue = a.FailedQueue,
-                             FailedQueueTextColor = "#000000",
-                             LastUpdateDateTimeTextColor = "#000000",
-                             WaitingQueueTextColor = "#000000",
-                         }).ToList();
+                                                                  select new HybridTenantStateList()
+                                                                  {
+                                                                      Tenant = a.Tenant,
+                                                                      WaitingQueue = a.WaitingQueue,
+                                                                      LastUpdateDateTime = a.LastUpdateDateTime,
+                                                                      FailedQueue = a.FailedQueue,
+                                                                      FailedQueueTextColor = "#000000",
+                                                                      LastUpdateDateTimeTextColor = "#000000",
+                                                                      WaitingQueueTextColor = "#000000",
+                                                                      LastQueueDateTime = a.LastQueueDateTime,
+                                                                  }).ToList();
 
             List<int> statetenants = hybridTenantStateLists.Select(t => t.Tenant).ToList();
 

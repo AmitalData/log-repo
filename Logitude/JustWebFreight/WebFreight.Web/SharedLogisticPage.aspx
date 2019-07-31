@@ -133,13 +133,11 @@
                         <tr>
                             <td style="width:5px;"></td>
 
-                            <td style="width:50px;">
+                            <td id="companyLogoArea" style="width:50px;">
                                 <img id="companyLogo" src="HtmlHelpers/Images/Icons/Logo.png" style="width:50px; height:35px; vertical-align:bottom; position:absolute; top:2px;"/>                    
                             </td>
-                                                                                  
-<%--                             <td style="width:150px;">
-                                <img src="HtmlHelpers/Images/Icons/logo1248.jpg" style="width:150px; height:20px; vertical-align:bottom; position:absolute; top:2px;"/>                    
-                            </td>--%>
+                                                                                   
+
 
                             <td style="vertical-align:central; text-indent: 5px;">
                                 <span id="CompanyText" style="font-size:13px; color:#45494A"></span>
@@ -675,7 +673,7 @@
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:25px; text-align:center;"><img style="height:20px; width:20px;" src="#= DirectionSRC #" title="#= DirectionName #" /></div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:60px;">Ref No:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:90px; color:\\#1B90CB;">${ShipmentNumber}</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;">${MyPartnerName}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; visibility: #= MyPartnerVisibility #;">${MyPartnerName}</div>
 
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:30px;"><img style="height:20px; width:22px; padding:0px; margin:0px;" src="#= FromCountySRC #"/></div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;" title="#= FromPortName #">${FromPortName}</div>
@@ -691,7 +689,7 @@
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; font-size:11px; color: #= StatusColor #;">${StatusName}</div>                       
 
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:7px;"></div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:130px; font-size:11px; color: #= StatusColor #;">Delivery Date</div>  
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:150px; font-size:11px; color: #= StatusColor #;">Requested Delivery Date</div>  
                     </div>
 
                     <div style="height:25px; vertical-align:central;">
@@ -712,7 +710,7 @@
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; font-size:11px; color: #= StatusColor #; margin-top:-10px;">${StatusDate}</div> 
 
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:7px;"></div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:130px; font-size:11px; color: #= StatusColor #; margin-top:-10px;">${DeliveryDate}</div> 
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; visibility: #= DeliveryDateVisibility #; width:150px; font-size:11px; color: #= StatusColor #; margin-top:-10px;">${DeliveryDate}</div> 
 
                     </div>
 
@@ -730,7 +728,7 @@
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:60px;"></div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px; font-size:11px; color: Orange;" title="#= LastLogDateLong #"></div>
 
-                        <div class="ValueTextStyle TemplateItem" style="position: absolute; left: 300px; bottom: 5px; height: 15px; width: 380px; line-height: 15px; font-size:10px;" title="#= DescriptionOfGoods #">${DescriptionOfGoods}</div> 
+                        <div class="ValueTextStyle TemplateItem" style="position: absolute; left: 300px; bottom: 5px; height: 15px; width: 400px; line-height: 15px; font-size:10px;" title="#= DescriptionOfGoods #">${DescriptionOfGoods}</div> 
                     </div>
 
                 </div>

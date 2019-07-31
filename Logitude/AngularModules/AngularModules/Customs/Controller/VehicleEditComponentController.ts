@@ -1,4 +1,4 @@
-﻿import { AmitalGatewayUtil, UnifreightMessageM } from   '../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { AmitalGatewayUtil, UnifreightMessageM } from   '../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { AppTool } from '../../Infrastructure/Tools';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { IEditComponentController } from '../../Infrastructure/Components/EditComponent/EditComponent';
@@ -11,7 +11,7 @@ export class VehicleEditComponentController implements IEditComponentController 
     public IsInBatchRequest: boolean = null;
 
     private _CurrentEntity: VehiclePM
-
+    private CurrentSession = SessionLocator.SelectedSession;
     private _ControllerOn: boolean = false;
     private _UnifaceExclusiveAlreadyLocked: boolean;
     OnFirstTimeAfterSingleDataLoaded(CurrentEntity): Promise<boolean> {
@@ -26,7 +26,7 @@ export class VehicleEditComponentController implements IEditComponentController 
             //alert(SessionLocator.AllSessions.length);
             //let myEditTab: SessionTabItem = this.Tabs[1];
             if (SessionLocator.AllSessions.length == 2 &&
-                SessionLocator.AllSessions[0] != SessionLocator.CurrentSession) {
+                SessionLocator.AllSessions[0] != this.CurrentSession) {
                 //myEditTab no need to Check !!!
                 this._ControllerOn = false;
                 resolve(this._ControllerOn);
@@ -55,7 +55,7 @@ export class VehicleEditComponentController implements IEditComponentController 
                     //if (ResponseInstructionCancel) {
                     //    this.ToCancell = true;
                     //    resolve(this._ControllerOn);
-                    //    //SessionLocator.CurrentSession.RealCloseCurrentEditComponent();
+                    //    //this.CurrentSession.RealCloseCurrentEditComponent();
                     //    return;
                     //}
                     this._InDisplayModeCFIFILMLockMMessage = "";
@@ -84,12 +84,12 @@ export class VehicleEditComponentController implements IEditComponentController 
                         args.MenuButtonsStates["DeleteVehicle"] = true;
                         MenuButtonsEvents.MenuButtonsStateChanged.emit(args);
 
-                        if (SessionLocator.CurrentSession.CurrentEditComponent) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                        if (this.CurrentSession.CurrentEditComponent) {
+                            this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
                         }
                         //**************************************************************************//
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         var message: MessageWindow = new MessageWindow();
                         message.Width = 350;
                         message.Height = 180;

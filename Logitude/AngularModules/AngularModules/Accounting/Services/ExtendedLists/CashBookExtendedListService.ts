@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -44,6 +44,21 @@ export class CashBookExtendedListService {
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetCashBookSummary() {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetCashBookSummary?', {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists = response.json();
+                return allLists;
+            });
         });
     }
 

@@ -328,7 +328,6 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
-            if (this.SelectedItem.lastTitle == "Custom") {
                 this.queryFilterItem = new QueryFilterItem();
                 this.queryFilterItem.DisplayInList = false;
                 this.queryFilterItem.FieldName = "FromDate";
@@ -342,7 +341,15 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
                 this.queryFilterItem.FieldValue = this.ActivityFromDate;
                 this.queryFilterItem.FieldDataType = "Date";
                 this.queryFilterItems.push(this.queryFilterItem);
-            }
+            
+
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "TimeRange";
+            this.queryFilterItem.FieldValue = this.SelectedItem.lastTitle;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
 
             this.reportFliter = new ReportFliter();

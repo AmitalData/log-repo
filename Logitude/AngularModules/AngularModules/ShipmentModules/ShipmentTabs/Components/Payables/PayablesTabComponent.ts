@@ -54,6 +54,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public IsResourcesReady: boolean = false;  
     public myDomainService: ShipmentDomainService;
     public myUserListService: UserListService = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
         this.OriginShipment = entityArgs.OriginEntity;
@@ -78,7 +79,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "PayablesGenerated") {
                     this.BuildItemsSource();
                     this.ComputeShipmentFields();
@@ -106,6 +107,9 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                    this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildSummaryData();
@@ -266,7 +270,12 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public OpenPayables: number = 0;
     public DifferencePayablesText: string = "N/A";
     public DifferencePayablesColor: string;
+    public PayableList: any[] = [];
+
     BuildSummaryData() {
+
+        this.PayableList = this.EntityPM.ShipmentAPInvoices;
+
         if (this.IsByLocalCurrency) {
             this.AccrualsPayables = ArrayTool.Sum(this.EntityPM.ShipmentPayables, "ExpectedAmountLocal");
             this.AccountedPayables = ArrayTool.Sum(this.EntityPM.ShipmentPayables, "AccountedAmountInLocalCurrency");
@@ -644,7 +653,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                             if (!myResponse.HasError) {
                                 this.OriginShipment = myResponse.Result;
                                 this.entityArgs.OriginEntity = myResponse.Result;
-                                SessionLocator.CurrentSession.FireEvent("OriginShipmentLoaded");
+                                this.CurrentSession.FireEvent("OriginShipmentLoaded");
 
                                 var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
                                 Generator.GeneratePayablesFromOriginShipment(this.OriginShipment);
@@ -812,10 +821,15 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         if (this.SavingRequestParam) {
             var entityId = this.SavingRequestParam;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
+
+                    var iFields: any[] = [];
+                    iFields.push({ FieldName: "ShipmentConcurrencyGUID", FieldValue: this.EntityPM.ConcurrencyGUID });
+                    iFields.push({ FieldName: "ShipmentNewConcurrencyGUID", FieldValue: this.EntityPM.NewConcurrencyGUID });
+
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'APInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });
+                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'APInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber, EntityFields: iFields });
 
                     let isEditComponentSaved = false;
                     cmpRef.instance.BackCompleted.subscribe(bk => {
@@ -842,7 +856,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         if (this.SavingRequestParam) {
             var entityId = this.SavingRequestParam;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'Quote', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });
@@ -869,7 +883,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityPM: comp.EntityPM, ObjectTableName: 'APInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });
@@ -946,6 +960,19 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
+                    case "CWKG": {
+                        if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
+                            isDifferentOrders = true;
+                        }
+                       break;
+                    }
+                    case "GWKG": {
+                        if (item.Quantity != this.EntityPM.GrossWeightInKG) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
                     case "GRWT": {
 
                         if (item.Quantity != this.EntityPM.GrossWeight) {
@@ -1030,6 +1057,15 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                             if (this.EntityPM.ShipmentPayables.filter(f => f.MeasurementCode == "PRFR" && f.Quantity != FRT_Quantity).length > 0) {
                                 isDifferentPRFR = true;
                             }
+                        }
+
+                        break;
+                    }
+
+                    case "VCBM": {
+
+                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
+                            isDifferentOrders = true;
                         }
 
                         break;
@@ -1162,8 +1198,7 @@ export class ShipmentPayableItem extends BaseComponent {
             }                       
         }
         
-        //this.IsRateEnabled = isRateEnabled;
-        this.IsRateEnabled = true;
+        this.IsRateEnabled = isRateEnabled;
         this.IsQuantityEnabled = isQuantityEnabled;
         this.IsUnitPriceEnabled = isUnitPriceEnabled;
         this.IsTotalAmountEnabled = isTotalAmountEnabled;
@@ -1434,12 +1469,17 @@ export class ShipmentPayableItem extends BaseComponent {
 
             this.SetPrepaidCollectId();
 
-            if (list.ChargesGroupCode == "FRT" || list.ChargesGroupCode == "SCH") {
-                this.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+            if (!AppTool.IsNullOrEmpty(list.PayablesDefaultCurrencyId)) {
+                this.CurrencyId = list.PayablesDefaultCurrencyId;
             }
-
             else {
-                this.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                if (list.ChargesGroupCode == "FRT" || list.ChargesGroupCode == "SCH") {
+                    this.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                }
+
+                else {
+                    this.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                }
             }
 
             if (this.fatherComponent.IsLCLEntity) {
@@ -1573,7 +1613,9 @@ export class ShipmentPayableItem extends BaseComponent {
                                 case "FIXD": { this.Quantity = 1; break; }
                                 case "GWTN": { this.Quantity = this.ShipmentPM.GrossWeightPerTon; break; }
                                 case "QTY": { this.Quantity = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
-
+                                case "CWKG": { this.Quantity = this.ShipmentPM.ChargeableWeightInKG; break;}
+                                case "GWKG": { this.Quantity = this.ShipmentPM.GrossWeightInKG; break; }
+                                case "VCBM": { this.Quantity = this.ShipmentPM.VolumeInCBM; break; }
                                 case "PRVL": {
                                     this.Quantity = this.ShipmentPM.ValueOfGoods;
                                     this.CurrencyId = this.ShipmentPM.ValueOfGoodsCurrencyId;
@@ -2320,6 +2362,14 @@ export class ShipmentPayableItem extends BaseComponent {
 
                     this.InsideItemsSource.forEach(item => {
                         switch (this.MeasurementCode) {
+                            case "VCBM": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "VolumeInCBM");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.VolumeInCBM;
+                                break;
+                            }
+
                             case "VOLU": {
                                 _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "Volume");
                                 _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
@@ -2341,6 +2391,21 @@ export class ShipmentPayableItem extends BaseComponent {
                                 _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
                                 unitPrice = _Ratio * this.UnitPrice;
                                 quantity = item.GrossWeightPerTon;
+                                break;
+                            }
+
+                            case "CWKG": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "ChargeableWeightInKG");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.ChargeableWeightInKG;
+                                break;
+                            }
+                            case "GWKG": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "GrossWeightInKG");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.GrossWeightInKG;
                                 break;
                             }
 
@@ -2483,6 +2548,9 @@ export class ShipmentPayableItem extends BaseComponent {
             case "PRFR": { result = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
             case "GWTN": { result = this.ShipmentPM.GrossWeightPerTon; break; }
             case "QTY": { result = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
+            case "CWKG": { result = this.ShipmentPM.ChargeableWeightInKG; break; }
+            case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
+            case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
             case "BCNT": {
                 break;
             }
@@ -2547,6 +2615,9 @@ export class InsidePayableViewModel {
     get FreightReceivablesAmount() { return this.ShipmentPM.FreightReceivablesAmount; }
     get NumberOfPackages() { return this.ShipmentPM.NumberOfPackages; }
     get NumberOfContainers() { return this.ShipmentPM.NumberOfContainers; }
+    get ChargeableWeightInKG() { return this.ShipmentPM.ChargeableWeightInKG; }
+    get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
+    get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
 
     // Payable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -2620,6 +2691,30 @@ export class InsidePayableViewModel {
         var myQuantity = null;
 
         switch (this.MeasurementCode) {
+            case "CWKG": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.ChargeableWeightInKG;
+                }
+
+                break;
+            }
+
+            case "GWKG": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.GrossWeightInKG;
+                }
+
+                break;
+            }
+
+            case "VCBM": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.VolumeInCBM;
+                }
+
+                break;
+            }
+
             case "GRWT": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.GrossWeight;

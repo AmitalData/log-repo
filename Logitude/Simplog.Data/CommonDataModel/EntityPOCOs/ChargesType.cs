@@ -75,5 +75,19 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }
         public string VatTypeId { get; set; }
+
+        public bool IsImport { get; set; }
+        public bool IsDomestic { get; set; }
+        public bool IsExport { get; set; }
+        public bool IsDrop { get; set; }
+
+        [ForeignKey("ReceivablesDefaultCurrencyId")]
+        public virtual Currency ReceivablesDefaultCurrency  { get; set; }
+        public string ReceivablesDefaultCurrencyId { get; set; }
+
+        [ForeignKey("PayablesDefaultCurrencyId")]
+        public virtual Currency PayablesDefaultCurrency { get; set; }
+        public string PayablesDefaultCurrencyId { get; set; }
+
     }
 }

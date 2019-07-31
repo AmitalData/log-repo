@@ -32,7 +32,7 @@
                                     <td>{{'Shipment.TH.Packages' | TextCodeTranslationPipe}}</td>
 
                                     <td style="width: 90px">
-                                        <button  id="{{ 'AddPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackageClicked()">{{AddButtonLabel}}</button>
+                                        <button id="{{ 'AddPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackageClicked()">{{AddButtonLabel}}</button>
                                     </td>
 
                                     <td style="width:5px;" *ngIf="IsFCLEntity">
@@ -40,7 +40,7 @@
                                     </td>
 
                                     <td style="width: 120px" *ngIf="IsInsideButtonVisible">
-                                        <button  id="{{ 'AddInsidePackage' | IdGeneratorPipe}}" [disabled]="!IsAddInsideButtonEnabled" class="Button" (click)="AddInsideButtonClicked()">{{'Shipment.B.Packages.AddInsidePackage' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'AddInsidePackage' | IdGeneratorPipe}}" [disabled]="!IsAddInsideButtonEnabled" class="Button" (click)="AddInsideButtonClicked()">{{'Shipment.B.Packages.AddInsidePackage' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width:5px;">
@@ -48,7 +48,7 @@
                                     </td>
 
                                     <td style="width: 1px">
-                                        <IconButton  id="{{ 'PackageSettings' | IdGeneratorPipe}}" [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
+                                        <IconButton id="{{ 'PackageSettings' | IdGeneratorPipe}}" [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
                                     </td>
 
                                     <td style="width:5px;" *ngIf="IsRebuildButtonVisible">
@@ -56,7 +56,41 @@
                                     </td>
 
                                     <td style="width: 1px" *ngIf="IsRebuildButtonVisible">
-                                        <button   id="{{ 'ReBuildPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="RebuildButtonClicked()">{{'Shipment.B.Packages.Rebuild' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'ReBuildPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="RebuildButtonClicked()">{{'Shipment.B.Packages.Rebuild' | TextCodeTranslationPipe}}</button>
+                                    </td>
+
+                                    <td style="width:5px;" *ngIf="IsDeletePackagesButtonVisible">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 1px" *ngIf="IsDeletePackagesButtonVisible">
+                                        <button id="{{ 'DeletePackages' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="DeletePackagesButtonClicked()">{{'Shipment.B.Packages.DeletePackages' | TextCodeTranslationPipe}}</button>
+                                    </td>
+
+
+                                    <td style="width:5px;" *ngIf="IsDownloadUploadPackagesVisible">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 120px" *ngIf="IsDownloadUploadPackagesVisible">
+                                        <div tabindex="0" class="ToggleButton">
+                                            <label>{{'Shipment.B.Packages.DownloadUpload' | TextCodeTranslationPipe}}</label>
+                                            <img src="./Images/ToggleIcon.png" />
+
+                                            <div class="ToggleButtonMenu" style="width:118px;">
+                                                <button (click)="DownloadClicked()">{{'Shipment.B.Packages.DownloadPackages' | TextCodeTranslationPipe}}</button>
+
+                                                <div>
+                                                    <input class="upload" style="display: none;width:65px"
+                                                           type="file" (change)="OnFileChanged($event)"
+                                                           (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
+                                                           #fileInput>
+                                                    <a href="#" style="text-decoration:none">
+                                                        <button (click)="fileInput.click()">{{'Shipment.B.Packages.UploadPackages' | TextCodeTranslationPipe}}</button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
@@ -800,7 +834,7 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'GrossWeight'" [Text]="GrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="GrossWeightLostFocus($event)"></LogTextBox>
+                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'GrossWeight'" [Text]="GrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (paste)="GrossWeightPaste($event)" (LostFocus)="GrossWeightLostFocus($event)"></LogTextBox>
                                     </td>
 
                                     <td style="width: 20px; vertical-align:middle;">
