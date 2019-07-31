@@ -69,7 +69,9 @@ namespace WebFreight.Web.App_Code
                     var CustomerTenantAccess = CustomerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(EntityPM.Tenant, (int)EntityPM.CustomerTenantNumber);
                     if (CustomerTenantAccess != null)
                     {
-                        PartnerName = PartnerName + " " + CustomerTenantAccess.CompanyName;
+                        //PartnerName = PartnerName + " " + CustomerTenantAccess.CompanyName;
+                        PartnerName = CustomerTenantAccess.CompanyName + " ( " + EntityPM.CustomerTenantNumber + " )";
+
                     }
                 }
                

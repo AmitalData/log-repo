@@ -151,4 +151,10 @@ export class SettingsWorkspaceComponent {
         logWindow.Title = "Get Projects";
         logWindow.Show('./TimeManagement/Components/NewEntity/NewGetProjectComponent');
     }
+
+    MoveHBProjectsClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Move Hours Between Projects";
+        logWindow.Show('./TimeManagement/Components/NewEntity/NewMoveHBProjectsComponent');
+    }
 }
