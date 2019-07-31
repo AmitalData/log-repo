@@ -12,7 +12,7 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass'; 
 
 
 export class SchedulerLogsPM {
@@ -25,24 +25,29 @@ export class SchedulerLogsPM {
       }
  	 
     
-    private code: string;
-    public get Code() { return this.code; }
-    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+    private id: string;
+    public get Id() { return this.id; }
+    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
-    private name: string;
-    public get Name() { return this.name; }
-    public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
+    private tenant: number;
+    public get Tenant() { return this.tenant; }
+    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private searchFields: string;
-    public get SearchFields() { return this.searchFields; }
-    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+    private createDate: Date;
+    public get CreateDate() { return this.createDate; }
+    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
        
 	 
-    private description: string;
-    public get Description() { return this.description; }
-    public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
+    private log: string;
+    public get Log() { return this.log; }
+    public set Log(newValue: string) { if (this.log != newValue) { this.log = newValue; this.MarkAsDirty("Log"); } }
+       
+	 
+    private historyId: string;
+    public get HistoryId() { return this.historyId; }
+    public set HistoryId(newValue: string) { if (this.historyId != newValue) { this.historyId = newValue; this.MarkAsDirty("HistoryId"); } }
        
 	 
 

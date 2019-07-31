@@ -1080,6 +1080,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\FeatureToggleList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerLogsList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerProcedureList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\ToggleList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\WebhookKeysList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMInitServices\FeatureTogglePMInitService.ts" />
