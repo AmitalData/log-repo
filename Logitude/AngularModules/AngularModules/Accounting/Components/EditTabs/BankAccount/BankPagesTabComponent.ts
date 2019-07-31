@@ -410,6 +410,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
 
                         }
                         else {
+                            this.IsRestoreButtonVisibile = false;
                             this.RestoreToolTipMessage = null;
                             this.ShowWindow(entityPM);
                             
