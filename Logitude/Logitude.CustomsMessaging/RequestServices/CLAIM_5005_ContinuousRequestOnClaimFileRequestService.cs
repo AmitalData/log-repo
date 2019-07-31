@@ -51,8 +51,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.explanation = myClaimsRelatedEntityPM.Explanation;
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.TPGIdentifier = new TPGIdentifier();
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.TPGIdentifier.fileNumber = myClaimsRelatedEntityPM.TapagNumber;
-                myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.TPGIdentifier.numeral = (int)myClaimsRelatedEntityPM.Numeral;
-
+                if(myClaimsRelatedEntityPM.Numeral != null)
+                {
+                    myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.TPGIdentifier.numeral = (int)myClaimsRelatedEntityPM.Numeral;
+                }
+                
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.RequestSubmiter = new CLAIM_MSG9_ContinuousRequestOnClaimFileRequestSubmiter();
                 if (!string.IsNullOrWhiteSpace(_ClaimPM.ClaimSubmiterNumber))
                 {

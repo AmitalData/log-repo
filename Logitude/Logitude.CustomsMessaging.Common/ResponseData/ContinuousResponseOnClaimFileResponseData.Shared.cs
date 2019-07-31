@@ -8,7 +8,9 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
 {
     public class ContinuousResponseOnClaimFileResponseData : ResponseDataBase
     {
-        public string CustomsLegalDemandsList { get; set; }
-        public string CountriesExclusionList { get; set; }
+        public string ContinuousMessagesTypeCode { get; set; }
+        public string ContinuousMessagesTypeName { get; set; }
+        public string ClaimRequestNumber { get; set; }
+        public string Note { get; set; }
     }
 }

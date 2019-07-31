@@ -2335,7 +2335,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             logWindow.Height = 570;
 
             switch (this.LookUpTableName) {
-                case "Customs.Client": {
+                case "Customs.Client": 
+                case "Customs.CourierPendingReason":
+                {
                     logWindow.Width = 800;
                     logWindow.Height = 600;
                     logWindow.IsShowCloseButton = true;

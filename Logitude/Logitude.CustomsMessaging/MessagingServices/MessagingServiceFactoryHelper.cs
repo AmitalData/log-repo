@@ -338,6 +338,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new CLAIM_2340_ClaimRequestMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                CLAIM_5005_ContinuousRequestOnClaimFileMessagingService>
+                ((new CLAIM_5005_ContinuousRequestOnClaimFileMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInCLAIM_5115_ContinuousMessageMessagingServices>
                 ((new DCAInCLAIM_5115_ContinuousMessageMessagingServices()).MainInterfaceCode);
 

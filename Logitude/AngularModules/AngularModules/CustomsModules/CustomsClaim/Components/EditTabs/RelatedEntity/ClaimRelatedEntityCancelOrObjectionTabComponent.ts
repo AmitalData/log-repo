@@ -1,16 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { ClaimPM } from '../../../../../Customs/EntityPMs/ClaimPM';
 import { ClaimsRelatedEntityPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntityPM';
-import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
+import { CustomMessageWrapperComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ContinuousRequestOnClaimFileRequestParams } from '../../../../../Customs/DataContract/RequestParams/ContinuousRequestOnClaimFileRequestParams';
+import { ContinuousResponseOnClaimFileResponseData } from '../../../../../Customs/DataContract/ResponseData/ContinuousResponseOnClaimFileResponseData';
 import { CustomSendOptionsArgs } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { ClaimsRelatedEntityExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/ClaimsRelatedEntityExtendedPMService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClaimWebService } from '../../../../../Customs/Services/WebServices/ClaimWebService';
 
 
 @Component({
@@ -18,7 +21,10 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
     templateUrl: './ClaimRelatedEntityCancelOrObjectionTabComponent.html',
 })
 
-export class ClaimRelatedEntityCancelOrObjectionTabComponent extends BaseComponent {
+export class ClaimRelatedEntityCancelOrObjectionTabComponent
+    extends BaseRequestsSheetMassaging
+    implements AfterViewInit, IRequestsSheetMassagingComponent, OnInit{
+    
     public DataContext: ClaimRelatedEntityCancelOrObjectionTabComponent = this;
     public EntityPM: ClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(new ClaimPM());
     public ClaimPM: ClaimPM = new ClaimPM();
@@ -26,83 +32,111 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent extends BaseCompone
 
     public CurrentEditComponentId: string;
     public IsControlEnabled: boolean = true;
-    public IsNewEntity: boolean = false;
 
     ValidationErrors: string[] = [];
     _ClaimsRelatedEntityExtendedPMService: ClaimsRelatedEntityExtendedPMService = new ClaimsRelatedEntityExtendedPMService()
+    _ClaimWebService: ClaimWebService = new ClaimWebService()
 
     constructor(public entityArgs: EntityArgs) {
         super();
 
         this.ValidationErrors = [];
-        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
+        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
     }
 
     private Listen() {
-        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
 
-            this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
+            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
 
-            SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
 
-            SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                 }
             });
 
-            SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
+            SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
                 }
             });
         }
     }
 
-    InitTab(entityPM: ClaimsRelatedEntityPM, claimPM: ClaimPM, isEnable: boolean, isNew: boolean) {
+    SetWindowArgs(args: any) {
+        if (args != null) {
+            this.EntityPM = args.ClaimsRelatedEntityPM;
+            this.ClaimPM = args.ClaimPM;
 
-        this.EntityPM = entityPM;
-        this.ClaimPM = claimPM;
-        this.IsNewEntity = isNew;
+            this.UIProperties.SetEnabled("ContinuousMessagesTypeCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Note", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ClaimRequestNumber", this.ObjectTableName, false);
+        }
+    }
 
-        this.UIProperties.SetEnabled("ContinuousMessagesTypeCode", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("Note", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("ClaimRequestNumber", this.ObjectTableName, false);
+    @ViewChild(CustomMessageWrapperComponent)
+    SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
+    ngAfterViewInit() {
+        if (this.SuperCustomMessageWrapperComponent == null) {
+            console.warn("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent == null");
+        } else {
+            console.log("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent != null");
+        }
+        this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
+        this.subscribeWrapperComponent()
+    }
+
+    OnMassageDisplayMethod() {
+        if (this.RequestParams == null) {
+            this.RequestParams = new ContinuousRequestOnClaimFileRequestParams();
+        }
+
+        if (this.ResponseData) {
+            //ContinuousResponseOnClaimFileResponseData
+        }
+        else {
+            this.ResponseData = new ContinuousResponseOnClaimFileResponseData();
+        }
     }
 
     RefreshEntity() {
-        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
-    }
-
-    selectedTab: LogTab;
-    public get SelectedTab() { return this.selectedTab; }
-    public set SelectedTab(tab: LogTab) {
-        this.selectedTab = tab;
-    }
-
-    public SetTabArgs(args: any, valdationErrorList: any[] = null) {
-        this.EntityPM = args.EntityPM;
-        console.log("EntityPM", this.EntityPM);
+        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     public get ContinuousRequestTypeCode() { return this.EntityPM.ContinuousRequestTypeCode; }
     public set ContinuousRequestTypeCode(newValue: string) { this.EntityPM.ContinuousRequestTypeCode = newValue; }
 
-    public get ContinuousMessagesTypeCode() { return this.EntityPM.ContinuousMessagesTypeCode; }
-    public set ContinuousMessagesTypeCode(newValue: string) { this.EntityPM.ContinuousMessagesTypeCode = newValue; }
-
     public get Explanation() { return this.EntityPM.Explanation; }
     public set Explanation(newValue: string) { this.EntityPM.Explanation = newValue; }
 
-    public get Note() { return this.EntityPM.Note; }
-    public set Note(newValue: string) { this.EntityPM.Note = newValue; }
+    //#endregion
 
-    public get ClaimRequestNumber() { return this.EntityPM.ClaimRequestNumber; }
-    public set ClaimRequestNumber(newValue: string) { this.EntityPM.ClaimRequestNumber = newValue; }
+    //#region Response Properties
+    get ContinuousMessagesTypeCode() { return this.ResponseData.ContinuousMessagesTypeCode; }
+    set ContinuousMessagesTypeCode(value: string) {
+        if (this.ResponseData.ContinuousMessagesTypeCode != value) {
+            this.ResponseData.ContinuousMessagesTypeCode = value;
+        }
+    }
 
+    get ClaimRequestNumber() { return this.ResponseData.ClaimRequestNumber; }
+    set ClaimRequestNumber(value: string) {
+        if (this.ResponseData.ClaimRequestNumber != value) {
+            this.ResponseData.ClaimRequestNumber = value;
+        }
+    }
+
+    get Note() { return this.ResponseData.Note; }
+    set Note(value: string) {
+        if (this.ResponseData.Note != value) {
+            this.ResponseData.Note = value;
+        }
+    }
     //#endregion
 
     FillErrors() {
@@ -128,26 +162,26 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent extends BaseCompone
             return;
         }
 
-        SessionLocator.SelectedSession.StartBusyIndicator("");
-        this.EntityPM.ContinuousRequestTypeCode = this.ContinuousRequestTypeCode;
-        this.EntityPM.Explanation = this.Explanation;
-        if (this.IsNewEntity) {
-            this._ClaimsRelatedEntityExtendedPMService.insert(this.EntityPM).subscribe(res => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(myResult => {
+            var res: ServiceResponse = myResult;
+            if (!res.HasError) {
+                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 this.SendContinuousRequestOnClaimMessage(customSendOptionsArgs);
-            });
-        }
-        else {
-            this._ClaimsRelatedEntityExtendedPMService.update(this.EntityPM).subscribe(res => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
-                this.SendContinuousRequestOnClaimMessage(customSendOptionsArgs);
-            });
-        }
+            }
+            else {
+                this.ValidationErrorsList = res.ErrorsArray;
+            }
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            return false;
+        });
+
+        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
     }
 
     SendContinuousRequestOnClaimMessage(customSendOptionsArgs: CustomSendOptionsArgs) {
 
-        SessionLocator.SelectedSession.StartBusyIndicator("");
+        SessionLocator.CurrentSession.StartBusyIndicator("");
         var currRequestParams = new ContinuousRequestOnClaimFileRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -162,20 +196,17 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent extends BaseCompone
             .ShowProgressBar(currRequestParams.PBId,
                 "שליחת בקשה ביטול/ערר תביעה", true)
             .then((res) => {
-                //this._ClaimsRelatedEntityExtendedPMService.get(this.CourierMasterPM.Id).subscribe(rsptPMget => {
-                //    let entityPMResult = rsptPMget.Result;
-                //    if (entityPMResult != null) {
-                //        this.IsNew = false;
-                //        this.EntityPM = entityPMResult;
+                //
             }
             ).catch((err) => {
                 this.ValidationErrors.push(err);
             });
 
-
-        //this._CourierMasterService.PostGatepassRequestMessage(currRequestParams)
-        //    .subscribe((myServiceResponse: ServiceResponse) => {
-        //    });
+        this._ClaimWebService.PostSendContinuousRequestOnClaim(currRequestParams)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+                this.ResponseData = myServiceResponse.Result;
+                this.OnMassageDisplayMethod();
+        });
     }
 }
 
