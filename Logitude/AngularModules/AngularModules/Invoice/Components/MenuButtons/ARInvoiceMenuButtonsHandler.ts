@@ -849,6 +849,7 @@ export class ARInvoiceMenuButtonsHandler {
     AutoCreditDate: Date = null;
     AutoCreditManualNumber: string = null;
     AutoCreditClicked() {
+        
         if (this.EntityPM.InvoicePayments.length > 0) {
             var messageWindow = new MessageWindow();
             messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.S.AutoCreditingMsg1"));
@@ -1035,6 +1036,7 @@ export class ARInvoiceMenuButtonsHandler {
             newInvoiceLine.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1;
             newInvoiceLine.IsExpense = item.IsExpense;
             newInvoiceLine.GLAccountId = item.GLAccountId;
+            newInvoiceLine.LineActionCode= "1";
             AutoCreditInvoice.AddARInvoiceLinePM(newInvoiceLine);
             index++;
         });
