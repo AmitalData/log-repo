@@ -7,7 +7,7 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.TariffVersions", "InitialEnddate", c => c.DateTime());
+            //AddColumn("dbo.TariffVersions", "InitialEnddate", c => c.DateTime());
         }
         
         public override void Down()
