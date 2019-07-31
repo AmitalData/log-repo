@@ -93,6 +93,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
+
         this.EntityPM = entityArgs.EntityPM;
         this.isFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.originalPaymentOpenAmount = this.EntityPM.OpenAmount;
@@ -1454,6 +1455,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return result;
     }
 
+  
     get Bank() {
         if (this.EntityPM == null) {
             return null;

@@ -128,7 +128,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
                 ReconcileExternalPageLineQueryService pageLineQuery = new ReconcileExternalPageLineQueryService(entityPM.Tenant);
                 LedgerTransactionUpdateService transactionService = new LedgerTransactionUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
+                EntityQueryServices.ARPaymentChequeQueryService aRPaymentChequeQueryService = new EntityQueryServices.ARPaymentChequeQueryService(entityPM.Tenant);
 
                 // get transactions
                 List<string> ledgerTransactionIds = entityPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(d => d.TransactionId).ToList();

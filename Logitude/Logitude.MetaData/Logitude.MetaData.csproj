@@ -536,9 +536,6 @@
     <None Include="EntityFiles\InvoiceModel\ARPaymentChequeReplica.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\InvoiceModel\ARPaymentChequeStatusReplica.lxml">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="EntityFiles\InvoiceModel\SATInvoiceStatus.lxml">
       <SubType>Designer</SubType>
     </None>
