@@ -44,10 +44,10 @@ export class AddEditCourierPendingReasonComponent
     constructor(public entityArgs: EntityArgs) {
         super();
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             if (AppTool.IsNullOrEmpty(entityArgs.EntityPM) || !(entityArgs.EntityPM instanceof CourierPendingReasonPM)) {
                 this.EntityPM = new CourierPendingReasonPM();
                 this.EntityPM.Tenant = SessionLocator.Tenant;
@@ -64,9 +64,9 @@ export class AddEditCourierPendingReasonComponent
 
     Loaded: boolean = false;
     ngOnInit() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             this.Loaded = true;
         });
     }
@@ -115,9 +115,9 @@ export class AddEditCourierPendingReasonComponent
         if (this.isFromUnifreight) {
             if (this.EntityPM != null && !AppTool.IsNullOrEmpty(this.EntityPM.Code)) {
                 this.EntityPM.UnifreightStatusCode = null;
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                 this._CourierPendingReasonPMService.update(this.EntityPM).subscribe(myResult => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                     if (myResult.HasError) {
                         this.ValidationErrorsList = [];
                         this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
@@ -127,10 +127,10 @@ export class AddEditCourierPendingReasonComponent
                 });
             }
             if (newValue) {
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                 this._CourierPendingReasonPMService.get(newValue).subscribe(response => {
                     if (!response.HasError && response.Result != null) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
                         if (!AppTool.IsNullOrEmpty(response.Result.UnifreightStatusCode) && response.Result.UnifreightStatusCode != this.UnifreightStatusCode) {
                             var confirm = new ConfirmWindow();
                             confirm.Width = 350;
@@ -229,7 +229,7 @@ export class AddEditCourierPendingReasonComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
 
 
