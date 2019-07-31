@@ -13,12 +13,12 @@ namespace Logitude.Global.OracleMigration.Migrations
             AddColumn("dbo.TenantManagements", "BluesnapOneTimeContract", c => c.String(maxLength: 40, unicode: false));
             AddColumn("dbo.TenantManagements", "BluesnapInttraStockContractQTY", c => c.Int());
             AddColumn("dbo.TenantManagements", "MainAdditionalPackageApplied", c => c.Boolean(nullable: false));
-            AddColumn("dbo.GlobalDBs", "SecondaryAzureDBConnection", c => c.String(nullable: false, maxLength: 512));
+            AddColumn("dbo.GlobalDBs", "SecondaryAzureDBConnection", c => c.String(nullable: true, maxLength: 512));
             AddColumn("dbo.GlobalDBs", "IsBlocking", c => c.Boolean(nullable: false));
-            AddColumn("dbo.Settings", "ChampTestAPIURL", c => c.String(nullable: false, maxLength: 1000, unicode: false));
-            AddColumn("dbo.Settings", "ChampTestAPIPassword", c => c.String(nullable: false, maxLength: 40, unicode: false));
-            AddColumn("dbo.Settings", "ChampProdAPIURL", c => c.String(nullable: false, maxLength: 1000, unicode: false));
-            AddColumn("dbo.Settings", "ChampProdAPIPassword", c => c.String(nullable: false, maxLength: 40, unicode: false));
+            AddColumn("dbo.Settings", "ChampTestAPIURL", c => c.String(nullable: true, maxLength: 1000, unicode: false));
+            AddColumn("dbo.Settings", "ChampTestAPIPassword", c => c.String(nullable: true, maxLength: 40, unicode: false));
+            AddColumn("dbo.Settings", "ChampProdAPIURL", c => c.String(nullable: true, maxLength: 1000, unicode: false));
+            AddColumn("dbo.Settings", "ChampProdAPIPassword", c => c.String(nullable: true, maxLength: 40, unicode: false));
             AddColumn("dbo.Settings", "ReleaseNotesURL", c => c.String(maxLength: 600, unicode: false));
             AddColumn("dbo.Settings", "CPUIntensiveWebServicesURL", c => c.String(maxLength: 1000, unicode: false));
             AlterColumn("dbo.TenantManagements", "BluesnapContractQTY", c => c.Int());
