@@ -92,6 +92,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             if (warehouseEntryStatus != null) entityPM.StatusName = warehouseEntryStatus.Name;
 
             this.ComputeRoutingField(entityPM);
+
+            entityPM.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
+            entityPM.MasterHouse = entityPM.MasterNumber + " " + entityPM.HouseNumber;
+            entityPM.EntryReferencesAndDate = entityPM.EntryReference + " " + entityPM.ActualEntryDate;
+
         }
 
         private void ComputeRoutingField(WarehouseEntryPM entityPM)

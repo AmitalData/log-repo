@@ -13,29 +13,19 @@ using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
 
-namespace Logitude.Accounting.BL.APIDataContract.ApiV1
+namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 {
    
-    public class ARPaymentCheque
+    public class APInvoiceTransferStatus
     {
 
 	    
-    public string Id { get; set; }
+	[XmlAttribute]
+    public string Code { get; set; }
     
-    public int Tenant { get; set; }
-    
-    public string ChequeNumber { get; set; }
-    
-    public DateTime ValueDate { get; set; }
-    
-    public decimal LocalAmount { get; set; }
-    
-    public decimal ForeignAmount { get; set; }
-    
-    public string BankName { get; set; }
-    
-    public string BankBranch { get; set; }
-    
-    public string BankAccount { get; set; }
+    public string Name { get; set; }
+
+    public  string  ComputingPartnerCode { get; set; }
+
     }
 } 

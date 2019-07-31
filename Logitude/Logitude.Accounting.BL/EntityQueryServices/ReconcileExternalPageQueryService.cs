@@ -148,24 +148,24 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public bool CheckFirstCancelledBankPage(string bankAccountId, int pageNo, int tenant)
         {
-            int LastPageNo= GetLastPageNo(bankAccountId, tenant);
-            List<ReconcileExternalPage> reconcileExternalPages = GetBankAccountBankPages(bankAccountId, tenant);
+            //int LastPageNo= GetLastPageNo(bankAccountId, tenant);
+            //List<ReconcileExternalPage> reconcileExternalPages = GetBankAccountBankPages(bankAccountId, tenant);
 
-            if (LastPageNo == pageNo)
-            {
-                bool previouseCancelledPageExist = CheckPreviousBankPageStatus(reconcileExternalPages, pageNo );
-                if(previouseCancelledPageExist)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                bool nextUncancelledBankPageExist = ChecNextUnCancelledBankPges(reconcileExternalPages, pageNo );
+            //if (LastPageNo == pageNo)
+            //{
+            //    bool previouseCancelledPageExist = CheckPreviousBankPageStatus(reconcileExternalPages, pageNo );
+            //    if(previouseCancelledPageExist)
+            //    {
+            //        return false;
+            //    }
+            //    else
+            //    {
+            //        return true;
+            //    }
+            //}
+            //else
+            //{
+                bool nextUncancelledBankPageExist = ChecNextUnCancelledBankPges(bankAccountId, pageNo,tenant );
                 if (nextUncancelledBankPageExist)
                 {
                     return false;
@@ -175,31 +175,31 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 {
                     return true;
                 }
-            }
+            //}
           
         }
 
-        private  List<ReconcileExternalPage> GetBankAccountBankPages(string  bankAccountId, int tenant)
+        //private  List<ReconcileExternalPage> GetBankAccountBankPages(string  bankAccountId, int tenant)
+        //{
+
+        //    return (from a in context.ReconcileExternalPages
+        //            where a.BankAccountId == bankAccountId && a.Tenant == tenant select a).ToList();
+
+
+        //}
+        //private  bool CheckPreviousBankPageStatus(List<ReconcileExternalPage> reconcileExternalPages, int pageNo)
+        //{
+        //    pageNo = pageNo - 1;
+        //    return (from a in reconcileExternalPages 
+        //            where a.StatusCode == "3"   && a.PageNo == pageNo
+        //            select a).Any();
+        //}
+
+        private bool ChecNextUnCancelledBankPges(string bankAccountId, int pageNo, int tenant)
         {
 
-            return (from a in context.ReconcileExternalPages
-                    where a.BankAccountId == bankAccountId && a.Tenant == tenant select a).ToList();
-
-
-        }
-        private  bool CheckPreviousBankPageStatus(List<ReconcileExternalPage> reconcileExternalPages, int pageNo)
-        {
-            pageNo = pageNo - 1;
-            return (from a in reconcileExternalPages 
-                    where a.StatusCode == "3"   && a.PageNo == pageNo
-                    select a).Any();
-        }
-
-        private bool ChecNextUnCancelledBankPges(List<ReconcileExternalPage > reconcileExternalPages , int pageNo)
-        {
-
-           return (from a in reconcileExternalPages
-             where  a.PageNo > pageNo && a.StatusCode != "3"
+           return (from a in context.ReconcileExternalPages
+                   where  a.PageNo > pageNo && a.StatusCode != "3" && a.BankAccountId == bankAccountId && a.Tenant == tenant
 
              select a).Any();
 

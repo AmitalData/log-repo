@@ -72,10 +72,12 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     }
     IsEditButtonDisabled: boolean = false;
     EditWindowToolTip: string = null;
+    IsRestoreButtonEnabled: boolean
     SetWindowArgs(args) {
         if (args != null) {
             var prevPageNo;
             this.BankAccountPM = args.BankAccount;
+            this.IsRestoreButtonEnabled = args.IsRestoreButtonEnabled;
             this.IsEditButtonDisabled = !args.EnableReconcileEditButton;
             this.IsRestoreButtonVisibile = args.IsRestoreButtonVisibile;
             this.EditWindowToolTip = args.message;
@@ -278,7 +280,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         this.IsDisplayOnly = false;
         this.SetUIProperties();
         this.closeScreen = false;
-    
+         
         this.SaveEntity();
 
     }
@@ -352,7 +354,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     }
 
     RestoreButtonClicked() {
-
+        this.IsCancelApprovedEnabled = true;
         this.EditButtonClicked();
     }
 

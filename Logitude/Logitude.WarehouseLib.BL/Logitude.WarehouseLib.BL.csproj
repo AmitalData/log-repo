@@ -114,6 +114,7 @@
     <Compile Include="EntityUpdateServices\WarehouseReleasePackageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\WarehouseReleaseUpdateService.cs" />
     <Compile Include="Helpers\ContainerNumberWarehouseValidator.cs" />
+    <Compile Include="Helpers\WarehouseEntryReleaseHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\WarehouseClassLevelValidator.cs" />
     <Compile Include="Validators\WarehouseTranslateTextsClass.cs" />

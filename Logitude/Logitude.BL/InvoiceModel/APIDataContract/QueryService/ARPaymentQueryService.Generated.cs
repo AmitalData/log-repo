@@ -132,8 +132,8 @@ using Simplog.Data.InvoiceModel;
 							 
 				if(MyEntityPM.ARPaymentChequeReplicas != null && MyEntityPM.ARPaymentChequeReplicas.Count > 0)
 				{
-					 ARPaymentChequeReplicaQueryService ARPaymentChequeReplicaService6 = new ARPaymentChequeReplicaQueryService(Tenant);
-					 temp.ARPaymentChequeReplicas = ARPaymentChequeReplicaService6.ARPaymentChequeReplicaDataMapping(MyEntityPM.ARPaymentChequeReplicas,Tenant);
+					 ARPaymentChequeQueryService ARPaymentChequeService6 = new ARPaymentChequeQueryService(Tenant);
+					 temp.ARPaymentCheques = ARPaymentChequeService6.ARPaymentChequeDataMapping(MyEntityPM.ARPaymentChequeReplicas,Tenant);
 				}
 
 							 					
@@ -255,10 +255,10 @@ using Simplog.Data.InvoiceModel;
 
 								  
 
-					if(MyEntity.ARPaymentChequeReplicas != null && MyEntity.ARPaymentChequeReplicas.Count > 0)
+					if(MyEntity.ARPaymentCheques != null && MyEntity.ARPaymentCheques.Count > 0)
 					{
-						ARPaymentChequeReplicaQueryService ARPaymentChequeReplicaService6 = new ARPaymentChequeReplicaQueryService(Tenant);
-						temp.ARPaymentChequeReplicas = ARPaymentChequeReplicaService6.ARPaymentChequeReplicaDataMappingAndValidatin(MyEntity.ARPaymentChequeReplicas,Tenant,ComputingPartnerName);
+						ARPaymentChequeQueryService ARPaymentChequeService6 = new ARPaymentChequeQueryService(Tenant);
+						temp.ARPaymentChequeReplicas = ARPaymentChequeService6.ARPaymentChequeDataMappingAndValidatin(MyEntity.ARPaymentCheques,Tenant,ComputingPartnerName);
 					}
 
 								 					   
