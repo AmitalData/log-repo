@@ -369,6 +369,21 @@ export class WarehouseEntryPM {
     public set TotalVolumetricWeight(newValue: number) { if (this.totalVolumetricWeight != newValue) { this.totalVolumetricWeight = newValue; this.MarkAsDirty("TotalVolumetricWeight"); } }
        
 	 
+    private lastStatusUpdateDate: Date;
+    public get LastStatusUpdateDate() { return this.lastStatusUpdateDate; }
+    public set LastStatusUpdateDate(newValue: Date) { if (this.lastStatusUpdateDate != newValue) { this.lastStatusUpdateDate = newValue; this.MarkAsDirty("LastStatusUpdateDate"); } }
+       
+	 
+    private masterHouse: string;
+    public get MasterHouse() { return this.masterHouse; }
+    public set MasterHouse(newValue: string) { if (this.masterHouse != newValue) { this.masterHouse = newValue; this.MarkAsDirty("MasterHouse"); } }
+       
+	 
+    private entryReferencesAndDate: string;
+    public get EntryReferencesAndDate() { return this.entryReferencesAndDate; }
+    public set EntryReferencesAndDate(newValue: string) { if (this.entryReferencesAndDate != newValue) { this.entryReferencesAndDate = newValue; this.MarkAsDirty("EntryReferencesAndDate"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPM;
 		

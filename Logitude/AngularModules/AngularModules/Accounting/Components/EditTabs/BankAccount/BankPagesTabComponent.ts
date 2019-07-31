@@ -410,6 +410,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
 
                         }
                         else {
+                            this.IsRestoreButtonVisibile = false;
                             this.RestoreToolTipMessage = null;
                             this.ShowWindow(entityPM);
                             
@@ -465,14 +466,16 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
 
         if (result == null) {
             this.IsRestoreButtonVisibile = true;
+            this.IsRestoreButtonEnabled = true;
             this.RestoreToolTipMessage = null;
         }
         else {
             this.RestoreToolTipMessage = result;
-            this.IsRestoreButtonVisibile = false;
+            this.IsRestoreButtonEnabled = false;
+            this.IsRestoreButtonVisibile = true;
         }
     }
-
+    IsRestoreButtonEnabled: boolean;
     EnableReconcileEditButton: boolean = false;
     ShowWindow(entity: any = null) {
 
@@ -492,6 +495,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
                 var windowArgs: any = {};
                 windowArgs.entity = entity;
                 windowArgs.BankAccountId = this.EntityPM.Id;
+                windowArgs.IsRestoreButtonEnabled = this.IsRestoreButtonEnabled;
                 windowArgs.IsRestoreButtonVisibile = this.IsRestoreButtonVisibile;
                 windowArgs.RestoreToolTipMessage = this.RestoreToolTipMessage;
                 windowArgs.EnableReconcileEditButton = this.EnableReconcileEditButton;

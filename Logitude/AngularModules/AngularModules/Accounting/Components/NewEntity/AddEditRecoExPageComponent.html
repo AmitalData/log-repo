@@ -427,7 +427,7 @@
                         <button class="Button" (click)="CancelApprovalButtonClicked()" [disabled]="!IsCancelApprovedEnabled">{{'BankAccounts.O.CancelPage' | TextCodeTranslationPipe}}</button>
                     </td>
                     <td style="width: 90px;" *ngIf="IsRestoreButtonVisibile">
-                        <button class="Button" (click)="RestoreButtonClicked()">{{'Accounting.General.O.Restore' |TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="RestoreButtonClicked()" [disabled]="!IsRestoreButtonEnabled">{{'Accounting.General.O.Restore' |TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 7px;">

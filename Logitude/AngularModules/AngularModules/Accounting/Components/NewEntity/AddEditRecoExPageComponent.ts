@@ -72,10 +72,12 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     }
     IsEditButtonDisabled: boolean = false;
     EditWindowToolTip: string = null;
+    IsRestoreButtonEnabled: boolean
     SetWindowArgs(args) {
         if (args != null) {
             var prevPageNo;
             this.BankAccountPM = args.BankAccount;
+            this.IsRestoreButtonEnabled = args.IsRestoreButtonEnabled;
             this.IsEditButtonDisabled = !args.EnableReconcileEditButton;
             this.IsRestoreButtonVisibile = args.IsRestoreButtonVisibile;
             this.EditWindowToolTip = args.message;
