@@ -69,15 +69,16 @@ namespace Logitude.BL.Helpers
             QuoteTemplateTableDesignQuery quotetemplateTableDesignQuery = new QuoteTemplateTableDesignQuery(new QuoteTemplateTableDesignRepository(context));
             QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-            byte[] data = null;
+            byte[] pdfData = null;
             string headerHtmlString = null;
             string footerHtmlString = null;
             string bodyHtmlString = null;
             string RequestArea = "Maintenance";
-
+            bool isSaveQuotationDocumentAsHtml = true;
             QuoteTemplatePM template = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
+            ObjectTableRepository objectTabelRepository = null;
+            ObjectTable objectTable = null;
 
-   
             if (!string.IsNullOrEmpty(quoteId) && quotePM == null)
             {
                 int tenantNumber = userTenant != null ? (int)userTenant : tenant;
@@ -86,9 +87,7 @@ namespace Logitude.BL.Helpers
 
             if (quotePM == null) quotePM = BuildingQuotePM();
 
-
-
-
+            
             if (templateSections == null)
             {
                 if (quotePM.QuoteTemplateId == quoteTemplateId)
@@ -156,11 +155,7 @@ namespace Logitude.BL.Helpers
                 }
             }
 
-            QuoteTemplateSectionPM headerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PH").FirstOrDefault();
-
-
-
-
+       
 
             quoteTemplateBuildArges.Tenant = tenant;
             quoteTemplateBuildArges.IsResultPDF = true;
@@ -174,27 +169,11 @@ namespace Logitude.BL.Helpers
             quoteTemplateBuildArges.QuoteTemplateSectionPMLists = templateSections;
             quoteTemplateBuildArges.QuoteTemplatePM = template;
 
-            SetSectionTypeCode(quoteTemplateBuildArges, "PH");
-            byte[] headerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
-            headerHtmlString += GetBodyString(headerdata);
 
 
-
-            if (setting.PageHeaderArea1Type == "Quote Header" || setting.PageHeaderArea2Type == "Quote Header" || setting.PageHeaderArea3Type == "Quote Header")
-            {
-                quoteTemplateBuildArges.HideQuoteHeaderFromPdf = true;
-            }
+    
 
 
-            SetSectionTypeCode(quoteTemplateBuildArges, null);
-            byte[] bodyData = GetQuoteTemplateHtmlReport(quoteTemplateBuildArges, false, RequestArea);
-            bodyHtmlString = GetBodyString(bodyData);
-
-            QuoteTemplateSectionPM footerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PF").FirstOrDefault();
-
-            SetSectionTypeCode(quoteTemplateBuildArges, "PF");
-            byte[] footerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
-            footerHtmlString += GetBodyString(footerdata);
 
             HtmlToPdfConverter pdfConverter = new HtmlToPdfConverter();
             pdfConverter.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
@@ -202,34 +181,34 @@ namespace Logitude.BL.Helpers
             pdfConverter.HtmlViewerWidth = 800;
             pdfConverter.PdfDocumentOptions.PdfCompressionLevel = PdfCompressionLevel.Normal;
             pdfConverter.PdfDocumentOptions.EnhancedGraphicsQuality = true;
-
-
+            pdfConverter.PdfDocumentOptions.PdfPageOrientation = PdfPageOrientation.Portrait;
+            pdfConverter.TriggeringMode = TriggeringMode.Auto;
             if (setting != null)
             {
                 int marginleft = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
                 int marginRight = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
-
                 pdfConverter.PdfDocumentOptions.LeftMargin = marginleft;
                 pdfConverter.PdfDocumentOptions.RightMargin = marginRight;
             }
 
 
-            pdfConverter.PdfDocumentOptions.PdfPageOrientation = PdfPageOrientation.Portrait;
-            pdfConverter.PdfDocumentOptions.ShowHeader = true;
-            pdfConverter.PdfDocumentOptions.ShowFooter = true;
+
             // set the header HTML area
-            ObjectTableRepository objectTabelRepository = null;
-            ObjectTable objectTable = null;
-
-
-            headerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, headerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
-
-            HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, headerHtmlString, null, 2040, 0);
-            pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
-
-            pdfConverter.PdfHeaderOptions.HeaderHeight = 1;
+            QuoteTemplateSectionPM headerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PH").FirstOrDefault();
             if (!headerSection.IsExcluded)
             {
+                pdfConverter.PdfDocumentOptions.ShowHeader = true;
+                if (setting.PageHeaderArea1Type == "Quote Header" || setting.PageHeaderArea2Type == "Quote Header" || setting.PageHeaderArea3Type == "Quote Header") quoteTemplateBuildArges.HideQuoteHeaderFromPdf = true;
+                SetSectionTypeCode(quoteTemplateBuildArges, "PH");
+                byte[] headerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
+                headerHtmlString += GetBodyString(headerdata);
+
+            
+
+                headerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, headerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
+                HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, headerHtmlString, null, 2040, 0);
+                pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
+                pdfConverter.PdfHeaderOptions.HeaderHeight = 1;
                 pdfConverter.PdfHeaderOptions.HeaderHeight = setting.PageHeaderAreaHeight * 29;
                 if (setting.SpaceLinesBeforeHeaders > 0)
                 {
@@ -241,37 +220,44 @@ namespace Logitude.BL.Helpers
             }
 
 
-
-
-
-            footerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, footerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
-
-
-            HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, footerHtmlString, null, 2040, 0);
-            pdfConverter.PdfFooterOptions.AddElement(footerHtml);
-
-
-
-            double footerTopMargin = (double)setting.SpaceLinesBeforeFooters * 21;
-            float heightFooter = (setting.PageFooterAreaHeight * 29) + (float)footerTopMargin;
+            // set the Footer HTML area
+            QuoteTemplateSectionPM footerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PF").FirstOrDefault();
             if (!footerSection.IsExcluded)
             {
+                pdfConverter.PdfDocumentOptions.ShowFooter = true;
+                SetSectionTypeCode(quoteTemplateBuildArges, "PF");
+                byte[] footerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
+                footerHtmlString += GetBodyString(footerdata);
+
+                double footerTopMargin = (double)setting.SpaceLinesBeforeFooters * 21;
+                float heightFooter = (setting.PageFooterAreaHeight * 29) + (float)footerTopMargin;
+
+                footerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, footerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
+                HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, footerHtmlString, null, 2040, 0);
+                pdfConverter.PdfFooterOptions.AddElement(footerHtml);
                 pdfConverter.PdfFooterOptions.FooterHeight = (heightFooter + 10);
+
+
+                TextElement footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
+                footerTextElement.TextAlign = HorizontalTextAlign.Right;
+                pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
+
 
             }
             else pdfConverter.PdfFooterOptions.FooterHeight = 1;
 
 
-            TextElement footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ",
-            new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
 
-            footerTextElement.TextAlign = HorizontalTextAlign.Right;
-            pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
+
+            //Body
+
+            SetSectionTypeCode(quoteTemplateBuildArges, null);
+            byte[] bodyData = GetQuoteTemplateHtmlReport(quoteTemplateBuildArges, false, RequestArea);
+            bodyHtmlString = GetBodyString(bodyData);
 
             HtmlAgilityPack.HtmlDocument htmlDocument = new HtmlAgilityPack.HtmlDocument();
             htmlDocument.LoadHtml(bodyHtmlString);
             var nodes = htmlDocument.DocumentNode.Elements("p");
-
             foreach (HtmlAgilityPack.HtmlNode node in nodes)
             {
                 if (node.Attributes["dir"] != null && node.Attributes["dir"].Value.ToString() == "RTL")
@@ -291,17 +277,17 @@ namespace Logitude.BL.Helpers
                     }
                 }
             }
-
             bodyHtmlString = htmlDocument.DocumentNode.InnerHtml;
-
             bodyHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, bodyHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
-            pdfConverter.TriggeringMode = TriggeringMode.Auto;
-            data = pdfConverter.ConvertHtml(bodyHtmlString, null);
 
-            string fullHtml = headerHtmlString + bodyHtmlString + footerHtmlString;
-            CreateHtmlQuotationDocument(tenant, quotePM, fullHtml);
+            pdfData = pdfConverter.ConvertHtml(bodyHtmlString, null);
+            if (quotePM.Id != "10697")
+            {
+                string fullHtml = headerHtmlString + bodyHtmlString + footerHtmlString;
+                CreateHtmlQuotationDocument(tenant, quotePM, fullHtml);
+            }
       
-            return data;
+            return pdfData;
         }
 
         private static void CreateHtmlQuotationDocument(int tenant, QuotePM quotePM, string fullHtml)
