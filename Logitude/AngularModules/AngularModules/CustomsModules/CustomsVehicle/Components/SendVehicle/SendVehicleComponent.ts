@@ -163,7 +163,7 @@ export class SendVehicleComponent {
         this._VehicleExtendedPMService.GetIsVehicleAttachmentNumberIsMoreThenAllow(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             if (!AppTool.IsNullOrEmpty(response.Result) && response.Result == true) {
                 SessionLocator.SelectedSession.CurrentEditComponent.StopBusyIndicator();
-                this.ValidationErrors.push("לא ניתן לשלוח ריכבית עם מעל 5 מסמכים ");
+                this.ValidationErrors.push("לא ניתן לשלוח מסר הקמת רכבית כאשר מקושרים יותר מ-5 מסמכים ");
                 this.FillValidationErrors();
                 return;
             }
