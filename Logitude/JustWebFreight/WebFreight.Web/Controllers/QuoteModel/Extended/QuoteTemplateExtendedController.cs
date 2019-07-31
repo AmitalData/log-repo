@@ -318,13 +318,16 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                             quotePM.LastVersionNumber = version.VersionNumber;
                             quotePM.QuoteTemplateId = quoteTemplateId;
                             quotePM.QuotationSections = sectionsIds;
-                            quoteService.SetChangeSet(new List<QuoteChargePM>(), new List<QuoteFollowUpPM>(), new List<QuotePackagePM>(), new List<QuoteDocumentVersionPM>());
-                            quoteService.Update(quotePM);
+                      
 
                         }
 
                         QuoteTemplateReportHelper quoteTemplateReportHelper = new QuoteTemplateReportHelper();
                         pdfData = quoteTemplateReportHelper.BuildQuoteTemplatePdfReport(quoteId, quoteTemplateId, updatedByUserId, tenant, null,null, quotePM);
+
+                        //Update QuoteHTMLDocumentId;
+                        quoteService.SetChangeSet(new List<QuoteChargePM>(), new List<QuoteFollowUpPM>(), new List<QuotePackagePM>(), new List<QuoteDocumentVersionPM>());
+                        quoteService.Update(quotePM);
 
                         Simplog.Data.CommonDataModel.EntityPOCOs.Document document = documentRep.GetSingleDocument(tenant, version.DocumentId);
                      

@@ -32,6 +32,11 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using WebFreight.Web.Security;
+using Logitude.Server.Tools.StorageService;
+using Logitude.Server.Tools;
+using Document = Simplog.Data.CommonDataModel.EntityPOCOs.Document;
+using Logitude.Server.Tools.Counters;
+using Logitude.BL.QuoteModel.Tools.EntityService;
 
 namespace Logitude.BL.Helpers
 {
@@ -72,7 +77,7 @@ namespace Logitude.BL.Helpers
 
             QuoteTemplatePM template = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
 
-
+   
             if (!string.IsNullOrEmpty(quoteId) && quotePM == null)
             {
                 int tenantNumber = userTenant != null ? (int)userTenant : tenant;
@@ -80,6 +85,7 @@ namespace Logitude.BL.Helpers
             }
 
             if (quotePM == null) quotePM = BuildingQuotePM();
+
 
 
 
@@ -229,7 +235,7 @@ namespace Logitude.BL.Helpers
                 {
                     //4 * 7 = 28;
                     //28 -------------- > 40px
-                    pdfConverter.PdfDocumentOptions.TopMargin =(float) ((double)setting.SpaceLinesBeforeHeaders * (double)21);
+                    pdfConverter.PdfDocumentOptions.TopMargin = (float)((double)setting.SpaceLinesBeforeHeaders * (double)21);
                 }
 
             }
@@ -290,10 +296,53 @@ namespace Logitude.BL.Helpers
 
             bodyHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, bodyHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
             pdfConverter.TriggeringMode = TriggeringMode.Auto;
-            //data = pdfConverter.GetPdfBytesFromHtmlString(bodyHtmlString);
             data = pdfConverter.ConvertHtml(bodyHtmlString, null);
 
+            string fullHtml = headerHtmlString + bodyHtmlString + footerHtmlString;
+            CreateHtmlQuotationDocument(tenant, quotePM, fullHtml);
+      
             return data;
+        }
+
+        private static void CreateHtmlQuotationDocument(int tenant, QuotePM quotePM, string fullHtml)
+        {
+            if (!string.IsNullOrEmpty(fullHtml))
+            {
+                var fullQuotationHtmlByte = Encoding.UTF8.GetBytes(fullHtml);
+                DocumentRepository documentRep = new DocumentRepository(tenant);
+                Document document = new Document()
+                {
+                    FileName = "QuotationHtml-" + quotePM.QuoteNumber,
+                    CalculatedFileName = "QuotationHtml-" + quotePM.QuoteNumber,
+                    CreateDate = DateTime.Now,
+                    Extension = "html",
+                    FileSize = fullQuotationHtmlByte.Length,
+                    Tenant = tenant,
+                    Id = IdCounter.GetNumber("Document", tenant),
+                    HasFile = true,
+                    Folder = "others",
+                    IsEncrypted = true,
+                };
+                documentRep.Add(document);
+
+
+                string filename = document.Id + "." + document.Extension;
+                string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = fullQuotationHtmlByte.Length,
+                    IsEncrypted = true,
+                };
+
+                storageservice.Write(fullQuotationHtmlByte, fileInfo);
+                documentRep.SubmitChanges();
+                quotePM.QuoteHTMLDocumentId = document.Id;
+            }
         }
 
         private static void SetSectionTypeCode(QuoteTemplateBuildArges quoteTemplateBuildArges, string sectionTypeCode)
