@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
@@ -63,6 +63,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     ProgressBarId: string = Guid.newGuid();
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor( public _imageLibraryService: ImageLibraryService, fb: FormBuilder, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.myForm = fb.group({});
@@ -110,7 +111,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
     }
 
     LoadDocumentsFiling() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTable(this.EntityId, this.childEntityId, this.ObjectTableId, "I", this.Tenant, false).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
@@ -124,7 +125,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
 
 
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
 
 
@@ -141,7 +142,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
             if (this.externalDocs != null) {
                 this.CurrentDocument = this.externalDocs.filter(d=> d.DocumentTypeId == this.DocumentTypeId)[0];
                 if (this.CurrentDocument == null) {
-                    SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+                    this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
                     this._documentsFilingExtendedPMService.CreateDocumentsFiling(this.DocumentTypeId, this.EntityId, this.childEntityId, "", this.ObjectTableId, "I", this.Tenant).subscribe(res => {
 
                         var pmResponse: ServiceResponse = res;
@@ -152,7 +153,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                                 this.CurrentDocument = myResult;
                             }
                         }
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.IsUploadVisibile = true;
                     });
                 }
@@ -182,7 +183,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
         if (this.RequsetPageName != "DocIn" && this.RequsetPageName!= "SharedDocument") {
             if (this.TiggerViewModel) this.TiggerViewModel.OnUploadComplete(this);
         }
-        SessionLocator.CurrentSession.CurrentWindow.Close("");
+        this.CurrentSession.CurrentWindow.Close("");
     }
 
 

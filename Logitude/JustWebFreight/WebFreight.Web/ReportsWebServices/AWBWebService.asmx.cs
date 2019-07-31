@@ -121,6 +121,7 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.VolumeInCBM = shipmentPM.VolumeInCBM + " CBM";
                 awbDp.VolumeUnitCode = shipmentPM.VolumeUnitCode;
                 awbDp.ChargeableWeightEdited = shipmentPM.ChargeableWeightEdited;
+                awbDp.MainCarriageLeg2_MAWB = shipmentPM.Transshipment1AdditionalMAWBOBLBL;
 
                 if (shipmentPM.BranchId != null)
                 {
@@ -151,6 +152,7 @@ namespace WebFreight.Web.ReportsWebServices
                 this.GetNotify1Data(awbDp, shipmentPM, addressRepository);
                 this.GetNotify2Data(awbDp, shipmentPM, addressRepository);
                 this.GetAgentData(awbDp, shipmentPM, addressRepository);
+                this.GetConsolidatorData(awbDp, shipmentPM);
 
                 #region PlaceOfDelivery
 
@@ -444,6 +446,7 @@ namespace WebFreight.Web.ReportsWebServices
             int tenant = shipmentPM.Tenant;
             string shipperId = !string.IsNullOrEmpty(shipmentPM.ShipperNotExporterId) ? shipmentPM.ShipperNotExporterId : shipmentPM.ShipperId;
             string shipperAddressId = !string.IsNullOrEmpty(shipmentPM.ShipperNotExporterAddressId) ? shipmentPM.ShipperNotExporterAddressId : shipmentPM.ShipperAddressId;
+            ContactRepository contactRepository = new ContactRepository(myCommonContext);
 
             if (!string.IsNullOrEmpty(shipperId))
             {
@@ -532,6 +535,16 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
                     }
+
+                    if(!string.IsNullOrEmpty(actualShipperCard.PrimaryContactId))
+                    {
+                        Contact primaryContact = contactRepository.GetSingleContact(actualShipperCard.PrimaryContactId, tenant);
+                        if (primaryContact != null)
+                        {
+                            awbDp.ShipperPrimaryContactName = primaryContact.EnglishName;
+                            awbDp.ShipperPrimaryContactPhone = primaryContact.BusinessPhone;                            
+                        }
+                    }
                 }
             }
 
@@ -548,7 +561,72 @@ namespace WebFreight.Web.ReportsWebServices
                         awbDp.ShipperNotExporterATTN = myPartnerAddress.ATTN;
                     }
                 }
-            }            
+            }
+
+            if (!string.IsNullOrEmpty(shipmentPM.ShipperNotExporterContactId))
+            {               
+                Contact contact = contactRepository.GetSingleContact(shipmentPM.ShipperNotExporterContactId, tenant);
+                if (contact != null)
+                {
+                    awbDp.ShipperNotExporterContactDetails = contact.EnglishName;
+
+                    if (!string.IsNullOrEmpty(contact.BusinessPhone))
+                    {
+                        awbDp.ShipperNotExporterContactDetails = awbDp.ShipperNotExporterContactDetails + Environment.NewLine + "Ph: " + contact.BusinessPhone;
+
+                        if (!string.IsNullOrEmpty(contact.Fax))
+                        {
+                            awbDp.ShipperNotExporterContactDetails = awbDp.ShipperNotExporterContactDetails + " - Fx: " + contact.Fax;
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(contact.Fax))
+                        {
+                            awbDp.ShipperNotExporterContactDetails = awbDp.ShipperNotExporterContactDetails + Environment.NewLine + "Fx: " + contact.Fax;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(contact.Email))
+                    {
+                        awbDp.ShipperNotExporterContactDetails = awbDp.ShipperNotExporterContactDetails + Environment.NewLine + "Email: " + contact.Email;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipmentPM.ShipperContactId))
+            {
+                Contact shipperContact = contactRepository.GetSingleContact(shipmentPM.ShipperContactId, tenant);
+
+                if (shipperContact != null)
+                {
+                    awbDp.ShipperContactDetails = shipperContact.EnglishName;
+
+                    if (!string.IsNullOrEmpty(shipperContact.BusinessPhone))
+                    {
+                        awbDp.ShipperContactDetails = awbDp.ShipperContactDetails + Environment.NewLine + "Ph: " + shipperContact.BusinessPhone;
+
+                        if (!string.IsNullOrEmpty(shipperContact.Fax))
+                        {
+                            awbDp.ShipperContactDetails = awbDp.ShipperContactDetails + " - Fx: " + shipperContact.Fax;
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(shipperContact.Fax))
+                        {
+                            awbDp.ShipperContactDetails = awbDp.ShipperContactDetails + Environment.NewLine + "Fx: " + shipperContact.Fax;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(shipperContact.Email))
+                    {
+                        awbDp.ShipperContactDetails = awbDp.ShipperContactDetails + Environment.NewLine + "Email: " + shipperContact.Email;
+                    }
+                }
+            }
         }
 
         private void GetConsigneeData(AWBDataProvider awbDp, ShipmentPM shipmentPM, AddressRepository addressRepository)
@@ -556,6 +634,7 @@ namespace WebFreight.Web.ReportsWebServices
             int tenant = shipmentPM.Tenant;
             string consigneeId = !string.IsNullOrEmpty(shipmentPM.ConsigneeNotImporterId) ? shipmentPM.ConsigneeNotImporterId : shipmentPM.ConsigneeId;
             string consigneeAddressId = !string.IsNullOrEmpty(shipmentPM.ConsigneeNotImporterAddressId) ? shipmentPM.ConsigneeNotImporterAddressId : shipmentPM.ConsigneeAddressId;
+            ContactRepository contactRepository = new ContactRepository(myCommonContext);
 
             if (!string.IsNullOrEmpty(consigneeId))
             {
@@ -642,6 +721,16 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
                     }
+
+                    if (!string.IsNullOrEmpty(actualConsigneeCard.PrimaryContactId))
+                    {
+                        Contact primaryContact = contactRepository.GetSingleContact(actualConsigneeCard.PrimaryContactId, tenant);
+                        if (primaryContact != null)
+                        {
+                            awbDp.ConsigneePrimaryContactName = primaryContact.EnglishName;
+                            awbDp.ConsigneePrimaryContactPhone = primaryContact.BusinessPhone;
+                        }
+                    }
                 }
             }
 
@@ -655,6 +744,39 @@ namespace WebFreight.Web.ReportsWebServices
                     if (myPartnerAddress != null)
                     {
                         awbDp.ConsigneeNotImporterATTN = myPartnerAddress.ATTN;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipmentPM.ConsigneeContactId))
+            {
+                Contact consigneeContact = contactRepository.GetSingleContact(shipmentPM.ConsigneeContactId, tenant);
+
+                if (consigneeContact != null)
+                {
+                    awbDp.ConsigneeContactDetails = consigneeContact.EnglishName;
+
+                    if (!string.IsNullOrEmpty(consigneeContact.BusinessPhone))
+                    {
+                        awbDp.ConsigneeContactDetails = awbDp.ConsigneeContactDetails + Environment.NewLine + "Ph: " + consigneeContact.BusinessPhone;
+
+                        if (!string.IsNullOrEmpty(consigneeContact.Fax))
+                        {
+                            awbDp.ConsigneeContactDetails = awbDp.ConsigneeContactDetails + " - Fx: " + consigneeContact.Fax;
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(consigneeContact.Fax))
+                        {
+                            awbDp.ConsigneeContactDetails = awbDp.ConsigneeContactDetails + Environment.NewLine + "Fx: " + consigneeContact.Fax;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(consigneeContact.Email))
+                    {
+                        awbDp.ConsigneeContactDetails = awbDp.ConsigneeContactDetails + Environment.NewLine + "Email: " + consigneeContact.Email;
                     }
                 }
             }
@@ -1583,9 +1705,11 @@ namespace WebFreight.Web.ReportsWebServices
             {                
                 CardRepository cardRepository = new CardRepository(myTenant);
                 Card card = cardRepository.GetSingleCard(shipmentPM.Notify1Id, myTenant);
+               
                 if (card != null)
                 {
                     myNotifyData = "Notify:" + card.EnglishName;
+                   
                 }
 
                 if (!string.IsNullOrEmpty(shipmentPM.Notify1AddressId))
@@ -2102,8 +2226,15 @@ namespace WebFreight.Web.ReportsWebServices
                     if (shipmentCommodity.ChargeableWeight != null)
                     {
                         commodityLine.ChargeableWeight = String.Format("{0:#,0.00}", shipmentCommodity.ChargeableWeight.Value);
+                        double? varChargeableWeightInKG = ShipmentMapping.GetWeightInKG("KG", shipmentCommodity.ChargeableWeight);
+
+                        if (varChargeableWeightInKG != null)
+                        {
+                            commodityLine.ChargeableWeightInKG = String.Format("{0:#,0.00}", varChargeableWeightInKG.Value);
+                        }
                     }
 
+                   
                     if (shipmentCommodity.NumberOfPackages != null)
                     {
                         commodityLine.TotalQuantity = shipmentCommodity.NumberOfPackages.ToString();
@@ -2209,6 +2340,13 @@ namespace WebFreight.Web.ReportsWebServices
                     awbDp.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
                     commodityLine.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
                 }
+
+                if (shipmentPM.ChargeableWeightInKG != null)
+                {
+                    awbDp.ChargeableWeightInKG = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeightInKG.Value);
+                    commodityLine.ChargeableWeightInKG = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeightInKG.Value);
+                }
+
 
                 if (shipmentPM.NumberOfPackages != null)
                 {
@@ -2617,6 +2755,8 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(notify1Id))
             {
                 Card notify1Card = CardRepository.GetSingleCard(notify1Id, tenant, false);
+                ContactRepository contactRepository = new ContactRepository(myCommonContext);
+
                 if (notify1Card != null)
                 {
                     awbDp.NotifyPartyName = string.IsNullOrEmpty(notify1Card.EnglishName) ? "" : notify1Card.EnglishName;
@@ -2639,6 +2779,40 @@ namespace WebFreight.Web.ReportsWebServices
                             awbDp.Notify1ATTN = notify1Address.ATTN;
                         }
                     }
+
+                    if (!string.IsNullOrEmpty(shipmentPM.Notify1ContactId))
+                    {
+                        Contact myContact = contactRepository.GetSingleContact(shipmentPM.Notify1ContactId, myTenant);
+
+                        if (myContact != null)
+                        {
+                            awbDp.Notify1ContactDetails = myContact.EnglishName;
+
+                            if (!string.IsNullOrEmpty(myContact.BusinessPhone))
+                            {
+                                awbDp.Notify1ContactDetails = awbDp.Notify1ContactDetails + Environment.NewLine + "Ph: " + myContact.BusinessPhone;
+
+                                if (!string.IsNullOrEmpty(myContact.Fax))
+                                {
+                                    awbDp.Notify1ContactDetails = awbDp.Notify1ContactDetails + " - Fx: " + myContact.Fax;
+                                }
+                            }
+
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(myContact.Fax))
+                                {
+                                    awbDp.Notify1ContactDetails = awbDp.Notify1ContactDetails + Environment.NewLine + "Fx: " + myContact.Fax;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(myContact.Email))
+                            {
+                                awbDp.Notify1ContactDetails = awbDp.Notify1ContactDetails + Environment.NewLine + "Email: " + myContact.Email;
+                            }
+                        }
+                    }
+
                 }
             }
         }
@@ -2652,6 +2826,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(notify2Id))
             {
                 Card notify2Card = CardRepository.GetSingleCard(notify2Id, tenant, false);
+                ContactRepository contactRepository = new ContactRepository(myCommonContext);
                 if (notify2Card != null)
                 {
                     if (!string.IsNullOrEmpty(notify2AddressId))
@@ -2662,6 +2837,39 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             awbDp.NotifyAddress2_WithName = DataProviders.General.GetAddressWithName(notify2Address);
                             awbDp.Notify2ATTN = notify2Address.ATTN;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(shipmentPM.Notify2ContactId))
+                    {
+                        Contact myContact = contactRepository.GetSingleContact(shipmentPM.Notify2ContactId, tenant);
+
+                        if (myContact != null)
+                        {
+                            awbDp.Notify2ContactDetails = myContact.EnglishName;
+
+                            if (!string.IsNullOrEmpty(myContact.BusinessPhone))
+                            {
+                                awbDp.Notify2ContactDetails = awbDp.Notify2ContactDetails + Environment.NewLine + "Ph: " + myContact.BusinessPhone;
+
+                                if (!string.IsNullOrEmpty(myContact.Fax))
+                                {
+                                    awbDp.Notify2ContactDetails = awbDp.Notify2ContactDetails + " - Fx: " + myContact.Fax;
+                                }
+                            }
+
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(myContact.Fax))
+                                {
+                                    awbDp.Notify2ContactDetails = awbDp.Notify2ContactDetails + Environment.NewLine + "Fx: " + myContact.Fax;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(myContact.Email))
+                            {
+                                awbDp.Notify2ContactDetails = awbDp.Notify2ContactDetails + Environment.NewLine + "Email: " + myContact.Email;
+                            }
                         }
                     }
                 }
@@ -2684,6 +2892,18 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         awbDp.AgentATTN = agentAddress.ATTN;
                     }
+                }
+            }
+        }
+
+        private void GetConsolidatorData(AWBDataProvider awbDp, ShipmentPM shipmentPM)
+        {
+            if (!string.IsNullOrEmpty(shipmentPM.ConsolidatorId))
+            {
+                Card card = CardRepository.GetSingleCard(shipmentPM.ConsolidatorId, shipmentPM.Tenant, false);
+                if(card != null)
+                {
+                    awbDp.ConsolidatorName = card.EnglishName;
                 }
             }
         }

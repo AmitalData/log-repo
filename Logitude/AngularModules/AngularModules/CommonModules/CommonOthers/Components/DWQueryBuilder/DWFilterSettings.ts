@@ -19,6 +19,7 @@ export class DWFilterSettings extends BaseComponent  {
     public ValidationErrorsList: string[] = []; 
     SystemSupportEnabledKey: string = "";
     DistributorSupportEnabledKey: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super(); 
     }
@@ -39,11 +40,11 @@ export class DWFilterSettings extends BaseComponent  {
     }
     
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.IsMandatoryFilter + "," + this.IsSetDefaults);
+        this.CurrentSession.CloseCurrentWindowEmit(this.IsMandatoryFilter + "," + this.IsSetDefaults);
         //if ((!this.IsSystemSupportEnabledCheck && this.IsSystemSupportEnabled) || (!this.IsDistributorSupportEnabledCheck && this.IsDistributorSupportEnabled)) {
         //    this.ShowConfirmationWindow();
         //}

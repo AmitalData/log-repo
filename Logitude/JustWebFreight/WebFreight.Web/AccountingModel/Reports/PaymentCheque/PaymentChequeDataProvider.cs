@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 
@@ -28,6 +29,8 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         public string BankCode { get; set; }
         public byte[] CompanyLogo { get; set; }
         public string AmountInHebrew { get; set; }
+        public Image AccountingLogo { get; set; }
+        public Image BankLogo { get; set; }
     }
 
     

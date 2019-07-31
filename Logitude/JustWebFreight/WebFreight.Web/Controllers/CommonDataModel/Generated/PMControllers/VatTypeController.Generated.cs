@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("VatType", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("VatType", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         VatTypeService service = new VatTypeService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("VatType", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("VatType", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "VatType" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "VatTypePM" + entityPM.Id + entityPM.Tenant;

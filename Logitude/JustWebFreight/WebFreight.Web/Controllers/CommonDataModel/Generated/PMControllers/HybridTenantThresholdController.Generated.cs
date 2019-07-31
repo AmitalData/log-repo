@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("HybridTenantThreshold", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("HybridTenantThreshold", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         HybridTenantThresholdService service = new HybridTenantThresholdService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("HybridTenantThreshold", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("HybridTenantThreshold", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "HybridTenantThreshold" + entityPM.Tenant + entityPM.Tenant;
                         string entityPmName = "HybridTenantThresholdPM" + entityPM.Tenant + entityPM.Tenant;

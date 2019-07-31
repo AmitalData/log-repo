@@ -30,6 +30,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CardId  { get; set; }
        [DataMember]
        public string Notes  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public string CreatedByUserName  { get; set; }
    }
 
 }

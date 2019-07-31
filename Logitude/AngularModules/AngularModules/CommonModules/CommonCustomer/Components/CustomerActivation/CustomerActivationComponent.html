@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0">
         <td>
@@ -305,7 +305,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button id="{{'cancel-activate' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -313,7 +313,7 @@
                     </td>
 
                     <td style="width: 57px;" *ngIf="ActivateFeatureON">
-                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button id="{{'Ok-activate' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

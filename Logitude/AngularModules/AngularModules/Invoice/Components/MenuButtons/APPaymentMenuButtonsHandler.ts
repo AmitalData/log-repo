@@ -22,6 +22,7 @@ export class APPaymentMenuButtonsHandler {
     private isCancelApproval: boolean;
     private isVoided: boolean;
     private isPrintRequested: boolean;
+    private isOerationInProgrees: boolean = false;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -33,6 +34,7 @@ export class APPaymentMenuButtonsHandler {
         this.isCancelApproval = false;
         this.isVoided = false;
         this.isPrintRequested = false;
+        this.isOerationInProgrees = false;
     }
 
     Listen() {
@@ -68,6 +70,8 @@ export class APPaymentMenuButtonsHandler {
             if (isLoadSuccess) {
                 this.EntityPM = this.entityArgs.EditComponent.EntityPM;
             }
+
+            this.ResetAllFlags();
         });
     }
 
@@ -207,18 +211,18 @@ export class APPaymentMenuButtonsHandler {
         if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
             var myConfirmWindow = new ConfirmWindow();
             myConfirmWindow.Width = 400;
-            myConfirmWindow.Show("Resend this invoice to QBO?");
+            myConfirmWindow.Show("Resend this payment to QBO?");
             myConfirmWindow.WindowClosed.subscribe(s => {
                 this.ResetAllFlags();
                 if (myConfirmWindow.Yes) {
-                    this.SendToQBOApproved("Resending Invoice to QBO");
+                    this.SendToQBOApproved("Resending payment to QBO");
 
                 }
             });
         }
 
         else {
-            this.SendToQBOApproved("Sending Invoice to QBO");
+            this.SendToQBOApproved("Sending payment to QBO");
             this.ResetAllFlags();
         }
     }
@@ -260,35 +264,43 @@ export class APPaymentMenuButtonsHandler {
 
     // [Approval]
     ApprovalMethod() {
-        if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
-            var FlagNotTransfered: boolean = false;
-            this.EntityPM.PaymentInvoices.forEach(item => {
-                if (item.APInvoiceTransferStatusCode != "TR") {
-                    FlagNotTransfered = true;
-                }
-            });
 
-            if (FlagNotTransfered) {
-                var window: MessageWindow = new MessageWindow();
-                window.Show("Invoices that were not transferred to QBO will not be connected to the payment at QBO");
-                window.WindowClosed.subscribe((event: any) => {
-                    this.CompleteApprove();
+        if (!FeatureLocator.HasEntityPermessions("APPayment", "UPDT", true)) {
+            return;
+        }
+
+        if (!this.isOerationInProgrees) {
+            this.isOerationInProgrees = true;
+
+            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+                var FlagNotTransfered: boolean = false;
+
+                this.EntityPM.PaymentInvoices.forEach(item => {
+                    if (item.APInvoiceTransferStatusCode != "TR") {
+                        FlagNotTransfered = true;
+                    }
                 });
+
+                if (FlagNotTransfered) {
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("Invoices that were not transferred to QBO will not be connected to the payment at QBO");
+                    window.WindowClosed.subscribe((event: any) => {
+                        this.CompleteApprove();
+                    });
+                }
+
+                else {
+                    this.CompleteApprove();
+                }
             }
+
             else {
                 this.CompleteApprove();
             }
-
         }
-        else {
-            this.CompleteApprove();
-        }
-
     }
     
-
     CompleteApprove() {
-
         if (this.EntityPM.PaymentMethodCode == "FS" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
             var messageWindow = new MessageWindow();
             messageWindow.Show("This payments with payment method Offsetting will not be transfered to quickbooks online , transfer it manually");
@@ -296,6 +308,7 @@ export class APPaymentMenuButtonsHandler {
                 this.ApprovingLogic();
             });
         }
+
         else {
             this.ApprovingLogic();
         }               
@@ -303,32 +316,36 @@ export class APPaymentMenuButtonsHandler {
 
     private ApprovingLogic() {
         var message = "";
-        if (!FeatureLocator.HasEntityPermessions("APPayment", "UPDT", true)) {
-            return;
-        }
+        var isValid = true;
 
         var errors = this.customValidator.Validate(this.EntityPM);
-        var isValid = true;
         if (errors != null && errors.length > 0) {
             isValid = false;
         }
+
         if (isValid) {
             this.EntityPM.SetVoided = false;
             this.EntityPM.SetApproved = true;
             this.EntityPM.SetCancelApproval = false;
+
             if (this.CurrentDocument != null) {
                 this.CurrentDocument.NeedsRebuild = true;
 
             }
+
             this.entityArgs.EditComponent.SaveChanges();
         }
+
         else {
+            if (this.entityArgs.EditComponent.ValidationErrorsList == null) {
+                this.entityArgs.EditComponent.ValidationErrorsList = [];
+            }
+
             errors.forEach(item => {
-                if (this.entityArgs.EditComponent.ValidationErrorsList == null) {
-                    this.entityArgs.EditComponent.ValidationErrorsList = [];
-                }
                 this.entityArgs.EditComponent.ValidationErrorsList.push(item);
             });
+
+            this.isOerationInProgrees = false;
         }
     }
     // [Cancel Approval]

@@ -12,11 +12,7 @@ import {TMBudgetPMService} from './Services/StandardPMs/TMBudgetPMService';
 import {TMProjectCategoryPMService} from './Services/StandardPMs/TMProjectCategoryPMService';
 import {SprintListService} from './Services/StandardLists/SprintListService';
 import {SprintPMService} from './Services/StandardPMs/SprintPMService';
-
-
-
-
-
+import { TMDayOffTypeListService } from './Services/StandardLists/TMDayOffTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -37,7 +33,7 @@ export class ModuleProviders {
 
             case "SprintListService": { myResult = new SprintListService(); break; }
             case "SprintPMService": { myResult = new SprintPMService(); break; }
-
+            case "TMDayOffTypeListService":{ myResult = new TMDayOffTypeListService(); break; }
         }
         return myResult;
     }

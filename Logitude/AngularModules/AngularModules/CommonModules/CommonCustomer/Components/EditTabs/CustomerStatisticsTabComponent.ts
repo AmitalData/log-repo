@@ -69,7 +69,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
     public legenddiv: string = "ActualVsPotentialLegends_ID_";
     public barChartData: any[] = [{ data: [], label: '' }, { data: [], label: '' }];
     public NewActualVsPotential: Array<any> = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     CompareComboBoxItemsChange(item) {
         this.SelectedCompareComboBoxItems = item;
         this.LoadActuals();
@@ -152,12 +152,12 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             listArgs.BackButtonTitle = "Back";
             listArgs.ShowViews = false;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadQueries());
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -180,7 +180,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
@@ -206,7 +206,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
@@ -235,7 +235,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
@@ -266,7 +266,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
@@ -336,6 +336,11 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
                     else if (productItem != null) {
                         this.NewActualVsPotential[1].Year.push(null);
                         this.NewActualVsPotential[1].ProductTypeCode.push(productItem.ProductTypeCode);
+                        this.NewActualVsPotential[1].Month.push(null);
+                    }
+                    else {
+                        this.NewActualVsPotential[1].Year.push(null);
+                        this.NewActualVsPotential[1].ProductTypeCode.push(element.Code);
                         this.NewActualVsPotential[1].Month.push(null);
                     }
                         if (i == 0) {
@@ -945,9 +950,9 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
         this.EntityName = "Customer";
         this.TenantPM = SessionLocator.TenantPM;
         this.EntityNotes = this.EntityPM.Notes;
-        this.ActivityStatusOverViewDashboardId = this.ActivityStatusOverViewDashboardId + SessionLocator.CurrentSession.GetChartId();
-        this.ActualVsPotentialChart = this.ActualVsPotentialChart + SessionLocator.CurrentSession.GetChartId();
-        this.legenddiv = this.legenddiv + SessionLocator.CurrentSession.GetChartId();
+        this.ActivityStatusOverViewDashboardId = this.ActivityStatusOverViewDashboardId + this.CurrentSession.GetChartId();
+        this.ActualVsPotentialChart = this.ActualVsPotentialChart + this.CurrentSession.GetChartId();
+        this.legenddiv = this.legenddiv + this.CurrentSession.GetChartId();
     }
 
     IsShowMessageComplate: boolean = false;
@@ -968,7 +973,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
     MoreDetails() {
 
         this.CustomerOverViewTabHide = true;
-        SessionLocator.DynamicLoader.Load('./CommonModules/CommonCustomer/Components/EditTabs/CustomerOverviewTabDetailsComponent', SessionLocator.CurrentSession.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./CommonModules/CommonCustomer/Components/EditTabs/CustomerOverviewTabDetailsComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Customer = this.EntityPM;

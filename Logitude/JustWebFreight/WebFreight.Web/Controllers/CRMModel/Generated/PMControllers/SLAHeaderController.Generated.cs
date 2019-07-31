@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("SLAHeader", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("SLAHeader", entityPM.Tenant, authToken.Tenant);
 	                    
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         SLAHeaderUpdateService service = new SLAHeaderUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("SLAHeader", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("SLAHeader", entityPM.Tenant, authToken.Tenant);
 	
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         SLAHeaderUpdateService service = new SLAHeaderUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

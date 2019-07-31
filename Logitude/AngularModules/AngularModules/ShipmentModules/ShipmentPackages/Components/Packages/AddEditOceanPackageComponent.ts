@@ -23,7 +23,9 @@ export class AddEditOceanPackageComponent {
     public ObjectTableName: string = "ShipmentPackage";
     public SelectedTabCode: string = "0";
     public IsFCLEntity: boolean = false;
+    public IsLCLEntity: boolean = false; 
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -33,6 +35,7 @@ export class AddEditOceanPackageComponent {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext.FillMethodsList();
         this.IsFCLEntity = dataContext.IsFCLEntity;
+        this.IsLCLEntity = dataContext.IsLCLEntity;
         this.SetLabels();
         this.Clone();
     }
@@ -52,7 +55,7 @@ export class AddEditOceanPackageComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var isValid: boolean = this.Validate();
@@ -82,7 +85,7 @@ export class AddEditOceanPackageComponent {
 
             this.UpdateDeliveryPackage();
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
@@ -260,7 +263,14 @@ export class AddEditOceanPackageComponent {
         this.myCloner.AddField('Reference1');
         this.myCloner.AddField('Reference2');
         this.myCloner.AddField('Reference3');
-        this.myCloner.AddField('Reference4');  
+        this.myCloner.AddField('Reference4');
+        this.myCloner.AddField('Make');
+        this.myCloner.AddField('Model');
+        this.myCloner.AddField('Year');
+        this.myCloner.AddField('Color');
+        this.myCloner.AddField('ChassisNumber');
+        this.myCloner.AddField('RegistrationNumber');
+        this.myCloner.AddField('CountryId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
     }

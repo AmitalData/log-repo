@@ -1,4 +1,4 @@
-﻿declare var System: any, window: any;
+declare var System: any, window: any;
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -27,7 +27,7 @@ export class DropBoxTestFileComponent extends BaseComponent implements OnInit, A
     ShowTestButton: boolean = false;
     DataContext: DropBoxTestFileComponent = this;
     ValidationErrorsList: any[];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public CD: ChangeDetectorRef) {
         super();
     }
@@ -40,7 +40,7 @@ export class DropBoxTestFileComponent extends BaseComponent implements OnInit, A
 
 
     CloseBtnClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SendTestFile() {
@@ -54,10 +54,10 @@ export class DropBoxTestFileComponent extends BaseComponent implements OnInit, A
             this.ValidationErrorsList.push("ObjectTable is required ");
         }
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             var myService: CommonDomainService = new CommonDomainService();
             myService.GetDropBoxComLogTestFile(SessionLocator.Tenant, this.FileName, this.FolderName, this.FileText, this.ObjectTableId).subscribe((myResult) => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var temp = myResult.Result;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 200;

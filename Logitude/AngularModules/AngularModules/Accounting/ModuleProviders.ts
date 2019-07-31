@@ -51,7 +51,7 @@ import { GLAccountMoreDataListService } from './Services/StandardLists/GLAccount
 import { TaxDeductionReportListService } from './Services/StandardLists/TaxDeductionReportListService';
 import { OpenFormatReportListService } from './Services/StandardLists/OpenFormatReportListService';
 //import { OpenFormatDateTypeListService } from './Services/StandardLists/OpenFormatDateTypeListService';
-
+import { TaxDeductionReportStatusListService } from './Services/StandardLists/TaxDeductionReportStatusListService';
 import { TaxReportPMService } from './Services/StandardPMs/TaxReportPMService';
 import { AccountingPeriodPMService } from './Services/StandardPMs/AccountingPeriodPMService';
 import { AutomaticReconcileMethodPMService } from './Services/StandardPMs/AutomaticReconcileMethodPMService';
@@ -100,6 +100,7 @@ import { JournalOpService } from './Services/Others/JournalOpService';
 import { BankAccountExtendedListService } from './Services/ExtendedLists/BankAccountExtendedListService';
 import { ReconcileExternalPageListService } from './Services/StandardLists/ReconcileExternalPageListService';
 import { BankDepositExtendedPMService } from './Services/ExtendedPMs/BankDepositExtendedPMService';
+import { AccountingOpService } from './Services/Others/AccountingOpService';
 
 import { PaymentChequeListService } from './Services/StandardLists/PaymentChequeListService';
 import { TaxWithholdingAssessOfficeListService } from './Services/StandardLists/TaxWithholdingAssessOfficeListService';
@@ -108,7 +109,7 @@ import { ReconcileExternalPageExtendedListService } from './Services/ExtendedLis
 import { ExternalReconciliationExtendedListService } from './Services/ExtendedLists/ExternalReconciliationExtendedListService';
 import { AutomaticExternalRconcilMthodListService } from './Services/StandardLists/AutomaticExternalReconcileMethodListService';
 import { TaxReportExtendedPMService } from './Services/ExtendedPMs/TaxReportExtendedPMService';
-
+import { OpenFormatReportStatusListService } from './Services/StandardLists/OpenFormatReportStatusListService';
 
 import { JournalMenuButtonsHandler } from './Components/MenuButtons/JournalMenuButtonsHandler';
 import { GLAccountMenuButtonsHandler } from './Components/MenuButtons/GLAccountMenuButtonsHandler';
@@ -223,6 +224,8 @@ export class ModuleProviders {
             case "VatReportStatusListService": { myResult = new VatReportStatusListService(); break; }
             case "GLAccountMoreDataListService": { myResult = new GLAccountMoreDataListService(); break; }
             // case "OpenFormatDateTypeListService": { myResult = new OpenFormatDateTypeListService(); break; }
+            case "TaxDeductionReportStatusListService": { myResult = new TaxDeductionReportStatusListService(); break; }
+            case "OpenFormatReportStatusListService": { myResult = new OpenFormatReportStatusListService(); break; }
             //#endregion
 
             //Extend Services
@@ -246,7 +249,7 @@ export class ModuleProviders {
             case "AccountingIntegrityCheckPMService": { myResult = new AccountingIntegrityCheckPMService; break; }
             case "AccountingNoteExtendedListService": { myResult = new AccountingNoteExtendedListService; break; }
             case "IntegrityCheckStatusListService": { myResult = new IntegrityCheckStatusListService; break; }
-
+            case "GLAccountOpService": { myResult = new AccountingOpService(); break; }
 
             //Menu Buttons
             case "JournalMenuButtonsHandler": { myResult = new JournalMenuButtonsHandler; break; }

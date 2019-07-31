@@ -50,7 +50,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public todayDate: Date;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");      
@@ -192,46 +192,27 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
         this.UIProperties.SetRequired("VATNumber", this.ObjectTableName, isRequired);
     }
+
+    public RateIsEnabled: boolean = false;
     SetUIProperties_ExchangeRate() {
         var isEnabled: boolean = false;
 
         if (this.IsScreenEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
-                if (this.EntityPM.InvoicePayments.length > 0) {
-                    isEnabled = false;
-                }
-                else {
-                    isEnabled = true;
-                }
-
-                if (this.EntityPM.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
-                    isEnabled = true;
-                }
+            if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
+                if (this.InvoiceCurrencyId) {
+                    if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                        if (this.EntityPM.InvoicePayments.length == 0) {
+                            isEnabled = true;
+                        }
+                    }
+                }                
             }            
         }
 
+        this.RateIsEnabled = isEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isEnabled);
     }
 
-    get RateIsEnabled() {
-        var result = true;
-
-        if (this.EntityPM != null) {
-            this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, true);
-
-            if (!this.IsScreenEnabled) {
-                this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
-                return false;
-            }
-
-            else if (this.EntityPM.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.InvoiceCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {
-                this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, false);
-                return false;
-            }
-        }
-
-        return result;
-    }
 
     // Refresh Screen
     private RefreshScreen() {
@@ -275,7 +256,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     private myCurrencyRatesService: CurrencyRatesService;
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -299,17 +280,17 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
                     this.BuildInvoiceLines();
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
     UpdateData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -336,12 +317,12 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         item.SetVatPercentage(this.GetVatTypePercentage(item.VatTypeId));
                     });
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -1050,14 +1031,18 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     public RunVatTypeFilterMethod() {
-        if (this.ItemsSource != null) {
-            this.ItemsSource.Collection.forEach(item => {
-                item.VatTypeId = this.VatTypeId;
-            });
-        }
+        if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
+            var vatType = this.VatTypeId;
+            this.VatTypeId = null;
 
-        this.VatTypeId = null;
-        this.ComputeTotals();
+            if (this.ItemsSource != null) {
+                this.ItemsSource.Collection.forEach(item => {
+                    item.VatTypeId = vatType;
+                });
+            }
+                        
+            this.ComputeTotals();
+        }
     }
 
     public RefreshLinesVat(vatId: string, vatPercentage: number) {
@@ -1117,6 +1102,7 @@ export class APInvoiceLineItem extends BaseComponent {
     public IsScreenEnabled: boolean;
     public CorrectionByUserName = "";
     public LocalCurrencyId: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(line: APInvoiceLinePM, public fatherComponent: APInvoiceDetailsTabGeneral, public AddNewLineMode) {
         super();
         this.invoiceLinePM = line;
@@ -1241,15 +1227,16 @@ export class APInvoiceLineItem extends BaseComponent {
         var isFieldEnabled = false;
 
         if (this.IsEditingEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
-                if (this.ForiegnCurrencyId != this.LocalCurrencyId) {
-                    isFieldEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
+                if (this.ForiegnCurrencyId) {
+                    if (this.ForiegnCurrencyId != this.LocalCurrencyId) {
+                        isFieldEnabled = true;
+                    }
                 }
             }
         }
         
-        //this.IsRateEnabled = isFieldEnabled;
-        this.IsRateEnabled = true;
+        this.IsRateEnabled = isFieldEnabled;
         this.UIProperties.SetEnabled("ForiegnExchangeRate", this.ObjectTableName, isFieldEnabled);
     }
     private SetUIProperties_EditControls() {

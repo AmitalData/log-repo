@@ -29,8 +29,8 @@ namespace WarehouseData
         string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
 
         string dbDestinationConnection = "Logitude2-5_Global,sa,Saas256,.";
-    
-        
+
+
         public BuildWarehouseForm()
         {
             InitializeComponent();
@@ -237,8 +237,17 @@ namespace WarehouseData
 
                             #endregion
 
+
                             #region Create and Build Dimensions Table
-                            warehouseHelper.ExecuteScript( "BuildWarehouse", destinationConnectionString , null , "BuildDateDimensionsTable");
+
+
+                              stepName = "BuildDateDimensionsTable";
+                            warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
+                            stepName = "RunOtherScripte";
+                            warehouseHelper.RunOtherScripte(destinationConnectionString);
+               
+
+
 
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
@@ -246,7 +255,6 @@ namespace WarehouseData
 
                                     if (table.DispayInScreen)
                                     {
-
                                         stopWatchDimensionsTable = new Stopwatch();
                                         stopWatchDimensionsTable.Start();
                                         SetControlPropertyValue("Text", "Building ...", table.DBTableName, "DIM");
@@ -254,8 +262,8 @@ namespace WarehouseData
                                     }
 
                                     stepName = table.BuildScriptName;
-
-                                    warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString , table);
+                                   
+                                    warehouseHelper.BuildAndExecuteDataWarehouseScript("BuildWarehouse", destinationConnectionString , table);
 
 
                                     if (table.DispayInScreen)
@@ -283,7 +291,7 @@ namespace WarehouseData
                                         SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Fact");
                                         SetControlPropertyValue("Text", "Building...", table.DBTableName, "Fact");
                                     }
-                                    warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString , table);
+                                    warehouseHelper.BuildAndExecuteDataWarehouseScript("BuildWarehouse", destinationConnectionString , table);
                           
                                     if (table.TableName == "Shipment")
                                     {
@@ -309,14 +317,16 @@ namespace WarehouseData
 
                             foreach (TableClass table in tableNameLists.Where(d => d.DispayInScreen))
                             {
+                                stepName = "DW table count";
                                 GetCount(table, "DW", destinationConnectionString);
                             }
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
+                                stepName = "DIM table count";
                                 GetCount(table, "DIM", destinationConnectionString);
                             }
 
-
+                            stepName = "Fact table count";
                             GetCount(tableNameLists.Where(d => d.DBTableName == "Shipments").FirstOrDefault(), "Fact", destinationConnectionString);
 
                             #endregion
@@ -328,7 +338,12 @@ namespace WarehouseData
                         catch (Exception ex)
                         {
                             IsBuildDataRunning = false;
-                            MessageBox.Show( ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : ""), stepName);
+
+                            string message = ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : "");
+                            if (message.Length > 1500)  message = message.Substring(0, 1500);
+
+
+                            MessageBox.Show(message, stepName);
                         }
                     }
 
@@ -339,7 +354,9 @@ namespace WarehouseData
             catch (Exception ex)
             {
                 IsBuildDataRunning = false;
-                MessageBox.Show(ex.Message, ex.Message + (ex.InnerException!=null? ex.InnerException.ToString():""));
+                string message = ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : "");
+                if (message.Length > 1500) message = message.Substring(0, 1500);
+                MessageBox.Show(message);
 
             }
 

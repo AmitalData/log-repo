@@ -1,4 +1,4 @@
-﻿
+
 
 declare var window: any;
 import {WarehouseReleasePM} from '../../EntityPMs/WarehouseReleasePM';
@@ -24,7 +24,7 @@ export class WarehouseReleaseMenuButtonsHandler {
     public EntityPM: WarehouseReleasePM;
     public entityArgs: EntityArgs
     private status: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     EntityParentPM: ShipmentPM;
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -246,17 +246,17 @@ export class WarehouseReleaseMenuButtonsHandler {
         confirmWindow.NoButtonText = "Cancel";
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                SessionLocator.CurrentSession.StartBusyIndicator("Cancel Release");
+                this.CurrentSession.StartBusyIndicator("Cancel Release");
                 var warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
                 warehouseReleasePMExtendedService.CancelRelease(this.EntityPM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (!pmResponse.HasError) {
                         this.EntityPM = pmResponse.Result;
-                        SessionLocator.CurrentSession.FireEvent("CancelRelease");
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.FireEvent("CancelRelease");
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
                     } else {
 

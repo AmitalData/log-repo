@@ -51,19 +51,20 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     public FilterId_A: string;
     public FilterId_O: string;
     public FilterId_I: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
         if (SessionLocator.PrivateLableSettings) {
             this.PLShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
         }
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.FilterId_A = "TransportFilter_A_-1_-1";
             this.FilterId_O = "TransportFilter_O_-1_-1";
             this.FilterId_I = "TransportFilter_I_-1_-1";
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("TransportsFilter");
+            var idIndex = this.CurrentSession.GetNewId("TransportsFilter");
             this.FilterId_A = "TransportFilter_A_" + idIndex;
             this.FilterId_O = "TransportFilter_O_" + idIndex;
             this.FilterId_I = "TransportFilter_I_" + idIndex;
@@ -389,7 +390,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     public set GrossWeight(newValue: number) { this.EntityPM.GrossWeight = +(newValue); }
 
     public get Master() { return this.EntityPM.Master }
-    public set Master(newValue: string) { this.EntityPM.Master = newValue; }
+    public set Master(newValue: any) { this.EntityPM.Master = newValue; }
 
     public get House() { return this.EntityPM.House }
     public set House(newValue: string) { this.EntityPM.House = newValue; }
@@ -402,7 +403,11 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         return this.containerNumber;
     }
     public set ContainerNumber(newValue: string) {
-        if (this.EntityPM.ShipmentPackages && this.EntityPM.ShipmentPackages.length == 0) {
+        if (AppTool.IsNullOrEmpty(newValue)) {
+            this.EntityPM.ShipmentPackages = [];
+            this.containerNumber = newValue;
+        }
+        if (this.EntityPM.ShipmentPackages && this.EntityPM.ShipmentPackages.length == 0 && !AppTool.IsNullOrEmpty(newValue)) {
             this.EntityPM.ShipmentPackages = [];
             var MyPackage = new ShipmentPackagePM(this.EntityPM);
             MyPackage.ContainerNumber = newValue;
@@ -411,11 +416,11 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             MyPackage.Quantity = this.PackagesQuantity;
             this.EntityPM.ShipmentPackages.push(MyPackage);
         }
-        else if (this.EntityPM.ShipmentPackages.length > 0) {
-            this.EntityPM.ShipmentPackages[0].ContainerNumber = newValue;
-            this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
-            this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
-            this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity; 
+        else if (this.EntityPM.ShipmentPackages.length > 0) { 
+                this.EntityPM.ShipmentPackages[0].ContainerNumber = newValue;
+                this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
+                this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
+                this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity;  
         }
         //this.ValidateContainerNumber(newValue);
     }
@@ -435,6 +440,10 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     
 
     SaveChanges() {
+        if (this.isSaveClicked == true) {
+            return;
+        }
+        this.isSaveClicked = true;
         this.ValidationErrorsList = [];
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -448,6 +457,27 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         }
         if (this.CustomerReference2 && this.CustomerReference2.length > 30) {
             this.ValidationErrorsList.push("My Reference can't be more than 30 characters");
+        }
+        if (!AppTool.IsNullOrEmpty(this.PackagesQuantity) && this.isInt(this.PackagesQuantity) == false) {
+            this.ValidationErrorsList.push("Quantity Must be integer.");
+        }
+       
+        if ((typeof this.PackagesQuantity != 'number' || this.PackagesQuantity.toString() == "NaN") && this.PackagesQuantity != null) {
+            this.ValidationErrorsList.push("Quantity must be numaric value");
+        }
+        if ((typeof this.GrossWeight != 'number' || this.GrossWeight.toString() == "NaN") && this.GrossWeight != null) {
+            this.ValidationErrorsList.push("Weight must be numaric value");
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber) && (AppTool.IsNullOrEmpty(this.PackagesQuantity) || AppTool.IsNullOrEmpty(this.GrossWeight))) {
+            this.ValidationErrorsList.push("Weight and Quantity are required");
+        }
+        else {
+            if (this.EntityPM.ShipmentPackages.length > 0) {
+                //this.EntityPM.ShipmentPackages[0].ContainerNumber = newValue;
+                this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
+                this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
+                this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity;
+            }
         }
         if (this.ValidationErrorsList.length == 0) {
             this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe(myResult => {
@@ -471,6 +501,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                                 this.SaveData();
                                             }
                                             else {
+                                                this.isSaveClicked = false;
                                                 //this.LoadImporterShipments(true);
                                             }
                                         });
@@ -495,6 +526,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                                 this.SaveData();
                                             }
                                             else {
+                                                this.isSaveClicked = false;
                                                 //this.LoadImporterShipments(true);
                                             }
                                         });
@@ -523,6 +555,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                             this.SaveData();
                                         }
                                         else {
+                                            this.isSaveClicked = false;
                                             //this.LoadImporterShipments(true);
                                         }
                                     });
@@ -547,6 +580,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                             this.SaveData();
                                         }
                                         else {
+                                            this.isSaveClicked = false;
                                             //this.LoadImporterShipments(true);
                                         }
                                     });
@@ -565,20 +599,23 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
 
                     //if (!this.SelectedTransportationTypes) {
                     this.ValidationErrorsList.push("Transportation Type Port is not defined in your tenant.");
+                    this.isSaveClicked = false;
                     //}
                     //this.SaveData();
                 }
             });
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.isSaveClicked = false;
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
 
     }
     isInt(n) {
         return n % 1 === 0;
     }
-    SaveData() {
+    isSaveClicked: boolean = false;
+    SaveData() { 
         this.ValidationErrorsList = [];
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -596,9 +633,14 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         //if (AppTool.IsNullOrEmpty(this.CustomerReference2)) {
         //    this.ValidationErrorsList.push(msg.replace("%FieldName", "My Reference"));
         //}
+        var isMasterAllDigits = this.Master != null ? /^\d+$/.test(this.Master) : true;//typeof this.Master;
+        if (!isMasterAllDigits) {
+            this.ValidationErrorsList.push("Master Field must be all digits");
+        }
         if ((typeof this.PackagesQuantity != 'number' || this.PackagesQuantity.toString() == "NaN") && this.PackagesQuantity != null) {
             this.ValidationErrorsList.push("Quantity must be numaric value");
         }
+        //Master Field must be all digits
         if ((typeof this.GrossWeight != 'number' || this.GrossWeight.toString() == "NaN") && this.GrossWeight != null) {
             this.ValidationErrorsList.push("Weight must be numaric value");
         }
@@ -622,7 +664,8 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         //    this.ValidationErrorsList.push(msg.replace("%FieldName", "Destination"));
         //}
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+            this.isSaveClicked = false;
             this.EntityPM.IsImporterShipment = true;
             this.EntityPM.MainCarriageFromPortId = this.EntityPM.FromPortId;
             this.EntityPM.MainCarriageToPortId = this.EntityPM.ToPortId;
@@ -685,14 +728,14 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 this._ShipmentPMService.insert(this.EntityPM).subscribe(myResult => {
                     if (!myResult.HasError) {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "New Shipment");
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
                         //ParentViewModel.setImporterFilter();
                         //ParentViewModel.LoadAllData();
                     }
                     else {
                         this.ValidationErrorsList = myResult.ErrorsArray;
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
                 });
             }
@@ -711,13 +754,13 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 }
                 this._ShipmentPMService.update(this.EntityPM).subscribe(myResult => {
                     if (!myResult.HasError) {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");
                     }
                     else {
                         //this.ValidationErrorsList = myResult.ErrorsArray;
                         this.ValidationErrorsList = myResult.ErrorsArray;//.push("There Are Validation Errors.");
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
                 });
             }
@@ -725,7 +768,8 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
 
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.isSaveClicked = false;
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
     }
 
@@ -746,7 +790,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     itemMouseOver(itemValue: string) {

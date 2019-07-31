@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 
 import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
@@ -46,7 +46,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
     VolumetricWeightLabel: string;
     ActualReleaseDateOldValue: Date;
     ExpectedReleaseDateOldValue: Date;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public _traceEventExtendedPMService: TraceEventExtendedPMService) {
         super();
         this.myShipmentPMService = new ShipmentPMService();
@@ -86,14 +86,14 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
     private LoadCompletedChangedEvent: any = null;
     Listen() {
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
 
             if (!this.SaveCompletedChangedEvent) {
-                this.SaveCompletedChangedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedChangedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EventTypeCodeList = [];
-                        this.warehouseReleasePM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.warehouseReleasePM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.EventTypeCodeList.push(new EventTypeClass("UPRE", null));
                         if (this.warehouseReleasePM.ExpectedReleaseDate != this.ExpectedReleaseDateOldValue) {
                             this.ExpectedReleaseDateOldValue = this.warehouseReleasePM.ExpectedReleaseDate;
@@ -112,9 +112,9 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
 
             if (!this.LoadCompletedChangedEvent) {
-                this.LoadCompletedChangedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedChangedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.warehouseReleasePM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.warehouseReleasePM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
@@ -122,7 +122,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
         }
 
         if (!this.CancelReleaseChangedEvent) {
-            this.CancelReleaseChangedEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.CancelReleaseChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "CancelRelease") {
                     this.SetEnableProperties();
                 }
@@ -157,10 +157,10 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
             }
 
             else if (!AppTool.IsNullOrEmpty(this.warehouseReleasePM.ShipmentId)) {
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
                 this.myShipmentPMService.get(this.warehouseReleasePM.ShipmentId).subscribe(res => {
                     var shipResponse: ServiceResponse = res;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!shipResponse.HasError) {
                         this.ShipmentPM = shipResponse.Result;
                         if (this.ShipmentPM) {
@@ -235,7 +235,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
             traceEventArgs.EntityId = this.warehouseReleasePM.Id;
             traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
             this._traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
-                SessionLocator.CurrentSession.FireEvent("LoadEventTabData");
+                this.CurrentSession.FireEvent("LoadEventTabData");
             });
         }
     }

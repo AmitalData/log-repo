@@ -240,7 +240,8 @@ namespace WebFreight.Web.WebServices
             }
 
             DashBoardDataClass totalData = new DashBoardDataClass();
-
+           
+               
             totalData.CustomersList = new List<CustomersDataClass>();
             totalData.CountriesList = new List<CountriesDataClass>();
             totalData.DirectionTransportModeList = new List<DirectionTransportModeDataClass>();
@@ -256,8 +257,22 @@ namespace WebFreight.Web.WebServices
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             if (filterItem_ToDate != null && filterItem_ToDate.FieldValue != null) toDate = DateTime.Parse(filterItem_ToDate.FieldValue.ToString());
 
+            QueryFilterItem filterItem_TimeRange = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TimeRange").FirstOrDefault();
+            string TimeRange = null;
+            if (filterItem_TimeRange != null)
+            {
+                if (filterItem_TimeRange.FieldValue != null)
+                {
+                    TimeRange = filterItem_TimeRange.FieldValue.ToString();
+                }
+            }
 
-            if (fromDate != null && toDate != null)
+
+            totalData.FromDate = fromDate;
+            totalData.ToDate = toDate;
+            totalData.TimeRange = TimeRange;
+
+            if (TimeRange == "Custom")
             {
                 totalData.CustomersList = this.GetCustomersDataCustom(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId,fromDate,toDate);
                 totalData.CountriesList = this.GetCountriesDataCustom(tenant, LastMonths, LastDays, ShowIndex, DirectionId, TransportModeId,fromDate,toDate);

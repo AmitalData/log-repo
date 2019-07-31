@@ -1,4 +1,4 @@
-﻿
+
 <table *ngIf="IsVisible">
     <tr>
         <td>
@@ -114,7 +114,7 @@
                                                                 </td>
 
                                                                 <td>
-                                                                    <LogTextBox (LostFocus)="item.OnGrossWeightLostFocus($event)" [ObjectFieldName]="'Weight'" [Text]="item.Weight" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                                    <LogTextBox  (LostFocus)="item.OnGrossWeightLostFocus($event)" [ObjectFieldName]="'Weight'" [Text]="item.Weight" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -176,7 +176,7 @@
                                                         </td>
 
                                                         <td style="width: 165px;">
-                                                            <LogTextBox [ObjectFieldName]="'GrossWeight'" [Text]="GrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="GrossWeightLostFocus($event)"></LogTextBox>
+                                                            <LogTextBox [ObjectFieldName]="'GrossWeight'" [Text]="GrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (paste)="GrossWeightPaste($event)" (LostFocus)="GrossWeightLostFocus($event)"></LogTextBox>
                                                         </td>
 
                                                         <td style="width:10px; vertical-align:middle;">
@@ -192,7 +192,7 @@
                                                         </td>
 
                                                         <td>
-                                                            <LogTextBox [ObjectFieldName]="'ChargeableWeight'" [Text]="ChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="ChargeableWeightLostFocus($event)"></LogTextBox>
+                                                            <LogTextBox [ObjectFieldName]="'ChargeableWeight'" [Text]="ChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (paste)="ChargeableWeightPaste($event)" (LostFocus)="ChargeableWeightLostFocus($event)"></LogTextBox>
                                                         </td>
 
                                                         <td>

@@ -140,6 +140,9 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.State = tenantAddress.StateEnglishName;
                         invoicedataprovider.TenantStateCode = tenantAddress.StateCode;
                     }
+
+                    invoicedataprovider.TenantCAAT = tenantSettings.CAAT;
+                    invoicedataprovider.TenantCBSA = tenantSettings.CBSA;
                 }
 
                 List<VatType> allVATTypes = (from d in commonContext.VatTypes where d.Tenant == tenant select d).ToList();
@@ -171,7 +174,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.Signature = tenantSettings.Signature != null ? tenantSettings.Signature : "";
                     invoicedataprovider.VatNumber = tenantSettings.VatNumber != null ? tenantSettings.VatNumber : "";
 
-                    DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies where copy.Id == documentTypeCopyId select copy).FirstOrDefault();
+                    DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies where copy.Id == documentTypeCopyId && copy.Tenant == tenant select copy).FirstOrDefault();
 
                     switch (currentObjectTable.Name)
                     {
@@ -1016,6 +1019,14 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.MainCarriageCarrier = maincarriagecarrier.EnglishName != null ? maincarriagecarrier.EnglishName : "";
                         invoicedataprovider.maincarriagecarrierLocalName = maincarriagecarrier.LocalName != null ? maincarriagecarrier.LocalName : "";
                         invoicedataprovider.MainCarriageCarrierPrefix = shipment.AirlinePrefix != null ? shipment.AirlinePrefix : "";
+
+                        if (maincarriagecarrier.PartnerTypeId == "SL")
+                        {
+                            ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
+                            ShippingLine shippingLine = shippingLineRepository.GetSingleShippingLine(maincarriagecarrier.Id, tenant);
+                            invoicedataprovider.CarrierCAAT = shippingLine != null ? shippingLine.CAAT : null;
+                            invoicedataprovider.CarrierCBSA = shippingLine != null ? shippingLine.CBSA : null;
+                        }
                     }
 
                     if (!string.IsNullOrEmpty(invoicedataprovider.MainCarriageCarrierPrefix) && !string.IsNullOrEmpty(invoicedataprovider.MainCarriageMAWBOBLBL))
@@ -1228,9 +1239,18 @@ namespace WebFreight.Web.ReportsWebServices
                     currentInvoice.PrintByUserId = issuedByuser.Id;
                     currentInvoice.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-                    if (currentInvoice.StatusCode == "AD")
+                    switch (currentInvoice.StatusCode)
                     {
-                        currentInvoice.IsPrinted = true;
+                        case "AD":
+                        case "VD":
+                        case "PD":
+                        case "PP":
+                        case "AR":
+                        case "AC":
+                            {
+                                currentInvoice.IsPrinted = true;
+                                break;
+                            }
                     }
 
                     invoiceRepository.Update(currentInvoice);
@@ -1698,7 +1718,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.ForeignAmount = String.Format("{0:#,0.00}", lineAmount_Foreign);
                         reportinvoiceline.LocalAmount_Double = lineAmount_Local;
                         reportinvoiceline.InvoiceAmount_Double = lineAmount_Invoice;
-
+                        reportinvoiceline.ForeignAmount_Double = lineAmount_Foreign;
                         reportinvoiceline.VatAmountIncludeMultiInInvoiceCurrency = this.GetVatAmountIncludeMultiInInvoiceCurrencyField(invoiceline.VatTypeId, invoiceline.InvoiceAmount, invoiceTypeCode, allVATTypes, allVatTypesPercentages, allVATTypesGroups);
 
                         if (!string.IsNullOrEmpty(invoiceline.VatTypeId))
@@ -1879,7 +1899,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.ForeignAmount = lineAmount_Foreign != null ? String.Format("{0:#,0.00}", lineAmount_Foreign.Value) : "";
                         reportinvoiceline.LocalAmount_Double = lineAmount_Local;
                         reportinvoiceline.InvoiceAmount_Double = lineAmount_Invoice;
-
+                        reportinvoiceline.ForeignAmount_Double = lineAmount_Foreign;
                         reportinvoiceline.VatAmountIncludeMultiInInvoiceCurrency = this.GetVatAmountIncludeMultiInInvoiceCurrencyField(invoiceline.VatTypeId, invoiceline.InvoiceCurrencyAmount, invoiceTypeCode, allVATTypes, allVatTypesPercentages, allVATTypesGroups);
 
                         #region VAT
@@ -2730,9 +2750,18 @@ namespace WebFreight.Web.ReportsWebServices
                         entityPOCO.PrintByUserId = issuedByuser.Id;
                         entityPOCO.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-                        if (entityPOCO.StatusCode == "AD")
+                        switch (entityPOCO.StatusCode)
                         {
-                            entityPOCO.IsPrinted = true;
+                            case "AD":
+                            case "VD":
+                            case "PD":
+                            case "PP":
+                            case "AR":
+                            case "AC":
+                                {
+                                    entityPOCO.IsPrinted = true;
+                                    break;
+                                }
                         }
 
                         invoiceRepository.Update(entityPOCO);
@@ -2819,6 +2848,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.ForeignAmount = String.Format("{0:#,0.00}", lineAmount_Foreign);
                         reportinvoiceline.LocalAmount_Double = lineAmount_Local;
                         reportinvoiceline.InvoiceAmount_Double = lineAmount_Invoice;
+                        reportinvoiceline.ForeignAmount_Double = lineAmount_Foreign;
 
                         #region Vats
                         reportinvoiceline.VatAmountIncludeMultiInInvoiceCurrency = this.GetVatAmountIncludeMultiInInvoiceCurrencyField(invoiceline.VatTypeId, invoiceline.InvoiceAmount, entityPOCO.ARInvoiceTypeCode, allVATTypes, allVatTypesPercentages, allVATTypesGroups);
@@ -2972,6 +3002,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.ForeignAmount = lineAmount_Foreign != null ? String.Format("{0:#,0.00}", lineAmount_Foreign.Value) : "";
                         reportinvoiceline.LocalAmount_Double = lineAmount_Local;
                         reportinvoiceline.InvoiceAmount_Double = lineAmount_Invoice;
+                        reportinvoiceline.ForeignAmount_Double = lineAmount_Foreign;
 
                         #region VAT
 

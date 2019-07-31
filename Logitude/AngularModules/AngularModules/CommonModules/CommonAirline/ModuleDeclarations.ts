@@ -8,6 +8,12 @@ import {AddEditAirlineMessagingRuleComponent} from './Components/AddEdit/AddEdit
 import {AddEditTarrifHeaderComponent} from './Components/AddEdit/AddEditTarrifHeaderComponent';
 import {AddEditTariffChargeComponent} from './Components/AddEdit/AddEditTariffChargeComponent';
 import { AirlineDocsInTabComponent } from './Components/EditTabs/AirlineDocsInTabComponent';
+import { AirlineGeneralTabComponent } from './Components/EditTabs/AirlineGeneralTabComponent';
+import { AreasTabComponent } from './Components/EditTabs/AreasTabComponent';
+import { AddEditAirlineAreaComponent } from './Components/AddEdit/AddEditAirlineAreaComponent';
+import { ChoosePortComponent } from './Components/AddEdit/ChoosePortComponent';
+
+
 
 export const Components =
     [
@@ -15,12 +21,16 @@ export const Components =
         AirlineAdaptationsTabComponent,
         AirlineAWBStockTabComponent,
         AirlineCCSSettingsTabComponent,
-        AirlineSurchargeTabComponent,
+        AreasTabComponent,
         AddEditAirlineAdaptationItemComponent,
         AddEditAirlineMessagingRuleComponent,
         AddEditTarrifHeaderComponent,
         AddEditTariffChargeComponent,
         AirlineDocsInTabComponent,
+        AirlineGeneralTabComponent,
+        AirlineSurchargeTabComponent,
+        AddEditAirlineAreaComponent,
+        ChoosePortComponent
     ];
 
 export class ModuleDeclarations {
@@ -33,12 +43,19 @@ export class ModuleDeclarations {
             case "AirlineAdaptationsTabComponent": { myResult = AirlineAdaptationsTabComponent; break; }
             case "AirlineAWBStockTabComponent": { myResult = AirlineAWBStockTabComponent; break; }
             case "AirlineCCSSettingsTabComponent": { myResult = AirlineCCSSettingsTabComponent; break; }
-            case "AirlineSurchargeTabComponent": { myResult = AirlineSurchargeTabComponent; break; }
+            case "AreasTabComponent": { myResult = AreasTabComponent; break; }
             case "AddEditAirlineAdaptationItemComponent": { myResult = AddEditAirlineAdaptationItemComponent; break; }
             case "AddEditAirlineMessagingRuleComponent": { myResult = AddEditAirlineMessagingRuleComponent; break; }
             case "AddEditTarrifHeaderComponent": { myResult = AddEditTarrifHeaderComponent; break; }
             case "AddEditTariffChargeComponent": { myResult = AddEditTariffChargeComponent; break; }
             case "AirlineDocsInTabComponent": { myResult = AirlineDocsInTabComponent; break; }
+            case "AirlineGeneralTabComponent": { myResult = AirlineGeneralTabComponent; break; }
+            case "AirlineSurchargeTabComponent": { myResult = AirlineSurchargeTabComponent; break; }
+            case "AddEditAirlineAreaComponent": { myResult = AddEditAirlineAreaComponent; break; }
+            case "ChoosePortComponent": { myResult = ChoosePortComponent; break; }
+
+                
+                
         }
 
         return myResult;

@@ -43,19 +43,23 @@ export class AccountingPeriodsComponent extends BaseComponent {
     ShowPrompt: boolean = false;
     public isRTL: boolean = false;
     public hasReadPermision: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService, public entityArgs: EntityArgs) {
         super();
         this.accountingPeriodListService = new AccountingPeriodListService();
         this.accountingPeriodPMService = new AccountingPeriodPMService();
         this._AccountingPeriodExtendedListService = new AccountingPeriodExtendedListService();
         this._AccountingPeriodExtendedPMService = new AccountingPeriodExtendedPMService();
-        this.UIProperties.SetEnabled("Year", this.ObjectTableName, true);
+        // this.UIProperties.SetEnabled("Year", this.ObjectTableName, true);
 
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.hasReadPermision = FeatureLocator.HasEntityPermessions(this.ObjectTableName, 'READ',false);
-        if(this.hasReadPermision) this.UIProperties.SetEnabled("Year", this.ObjectTableName, false);
+        if(this.hasReadPermision)
+            this.UIProperties.SetEnabled("Year", this.ObjectTableName, true);
+        else
+            this.UIProperties.SetEnabled("Year", this.ObjectTableName, false);
+
 
     }
 
@@ -110,7 +114,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     EditPeriod(period: AccountingPeriodList) {

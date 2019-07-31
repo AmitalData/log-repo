@@ -1,6 +1,7 @@
 declare var window: any;
-import {AppTool} from '../../../Infrastructure/Tools';
-import {ARInvoicePM} from '../../EntityPMs/ARInvoicePM';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { ARInvoicePM } from '../../EntityPMs/ARInvoicePM';
+import { ARInvoiceLinePM } from '../../EntityPMs/ARInvoiceLinePM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -16,11 +17,15 @@ import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHe
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
-import { SessionComponent } from '../../../Infrastructure/Components/Session/SessionComponent';
+import { ARInvoicePMService } from '../../Services/StandardPMs/ARInvoicePMService';
+import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
+import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 
 export class ARInvoiceMenuButtonsHandler {
+    private CurrentSession = SessionLocator.SelectedSession;
     public EntityPM: ARInvoicePM;
     public entityArgs: EntityArgs
+    private isRunningBatchTaskExecution: boolean = false;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -33,31 +38,48 @@ export class ARInvoiceMenuButtonsHandler {
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
                     var myButtonIsDisabled = false;
+                   
 
                     switch (button.EventCode) {
                         case "SaveAsDraft":
                             {
                                 myButtonIsDisabled = !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
+
+                                if (this.EntityPM.IsConstituentInvoice) {
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        if (this.EntityPM.IsAutoCredit) {
+                                            myButtonIsDisabled = false;
+                                        }
+                                    }
+                                }
+
                                 button.LabelTextCodeCode = (this.EntityPM.IsConstituentInvoice) ? "General.B.Save" : "ARInvoice.B.SaveAsDraft";
+
                                 break;
                             }
 
                         case "CancelDraft":
                             {
-                                button.IsHidden = this.EntityPM.IsConstituentInvoice ? true : false;
+                                
 
-                                myButtonIsDisabled = true;
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    button.IsHidden = true;
+                                }
+                                else {
+                                    button.IsHidden = this.EntityPM.IsConstituentInvoice ? true : false;
 
-                                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                    if (this.EntityPM.StatusCode != "LL") {
-                                        if (this.EntityPM.IsConstituentInvoice) {
-                                            if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId) && this.EntityPM.StatusCode == "NT") {
+                                    myButtonIsDisabled = true;
+                                    if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        if (this.EntityPM.StatusCode != "LL") {
+                                            if (this.EntityPM.IsConstituentInvoice) {
+                                                if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId) && this.EntityPM.StatusCode == "NT") {
+                                                    myButtonIsDisabled = false;
+                                                }
+                                            }
+
+                                            else if (this.EntityPM.StatusCode == "DR") {
                                                 myButtonIsDisabled = false;
                                             }
-                                        }
-
-                                        else if (this.EntityPM.StatusCode == "DR") {
-                                            myButtonIsDisabled = false;
                                         }
                                     }
                                 }
@@ -69,19 +91,27 @@ export class ARInvoiceMenuButtonsHandler {
                             {
                                 button.IsHidden = this.EntityPM.IsConstituentInvoice ? true : false;
                                 myButtonIsDisabled = !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
+
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id) && this.EntityPM.IsAutoCredit) {
+                                    myButtonIsDisabled = false;
+                                }
                                 break;
                             }
 
                         case "SetAsSent":
                             {
-                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                    myButtonIsDisabled = true;
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    button.IsHidden = true;
                                 }
+                                else {
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        myButtonIsDisabled = true;
+                                    }
 
-                                else if (this.EntityPM.Sent || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "LL") {
-                                    myButtonIsDisabled = true;
+                                    else if (this.EntityPM.Sent || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "LL") {
+                                        myButtonIsDisabled = true;
+                                    }
                                 }
-
                                 break;
                             }
 
@@ -147,6 +177,9 @@ export class ARInvoiceMenuButtonsHandler {
                                     myButtonIsDisabled = !isEnabled;
                                 }
 
+                                else if (this.EntityPM.ARInvoiceTypeCode == "CC") {
+                                    myButtonIsDisabled = true;
+                                }
 
                                 if (SessionLocator.TenantPM.AccountingActivated == true) {
                                     if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
@@ -174,12 +207,17 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "ReTransfer":
                             {
-                                myButtonIsDisabled = true;
-                                button.IsHidden = this.EntityPM.IsConstituentInvoice;
-                                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
-                                    if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
-                                        if (this.EntityPM.TransferStatusCode == "TR") {
-                                            myButtonIsDisabled = false;
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    button.IsHidden = true;
+                                }
+                                else {
+                                    myButtonIsDisabled = true;
+                                    button.IsHidden = this.EntityPM.IsConstituentInvoice;
+                                    if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
+                                        if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
+                                            if (this.EntityPM.TransferStatusCode == "TR") {
+                                                myButtonIsDisabled = false;
+                                            }
                                         }
                                     }
                                 }
@@ -203,8 +241,6 @@ export class ARInvoiceMenuButtonsHandler {
                                 break;
                             }
 
-
-
                         case "SendToQBO":
                             {
                                 if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG" ) {
@@ -221,7 +257,7 @@ export class ARInvoiceMenuButtonsHandler {
                                    button.DisplayText = "Resend to QBO";
                                 }
                                 if (this.EntityPM.ApprovedDate == null) {
-                                    if (this.EntityPM.ARInvoiceTypeCode == "CD")
+                                    if (this.EntityPM.ARInvoiceTypeCode == "CD" || this.EntityPM.ARInvoiceTypeCode == "CC")
                                         myButtonIsDisabled = false;
                                     else
                                     myButtonIsDisabled = true;
@@ -232,6 +268,15 @@ export class ARInvoiceMenuButtonsHandler {
 
                                 break;
                             }
+
+                        case "InvoiceOperationsSeparator":
+                       case "VoidARInvoiceOperationsSeparator": {
+                            if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                button.IsHidden = true;
+
+                            }
+                            break;
+                        }
                     }
 
                     button.IsDisabled = myButtonIsDisabled;
@@ -372,14 +417,10 @@ export class ARInvoiceMenuButtonsHandler {
 
     isValid: boolean = false;
     isButtonClicked: boolean = false;
-    isSaveAutoCreditRequested: boolean = false;
-    isOpenAutoCreditRequested: boolean = false;
     isPrintRequested: boolean = false;
     StopFlags() {
         this.isButtonClicked = false;
         this.isPrintRequested = false;
-        this.isSaveAutoCreditRequested = false;
-        this.isOpenAutoCreditRequested = false;
     }
     StopFields() {
         this.AutoCreditId = null;
@@ -410,12 +451,20 @@ export class ARInvoiceMenuButtonsHandler {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
-                    if (this.isSaveAutoCreditRequested) {
-                        this.SaveBeforeAutoCreditCompleted();
-                    }
-
                     if (this.isPrintRequested) {
                         this.InitializePrinting();
+                    }
+
+                    if (this.isRunningBatchTaskExecution) {
+
+                        this.isRunningBatchTaskExecution = false;
+
+                        //if (this.EntityPM.BatchTaskExecutionId) {
+
+                        //    this.CurrentSession.StartBusyIndicator("Updating Shipments. It may take a few minutes...");
+
+                        //    this.CheckBatchTaskExecution(this.EntityPM.BatchTaskExecutionId);
+                        //}
                     }
                 }
 
@@ -428,12 +477,49 @@ export class ARInvoiceMenuButtonsHandler {
             if (isLoadSuccess) {
                 this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
-                if (this.isOpenAutoCreditRequested) {
-                    this.OpenAutoCreditScreen();
+                if (this.IsAutoCreditConsolidation) {
+                    this.IsAutoCreditConsolidation = false;
+
+                    this.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
                 }
             }
 
             this.StopFlags();
+        });
+    }
+
+    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
+
+        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+
+        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: BatchTaskExecutionList = myResponse.Result;
+
+                if (list.StatusCode == "D") {
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var window = new MessageWindow();
+                    window.Show("Shipments updated successfully");
+                }
+
+                else if (list.StatusCode == "F") {
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var window = new MessageWindow();
+                    window.Show("There was an error updating shipments and saving the invoice. Please try again later");
+                }
+
+                else {
+                    this.CheckBatchTaskExecution(BatchTaskExecutionId);
+                }
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                var window = new MessageWindow();
+                window.Show(myResponse.ErrorsArray[0]);
+            }
         });
     }
 
@@ -530,12 +616,12 @@ export class ARInvoiceMenuButtonsHandler {
 
                 else if (helper.IsActivated) {
 
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
 
                     var myService = new InvoiceDomainService();
                     myService.GetCustomerCreditLimitActualAmount(this.EntityPM.BillToId).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myResponse.HasError) {
                             helper.Run(myResponse.Result);
@@ -586,12 +672,33 @@ export class ARInvoiceMenuButtonsHandler {
         }
     }
     ApplyApproveClicked() {
+        if (this.EntityPM.IsAutoCredit) {
+            var myConfirmWindow = new ConfirmWindow();
+            myConfirmWindow.Width = 400;
+            myConfirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCredit"));
+            myConfirmWindow.WindowClosed.subscribe(s => {
+                if (myConfirmWindow.Yes) {
+                    this.ProceedToApprove(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));                    
+                }
+            });
+        }
+
+        else {
+            this.ProceedToApprove("Approving...");
+        }
+    }
+    ProceedToApprove(msg: string) {
         this.EntityPM.SetVoided = false;
         this.EntityPM.SetApproved = true;
         this.EntityPM.SetReTransfer = false;
         this.EntityPM.SetCancelDraft = false;
         this.EntityPM.SetReSendQBO = false;
-        this.entityArgs.EditComponent.SaveChanges("Approving...");
+
+        if (this.EntityPM.IsConsolidationInvoice) {
+            this.isRunningBatchTaskExecution = true;
+        }
+
+        this.entityArgs.EditComponent.SaveChanges(msg);
     }
 
     CancelDraftClicked() {
@@ -688,12 +795,12 @@ export class ARInvoiceMenuButtonsHandler {
     }
     AccountingCheck() {
         if (this.EntityPM.MainEntityId) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             var myService = new InvoiceDomainService();
             myService.GetShipmentIsAccountingClosed(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     var IsAccountingClosed = myResponse.Result;
@@ -735,6 +842,11 @@ export class ARInvoiceMenuButtonsHandler {
                 this.EntityPM.SetReTransfer = false;
                 this.EntityPM.SetCancelDraft = false;
                 this.EntityPM.SetReSendQBO = false;
+
+                if (this.EntityPM.IsConsolidationInvoice) {
+                    this.isRunningBatchTaskExecution = true;
+                }
+
                 this.entityArgs.EditComponent.SaveChanges("Voiding...");
             }
         });
@@ -757,6 +869,7 @@ export class ARInvoiceMenuButtonsHandler {
     }
 
     // AutoCredit
+    IsAutoCreditConsolidation: boolean = false;
     AutoCreditId: string = null;
     AutoCreditDate: Date = null;
     AutoCreditManualNumber: string = null;
@@ -778,12 +891,12 @@ export class ARInvoiceMenuButtonsHandler {
 
             if (this.isValid) {
                 if (this.EntityPM.MainEntityId) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
 
                     var myService = new InvoiceDomainService();
                     myService.GetShipmentIsAccountingClosed(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myResponse.HasError) {
                             var IsAccountingClosed = myResponse.Result;
@@ -816,96 +929,140 @@ export class ARInvoiceMenuButtonsHandler {
         }
     }
     AutoCreditClickedProccess() {
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate");
-        logitudeWindow.Height = 150;
-        logitudeWindow.Width = 330;
-        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, EventCode: "AutoCreditInvoiceDate" };
-        logitudeWindow.Show("./Invoice/Components/MenuButtonsComponents/ARInvoiceMenuButtonsComponent");
-        logitudeWindow.ComponentLoaded.subscribe(cmp => {
-            logitudeWindow.WindowClosed.subscribe(s => {
-                this.StopFlags();
+        var newAutoCreditInvoice: ARInvoicePM = this.CreateAutoCreditInvoice();
+        
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityPM: newAutoCreditInvoice, ObjectTableName: 'ARInvoice', BackButtonLabel: "ARInvoice" + ": " + this.EntityPM.InvoiceNumber });
 
-                if (s) {
-                    if (cmp.Date) {
-                        this.AutoCreditDate = cmp.Date;
+                let isEditComponentSaved = false;
 
-                        var myConfirmWindow = new ConfirmWindow();
-                        myConfirmWindow.Width = 400;
-                        myConfirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCredit"));
-                        myConfirmWindow.WindowClosed.subscribe(s => {
-                            if (myConfirmWindow.Yes) {
-                                this.isSaveAutoCreditRequested = true;
-                                this.entityArgs.EditComponent.SaveChanges(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));
-                            }
-                        });
-                    }
-                }
-            });
-        });
-    }
-    SaveBeforeAutoCreditCompleted() {
-        if (this.EntityPM.IsInvoiceNumberManuallySet) {
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Title = TextCodeTranslator.Translate("ARInvoice.M.InvoiceManualNumber");
-            logitudeWindow.Height = 200;
-            logitudeWindow.Width = 350;
-            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, EventCode: "AutoCreditManualNumber" };
-            logitudeWindow.Show("./Invoice/Components/MenuButtonsComponents/ARInvoiceMenuButtonsComponent");
-            logitudeWindow.ComponentLoaded.subscribe(cmp => {
-                logitudeWindow.WindowClosed.subscribe(s => {
-                    this.StopFlags();
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (isEditComponentSaved) {
 
-                    if (s) {
-                        if (cmp.ManualNumber) {
-                            this.AutoCreditManualNumber = cmp.ManualNumber;
-                            this.InvokeAutoCredit();
+                        if (this.EntityPM.IsConsolidationInvoice) {
+                            this.IsAutoCreditConsolidation = true;
                         }
+
+                        this.entityArgs.EditComponent.IsReloadNeeded = true;
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
+                    else {
+                        this.StopFlags();
+                    }
+                });
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+
+                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
                     }
                 });
             });
-        }
-
-        else {
-            this.InvokeAutoCredit();
-        }
     }
-    InvokeAutoCredit() {
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));
+    CreateAutoCreditInvoice(): ARInvoicePM {
+        var myEntityPMService: ARInvoicePMService = new ARInvoicePMService()
+        var AutoCreditInvoice: ARInvoicePM = myEntityPMService.GetNewEntityPM();
+        AutoCreditInvoice.StatusCode = "AC";
+        AutoCreditInvoice.StatusName = "Auto Credit";
+        AutoCreditInvoice.IsAutoCredit = true;
+        AutoCreditInvoice.ARInvoiceTypeCode = this.EntityPM.ARInvoiceTypeCode == "CI" ? "CC" : "CD";
+        AutoCreditInvoice.DebitAccount = this.EntityPM.DebitAccount;
+        AutoCreditInvoice.TransferStatusCode = this.EntityPM.TransferStatusCode;
+        AutoCreditInvoice.BillToAddressId = this.EntityPM.BillToAddressId;
+        AutoCreditInvoice.BillToId = this.EntityPM.BillToId;
+        AutoCreditInvoice.InternalNotes = this.EntityPM.InternalNotes;
+        AutoCreditInvoice.InvoiceCurrencyExchangeRate = this.EntityPM.InvoiceCurrencyExchangeRate;
+        AutoCreditInvoice.InvoiceCurrencyId = this.EntityPM.InvoiceCurrencyId;
+        AutoCreditInvoice.InvoiceCurrencyCode = this.EntityPM.InvoiceCurrencyCode;
+        AutoCreditInvoice.PrintNotes = this.EntityPM.PrintNotes;
+        AutoCreditInvoice.PaymentTermId = this.EntityPM.PaymentTermId;
+        AutoCreditInvoice.PrepaidCollectId = this.EntityPM.PrepaidCollectId;
+        AutoCreditInvoice.LocalCurrencyId = this.EntityPM.LocalCurrencyId;
+        AutoCreditInvoice.VatNumber = this.EntityPM.VatNumber;
+        AutoCreditInvoice.CreatedByUserId = this.EntityPM.CreatedByUserId;
+        AutoCreditInvoice.IssuedByUserId = this.EntityPM.IssuedByUserId;
+        AutoCreditInvoice.PrintByUserId = this.EntityPM.PrintByUserId;
+        AutoCreditInvoice.InvoiceDate = this.AutoCreditDate != null ? this.AutoCreditDate : DateTool.GetCurrentDateAsUtc();
+        AutoCreditInvoice.DueDate = this.EntityPM.DueDate;
+        AutoCreditInvoice.PrintDate = this.EntityPM.PrintDate;
+        AutoCreditInvoice.Sent = this.EntityPM.Sent;
+        AutoCreditInvoice.ExchangeRateDate = this.EntityPM.ExchangeRateDate;
+        AutoCreditInvoice.BranchId = this.EntityPM.BranchId;
+        AutoCreditInvoice.ExpectedPaymentDate = this.EntityPM.ExpectedPaymentDate;
+        AutoCreditInvoice.ProfitCurrencyId = this.EntityPM.ProfitCurrencyId;
+        AutoCreditInvoice.ProfitCurrencyCode = this.EntityPM.ProfitCurrencyCode;
+        AutoCreditInvoice.ProfitCurrencyExchangeRate = this.EntityPM.ProfitCurrencyExchangeRate;
+        AutoCreditInvoice.MainEntityId = this.EntityPM.MainEntityId;
+        AutoCreditInvoice.MainEntityReference = this.EntityPM.MainEntityReference;
+        AutoCreditInvoice.MainEntityStatus = this.EntityPM.MainEntityStatus;
+        AutoCreditInvoice.AccountingExternalCode = this.EntityPM.AccountingExternalCode;
+        AutoCreditInvoice.IsConstituentInvoice = this.EntityPM.IsConstituentInvoice;
+        AutoCreditInvoice.IsConsolidationInvoice = this.EntityPM.IsConsolidationInvoice;
+        AutoCreditInvoice.SubTotalInInvoiceCurrency = this.EntityPM.SubTotalInInvoiceCurrency * -1;
+        AutoCreditInvoice.SubTotalInLocalCurrency = this.EntityPM.SubTotalInLocalCurrency * -1;
+        AutoCreditInvoice.AmountInInvoiceCurrency = this.EntityPM.AmountInInvoiceCurrency * -1;
+        AutoCreditInvoice.AmountInLocalCurrency = this.EntityPM.AmountInLocalCurrency * -1;
+        AutoCreditInvoice.AmountInProfitCurrency = this.EntityPM.AmountInProfitCurrency * -1;
+        AutoCreditInvoice.AmountDue = 0;
+        AutoCreditInvoice.AmountDueInLocalCurrency = 0;
+        AutoCreditInvoice.AmountDueInProfitCurrency = 0;
+        AutoCreditInvoice.CreditedByARInvoiceId = this.EntityPM.Id;
+        AutoCreditInvoice.AutoCreditByARInvoiceNumber = this.EntityPM.InvoiceNumber
+        AutoCreditInvoice.IsGeneralInvoice = this.EntityPM.IsGeneralInvoice;
+        AutoCreditInvoice.SalesmanUserId = this.EntityPM.SalesmanUserId;
+        AutoCreditInvoice.SATPaymentMethodCode = this.EntityPM.SATPaymentMethodCode;
+        AutoCreditInvoice.MetodoPagoCode = this.EntityPM.MetodoPagoCode;
+        AutoCreditInvoice.IsInvoiceNumberFromStock = this.EntityPM.IsInvoiceNumberFromStock;
+        AutoCreditInvoice.IsInvoiceNumberManuallySet = this.EntityPM.IsInvoiceNumberManuallySet;
 
-        var myService = new InvoiceDomainService();
-        myService.AutoCreditARInvoice(this.EntityPM.Id, this.EntityPM.IsInvoiceNumberManuallySet, this.AutoCreditManualNumber, this.AutoCreditDate).subscribe((myResponse: ServiceResponse) => {
-
-            SessionLocator.CurrentSession.StopBusyIndicator();
-
-            if (myResponse.HasError) {
-                this.entityArgs.EditComponent.ValidationErrorsList = myResponse.ErrorsArray;
-            }
-
-            else {
-                this.AutoCreditId = myResponse.Result;
-                this.isOpenAutoCreditRequested = true;
-                this.entityArgs.EditComponent.ReloadEntityPM();
-            }
+        this.CreateAutoCreditInvoiceLines(AutoCreditInvoice);        
+        return AutoCreditInvoice;
+    }
+    CreateAutoCreditInvoiceLines(AutoCreditInvoice: ARInvoicePM) {
+        var index: number = 1;
+        this.EntityPM.InvoiceLines.forEach(item => {
+            var newInvoiceLine: ARInvoiceLinePM = new ARInvoiceLinePM(AutoCreditInvoice);
+            newInvoiceLine.Tenant = item.Tenant;
+            newInvoiceLine.ChargesTypeId = item.ChargesTypeId;
+            newInvoiceLine.CreditAccount = item.CreditAccount;
+            newInvoiceLine.Description = item.Description;
+            newInvoiceLine.ForiegnCurrencyId = item.ForiegnCurrencyId;
+            newInvoiceLine.ForiegnExchangeRate = item.ForiegnExchangeRate;
+            newInvoiceLine.VatTypeId = item.VatTypeId;
+            newInvoiceLine.LineNumber = index;
+            newInvoiceLine.MeasurementId = item.MeasurementId;
+            newInvoiceLine.EntityId = item.EntityId;
+            newInvoiceLine.EntityReference = item.EntityReference;
+            newInvoiceLine.ViewOrder = item.ViewOrder;
+            newInvoiceLine.ExternalTAXItemId = item.ExternalTAXItemId;
+            newInvoiceLine.ExternalVATCard = item.ExternalVATCard;
+            newInvoiceLine.ForiegnCurrencyCode = item.ForiegnCurrencyCode;
+            newInvoiceLine.InvoiceCurrencyCode = item.InvoiceCurrencyCode;
+            newInvoiceLine.InvoiceLocalCurrencyCode = item.InvoiceLocalCurrencyCode;
+            newInvoiceLine.MeasurementCode = item.MeasurementCode;
+            newInvoiceLine.VatTypeName = item.VatTypeName;
+            newInvoiceLine.IsExchangeRateFixed = item.IsExchangeRateFixed;
+            newInvoiceLine.LocalDescription = item.LocalDescription;
+            newInvoiceLine.PrepaidCollectId = item.PrepaidCollectId;
+            newInvoiceLine.VatPercentage = item.VatPercentage;
+            newInvoiceLine.Quantity = item.Quantity;
+            newInvoiceLine.UnitPrice = item.UnitPrice * -1;
+            newInvoiceLine.ForiegnCurrencyAmount = item.ForiegnCurrencyAmount * -1;
+            newInvoiceLine.LocalCurrencyAmount = item.LocalCurrencyAmount * -1;
+            newInvoiceLine.ProfitCurrencyAmount = item.ProfitCurrencyAmount * -1;
+            newInvoiceLine.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1;
+            newInvoiceLine.IsExpense = item.IsExpense;
+            newInvoiceLine.GLAccountId = item.GLAccountId;
+            AutoCreditInvoice.AddARInvoiceLinePM(newInvoiceLine);
+            index++;
         });
-    }
-    OpenAutoCreditScreen() {
-
-        if (this.EntityPM.IsConsolidationInvoice) {
-            SessionLocator.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.AutoCreditId)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: this.AutoCreditId, ObjectTableName: 'ARInvoice', BackButtonLabel: "Invoice: " + this.EntityPM.InvoiceNumber });
-
-                    if (this.EntityPM.IsConsolidationInvoice) {
-                        SessionLocator.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
-                    }
-                });
-        }
     }
 
     // Print
@@ -967,12 +1124,12 @@ export class ARInvoiceMenuButtonsHandler {
             }
 
             else {
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
 
                 var myService = new InvoiceDomainService();
                 myService.GetShipmentLevelCode(this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (!myResponse.HasError) {
                         var myShipmentLevelCode = myResponse.Result;

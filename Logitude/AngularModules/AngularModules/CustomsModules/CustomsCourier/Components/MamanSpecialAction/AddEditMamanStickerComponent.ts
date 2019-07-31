@@ -34,9 +34,9 @@ export class AddEditMamanStickerComponent
     constructor(public entityArgs: EntityArgs) {
         super();
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        SessionLocator.SelectedSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             this.IsLoaded = true;
         });
     }
@@ -89,16 +89,16 @@ export class AddEditMamanStickerComponent
     //#endregion\
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         if (this.IsNew) {
             this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.SendMamanSpecialAction();
             });
         }
         else {
             this._DeclarationMamanSpecialActionPMService.update(this.EntityPM).subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 this.SendMamanSpecialAction();
             });
         }
@@ -106,9 +106,9 @@ export class AddEditMamanStickerComponent
     }
 
     SendMamanSpecialAction() {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe(myResult => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
             if (myResult.HasError) {
                 this.ValidationErrorsList = [];
                 this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
@@ -124,7 +124,7 @@ export class AddEditMamanStickerComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
 
 

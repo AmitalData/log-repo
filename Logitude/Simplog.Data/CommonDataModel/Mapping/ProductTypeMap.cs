@@ -35,19 +35,30 @@ namespace Simplog.Data.CommonDataModel.Mapping
                  .IsUnicode(false);
 
 
+
+            this.Property(t => t.RoutingRQuoteDefaultTemplateId)
+                 .HasMaxLength(15)
+                .IsUnicode(false);
+
+
+
+
             // Table & Column Mappings
             this.ToTable("ProductTypes");
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.QuotationDefaultTemplateId).HasColumnName("QuotationDefaultTemplateId");
-
+            this.Property(t => t.RoutingRQuoteDefaultTemplateId).HasColumnName("RoutingRQuoteDefaultTemplateId");
 
             this.HasOptional(t => t.QuoteTemplate)
                 .WithMany()
                 .HasForeignKey(d => d.QuotationDefaultTemplateId);
 
 
+            this.HasOptional(t => t.RoutingRQuoteDefaultTemplate)
+                .WithMany()
+                .HasForeignKey(d => d.RoutingRQuoteDefaultTemplateId);
         }
     }
 }

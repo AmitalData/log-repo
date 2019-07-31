@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, Output, EventEmitter, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {InfraSettings} from '../../../../../Infrastructure/Utilities/InfraSettings';
@@ -28,9 +28,8 @@ import {DocumentTypeListService} from '../../../../../Common/Services/StandardLi
 import {DocumentsFilingExtendedPMService} from '../../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import {UserListService} from '../../../../../Common/Services/StandardLists/UserListService';
 import {CorrespondencePMService} from'../../../../../CRM/Services/StandardPMs/CorrespondencePMService';
-import {TicketPMService} from '../../../../../CRM/Services/StandardPMs/TicketPMService'; 
+import {TicketPMService} from '../../../../../CRM/Services/StandardPMs/TicketPMService';
 import {TicketClosureArgs} from '../../../../../CRM/Args';
-
 
 @Component({
     moduleId: './CRMModules/CRMTickets/Components/EditTabs/MainTab/',
@@ -54,7 +53,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[];
 
     @Output() OnCloseAttachmentDocsInEvent: EventEmitter<any> = new EventEmitter();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeListService: DocumentTypeListService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -256,7 +255,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
         return myResult;
     }
 
-    // Align Commands 
+    // Align Commands
     public FlowDirection: string = "ltr";
     private GetFlowDirection() {
         var myResult = "ltr";
@@ -271,6 +270,8 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
         }
         this.FlowDirection = myResult;
     }
+
+
     public BackgroundAlignRight = "transparent";
     private BackgroundAlignLeft = "transparent";
     private GetBackgroundAlignRight() {
@@ -422,7 +423,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
             });
         }
         if (this.ValidationErrorsList.length == 0) {
-            //Update Ticket Stage 
+            //Update Ticket Stage
             var myService: CRMDomainService = new CRMDomainService();
             myService.GetTicketOwnerPermission(this.Ticket.OwnerId, this.Ticket.OwnerName).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
@@ -436,9 +437,9 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
                                 this.Ticket.StageCode = myStage.Code;
                                 this.Ticket.StageName = myStage.Name;
                             }
-                            this.CheckTicketCorrespondenceNumbers(); // Fix Ticket First Resopnse Time 
+                            this.CheckTicketCorrespondenceNumbers(); // Fix Ticket First Resopnse Time
 
-                            // Ticket Ccs & Internal users 
+                            // Ticket Ccs & Internal users
                             var ccs: string = this.AddNewEmails(this.EntityPM.CCs, this.Ticket.CCs);
                             var internals: string = this.AddNewEmails(this.EntityPM.InternalUsers, this.Ticket.InternalUsers);
 
@@ -548,7 +549,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
         var myService: CRMDomainService = new CRMDomainService();
         myService.GetTicketOwnerPermission(this.Ticket.OwnerId, this.Ticket.OwnerName).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.StartBusyIndicator("Sending");
+                this.CurrentSession.StartBusyIndicator("Sending");
                 var myService: CorrespondencePMService = new CorrespondencePMService();
                 myService.insert(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
                     if (myRespone != null) {
@@ -556,9 +557,9 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
                             this.UpdateTicket();
                         }
                         else {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             this.ValidationErrorsList = myRespone.ErrorsArray;
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
                     }
                 });
@@ -571,20 +572,20 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     UpdateTicket() {
         var myService: TicketPMService = new TicketPMService();
         myService.update(this.Ticket).subscribe((myRespone: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (myRespone != null) {
                 if (!myRespone.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
                 else {
                     this.ValidationErrorsList = myRespone.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     // Internal / External Email Process
@@ -615,7 +616,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
             }
         });
     }
-   
+
     CheckIsValidEmails(email: string) {
         var EMAIL_REGEXP = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
         var IsOk = true;
@@ -728,7 +729,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
     public ShowUplpaderAttachment() {
         this.IsLoadUploader = true;
-   
+
         var windowArgs: any = {};
         windowArgs.EntityId = this.EntityPM.EntityId;
         var objectTable = window.ObjectTables.filter(x => x.Name === "Ticket")[0];
@@ -767,14 +768,14 @@ export class AttachmentsArgs {
     get FileExtension() {  return this.DocumentFilingPM.FileExtension;   }
     get Tenant() {return this.DocumentFilingPM.Tenant;}
     get DocumentFilingId(){ return this.DocumentFilingPM.Id; }
-    get EntityId() { return this.DocumentFilingPM.EntityId; } 
-    get ObjectTableId() { return this.DocumentFilingPM.ObjectTableId; } 
-    get CreatedByUserId() { return this.DocumentFilingPM.CreatedByUserId; } 
-    get CreateDate() { return this.DocumentFilingPM.CreateDate; } 
-    get OwnerId() { return this.DocumentFilingPM.OwnerId; } 
-    get UpdatedByUserId() { return this.DocumentFilingPM.UpdatedByUserId; } 
-    get UpdateDate() { return this.DocumentFilingPM.UpdateDate; } 
-    get FileSize() { return this.DocumentFilingPM.FileSize; } 
+    get EntityId() { return this.DocumentFilingPM.EntityId; }
+    get ObjectTableId() { return this.DocumentFilingPM.ObjectTableId; }
+    get CreatedByUserId() { return this.DocumentFilingPM.CreatedByUserId; }
+    get CreateDate() { return this.DocumentFilingPM.CreateDate; }
+    get OwnerId() { return this.DocumentFilingPM.OwnerId; }
+    get UpdatedByUserId() { return this.DocumentFilingPM.UpdatedByUserId; }
+    get UpdateDate() { return this.DocumentFilingPM.UpdateDate; }
+    get FileSize() { return this.DocumentFilingPM.FileSize; }
 
     ViewAttachment() {
         var documentSecurity = this.DocumentFilingPM.SecurityId;

@@ -42,24 +42,28 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     public TenantPM: TenantPM;
     public EntityPM: FullAccountingSettingPM;
     public isRTL: boolean = false;
-
+    ImageId: string;
+    EntityId: string;
     fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();;
     fullAccountingSettingListService: FullAccountingSettingListService;
     tenantPMService: TenantPMService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public serviceArgs: ServiceArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-
+        this.CurrentSession.StartBusyIndicatorLoading();
+       
         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
         });
         this.fullAccountingSettingPMService.get(SessionLocator.Tenant.toString()).subscribe((myResult: any) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             this.EntityPM = myResult.Result;
+            this.ImageId = this.EntityPM.PaymentChequesLogoId;
+            this.EntityId = this.EntityPM.Id;
+
             if (this.EntityPM == null || this.EntityPM == undefined) {
                 console.log("There is no F. Accounting setting found for tenant: " + SessionLocator.Tenant);
             } else {
@@ -132,12 +136,27 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    get IsPaymentChequesActivated() { return this.EntityPM.IsPaymentChequesActivated; }
+    set IsPaymentChequesActivated(value: boolean) {
+        if (this.EntityPM.IsPaymentChequesActivated != value) {
+            this.EntityPM.IsPaymentChequesActivated = value;
 
+            this.SetUIProperties();
+        }
+    }
 
     get DeductionFileNumber() { return this.EntityPM.DeductionFileNumber; }
     set DeductionFileNumber(value: string) {
         if (this.EntityPM.DeductionFileNumber != value) {
             this.EntityPM.DeductionFileNumber = value;
+        }
+    }
+
+
+    get GLAccounterCounterLength() { return this.EntityPM.GLAccounterCounterLength; }
+    set GLAccounterCounterLength(value: number) {
+        if (this.EntityPM.GLAccounterCounterLength != value) {
+            this.EntityPM.GLAccounterCounterLength = value;
         }
     }
 
@@ -264,7 +283,16 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     if (this.EntityPM.CustomsGLAccountId != value) {
       this.EntityPM.CustomsGLAccountId = value;
     }
-  }
+    }
+
+    get PaymentChequesLogoId() { return this.EntityPM.PaymentChequesLogoId; }
+    set PaymentChequesLogoId(value: string) {
+        if (this.EntityPM.PaymentChequesLogoId != value) {
+            this.EntityPM.PaymentChequesLogoId = value;
+
+
+        }
+    }
 
     get AirImportJobControlAccountId() { return this.EntityPM.AirImportJobControlAccountId; }
     set AirImportJobControlAccountId(value: string) {
@@ -362,8 +390,15 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     //#endregion
 
     //Commands
+
+    ImageUploadedCompleted(code) {
+        this.ImageId = code;
+        this.EntityPM.PaymentChequesLogoId = code;
+    }
+
+
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -380,7 +415,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             this.SubmitChanges();
         }
 
@@ -393,15 +428,15 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) { // Success
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         }, error => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             var dd: Response = error;
             console.log(dd.text);
             this.ValidationErrorsList = [];
@@ -454,6 +489,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.SelectedTab = "FullAccoutingSetting";
         this.TabsSource.push({ Name: "FullAccoutingSetting", isSelected: true, Header: TextCodeTranslator.Translate("General.O.General") }); //Accounting.O.FullAccountingSettings
         this.TabsSource.push({ Name: "ControlAccounts", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.O.ControlGLAccounts") });
+        this.TabsSource.push({ Name: "Logo", isSelected: false, Header: TextCodeTranslator.Translate("Accounting.General.O.Cheques") });
+
     }
     SelectionChanged(tab: any) {
 

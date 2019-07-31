@@ -38,21 +38,22 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             if (_GLAccountBillTO.ReconcileMethodCode == ((int)ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString()
         ) //Local Currency
             {
-                var sumLocal = _JournalARPayment.JournalLines.Where(r => r.CreditAccountId == _GLAccountBillTO.Id).Sum(r => r.LocalAmount);
-                
-                if (sumLocal != ReconciliationLines.Sum(r => r.ReconciliationAmount))
-                {
-                    throw new Exception("(sumLocal != ReconciliationLines.Sum(r => r.ReconciliationAmount))");
-                }
+                   var sumLocal = _JournalARPayment.JournalLines.Where(r => r.CreditAccountId == _GLAccountBillTO.Id && r.ActionCode == "1").Sum(r => r.LocalAmount); // 1- Credit
+
+                //if (sumLocal != ReconciliationLines.Sum(r => r.ReconciliationAmount))
+                //{
+                //    throw new Exception("(sumLocal != ReconciliationLines.Sum(r => r.ReconciliationAmount))");
+                //}
             }
             else
             {
                 string glAccountCurrencyId = _GLAccountBillTO.CurrencyId;
-                var sumForeign = _JournalARPayment.JournalLines.Where(r => r.CreditAccountId == _GLAccountBillTO.Id).Sum(r => r.ForeignAmount);
-                if (sumForeign != ReconciliationLines.Sum(r => r.ReconciliationAmount))
-                {
-                    throw new Exception("(sumForeign != ReconciliationLines.Sum(r => r.ReconciliationAmount))");
-                }
+                var sumForeign = _JournalARPayment.JournalLines.Where(r => r.CreditAccountId == _GLAccountBillTO.Id && r.ActionCode == "1").Sum(r => r.ForeignAmount); // 1- Credit
+                //if (sumForeign != ReconciliationLines.Sum(r => r.ReconciliationAmount))
+                //{
+                //    throw new Exception("(sumForeign != ReconciliationLines.Sum(r => r.ReconciliationAmount))");
+                //}
+
                 if (ReconciliationLines.Select(r => r.CurrencyId).Distinct().Count() > 1)
                 {
                     throw new Exception("only 1 currency");
@@ -115,7 +116,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             
             if (!ledgerListNotReconcile.Any())
             {
-                throw new Exception($"Does have any Ledger/ Already Reconcile!! .GetQByJournalIds({idList}, tenant).Where(r => r.AccountId == {glAccountBillTOId}).Where(r => !r.IsReconciled).Where(r => !r.InReconcileProgress)");
+              //  throw new Exception($"Does have any Ledger/ Already Reconcile!! .GetQByJournalIds({idList}, tenant).Where(r => r.AccountId == {glAccountBillTOId}).Where(r => !r.IsReconciled).Where(r => !r.InReconcileProgress)");
             }
 
             var lineCounter = 1;
@@ -196,18 +197,47 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                     .Where(r => r.AccountId == glAccountBillTOId);
                 var LedgerOfBilltoByJournalIdList = qLedgerOfBilltoByJournalId.ToList();
 
-                LedgerOfBilltoByJournalIdList.ForEach(
-                    l =>
+                foreach(var l in LedgerOfBilltoByJournalIdList)
+                {
+                    var ListLdgerPerJournal = autoReconcileRecordList.Where(r => r.JournalId == l.JournalId).Select(r => r.LedgerTransactionID).ToList();
+                    if (ListLdgerPerJournal.Count > 1)
                     {
-                        var ListLdgerPerJournal = autoReconcileRecordList.Where(r => r.JournalId == l.JournalId).Select(r => r.LedgerTransactionID).ToList();
-                        if (ListLdgerPerJournal.Count > 1)
-                        {
-                            throw new Exception("I DID NOT PLAN THAT I WILL FOUND FOR 1 JOURNAL MANY LEDGER FOR BILLTO - TODO add zero autoReconcileRecordList record !!!");
-                        }
+                        throw new Exception("I DID NOT PLAN THAT I WILL FOUND FOR 1 JOURNAL MANY LEDGER FOR BILLTO - TODO add zero autoReconcileRecordList record !!!");
+                    }
 
-                        var autoReconcileRecord = autoReconcileRecordList.First(r => r.JournalId == l.JournalId);
-                        autoReconcileRecord.LedgerTransactionID = l.Id;
-                    });
+                    var autoReconcileRecord = autoReconcileRecordList.First(r => r.JournalId == l.JournalId);
+                    autoReconcileRecord.LedgerTransactionID = l.Id;
+                    foreach (AutoReconcileRecord record in autoReconcileRecordList)
+                    {
+                        if (record.JournalId == l.JournalId)
+                        {
+                            record.LedgerTransactionID = l.Id;
+
+                        }
+                    }
+                }
+
+                //LedgerOfBilltoByJournalIdList.ForEach(
+                //    l =>
+                //    {
+                //        var ListLdgerPerJournal = autoReconcileRecordList.Where(r => r.JournalId == l.JournalId).Select(r => r.LedgerTransactionID).ToList();
+                //        if (ListLdgerPerJournal.Count > 1)
+                //        {
+                //            throw new Exception("I DID NOT PLAN THAT I WILL FOUND FOR 1 JOURNAL MANY LEDGER FOR BILLTO - TODO add zero autoReconcileRecordList record !!!");
+                //        }
+
+                //        var autoReconcileRecord = autoReconcileRecordList.First(r => r.JournalId == l.JournalId);
+                //        autoReconcileRecord.LedgerTransactionID = l.Id;
+                //        foreach(AutoReconcileRecord record in autoReconcileRecordList)
+                //        {
+                //            if (record.JournalId == l.JournalId)
+                //            {
+                //                record.LedgerTransactionID = l.Id;
+                             
+                //            }
+                //        }
+                        
+                //    });
                 if (autoReconcileRecordList.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionID)))
                 {
                     throw new Exception("not all autoReconcileRecordList  have  LedgerTransactionID /  After fetch LedgerTransaction from GetQByJournalIds ");
@@ -235,7 +265,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
 
                 if (autoReconcileRecordList.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionID) && string.IsNullOrWhiteSpace(r.JournalId)))
                 {
-                    throw new Exception("after GetByJournalsAccountingEntityIds  Not All rows have  JournalId ");
+                   // throw new Exception("after GetByJournalsAccountingEntityIds  Not All rows have  JournalId ");
                 }
             }
         }

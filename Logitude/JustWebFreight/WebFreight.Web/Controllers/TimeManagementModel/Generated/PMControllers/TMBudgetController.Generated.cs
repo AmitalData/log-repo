@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TMBudget", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TMBudget", entityPM.Tenant, authToken.Tenant);
 	                    
                         ITimeManagementContext MyContext = TimeManagementContext.GetContext(entityPM.Tenant);
                         TMBudgetUpdateService service = new TMBudgetUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -141,6 +142,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TMBudget", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TMBudget", entityPM.Tenant, authToken.Tenant);
 	
                         ITimeManagementContext MyContext = TimeManagementContext.GetContext(entityPM.Tenant);
                         TMBudgetUpdateService service = new TMBudgetUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

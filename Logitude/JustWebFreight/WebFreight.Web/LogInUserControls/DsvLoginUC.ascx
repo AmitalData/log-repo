@@ -940,7 +940,11 @@
 
             LoginToAngular = function (userdata) {
 
-
+                var isTenantAllowed = false;
+                var Tenant = userdata.CurrentTenant;
+                if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638) {
+                    isTenantAllowed = true;
+                }
 
                 var url = "api/LogitudeApplication"
                 $.ajax({
@@ -966,18 +970,24 @@
 
                             if (navigator.userAgent != null) {
                                 if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
-                                    alert("IOS is currently not supported in HTML5 version");
-                                    return;
+                                    if (!isTenantAllowed) {
+                                        alert("IOS is currently not supported in HTML5 version");
+                                        return;
+                                    }
                                 }
 
                                 else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {
-                                    alert("IOS is currently not supported in HTML5 version");
-                                    return;
+                                    if (!isTenantAllowed) {
+                                        alert("IOS is currently not supported in HTML5 version");
+                                        return;
+                                    }
                                 }
 
                                 else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {
-                                    alert("IOS is currently not supported in HTML5 version");
-                                    return;
+                                    if (!isTenantAllowed) {
+                                        alert("IOS is currently not supported in HTML5 version");
+                                        return;
+                                    }
                                 }
                             }
 

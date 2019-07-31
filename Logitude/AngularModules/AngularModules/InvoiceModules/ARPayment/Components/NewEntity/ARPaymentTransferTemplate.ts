@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ARPaymentPM} from '../../../../Invoice/EntityPMs/ARPaymentPM';
@@ -27,7 +27,7 @@ export class ARPaymentTransferTemplate extends BaseComponent {
     private IsTheFirstTime: boolean = true;
     public IsNew: boolean = false;
     public EntityId: string;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -164,13 +164,13 @@ export class ARPaymentTransferTemplate extends BaseComponent {
             }
             if (this.IsTheFirstTime && !this.IsNew) {
                 this.IsTheFirstTime = false;
-                if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+                if (this.CurrentSession.CurrentEditComponent != null) {
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Width = 450;
                     confirmWindow.Show("Accounting details needed for transfer is updated, update the transfer status ?");
                     confirmWindow.WindowClosed.subscribe((event: any) => {
                         if (confirmWindow.Yes) {
-                            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                            this.CurrentSession.CurrentEditComponent.SaveChanges();
                         }
                     });
                 }
@@ -208,7 +208,7 @@ export class ARPaymentTransferTemplate extends BaseComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     public ValidationErrorsList = [];
     OkButtonClicked() {
@@ -216,12 +216,12 @@ export class ARPaymentTransferTemplate extends BaseComponent {
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             var service = new ARPaymentPMService();
             service.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!response.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
                 else {
                     this.ValidationErrorsList = response.ErrorsArray;
@@ -236,7 +236,7 @@ export class ARTransferLineArgs extends BaseComponent {
     public Code: string;
     public ObjectTableName: string = "ARPayment";
     public DataContext = this;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: ARPaymentPM, public father: ARPaymentTransferTemplate, typeCode: string) {
         super();
         this.EntityPM = entity;

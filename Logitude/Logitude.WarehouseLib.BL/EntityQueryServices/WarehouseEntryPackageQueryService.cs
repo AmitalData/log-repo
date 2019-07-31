@@ -150,7 +150,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                                                         InternalNotes = a.WarehouseEntry.Notes,
                                                                                         SpecialInstructions = a.WarehouseEntry.SpecialInstruction,
                                                                                         VolumetricWeight = a.VolumetricWeight,
-                                                                                        
+                                                                                        EntryReference= a.WarehouseEntry != null ? a.WarehouseEntry.EntryReference : "",
                                                                                     });
 
 

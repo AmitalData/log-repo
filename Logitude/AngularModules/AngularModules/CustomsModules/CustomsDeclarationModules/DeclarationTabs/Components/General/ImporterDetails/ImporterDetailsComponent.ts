@@ -665,7 +665,7 @@ export class ImporterDetailsComponent extends BaseComponent {
 
      CancelButtonClicked() {
          this.RejectChanges();
-         SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+         SessionLocator.SelectedSession.CloseCurrentWindowEmit("cancel");
      }
 
      GetPassportNumber(passportNumber: string) {
@@ -701,8 +701,8 @@ export class ImporterDetailsComponent extends BaseComponent {
         this.EntityPM.CalculatedImporterName = null
 
         //this.OkButtonClicked();
-        //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-        //SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        //SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        //SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
     }
     Append2ImporterAddress(val:string ) {
         if (!AppTool.IsNullOrEmpty(val)) {
@@ -729,7 +729,7 @@ export class ImporterDetailsComponent extends BaseComponent {
 
         }
         
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
         var passportNumber: string;
             switch (this.type) {
                 case "Importer": {
@@ -809,10 +809,10 @@ export class ImporterDetailsComponent extends BaseComponent {
 
 
             if (this.doDisable) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
             }
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("!ok");
+                SessionLocator.SelectedSession.CloseCurrentWindowEmit("!ok");
             }
         
          

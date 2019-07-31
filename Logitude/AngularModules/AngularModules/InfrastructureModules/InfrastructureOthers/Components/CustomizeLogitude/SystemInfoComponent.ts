@@ -29,7 +29,8 @@ export class SystemInfoComponent {
     BluesnapVisibility: boolean=false;
     PaidVisibility: boolean=false;
     IsTrailVisibility: boolean=false;
-    TemporalPackageVisibility: boolean=false;
+    TemporalPackageVisibility: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _exportDocumentService: ExportDocumentService) {
 
     }
@@ -81,6 +82,6 @@ export class SystemInfoComponent {
     }
 
     CloseButtonClicked() {    
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

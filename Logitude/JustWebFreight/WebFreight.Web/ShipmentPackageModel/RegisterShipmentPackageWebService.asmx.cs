@@ -65,7 +65,7 @@ namespace WebFreight.Web.ShipmentPackageModel
             AddressRepository addressRepository = new AddressRepository(commonContext);
             PortRepository portRepository = new PortRepository(commonContext);
             VesselRepository vesselRepository = new VesselRepository(commonContext);
-            Tenant ten = tenantRep.GetSingleTenant(tenant);            
+            Tenant ten = tenantRep.GetSingleTenant(tenant);
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -105,7 +105,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                     shipments = shipments.Where(d => DbFunctions.TruncateTime(d.CreateDateTime) <= DbFunctions.TruncateTime(toDate));
                 }
             }
-            
+
             if (!string.IsNullOrEmpty(partnerId))
             {
                 Card card = CardRepository.GetSingleCard(partnerId, tenant, true);
@@ -118,14 +118,14 @@ namespace WebFreight.Web.ShipmentPackageModel
                 {
                     shipments = shipments.Where(d => d.CustomerId == partnerId);
                     totalData.Partner = "Customer Name";
-                }               
+                }
             }
 
             else
             {
                 totalData.Partner = "Partner";
             }
-            
+
             string type = typeItem != null ? typeItem.FieldValue.ToString() : null;
             if (!string.IsNullOrEmpty(type))
             {
@@ -152,12 +152,16 @@ namespace WebFreight.Web.ShipmentPackageModel
                                                                        .Where(d => d.BillToId == shipment.CustomerId && d.StatusCode != "LL")
                                                                        .ToList();
 
+                ShipmentPickUpDelivery myFirstPickUp = (from d in shipmentCotnext.ShipmentPickUpDeliveries
+                                                        where d.ShipmentId == shipment.ShipmentId && d.PickUpDeliveryTypeCode == "PICK"
+                                                        select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
                 List<ShipmentPackageItem> myPackageItems = packageItems.Where(d => d.PackageId == shipment.PackageId).ToList();
 
                 WebFreight.Web.ShipmentPackageModel.RegisterShipmentPackageDataProvider.RegisterShipmentPackageRecord provider = new RegisterShipmentPackageDataProvider.RegisterShipmentPackageRecord();
 
                 provider.ShipmentNumber = shipment.ShipmentNumber != null ? shipment.ShipmentNumber : "";
-                provider.ETD = shipment.MainCarriageETD != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageETD) : "";                
+                provider.ETD = shipment.MainCarriageETD != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageETD) : "";
                 provider.ETA = shipment.MainCarriageFinalDestinationETA != null ? String.Format("{0:dd MMM yyyy}", shipment.MainCarriageFinalDestinationETA) : "";
                 provider.MasterNumber = !string.IsNullOrEmpty(shipment.MasterNumber) ? shipment.MasterNumber : "";
                 provider.Vessel_Voyage = !string.IsNullOrEmpty(shipment.Vessel_Voyage) ? shipment.Vessel_Voyage : "";
@@ -185,12 +189,72 @@ namespace WebFreight.Web.ShipmentPackageModel
                 provider.ATA = shipment.ATA;
                 provider.OnCarriageATD = shipment.OnCarriageATD;
                 provider.OnCarriageATA = shipment.OnCarriageATA;
+                provider.OnCarriageETA = shipment.OnCarriageETA;
                 provider.ContainerNotes = shipment.ContainerNotes;
                 provider.GrossWeight = String.Format("{0:0,0.00}", shipment.PackagesGrossWeight);
                 provider.Flagged = shipment.ContainerFollowUp;
                 provider.GrossWeightAsDouble = shipment.PackagesGrossWeight;
                 provider.Ramp = shipment.OnCarriageToPortCode;
                 provider.BookingConfirmationNumber = shipment.BookingConfirmationNumber;
+                provider.Volume = shipment.Volume;
+                provider.ContainerVolume = shipment.PackageVolume;
+
+                if (!string.IsNullOrEmpty(shipment.MainCarriageCarrierId))
+                {
+                    ShippingLine myShippingLine = (from d in commonContext.ShippingLines where d.Id == shipment.MainCarriageCarrierId select d).FirstOrDefault();
+                    if (myShippingLine != null)
+                    {
+                        provider.ShippingLineSCAC = myShippingLine.SCACCode;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(shipment.IncotermId))
+                {
+                    Incoterm myIncoterm = (from d in commonContext.Incoterms where d.Id == shipment.IncotermId select d).FirstOrDefault();
+                    if (myIncoterm != null)
+                    {
+                        provider.Incoterm = myIncoterm.Name;
+                        provider.IncotermCode = myIncoterm.Code;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(shipment.ShipperAddressId))
+                {
+                    Address shipperAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, tenant);
+                    if (shipperAddress != null)
+                    {
+                        if (shipperAddress.Country != null)
+                        {
+                            provider.ShipperCityAndCountry = shipperAddress.City + ", " + shipperAddress.Country.EnglishName;
+                        }
+                        else
+                        {
+                            provider.ShipperCityAndCountry = shipperAddress.City;
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(shipment.ConsigneeAddressId))
+                {
+                    Address consigneeAddress = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, tenant);
+                    if (consigneeAddress != null)
+                    {
+                        if (consigneeAddress.Country != null)
+                        {
+                            provider.ConsigneeCityAndCountry = consigneeAddress.City + ", " + consigneeAddress.Country.EnglishName;
+                        }
+                        else
+                        {
+                            provider.ConsigneeCityAndCountry = consigneeAddress.City;
+                        }
+                    }
+                }
+
+                if (myFirstPickUp != null)
+                {
+                    provider.PickupATD = myFirstPickUp.ATD;
+                    provider.PickupATA = myFirstPickUp.ATA;
+                }
 
                 if (myPackageItems.Count > 0)
                 {
@@ -247,7 +311,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                     {
                         Vessel vessel = vesselRepository.GetSingleVessel(shipment.Transshipment3VesselId, tenant);
 
-                        if(vessel != null)
+                        if (vessel != null)
                         {
                             provider.LastVessel = vessel.EnglishName;
                         }
@@ -306,26 +370,29 @@ namespace WebFreight.Web.ShipmentPackageModel
                 {
                     provider.ATARamp = shipment.PackageOnCarriageATA;
                     provider.ATDRamp = shipment.PackageOnCarriageATD;
+                    provider.ETARamp = shipment.PackageOnCarriageETA;
                 }
 
                 else
                 {
                     provider.ATARamp = shipment.OnCarriageATA;
                     provider.ATDRamp = shipment.OnCarriageATD;
+                    provider.ETARamp = shipment.OnCarriageETA;
                 }
 
-                if(!string.IsNullOrEmpty(shipment.PackageDliveryId))
+                if (!string.IsNullOrEmpty(shipment.PackageDliveryId))
                 {
                     ShipmentPickUpDelivery myDelivery = (from d in shipmentCotnext.ShipmentPickUpDeliveries
-                                                             where d.Id == shipment.PackageDliveryId select d).FirstOrDefault();
+                                                         where d.Id == shipment.PackageDliveryId
+                                                         select d).FirstOrDefault();
 
-                    if(myDelivery != null)
+                    if (myDelivery != null)
                     {
                         provider.ATADoor = myDelivery.ATA;
                     }
                 }
 
-                if(myRailDelivery != null)
+                if (myRailDelivery != null)
                 {
                     provider.RailATA = myRailDelivery.ATA;
                     provider.RailATD = myRailDelivery.ATD;
@@ -375,6 +442,7 @@ namespace WebFreight.Web.ShipmentPackageModel
 
                 if (myLastDelivery != null)
                 {
+                    provider.DeliveryATD = myLastDelivery.ATD;
                     provider.DeliveryATA = myLastDelivery.ATA;
 
                     switch (myLastDelivery.PickUpDeliveryToTypeCode)
@@ -400,7 +468,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                                     Port myPort = portRepository.GetSinglePort(tenant, myLastDelivery.ToPortId);
                                     if (myPort != null)
                                     {
-                                        provider.FinalDestination = myPort.EnglishName;                                        
+                                        provider.FinalDestination = myPort.EnglishName;
                                     }
                                 }
 
@@ -422,7 +490,7 @@ namespace WebFreight.Web.ShipmentPackageModel
 
                 else if (!string.IsNullOrEmpty(shipment.OnCarriageToPortId))
                 {
-                    provider.FinalDestination = shipment.OnCarriageTo;                    
+                    provider.FinalDestination = shipment.OnCarriageTo;
                 }
                 else
                 {
@@ -465,7 +533,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                     }
 
                 }
-                
+
                 if (!string.IsNullOrEmpty(shipment.ShipmentTypeName))
                 {
                     if (shipment.ShipmentTypeName == "FCL")
@@ -482,7 +550,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                     provider.Type = "";
                 }
 
-                if(!string.IsNullOrEmpty(shipment.VesselId))
+                if (!string.IsNullOrEmpty(shipment.VesselId))
                 {
                     VesselRepository rep = new VesselRepository(tenant);
                     Vessel vessel = rep.GetSingleVessel(shipment.VesselId, tenant);
@@ -492,7 +560,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                         provider.VesselName = vessel.EnglishName;
                     }
                 }
-                
+
                 if (!string.IsNullOrEmpty(shipment.AgentReference1))
                 {
                     if (!string.IsNullOrEmpty(shipment.AgentReference2))
@@ -561,7 +629,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                     totalData.Records.Add(provider);
                 }
             }
-            
+
             return totalData;
         }
     }

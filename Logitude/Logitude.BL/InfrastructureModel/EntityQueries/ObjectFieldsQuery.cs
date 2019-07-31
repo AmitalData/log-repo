@@ -1434,20 +1434,20 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                 foreach (ObjectFieldPM objectField in objectfields)
                 {
-                    if (objectFieldModificationsDictionary.Count != 0)
-                    {
-                        if (objectFieldModificationsDictionary.Keys.Contains(objectField.Id))
-                        {
-                            ObjectFieldModification mod = objectFieldModificationsDictionary[objectField.Id];
+					if (objectFieldModificationsDictionary.Count != 0 && tenant != 0)
+					{
+						if (objectFieldModificationsDictionary.Keys.Contains(objectField.Id))
+						{
+							ObjectFieldModification mod = objectFieldModificationsDictionary[objectField.Id];
 
-                            if (mod != null)
-                            {
-                                objectField.IsRequiered = mod.IsRequired;
-                                objectField.MaxLength = mod.MaxLength;
-                                objectField.MinLength = mod.MinLength;
-                            }
-                        }
-                    }
+							if (mod != null)
+							{
+								objectField.IsRequiered = mod.IsRequired;
+								objectField.MaxLength = mod.MaxLength;
+								objectField.MinLength = mod.MinLength;
+							}
+						}
+					}
 
                     if (objectFieldValidationsDictionary.Count != 0)
                     {
@@ -1471,9 +1471,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TextCode fullnamecode = textCodes.Where(t => t.Id == objectField.FullNameTextCodeId).FirstOrDefault();
                         fullnamecode = fullnamecode ?? textcodesRepository.GetSingleTextCode(objectField.FullNameTextCodeId);
 
-                        objectField.FullNameTextCodeDefaultText = fullnamecode.DefaultText;
-                        objectField.FullNameTextCodeLocalDefaultText = fullnamecode.LocalDefaultText;
-                        objectField.FullNameTextCodeCode = fullnamecode.Code;
+                        if (fullnamecode != null)
+                        {
+                            objectField.FullNameTextCodeDefaultText = fullnamecode.DefaultText;
+                            objectField.FullNameTextCodeLocalDefaultText = fullnamecode.LocalDefaultText;
+                            objectField.FullNameTextCodeCode = fullnamecode.Code;
+                        }
+                       
                     }
 
                     if (objectField.ShortNameTextCodeId != null)
@@ -1481,8 +1485,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TextCode shortnamecode = textCodes.Where(t => t.Id == objectField.ShortNameTextCodeId).FirstOrDefault();
                         shortnamecode = shortnamecode ?? textcodesRepository.GetSingleTextCode(objectField.ShortNameTextCodeId);
 
-                        objectField.ShortNameTextCodeDefaultText = shortnamecode.DefaultText;
-                        objectField.ShortNameTextCodeCode = shortnamecode.Code;
+                        if (shortnamecode != null)
+                        {
+                            objectField.ShortNameTextCodeDefaultText = shortnamecode.DefaultText;
+                            objectField.ShortNameTextCodeCode = shortnamecode.Code;
+                        }
+                       
                     }
 
                     if (objectField.HelpTextCodeId != null)
@@ -1490,8 +1498,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TextCode helpcode = textCodes.Where(t => t.Id == objectField.HelpTextCodeId).FirstOrDefault();
                         helpcode = helpcode ?? textcodesRepository.GetSingleTextCode(objectField.HelpTextCodeId);
 
-                        objectField.HelpTextTextCodeCode = helpcode.Code;
-                        objectField.HelpTextCodeDefaultText = helpcode.DefaultText;
+                        if (helpcode != null)
+                        {
+                            objectField.HelpTextTextCodeCode = helpcode.Code;
+                            objectField.HelpTextCodeDefaultText = helpcode.DefaultText;
+                        }
+                       
                     }
 
                     if (objectField.ListTextCodeId != null)
@@ -1499,8 +1511,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TextCode listcode = textCodes.Where(t => t.Id == objectField.ListTextCodeId).FirstOrDefault();
                         listcode = listcode ?? textcodesRepository.GetSingleTextCode(objectField.ListTextCodeId);
 
-                        objectField.ListTextCodeCode = listcode.Code;
-                        objectField.ListTextCodeDefaultText = listcode.DefaultText;
+                        if (listcode != null)
+                        {
+                            objectField.ListTextCodeCode = listcode.Code;
+                            objectField.ListTextCodeDefaultText = listcode.DefaultText;
+                        }
+                       
                     }
                 }
 
@@ -2156,5 +2172,41 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return objectField;
         }
+
+
+        public List<ObjectFieldPM> GetCustomObjectFieldsByTenantAndObjectTable(int tenant, string objecttableName)
+        {
+            ObjectTablePM table = ObjectTableQuery.GetObjectTableByCode(objecttableName, tenant);
+            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode")
+                                                where a.Tenant == tenant  && a.InActive == false && a.ObjectTableId == table.Id && a.IsCustom == true
+                                                select new ObjectFieldPM()
+                                                {
+                                                   
+                                                    DataTypeCode = a.DataTypeCode,
+                                                    FullNameTextCodeId = a.FullNameTextCodeId,
+                                                    FieldName = a.FieldName,
+                                                    ShortNameTextCodeId = a.ShortNameTextCodeId,
+                                                    HelpTextCodeId = a.HelpTextCodeId,
+                                                    Id = a.Id,
+                                                    IsCustom = a.IsCustom,
+                                                    LookUpControlName = a.LookUpControlName,
+                                                    LookUpTableId = a.LookUpTableId,
+                                                    ObjectTableId = a.ObjectTableId,
+                                                    ObjectTableName = a.ObjectTable.Name,
+                                                    Tenant = a.Tenant,
+                                                    ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
+                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
+                                                    ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
+                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                                    DisplayLongName = a.DisplayLongName,
+                                                    FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
+                                                    Code = a.Code,
+                                            
+                                                }).ToList();
+
+            return objectFields;
+        }
+
     }
 }

@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CreditLimitSetting", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CreditLimitSetting", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         CreditLimitSettingService service = new CreditLimitSettingService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CreditLimitSetting", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CreditLimitSetting", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "CreditLimitSetting" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "CreditLimitSettingPM" + entityPM.Id + entityPM.Tenant;

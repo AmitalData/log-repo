@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {GetStackWindowArgs} from '../../../Args';
@@ -25,10 +25,11 @@ export class StackSelectionComponent {
     public SelectedItem: MAWBStackPM = null;
     public ObjectTableName: string = "MAWBStack";
     public IsResourcesReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.ItemsSource = [];
         this.StackDomainService = new AWBStackDomainService();
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading Air Waybill Numbers");
+        this.CurrentSession.StartBusyIndicator("Loading Air Waybill Numbers");
     }
 
     private args: GetStackWindowArgs;
@@ -69,7 +70,7 @@ export class StackSelectionComponent {
             this.StackDomainService.GetMAWBStackPMsByAirlineIdAndShipperId(this.AirlineId, this.ShipperId, 100, 0).subscribe((myResult:any) => {
                 var data: MAWBStackPM[] = myResult;
                 this.ItemsSource = data.sort((a, b) => { return a.Number - b.Number });
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
 
             this.StackDomainService.GetMAWBStackPMsCountByAirlineIdAndShipperId(this.AirlineId, this.ShipperId).subscribe((myResult:any) => {
@@ -83,7 +84,7 @@ export class StackSelectionComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -99,18 +100,18 @@ export class StackSelectionComponent {
                     confirmWindow.Show("The MAWB number that you selected is not assigned to this shipper. Continue anyway?");
                     confirmWindow.WindowClosed.subscribe(c => {
                         if (confirmWindow.Yes) {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
                     });
                 }
 
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
                 }
             }
 
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
             }
         }
 
@@ -125,13 +126,13 @@ export class StackSelectionComponent {
         //        confirmWindow.Show("The MAWB number that you selected is not assigned to this shipper. Continue anyway?");
         //        confirmWindow.WindowClosed.subscribe(c => {
         //            if (confirmWindow.Yes) {
-        //                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        //                this.CurrentSession.CloseCurrentWindowEmit("OK");
         //            }
         //        });
         //    }
 
         //    else {
-        //        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        //        this.CurrentSession.CloseCurrentWindowEmit("OK");
         //    }
         //}
     }

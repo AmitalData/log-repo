@@ -8,32 +8,37 @@ export class RoutingTabComponent {
     this.Helper = new FieldsHelper();
   }
 
-
-  public RoutingTab(LogitudeShipType: any, ShipmentType: any) {
-
+  public RoutingTab(ShipmentLevelCode: any, ShipmentType: any, Direction: string) {
     this.Helper.WaitByIdAndClick('Shipment.TH.Routings');
-    // this.AddPickup();
-    // this.Helper.WaitBusyIndicator();
-    // if (LogitudeShipType == 'D' || LogitudeShipType == 'H') {
-    //   this.AddPreCarriage(ShipmentType);
-    //   this.AddOnCarriage(ShipmentType);
-    // }
-    this.EditMainCarriage(LogitudeShipType, ShipmentType);
-    // this.AddDelivery();
-    // this.Helper.WaitBusyIndicator();
-
+    if ((Direction == 'Domestic' && ShipmentType == 'FTL')||(Direction == 'Domestic' && ShipmentType == 'LTL')) {
+      // var mainCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'Trucker1London');
+      // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByIdAndFill('Shipment_Driver', 'Driver, Protractor ... ');
+      this.Helper.WaitByIdAndFill('Shipment_TruckNumber', '985');
+    }
+    else {
+      this.AddPickup();
+      this.Helper.WaitBusyIndicator();
+      if (ShipmentLevelCode == 'D' || ShipmentLevelCode == 'H') {
+        this.AddPreCarriage(ShipmentType);
+        this.AddOnCarriage(ShipmentType);
+      }
+      this.EditMainCarriage(ShipmentLevelCode, Direction, ShipmentType);
+      this.AddDelivery();
+      this.Helper.WaitBusyIndicator();
+    }
   }
 
 
-  private EditMainCarriage(LogitudeShipType: string, ShipmentType: any) {
+  private EditMainCarriage(ShipmentLevelCode: string, Direction: string, ShipmentType: any) {
     this.Helper.WaitByIdAndClick('Edit-MainCarriage');
 
-    if (LogitudeShipType == 'D' || LogitudeShipType == 'M') {
+    if (ShipmentLevelCode == 'D' || ShipmentLevelCode == 'M') {
 
       if (ShipmentType == '') {
         // this.Helper.WaitBusyIndicator();
         // browser.driver.sleep(50000);
-      
+
         //------------------------- GET FROM STOCK ------------------------------
         //------------------------- GET FROM STOCK ------------------------------
         // this.Helper.WaitByIdAndClick('GetFromStockBtn');
@@ -55,28 +60,37 @@ export class RoutingTabComponent {
         //------------------------- END GET FROM STOCK ------------------------------
         //------------------------- END GET FROM STOCK ------------------------------
 
-        var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', 'am');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        if (Direction == 'Domestic') {
+          var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', 'eze');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        var transshipment1CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierId', 'rj');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+          var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', 'eze');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
+          var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'eze');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+        } else {
+          var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', 'LHR');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+          var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', 'JFK');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+          var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'MAN');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        }
+
+        var transshipment1CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierId', 'BA');
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierNumber', '125');
 
-        var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', 'ab');
+        var transshipment2CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierId', 'BA');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-        var transshipment2CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierId', 'am');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
         this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierNumber', '126');
 
-        var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'am');
+        var transshipment3CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierId', 'BA');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-        var transshipment3CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierId', 'lh');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
         this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierNumber', '127');
 
         this.Helper.WaitByIdAndFill('date_Shipment_MainCarriageATD', '1');
@@ -84,114 +98,129 @@ export class RoutingTabComponent {
 
         this.Helper.WaitByIdAndClick('MainCarriageOKBtn');
       }
-      else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
+      else if (ShipmentType == 'FCL' || ShipmentType == 'LCL' ||ShipmentType == 'OG') {
         // First leg details
-        var mainCarriageVessel = this.Helper.WaitByIdAndFill('Shipment_MainCarriageVesselId', 'log');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        // var mainCarriageVessel = this.Helper.WaitByIdAndFill('Shipment_MainCarriageVesselId', 'VesselIdPT');
+        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndFill('date_Shipment_MainCarriageATD', '1');
         this.Helper.WaitByIdAndFill('date_Shipment_MainCarriageATA', '1');
 
+        // if (Direction == 'Domestic') {
+        //   var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', 'MIA');
+        //   this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
+        //   var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', 'LAS');
+        //   this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', '225');
+        //   var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'MIA');
+        //   this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+        // } else {
+          var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', 'eze');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+          var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', 'eze');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+          var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'eze');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        //}
+        var transshipment1CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierId', 'MSCU');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-        var transshipment1CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierId', 'aclu');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
         this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierNumber', '125');
 
-        var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', '45b');
+        var transshipment2CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierId', 'MSCU');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-        var transshipment2CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierId', 'balu');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
         this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierNumber', '126');
 
-        var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'w2w');
+        var transshipment3CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierId', 'MSCU');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-        var transshipment3CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierId', 'votu');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
         this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierNumber', '127');
 
         this.Helper.WaitByIdAndClick('MainCarriageOKBtn');
       }
-      else if (ShipmentType == 'LTL' || ShipmentType == 'FTL') {
-        var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', 'du');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      else if (ShipmentType == 'LTL' || ShipmentType == 'FTL' || ShipmentType == 'IG') {
 
-        var transshipment1CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierId', 'trk1');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        if (Direction == 'Domestic') {
+          var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', 'eze');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
+          var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', 'eze');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+          var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'eze');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+        } else {
+          var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', 'MAN');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+          var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', 'LON');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+          var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'NYC');
+          this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        }
+        var transshipment1CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierId', 'Trucker1London');
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierNumber', '125');
 
-        var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', 'fra');
+        var transshipment2CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierId', 'Trucker1London');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-        var transshipment2CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierId', 'trk2');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
         this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierNumber', '126');
 
-        var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'bras');
+        var transshipment3CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierId', 'Trucker1London');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-        var transshipment3CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierId', 'trk3');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
         this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierNumber', '127');
 
         this.Helper.WaitByIdAndClick('MainCarriageOKBtn');
       }
-
     }
-    else if (LogitudeShipType == 'H') {
-      var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 't');
+    else if (ShipmentLevelCode == 'H') {
+      var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var transshipment1CarrierId = this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'i');
+      var transshipment1CarrierId = this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
 
       this.Helper.WaitByIdAndClick('OkBtn');
-
     }
-
-
-
   }
 
   private AddPickup() {
 
     this.Helper.WaitByIdAndClick('Add-PickUp');
 
-    // this.Helper.WaitByIdAndClick('Port_FromRadio');
-    // this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_FromPortId', 's');
-    // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-
-    // this.Helper.WaitByIdAndClick('Port_ToRadio');
-    // this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_ToPortId', 'r');
-    // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 't');
+    // From Port Details 
+    this.Helper.WaitByIdAndClick('ShipmentPickUpDelivery_CarrierId');
+    var fromPortBtn = element(by.id('Port_FromRadio'));
+    browser.executeScript("arguments[0].click();", fromPortBtn.getWebElement());
+    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_FromPortId', 'eze');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierNumber', '777');
+    //To Port Details 
+    browser.executeScript("arguments[0].click();", element(by.id('Port_ToRadio')).getWebElement());
+    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_ToPortId', 'eze');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 'Trucker1London');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierNumber', 'Truck Prot');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_Driver', 'Trucker Driver');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_TruckNumber', 'Transp Doc');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_TrailerNumber', 'Trail No.');
-    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_Notes', 'Adding Pickup ');
+    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_Notes', 'Adding Pickup by protractor .. ');
 
+    // Pickup packages details 
     this.Helper.WaitByIdAndClick('ShipmentPickUpDelivery.TH.Packages');
     this.Helper.WaitByIdAndClick('Add');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDeliveryPackage_Quantity', '10');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDeliveryPackage_Weight', '100');
     this.Helper.WaitByCssButtonClick('.RedButton', 'Ok');
+    // this.Helper.WaitByIdAndClick('AddPickupPackage');
+
 
 
     this.Helper.WaitByIdAndClick('SaveBtn');
@@ -204,51 +233,51 @@ export class RoutingTabComponent {
     this.Helper.WaitByIdAndClick('RoutingToggle');
     this.Helper.WaitByIdAndClick('PreCarriage');
     if (ShipmentType == '') {
-      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'a');
+      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'air');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'a');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'is');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'sa');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'aerolin');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierNumber', '985');
       this.Helper.WaitByIdAndClick('PreCarriageOKBtn');
     }
     else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
-      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'o');
+      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'ocean');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'be');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'isa');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'a');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'Maersk lines');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierNumber', '985');
       this.Helper.WaitByIdAndClick('PreCarriageOKBtn');
     }
     else if (ShipmentType == 'FTL' || ShipmentType == 'LTL') {
-      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'I');
+      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'Inland');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'antalya');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'abk');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'trk1');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'Trucker1London');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierNumber', '985');
@@ -266,13 +295,13 @@ export class RoutingTabComponent {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'a');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'is');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'sa');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'American');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierNumber', '985');
@@ -283,13 +312,13 @@ export class RoutingTabComponent {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'be');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'isa');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'f');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'Maersk lines');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierNumber', '985');
@@ -300,13 +329,13 @@ export class RoutingTabComponent {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'antalya');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'abk');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'trk1');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'Trucker1NewYork');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierNumber', '985');
@@ -317,14 +346,14 @@ export class RoutingTabComponent {
   private AddDelivery() {
     this.Helper.WaitByIdAndClick('Add-Delivery');
 
-    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 't');
+    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 'Trucker1London');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierNumber', '777');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_Driver', 'Trucker Driver');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_TruckNumber', 'Transp Doc');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_TrailerNumber', 'Trail No.');
-    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_Notes', 'Adding Pickup ');
+    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_Notes', 'Adding Delivery ');
 
     this.Helper.WaitByIdAndClick('SaveBtn');
     this.Helper.WaitBusyIndicator();

@@ -1,4 +1,4 @@
-﻿<div class="TabHolder" style="overflow-x:auto">
+<div class="TabHolder" style="overflow-x:auto">
     <div class="TabControl" style="position: absolute; height: calc(100% - 20px);width: calc(100% - 20px)">
         <div class="TabControlHead">
             <ul style="margin-left: 2px;">
@@ -26,7 +26,11 @@
                     </div>
                 </li>
 
-               
+                <li [class.Selected]="SelectedTabCode == 'Vacations'" (click)="SelectedTabCode = 'Vacations'">
+                    <div class="InnerChild">
+                        Vacations
+                    </div>
+                </li>
 
             </ul>
         </div>
@@ -48,7 +52,9 @@
                 <div class="LocationDirective" LocationDirective Code="ClockTime"></div>
             </div>
 
-          
+            <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'Vacations'">
+                <div class="LocationDirective" LocationDirective Code="Vacations"></div>
+            </div>
         </div>
     </div>
 

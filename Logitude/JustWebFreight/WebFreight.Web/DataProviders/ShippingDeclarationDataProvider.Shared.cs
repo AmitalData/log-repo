@@ -305,6 +305,7 @@ namespace WebFreight.Web.DataProviders
         public string DeliveryToContactName { get; set; }
         public string DeliveryToContactEmail { get; set; }
         public string DeliveryToContactPhone { get; set; }
+        public string FirstDeliveryToContactPhone { get; set; }
 
         public DateTime? FirstPickupETD { get; set; }
 
@@ -391,6 +392,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? WarehouseLegEntryDate { get; set; }
         public DateTime? WarehouseLegReleaseDate { get; set; }
         public string DeliveryNotes { get; set; }
+        public bool IsDangerous { get; set; }
 
         public string TenantName { get; set; }
         public string TenantPhone { get; set; }
@@ -422,5 +424,14 @@ namespace WebFreight.Web.DataProviders
         public string NotifyContactDetails { get; set; }      
         public string FullPickupAddress { get; set; }
         public double? ChargeableWeight{ get; set; }
+        public string IssuingCarrierAgentName { get; set; }
+        public string ARInvoices { get; set; }
+        public string SpecialServicesTypeName { get; set; }
+
+        public string TenantCBSA { get; set; }
+        public string TenantCAAT { get; set; }
+        public string CarrierCBSA { get; set; }
+        public string CarrierCAAT { get; set; }
+        public string InlandDriver { get; set; }
     }
 }

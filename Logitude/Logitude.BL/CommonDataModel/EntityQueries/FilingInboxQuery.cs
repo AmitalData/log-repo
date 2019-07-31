@@ -151,7 +151,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         FileSize = document.FileSize,
                     };
                     byte[] fileXml = storageservice.Read(fileInfo);
-                    item.EmailBody = UTF8Encoding.UTF8.GetString(fileXml, 0, fileXml.Length);
+                    if (fileXml != null)
+                    {
+                        item.EmailBody = UTF8Encoding.UTF8.GetString(fileXml, 0, fileXml.Length);
+                    } 
                 }
 
                 var contact = myContactRepository.GetSingleContact(item.Sender, tenant);

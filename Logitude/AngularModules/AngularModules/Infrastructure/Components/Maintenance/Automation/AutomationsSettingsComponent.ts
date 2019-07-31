@@ -1,4 +1,4 @@
-﻿
+
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
@@ -14,7 +14,7 @@ import {AutomationPM} from '../../../../Common/EntityPMs/AutomationPMExtended';
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-
+import {AutomationArgs} from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 @Component({
     moduleId: module.id,
@@ -49,6 +49,7 @@ export class AutomationsSettingsComponent implements OnInit {
     IsAddAtomationEnable: boolean = false;
     OnUpdateTabVisibility: boolean = false;
     ScheduleTabVisibility: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _automationExtendedPMService: AutomationExtendedPMService, public _automationPMService: AutomationPMService) {
 
 
@@ -115,7 +116,7 @@ export class AutomationsSettingsComponent implements OnInit {
 
     LoadAutomationsList() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.AutomationList = [];
         this._automationExtendedPMService.getAutomationesByObjectTableId(this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
 
@@ -131,7 +132,7 @@ export class AutomationsSettingsComponent implements OnInit {
 
                 this.RefreshAutomationList("OnCreate");
                 this.RefreshAutomationList("OnUpdate");
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -196,7 +197,7 @@ export class AutomationsSettingsComponent implements OnInit {
         newEntity.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         newEntity.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         newEntity.Description = "";
-        newEntity.Version = 0,
+        newEntity.Version = 1,
         newEntity.Inactive = false;
         newEntity.ResultCode = "EMAIL";
         newEntity.DocumentTypeId = "";
@@ -304,30 +305,40 @@ export class AutomationsSettingsComponent implements OnInit {
      }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveButtonClicked() {
      
         var automations: AutomationItemViewModel[] = this.AutomationList.filter(d=> d.EntityPM.IsDirty);
-      var  automationsPMList: AutomationPM[] = [];
+        var automationArgsLists: AutomationArgs[] = [];
         if (automations && automations.length > 0) {
 
+            
+
             automations.forEach((item) => {
-                item.EntityPM.AutomatedDataBackup = null;
-                item.EntityPM.AutomationXML = "";
-                if (item.EntityPM) {
-                    automationsPMList.push(item.EntityPM);
-                }
+                var automationArgs: AutomationArgs = new AutomationArgs();
+                automationArgs.Id = item.Id;
+                automationArgs.Tenant = item.Tenant;
+                automationArgs.Order = item.Order;
+                automationArgsLists.push(automationArgs);
             });
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-            this._automationExtendedPMService.putAuomationList(automationsPMList).subscribe(res => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+            //automations.forEach((item) => {
+            //    item.EntityPM.AutomatedDataBackup = null;
+            //    item.EntityPM.AutomationXML = "";
+            //    if (item.EntityPM) {
+            //        automationsPMList.push(item.EntityPM);
+            //    }
+            //});
+
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this._automationExtendedPMService.putAuomationList(automationArgsLists).subscribe(res => {
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindow();
             });
         }
-        else SessionLocator.CurrentSession.CloseCurrentWindow();
+        else this.CurrentSession.CloseCurrentWindow();
 
         
     }

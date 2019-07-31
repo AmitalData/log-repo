@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.DataContract
 {
-   public class OpenFormatReportData
+    public class OpenFormatReportData
     {
 
         public List<B100Data> B100DataList;
@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL.DataContract
         public string CreatedByUser { get; set; }
 
         public string OppositGLAccount { get; set; }
-
+        public string LedgerTransactionId { get; set; }
 
     }
 
@@ -123,12 +123,42 @@ namespace Logitude.Accounting.BL.DataContract
         public string CreatedbyUser { get; set; }
         public string AddressId { get; set; }
         public string GLAccountId { get; set; }
-        public string VendorId { get;  set; }
-        public string APInvoiceId { get;  set; }
+        public string VendorId { get; set; }
+        public string APInvoiceId { get; set; }
         public string ARPaymentMethod { get; set; }
         public string DepositId { get; set; }
         public string CashBookType { get; set; }
         public string ARPaymentId { get; set; }
-       
+
+    }
+
+    public class Summary
+    {
+        public string VatNumber { get; set; }
+        public string CompanyName { get; set; }
+
+
+        public List<ReportData> Data { get; set; }
+        public List<ReportTotal> ReportTotals { get; set; }
+
+    }
+
+    public class ReportData
+    {
+
+        public string RecordCode { get; set; }
+        public string RecordDescription { get; set; }
+        public int TotalRecords { get; set; }
+
+    }
+
+    public class ReportTotal
+    {
+        public string DocumentNumber { get; set; }
+        public string DocumentType { get; set; }
+        public decimal TotalQuantity { get; set; }
+        public decimal TotalAmount { get; set; }
+
+
     }
 }

@@ -192,7 +192,48 @@ export class DWQueryBuilderService {
                         pmresponse.Result = result;
                         return pmresponse;
 
-                    });
+                    }).catch(ServiceHelper.HandleServiceError);;
+            }
+            else {
+
+                //response.HasError = true;
+                //response.ErrorsArray = errorsArray;
+
+                return null;//Observable.of(response);
+
+            }
+        }
+
+        );
+    }
+
+    GetDateFilterSample(entityPM: DWObjectFieldsDetails) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
+          
+            var errorsArray = []; 
+             
+          
+            if (errorsArray.length == 0) {
+              
+                var temp = this.deepClone(entityPM);
+
+                
+                return this._http.post(this._apiUrl + '/PostGetDateFilterSample', JSON.stringify(temp),
+                    { headers: authHeader }).map((response) => {
+
+                        var result = response.json(); 
+                        var pmresponse: ServiceResponse;
+                        pmresponse = new ServiceResponse();
+                        pmresponse.Result = result;
+                        return pmresponse;
+
+                    }).catch(ServiceHelper.HandleServiceError);;
             }
             else {
 
@@ -244,7 +285,7 @@ export class DWQueryBuilderService {
 
 
         if (mapParent) {
-            entityPM.OldEntityPM = this.clone(entityPM);
+            entityPM.OldEntityPM = this.deepClone(entityPM);
 
         }
         else {
@@ -343,7 +384,7 @@ export class DWQueryBuilderService {
             key => ({
                 [key]:
 
-                    key != "UIProperties" && key != "MyParentClass" && key != "Items" ? this.deepClone(obj[key], hash) : true
+                    key != "UIProperties" && key != "MyParentClass" && key != "ShowSampleDateCommand" && key != "Items" && key != "TooltipId" && key != "TooltipContentId" && key != "CurrentSession" ? this.deepClone(obj[key], hash) : true
                     
             })));
     }
@@ -413,7 +454,7 @@ export class DWQueryBuilderService {
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
 
-            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
+            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged" || jsonPMKeys[key] === "MyParentClass" || jsonPMKeys[key] === "ShowSampleDateCommand" || jsonPMKeys[key] === "Items" || jsonPMKeys[key] === "TooltipId" || jsonPMKeys[key] === "TooltipContentId" || jsonPMKeys[key] === "CurrentSession") {
                 continue;
             }
 

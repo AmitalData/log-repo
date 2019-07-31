@@ -1,4 +1,4 @@
-﻿import {CommunicationLogPM} from '../../EntityPMs/CommunicationLogPM'
+import {CommunicationLogPM} from '../../EntityPMs/CommunicationLogPM'
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow'
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow'
@@ -13,6 +13,7 @@ export class CommunicationLogMenuButtonsHandler {
     public EntityPM: CommunicationLogPM;
     public entityArgs: EntityArgs
     communicationLogExtendedPMService: CommunicationLogExtendedPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -73,9 +74,9 @@ export class CommunicationLogMenuButtonsHandler {
 
     ResendButtonClcik() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Resending...");
+        this.CurrentSession.StartBusyIndicator("Resending...");
         this.communicationLogExtendedPMService.SendCommunicationLogToQueue(this.EntityPM.Id, this.EntityPM.Tenant).subscribe(res => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 

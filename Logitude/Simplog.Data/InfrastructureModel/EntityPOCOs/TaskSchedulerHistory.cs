@@ -19,7 +19,12 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string RunResult { get; set; }
         public string TaskId { get; set; } 
         public bool IsError { get; set; }
+        public DateTime? StartDateTimeUTC { get; set; }
+        public DateTime? EndDateTimeUTC { get; set; }
         [ForeignKey("TaskId")]
         public virtual TasksScheduler TaskScheduler { get; set; }
+        public string LogType { get; set; }
+        public string LogFirstLine { get; set; }
+
     }
 }

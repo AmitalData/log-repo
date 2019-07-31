@@ -20,7 +20,6 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     SelectedOperator: Operator;
     isChangeOperator: boolean;
     IsSetValue: boolean;
-    Id: string;
     FieldValue: any;
     IsLoadOperatorList: boolean = false;
     DelayAutomationconditionsViewModel: any;
@@ -35,11 +34,15 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     IsCustomCombox: boolean = false;
     AutomationCondationFieldListFilterItems: ApiQueryFilters;
     CustomAutomationCondationFieldListFilterItems: ApiQueryFilters;
-   
+    SystemVariableOperatorLists: Operator[];
+    SelectedSystemVariableOperator: Operator;
+
+
+
 
    CurrentEntityType: string;
-    ObjectFieldId: string = "";
-
+   ObjectFieldId: string = "";
+   //IsSystemVariables: boolean = false;
     CustomObjectFieldId: string = "";
     AutomationHelper: AutomationHelper;
     constructor(entityPM: AutomationCondition, addEditAutomationsViewModel: any, delayAutomationconditionsViewModel = null) {
@@ -52,7 +55,6 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         this.InitLOVFilters();
         this.AllowedinAutomationConditionsFieldLists = addEditAutomationsViewModel.AllowedinAutomationConditionsFieldLists;
         this.ObjectFieldPM = this.AllowedinAutomationConditionsFieldLists.filter(d => d.Id == this.CurrentEntityPM.ObjectFieldId)[0];
-        this.Id = entityPM.Id;
         this.FieldValue = this.CurrentEntityPM.Value;
         this.DateTypeList = [];
         this.DateTypeList.push(new Operator("@Today-", "-"));
@@ -60,10 +62,12 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         this.DateTypeList.push(new Operator("Date", "Date"));
         this.SelectedDateType = this.DateTypeList[0];
         this.CurrentEntityType = this.AddEditAutomationsViewModel.CurrentEntityPM.Type;
-      
+        this.SystemVariableOperatorLists = [];
+        this.SystemVariableOperatorLists.push(new Operator("System User", "SystemUser"));
+
 
         if (this.ObjectFieldPM) {
-            this.ChosenOperatorList(this.ObjectFieldPM.DataTypeCode, false);
+            this.ChosenOperatorList(this.ObjectFieldPM.DataTypeCode, false, this.ObjectFieldPM);
             this.ObjectFieldId = this.ObjectFieldPM.Id;
  
 
@@ -131,8 +135,6 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         }
 
         if (this.SelectedOperator) {
-
-          
             this.BuildCustomFromFieldbjectFieldLists();
             if (this.HideGeneralControl(this.SelectedOperator.Code)) {
                 this.IsHideGeneralControl = true;
@@ -140,10 +142,14 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                 this.CurrentEntityPM.Value = "";
             }
 
-
-
+            if (this.SelectedOperator.Code == "EqualSystemVariable") {
+                this.SelectedSystemVariableOperator = this.SystemVariableOperatorLists.filter(d => d.Code == this.FieldValue)[0];
+                if (!this.SelectedSystemVariableOperator) {
+                    this.SelectedSystemVariableOperator = this.SystemVariableOperatorLists[0];
+                    this.AutomationHelper.ConditionValueChange(this.SelectedSystemVariableOperator.Code);
+                }
+            }
         }
-
 
         this.IsLoadOperatorList = true;
 
@@ -157,6 +163,17 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     }
 
    
+    get IsSystemVariables() {
+        var result = false;
+        if (this.SelectedOperator) {
+            if (this.SelectedOperator.Code == "EqualSystemVariable") result = true;
+        }
+
+        return result;
+
+
+    }
+
 
 
     InitLOVFilters() {
@@ -197,7 +214,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         this.AddEditAutomationsViewModel.IsChangeCondition = true;
     }
    
-    ChosenOperatorList(dataTypeCode: string, isChangeOperator: boolean) {
+    ChosenOperatorList(dataTypeCode: string, isChangeOperator: boolean, objectFieldPM: ObjectFieldPM = null) {
         this.OperatorList = [];
 
         if (dataTypeCode == "DateTime" || dataTypeCode == "Date" || dataTypeCode == "Integer" || dataTypeCode == "Decimal" || dataTypeCode == "Double") {
@@ -216,7 +233,19 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         }
 
         else if (dataTypeCode == "Boolean") this.OperatorList.push(new Operator("Equals", "="));
+        else if (dataTypeCode == "LookUp") {
+            this.OperatorList.push(new Operator("Equals", "="));
+            this.OperatorList.push(new Operator("Does Not Equal", "<>"));
+            this.OperatorList.push(new Operator("Equal [Field]", "=F"));
+            this.OperatorList.push(new Operator("Does Not Equal [Field]", "<>F"));
 
+            if (objectFieldPM != null) {
+                if (objectFieldPM.ObjectTable_LookUpTableName == "User" || objectFieldPM.ObjectTable_LookUpTableName == "Contact") {
+                    this.OperatorList.push(new Operator("Equal [System Variable]", "EqualSystemVariable"));
+                }
+            }
+
+        }
         else {
 
             this.OperatorList.push(new Operator("Equals", "="));
@@ -228,30 +257,26 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
             this.OperatorList.push(new Operator("Does Not Equal [Field]", "<>F"));
             this.OperatorList.push(new Operator("Contains [Field]", "CONTAINSF"));
             this.OperatorList.push(new Operator("Does Not Contain [Field]", "!CONTAINSF"));
-
-
         }
 
-       if (this.CurrentEntityType != "OnCreate") {
+
+
+
+
+        if (this.CurrentEntityType != "OnCreate") {
             this.OperatorList.push(new Operator("Changed to", "CHANGEDTO"));
             this.OperatorList.push(new Operator("Changed", "CHANGED"));
-
-      }
-
-
-      if (dataTypeCode == "DateTime" || dataTypeCode == "Date") {
-
-        if (!this.OperatorList.filter(d => d.Code == "CHANGED")[0]) {
-          this.OperatorList.push(new Operator("Changed", "CHANGED"));
         }
 
 
-        this.OperatorList.push(new Operator("Is Empty", "ISEMPTY"));
-        this.OperatorList.push(new Operator("Is not Empty", "ISNOTEMPTY"));
+        if (dataTypeCode == "DateTime" || dataTypeCode == "Date") {
 
-
-      
-      }
+            if (!this.OperatorList.filter(d => d.Code == "CHANGED")[0]) {
+                this.OperatorList.push(new Operator("Changed", "CHANGED"));
+            }
+            this.OperatorList.push(new Operator("Is Empty", "ISEMPTY"));
+            this.OperatorList.push(new Operator("Is not Empty", "ISNOTEMPTY"));
+        }
 
 
         if (isChangeOperator) {
@@ -271,8 +296,15 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                 if (item.Id != oldObjectFieldId) {
 
                     this.IsHideGeneralControl = false;
-                    this.FieldValue = "";
-                    this.CurrentEntityPM.Value = "";
+                    this.FieldValue = item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime" ? 0 : "";
+
+
+                    if (item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime") {
+                        var todayDate = DateTool.GetCurrentDateTimeAsUtc();
+                        this.CurrentEntityPM.Value = this.SelectedDateType.Name + "*" + this.FieldValue + "*" + FieldValueResolver.ConvertUTCDateToString(todayDate, "Automation");
+                    } else this.CurrentEntityPM.Value = "";
+
+                   
                     this.AddEditAutomationsViewModel.IsChangeCondition = true;
                     var ischange = false;
 
@@ -289,7 +321,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                         this.UIProperties.SetRequired(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, false);
 
                         this.CurrentEntityPM.ObjectFieldId = this.SelectedCustomField.Id;
-                        this.ChosenOperatorList(this.SelectedCustomField.DataTypeCode, true);
+                        this.ChosenOperatorList(this.SelectedCustomField.DataTypeCode, true, this.SelectedCustomField);
                         this.SelectedOperator = this.OperatorList[0];
                      
                     }
@@ -301,6 +333,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                         this.IsRefrachCustomField = !this.IsRefrachCustomField;
                     }
 
+           
                     this.BuildCustomFromFieldbjectFieldLists();
 
                 }
@@ -363,6 +396,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
             if ((item.Code.indexOf("F") != -1 && this.SelectedOperator.Code.indexOf("F") == -1) || (item.Code.indexOf("F") == -1 && this.SelectedOperator.Code.indexOf("F") != -1)) {
                 this.FieldValue = "";
                 this.CurrentEntityPM.Value = "";
+                this.SelectedSystemVariableOperator = null;
             }
 
             this.SelectedOperator = item;
@@ -374,6 +408,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                 this.IsHideGeneralControl = true;
                 this.FieldValue = "";
                 this.CurrentEntityPM.Value = "";
+                this.SelectedSystemVariableOperator = null;
 
             } else {
                 this.IsHideGeneralControl = false;
@@ -440,6 +475,11 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     }
 
 
+    SystemVariableCondationValueChanged(value) {
+        this.AutomationHelper.SystemVariableCondationValueChanged(value);
+    }
+
+
     DateTypeListCondationValueChanged(value) {
 
         this.AutomationHelper.DateTypeListCondationValueChanged(value);
@@ -468,3 +508,5 @@ class Operator {
 
 
 }
+
+

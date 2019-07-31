@@ -55,16 +55,16 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     public AmLineChartData: any = [];
     public MoneyInLabel: string = "";
     public dailySpotLightClass: DailySpotlightClass; 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
         this.dailySpotLightClass = new DailySpotlightClass();
         this.dashboarddomainservice = new DashboardDomainService();
-        this.ActivityStatusDashboardId = this.ActivityStatusDashboardId + SessionLocator.CurrentSession.GetChartId();
-        this.MoneyInDashboardId = this.ActivityStatusDashboardId + SessionLocator.CurrentSession.GetChartId();
-        this.TopFiveDashboardId = this.TopFiveDashboardId + SessionLocator.CurrentSession.GetChartId();
-        this.TopFiveDashboardLegendId = "TopFiveDashboardLegendId_" + SessionLocator.CurrentSession.GetNewId("TopFiveDashboardLegendId");
+        this.ActivityStatusDashboardId = this.ActivityStatusDashboardId + this.CurrentSession.GetChartId();
+        this.MoneyInDashboardId = this.ActivityStatusDashboardId + this.CurrentSession.GetChartId();
+        this.TopFiveDashboardId = this.TopFiveDashboardId + this.CurrentSession.GetChartId();
+        this.TopFiveDashboardLegendId = "TopFiveDashboardLegendId_" + this.CurrentSession.GetNewId("TopFiveDashboardLegendId");
     }
 
     ngOnInit() {
@@ -498,11 +498,11 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         listArgs.DisplayTitle = displayName;
         listArgs.BackButtonTitle = "Dashboard";
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadData());
                 });
         });
@@ -923,7 +923,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
     OpenDashBoard() {
         this.isNotMoreDetails = false;
-        SessionLocator.DynamicLoader.Load("./Dashboard/Components/Workspace/ActivityStatusDetailsComponent", SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load("./Dashboard/Components/Workspace/ActivityStatusDetailsComponent", this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.logoff.subscribe(($event) => this.change(cmpRef))
                         this.ActivityStatusPage = cmpRef;

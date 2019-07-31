@@ -71,7 +71,7 @@
                                                                 <tr>
                                                                     <td style="float:left;width:35px;">
                                                                         <!--<LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'IsChecked'" [Checked]="item.IsChecked" [DataContext]="DataContext" (ValueChanged)="onValueChanged(item, $event)"></LogCheckBox>-->
-                                                                        <CheckBox (Checked)="onValueChanged(item,$event)" [IsChecked]="item.IsChecked"></CheckBox>
+                                                                        <CheckBox (Checked)="onValueChanged(item,i,$event)" [IsChecked]="item.IsChecked"></CheckBox>
                                                                     </td>
                                                                     <td style="width:5px;float:left;">
                                                                         <div></div>

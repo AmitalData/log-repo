@@ -41,7 +41,7 @@ export class PartnersItemsSelectionComponent extends BaseComponent {
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     private customsVendorListService: CustomsVendorListService = new CustomsVendorListService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -78,11 +78,11 @@ export class PartnersItemsSelectionComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.SelectedRow);
+        this.CurrentSession.CloseCurrentWindowEmit(this.SelectedRow);
     }
 
     Search(text: string) {
@@ -181,7 +181,7 @@ export class PartnersItemsSelectionComponent extends BaseComponent {
     }
     OnRowDoubleClick(item: any) {
         this.SelectedRow = item;
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.SelectedRow);
+        this.CurrentSession.CloseCurrentWindowEmit(this.SelectedRow);
 
     }
 

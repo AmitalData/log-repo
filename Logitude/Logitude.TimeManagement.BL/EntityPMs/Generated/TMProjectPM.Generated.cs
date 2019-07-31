@@ -480,6 +480,144 @@ namespace Logitude.TimeManagement.BL.EntityPMs
 			
 		 }
 	   }
+	  private string categoryName ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CategoryName  
+	   {
+	    
+	     get
+		{
+		   return categoryName;
+		 }
+		 set
+		 {
+		   if(categoryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CategoryName",OldValue=categoryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   categoryName=value;
+		   }
+			
+		 }
+	   }
+	  private bool excludeFromProrating ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ExcludeFromProrating  
+	   {
+	    
+	     get
+		{
+		   return excludeFromProrating;
+		 }
+		 set
+		 {
+		   if(excludeFromProrating != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExcludeFromProrating",OldValue=excludeFromProrating,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   excludeFromProrating=value;
+		   }
+			
+		 }
+	   }
+	  private string dayOffTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DayOffTypeCode  
+	   {
+	    
+	     get
+		{
+		   return dayOffTypeCode;
+		 }
+		 set
+		 {
+		   if(dayOffTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DayOffTypeCode",OldValue=dayOffTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dayOffTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private bool blockedForDataEntry ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool BlockedForDataEntry  
+	   {
+	    
+	     get
+		{
+		   return blockedForDataEntry;
+		 }
+		 set
+		 {
+		   if(blockedForDataEntry != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BlockedForDataEntry",OldValue=blockedForDataEntry,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   blockedForDataEntry=value;
+		   }
+			
+		 }
+	   }
+	  private string budgetName ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BudgetName  
+	   {
+	    
+	     get
+		{
+		   return budgetName;
+		 }
+		 set
+		 {
+		   if(budgetName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BudgetName",OldValue=budgetName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   budgetName=value;
+		   }
+			
+		 }
+	   }
+	  private string dayOffTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DayOffTypeName  
+	   {
+	    
+	     get
+		{
+		   return dayOffTypeName;
+		 }
+		 set
+		 {
+		   if(dayOffTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DayOffTypeName",OldValue=dayOffTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dayOffTypeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -64,7 +64,9 @@ namespace Simplog.Data.CommonDataModel
                 currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             }
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             ProductDataViewContext context = new ProductDataViewContext(connection);
             return context;
 

@@ -19,7 +19,9 @@ namespace WebFreight.Web.DataProviders
         public string VendorAddress { get; set; } // ??
         public string VendorVatNumber { get; set; }
         public string ShipperName { get; set; }
+        public string ShipperAddress { get; set; }
         public string ConsigneeName { get; set; }
+        public string ConsigneeAddress { get; set; }
         public string MainCarriageCarrierLabel { get; set; }
         public string MainCarriageCarrierName { get; set; }
         public string MainCarriageVesselLabel { get; set; }
@@ -69,6 +71,9 @@ namespace WebFreight.Web.DataProviders
         public string ReleasingAgentAddress { get; set; }
         public string BranchAddress { get; set; }
 
+        public double? ExchangeRate { get; set; }
+        public string MasterNumber { get; set; }
+
         public List<APReportInvoiceLine> APInvoiceLinesList { get; set; }
         public List<APTotalVat> APTotalVatList { get; set; }
         public List<APInvoiceMultipleEntity> APInvoiceMultipleEntityList { get; set; }
@@ -86,6 +91,7 @@ namespace WebFreight.Web.DataProviders
         public string ForeignCurrency { get; set; }
         public double? InvoiceAmount { get; set; }
         public double? OpenAmount { get; set; }
+        public string Notes { get; set; }
     }
 
     public class APTotalVat

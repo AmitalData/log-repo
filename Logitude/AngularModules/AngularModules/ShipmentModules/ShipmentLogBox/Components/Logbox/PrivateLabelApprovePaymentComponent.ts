@@ -1,4 +1,4 @@
-﻿declare var System: any, window: any;
+declare var System: any, window: any;
 import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
@@ -51,6 +51,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     _ImageLibraryService: ImageLibraryService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
@@ -104,7 +105,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                 this.DimApproveButton = true;
             }
             var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
             this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
                 var Result = [];//DocumentTypeMetaDataExtendedService
 
@@ -144,7 +145,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                 //}
                 this.externalDocs.push({ key: "חשבונות ספק ורשימות אריזה", value: tempSupplierInvoice });
                 this.externalDocs.push({ key: "מסמכים נוספים", value: tempOthers });
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             }, error => {
                 var dd: Response = error;
@@ -153,7 +154,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     }
     public ValidationWarningsList: string = null;
     ApproveButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
         this.ValidationWarningsList = null;
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
             var entity = AdditionalResult.Result
@@ -165,7 +166,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                 this.messageWindow.Message = "גרסה זו כבר אושרה על ידי משתמש אחר";
                 this.messageWindow.Show(this.messageWindow.Message);
                 //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator(); 
+                this.CurrentSession.CurrentWindow.StopBusyIndicator(); 
             }
             else {
                 entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
@@ -198,7 +199,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                     this.messageWindow.Message = "אישור הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
                     this.messageWindow.Show(this.messageWindow.Message);
                     //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 });
             }
         });
@@ -206,7 +207,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     }
 
     DenyButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("...");
         var newWindow = new LogitudeWindow();
         newWindow.Width = 350;
         newWindow.Height = 220;
@@ -222,11 +223,11 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                 this.messageWindow.Message = "גרסה זו כבר נדחתה על ידי משתמש אחר";
                 this.messageWindow.Show(this.messageWindow.Message);
                 //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
             else {
                 newWindow.Title = "הסבר לדחיית הצהרה";
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var windowArgs: any = {};
                 windowArgs.AdditionalData = entity;
                 newWindow.WindowArgs = windowArgs;
@@ -236,7 +237,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                     if ($event == "Denied") {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Deny Declaration");
                         this.DimDenyButton = true;
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                         this.messageWindow.RTL = true;
                         this.messageWindow.Width = 300;
                         this.messageWindow.Height = 150;
@@ -265,7 +266,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public get ShipperReference1() { return this.EntityPm.ShipperReference1 }

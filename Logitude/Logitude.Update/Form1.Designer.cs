@@ -65,6 +65,10 @@
             this.importToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.impPackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.impRolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tenantRTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tenantTxtBox = new System.Windows.Forms.ToolStripTextBox();
+            this.rTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -103,6 +107,7 @@
             this.button38 = new System.Windows.Forms.Button();
             this.button39 = new System.Windows.Forms.Button();
             this.button37 = new System.Windows.Forms.Button();
+            this.button42 = new System.Windows.Forms.Button();
             this.BuildZipFileslbl = new System.Windows.Forms.Label();
             this.button27 = new System.Windows.Forms.Button();
             this.ConvertXmalTemplateToHtmlButton = new System.Windows.Forms.Button();
@@ -152,6 +157,8 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblUTariffModule = new System.Windows.Forms.Label();
+            this.button41 = new System.Windows.Forms.Button();
             this.btnUpdateTenantZeroNew = new System.Windows.Forms.Button();
             this.lblTenantNew = new System.Windows.Forms.Label();
             this.lblUGlobal = new System.Windows.Forms.Label();
@@ -160,11 +167,14 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button43 = new System.Windows.Forms.Button();
+            this.btnCompareData = new System.Windows.Forms.Button();
             this.button40 = new System.Windows.Forms.Button();
             this.HarmonizeCodesLabel = new System.Windows.Forms.Label();
             this.HarmonizeCodesButton = new System.Windows.Forms.Button();
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
+            this.button44 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -315,7 +325,8 @@
             this.productionToolStripMenuItem,
             this.customsBookToolStripMenuItem,
             this.metaDataUpdateToolStripMenuItem,
-            this.expImpToolStripMenuItem});
+            this.expImpToolStripMenuItem,
+            this.tenantRTLToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(751, 24);
@@ -484,6 +495,36 @@
             this.impRolesToolStripMenuItem.Text = "Imp.Roles";
             this.impRolesToolStripMenuItem.Click += new System.EventHandler(this.impRolesToolStripMenuItem_Click);
             // 
+            // tenantRTLToolStripMenuItem
+            // 
+            this.tenantRTLToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tenantTxtBox,
+            this.rTLToolStripMenuItem,
+            this.lTRToolStripMenuItem});
+            this.tenantRTLToolStripMenuItem.Name = "tenantRTLToolStripMenuItem";
+            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
+            this.tenantRTLToolStripMenuItem.Text = "Tenant RTL";
+            // 
+            // tenantTxtBox
+            // 
+            this.tenantTxtBox.Name = "tenantTxtBox";
+            this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
+            this.tenantTxtBox.Text = "1";
+            // 
+            // rTLToolStripMenuItem
+            // 
+            this.rTLToolStripMenuItem.Name = "rTLToolStripMenuItem";
+            this.rTLToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.rTLToolStripMenuItem.Text = "RTL";
+            this.rTLToolStripMenuItem.Click += new System.EventHandler(this.rtlBtn_Click);
+            // 
+            // lTRToolStripMenuItem
+            // 
+            this.lTRToolStripMenuItem.Name = "lTRToolStripMenuItem";
+            this.lTRToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.lTRToolStripMenuItem.Text = "LTR";
+            this.lTRToolStripMenuItem.Click += new System.EventHandler(this.ltrBtn_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -637,7 +678,7 @@
             // 
             // btnAddBatchServicesDefinitions
             // 
-            this.btnAddBatchServicesDefinitions.Location = new System.Drawing.Point(522, 165);
+            this.btnAddBatchServicesDefinitions.Location = new System.Drawing.Point(522, 195);
             this.btnAddBatchServicesDefinitions.Name = "btnAddBatchServicesDefinitions";
             this.btnAddBatchServicesDefinitions.Size = new System.Drawing.Size(184, 35);
             this.btnAddBatchServicesDefinitions.TabIndex = 26;
@@ -677,7 +718,7 @@
             // 
             // DownLoadZipFile
             // 
-            this.DownLoadZipFile.Location = new System.Drawing.Point(522, 121);
+            this.DownLoadZipFile.Location = new System.Drawing.Point(522, 151);
             this.DownLoadZipFile.Name = "DownLoadZipFile";
             this.DownLoadZipFile.Size = new System.Drawing.Size(184, 38);
             this.DownLoadZipFile.TabIndex = 30;
@@ -688,9 +729,9 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(522, 27);
+            this.checkBox1.Location = new System.Drawing.Point(522, 57);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(85, 17);
+            this.checkBox1.Size = new System.Drawing.Size(84, 17);
             this.checkBox1.TabIndex = 18;
             this.checkBox1.Text = "Save to disk";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -802,7 +843,7 @@
             // 
             // button31
             // 
-            this.button31.Location = new System.Drawing.Point(522, 227);
+            this.button31.Location = new System.Drawing.Point(522, 257);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(184, 28);
             this.button31.TabIndex = 55;
@@ -845,6 +886,18 @@
             this.button37.Visible = false;
             this.button37.Click += new System.EventHandler(this.button37_Click);
             // 
+            // button42
+            // 
+            this.button42.Location = new System.Drawing.Point(271, 441);
+            this.button42.Name = "button42";
+            this.button42.Size = new System.Drawing.Size(184, 23);
+            this.button42.TabIndex = 94;
+            this.button42.Text = "Fix LogBox Docs";
+            this.toolTip1.SetToolTip(this.button42, "When finished, Click on Update Tenants, Then Build Zip files");
+            this.button42.UseVisualStyleBackColor = true;
+            this.button42.Visible = false;
+            this.button42.Click += new System.EventHandler(this.button42_Click);
+            // 
             // BuildZipFileslbl
             // 
             this.BuildZipFileslbl.AutoSize = true;
@@ -858,7 +911,7 @@
             // 
             // button27
             // 
-            this.button27.Location = new System.Drawing.Point(522, 299);
+            this.button27.Location = new System.Drawing.Point(522, 329);
             this.button27.Name = "button27";
             this.button27.Size = new System.Drawing.Size(184, 28);
             this.button27.TabIndex = 41;
@@ -868,7 +921,7 @@
             // 
             // ConvertXmalTemplateToHtmlButton
             // 
-            this.ConvertXmalTemplateToHtmlButton.Location = new System.Drawing.Point(522, 82);
+            this.ConvertXmalTemplateToHtmlButton.Location = new System.Drawing.Point(522, 112);
             this.ConvertXmalTemplateToHtmlButton.Name = "ConvertXmalTemplateToHtmlButton";
             this.ConvertXmalTemplateToHtmlButton.Size = new System.Drawing.Size(184, 33);
             this.ConvertXmalTemplateToHtmlButton.TabIndex = 42;
@@ -928,7 +981,7 @@
             // ConvertXmalTemplateLable
             // 
             this.ConvertXmalTemplateLable.AutoSize = true;
-            this.ConvertXmalTemplateLable.Location = new System.Drawing.Point(519, 324);
+            this.ConvertXmalTemplateLable.Location = new System.Drawing.Point(519, 354);
             this.ConvertXmalTemplateLable.Name = "ConvertXmalTemplateLable";
             this.ConvertXmalTemplateLable.Size = new System.Drawing.Size(0, 13);
             this.ConvertXmalTemplateLable.TabIndex = 47;
@@ -990,7 +1043,7 @@
             // 
             // ConvertSignatureButton
             // 
-            this.ConvertSignatureButton.Location = new System.Drawing.Point(522, 53);
+            this.ConvertSignatureButton.Location = new System.Drawing.Point(522, 83);
             this.ConvertSignatureButton.Name = "ConvertSignatureButton";
             this.ConvertSignatureButton.Size = new System.Drawing.Size(184, 23);
             this.ConvertSignatureButton.TabIndex = 48;
@@ -1001,7 +1054,7 @@
             // ConvertSignatureLable
             // 
             this.ConvertSignatureLable.AutoSize = true;
-            this.ConvertSignatureLable.Location = new System.Drawing.Point(538, 28);
+            this.ConvertSignatureLable.Location = new System.Drawing.Point(538, 58);
             this.ConvertSignatureLable.Name = "ConvertSignatureLable";
             this.ConvertSignatureLable.Size = new System.Drawing.Size(0, 13);
             this.ConvertSignatureLable.TabIndex = 49;
@@ -1009,7 +1062,7 @@
             // 
             // _UpdatePortsButton
             // 
-            this._UpdatePortsButton.Location = new System.Drawing.Point(522, 259);
+            this._UpdatePortsButton.Location = new System.Drawing.Point(522, 289);
             this._UpdatePortsButton.Name = "_UpdatePortsButton";
             this._UpdatePortsButton.Size = new System.Drawing.Size(184, 34);
             this._UpdatePortsButton.TabIndex = 50;
@@ -1020,7 +1073,7 @@
             // UpdatePortslbl
             // 
             this.UpdatePortslbl.AutoSize = true;
-            this.UpdatePortslbl.Location = new System.Drawing.Point(565, 454);
+            this.UpdatePortslbl.Location = new System.Drawing.Point(565, 484);
             this.UpdatePortslbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdatePortslbl.Name = "UpdatePortslbl";
             this.UpdatePortslbl.Size = new System.Drawing.Size(100, 13);
@@ -1046,7 +1099,7 @@
             // 
             // CopyReportButton
             // 
-            this.CopyReportButton.Location = new System.Drawing.Point(522, 333);
+            this.CopyReportButton.Location = new System.Drawing.Point(522, 363);
             this.CopyReportButton.Name = "CopyReportButton";
             this.CopyReportButton.Size = new System.Drawing.Size(184, 28);
             this.CopyReportButton.TabIndex = 57;
@@ -1057,7 +1110,7 @@
             // CopyReportButtonLable
             // 
             this.CopyReportButtonLable.AutoSize = true;
-            this.CopyReportButtonLable.Location = new System.Drawing.Point(565, 476);
+            this.CopyReportButtonLable.Location = new System.Drawing.Point(565, 506);
             this.CopyReportButtonLable.MinimumSize = new System.Drawing.Size(100, 0);
             this.CopyReportButtonLable.Name = "CopyReportButtonLable";
             this.CopyReportButtonLable.Size = new System.Drawing.Size(100, 13);
@@ -1078,7 +1131,7 @@
             // updateFillComputingLBL
             // 
             this.updateFillComputingLBL.AutoSize = true;
-            this.updateFillComputingLBL.Location = new System.Drawing.Point(565, 428);
+            this.updateFillComputingLBL.Location = new System.Drawing.Point(565, 458);
             this.updateFillComputingLBL.MinimumSize = new System.Drawing.Size(100, 0);
             this.updateFillComputingLBL.Name = "updateFillComputingLBL";
             this.updateFillComputingLBL.Size = new System.Drawing.Size(100, 13);
@@ -1088,7 +1141,7 @@
             // updateFillComputingPortsLBL
             // 
             this.updateFillComputingPortsLBL.AutoSize = true;
-            this.updateFillComputingPortsLBL.Location = new System.Drawing.Point(565, 441);
+            this.updateFillComputingPortsLBL.Location = new System.Drawing.Point(565, 471);
             this.updateFillComputingPortsLBL.MinimumSize = new System.Drawing.Size(100, 0);
             this.updateFillComputingPortsLBL.Name = "updateFillComputingPortsLBL";
             this.updateFillComputingPortsLBL.Size = new System.Drawing.Size(100, 13);
@@ -1115,7 +1168,7 @@
             // addWarehouseLabel
             // 
             this.addWarehouseLabel.AutoSize = true;
-            this.addWarehouseLabel.Location = new System.Drawing.Point(565, 415);
+            this.addWarehouseLabel.Location = new System.Drawing.Point(565, 445);
             this.addWarehouseLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.addWarehouseLabel.Name = "addWarehouseLabel";
             this.addWarehouseLabel.Size = new System.Drawing.Size(100, 13);
@@ -1269,7 +1322,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 13);
+            this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 80;
             this.label2.Text = "tenant:";
             // 
@@ -1292,7 +1345,7 @@
             this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.linkLabel1.Location = new System.Drawing.Point(162, 42);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(19, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(20, 13);
             this.linkLabel1.TabIndex = 81;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "(?)";
@@ -1334,6 +1387,8 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.lblUTariffModule);
+            this.tabPage1.Controls.Add(this.button41);
             this.tabPage1.Controls.Add(this.btnUpdateTenantZeroNew);
             this.tabPage1.Controls.Add(this.lblTenantNew);
             this.tabPage1.Controls.Add(this.lblUGlobal);
@@ -1388,6 +1443,27 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // lblUTariffModule
+            // 
+            this.lblUTariffModule.AutoSize = true;
+            this.lblUTariffModule.Location = new System.Drawing.Point(206, 522);
+            this.lblUTariffModule.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblUTariffModule.Name = "lblUTariffModule";
+            this.lblUTariffModule.Size = new System.Drawing.Size(100, 13);
+            this.lblUTariffModule.TabIndex = 94;
+            this.lblUTariffModule.Text = "...";
+            // 
+            // button41
+            // 
+            this.button41.Location = new System.Drawing.Point(16, 517);
+            this.button41.Name = "button41";
+            this.button41.Size = new System.Drawing.Size(184, 22);
+            this.button41.TabIndex = 93;
+            this.button41.Text = "Update Tariff Module";
+            this.button41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button41.UseVisualStyleBackColor = true;
+            this.button41.Click += new System.EventHandler(this.button41_Click);
             // 
             // btnUpdateTenantZeroNew
             // 
@@ -1463,6 +1539,10 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.button44);
+            this.tabPage2.Controls.Add(this.button43);
+            this.tabPage2.Controls.Add(this.button42);
+            this.tabPage2.Controls.Add(this.btnCompareData);
             this.tabPage2.Controls.Add(this.button40);
             this.tabPage2.Controls.Add(this.HarmonizeCodesLabel);
             this.tabPage2.Controls.Add(this.HarmonizeCodesButton);
@@ -1518,6 +1598,26 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
+            // button43
+            // 
+            this.button43.Location = new System.Drawing.Point(271, 471);
+            this.button43.Name = "button43";
+            this.button43.Size = new System.Drawing.Size(184, 26);
+            this.button43.TabIndex = 95;
+            this.button43.Text = "button43";
+            this.button43.UseVisualStyleBackColor = true;
+            this.button43.Click += new System.EventHandler(this.button43_Click);
+            // 
+            // btnCompareData
+            // 
+            this.btnCompareData.Location = new System.Drawing.Point(522, 430);
+            this.btnCompareData.Name = "btnCompareData";
+            this.btnCompareData.Size = new System.Drawing.Size(165, 23);
+            this.btnCompareData.TabIndex = 93;
+            this.btnCompareData.Text = "Compare Onlie Data";
+            this.btnCompareData.UseVisualStyleBackColor = true;
+            this.btnCompareData.Click += new System.EventHandler(this.btnCompareData_Click);
+            // 
             // button40
             // 
             this.button40.Location = new System.Drawing.Point(8, 529);
@@ -1548,7 +1648,7 @@
             // 
             // btnDownloadMrt
             // 
-            this.btnDownloadMrt.Location = new System.Drawing.Point(522, 369);
+            this.btnDownloadMrt.Location = new System.Drawing.Point(522, 399);
             this.btnDownloadMrt.Name = "btnDownloadMrt";
             this.btnDownloadMrt.Size = new System.Drawing.Size(165, 24);
             this.btnDownloadMrt.TabIndex = 89;
@@ -1565,6 +1665,16 @@
             this.EncryptionDocumentLabel.Size = new System.Drawing.Size(100, 13);
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
+            // 
+            // button44
+            // 
+            this.button44.Location = new System.Drawing.Point(271, 506);
+            this.button44.Name = "button44";
+            this.button44.Size = new System.Drawing.Size(184, 26);
+            this.button44.TabIndex = 96;
+            this.button44.Text = "button44";
+            this.button44.UseVisualStyleBackColor = true;
+            this.button44.Click += new System.EventHandler(this.button44_Click);
             // 
             // Form1
             // 
@@ -1747,6 +1857,16 @@
         private System.Windows.Forms.Button HarmonizeCodesButton;
         private System.Windows.Forms.Label HarmonizeCodesLabel;
         private System.Windows.Forms.Button button40;
+		private System.Windows.Forms.Button btnCompareData;
+        private System.Windows.Forms.Label lblUTariffModule;
+        private System.Windows.Forms.Button button41;
+        private System.Windows.Forms.ToolStripMenuItem tenantRTLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox tenantTxtBox;
+        private System.Windows.Forms.ToolStripMenuItem rTLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lTRToolStripMenuItem;
+        private System.Windows.Forms.Button button42;
+        private System.Windows.Forms.Button button43;
+        private System.Windows.Forms.Button button44;
     }
 }
 

@@ -26,8 +26,8 @@ namespace WarehouseData
 {
     public partial class UpdateWarehouseForm : Form
     {
-        string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
-        string dbDestinationConnection = "Logitude2-5_Global,sa,Saas256,.";
+        string dbSourceConnection = "2019R3_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
+        string dbDestinationConnection = "2019R3_Global,sa,Saas256,.";
 
         public UpdateWarehouseForm()
         {
@@ -136,6 +136,9 @@ namespace WarehouseData
 
                             #endregion
 
+                            warehouseHelper.RunOtherScripte(destinationConnectionString, true);
+
+                      
                             #region Update Dimensions Table
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
@@ -146,7 +149,7 @@ namespace WarehouseData
                                 SetControlPropertyValue("Text", "Updating ...", table.DBTableName, "Dim");
                                 SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Dim");
 
-                                warehouseHelper.ExecuteScript("IncrementalWarehouse", destinationConnectionString , table);
+                                warehouseHelper.BuildAndExecuteDataWarehouseScript("IncrementalWarehouse", destinationConnectionString , table);
 
                                 stopWatchDimensionsTable.Stop();
                                 TimeSpan stopWatchDimensionsTableTs = stopWatchDimensionsTable.Elapsed;
@@ -172,7 +175,7 @@ namespace WarehouseData
                                 }
 
                                 warehouseHelper.RemoveDataFromFactShipment(table, destinationConnectionString);
-                                warehouseHelper.ExecuteScript( "IncrementalWarehouse", destinationConnectionString, table);
+                                warehouseHelper.BuildAndExecuteDataWarehouseScript( "IncrementalWarehouse", destinationConnectionString, table);
 
 
                                 if (table.TableName == "Shipment")

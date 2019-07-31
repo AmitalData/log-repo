@@ -19,7 +19,22 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
         {
             if (isNewEntity)
             {
+                entityPOCO.BluesnapContractQTY = entityPM.NumberOfUsers;
+                entityPOCO.BluesnapCRMContractQTY = 1;
+                entityPOCO.BluesnapEAWBContractQTY = 1;
+                entityPOCO.BluesnapEAWBSContractQTY = 1;
+                entityPOCO.BluesnapOneTimeContractQTY = 1;
+                entityPOCO.BluesnapInttraStockContractQTY = 1;
+            }
 
+            else
+            {
+                entityPOCO.BluesnapContractQTY = entityPM.BluesnapContractQTY;
+                entityPOCO.BluesnapCRMContractQTY = entityPM.BluesnapCRMContractQTY;
+                entityPOCO.BluesnapEAWBContractQTY = entityPM.BluesnapEAWBContractQTY;
+                entityPOCO.BluesnapEAWBSContractQTY = entityPM.BluesnapEAWBSContractQTY;
+                entityPOCO.BluesnapOneTimeContractQTY = entityPM.BluesnapOneTimeContractQTY;
+                entityPOCO.BluesnapInttraStockContractQTY = entityPM.BluesnapInttraStockContractQTY;
             }
 
             entityPOCO.Name = entityPM.Name;
@@ -61,12 +76,9 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.BluesnapCRMContractId = entityPM.BluesnapCRMContractId;
             entityPOCO.BluesnapEAWBContractId = entityPM.BluesnapEAWBContractId;
             entityPOCO.BluesnapEAWBSContractId = entityPM.BluesnapEAWBSContractId;
-            entityPOCO.BluesnapOneTimeContractId = entityPM.BluesnapOneTimeContractId;
-            entityPOCO.BluesnapContractQTY = entityPM.BluesnapContractQTY;
-            entityPOCO.BluesnapCRMContractQTY = entityPM.BluesnapCRMContractQTY;
-            entityPOCO.BluesnapEAWBContractQTY = entityPM.BluesnapEAWBContractQTY;
-            entityPOCO.BluesnapEAWBSContractQTY = entityPM.BluesnapEAWBSContractQTY;
-            entityPOCO.BluesnapOneTimeContractQTY = entityPM.BluesnapOneTimeContractQTY;            
+            entityPOCO.BluesnapOneTimeContract = entityPM.BluesnapOneTimeContract;
+            entityPOCO.BluesnapInttraStockContractId = entityPM.BluesnapInttraStockContractId;
+
             entityPOCO.GlobalTenant.TTY = entityPM.TTY;
             entityPOCO.GlobalTenant.IsActive = entityPM.IsActive;
             entityPOCO.GlobalTenant.CompanyName = entityPM.Name;
@@ -120,6 +132,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.PackageCodeSearchField = entityPM.PackageCodeSearchField;
             entityPOCO.IsINTTRAStockPrepaid = entityPM.IsINTTRAStockPrepaid;
             entityPOCO.IsINTTRAOnlyDemo = entityPM.IsINTTRAOnlyDemo;
+            entityPOCO.MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied;
 
             if (entityPM.IsMultiPackage)
             {
@@ -143,6 +156,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                         tenant.RegulatedAgentRegimeActivated = false;
 
                     }
+
+                    tenant.IsTestTenant = entityPM.IsTestTenant;
 
                     tenantRepository.Update(tenant);
                     tenantRepository.SubmitChanges();

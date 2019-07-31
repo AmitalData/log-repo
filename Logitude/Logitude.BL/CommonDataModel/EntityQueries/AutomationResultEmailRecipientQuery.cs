@@ -102,8 +102,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     select a).FirstOrDefault();
         }
 
-      
 
-  
+        public List<AutomationResultEmailRecipientPM> GetAutomationResultEmailRecipientPMsByAutomationIds(List<string> automationIds, int tenant)
+        {
+            List<AutomationResultEmailRecipientPM> AutomationResultEmailRecipientes = (from a in repository.context.AutomationResultEmailRecipients
+                                                                                       where a.Tenant == tenant && automationIds.Contains(a.AutomationsId) 
+                                                                                       select new AutomationResultEmailRecipientPM()
+                                                                                       {
+                                                                                           RecipientValue = a.RecipientValue,
+                                                                                           RecipientType = a.RecipientType,
+                                                                                           AutomationsId = a.AutomationsId,
+                                                                                       }).ToList();
+            return AutomationResultEmailRecipientes;
+        }
+
     }
 }

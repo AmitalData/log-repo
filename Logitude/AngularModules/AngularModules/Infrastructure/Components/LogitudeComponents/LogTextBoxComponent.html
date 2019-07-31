@@ -98,10 +98,6 @@
         text-align: right;
         padding-right: 6px;
     }
-    .AlignLeft {
-        text-align: left;
-        padding-right: 6px;
-    }
 
     .collapse-btn {
         background-image: url('./Images/Icons/collapse.png') !important;
@@ -118,6 +114,8 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: 12px;
+        background-color: white;
+        border-radius: 5px;
     }
 
         .expand-btn:hover {
@@ -134,7 +132,7 @@
 
 <!-- [disabled]="IsDisabled" -->
 
-<div style="height:100%;width:100%">
+<div style="width:100%" [style.height]="textboxHeight">
     <div [id]="ErrorPopUpId"
          FixedPosition
          [ElementId]="ErrorPopUpId"
@@ -175,10 +173,7 @@
                                   bottom: 0;
                                   left: 0;
                                   right: 0;
-                                  opacity:1 !important; font-size:12px;
-                                  direction: ltr;
-                                  padding: 0 2px;"
-                            [style.text-align]="isRTL?'right':'left'"
+                                  opacity:1 !important; font-size:12px;"
                            [spellcheck]="AllowSpellCheck"
                            [(ngModel)]="TextValue"
                            (focus)="onFocus()"
@@ -187,9 +182,17 @@
                            (keydown)="OnKeyDown($event)"
                            [placeholder]="Placeholder"
                            [class.AlignRight]="AlignTextToRight"
-                           [class.AlignLeft]="AlignTextToLeft"
+                           [id]="InputId" #input ondrop="return false"
+                           (paste)="OnPaste($event)"/>
 
-                           [id]="InputId" #input ondrop="return false" (paste)="OnPaste($event)" />
+                            <div *ngIf="!IsDisabled && isMouseOver && (ObjectField?.EnableFullscreenTextBox)"
+                            [class.collapse-btn]="isExpanded"
+                            class="expand-btn"
+                            style="top: 0px;background-color: transparent;background-color: white;border-radius: 5px;"
+                            [style.right]="isRTL ? 'initial' : (multlineTextBoxLines > RowsCount ? '22px' : '0')"
+                            [style.left]="isRTL ? (multlineTextBoxLines > RowsCount ? '22px' : '0') : 'initial'"
+                            (click)="ExpandButtonClicked()"></div>
+
                 </div>
 
                 <div *ngIf="IsMultiline"
@@ -207,9 +210,9 @@
                               (focus)="onFocus()" [placeholder]="Placeholder"
                               (blur)="onBlur()"
                               (keydown)="OnKeyDown($event)"
-                              [attr.rows]="RowsCount"
                               [id]="InputId" style="box-shadow:none;border:1px solid transparent; font-size:12px; font-family:inherit;"
                               ondrop="return false"
+                              [style.text-align]="isRTL?'right':'left'"
                               (paste)="OnPaste($event)"></textarea>
 
                     <div *ngIf="!IsDisabled && isMouseOver" [class.collapse-btn]="isExpanded"

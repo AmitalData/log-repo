@@ -109,6 +109,11 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string Notes { get; set; }
         [Column("UniqueField")]
 	    public string UniqueField { get; set; }
+        [ForeignKey("APPayment")]
+        [Column("APPaymentId")]
+	    public string APPaymentId { get; set; }
+	      
+        public virtual APPayment APPayment { get; set; }
     }
 }
 	 

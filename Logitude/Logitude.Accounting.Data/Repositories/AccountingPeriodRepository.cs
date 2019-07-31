@@ -39,6 +39,16 @@ namespace Logitude.Accounting.Data.Repositories
             return accountingPeriods;
         }
 
+        public List<AccountingPeriod> GetAccountingPeriodsByTenantAndType(string periodTypeCode, int tenant)
+        {
+            List<AccountingPeriod> accountingPeriods;
+            accountingPeriods = (from a in context.AccountingPeriods
+                                 where a.Tenant == tenant && a.PeriodTypeCode == periodTypeCode
+                                 select a).ToList();
+            return accountingPeriods;
+        }
+
+
 
         public List<AccountingPeriod> GetAccountingPeriodsByType(string periodTypeCode, int tenant)
         {

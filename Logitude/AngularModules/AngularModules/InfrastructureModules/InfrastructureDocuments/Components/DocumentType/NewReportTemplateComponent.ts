@@ -1,4 +1,4 @@
-﻿import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/map';
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -64,7 +64,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
     NameRadioButtonChoice: string = Guid.NewRandomString();
     NameRadioEditorChoice: string = Guid.NewRandomString();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService) {
         super();
 
@@ -253,7 +253,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
         this.documentTypeTemplatePMService.insert(newTemplatePm).subscribe(myResult=> {
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             if (myResult) {
                 if (myResult.HasError) {
@@ -276,7 +276,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
                     this.DataViewModel.DocumentTypeTemplateLists.push(templateViewModel);
                     this.DataViewModel.EditDocumentTemplate(templateViewModel);
-                    SessionLocator.CurrentSession.CurrentWindow.Close(myResult.Result.Id);
+                    this.CurrentSession.CurrentWindow.Close(myResult.Result.Id);
                 }
 
 
@@ -284,7 +284,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
 
         }, error=> {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             var dd: any = error;
             console.log(dd.text);
         })
@@ -346,7 +346,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
 
     }
 
@@ -376,7 +376,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
             this.ValidationErrorsList.push("Please select at least template");
         }
         else { 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
             switch (this.ValueRadioChoice) {
                 case "Blank":
                     {
@@ -565,9 +565,9 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
                     }
                 }
             }
-            else SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            else this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }, error=> {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             var dd: any = error;
             console.log(dd.text);
         });

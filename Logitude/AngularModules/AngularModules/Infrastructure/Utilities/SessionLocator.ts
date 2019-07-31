@@ -11,6 +11,8 @@ import { SignalRChannelService } from '../Services/SignalRServices/SignalRChanne
 import {SATInterfaceSettingPM} from '../../Invoice/EntityPMs/SATInterfaceSettingPM';
 import {Http} from '@angular/http';
 import { TenantManagementJS } from '../DataContracts/TenantManagementJS';
+import { FeatureToggleList } from '../EntityLists/FeatureToggleList';
+import { Observable, TimeInterval, Subscription } from 'rxjs/Rx';
 
 export class SessionLocator {
     public static Http: Http;    
@@ -44,8 +46,10 @@ export class SessionLocator {
     public static TenantSettings: any[];
     public static LoggedUserPM: UserPM;
     public static ApplicationLocation: ViewContainerRef;  
-    public static SATInterfaceSettings: SATInterfaceSettingPM;  
-    public static CurrentSession: SessionComponent;
+    public static SATInterfaceSettings: SATInterfaceSettingPM;
+    public static FeatureToggles: FeatureToggleList[] = [];
+    public static SelectedSession: SessionComponent;
+    public static ShowUserNewReleaseToolTip: boolean = true;
     public static AllSessions: Array<SessionComponent>;
     public static AddSession(mySession: SessionComponent) {
         if (SessionLocator.AllSessions == null) {
@@ -56,16 +60,18 @@ export class SessionLocator {
             SessionLocator.AllSessions.push(mySession);
         }
     }
-    public static TimersSubscribtions: Array<any> = [];
+    public static TimersSubscribtions: Array<Subscription> = [];
     public static StopApplicationTimers() {
 
         for (var key in SessionLocator.TimersSubscribtions) {
-            var subscription = SessionLocator.TimersSubscribtions[key];
-
-            // if (subscription != null && !subscription.isUnsubscribed()) {
-            //  console.log("timer stopped");
-            // subscription.Dispose();
-            // }
+            let timerSubscribion: Subscription = SessionLocator.TimersSubscribtions[key];
+            timerSubscribion.unsubscribe();
+            
+            //if (subscription != null && !subscription.isUnsubscribed()) {
+            //    //subscription.unsubscribe();
+            //    console.log("timer stopped");
+            //    subscription.Dispose();
+            //}
         }
 
         SessionLocator.TimersSubscribtions = [];

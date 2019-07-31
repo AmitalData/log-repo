@@ -1,45 +1,47 @@
 declare var window: any;
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {Headers} from '@angular/http';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {SessionInfo} from '../../Utilities/SessionInfo';
-import {InfraSettings} from '../../Utilities/InfraSettings';
-import {IndexedDbService} from '../../Services/IndexedDbService';
-import {EntityResourceService} from '../../Services/EntityResourceService';
-import {AppTool} from '../../Tools';
-import {FeatureLocator} from '../../Utilities/FeatureLocator';
-import {SessionLocator} from '../../Utilities/SessionLocator';
-import {LastFilterClass} from '../../Utilities/LastFilterClass';
-import {ApplicationTimersManager} from '../../Utilities/ApplicationTimersManager';
-import {CachedDataManager} from '../../Utilities/CachedDataManager';
-import {EntityListService} from '../../Services/EntityListService';
-import {LoginService, LoginParameters} from '../../Services/LoginService';
-import {UserPMService} from '../../../Common/Services/StandardPMs/UserPMService';
-import {TenantPMService} from '../../../Common/Services/StandardPMs/TenantPMService';
-import {AccountingSettingPMService} from '../../../Common/Services/StandardPMs/AccountingSettingPMService';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Headers } from '@angular/http';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { SessionInfo } from '../../Utilities/SessionInfo';
+import { InfraSettings } from '../../Utilities/InfraSettings';
+import { IndexedDbService } from '../../Services/IndexedDbService';
+import { EntityResourceService } from '../../Services/EntityResourceService';
+import { AppTool } from '../../Tools';
+import { FeatureLocator } from '../../Utilities/FeatureLocator';
+import { SessionLocator } from '../../Utilities/SessionLocator';
+import { LastFilterClass } from '../../Utilities/LastFilterClass';
+import { ApplicationTimersManager } from '../../Utilities/ApplicationTimersManager';
+import { CachedDataManager } from '../../Utilities/CachedDataManager';
+import { EntityListService } from '../../Services/EntityListService';
+import { LoginService, LoginParameters } from '../../Services/LoginService';
+import { UserPMService } from '../../../Common/Services/StandardPMs/UserPMService';
+import { TenantPMService } from '../../../Common/Services/StandardPMs/TenantPMService';
+import { AccountingSettingPMService } from '../../../Common/Services/StandardPMs/AccountingSettingPMService';
 import { CustomsInterfaceSettingPMService } from '../../../Common/Services/StandardPMs/CustomsInterfaceSettingPMService';
 import { SharedLogisticsSettingPMService } from '../../Services/StandardPMs/SharedLogisticsSettingPMService';
-import {CreditLimitSettingPMService} from '../../../Common/Services/StandardPMs/CreditLimitSettingPMService';
-import {LogitudeApplicationService} from '../../Services/WebServices/LogitudeApplicationService';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {ObjectTableRulePMService} from '../../Services/StandardPMs/ObjectTableRulePMService';
-import {ObjectTableRuleFieldPMService} from '../../Services/StandardPMs/ObjectTableRuleFieldPMService';
-import {UserLastLoginPMService}  from '../../../Common/Services/StandardPMs/UserLastLoginPMService';
-import {UserLastLoginPM}  from '../../../Common/EntityPMs/UserLastLoginPM';
-import {InfrastructureDomainService} from '../../Services/InfrastructureDomainService';
+import { CreditLimitSettingPMService } from '../../../Common/Services/StandardPMs/CreditLimitSettingPMService';
+import { LogitudeApplicationService } from '../../Services/WebServices/LogitudeApplicationService';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { ObjectTableRulePMService } from '../../Services/StandardPMs/ObjectTableRulePMService';
+import { ObjectTableRuleFieldPMService } from '../../Services/StandardPMs/ObjectTableRuleFieldPMService';
+import { UserLastLoginPMService } from '../../../Common/Services/StandardPMs/UserLastLoginPMService';
+import { UserLastLoginPM } from '../../../Common/EntityPMs/UserLastLoginPM';
+import { InfrastructureDomainService } from '../../Services/InfrastructureDomainService';
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
-import {SATInterfaceSettingPMService} from '../../../Invoice/Services/StandardPMs/SATInterfaceSettingPMService';
-import {DateTool, FileLoader} from '../../Tools';
+import { SATInterfaceSettingPMService } from '../../../Invoice/Services/StandardPMs/SATInterfaceSettingPMService';
+import { DateTool, FileLoader } from '../../Tools';
 import { Guid } from '../../Utilities/Guid';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 declare var changeFavicon: any;
 declare var changeTitle: any;
-import {RulesValidator} from '../../Validators/RulesValidator';
-import {Environment} from '../../Locators/Environment';
-import {ObjectsLocator} from '../../Locators/ObjectsLocator';
-import {ServiceLocator} from '../../Locators/ServiceLocator';
-import {ObjectsUpdater} from '../../Locators/ObjectsUpdater';
+import { RulesValidator } from '../../Validators/RulesValidator';
+import { Environment } from '../../Locators/Environment';
+import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+import { ServiceLocator } from '../../Locators/ServiceLocator';
+import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
+//import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
+import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Component({
     moduleId: module.id,
@@ -76,7 +78,9 @@ export class LoginComponent implements OnInit {
     private _objectTableRulePMService: ObjectTableRulePMService = new ObjectTableRulePMService();
     private _objectTableRuleFieldPMService: ObjectTableRuleFieldPMService = new ObjectTableRuleFieldPMService();
     private myInfrastructureDomainService: InfrastructureDomainService;
+    //public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
     private sATInterfaceSettingPMService: SATInterfaceSettingPMService;
+    private UserExtendedPMService: UserExtendedPMService;
     constructor(private logitudeApplicationService: LogitudeApplicationService, private loginService: LoginService, public IndexedDbService: IndexedDbService, private entityResourceService: EntityResourceService, private _applicationTimersManager: ApplicationTimersManager, public entityListService: EntityListService,
         private _userLastLoginPMService: UserLastLoginPMService
     ) {
@@ -127,9 +131,11 @@ export class LoginComponent implements OnInit {
         window.ObjectFieldsCache = [];
         window.Tips = [];
         window.TipsVisibilities = [];
+        window.DWObjectFields = [];
 
         this.myInfrastructureDomainService = new InfrastructureDomainService();
         this.sATInterfaceSettingPMService = new SATInterfaceSettingPMService();
+        this.UserExtendedPMService = new UserExtendedPMService();
         //FileLoader.LoadFroalaResources();
     }
 
@@ -247,19 +253,19 @@ export class LoginComponent implements OnInit {
 
                     var iGlobalDomainService = new GlobalDomainService();
 
-                    iGlobalDomainService.GetTenantManagementJS().subscribe((myResponse: ServiceResponse) => {
+                    iGlobalDomainService.GetTenantManagementJS(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
                         ObjectsUpdater.UpdateLoggedUserPM(myResult);
                         ObjectsUpdater.UpdateTenantManagementJS(myResponse.Result);
 
                         SessionInfo.LoggedUserPM = myResult;
 
                         if (ObjectsLocator.LoggedUserPM.ExpirationDate != null && DateTool.GetDateParts(ObjectsLocator.LoggedUserPM.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
-                            this.Blocking.emit("user");
+                            SessionLocator.BlockType = "user";
                         }
 
-                        else {
-                            this.CheckTenantBlocking(userData);
-                        }
+                        //   else {
+                        this.CheckTenantBlocking(userData);
+                        //   }
                     });
                 });
             }
@@ -296,7 +302,7 @@ export class LoginComponent implements OnInit {
                 IsUser: true,
                 GetToken: true,
                 IsAngularLogin: true,
-                ClientType :"Web",
+                ClientType: "Web",
 
             };
 
@@ -479,6 +485,13 @@ export class LoginComponent implements OnInit {
                     //2
                 });
 
+                CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
+                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+                        this.IncreaseProgressBar("General Resources");
+                        //26
+                    });
+                });
+
                 // LastFilters
                 this.loginService.GetLastFilters().subscribe(myResult => {
                     LastFilterClass.MapJSON(myResult);
@@ -488,7 +501,7 @@ export class LoginComponent implements OnInit {
 
                 // TenantManagementPM
                 var iGlobalDomainService = new GlobalDomainService();
-                iGlobalDomainService.GetTenantManagementJS().subscribe((myResponse: ServiceResponse) => {
+                iGlobalDomainService.GetTenantManagementJS(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
                     ObjectsUpdater.UpdateTenantManagementJS(myResponse.Result);
                     this.IncreaseProgressBar();
                     //4
@@ -709,12 +722,12 @@ export class LoginComponent implements OnInit {
                     });
                 }
 
-                CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
-                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
-                        this.IncreaseProgressBar();
-                        //26
-                    });
-                });
+                //CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
+                //    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+                //        this.IncreaseProgressBar();
+                //        //26
+                //    });
+                //});
             });
         });
 
@@ -782,83 +795,89 @@ export class LoginComponent implements OnInit {
             this.IncreaseProgressBar();
             //32
         });
-        
-        this.loginService.GetFeatureToggles().subscribe(myResult => {
-            window.FeatureToggles = myResult;
-            this.IncreaseProgressBar();
-            //33
+
+        this.myInfrastructureDomainService.GetFeatureToggles().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                SessionLocator.FeatureToggles = myResponse.Result;
+                this.IncreaseProgressBar();
+                //33
+            }
         });
 
+        this.UserExtendedPMService.CheckUserReleaseNotesToolTip(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                SessionLocator.ShowUserNewReleaseToolTip = myResponse.Result;
+                this.IncreaseProgressBar();
+                //34
+            }
+        });
 
-        //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(myResult => {
-        //    window.ObjectTableRulePMs = myResult;
-        //    this.IncreaseProgressBar();
-        //    //11
-        //});
-    }
+        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Shipments").subscribe(Result => {
+            //var ObsList = [];
+            if (!Result.HasError) {
+                window.DWObjectFields = Result.Result;
+                this.IncreaseProgressBar();
+                //Result.Result.forEach((field) => {
+                //    if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
+                //        var view = new DWObjectFieldsDetails(field, null);
+                //        view.ParentDataTypeCode = field.DataTypeCode;
+                //        ObsList.push(view);
+                //    }
+                //});
+            }
+        });
+                //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(myResult => {
+                //    window.ObjectTableRulePMs = myResult;
+                //    this.IncreaseProgressBar();
+                //    //11
+                //});
+            }
 
 
     private CheckTenantBlocking(userData: any) {
-        var isCheckedCompleted = false;
-        var todayDateTicks = DateTool.GetCurrentDateAsUtc().valueOf();
+                var isSystemBlocked = false;
+                var todayDateTicks = DateTool.GetCurrentDateAsUtc().valueOf();
 
-        if (SessionLocator.TenantManagementJS.PaymentFailure) {
+                if(SessionLocator.TenantManagementJS.PaymentFailure) {
 
-            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.SuspendDate)) {
-                isCheckedCompleted = true;
-                this.Blocking.emit("company");
-            }
+                    if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.SuspendDate)) {
+                        isSystemBlocked = true;
+                        SessionLocator.BlockType = "company";
+                    }
 
-            else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.SuspendDate).DateTicks < todayDateTicks) {
-                isCheckedCompleted = true;
-                this.Blocking.emit("suspend");
-            }
-
-            else {
-                isCheckedCompleted = true;
-                this.LoadClosedTablesToWindow(userData.CurrentTenant);
-            }
-        }
-
-        if (!isCheckedCompleted) {
-            if (SessionLocator.TenantManagementJS.IsTrial) {
-
-                if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TrialEndDate)) {
-                    isCheckedCompleted = true;
-                    this.Blocking.emit("company");
+                    else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.SuspendDate).DateTicks < todayDateTicks) {
+                        isSystemBlocked = true;
+                        SessionLocator.BlockType = "suspend";
+                    }
                 }
 
-                else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.TrialEndDate).DateTicks < todayDateTicks) {
-                    isCheckedCompleted = true;
-                    this.Blocking.emit("company");
+        if(!isSystemBlocked) {
+                    if (SessionLocator.TenantManagementJS.IsTrial) {
+
+                        if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TrialEndDate)) {
+                            isSystemBlocked = true;
+                            SessionLocator.BlockType = "company";
+                        }
+
+                        else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.TrialEndDate).DateTicks < todayDateTicks) {
+                            isSystemBlocked = true;
+                            SessionLocator.BlockType = "company";
+                        }
+                    }
                 }
 
-                else {
-                    isCheckedCompleted = true;
-                    this.LoadClosedTablesToWindow(userData.CurrentTenant);
+        if(!isSystemBlocked) {
+                    if (!AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
+
+                        if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.PaidUntilDate).DateTicks < todayDateTicks && !SessionLocator.TenantManagementJS.IsRecurring) {
+                            isSystemBlocked = true;
+                            SessionLocator.BlockType = "company";
+                        }
+                    }
                 }
+
+        this.LoadClosedTablesToWindow(userData.CurrentTenant);
             }
-        }
-
-        if (!isCheckedCompleted) {
-            if (!AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
-
-                if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.PaidUntilDate).DateTicks < todayDateTicks && !SessionLocator.TenantManagementJS.IsRecurring) {
-                    isCheckedCompleted = true;
-                    this.Blocking.emit("company");
-                }
-
-                else {
-                    isCheckedCompleted = true;
-                    this.LoadClosedTablesToWindow(userData.CurrentTenant);
-                }
-            }
-        }
-
-        if (!isCheckedCompleted) {
-            this.LoadClosedTablesToWindow(userData.CurrentTenant);
-        }
-    }
 
     private timerToken: any;
     private TotalNumberOfLoads: number = 0;
@@ -866,10 +885,10 @@ export class LoginComponent implements OnInit {
     private LastLoadSize: number = 0;
     public LoadingCounter: number = 0;
     public CompletedLoadsCount = 0;
-    IncreaseProgressBar() {
-
+    IncreaseProgressBar(loadOPName: string = "") {
+        console.log(loadOPName + "==>Completed Login Loads Count: " + this.CompletedLoadsCount);
         if (this.TotalNumberOfLoads == 0) {
-            this.TotalNumberOfLoads = 33;
+            this.TotalNumberOfLoads = 36;
 
             if (!SessionLocator.UseCachedData) {
                 this.TotalNumberOfLoads += 1;
@@ -906,6 +925,7 @@ export class LoginComponent implements OnInit {
             }
 
             if (this.CompletedLoadsCount == this.TotalNumberOfLoads) {
+                console.log("===============>Changing Page<==================");
                 ServiceLocator.RulesValidator = new RulesValidator();
                 this.timerToken = setTimeout(() => this.ChangePage(), 1000);
             }

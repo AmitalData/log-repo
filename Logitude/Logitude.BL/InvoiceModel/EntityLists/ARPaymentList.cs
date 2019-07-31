@@ -79,5 +79,12 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string BranchName { get; set; }
         public DateTime? SATApprovalDate { get; set; }
 
+        public DateTime? ApprovedDate { get; set; }
+        public string ApprovedByUserId { get; set; }
+        public DateTime? FirstApproveDate { get; set; }
+        public bool IsFullAccounting { get; set; }
+        public DateTime? FechaPago { get; set; }
+
+
     }
 }

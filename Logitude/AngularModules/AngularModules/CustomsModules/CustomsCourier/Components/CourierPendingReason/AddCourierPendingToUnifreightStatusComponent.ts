@@ -40,10 +40,10 @@ export class AddCourierPendingToUnifreightStatusComponent
 
     Loaded: boolean = false;
     ngOnInit() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this.Loaded = true;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
         });
 
     }
@@ -53,9 +53,9 @@ export class AddCourierPendingToUnifreightStatusComponent
 
             if (args.FromUnifreight && !AppTool.IsNullOrEmpty(args.UnifreightStatusCode)) {
                 this.UnifreightStatusCode = args.UnifreightStatusCode;
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                SessionLocator.SelectedSession.StartBusyIndicatorLoading();
                 this._CourierPendingReasonExtendedListService.GetCourierPendingReasonByUnifreightStatus(this.UnifreightStatusCode).subscribe(response => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                     var courierPendingReasonResult: CourierPendingReasonPM[] = response.Result;
                     this.BuildCourierPendingReasonList(courierPendingReasonResult);
                 });
@@ -93,13 +93,13 @@ export class AddCourierPendingToUnifreightStatusComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
 
 
     OkButtonClicked() {
         if (this.CourierPendingReasonList != null) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.CourierPendingReasonList.Collection.forEach((item: CourierPendingReasonLineComponent) => {
                 if (item.isNew) {
                     item.entityPM.UnifreightStatusCode = this.UnifreightStatusCode;
@@ -112,11 +112,11 @@ export class AddCourierPendingToUnifreightStatusComponent
                     });
                 }
             });
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
         }
 
         if (this.DeleteCourierPendingReasonList != null) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.DeleteCourierPendingReasonList.Collection.forEach((deleteItem: CourierPendingReasonLineComponent) => {
                 this._CourierPendingReasonExtendedListService.DeleteCourierPendingReasonUnifreightStatus(deleteItem.PendingCode).subscribe(response => {
                     if (response.HasError) {
@@ -126,7 +126,7 @@ export class AddCourierPendingToUnifreightStatusComponent
                     }
                 });
             });
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            SessionLocator.SelectedSession.StopBusyIndicator();
         }
             
         this.CancelButtonClicked();
@@ -155,9 +155,9 @@ export class CourierPendingReasonLineComponent extends BaseComponent {
     public get PendingCode() { return this.entityPM.Code; }
     public set PendingCode(newValue: string) {
         if (newValue) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.parent._CourierPendingReasonPMService.get(newValue).subscribe(response => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 if (!response.HasError && response.Result != null) {
                     if (!AppTool.IsNullOrEmpty(response.Result.UnifreightStatusCode) && response.Result.UnifreightStatusCode != this.parent.UnifreightStatusCode) {
                             var confirm = new ConfirmWindow();

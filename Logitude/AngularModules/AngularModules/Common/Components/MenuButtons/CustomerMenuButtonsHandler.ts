@@ -357,7 +357,7 @@ export class CustomerMenuButtonsHandler {
         this.isActivate = false;
         this.isMarkAsReadyActivation = false;
     }
-
+    private CurrentSession = SessionLocator.SelectedSession;
     SetAsPotential() {
 
         if (this.EntityPM.LastShipmentDate != null) {
@@ -630,10 +630,10 @@ export class CustomerMenuButtonsHandler {
 
 
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 }

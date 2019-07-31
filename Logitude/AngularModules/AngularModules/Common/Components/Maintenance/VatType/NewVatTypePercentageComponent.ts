@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -20,6 +20,7 @@ export class NewVatTypePercentageComponent extends BaseComponent {
     public ObjectTableName: string = "VatTypePercentage";
     public ValidationErrorsList: string[] = [];
     public IsNewEntity: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -48,7 +49,7 @@ export class NewVatTypePercentageComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -63,7 +64,7 @@ export class NewVatTypePercentageComponent extends BaseComponent {
                 this.VatTypePM.AddVatTypePercentagePM(this.EntityPM);
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 

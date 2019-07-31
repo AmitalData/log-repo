@@ -320,7 +320,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             else
             {
-                throw new ApplicationException("No page lines found in bank account!");
+                //throw new ApplicationException("No page lines found in bank account!");
             }
 
 

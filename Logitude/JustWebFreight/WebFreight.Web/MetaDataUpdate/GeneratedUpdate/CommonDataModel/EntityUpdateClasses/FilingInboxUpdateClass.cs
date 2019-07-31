@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class FilingInboxUpdateClass
@@ -172,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "Sender",
-					  						DefaultText =  @"Sender",
+					  						DefaultText =  "Sender",
 					  						HelpTextCode =  "Sender",
 					  						Code =  "Sender",
 					  						DependencyFilter3IsList =  false,
@@ -230,7 +234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "Subject",
-					  						DefaultText =  @"Subject",
+					  						DefaultText =  "Subject",
 					  						HelpTextCode =  "Subject",
 					  						Code =  "Subject",
 					  						DependencyFilter3IsList =  false,
@@ -288,7 +292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "IsDeleted",
-					  						DefaultText =  @"Is Deleted",
+					  						DefaultText =  "Is Deleted",
 					  						HelpTextCode =  "IsDeleted",
 					  						Code =  "IsDeleted",
 					  						DependencyFilter3IsList =  false,
@@ -346,7 +350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
+					  						DefaultText =  "Create Date",
 					  						HelpTextCode =  "CreateDate",
 					  						Code =  "CreateDate",
 					  						DependencyFilter3IsList =  false,
@@ -404,7 +408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
+					  						DefaultText =  "Update Date",
 					  						HelpTextCode =  "UpdateDate",
 					  						Code =  "UpdateDate",
 					  						DependencyFilter3IsList =  false,
@@ -463,7 +467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  @"Updated By",
+					  						DefaultText =  "Updated By",
 					  						HelpTextCode =  "UpdatedByUserId",
 					  						Code =  "UpdatedByUserId",
 					  						DependencyFilter3IsList =  false,
@@ -521,7 +525,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "BodyDocumentId",
-					  						DefaultText =  @"Body Document",
+					  						DefaultText =  "Body Document",
 					  						HelpTextCode =  "BodyDocumentId",
 					  						Code =  "BodyDocumentId",
 					  						DependencyFilter3IsList =  false,
@@ -579,7 +583,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "FileName",
-					  						DefaultText =  @"File",
+					  						DefaultText =  "File",
 					  						HelpTextCode =  "FileName",
 					  						Code =  "FileName",
 					  						DependencyFilter3IsList =  false,
@@ -636,9 +640,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search..",
+					  						DefaultText =  "Search..",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: subject\n2: documents names",
+					  						HelpTextDefaultText =  "Searching by :\n1: subject\n2: documents names",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -660,6 +664,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable FilingInboxObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "FilingInbox" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature FilingInboxFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature FilingInboxFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature FilingInboxFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = FilingInboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "FilingInbox.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

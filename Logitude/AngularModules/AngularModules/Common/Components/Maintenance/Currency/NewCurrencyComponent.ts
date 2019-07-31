@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit} from '@angular/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -22,7 +22,7 @@ export class NewCurrencyComponent extends BaseComponent implements AfterViewInit
     public LabelColumnWidth: number = 135;
     public ControlColumnWidth: number = 230;
     public TenantPM: TenantPM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -88,7 +88,7 @@ export class NewCurrencyComponent extends BaseComponent implements AfterViewInit
 
     //Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -144,12 +144,12 @@ export class NewCurrencyComponent extends BaseComponent implements AfterViewInit
         myService.CopyCurrencyToTenant(this.CurrencyId, this.CurrencyRate, myDate).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var newCreatedCurrency: CurrencyList = myResponse.Result;
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit(newCreatedCurrency.Id);
+                this.CurrentSession.CloseCurrentWindowEmit(newCreatedCurrency.Id);
             }
 
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

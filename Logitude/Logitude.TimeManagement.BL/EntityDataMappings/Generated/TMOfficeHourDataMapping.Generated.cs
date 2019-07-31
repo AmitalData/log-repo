@@ -57,7 +57,9 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         EntryTime, 
 	         ExitTime, 
 	         Description, 
-	         Inactive,
+	         Inactive, 
+	         Minutes, 
+	         UpdatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

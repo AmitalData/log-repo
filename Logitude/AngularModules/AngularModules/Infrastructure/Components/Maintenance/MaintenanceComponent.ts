@@ -23,6 +23,7 @@ export class MaintenanceComponent {
     public ItemsSource: MaintenanceMenuItem[];
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ItemsSource = [];
         this.BuildPagesMenu();
@@ -65,6 +66,10 @@ export class MaintenanceComponent {
             this.PagesMenu.push(new Menu("TKT", "Tickets"));
         }
 
+        if (FeatureLocator.HasFeaturePermession("General", "General.Occasion.OccasionType")) {
+            this.PagesMenu.push(new Menu("OCS", "Occasions"));
+        }
+
         if (FeatureLocator.HasFeaturePermession("General", "CUSTOMS")) {
             this.PagesMenu.push(new Menu("CSM", TextCodeTranslator.Translate("General.MC.Custom.Customs")));
         }
@@ -94,16 +99,16 @@ export class MaintenanceComponent {
         }
     }
 
-    // Maintenance Menu    
+    // Maintenance Menu
     private AllMaintenanceMenu: MaintenanceMenuItem[];
     private BuildMaintenanceMenu() {
         this.AllMaintenanceMenu = [];
         var allMenusTables: MenusTablePM[] = window.MenusTables.filter(x => x.MenuTypeCode === "MTC").sort((a, b) => { return a.IndexOfOrder - b.IndexOfOrder });
 
-        allMenusTables.forEach(item => {           
+        allMenusTables.forEach(item => {
 
             if (FeatureLocator.IsFeatureGranted(item.FeatureId)) {
-            
+
                 if (item.Code == "MTCB") {
                     //CustomsSettingList customsSetting = DataProvider.GetCachedList<CustomsSettingList>("Customs.CustomsSetting").FirstOrDefault();
                     //if (customsSetting != null) {
@@ -156,7 +161,7 @@ export class MaintenanceComponent {
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "SYSTEMSETTINGS")) {
-            
+
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyAddress")) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
@@ -254,6 +259,14 @@ export class MaintenanceComponent {
                 item.Icon = "Settings"
                 item.Code = "CUSA";
                 item.ObjectTableName = "Customer Settings";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.VATSettings")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "VATS";
+                item.ObjectTableName = "VAT Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.SupportManagement")) {
@@ -450,9 +463,9 @@ export class MaintenanceComponent {
             }
 
         }
-        
+
         let yaronWantWithoutLogiUpdate = false;// in "customs" branch do not use it !!
-         
+
         if (yaronWantWithoutLogiUpdate ||
             (SessionLocator.Tenant == 0 && !SessionLocator.LoggedUserPM.IsDistributor && window.ObjectTables.filter(d => d.Name == "Customs.CustomsSetting")[0] != null)
         ) {
@@ -477,29 +490,29 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Full Accounting Setting";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-            if (FeatureLocator.HasFeaturePermession("General", "General.Features.YearTransfer")) {
-                var item = new MenusTablePM();
-                item.CategoryTypeCode = "ACC";
-                item.Icon = "Settings"
-                item.Code = "ACYT";
-                item.ObjectTableName = "Year Transfer";
-                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-            }
-            if (FeatureLocator.HasFeaturePermession("General", "General.Features.AccountingPeriods")) {
-                var item = new MenusTablePM();
-                item.CategoryTypeCode = "ACC";
-                item.Icon = "Settings"
-                item.Code = "ACPD";
-                item.ObjectTableName = "AccountingPeriod";
-                var ObjectTable = window.ObjectTables.filter(d => d.Name == "AccountingPeriod")[0];
-                item.ObjectTableId = ObjectTable.Id;
-                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-            }
+            //if (FeatureLocator.HasFeaturePermession("General", "General.Features.YearTransfer")) {
+            //    var item = new MenusTablePM();
+            //    item.CategoryTypeCode = "ACC";
+            //    item.Icon = "Settings"
+            //    item.Code = "ACYT";
+            //    item.ObjectTableName = "Year Transfer";
+            //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            //}
+            //if (FeatureLocator.HasFeaturePermession("General", "General.Features.AccountingPeriods")) {
+            //    var item = new MenusTablePM();
+            //    item.CategoryTypeCode = "ACC";
+            //    item.Icon = "Settings"
+            //    item.Code = "ACPD";
+            //    item.ObjectTableName = "AccountingPeriod";
+            //    var ObjectTable = window.ObjectTables.filter(d => d.Name == "AccountingPeriod")[0];
+            //    item.ObjectTableId = ObjectTable.Id;
+            //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            //}
 
-            
+
 
         }
-      
+
     }
     private BuildOtherMenus() {
         if (SessionLocator.Tenant == 0){// && FeatureLocator.HasFeaturePermession("General", "HYBRIDPARTNERS")) {
@@ -511,6 +524,18 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "HybridPartner")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
+       
+        if (FeatureLocator.HasFeaturePermession("General", "SCHEDULERS")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "MNG";
+            item.Icon = "List"
+            item.Code = "MASC";
+            item.ObjectTableName = "TasksScheduler";
+            item.TextCode = "General.Features.Schedulers";
+            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TasksScheduler")[0].Id
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
+        } 
 
         if (FeatureLocator.HasFeaturePermession("General", "MAINCUSTOMERS")) {
             var item = new MenusTablePM();
@@ -527,9 +552,20 @@ export class MaintenanceComponent {
             item.Icon = "Settings"
             item.Code = "DRBO";
             item.ObjectTableName = "DropBox Connection";
-            //item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "General")[0].Id
+            //item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "General")[0].Idd
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
+
+        if (FeatureLocator.HasFeaturePermession("General", "CacheLogMenu")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "List"
+            item.Code = "CCHL";
+            item.ObjectTableName = "Cache Log";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
+
+
 
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
@@ -571,13 +607,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "BatchServicesLog")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "MNG";
-            item.Icon = "List"
-            item.Code = "TMNG";
-            item.ObjectTableName = "TasksScheduler";
-            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TasksScheduler")[0].Id
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
         }
 
         else {
@@ -832,7 +862,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "ACYT": {
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
                     this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
@@ -868,21 +898,21 @@ export class MaintenanceComponent {
                 }
                 case "MTUS": {
                     this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((resp: any) => {
-                        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run(null);
-                                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                this.CurrentSession.AddMenuReference(cmpRef);
                             });
                     });
                     break;
                 }
                 case "CRLM": {
-                    var logitudeWindow = new LogitudeWindow();                    
+                    var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = "Credit Limit Settings";
                     logitudeWindow.Show('./Common/Components/Maintenance/CreditLimit/CreditLimitSettingsComponent');
                     break;
-                }                
+                }
                 case "MTBH": {
                     this._entityResourceService.getEntityResourceByTableName("BusinessHour", 0).subscribe(response => {
                         this._entityResourceService.getEntityResourceByTableName("BusinessHoursHoliday", 0).subscribe(response => {
@@ -959,6 +989,18 @@ export class MaintenanceComponent {
                     });
                     break;
                 }
+                case "VATS": {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+                        var windowTitle = "VAT Settings";
+                        var logWindow = new LogitudeWindow();
+                        logWindow.Width = 800;
+                        logWindow.Height = 700;
+                        logWindow.Title = windowTitle;
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./Common/Components/Maintenance/VATSettingsComponent');
+                    });
+                    break;
+                }
                 case "CISE": {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = "Customs Settings";
@@ -994,11 +1036,11 @@ export class MaintenanceComponent {
                 }
                 case "MTTC": {
                     this._entityResourceService.getEntityResourceByTableName("TicketClassification", 0).subscribe((resp: any) => {
-                        SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketClassificationMaintenanceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketClassificationMaintenanceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run();
-                                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                this.CurrentSession.AddMenuReference(cmpRef);
                             });
                     });
                     break;
@@ -1052,7 +1094,7 @@ export class MaintenanceComponent {
                         logWindow.IsShowCloseButton = false;
                         logWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/TenantSecurityPolicy/TenantLoginPolicyComponent');
                     });
-                    break;                                        
+                    break;
                 }
                 case "BSLG": {
                     var logWindow = new LogitudeWindow();
@@ -1088,22 +1130,43 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent');
                     break;
                 }
-                case "TMNG": {
+
+                case "CRTE": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = "Create Tenant";
+                    logitudeWindow.Height = 500;
+                    logitudeWindow.Width = 750;
+                    logitudeWindow.ShowCloseButton = false;
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CreateTenant/CreateTenantComponent');
+                    break;
+                }
+
+
+
+
+                case "MASC": {
                     this._entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe(response => {
+
                         var logWindow = new LogitudeWindow();
-                        logWindow.Width = 1100;
+                        logWindow.Width = 1200;
                         logWindow.Height = 1000;
-                        logWindow.Title = "Task Scheduler";
+                        if (!FeatureLocator.HasFeaturePermession("TasksScheduler", "READ") || (!FeatureLocator.HasFeaturePermession("TasksScheduler", "TASK") && !FeatureLocator.HasFeaturePermession("TasksScheduler", "FTP"))) {
+                            logWindow.Width =800;
+                            logWindow.Height = 500;
+                        }
+
+
+                        logWindow.Title = "Scheduler";
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/MainSchedulerComponent');
                     });
                     break;
                 }
                 case "MTHT": {
                     var windowTitle = "Hybrid Tenant State";
                     var logWindow = new LogitudeWindow();
-                    logWindow.Width = 820;
-                    logWindow.Height = 515;
+                    logWindow.Width = 1100;
+                    logWindow.Height = 550;
                     logWindow.Title = windowTitle;
                     logWindow.Show('./InfrastructureModules/InfrastructureHybrid/Components/HybridTenantState/HybridTenantStateComponent');
                     break;
@@ -1199,13 +1262,23 @@ export class MaintenanceComponent {
                     break;
               }
 
+
+              case "CCHL": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Width = 800;
+                    logitudeWindow.Height = 600;
+                    logitudeWindow.Title = 'Cache Log';
+                    logitudeWindow.Show('./Infrastructure/Components/Maintenance/CacheLogComponent');
+                break;
+            }
+
                 //  case "TXRP": {
                 //    this._entityResourceService.getEntityResourceByTableName("TaxReport", 0).subscribe((resp: any) => {
-                //        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                //        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 //            .then(cmpRef => {
                 //                cmpRef.instance.ComponentRef = cmpRef;
                 //                cmpRef.instance.Run(null);
-                //                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                //                this.CurrentSession.AddMenuReference(cmpRef);
                 //            });
                 //    });
                 //    break;
@@ -1258,11 +1331,11 @@ export class MaintenanceComponent {
                             listArgs.BackButtonTitle = "Maintenance";
                             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                                 listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
-                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         cmpRef.instance.ComponentRef = cmpRef;
                                         cmpRef.instance.Run(listArgs);
-                                        //SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                        //this.CurrentSession.AddMenuReference(cmpRef);
                                     });
                             });
                         }
@@ -1281,6 +1354,16 @@ export class MaintenanceComponent {
     }
     DoJoker(text: string) {
         switch (text) {
+            case "jokeraccfunctionaltest": {
+
+
+                var logitudeWindow = new LogitudeWindow();
+                logitudeWindow.Width = 400;
+                logitudeWindow.Height = 300;
+                logitudeWindow.Title = "Accounting Load Test";
+                logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingFunctionalTestComponent');
+
+            } break;
             case "jokeraccloadtest": {
 
 
@@ -1289,7 +1372,7 @@ export class MaintenanceComponent {
                 logitudeWindow.Height = 500;
                 logitudeWindow.Title = "Accounting Load Test";
                 logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingLoadTestComponent');
-                
+
             } break;
             case "jokersign": {
                 var logitudeWindow = new LogitudeWindow();
@@ -1302,7 +1385,7 @@ export class MaintenanceComponent {
 
                 logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/SignStationsComponent');
                 break;
-                
+
             }
             case "jokerGetAmitalRestrictOwnerModel": {
                 var servicelink = '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
@@ -1328,15 +1411,15 @@ export class MaintenanceComponent {
                 logitudeWindow.ShowCloseButton = true;
                 logitudeWindow.Height = 525;
                 logitudeWindow.Width = 750;
-                
-                
+
+
                 logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/LoadTestComponent');
                 break;
             }
             default: {
                 break;
             }
-                
+
         }
     }
     SearchTextChanged(text: string) {
@@ -1361,11 +1444,11 @@ export class MaintenanceComponent {
             var listArgs = new ListComponentArgs();
             listArgs.DisplayTitle = item.TranslatedName;//TextCodeTranslator.Translate();
             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsClosedTablesComponent',
-                SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     //cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         });
     }
@@ -1375,11 +1458,11 @@ export class MaintenanceComponent {
             var listArgs = new ListComponentArgs();
             listArgs.DisplayTitle = item.TranslatedName;//TextCodeTranslator.Translate();
             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsMaintenance/Components/Maintenance/InterfaceManagementComponent',
-                SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     //cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         });
     }
@@ -1410,7 +1493,7 @@ class MaintenanceMenuItem {
             var r = "";
         }
 
-        if (this.Code == "MTCL" || this.Code == "MTIS" || this.Code == "MCSG") {
+        if (this.Code == "MTCL" || this.Code == "MTIS" || this.Code == "MCSG" || this.Code == "MASC" || this.Code == "CRTE") {
             myResult = TextCodeTranslator.TranslateTable(this.item.TextCode);
         }
 
@@ -1430,6 +1513,10 @@ class MaintenanceMenuItem {
         }
 
         this.TranslatedName = myResult;
+        if (this.Code == "MASC") {
+
+            this.TranslatedName = "Scheduler";
+        }
         if (AppTool.IsNullOrEmpty(this.TranslatedName)) {
             this.TranslatedName = this.Code;
         }
@@ -1438,7 +1525,7 @@ class MaintenanceMenuItem {
         var myResult = "";
 
 
-        
+
 
         if (this.CategoryTypeCode == "PRS" || this.CategoryTypeCode == "CMS" || this.CategoryTypeCode == "MNG" || this.Code == "FACS" || this.Code == "ACYT") {
             switch (this.Code) {
@@ -1459,8 +1546,8 @@ class MaintenanceMenuItem {
                 case "FACS": { myResult = "Define your accounting settings"; break; }
                 //case "ACPD": { myResult = "Define your accounting periods"; break; }
                 case "ACYT": { myResult = "Year Transfer"; break; }
-                
-                    
+
+
 
             }
         }
@@ -1474,7 +1561,7 @@ class MaintenanceMenuItem {
         //if (this.Code == "MCSG") { myResult = "עמדות חתימה"; }
 
         this.DescriptionText = myResult;
-        
+
     }
     private SetImageIconSource() {
         switch (this.item.Icon) {

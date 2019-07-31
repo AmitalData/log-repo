@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -31,6 +31,7 @@ export class NewTransferComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public ItemsSource: NewTransferLine[] = [];
     public SelectedItem: NewTransferLine = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.EntityPM = new AccountingTransferHeaderPM();
@@ -41,7 +42,7 @@ export class NewTransferComponent extends BaseComponent {
     }
 
     private Listen() {
-        SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+        this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "TransferExportFirstTime") {
                 this.IsFirstTimeLoading = true;
                 this.LoadData()
@@ -406,7 +407,7 @@ export class NewTransferComponent extends BaseComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 export class NewTransferLine {

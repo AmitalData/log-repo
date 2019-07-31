@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CustomerTenantAccessCardsBatch", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CustomerTenantAccessCardsBatch", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         CustomerTenantAccessCardsBatchService service = new CustomerTenantAccessCardsBatchService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CustomerTenantAccessCardsBatch", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CustomerTenantAccessCardsBatch", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "CustomerTenantAccessCardsBatch" + entityPM.CustomerId + entityPM.Tenant;
                         string entityPmName = "CustomerTenantAccessCardsBatchPM" + entityPM.CustomerId + entityPM.Tenant;

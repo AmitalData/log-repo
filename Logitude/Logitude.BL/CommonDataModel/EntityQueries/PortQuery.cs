@@ -199,6 +199,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           StateCode = a.State == null ? null : a.State.Code,
                                           CombinedCode = a.CombinedCode,
                                           StateName = a.StateName,
+                                          CountryIsNorthAmerica = a.Country.IsNorthAmerica,
                                       }).FirstOrDefault();
                             
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -254,6 +255,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       StateCode = a.State == null ? null : a.State.Code,
                                       CombinedCode = a.CombinedCode,
                                       StateName = a.StateName,
+                                      CountryIsNorthAmerica = a.Country.IsNorthAmerica,
                                   }).FirstOrDefault();
                     }
                 }
@@ -299,6 +301,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   StateCode = a.State == null ? null : a.State.Code,
                                   CombinedCode = a.CombinedCode,
                                   StateName = a.StateName,
+                                  CountryIsNorthAmerica = a.Country.IsNorthAmerica,
                               }).FirstOrDefault();
                 }
 

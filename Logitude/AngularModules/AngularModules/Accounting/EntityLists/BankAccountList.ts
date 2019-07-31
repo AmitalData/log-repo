@@ -39,6 +39,10 @@ export class BankAccountList {
 	TransferGLAcccountLocalName: string;
 	DeferedGLAccountEnglishName: string;
 	TransferGLAcccountEnglishName: string;
+	CurrencyId: string;
+	CurrencyName: string;
+	CurrencyCode: string;
+	CurrencySign: string;
 	
 }
  

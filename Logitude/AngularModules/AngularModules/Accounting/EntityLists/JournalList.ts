@@ -36,6 +36,7 @@ export class JournalList {
 	LastActivityDate: Date;
 	StatusLocalName: string;
 	TypeLocalName: string;
+	IsLedgerCreated: boolean;
 	
 }
  

@@ -756,6 +756,121 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isBankPageEvent ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsBankPageEvent  
+	   {
+	    
+	     get
+		{
+		   return isBankPageEvent;
+		 }
+		 set
+		 {
+		   if(isBankPageEvent != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsBankPageEvent",OldValue=isBankPageEvent,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isBankPageEvent=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyId  
+	   {
+	    
+	     get
+		{
+		   return currencyId;
+		 }
+		 set
+		 {
+		   if(currencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyId",OldValue=currencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyId=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyName  
+	   {
+	    
+	     get
+		{
+		   return currencyName;
+		 }
+		 set
+		 {
+		   if(currencyName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyName",OldValue=currencyName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyName=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyCode  
+	   {
+	    
+	     get
+		{
+		   return currencyCode;
+		 }
+		 set
+		 {
+		   if(currencyCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyCode",OldValue=currencyCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyCode=value;
+		   }
+			
+		 }
+	   }
+	  private string currencySign ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencySign  
+	   {
+	    
+	     get
+		{
+		   return currencySign;
+		 }
+		 set
+		 {
+		   if(currencySign != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencySign",OldValue=currencySign,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencySign=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

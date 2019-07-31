@@ -1,4 +1,4 @@
-﻿
+
 
 declare var JSZip: any;
 
@@ -70,6 +70,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     public LastCustomerRequestList: CustomerTenantAccessList[]; 
     myTenantPM: TenantPM;
     public tenantPMService: TenantPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedLogisticsService: SharedLogisticsService, public _documentTypeListService: DocumentTypeListService) {
         this.ItemsSource = new ObservableCollection([]);
         if (this.tenantPMService == null) {
@@ -121,7 +122,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     }
 
     OnRowSelected(itemComponent: any) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: itemComponent.Id, ObjectTableName: 'CustomerTenantAccess', BackButtonLabel: "Back" });
@@ -233,11 +234,11 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
             listArgs.BackButtonTitle = backButtonTitle;
             //listArgs.ShowViews = false;
             //this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
             //});
 
@@ -342,11 +343,11 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
             listArgs.BackButtonTitle = backButtonTitle;
             listArgs.ShowViews = showViews;
            
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
 
         }

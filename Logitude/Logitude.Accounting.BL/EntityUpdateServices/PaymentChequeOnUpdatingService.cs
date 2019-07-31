@@ -4,6 +4,8 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -35,24 +37,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //BankAccountQueryService bankAccountService = new BankAccountQueryService(entityPM.Tenant);
                 //BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, false, false);
                 BankAccountPM bankAccount = GetSingleBankAccountPM(entityPM);
-                if (bankAccount.ChequeCounter == null)
+                if (bankAccount != null)
                 {
-                    throw new Exception("The cheque counter did not defined for the choosen bank");
-                }
-                else
-                {
-                    entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
-                    entityPM.UniqueField = entityPM.ChequeNumber;
-                    BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                    bankAccount.ChequeCounter += 1;
-                    bankAccount.ChangeSetOp = ChangeSetOperation.Update;
-                    bankAccountUpdateService.Update(bankAccount, true);
+                    if (bankAccount.ChequeCounter == null)
+                    {
+                        throw new Exception("The cheque counter did not defined for the choosen bank");
+                    }
+                    else
+                    {
+                        entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
+                        entityPM.UniqueField = entityPM.ChequeNumber;
+                        BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        bankAccount.ChequeCounter += 1;
+                        bankAccount.ChangeSetOp = ChangeSetOperation.Update;
+                        bankAccountUpdateService.Update(bankAccount, true);
+                    }
                 }
                // ValidateEntity(entityPM);
                 //TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
                 //TenantPM currentTenant = tenantQuery.GetSinglePM(entityPM.Tenant);
                 entityPM.ForeignAmount = entityPM.LocalAmount;
-                CreateJournalPM(entityPM);
+                JournalPM journal= CreateJournalPM(entityPM);
             }
 
             entityPM.UpdateDate = DateTime.Now;
@@ -95,8 +100,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return TenantServerConfigration.GetCurrentDateTime(tenant);
         }
 
-        public virtual void  CreateJournalPM(PaymentChequePM entityPM)
+        public virtual JournalPM  CreateJournalPM(PaymentChequePM entityPM)
         {
+            APPaymentPM paymentPM = GetAPPayment(entityPM);
             BankAccountPM bankAccount = GetSingleBankAccountPM(entityPM);
             JournalUpdateService journalUpdateService = new JournalUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
             JournalPM journal = new JournalPM
@@ -107,7 +113,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CreatedByUserId = entityPM.CreatedByUserId,
                 AccountingEntityCode = "9",
                 AccountingEntityId = entityPM.Id,
-                AccountingEntityReference = entityPM.ChequeNumber,
+                AccountingEntityReference = paymentPM != null?  paymentPM.PaymentNo : entityPM.ChequeNumber,
                 UpdateDate = entityPM.UpdateDate,
                 UpdatedByUserId = entityPM.UpdatedByUserId,
                 ApproveDate = entityPM.CreateDate,
@@ -115,6 +121,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ChangeSetOp = ChangeSetOperation.Insert,
                 Tenant = entityPM.Tenant,
                 AccountingDate = (DateTime)entityPM.CreateDate,
+               
 
             };
             if (entityPM.ForeignAmount == null) entityPM.ForeignAmount = 0;
@@ -140,8 +147,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CurrencyId = entityPM.CurrencyId,
                 ForeignAmount = (decimal)entityPM.ForeignAmount,
                 ExchangeRate = entityPM.ExchangeRate,
-                ChangeSetOp = ChangeSetOperation.Insert
-
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Reference1 = paymentPM != null? paymentPM.PaymentNo : null,
+                Reference2 = entityPM.ChequeNumber,
+                
 
             };
             JournalLinePM journalLine2 = new JournalLinePM()
@@ -155,7 +164,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CurrencyId = entityPM.CurrencyId,
                 ForeignAmount = (decimal)entityPM.ForeignAmount,
                 ExchangeRate = entityPM.ExchangeRate,
-                ChangeSetOp = ChangeSetOperation.Insert
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
+                Reference2 = entityPM.ChequeNumber,
 
 
             };
@@ -171,6 +182,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             journal.JournalLines.Add(journalLine2);
             journalUpdateService.Update(journal, true);
             entityPM.JournalNumber = journal.JournalNumber;
+
+            return journal;
         }
 
         public virtual BankAccountPM GetSingleBankAccountPM(PaymentChequePM entityPM)
@@ -179,6 +192,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             BankAccountQueryService bankAccountService = new BankAccountQueryService(entityPM.Tenant);
             BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, false, false);
             return bankAccount;
+        }
+
+        public virtual APPaymentPM GetAPPayment(PaymentChequePM paymentCheque)
+        {
+            if (paymentCheque.APPaymentId != null)
+            {
+                APPaymentQuery paymentQuery = new APPaymentQuery(paymentCheque.Tenant);
+                return paymentQuery.GetSingleAPPaymentPM(paymentCheque.APPaymentId, paymentCheque.Tenant);
+
+            }
+            else return null;
         }
     }
 
@@ -189,7 +213,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
        // string GetObjectTableId(int tenant);
         string GetLogContactId(int tenant);
         DateTime GetCurrentDateTime(int tenant);
-        void CreateJournalPM(PaymentChequePM entityPM);
+        JournalPM  CreateJournalPM(PaymentChequePM entityPM);
         BankAccountPM GetSingleBankAccountPM(PaymentChequePM entityPM);
+       APPaymentPM GetAPPayment(PaymentChequePM paymentCheque);
     }
 }

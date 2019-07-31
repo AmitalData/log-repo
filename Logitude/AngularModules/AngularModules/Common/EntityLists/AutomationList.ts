@@ -26,5 +26,6 @@ export class AutomationList {
 		CreatedByUserId: string;
 		UpdatedByUserId: string;
 		Order: number;
+		Code: string;
 	
 }

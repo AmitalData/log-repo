@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("HybridPartner", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("HybridPartner", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         HybridPartnerService service = new HybridPartnerService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("HybridPartner", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("HybridPartner", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "HybridPartner" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "HybridPartnerPM" + entityPM.Id + entityPM.Tenant;

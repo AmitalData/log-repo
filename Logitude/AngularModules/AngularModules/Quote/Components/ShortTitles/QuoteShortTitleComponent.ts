@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {QuotePM} from '../../EntityPMs/QuotePM';
 import {AppTool} from '../../../Infrastructure/Tools';
@@ -14,6 +14,7 @@ import {CardList} from '../../../Common/EntityLists/CardList';
 
 export class QuoteShortTitleComponent {
     public EntityPM: QuotePM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
 
@@ -109,7 +110,7 @@ export class QuoteShortTitleComponent {
                             }
 
                             if (!AppTool.IsNullOrEmpty(objectTableName)) {
-                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         cmpRef.instance.ComponentRef = cmpRef;
                                         cmpRef.instance.Run({ EntityId: this.EntityPM.CustomerId, ObjectTableName: objectTableName, BackButtonLabel: 'Quote' });
@@ -117,7 +118,7 @@ export class QuoteShortTitleComponent {
                                         let isEditComponentSaved = false;
                                         cmpRef.instance.BackCompleted.subscribe(bk => {
                                             if (isEditComponentSaved) {
-                                                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                             }
                                         });
 

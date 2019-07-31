@@ -29,5 +29,15 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         [ForeignKey("ShipmentPickUpDeliveryId")]
         public virtual ShipmentPickUpDelivery ShipmentPickUpDelivery { get; set; }
+
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Year { get; set; }
+        public string Color { get; set; }
+        public string ChassisNumber { get; set; }
+        public string RegistrationNumber { get; set; }
+        public string CountryId { get; set; }
+        [ForeignKey("CountryId")]
+        public virtual Country Country { get; set; }
     }
 }

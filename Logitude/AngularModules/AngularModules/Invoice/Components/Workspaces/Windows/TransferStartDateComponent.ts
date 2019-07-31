@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -24,6 +24,7 @@ export class TransferStartDateComponent extends BaseComponent {
     private singleEntityName: string;
     private pluralEntityName: string;
     private invoiceDomainService: InvoiceDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.invoiceDomainService = new InvoiceDomainService();
@@ -78,7 +79,7 @@ export class TransferStartDateComponent extends BaseComponent {
 
     CloseButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     private isOkButtonClicked: boolean = false;
@@ -136,7 +137,7 @@ export class TransferStartDateComponent extends BaseComponent {
     }
     ReApplyOkButton() {
         this.isOkButtonClicked = false;
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
     GetConfirmMessage(myStartDate: Date) {
         var myResult: string = "";
@@ -185,7 +186,7 @@ export class TransferStartDateComponent extends BaseComponent {
     public IsNoDataTextVisible: boolean = false;
     public IsUpdateTextVisible: boolean = false;
     UpdateSystemStartDate(myStartDate: Date) {
-        SessionLocator.CurrentSession.StartBusyIndicator("Calculating data...");
+        this.CurrentSession.StartBusyIndicator("Calculating data...");
 
         this.invoiceDomainService.SetAccountingSettingStartDate(this.Code, myStartDate).subscribe((myResponse1: ServiceResponse) => {
             if (myResponse1.HasError) {
@@ -255,7 +256,7 @@ export class TransferStartDateComponent extends BaseComponent {
 
             this.sentCount = this.sentCount + idsList.length;
 
-            SessionLocator.CurrentSession.StartBusyIndicator("Blocking " + this.sentCount + " from " + this.allEntitiesCount + " " + this.pluralEntityName);
+            this.CurrentSession.StartBusyIndicator("Blocking " + this.sentCount + " from " + this.allEntitiesCount + " " + this.pluralEntityName);
 
             this.invoiceDomainService.BlockTransferEntities(idsList, this.Code).subscribe((myResponse: ServiceResponse) => {
                 this.Blocking();

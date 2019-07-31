@@ -41,7 +41,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             
             var myAllCardServiceDS = new GLAccountDashboard();
             bool twoLevel = false;
-            List<ChartOfAccountBalanceM> dic = myAllCardServiceDS.TreeMapGLAccountBanlanceByCOA(tenant, ByBalance, MyCollector, CallBackCOATypeCode, CallBackParentCOAId, twoLevel);
+            List<ChartOfAccountBalanceM> dic = myAllCardServiceDS.TreeMapGLAccountBanlanceByCOA(tenant, ByBalance, MyCollector, CallBackCOATypeCode, CallBackParentCOAId/*, twoLevel*/);
+            dic.ForEach(item => item.ChildName = item.ChildName.Replace("'"[0], ' '));
+            dic.ForEach(item => item.ParentName = item.ParentName.Replace("'"[0], ' '));
             _MyJson =JsonConvert.SerializeObject(dic);
         }
 

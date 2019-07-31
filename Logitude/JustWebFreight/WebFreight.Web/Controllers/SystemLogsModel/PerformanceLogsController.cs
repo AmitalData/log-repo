@@ -101,9 +101,81 @@ namespace WebFreight.Web.Controllers.SystemLogsModel
         }
 
 
+		public HttpResponseMessage PostLogsList(List<PerformanceLog> logsList)
+		{
+			try
+			{
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+				string token = HttpContext.Current.Request.Headers["Token"];
+				AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+				SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+				//SecurityUtility.CheckContactFeature("ErrorLog", "NEW", authToken.Tenant);
+
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{
+					IGlobalContext globalContext = GlobalContext.GetContext();
+
+					PerformanceLogRepository performanceLogRepository = new PerformanceLogRepository(globalContext);
+
+					try
+					{
+						string ip = "";
+						if (HttpContext.Current != null && HttpContext.Current.Request != null)
+						{
+							string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+							if (string.IsNullOrEmpty(currentIP))
+							{
+								currentIP = HttpContext.Current.Request.UserHostAddress;
+							}
+							ip = currentIP;
+						}
+						if (logsList != null && logsList.Count > 0)
+						{
+							foreach (var entity in logsList)
+							{
+								entity.UserIP = ip;
+
+								entity.LogDateTimeGMT = DateTime.UtcNow;
+
+								performanceLogRepository.Add(entity);
+							}
+
+							performanceLogRepository.SubmitChanges();
+						}
+						scope.Complete();
+
+					}
+					catch (Exception ex)
+					{
+						if (ex.InnerException != null)
+						{
+							if (ex.InnerException.Message.Contains("Violation of PRIMARY KEY constraint") || ex.Message.Contains("Violation of PRIMARY KEY constraint"))
+							{
+								//entity.Id = Guid.NewGuid().ToString();
+								//performanceLogRepository.SubmitChanges();
+								scope.Complete();
+							}
+						}
+						else
+							throw ex;
+						//Cannot insert duplicate key in object 
+
+					}
+					//  scope.Complete();
+				}
+
+				return Request.CreateResponse(HttpStatusCode.OK, "");
+			}
+
+			catch (Exception ex)
+			{
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+		}
+
+
+		// PUT api/<controller>/5
+		public void Put(int id, [FromBody]string value)
         {
         }
 

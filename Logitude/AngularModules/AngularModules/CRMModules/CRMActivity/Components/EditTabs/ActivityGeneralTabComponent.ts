@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, ChangeDetectorRef} from '@angular/core';
 import {ActivityPM} from '../../../../CRM/EntityPMs/ActivityPM';
 import {ActivityNotePM} from '../../../../CRM/EntityPMs/ActivityNotePM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -27,6 +27,7 @@ export class ActivityGeneralTabComponent extends BaseComponent {
     public DataContext = this;
 
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -35,20 +36,20 @@ export class ActivityGeneralTabComponent extends BaseComponent {
         this.Listen();
     }
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.ActivityInputTemplate.entityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.ActivityInputTemplate.entityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetFieldsEnabled();
                     this.ActivityInputTemplate.SetFieldsEnabled();
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.ActivityInputTemplate.entityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.ActivityInputTemplate.entityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetFieldsEnabled();
                     this.ActivityInputTemplate.SetFieldsEnabled();
                 }
@@ -442,7 +443,7 @@ export class ActivityGeneralTabComponent extends BaseComponent {
         }
     }
     ViewEntity(tableName: string, entityId: string) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: tableName, });

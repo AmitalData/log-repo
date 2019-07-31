@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UserPM} from '../../../../Common/EntityPMs/UserPM';
 import {TwoFactorAuthenticationDevicePM} from '../../../../Common/EntityPMs/TwoFactorAuthenticationDevicePM';
@@ -26,6 +26,7 @@ export class DevicesTabComponent extends BaseComponent {
     public ItemsSource: TwoFactorAuthenticationDevicePM[] = [];
     private twoFactorAuthenticationDeviceExtendedPMService: TwoFactorAuthenticationDeviceExtendedPMService;
     private twoFactorAuthenticationDevicePMService: TwoFactorAuthenticationDevicePMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -42,9 +43,9 @@ export class DevicesTabComponent extends BaseComponent {
 
     DeviceActivation(device: TwoFactorAuthenticationDevicePM, isActive: boolean) {
         device.InActive = !isActive;
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.twoFactorAuthenticationDevicePMService.update(device).subscribe(response => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (response.HasError) {
             }
 

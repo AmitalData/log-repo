@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("EventType", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("EventType", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         EventTypeService service = new EventTypeService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("EventType", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("EventType", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "EventType" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "EventTypePM" + entityPM.Id + entityPM.Tenant;

@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .Tips:hover{
         cursor:pointer;
     }
@@ -226,7 +226,7 @@
                                                                 <td style="width:50px" class="Label">Period</td>
                                                                 <td style="width:200px"><ComboBox style="width:150px;" [ItemsSource]="QueriesList" (SelectedItemChanged)="QueriesSelectedChange($event)" [SelectedItem]="SelectedQueryItem" [Binding]="'Name'"></ComboBox></td>
                                                                 <td></td>
-                                                                <td style="width:22px;min-width:22px"><IconButton [Name]="'Refresh'"> </IconButton></td>
+                                                                <td style="width:22px;min-width:22px"><IconButton [Name]="'Refresh'" (click)="RefreshQueues()"> </IconButton></td>
                                                             </tr>
                                                         </table>
                                                     </td>

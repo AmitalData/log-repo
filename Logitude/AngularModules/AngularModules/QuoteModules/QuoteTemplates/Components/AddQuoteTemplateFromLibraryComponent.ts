@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -29,6 +29,7 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
     QuoteId: any;
     QuoteTypeCode: string = null;
     AreaName: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
@@ -79,12 +80,12 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
         this.FullQuoteTemplateLists = [];
 
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
 
 
 
         this.quoteTemplateExtendedPMService.GetQuoteTemplateListsFromLibrary(this.QuoteTypeCode).subscribe(res => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 pmResponse.Result.forEach((item) => {
@@ -110,22 +111,22 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     AddFromLibraryButtonClicked(item: any) {
         this.QuoteTemplateViewModelSelected = item;
         this.QuoteTemplateViewModelSelected.IsEnabledAddDocumentTemplate = false;
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
 
 
 
         this.quoteTemplateExtendedPMService.GetCopyQuoteTemplateFromLibrary(item.Id, SessionLocator.LoggedUserId).subscribe(res => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
-                SessionLocator.CurrentSession.CurrentWindow.Close(pmResponse.Result);
+                this.CurrentSession.CurrentWindow.Close(pmResponse.Result);
  
             }
 

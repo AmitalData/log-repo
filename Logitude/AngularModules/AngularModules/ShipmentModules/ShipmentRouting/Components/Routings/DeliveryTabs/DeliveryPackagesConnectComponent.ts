@@ -26,6 +26,7 @@ export class DeliveryPackagesConnectComponent {
     public ItemsSource: DeliveryPackagesConnectItem[] = [];
     public IsOkButtonEnabled: boolean = false;
     private fatherComponent: DeliveryPackagesTabComponent;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -92,7 +93,7 @@ export class DeliveryPackagesConnectComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -128,13 +129,14 @@ export class DeliveryPackagesConnectComponent {
         });
 
         this.fatherComponent.BuildItemsSource();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
 }
 export class DeliveryPackagesConnectItem {
     public EntityPM: ShipmentPackagePM;
     public InsideEntityPM: InsideShipmentPackagePM;
     public IsContainer: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: ShipmentPackagePM, InsideEntityPM: InsideShipmentPackagePM, private fatherComponent: DeliveryPackagesConnectComponent) {
         this.EntityPM = entity;
         this.InsideEntityPM = InsideEntityPM;

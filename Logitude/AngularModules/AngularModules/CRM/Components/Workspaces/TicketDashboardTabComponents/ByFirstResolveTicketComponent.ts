@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList,ViewEncapsulation} from '@angular/core';
+import {Component, ViewChildren, QueryList,ViewEncapsulation} from '@angular/core';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -78,18 +78,18 @@ export class ByFirstResolveTicketComponent extends BaseComponent {
         this.selectedDateFilter = this.DateFilterList.filter(d => d.Code == defaultFilterCode)[0];
     }
     private InitializeIds() {
-        this.ClosedTicketsByClassificationId = "TicketsByClassificationId_" + SessionLocator.CurrentSession.GetNewId("TicketsByClassificationId");
-        this.ClosedTicketsBySeverityId = "TicketsBySeverityId_" + SessionLocator.CurrentSession.GetNewId("TicketsBySeverityId");
-        this.ClosedTicketsByTicketTypeId = "TicketsByTicketOwnerId_" + SessionLocator.CurrentSession.GetNewId("TicketsByTicketOwnerId");
-        this.ClosedSLAViolationId = "SLAViolationId_" + SessionLocator.CurrentSession.GetNewId("SLAViolationId");
-        this.ClosedSolvedTicketsId = "OpenTicketsId_" + SessionLocator.CurrentSession.GetNewId("OpenTicketsId");
-        this.ClosedTicketsByTicketsTypeLegendId = "ClosedTicketsByTicketsTypeLegendId_" + SessionLocator.CurrentSession.GetNewId("ClosedTicketsByTicketsTypeLegendId");
-        this.ClosedTicketsBySeverityLegendId = "ClosedTicketsBySeverityLegendId_" + SessionLocator.CurrentSession.GetNewId("ClosedTicketsBySeverityLegendId");
-        this.ClosedTicketsByClassificationLegendId = "ClosedTicketsByClassificationLegendId_" + SessionLocator.CurrentSession.GetNewId("ClosedTicketsByClassificationLegendId");
+        this.ClosedTicketsByClassificationId = "TicketsByClassificationId_" + this.CurrentSession.GetNewId("TicketsByClassificationId");
+        this.ClosedTicketsBySeverityId = "TicketsBySeverityId_" + this.CurrentSession.GetNewId("TicketsBySeverityId");
+        this.ClosedTicketsByTicketTypeId = "TicketsByTicketOwnerId_" + this.CurrentSession.GetNewId("TicketsByTicketOwnerId");
+        this.ClosedSLAViolationId = "SLAViolationId_" + this.CurrentSession.GetNewId("SLAViolationId");
+        this.ClosedSolvedTicketsId = "OpenTicketsId_" + this.CurrentSession.GetNewId("OpenTicketsId");
+        this.ClosedTicketsByTicketsTypeLegendId = "ClosedTicketsByTicketsTypeLegendId_" + this.CurrentSession.GetNewId("ClosedTicketsByTicketsTypeLegendId");
+        this.ClosedTicketsBySeverityLegendId = "ClosedTicketsBySeverityLegendId_" + this.CurrentSession.GetNewId("ClosedTicketsBySeverityLegendId");
+        this.ClosedTicketsByClassificationLegendId = "ClosedTicketsByClassificationLegendId_" + this.CurrentSession.GetNewId("ClosedTicketsByClassificationLegendId");
 
     }
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.InitializeIds();
@@ -465,12 +465,12 @@ export class ByFirstResolveTicketComponent extends BaseComponent {
         listArgs.DisplayTitle = "Ticket";
         listArgs.BackButtonTitle = "Ticket";
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run(listArgs);
-                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                this.CurrentSession.AddMenuReference(cmpRef);
             });
 
 
@@ -503,12 +503,12 @@ export class ByFirstResolveTicketComponent extends BaseComponent {
             listArgs.DisplayTitle = typeName;
             listArgs.BackButtonTitle = "Ticket";
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
 
@@ -542,12 +542,12 @@ export class ByFirstResolveTicketComponent extends BaseComponent {
             listArgs.DisplayTitle = typeName;
             listArgs.BackButtonTitle = "Ticket";
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadFilteredQueries());
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
 

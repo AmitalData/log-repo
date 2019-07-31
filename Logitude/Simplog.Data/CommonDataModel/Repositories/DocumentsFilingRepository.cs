@@ -32,6 +32,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where record.Tenant == tenant select record);
         }
 
+        public IQueryable<DocumentsFiling> GetAllDocumentsFilings()
+        {
+            return (from record in context.DocumentsFilings 
+                    select record);
+        }
+
         public DocumentsFiling GetSingleDocumentsFiling(string id, int tenant)
         {
             DocumentsFiling d = (from a in context.DocumentsFilings.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")

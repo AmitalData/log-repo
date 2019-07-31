@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 
 import {Component, ViewContainerRef, OnInit, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
@@ -53,16 +53,17 @@ export class QueryColumnsEditComponent {
     private myQueryColumnsPMService: QueryColumnsPMService;
     private _http: Http;
     public serviceArgs: ServiceArgs;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this._http = ServiceHelper.Http;
         this.serviceArgs.http = ServiceHelper.Http;;
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.SearchFieldsId = "SearchFields_-1_-1";
         }
 
         else {
-            this.SearchFieldsId = "QueryColumnSearchFields_" + SessionLocator.CurrentSession.GetNewId("QueryColumnSearchFields");
+            this.SearchFieldsId = "QueryColumnSearchFields_" + this.CurrentSession.GetNewId("QueryColumnSearchFields");
         }
         //this.Run();
     }
@@ -449,7 +450,7 @@ export class QueryColumnsEditComponent {
     }
 
     SaveChanges() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
         //this.needsRebuildList = this.copy;
 
         //this.addedQueryColumnList.forEach((queryColumn, key) => {
@@ -466,7 +467,7 @@ export class QueryColumnsEditComponent {
         //            this.myQueryColumnsPMService.setServiceArgs(this.serviceArgs);
         //        }
         //        this.myQueryColumnsPMService.insert(queryColumn).subscribe(myResult => {
-        //            SessionLocator.CurrentSession.CloseCurrentWindow();
+        //            this.CurrentSession.CloseCurrentWindow();
         //        });
         //    }
         //});
@@ -496,8 +497,8 @@ export class QueryColumnsEditComponent {
                     this.myQueryColumnsPMService.update(qc).subscribe(myResult => {
                         Length++;
                         if (Length == this.OrderedQueryColumnsList.length && this.removedQueryColumnList.length == 0) {
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            this.CurrentSession.CloseCurrentWindow();
                         }
                     });
                 }
@@ -520,20 +521,20 @@ export class QueryColumnsEditComponent {
                 this.myQueryColumnsPMService.delete(queryColumn).subscribe(myResult => {
                     removedQueryLength = removedQueryLength + 1;
                     if (removedQueryLength == this.removedQueryColumnList.length) {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindow();
                     }
                 });
             //}
         });
 
         //if (this.addedQueryColumnList.length == 0 && this.removedQueryColumnList.length == 0) {
-        //    SessionLocator.CurrentSession.CloseCurrentWindow();
+        //    this.CurrentSession.CloseCurrentWindow();
         //}
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

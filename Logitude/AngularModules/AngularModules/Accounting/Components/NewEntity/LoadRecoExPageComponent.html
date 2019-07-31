@@ -1,0 +1,116 @@
+<!-- PrintRequestComponent view  -->
+<style>
+    .MessageBox {
+        width: 200px;
+        height: 30px;
+        padding: 2px 10px;
+        margin: 5px;
+        color: green;
+        font-family: sans-serif;
+        font-size: 12px;
+        text-align: center;
+    }
+    .MyTR{
+        height:20px;
+    }
+</style>
+
+<div>
+   
+
+        <!-- Request -->
+        <div class="class-request-content" *ngIf="_ResultLoadBankPage == null" >
+            <table style="width: 350px;height: 270px;padding-top: 10px;">
+                <tr  *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                    <td>
+                        <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                    </td>
+                </tr>
+
+                <!-- Request Fields -->
+
+                <tr style="height:35px">
+                    <td style="width:40px;text-align:right"><span style="font-size:11px;color:dimgray">קובץ:</span></td>
+                    <td style="width:150px; ">
+                        <LogTextBox [ObjectFieldName]="'FileName'" [Placeholder]="Placeholder" [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true" [Text]="FileName" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td style="width:10px;"><div></div></td>
+
+                    <td style="width:60px;text-align:left">
+                        <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button>
+                        <input accept=".txt,.TXT" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+                    </td>
+                    <td style="width:150px; background-color:white">
+                        <div *ngIf="IsShowProgressBar" style="height:20px;border:1px solid gray;border-radius:3px">
+                            <div style="height:16px;margin:1px;" id="myBar"></div>
+                        </div>
+                    </td>
+
+                    <td style="width:4px;"></td>
+                    <td style="width:30px;color:gray">{{ProgressBarPercentText}}</td>
+
+                    <td><div></div></td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="overflow:auto; height:300px;">
+            <table>
+                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors!=null && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors.length>0">
+                    <td colspan="10">
+                        <div style="color:orangered">שגיאות שנמצאו </div>
+                    </td>
+                </tr>
+                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors!=null && _ResultLoadBankPage.ValidateBankPageAgaintDBErrors.length>0">
+                    <td>
+                        <table>
+                            <tr class="MyTR" *ngFor="let item of _ResultLoadBankPage.ValidateBankPageAgaintDBErrors">
+                                <td>{{item.Message}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+
+                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBExceptionPageList!=null && _ResultLoadBankPage.DBExceptionPageList.length>0">
+                    <td colspan="10">
+                        <div style="color:red">שגיאות בבנית דפי בנק </div>
+                    </td>
+                </tr>
+                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBExceptionPageList!=null && _ResultLoadBankPage.DBExceptionPageList.length>0">
+                    <td>
+                        <table>
+                            <tr class="MyTR" *ngFor="let item of _ResultLoadBankPage.DBExceptionPageList">
+                                <td>{{item.Message}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+
+
+                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBSuccessPageList!=null && _ResultLoadBankPage.DBSuccessPageList.length>0">
+                    <td colspan="10">
+                        <div style="color:green">דפים שנקלטו</div>
+                    </td>
+                </tr>
+                <tr class="MyTR" *ngIf="_ResultLoadBankPage!=null  && _ResultLoadBankPage.DBSuccessPageList!=null && _ResultLoadBankPage.DBSuccessPageList.length>0">
+                    <td>
+                        <table>
+                            <tr class="MyTR"  *ngFor="let item of _ResultLoadBankPage.DBSuccessPageList">
+                                <td>{{item.Message}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+</div>

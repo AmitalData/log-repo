@@ -1,4 +1,4 @@
-﻿
+
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
@@ -17,6 +17,7 @@ export class MainMenuAutomationComponent implements OnInit {
     IsShowTicket: boolean = false;
     IsShowTransmissionLogs: boolean = false;
     AutomationEntityLists: AutomationItemClass[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
 
@@ -67,7 +68,7 @@ export class MainMenuAutomationComponent implements OnInit {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

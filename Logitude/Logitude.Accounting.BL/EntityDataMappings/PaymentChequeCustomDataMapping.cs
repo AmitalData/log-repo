@@ -40,13 +40,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             customMappedPMProperties.Add(PaymentChequeDataMapping.PMPropertyNames.PayToGLAccountId);
             customMappedPMProperties.Add(PaymentChequeDataMapping.PMPropertyNames.PaymentChequeStatusCode);
 
-            JournalPM journal = GetSingleJournalPM(entityPOCO.Id, entityPOCO.Tenant);
+            //JournalPM journal = GetSingleJournalPM(entityPOCO.Id, entityPOCO.Tenant);
 
-            if (journal != null)
-            {
-                entityPM.JournalId = journal.Id;
-                entityPM.JournalNumber = journal.JournalNumber;
-            }
+            //if (journal != null)
+            //{
+            //    entityPM.JournalId = journal.Id;
+            //    entityPM.JournalNumber = journal.JournalNumber;
+            //}
 
 
             if (entityPOCO.PayToGLAccountId != null)

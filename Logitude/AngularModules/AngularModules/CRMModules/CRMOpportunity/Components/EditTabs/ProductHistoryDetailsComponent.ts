@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OpportunityPM} from '../../../../CRM/EntityPMs/OpportunityPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -19,7 +19,7 @@ export class ProductHistoryDetailsComponent extends BaseComponent {
     private entityPM: CustomerProductActualDataPM;
     public ItemsSource: ObservableCollection;
     public TEUVisibility = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -34,6 +34,6 @@ export class ProductHistoryDetailsComponent extends BaseComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

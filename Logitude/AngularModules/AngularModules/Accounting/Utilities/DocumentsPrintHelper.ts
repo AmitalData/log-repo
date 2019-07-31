@@ -1,4 +1,4 @@
-﻿/*
+/*
  *********************************
  **    DocumentsPrintHelper     **
  *********************************
@@ -40,7 +40,7 @@ export class DocumentsPrintHelper {
     private _documentOutPMService: DocumentOutPMService = new DocumentOutPMService();
     private _documentTypePMService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
     private _exportDocumentService: ExportDocumentService = new ExportDocumentService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private ObjectTableName: string, private EntityId: string, private Tenant: number) {
 
     }
@@ -55,7 +55,7 @@ export class DocumentsPrintHelper {
 
 
     private BuildDocument() {
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.BuildingDocument"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.BuildingDocument"));
         var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
         var objectTableId = objectTable.Id;
 
@@ -125,7 +125,7 @@ export class DocumentsPrintHelper {
                             });
                             //} else {
                             //    console.warn("Cannot find document out copy, resend request...");
-                            //    //SessionLocator.CurrentSession.StopBusyIndicator();
+                            //    //this.CurrentSession.StopBusyIndicator();
                             //    this.BuildDocument(); // resend the request, the method [getCreateDocumentOut] does not create document out copy!!
                             //}
 
@@ -134,7 +134,7 @@ export class DocumentsPrintHelper {
 
                         } else {
                             console.error("[DocumentsPrintHelper] Cannot create document out!", res);
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
                     }
 
@@ -160,10 +160,10 @@ export class DocumentsPrintHelper {
     }
 
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 }

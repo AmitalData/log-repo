@@ -1,4 +1,4 @@
-﻿
+
 import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 @Component({
@@ -12,6 +12,7 @@ export class SharedMessageComponent implements OnInit {
     Message: string;
     TextColor: string;
     IsShowOkButton: boolean;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
 
@@ -30,7 +31,7 @@ export class SharedMessageComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

@@ -15,7 +15,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool AllowManualInvoiceNumber { get; set; }
         public bool IsVatNumberMandatoryInAR { get; set; }
         public bool IsVatNumberMandatoryInAP { get; set; }
-        public bool IsChronologicalDates { get; set; }
+        public bool IsARInvoiceChronologicalDates { get; set; }
+        public bool IsARPaymentChronologicalDates { get; set; }
         public string AccountingSystemCode { get; set; }
         public string ReceivableVATableTempCard { get; set; }
         public string ReceivableVATExemptTempCard { get; set; }
@@ -50,6 +51,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool EnableMultiCurrencyAPPayments { get; set; }
         public bool IsAPPaymentsTransferEnabled { get; set; }
         public bool EnableNegativeOffsetARPayments { get; set; }
-        public bool EnableNegativeOffsetAPPayments { get; set; }        
+        public bool EnableNegativeOffsetAPPayments { get; set; }
+        public bool EnableInvoiceStocksManagement { get; set; }
     }
 }

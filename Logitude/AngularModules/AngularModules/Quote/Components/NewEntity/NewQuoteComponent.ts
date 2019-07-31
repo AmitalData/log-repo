@@ -46,7 +46,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     public QuoteSetting: QuoteSettingPM = null;
     public ValidationErrorsList: string[];
     public IsAddAgentVisible: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;  
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -205,6 +206,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetEnabled("MoveTypeId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ExpirationDays", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ExpirationDate", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, isScreenEnabled);
+
         this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, isScreenEnabled);
 
         // Pickup
@@ -665,6 +668,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     set ShipperContactId(newValue: string) {
         if (this.EntityPM.ShipperContactId != newValue) {
             this.EntityPM.ShipperContactId = newValue;
+
+            if (this.QuoteCustomerTypeCode == "SHI") {
+                this.EntityPM.CustomerContactId = newValue;
+            }
         }
     }
 
@@ -684,10 +691,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
 
     private GetShipperCardData() {
         if (AppTool.IsNullOrEmpty(this.ShipperId)) {
-            this.ShipperContactId = null;
             this.ShipperNote = null;
             this.EntityPM.ShipperName = null;
             this.ShipperAddressList = null;
+            this.EntityPM.ShipperContactId = null;
             this.EntityPM.ShipperMainAddressId = null;
             this.EntityPM.ShipperPickAddressId = null;
         }
@@ -699,7 +706,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 if (myCardList) {
                     this.EntityPM.ShipperName = myCardList.EnglishName;
                     this.ShipperNote = myCardList.Notes;
-                    this.ShipperContactId = myCardList.PrimaryContactId;
+                    this.EntityPM.ShipperContactId = myCardList.PrimaryContactId;
                     this.EntityPM.ShipperMainAddressId = myCardList.MainAddressId;
                     this.EntityPM.ShipperPickAddressId = myCardList.PickAddressId;
 
@@ -782,6 +789,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     set ConsigneeContactId(newValue: string) {
         if (this.EntityPM.ConsigneeContactId != newValue) {
             this.EntityPM.ConsigneeContactId = newValue;
+
+            if (this.QuoteCustomerTypeCode == "CON") {
+                this.EntityPM.CustomerContactId = newValue;
+            }
         }
     }
 
@@ -801,10 +812,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
 
     private GetConsigneeCardData() {
         if (AppTool.IsNullOrEmpty(this.ConsigneeId)) {
-            this.ConsigneeContactId = null;
             this.ConsigneeNote = null;
             this.EntityPM.ConsigneeName = null;
             this.ConsigneeAddressList = null;
+            this.EntityPM.ConsigneeContactId = null;
             this.EntityPM.ConsigneeMainAddressId = null;
             this.EntityPM.ConsigneePickAddressId = null;
         }
@@ -816,7 +827,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 if (myCardList) {
                     this.EntityPM.ConsigneeName = myCardList.EnglishName;
                     this.ConsigneeNote = myCardList.Notes;
-                    this.ConsigneeContactId = myCardList.PrimaryContactId;
+                    this.EntityPM.ConsigneeContactId = myCardList.PrimaryContactId;
                     this.EntityPM.ConsigneeMainAddressId = myCardList.MainAddressId;
                     this.EntityPM.ConsigneePickAddressId = myCardList.PickAddressId;
 
@@ -1066,16 +1077,21 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             }
 
             else {
-                var date = DateTool.GetDateByDay(newValue);
+                this.SetExpirationDate();
+            }
+        }
+    }
 
-                if (this.ExpirationDate == null) {
+    private SetExpirationDate() {
+        if (this.EntityPM.ExpirationDays == null && this.EntityPM.ExpirationDate == null) { }
+        else {
+            var date = DateTool.AddDays(this.StartDate, this.ExpirationDays);
+            if (date == null) {
+                this.EntityPM.ExpirationDays = null;
+            }
+            else {
+                if (this.ExpirationDate.valueOf() != date.valueOf()) {
                     this.EntityPM.ExpirationDate = date;
-                }
-
-                else {
-                    if (this.ExpirationDate.valueOf() != date.valueOf()) {
-                        this.EntityPM.ExpirationDate = date;
-                    }
                 }
             }
         }
@@ -1091,15 +1107,28 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             }
 
             else {
-                var todayDate = DateTool.GetCurrentDateAsUtc();
-                var days = this.GetDaysBetweenDates(newValue, todayDate);
+                var days = this.GetDaysBetweenDates(newValue, this.StartDate);
                 if (this.ExpirationDays != days) {
                     this.EntityPM.ExpirationDays = days;
                 }
             }
         }
     }
-    
+
+    get StartDate() { return this.EntityPM.StartDate; }
+    set StartDate(newValue: Date) {
+        if (this.EntityPM.StartDate != newValue) {
+            this.EntityPM.StartDate = newValue;
+
+            if (newValue == null) {
+                this.EntityPM.ExpirationDays = null;
+            }
+            else {
+                this.SetExpirationDate();
+            }
+        }
+    }
+
     get IsAutomaticallyClosed() { return this.EntityPM.IsAutomaticallyClosed; }
     set IsAutomaticallyClosed(newValue: boolean) {
         if (this.EntityPM.IsAutomaticallyClosed != newValue) {
@@ -2077,10 +2106,9 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
             this.EntityPM.Ratio = AppTool.GetRatio(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
             this.EntityPM.DimFactor = AppTool.GetDimFactorFromRatio(this.EntityPM.Ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.ChargeableWeightUnitCode);
-        }
-        
-        this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
-        this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
+            this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
+            this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
+        }        
     }
     private SetPartners() {
         this.IsShipperMyCustomer = false;
@@ -2344,10 +2372,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.SetDataOnFinish();
 
@@ -2360,7 +2388,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }  
     }
     private SetDataOnFinish() {
@@ -2380,11 +2408,11 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
 
         if (computeNumberOfPackages) {
             var sum = 0;
-            if (this.EntityPM.PackageType1Quantity > 0) { sum = sum + this.EntityPM.PackageType1Quantity; }
-            if (this.EntityPM.PackageType2Quantity > 0) { sum = sum + this.EntityPM.PackageType2Quantity; }
-            if (this.EntityPM.PackageType3Quantity > 0) { sum = sum + this.EntityPM.PackageType3Quantity; }
-            if (this.EntityPM.PackageType4Quantity > 0) { sum = sum + this.EntityPM.PackageType4Quantity; }
-            if (this.EntityPM.PackageType5Quantity > 0) { sum = sum + this.EntityPM.PackageType5Quantity; }
+            if (this.EntityPM.PackageType1Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType1Quantity) ? 0 : this.PackageType1Quantity); }
+            if (this.EntityPM.PackageType2Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType2Quantity) ? 0 : this.PackageType2Quantity)}
+            if (this.EntityPM.PackageType3Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType3Quantity) ? 0 : this.PackageType3Quantity) }
+            if (this.EntityPM.PackageType4Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType4Quantity) ? 0 : this.PackageType4Quantity) }
+            if (this.EntityPM.PackageType5Quantity > 0) { sum = sum + (AppTool.IsNullOrEmpty(this.PackageType5Quantity) ? 0 : this.PackageType5Quantity)}
 
             if (this.IsLCLEntity) {
                 this.EntityPM.NumberOfPackages = sum;
@@ -2512,14 +2540,14 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     private SubmitCreatingNewQuote() {              
         var myService: QuotePMService = new QuotePMService();
         myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                this.CurrentSession.CloseCurrentWindowEmit('OK');
 
                 if (this.IsCopyFromQuote) {
                     this.RunInEditMode();
@@ -2528,7 +2556,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         });
     }
     private RunInEditMode() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: "Quote", BackButtonLabel: "Quote: " + this.sourceEntityPM.QuoteNumber });
@@ -2536,7 +2564,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 let isEditComponentSaved = false;
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     if (isEditComponentSaved) {
-                        //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 });
 
@@ -2731,6 +2759,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 }
 
                 QuoteUtilities.CopyQuoteCharges(this.EntityPM, this.sourceEntityPM, this.CopySaleIsChecked, this.CopyCostIsChecked);
+                this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
 
                 if (this.EntityPM.ExchangeRate == null) {
                     if (!AppTool.IsNullOrZero(this.sourceEntityPM.EstimateProfit) && !AppTool.IsNullOrZero(this.sourceEntityPM.ExchangeRate)) {

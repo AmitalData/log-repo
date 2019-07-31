@@ -70,11 +70,6 @@ export class TasksSchedulerPM {
     public set NextRunTime(newValue: Date) { if (this.nextRunTime != newValue) { this.nextRunTime = newValue; this.MarkAsDirty("NextRunTime"); } }
        
 	 
-    private lastRunTime: Date;
-    public get LastRunTime() { return this.lastRunTime; }
-    public set LastRunTime(newValue: Date) { if (this.lastRunTime != newValue) { this.lastRunTime = newValue; this.MarkAsDirty("LastRunTime"); } }
-       
-	 
     private lastRunResult: string;
     public get LastRunResult() { return this.lastRunResult; }
     public set LastRunResult(newValue: string) { if (this.lastRunResult != newValue) { this.lastRunResult = newValue; this.MarkAsDirty("LastRunResult"); } }
@@ -85,9 +80,9 @@ export class TasksSchedulerPM {
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
-    private serviceClassName: string;
-    public get ServiceClassName() { return this.serviceClassName; }
-    public set ServiceClassName(newValue: string) { if (this.serviceClassName != newValue) { this.serviceClassName = newValue; this.MarkAsDirty("ServiceClassName"); } }
+    private procedureCode: string;
+    public get ProcedureCode() { return this.procedureCode; }
+    public set ProcedureCode(newValue: string) { if (this.procedureCode != newValue) { this.procedureCode = newValue; this.MarkAsDirty("ProcedureCode"); } }
        
 	 
     private triggerType: string;
@@ -148,6 +143,71 @@ export class TasksSchedulerPM {
     private isLastRunError: boolean;
     public get IsLastRunError() { return this.isLastRunError; }
     public set IsLastRunError(newValue: boolean) { if (this.isLastRunError != newValue) { this.isLastRunError = newValue; this.MarkAsDirty("IsLastRunError"); } }
+       
+	 
+    private type: string;
+    public get Type() { return this.type; }
+    public set Type(newValue: string) { if (this.type != newValue) { this.type = newValue; this.MarkAsDirty("Type"); } }
+       
+	 
+    private schedulerDetailsXML: string;
+    public get SchedulerDetailsXML() { return this.schedulerDetailsXML; }
+    public set SchedulerDetailsXML(newValue: string) { if (this.schedulerDetailsXML != newValue) { this.schedulerDetailsXML = newValue; this.MarkAsDirty("SchedulerDetailsXML"); } }
+       
+	 
+    private nextRunTimeUTC: Date;
+    public get NextRunTimeUTC() { return this.nextRunTimeUTC; }
+    public set NextRunTimeUTC(newValue: Date) { if (this.nextRunTimeUTC != newValue) { this.nextRunTimeUTC = newValue; this.MarkAsDirty("NextRunTimeUTC"); } }
+       
+	 
+    private startDateTimeUTC: Date;
+    public get StartDateTimeUTC() { return this.startDateTimeUTC; }
+    public set StartDateTimeUTC(newValue: Date) { if (this.startDateTimeUTC != newValue) { this.startDateTimeUTC = newValue; this.MarkAsDirty("StartDateTimeUTC"); } }
+       
+	 
+    private version: number;
+    public get Version() { return this.version; }
+    public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
+       
+	 
+    private status: string;
+    public get Status() { return this.status; }
+    public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
+       
+	 
+    private retries: number;
+    public get Retries() { return this.retries; }
+    public set Retries(newValue: number) { if (this.retries != newValue) { this.retries = newValue; this.MarkAsDirty("Retries"); } }
+       
+	 
+    private duration: number;
+    public get Duration() { return this.duration; }
+    public set Duration(newValue: number) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
+       
+	 
+    private lastRunEndTime: Date;
+    public get LastRunEndTime() { return this.lastRunEndTime; }
+    public set LastRunEndTime(newValue: Date) { if (this.lastRunEndTime != newValue) { this.lastRunEndTime = newValue; this.MarkAsDirty("LastRunEndTime"); } }
+       
+	 
+    private lastRunEndTimeUTC: Date;
+    public get LastRunEndTimeUTC() { return this.lastRunEndTimeUTC; }
+    public set LastRunEndTimeUTC(newValue: Date) { if (this.lastRunEndTimeUTC != newValue) { this.lastRunEndTimeUTC = newValue; this.MarkAsDirty("LastRunEndTimeUTC"); } }
+       
+	 
+    private lastRunStartTimeUTC: Date;
+    public get LastRunStartTimeUTC() { return this.lastRunStartTimeUTC; }
+    public set LastRunStartTimeUTC(newValue: Date) { if (this.lastRunStartTimeUTC != newValue) { this.lastRunStartTimeUTC = newValue; this.MarkAsDirty("LastRunStartTimeUTC"); } }
+       
+	 
+    private lastRunStartTime: Date;
+    public get LastRunStartTime() { return this.lastRunStartTime; }
+    public set LastRunStartTime(newValue: Date) { if (this.lastRunStartTime != newValue) { this.lastRunStartTime = newValue; this.MarkAsDirty("LastRunStartTime"); } }
+       
+	 
+    private schedulerDetailsData: string;
+    public get SchedulerDetailsData() { return this.schedulerDetailsData; }
+    public set SchedulerDetailsData(newValue: string) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
        
 	 
 

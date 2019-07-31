@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .PartnerBoxHeader td {
         vertical-align: middle;
@@ -308,7 +308,7 @@
                                                         </td>
 
                                                         <td style="width: 23px; padding-left: 5px;">
-                                                            <IconButton [Name]="'Edit'" [ExternalId]="'AGT'" [IsSmall]="true" (click)="Edit('AGT')" [disabled]="IssuingCarrierAgentId == null || !ViaColoader"></IconButton>
+                                                            <IconButton [Name]="'Edit'" [ExternalId]="'AGT'" [IsSmall]="true" (click)="Edit('AGT')" [disabled]="(IssuingCarrierAgentId == null || !ViaColoader) && !Wizard.IsImportWizard"></IconButton>
                                                         </td>
 
                                                         <td style="width: 20px; padding-left: 2px;">

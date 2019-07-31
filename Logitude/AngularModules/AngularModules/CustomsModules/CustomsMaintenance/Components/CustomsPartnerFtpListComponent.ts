@@ -62,7 +62,7 @@ export class CustomsPartnerFtpListComponent
     _InEditMode: boolean = false;
 
     private myFTPService: FTPDetailPMService;
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this._FetchCustomsPartnerFtpResultList = new ObservableCollection([]);
@@ -84,7 +84,7 @@ export class CustomsPartnerFtpListComponent
         //];
 
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this._CustomsPartnerFtpExtendedPMService.GetScreenOption(SessionLocator.Tenant).subscribe(res => {
                 let screenOption = res.Result;
@@ -117,12 +117,12 @@ export class CustomsPartnerFtpListComponent
         this.UIProperties.SetRequired("TypeCode1", this.ObjectTableName, AppTool.IsNullOrEmpty(this.TypeCode));
     }
     ReLoadList() {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this._InEditMode = false;
         this._IsNew = false;
         this._CustomsPartnerFtpPM = null;
         this._CustomsPartnerFtpListService.getAll().subscribe(myResult => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             console.log("Get All CustomsPartnerFtp Definition: ", myResult);
             if (myResult != null && myResult.Result != null) {
@@ -145,7 +145,7 @@ export class CustomsPartnerFtpListComponent
             this._CustomsPartnerFtpPM = null;
             return;
         }
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     
@@ -161,13 +161,13 @@ export class CustomsPartnerFtpListComponent
         if (this.ValidationErrorsList != null && this.ValidationErrorsList.length > 0) {
             return;
         }
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
 
         if (this._IsNew == true) {
             this._CustomsPartnerFtpPMService.insert(this._CustomsPartnerFtpPM)
                 .subscribe(response => {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     var res: ServiceResponse = response;
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;
@@ -180,7 +180,7 @@ export class CustomsPartnerFtpListComponent
         }
         else {
             this._CustomsPartnerFtpPMService.update(this._CustomsPartnerFtpPM).subscribe(response => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var res: ServiceResponse = response;
                 if (res.HasError) {
                     this.ValidationErrorsList = res.ErrorsArray;
@@ -191,12 +191,12 @@ export class CustomsPartnerFtpListComponent
                 }
             });
         }
-        //SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+        //this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
         //console.log("..Saved Successfully ");
 
 
-        ///SessionLocator.CurrentSession.CloseCurrentWindow();
+        ///this.CurrentSession.CloseCurrentWindow();
     }
 
    
@@ -217,7 +217,7 @@ export class CustomsPartnerFtpListComponent
       
 
         this._CustomsPartnerFtpExtendedPMService.delete(item.Id).subscribe(response => {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             var res: ServiceResponse = response;
             if (res.HasError) {
                 this.ValidationErrorsList = res.ErrorsArray;
@@ -235,10 +235,10 @@ export class CustomsPartnerFtpListComponent
         this.ClearScreen();
         
         
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._CustomsPartnerFtpPMService.get(item.Id)
             .subscribe(myResponse => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                     return;

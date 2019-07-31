@@ -12,6 +12,7 @@ namespace Logitude.BL.CommonDataModel.CloseTables
     {   
        public const string InvoiceDate = "INV";  
        public const string ShipmentDate = "SHI";  
+       public const string OperationalDate = "OPR";  
     }
 }
 

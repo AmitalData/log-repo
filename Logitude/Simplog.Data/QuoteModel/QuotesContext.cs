@@ -46,7 +46,9 @@ namespace Simplog.Data.QuoteModel
                 currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             //}
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             QuotesContext context = new QuotesContext(connection);
             return context;
         }
@@ -101,6 +103,7 @@ namespace Simplog.Data.QuoteModel
             modelBuilder.Configurations.Add(new AccountingPaymentMethodMap());
             modelBuilder.Configurations.Add(new ARPaymentMap());
             modelBuilder.Configurations.Add(new ARPaymentStatuMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStocksStatusMap());
             modelBuilder.Configurations.Add(new BorderTypeMap());
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());

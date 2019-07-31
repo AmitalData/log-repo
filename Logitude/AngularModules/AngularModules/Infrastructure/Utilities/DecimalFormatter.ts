@@ -1,4 +1,4 @@
-﻿//import {isBlank, isNumber} from '@angular/common/src/facade/lang';
+//import {isBlank, isNumber} from '@angular/common/src/facade/lang';
 import {AppTool, FormatTool} from '../Tools';
 
 export class DecimalFormatter {
@@ -16,7 +16,7 @@ export class DecimalFormatter {
                     myMinFractionDigits = myMaxFractionDigits = maxDigits;
                 }
 
-                myResult = value.toLocaleString('en-US', { minimumFractionDigits: myMinFractionDigits, maximumFractionDigits: myMaxFractionDigits });
+                myResult = FormatTool.FormatNumber(value, "N" + myMinFractionDigits);/* value.toLocaleString('en-US', { minimumFractionDigits: myMinFractionDigits, maximumFractionDigits: myMaxFractionDigits });*/
             }
         }
 

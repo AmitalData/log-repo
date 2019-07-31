@@ -283,33 +283,5 @@ namespace WebFreight.Web.Helpers
 
 
 
-        public void AutomationLastUpdate(string objectTableId, int tenant)
-        {
-            AutomationLastUpdateRepository automationLastUpdateRepository = new AutomationLastUpdateRepository(tenant);
-            AutomationLastUpdate automationLastUpdate = automationLastUpdateRepository.GetSingleAutomationLastUpdate(objectTableId, tenant);
-
-            if (automationLastUpdate != null)
-            {
-                automationLastUpdate.LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                automationLastUpdateRepository.Update(automationLastUpdate);
-            }
-            else
-            {
-                automationLastUpdate = new AutomationLastUpdate()
-                {
-                    Tenant = tenant,
-                    HasAutomation = true,
-                    ObjectTableId = objectTableId,
-                    LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-
-                };
-
-                automationLastUpdateRepository.Add(automationLastUpdate);
-            }
-
-            automationLastUpdateRepository.SubmitChanges();
-        }
-
-
     }
 }

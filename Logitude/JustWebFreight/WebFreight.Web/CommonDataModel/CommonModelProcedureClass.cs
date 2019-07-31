@@ -35,6 +35,8 @@ namespace WebFreight.Web.CommonDataModel
                 param2.Value = tenant;
                 cmd.Parameters.Add(param2);
 
+                cmd.CommandTimeout = 10800; //3 Hours
+
                 cn.Open();
                 cmd.ExecuteNonQuery();
                 cn.Close();
@@ -53,7 +55,7 @@ namespace WebFreight.Web.CommonDataModel
                 param1.Direction = ParameterDirection.Input;
                 param1.Value = tenant;
                 cmd.Parameters.Add(param1);
-                cmd.CommandTimeout = 1800; //30 minutes
+                cmd.CommandTimeout = 18000; //3 Hours
                 cn.Open();
                 cmd.ExecuteNonQuery();
                 cn.Close();
@@ -76,6 +78,59 @@ namespace WebFreight.Web.CommonDataModel
             }
         }
 
+        public static bool IsExistsCustomerActualDataHistory(int tenant, DateTime? startDateTime)
+        {
+            bool isExists = false;
+
+            string strConnString = GetConnection(tenant);
+
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("select top 1 Id from CustomerActualDataHistory where Tenant = @Tenant and CONVERT(date,StartDateTime) = CONVERT(date,@StartDateTime)", cn);
+
+                cmd.Parameters.AddWithValue("@Tenant", tenant);
+                cmd.Parameters.AddWithValue("@StartDateTime", startDateTime);
+ 
+                cn.Open();
+
+                var iResult = cmd.ExecuteScalar();
+                if (iResult != null)
+                {
+                    isExists = true;
+                }
+
+                cn.Close();
+            }
+
+            return isExists;
+        }
+
+
+        public static void InsertCustomerActualDataHistory(int tenant, DateTime? startDateTime, DateTime? endDateTime, bool hasException, string exceptionMessage)
+        {
+            string strConnString = GetConnection(tenant);
+
+            using (SqlConnection conn = new SqlConnection(strConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = @"insert into CustomerActualDataHistory(Tenant, StartDateTime, EndDateTime, HasException, ExceptionMessage) VALUES(@Tenant, @StartDateTime, @EndDateTime, @HasException, @ExceptionMessage)";
+
+                    cmd.Parameters.AddWithValue("@Tenant", tenant);
+                    cmd.Parameters.AddWithValue("@StartDateTime", startDateTime);
+                    cmd.Parameters.AddWithValue("@EndDateTime", endDateTime);
+                    cmd.Parameters.AddWithValue("@HasException", hasException);
+                    cmd.Parameters.AddWithValue("@ExceptionMessage", exceptionMessage);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
         private static string GetConnection(int tenant)
         {
             GlobalDB currentDb;
@@ -87,8 +142,9 @@ namespace WebFreight.Web.CommonDataModel
             }
 
             string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;

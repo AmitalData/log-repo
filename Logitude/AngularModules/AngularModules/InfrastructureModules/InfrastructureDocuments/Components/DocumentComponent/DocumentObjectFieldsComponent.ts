@@ -42,6 +42,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     SelectedTabCode: string;
     InSertDataFieldType: string;
     public HideSystemDataTab: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
       
         
@@ -352,13 +353,13 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
             }
 
-            SessionLocator.CurrentSession.CurrentWindow.Close(this.TextSelected);
+            this.CurrentSession.CurrentWindow.Close(this.TextSelected);
     }
 
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.Close("");
+        this.CurrentSession.CurrentWindow.Close("");
     }
 
 

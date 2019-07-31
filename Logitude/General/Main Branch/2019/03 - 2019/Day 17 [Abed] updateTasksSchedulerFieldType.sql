@@ -1,0 +1,1 @@
+update TasksScheduler set Type = 'Task' where Type is null

@@ -201,6 +201,11 @@ export class PortPM {
     public set StateName(newValue: string) { if (this.stateName != newValue) { this.stateName = newValue; this.MarkAsDirty("StateName"); } }
        
 	 
+    private countryIsNorthAmerica: boolean;
+    public get CountryIsNorthAmerica() { return this.countryIsNorthAmerica; }
+    public set CountryIsNorthAmerica(newValue: boolean) { if (this.countryIsNorthAmerica != newValue) { this.countryIsNorthAmerica = newValue; this.MarkAsDirty("CountryIsNorthAmerica"); } }
+       
+	 
 
     public OldEntityPM: PortPM;
 		

@@ -1,4 +1,4 @@
-﻿import {Pipe} from '@angular/core';
+import {Pipe} from '@angular/core';
 import {DateTool, AppTool, DateFormats} from '../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 
@@ -121,6 +121,15 @@ export class DateTimePipe {
                     case "FIDATE": { //Filing Inbox
                           // Thu 22-Feb
                         myResult = myFormats.DayNameShort + " " + AppTool.PadLeft(myFormats.DateParts.Day + "", 2, "0") + "-" + myFormats.MonthNameShort;
+                        break;
+                    }
+                    case "DTLL12": { //Scheduler
+                        // Today:Yesterday:Tomorrow:ShortDate + hh:mm:ss (AM/PM)
+                        myResult = myFormats.DateString + " " + myFormats.ShortTimeString12;
+                        break;
+                    }
+                    case "SMD": { // time management pipe 'day/month'
+                        myResult = AppTool.PadLeft(myFormats.DateParts.Day + "", 2, "0") + "." + AppTool.PadLeft(myFormats.DateParts.Month + "", 2, "0") + "." + myFormats.DateParts.Year.toString().substr(-2);
                         break;
                     }
                     default: {

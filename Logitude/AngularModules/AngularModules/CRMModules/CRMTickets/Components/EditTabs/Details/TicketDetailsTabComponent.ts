@@ -47,7 +47,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     _entityResourceService: EntityResourceService = new EntityResourceService();
     public EntityList: EntityClass[] = [];
     public EntityNumberTitle = "Shipment Number";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -78,17 +78,17 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
 
     private TabSelectedEvent: any = null;
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetUIProperties_EntityClosed();
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetUIProperties_EntityClosed();
                 }
             });
@@ -704,14 +704,14 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
         });
     }
     ViewShipmentClicked() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.ShipmentId, ObjectTableName: 'Shipment', BackButtonLabel: "Tickets" });
             });
     }
     ViewQuoteClicked() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.QuoteId, ObjectTableName: 'Quote', BackButtonLabel: "Tickets" });
@@ -753,16 +753,16 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
         }
     }
     ConectContactClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Connecting");
+        this.CurrentSession.StartBusyIndicator("Connecting");
         var myDomainService: CRMDomainService = new CRMDomainService();
         myDomainService.GetConnectContactCards(this.CompanyId, this.ContactId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) {
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
             }
             else {
                 this.IsShowConnectContact = false;
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     AddCompanyClicked() {

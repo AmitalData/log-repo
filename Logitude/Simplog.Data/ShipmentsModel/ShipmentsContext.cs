@@ -53,7 +53,9 @@ namespace Simplog.Data.ShipmentsModel
                 currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             //}
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             ShipmentsContext context = new ShipmentsContext(connection);
             return context;
         }
@@ -105,6 +107,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new AccountingPaymentMethodMap());
             modelBuilder.Configurations.Add(new ARPaymentMap());
             modelBuilder.Configurations.Add(new ARPaymentStatuMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStocksStatusMap());
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
             modelBuilder.Configurations.Add(new AWBStatuMap());
@@ -315,6 +318,8 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new OBLTypeMap());
             modelBuilder.Configurations.Add(new ShipmentCustomsMessageTypeMap());
             modelBuilder.Configurations.Add(new INTTRAStatusMap());
+            modelBuilder.Configurations.Add(new INTTRABookingTransStatusMap());
+            modelBuilder.Configurations.Add(new INTTRABookingStatusMap());
             modelBuilder.Configurations.Add(new INTTRASIStatusMap());
             modelBuilder.Configurations.Add(new ShipmentContainerStatusMap());
             modelBuilder.Configurations.Add(new PickUpDeliveryTransportModeMap());
@@ -379,6 +384,8 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentCustomsTransmission> ShipmentCustomsTransmissions { get; set; }
         public IDbSet<INTTRAStatus> INTTRAStatuses { get; set; }
         public IDbSet<INTTRASIStatus> INTTRASIStatus { get; set; }
+        public IDbSet<INTTRABookingStatus> INTTRABookingStatuses { get; set; }
+        public IDbSet<INTTRABookingTransStatus> INTTRABookingTransStatuses { get; set; }
         public IDbSet<ShipmentContainerStatus> ShipmentContainerStatuses { get; set; }
         public IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; set; }
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; set; }

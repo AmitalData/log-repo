@@ -72,6 +72,27 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }).ToList();
         }
 
+        public ARPaymentInvoicePM GetARPaymentInvoicePMsByInvoiceNumber(string invoiceNumber, int tenant)
+        {
+            return (from a in repository.context.ARInvoicePayments.Include("ARInvoice")
+                    where a.ARInvoice.InvoiceNumber == invoiceNumber && a.Tenant == tenant
+                    select new ARPaymentInvoicePM()
+                    {
+                        ARInvoiceId = a.ARInvoiceId,
+                        Id = a.Id,
+                        ForeignAmount = a.ForeignAmount,
+                        PaymentAmount = a.PaymentAmount,
+                        LocalAmount = a.LocalAmount,
+                        ExchangeRate = a.ExchangeRate,
+                        ForeignCurrencyId = a.ForeignCurrencyId,
+                        Tenant = a.Tenant,
+                        ARPaymentId = a.ARPaymentId,
+                        ARInvoiceNumber = a.ARInvoice == null ? null : a.ARInvoice.InvoiceNumber,
+                        ARInvoiceMetodoPagoCode = a.ARInvoice == null ? null : a.ARInvoice.MetodoPagoCode,
+                        ARInvoiceTransferStatusCode = a.ARInvoice == null ? null : a.ARInvoice.TransferStatusCode,
+                    }).FirstOrDefault();
+        }
+
         public IQueryable<ARPaymentInvoicePM> GetPaymentLinesForMessaging(int tenant)
         {
             return (from a in repository.context.ARInvoicePayments.Include("ARInvoice")
@@ -92,28 +113,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         }
 
 
-        public List<ARInvoicePaymentPM> GetARInvoicePaymentPMsForPaymentIds(List<string> paymentids, int tenant)
-        {
-            List<ARInvoicePaymentPM> result =
-             (from a in repository.context.ARInvoicePayments
-              where paymentids.Contains(a.ARPaymentId) && a.Tenant == tenant
-              select new ARInvoicePaymentPM()
-              {
-                  ARInvoiceId = a.ARInvoiceId,
-                  Id = a.Id,
-                  ForeignAmount = a.ForeignAmount,
-                  ForeignCurrencyId = a.ForeignCurrencyId,
-                  LocalAmount = a.LocalAmount,
-                  Tenant = a.Tenant,
-                  ARPaymentId = a.ARPaymentId,
-                  ExchangeRate = a.ExchangeRate,
-                  PaymentAmount = a.PaymentAmount,
-                  PaymentNumber = a.ARPayment == null ? null : a.ARPayment.PaymentNo,
-
-              }).ToList();
-
-
-            return result;
-        }
+      
     }
 }

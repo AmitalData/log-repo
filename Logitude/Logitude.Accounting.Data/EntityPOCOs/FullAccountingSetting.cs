@@ -121,6 +121,12 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual GLAccount DefaultExternalDiffGLAccount { get; set; }
         [Column("SoftwareVersion")]
 	    public string SoftwareVersion { get; set; }
+        [Column("IsPaymentChequesActivated")]
+	    public bool IsPaymentChequesActivated { get; set; }
+        [Column("GLAccounterCounterLength")]
+	    public int? GLAccounterCounterLength { get; set; }
+        [Column("PaymentChequesLogoId")]
+	    public string PaymentChequesLogoId { get; set; }
     }
 }
 	 

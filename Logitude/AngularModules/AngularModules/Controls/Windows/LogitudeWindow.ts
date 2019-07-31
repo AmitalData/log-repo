@@ -14,6 +14,7 @@ export class LogitudeWindow {
     public IsSameWindowSize: boolean = false;
     public IsShowCloseButton: boolean = false;
     public IsFillScreen: boolean = false;
+    public IsFillScreenHeight: boolean = false;
     public WindowArgs: any;
     public NewWizardArgs: any;
     public DataContext: any;
@@ -40,6 +41,7 @@ export class LogitudeWindow {
 
     @Output() WindowClosed: EventEmitter<any> = new EventEmitter();
     @Output() ComponentLoaded: EventEmitter<any> = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         if (this.LayoutDirection == 'rtl') {
@@ -53,25 +55,25 @@ export class LogitudeWindow {
 
     public Show(myContent: any) {
         if (myContent != null) {
-            var viewContainerRefLocation: ViewContainerRef = SessionLocator.CurrentSession.SessionLocation.viewContainerRef;
-            if (SessionLocator.CurrentSession.CurrentEditComponent) {// itzik : due crush !!!- abdulllah add this lines ...
-                if (SessionLocator.CurrentSession.CurrentEditComponent.IsSplitBtnVisible) {
-                    viewContainerRefLocation = SessionLocator.CurrentSession.CurrentEditComponent.WindowLocationViewContainerRef;
+            var viewContainerRefLocation: ViewContainerRef = this.CurrentSession.SessionLocation.viewContainerRef;
+            if (this.CurrentSession.CurrentEditComponent) {// itzik : due crush !!!- abdulllah add this lines ...
+                if (this.CurrentSession.CurrentEditComponent.IsSplitBtnVisible) {
+                    viewContainerRefLocation = this.CurrentSession.CurrentEditComponent.WindowLocationViewContainerRef;
                 }
             }
 
 
-            if (SessionLocator.CurrentSession.CurrentWindow) {
+            if (this.CurrentSession.CurrentWindow) {
                 this.IsOverWindow = true;
-                this.parentWindow = SessionLocator.CurrentSession.CurrentWindow;
+                this.parentWindow = SessionLocator.SelectedSession.CurrentWindow;
             }
 
             if (this.IsOverAll) {
                 viewContainerRefLocation = SessionLocator.ApplicationLocation;
             }
 
-            else if (SessionLocator.CurrentSession.CurrentWindow) {
-                if (SessionLocator.CurrentSession.CurrentWindow.IsOverAll) {
+            else if (this.CurrentSession.CurrentWindow) {
+                if (this.CurrentSession.CurrentWindow.IsOverAll) {
                     this.IsOverAll = true;
                     viewContainerRefLocation = SessionLocator.ApplicationLocation;
                 }
@@ -83,19 +85,19 @@ export class LogitudeWindow {
                     this.ComponentRef = cmpRef;
                     this.InstanceComponent = cmpRef.instance;
 
-                    this.WindowIndex = SessionLocator.CurrentSession.GetNewWindowIndex();
+                    this.WindowIndex = this.CurrentSession.GetNewWindowIndex();
 
-                    if (SessionLocator.CurrentSession.CurrentWindow != null) {
-                        if (SessionLocator.CurrentSession.CurrentWindow.IsEditComponent == false) {
+                    if (this.CurrentSession.CurrentWindow != null) {
+                        if (this.CurrentSession.CurrentWindow.IsEditComponent == false) {
                             this.IsOverWindow = true;
 
-                            if (SessionLocator.CurrentSession.CurrentWindow.Width == this.Width && SessionLocator.CurrentSession.CurrentWindow.Height == this.Height) {
+                            if (this.CurrentSession.CurrentWindow.Width == this.Width && this.CurrentSession.CurrentWindow.Height == this.Height) {
                                 this.IsSameWindowSize = true;
                             }
                         }
                     }
 
-                    SessionLocator.CurrentSession.AddWindow(this);
+                    this.CurrentSession.AddWindow(this);
                     cmpRef.instance.InjectWindowComponent(myContent, this);
                 });
         }
@@ -105,13 +107,13 @@ export class LogitudeWindow {
         this.IsFillScreen = isFillScreen;
         this.IsEditComponent = true;
 
-        var viewContainerRefLocation: ViewContainerRef = SessionLocator.CurrentSession.SessionLocation.viewContainerRef;
+        var viewContainerRefLocation: ViewContainerRef = this.CurrentSession.SessionLocation.viewContainerRef;
         if (this.IsOverAll) {
             viewContainerRefLocation = SessionLocator.ApplicationLocation;
         }
 
-        else if (SessionLocator.CurrentSession.CurrentWindow) {
-            if (SessionLocator.CurrentSession.CurrentWindow.IsOverAll) {
+        else if (this.CurrentSession.CurrentWindow) {
+            if (this.CurrentSession.CurrentWindow.IsOverAll) {
                 this.IsOverAll = true;
             }
         }
@@ -122,18 +124,18 @@ export class LogitudeWindow {
                 this.ComponentRef = cmpRef;
                 this.InstanceComponent = cmpRef.instance;
 
-                this.WindowIndex = SessionLocator.CurrentSession.GetNewWindowIndex();
+                this.WindowIndex = this.CurrentSession.GetNewWindowIndex();
 
-                if (SessionLocator.CurrentSession.CurrentWindow != null) {
+                if (this.CurrentSession.CurrentWindow != null) {
                     this.IsOverWindow = true;
-                    this.parentWindow = SessionLocator.CurrentSession.CurrentWindow;
+                    this.parentWindow = SessionLocator.SelectedSession.CurrentWindow;
 
-                    if (SessionLocator.CurrentSession.CurrentWindow.Width == this.Width && SessionLocator.CurrentSession.CurrentWindow.Height == this.Height) {
+                    if (this.CurrentSession.CurrentWindow.Width == this.Width && this.CurrentSession.CurrentWindow.Height == this.Height) {
                         this.IsSameWindowSize = true;
                     }
                 }
 
-                SessionLocator.CurrentSession.AddWindow(this);
+                this.CurrentSession.AddWindow(this);
 
                 cmpRef.instance.InjectEditComponent(entityId, objectTableName, this, selectedTabCode);
             });
@@ -149,7 +151,7 @@ export class LogitudeWindow {
             this.InstanceComponent.Destroy();
         }
 
-        SessionLocator.CurrentSession.RemoveWindow(this);
+        this.CurrentSession.RemoveWindow(this);
         this.WindowClosed.emit(emit);
     }
 
@@ -242,6 +244,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
 
     public IsOverAll: boolean = false;
     @ViewChild("WindowContent", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         if (this.LayoutDirection == 'rtl') {
@@ -358,6 +361,12 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
                 windowHeight = appHeight - 115;
             }
 
+            else if (this.logWindow.IsFillScreenHeight) {
+                windowHeight = appHeight - 50;
+                windowWidth = this.logWindow.Width;
+            }
+
+
             else {
                 SetOverProperty = true;
 
@@ -390,9 +399,9 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
             var windowPlaceholderHeight: number = null;
             var isOverEditComponent: boolean = false;
 
-            isOverEditComponent = SessionLocator.CurrentSession.CurrentEditComponent != null && SessionLocator.CurrentSession.CurrentEditComponent != undefined;
+            isOverEditComponent = this.CurrentSession.CurrentEditComponent != null && this.CurrentSession.CurrentEditComponent != undefined;
 
-            // if (SessionLocator.CurrentSession.CurrentWindow.IsOverWindow)
+            // if (this.CurrentSession.CurrentWindow.IsOverWindow)
             //     isOverEditComponent = false;
 
 
@@ -401,7 +410,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
             if (isOverEditComponent || (isOverEditComponent && this.logWindow.IsOverWindow)) {
 
                 //get window location from edit component
-                var editComponentCelId = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentCellId;
+                var editComponentCelId = this.CurrentSession.CurrentEditComponent.EditComponentCellId;
                 var windowPlaceholderDiv = document.getElementById(editComponentCelId);
                 if (windowPlaceholderDiv) {
                     windowPlaceholderWidth = windowPlaceholderDiv.clientWidth;
@@ -432,9 +441,9 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     }
 
     private CreateDynamicIds() {
-        this.WindowId = "LogitudeWindow_" + SessionLocator.CurrentSession.SessionIndex + "_" + SessionLocator.CurrentSession.SessionWindowIndex;
-        this.FocusElementId = "LogitudeWindowFocusElement_" + SessionLocator.CurrentSession.SessionIndex + "_" + SessionLocator.CurrentSession.SessionWindowIndex;
-        this.WindowContainerId = "LogitudeWindowContainerElement_" + SessionLocator.CurrentSession.SessionIndex + "_" + SessionLocator.CurrentSession.SessionWindowIndex;
+        this.WindowId = "LogitudeWindow_" + this.CurrentSession.SessionIndex + "_" + this.CurrentSession.SessionWindowIndex;
+        this.FocusElementId = "LogitudeWindowFocusElement_" + this.CurrentSession.SessionIndex + "_" + this.CurrentSession.SessionWindowIndex;
+        this.WindowContainerId = "LogitudeWindowContainerElement_" + this.CurrentSession.SessionIndex + "_" + this.CurrentSession.SessionWindowIndex;
         this.logWindow.WindowId = this.WindowId;
         this.logWindow.WindowContainerId = this.WindowContainerId;
     }
@@ -562,7 +571,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
 
     CloseClicked() {
         if (this.IsEditComponent) {
-            SessionLocator.CurrentSession.CurrentEditComponent.BackButtonClicked();
+            this.CurrentSession.CurrentEditComponent.BackButtonClicked();
         }
 
         else {
@@ -572,7 +581,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
                 }
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 }

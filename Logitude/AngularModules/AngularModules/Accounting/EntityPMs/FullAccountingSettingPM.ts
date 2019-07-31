@@ -229,6 +229,21 @@ export class FullAccountingSettingPM {
     public set SoftwareVersion(newValue: string) { if (this.softwareVersion != newValue) { this.softwareVersion = newValue; this.MarkAsDirty("SoftwareVersion"); } }
        
 	 
+    private isPaymentChequesActivated: boolean;
+    public get IsPaymentChequesActivated() { return this.isPaymentChequesActivated; }
+    public set IsPaymentChequesActivated(newValue: boolean) { if (this.isPaymentChequesActivated != newValue) { this.isPaymentChequesActivated = newValue; this.MarkAsDirty("IsPaymentChequesActivated"); } }
+       
+	 
+    private gLAccounterCounterLength: number;
+    public get GLAccounterCounterLength() { return this.gLAccounterCounterLength; }
+    public set GLAccounterCounterLength(newValue: number) { if (this.gLAccounterCounterLength != newValue) { this.gLAccounterCounterLength = newValue; this.MarkAsDirty("GLAccounterCounterLength"); } }
+       
+	 
+    private paymentChequesLogoId: string;
+    public get PaymentChequesLogoId() { return this.paymentChequesLogoId; }
+    public set PaymentChequesLogoId(newValue: string) { if (this.paymentChequesLogoId != newValue) { this.paymentChequesLogoId = newValue; this.MarkAsDirty("PaymentChequesLogoId"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

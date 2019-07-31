@@ -1,4 +1,4 @@
-﻿
+
 import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../infrastructure/Tools';
@@ -21,7 +21,7 @@ import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 })
 
 export class FBLStockFieldComponent {
-
+    private CurrentSession = SessionLocator.SelectedSession;
     public ObjectField: ObjectFieldPM;
     public ObjectTableName: string;
     public DataContext: ShipmentPM;
@@ -103,9 +103,9 @@ export class FBLStockFieldComponent {
 
                     this.isGetFromStock = true;
 
-                    SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                         if (isSaveSuccess) {
-                            this.DataContext = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                            this.DataContext = this.CurrentSession.CurrentEditComponent.EntityPM;
                         }
                         else {
 
@@ -119,7 +119,7 @@ export class FBLStockFieldComponent {
                         this.SetUIProperties_StockButton();
                         
                     });
-                    SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
                   
                 }
             }
@@ -133,9 +133,9 @@ export class FBLStockFieldComponent {
             this.DataContext.FBLStockNumber = this.DataContext.House;
              this.isGetFromStock = false;
 
-             SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                  if (isSaveSuccess) {
-                     this.DataContext = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                     this.DataContext = this.CurrentSession.CurrentEditComponent.EntityPM;
                  }
                  else {
 
@@ -149,7 +149,7 @@ export class FBLStockFieldComponent {
                  this.SetUIProperties_StockButton();
 
              });
-             SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+             this.CurrentSession.CurrentEditComponent.SaveChanges();
 
            
         }

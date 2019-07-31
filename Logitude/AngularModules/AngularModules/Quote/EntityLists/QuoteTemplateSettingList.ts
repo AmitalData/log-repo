@@ -173,5 +173,19 @@ export class QuoteTemplateSettingList {
         ShowSaleMaxMinAmountPackages: boolean;
         ShowSaleMaxMinAmountContainers: boolean;
 
+        ShowHeaderLabelsPackages: boolean;
+        ShowHeaderLabelsContainers: boolean;
+
+
+        SpaceLinesBeforeContainers: number;
+        SpaceLinesBeforePackages: number;
+        SpaceLinesBeforeQuoteHeaders: number;
+        SpaceLinesBeforeQuoteDetails: number;
+        SpaceLinesBeforeHeaders: number;
+        SpaceLinesBeforeFooters: number;
+        SpaceLinesBeforePerContainers:number;
+
+
+
 
 }     

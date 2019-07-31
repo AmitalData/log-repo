@@ -1,7 +1,6 @@
 import {DateTool} from '../../Infrastructure/Tools';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ARInvoicePM} from '../EntityPMs/ARInvoicePM';
 import {InvoiceTool} from '../Tools';
 import {AppTool} from '../../Infrastructure/Tools'; 
@@ -28,7 +27,7 @@ export class ARInvoicePMInitService {
             entityPM.ProfitCurrencyCode = SessionLocator.TenantPM.ProfitCurrencyCode;
             entityPM.SATTransferStatusCode = "NT";
             entityPM.SATTransferStatusName = "Not Transfered";
-
+            entityPM.NewConcurrencyGUID = AppTool.GetNewGuid();
         }
     }
 

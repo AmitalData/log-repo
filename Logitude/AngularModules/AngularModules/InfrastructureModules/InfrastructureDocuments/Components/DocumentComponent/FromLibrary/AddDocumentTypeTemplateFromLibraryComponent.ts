@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../../../../Infrastructure/Utilities/Guid';
 import {DocumentTypeTemplateListExtendedService} from '../../../../../Common/Services/ExtendedLists/DocumentTypeTemplateListExtendedService';
@@ -45,6 +45,7 @@ export class AddDocumentTypeTemplateFromLibraryComponent implements OnInit {
 
     public DocumentTypeTemplateViewModelSelected: DocumentTypeTemplateViewModel;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _dcumentTypePMExtendedService: DocumentTypePMExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService) {
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
@@ -91,7 +92,7 @@ export class AddDocumentTypeTemplateFromLibraryComponent implements OnInit {
 
     Load() {
         this.DocumentTypeTemplateLists = [];
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         var isfilter = FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPE") ? false : true;
         this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibraryByDocumentTypeId(0, this.CurrentDocumentType.Id, isfilter,SessionInfo.LoggedUserTenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
@@ -139,7 +140,7 @@ export class AddDocumentTypeTemplateFromLibraryComponent implements OnInit {
             }
 
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         });
     }
 
@@ -147,7 +148,7 @@ export class AddDocumentTypeTemplateFromLibraryComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     AddFromLibraryButtonClicked(item: DocumentTypeTemplateViewModel) {
@@ -208,13 +209,13 @@ export class AddDocumentTypeTemplateFromLibraryComponent implements OnInit {
 
     CopyDocumentTypeTemplate() {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
         var documenttypetemplatePm: DocumentTypeTemplatePM = this.DocumentTypeTemplatePMLists.filter(d=> d.Id == this.DocumentTypeTemplateViewModelSelected.Id)[0];
         if (!documenttypetemplatePm) {
 
             this._documentTypeTemplatePMExtendedService.GetSingleDocumentTypeTemplate(this.DocumentTypeTemplateViewModelSelected.Id, 0).subscribe(res => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var pmResponse: ServiceResponse = res;
                 var myResult = pmResponse.Result;
                 if (myResult) {
@@ -222,7 +223,7 @@ export class AddDocumentTypeTemplateFromLibraryComponent implements OnInit {
                     this.SaveDocumentTypeTemplate(documenttypetemplatePm);
                 }
                 else {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     this.DocumentTypeTemplateViewModelSelected.IsEnabledAddDocumentTemplate = true;
                 }
 
@@ -255,10 +256,10 @@ export class AddDocumentTypeTemplateFromLibraryComponent implements OnInit {
 
        
         this.documentTypeTemplatePMService.insert(this.newTemplatePm).subscribe(res=> {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
 
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {

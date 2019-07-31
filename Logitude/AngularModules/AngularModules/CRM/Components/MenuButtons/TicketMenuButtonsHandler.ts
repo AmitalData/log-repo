@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {TicketPM} from '../../EntityPMs/TicketPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -21,6 +21,8 @@ export class TicketMenuButtonsHandler {
     public EntityPM: TicketPM;
     public entityArgs: EntityArgs
     private status: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -39,10 +41,10 @@ export class TicketMenuButtonsHandler {
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
             if (!this.SaveCompletedEvent) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                         if (this.isCancelled) {
@@ -60,8 +62,8 @@ export class TicketMenuButtonsHandler {
                             var errors = validator.ValidateCurrenctEntity(this.EntityPM);
                             if (errors != null && errors.length > 0) {
                                 isValid = false;
-                                if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-                                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+                                if (this.CurrentSession.CurrentEditComponent != null) {
+                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
                                 }
                             }
                             if (isValid) {
@@ -73,7 +75,7 @@ export class TicketMenuButtonsHandler {
             }
 
             if (!this.LoadCompletedEvent) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     }
@@ -230,7 +232,7 @@ export class TicketMenuButtonsHandler {
                 this.ClosuerWindow();
             }
             else {
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
             }
         });
     }

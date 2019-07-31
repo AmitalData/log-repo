@@ -33,5 +33,14 @@ namespace Logitude.BL.Resolvers
             ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
             return loggedcontact;
         }
+
+        public static bool GetLoggedContactShowLocal(int tenant)
+        {
+            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            bool showLocal = !(bool)loggedcontact?.DontShowLocal;
+            return showLocal;
+        }
     }
 }

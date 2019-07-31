@@ -27,6 +27,7 @@ export class WebhookTesterComponent extends BaseComponent {
     //private isPrimaryGenerated: boolean = false;
     //private isSecondaryGenerated: boolean = false;
     public Operators = ["In Header", "In URL"];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myService = new WebhookKeysExtendedPMService();
@@ -60,7 +61,7 @@ export class WebhookTesterComponent extends BaseComponent {
 
         //    else {
 
-        //        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        //        this.CurrentSession.StartBusyIndicatorLoading();
 
         //        this.myService.get(this.EntityId).subscribe((myResponse: ServiceResponse) => {
         //            if (myResponse.HasError) {
@@ -75,7 +76,7 @@ export class WebhookTesterComponent extends BaseComponent {
         //                }
         //            }
 
-        //            SessionLocator.CurrentSession.StopBusyIndicator();
+        //            this.CurrentSession.StopBusyIndicator();
         //        });
         //    }
         //});
@@ -119,11 +120,11 @@ export class WebhookTesterComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     private messageWindow: MessageWindow = new MessageWindow();
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         if (AppTool.IsNullOrEmpty(this.PageURL) || AppTool.IsNullOrEmpty(this.ContentToPush)) {
             this.ValidationErrorsList.push("Both URL and Content Fields Are Required .");
             return;
@@ -131,7 +132,7 @@ export class WebhookTesterComponent extends BaseComponent {
         var DataToPush = { URL: this.PageURL, Operation: this.Operation, AccessKey: this.AccessKey, ContentToPush: this.ContentToPush };
         this.myService.PushHookContent(DataToPush).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (!myResponse.HasError) {
                 this.messageWindow.Width = 300;

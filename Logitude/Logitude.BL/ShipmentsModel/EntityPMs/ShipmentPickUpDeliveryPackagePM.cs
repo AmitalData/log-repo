@@ -94,5 +94,13 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
                 pickUpDeliveryPackageHarmonizesChangeSet = value;
             }
         }
+
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Year { get; set; }
+        public string Color { get; set; }
+        public string ChassisNumber { get; set; }
+        public string RegistrationNumber { get; set; }
+        public string CountryId { get; set; }
     }
 }

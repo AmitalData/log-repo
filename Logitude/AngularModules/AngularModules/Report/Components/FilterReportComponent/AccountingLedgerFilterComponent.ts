@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow'
@@ -31,13 +31,13 @@ export class AccountingLedgerFilterComponent extends BaseComponent implements On
     public IsCreateDateId: string = "IsCreateDateId";
     public IsValueDateId: string = "IsValueDateId";
     public DateRadio: string = "DateRadio_";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
-        this.IsValueDateId = this.IsValueDateId + SessionLocator.CurrentSession.GetNewId(this.IsValueDateId);
-        this.IsCreateDateId = this.IsCreateDateId + SessionLocator.CurrentSession.GetNewId(this.IsCreateDateId);
-        this.DateRadio = this.DateRadio + SessionLocator.CurrentSession.GetNewId(this.DateRadio);
+        this.IsValueDateId = this.IsValueDateId + this.CurrentSession.GetNewId(this.IsValueDateId);
+        this.IsCreateDateId = this.IsCreateDateId + this.CurrentSession.GetNewId(this.IsCreateDateId);
+        this.DateRadio = this.DateRadio + this.CurrentSession.GetNewId(this.DateRadio);
     }
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {

@@ -1,0 +1,234 @@
+import {Component, Output, EventEmitter} from '@angular/core';
+import { AirlinePM } from '../../../../Common/EntityPMs/AirlinePM';
+import { AirlineAreaPM } from '../../../../Common/EntityPMs/AirlineAreaPM';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
+import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
+import {Validator} from '../../../../Infrastructure/Validators/Validator';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { PortList } from '../../../../Common/EntityLists/PortList';
+import { AirlineAreasPortPM } from '../../../../Common/EntityPMs/AirlineAreasPortPM';
+import { PortListService } from '../../../../Common/Services/StandardLists/PortListService';
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './AddEditAirlineAreaComponent.html',
+})
+
+export class AddEditAirlineAreaComponent extends BaseComponent {
+    public EntityPM: AirlineAreaPM;
+    public AirlinePM: AirlinePM;
+
+    public ObjectTableName: string="AirlineArea";
+    public DataContext: AddEditAirlineAreaComponent = this;
+    public IsNew: boolean;
+    public ItemList = [];
+    public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
+    public portListService: PortListService = new PortListService();
+    public RemovedAirlineAreas = [];
+    public AddedAirlineAreas = [];
+    public ISNullDescription: boolean = false;
+    constructor() {
+        super();
+    }
+
+    private myCloner: Cloner;
+    private Clone() {
+        this.myCloner = new Cloner(this.DataContext);
+        this.myCloner.AddEntity(this.EntityPM);
+        this.myCloner.AddEntity(this.AirlinePM);
+
+        this.myCloner.AddEntity(this.EntityPM);
+        this.myCloner.AddEntity(this.EntityPM.AirlineAreasPorts);
+        this.EntityPM.AirlineAreasPorts.forEach(p => {
+            this.myCloner.AddEntity(p);
+        });
+
+
+    }
+    private RejectChanges() {
+        this.myCloner.RejectChanges();
+    }
+
+
+    public get Name() { return this.EntityPM.Name; }
+    public set Name(value: string) { this.EntityPM.Name = value; }
+
+
+    public get Description() { return this.EntityPM.Description; }
+    public set Description(value: string) {
+        if (this.EntityPM.Description != value) {
+            this.EntityPM.Description = value;
+        }
+    }
+    
+    public IsResourcesReady: boolean = false;
+    SetWindowArgs(windowArgs: any) {
+        this.AirlinePM = windowArgs['EntityPM'];
+        this.AirlinePM.CloneMe();
+        this.AirlinePM.AirlineAreas.forEach(item => {
+            item.CloneMe();
+        });
+        this.IsNew = windowArgs['IsNew'];
+        if (this.IsNew) {
+            this.EntityPM = new AirlineAreaPM(this.AirlinePM);
+            this.EntityPM.CloneMe();
+            this.Clone();
+
+        }
+        
+        else {
+            
+            this.EntityPM = windowArgs['Entity'];
+            this.EntityPM.CloneMe();
+            this.Clone();
+            if (AppTool.IsNullOrEmpty(this.EntityPM.Description)) {
+                this.ISNullDescription = true;
+            }
+            this.EntityPM.AirlineAreasPorts.forEach(item => {
+                this.AddedAirlineAreas.push(item);
+
+                this.myCloner.AddEntity(item);
+
+                this.portListService.getSingleFromCache(item.PortId).subscribe(p => {
+                    if (!p.HasError) {
+                        if (p.Result) {
+                            item.CloneMe();
+                            this.ItemList.push(new DestinationClass(this, p.Result,false));
+                        }
+                    }
+                    else {
+                        this.ValidationErrorsList = p.ErrorsArray;
+                    }
+                });
+
+            });
+
+
+        }
+        this.IsResourcesReady = true;
+    }
+
+    ChoosePort() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 320;
+        logWindow.Height = 170;
+
+        var itemComponent = new DestinationClass(this, null,true);
+        logWindow.DataContext = itemComponent;
+
+        logWindow.Title = "Choose Ports";
+        logWindow.Show('./CommonModules/CommonAirline/Components/AddEdit/ChoosePortComponent');
+    }
+
+
+    DeletePort(Item: DestinationClass) {
+        var index = this.ItemList.indexOf(Item);
+        if (index > -1) {
+            this.ItemList.splice(index,1);
+        }
+
+        var index = this.AddedAirlineAreas.indexOf(Item.EntityPM);
+        if (index > -1) {
+            this.AddedAirlineAreas.splice(index, 1);
+        }
+
+        this.RemovedAirlineAreas.push(Item.EntityPM);
+    }
+   
+
+    SaveButtonClicked() {
+        this.ValidationErrorsList = [];
+        if (AppTool.IsNullOrEmpty(this.EntityPM.Name)) {
+            this.ValidationErrorsList.push("Name is required");
+        }
+
+        if (this.AddedAirlineAreas.filter(p => p.ChangeSetOp != "3")[0] == null) {
+            this.ValidationErrorsList.push("At Least one port is required");
+        }
+       
+      
+        if (this.ValidationErrorsList.length == 0) {
+            this.AddedAirlineAreas.forEach(item => {
+                this.EntityPM.AddAirlineAreasPortPM(item);
+            });
+            this.RemovedAirlineAreas.forEach(item => {
+                this.EntityPM.RemoveAirlineAreasPortPM(item);
+            });
+
+            if (this.IsNew) {
+
+                this.EntityPM.CreatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
+                this.EntityPM.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
+                this.EntityPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+                this.EntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+                this.EntityPM.AirlineId = this.AirlinePM.Id;
+                this.AirlinePM.AddAirlineAreaPM(this.EntityPM);
+
+            }
+            this.CurrentSession.CloseCurrentWindow();
+
+        }       
+    }
+
+    CancelButtonClicked() {
+        if (this.ISNullDescription)
+            this.Description = null;
+        this.RejectChanges();
+        this.AirlinePM.RejectChanges();
+        this.EntityPM.RejectChanges();
+        this.myCloner.RejectChanges();
+        this.AirlinePM.AirlineAreas.forEach(item => {
+            item.RejectChanges();
+        });
+        this.EntityPM.AirlineAreasPorts.forEach(item => {
+            item.RejectChanges();
+        });
+
+         this.CurrentSession.CloseCurrentWindow();
+    }
+
+  
+
+
+}
+
+
+export class DestinationClass extends BaseComponent {
+    public Indication: string;
+    public Name: string;
+    public Code: string;
+    public Id: string;
+
+    public EntityPM: AirlineAreasPortPM;
+    constructor(public fatherComponent: AddEditAirlineAreaComponent, Port: PortList,IsNew: boolean) {
+        super();   
+        if (IsNew && Port!=null) {
+            this.Indication = "Port";
+            this.Name = Port.EnglishName;
+            this.Code = Port.Code;
+            this.Id = Port.Id;
+            this.EntityPM = new AirlineAreasPortPM(fatherComponent.EntityPM);
+            this.EntityPM.Name = this.Name;
+            this.EntityPM.Tenant = SessionLocator.Tenant;
+            this.EntityPM.AirlineAreaId = fatherComponent.EntityPM.Id;
+            this.EntityPM.PortId = this.Id;
+            fatherComponent.AddedAirlineAreas.push(this.EntityPM);
+        }
+        else {
+            if (Port != null) {
+                this.Indication = "Port";
+                this.Name = Port.EnglishName;
+                this.Code = Port.Code;
+                this.Id = Port.Id;
+                this.EntityPM = fatherComponent.EntityPM.AirlineAreasPorts.filter(p => p.PortId == Port.Id)[0];
+
+            }
+        }
+    }
+}

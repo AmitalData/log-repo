@@ -268,6 +268,7 @@
     <Compile Include="CommonDataModel\APIDataContract\Vendor.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vessel.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AccountingSystemDetails.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CheckDigitControlAlgorithmDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CommunicationLogTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CommunicationStatusTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\ContactDoneMethodDetails.Generated.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\INTTRASettingModeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\LoginPolicyDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\MetodoPagoDetails.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\NumberFormatDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\PartnerTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\PaymentTermDateTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\ProductPeriodDetails.Generated.cs" />
@@ -310,6 +312,7 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\INTTRASettingModeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\LoginPolicyStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\MetodoPagoStruct.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\EnumGenerated\NumberFormatStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\PartnerTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\PaymentTermDateTypeStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\ProductPeriodStruct.Generated.cs" />
@@ -328,11 +331,41 @@
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
+    <Compile Include="CommonDataModel\EntityLists\AirlineAreasPortList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\AirlineAreaList.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\AirlineAreasPortPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\AirlineAreaPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CardContactProductPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\AirlineAreasPortQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\AirlineAreaQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\CardContactProductQuery.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\AirlineAreasPortMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\AirlineAreaMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\CardContactProductMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\Validating\VATValidating.cs" />
+    <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\SchedulerProcedureDetails.Generated.cs" />
+    <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\SchedulerProcedureStruct.Generated.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\SchedulerProcedureList.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\SchedulerProcedurePM.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\SchedulerLogsQuery.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARPaymentChequeReplica.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARPaymentChequeStatusReplica.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARPaymentInvoice.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentChequeReplicaQueryService.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentChequeStatusReplicaQueryService.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentInvoiceQueryService.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeReplicaPM.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeStatusReplicaPM.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeReplicaQuery.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeStatusReplicaQuery.cs" />
+    <Compile Include="QuoteModel\CustomFilters\QuoteTemplateCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
     <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />
     <Compile Include="CommonDataModel\DataContracts\UsersByTenantData.cs" />
     <Compile Include="CommonDataModel\EntityAMs\DepositionRequestAM.cs" />
     <Compile Include="CommonDataModel\EntityAMs\ImporterDepositionAM.cs" />
+    <Compile Include="CommonDataModel\EntityLists\CheckDigitControlAlgorithmList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomerDepositionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomsShipperList.cs" />
     <Compile Include="CommonDataModel\EntityLists\DocumentFilingBackupBatchList.cs" />
@@ -341,6 +374,8 @@
     <Compile Include="CommonDataModel\EntityLists\FilingInboxAttachmentLogList.cs" />
     <Compile Include="CommonDataModel\EntityLists\FilingInboxList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HybridPartnersPermissionList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\NumberFormatList.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CheckDigitControlAlgorithmPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CustomerDepositionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CustomsShipperPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\DepositionRequestPM.cs" />
@@ -354,6 +389,8 @@
     <Compile Include="CommonDataModel\EntityPMs\ImporterDepositionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\INTTRABranchRegisteredCarrierPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\INTTRASettingPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\NumberFormatPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\CheckDigitControlAlgorithmQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CustomerDepositionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CustomsShipperQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\DocumentFilingBackupBatchQuery.cs" />
@@ -364,6 +401,7 @@
     <Compile Include="CommonDataModel\EntityQueries\HybridPartnersPermissionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\INTTRABranchRegisteredCarrierQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\INTTRASettingQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\NumberFormatQuery.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerDepositionMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomsShipperMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentFilingBackupBatchMapping.cs" />
@@ -401,6 +439,39 @@
     <Compile Include="GlobalModel\Tools\DataMapping\WebhookKeysMapping.cs" />
     <Compile Include="GlobalModel\Tools\EntityService\WebhookKeysService.cs" />
     <Compile Include="Helpers\FullAccountingHelper.cs" />
+    <Compile Include="InfrastructureModel\DataContracts\SchedulerDetails.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\SchedulerLogsList.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\SchedulerLogsPM.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\SchedulerProcedureQuery.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerLogsMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\SchedulerLogsService.cs" />
+    <Compile Include="Interfaces\IHtmlEditorHelper.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\AccountingPaymentMethod.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARInvoiceLineAction.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARPayment.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARPaymentCancellation.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\CreditCardType.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\AccountingPaymentMethodQueryService.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\AccountingPaymentMethodQueryService.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\ARInvoiceLineActionQueryService.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentQueryService.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentQueryService.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\CreditCardTypeQueryService.Generated.cs" />
+    <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\ARInvoiceStocksStatusDetails.Generated.cs" />
+    <Compile Include="InvoiceModel\EntityLists\ARInvoiceStockList.cs" />
+    <Compile Include="InvoiceModel\EntityLists\ARInvoiceStocksStatusList.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\ARInvoiceStockLinePM.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\ARInvoiceStockPM.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ARInvoiceStockLineQuery.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ARInvoiceStockQuery.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ARInvoiceStocksStatusQuery.cs" />
+    <Compile Include="InvoiceModel\Tools\DataMapping\ARInvoiceStockMapping.cs" />
+    <Compile Include="InvoiceModel\Tools\EntityService\ARInvoiceStockService.cs" />
+    <Compile Include="InvoiceModel\Tools\EntityService\ConsolidationService.cs" />
+    <Compile Include="InvoiceModel\Tools\TraceEvents\ARInvoiceStockTracing.cs" />
+    <Compile Include="InvoiceModel\Tools\Validating\ARInvoiceStockValidating.cs" />
+    <Compile Include="Helpers\ShipmentComputedFieldsHelper.cs" />
+    <Compile Include="QuoteModel\Tools\EntityService\QuoteSubjectService.cs" />
     <Compile Include="Resolvers\LoggedContactResolver.cs" />
     <Compile Include="Mocks\MockLoggedContactUtil.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\ObjectTable.cs" />
@@ -2200,6 +2271,7 @@
     <Compile Include="QuoteModel\Tools\TraceEvents\QuoteTracing.FollowUps.cs" />
     <Compile Include="QuoteModel\Tools\TraceEvents\QuoteTracing.QuoteStage.cs" />
     <Compile Include="QuoteModel\Tools\Validating\QuotetValidating.cs" />
+    <Compile Include="Resolvers\WebClassResolver.cs" />
     <Compile Include="Security\AutenticationException.cs" />
     <Compile Include="Security\LoggedContactUtil.cs" />
     <Compile Include="Security\SecurityUtility.cs" />
@@ -2210,6 +2282,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\Delivery.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Direct.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\House.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\InsidePackage.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Master.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\OceanOrInlandPackage.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Payable.Generated.cs" />
@@ -2227,6 +2300,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\DirectQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\HouseQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\HouseQueryService.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\QueryService\InsidePackageQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\MasterQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\MasterQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\OceanOrInlandPackageQueryService.Generated.cs" />
@@ -2246,6 +2320,8 @@
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AWBInformationDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\CustomsTransmissionsStatusDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\HarmonizeCodeDetails.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\INTTRABookingStatusDetails.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\INTTRABookingTransStatusDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\INTTRADocumentTypeDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\ManifestStatusDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\OBLTypeDetails.Generated.cs" />
@@ -2263,6 +2339,8 @@
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\AWBInformationStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\CustomsTransmissionsStatusStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\HarmonizeCodeStruct.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\INTTRABookingStatusStruct.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\INTTRABookingTransStatusStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\INTTRADocumentTypeStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\ManifestStatusStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\OBLTypeStruct.Generated.cs" />
@@ -2288,6 +2366,8 @@
     <Compile Include="ShipmentsModel\EntityLists\AWBCustomsInformationList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBInformationList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\HarmonizeCodeList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\INTTRABookingStatusList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\INTTRABookingTransStatusList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\MessagingStockList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBOCIList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBSpecialHandlingCodeList.cs" />
@@ -2391,6 +2471,8 @@
     <Compile Include="ShipmentsModel\EntityQueries\AWBCustomsInformationQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBInformationQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\HarmonizeCodeQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\INTTRABookingStatusQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\INTTRABookingTransStatusQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\MessagingStockQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBOCIQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBSpecialHandlingCodeQuery.cs" />
@@ -2482,6 +2564,7 @@
     <Compile Include="Validators\ClassLevelValidator.cs" />
     <Compile Include="Validators\ClassLevelValidator.Shared.cs" />
     <Compile Include="Validators\CodeExistanceValidator.Shared.cs" />
+    <Compile Include="Validators\ContactInfo.cs" />
     <Compile Include="Validators\DocumentTypeClassLevelValidator.Shared.cs" />
     <Compile Include="Validators\DocumentTypeTransModeValidator.Shared.cs" />
     <Compile Include="Validators\FieldValidator.cs" />
@@ -2518,6 +2601,10 @@
     <ProjectReference Include="..\Logitude.Customs.Def\Logitude.Customs.Def.csproj">
       <Project>{89132340-6f21-4ce1-8de4-1ca45e2cd9f3}</Project>
       <Name>Logitude.Customs.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{B02E4D92-9226-4F3F-990F-66C7F66E9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>

@@ -20,6 +20,7 @@ export class QuoteSettingsComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public SaleCurrencySettings: CodeNameClass[] = [];
     private myService: QuoteDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
 
@@ -159,7 +160,7 @@ export class QuoteSettingsComponent extends BaseComponent {
     }
     
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -174,18 +175,18 @@ export class QuoteSettingsComponent extends BaseComponent {
 
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             this.myService.UpdateQuoteSettings(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
 
                 else {
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             });
         }

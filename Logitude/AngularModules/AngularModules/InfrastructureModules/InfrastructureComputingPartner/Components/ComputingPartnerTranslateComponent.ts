@@ -1,4 +1,4 @@
-﻿import {Component,Output,EventEmitter} from '@angular/core';
+import {Component,Output,EventEmitter} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -23,11 +23,11 @@ declare var window: any;
 })
 
 export class ComputingPartnerTranslateComponent extends BaseComponent {
-
+    private CurrentSession = SessionLocator.SelectedSession;
     public EntityPM: ComputingPartnerTablePM;
     constructor(private _entityListService: EntityListService) {
         super();
-        SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
+        this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
             if (res.Name == "btnComponentComputingPartnerEdit") {
                 var filters;
                 if (filters == null) {
@@ -204,7 +204,7 @@ export class ComputingPartnerTranslateComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

@@ -30,6 +30,7 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -89,6 +90,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             bank.LastPageNumber = entityPM.PageNo.ToString();
             bank.LastPageCloseBalance = entityPM.CloseBalance;
             bank.LastPageEndDate = entityPM.ToDate;
+            bank.IsBankPageEvent = true;
             bank.ChangeSetOp = ChangeSetOperation.Update;
             bankService.Update(bank, true);
 
@@ -125,6 +127,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 bankAccount.LastPageCloseBalance = prevPage==null ? 0 : prevPage.CloseBalance;
                 bankAccount.LastPageEndDate = prevPage == null ? DateTime.Now : prevPage.ToDate;
                 bankAccount.LastPageNumber = prevPage == null ? null : prevPage.PageNo.ToString();
+                bankAccount.IsBankPageEvent = true;
                 bankAccount.ChangeSetOp = ChangeSetOperation.Update;
                 bankService.Update(bankAccount, true);
 
@@ -160,19 +163,40 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            
         }
 
-        //protected override void Trace(ReconcileExternalPagePM entityPM, ReconcileExternalPage entityPOCO, string changesXml)
-        //{
-        //    if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-        //    {
-        //        //create trace event with created type.
-        //    }
-        //    else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-        //    {
+        public void CreateTraceEvent(ReconcileExternalPagePM entityPM, ContactPM loggedContact, string code)
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = entityPM.Tenant,
+                EventTypeCode = code,
+                UserId = loggedContact.Id,
+                EntityId = entityPM.Id,
+                ObjectTableName = "ReconcileExternalPage",
+                Notes = ""
+            });
 
+            
+            
+        }
+        protected override void Trace(ReconcileExternalPagePM entityPM, ReconcileExternalPage entityPOCO, string changesXml)
+        {
+            ContactPM contact= GetLoggedContact(entityPM.Tenant);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                CreateTraceEvent(entityPM, contact, "CREV");
+            }
+            else if (entityPM.ChangeSetOp == ChangeSetOperation.Update )
+            {
 
-        //    }
-        //    base.Trace(entityPM, entityPOCO, changesXml);
-        //}
+                CreateTraceEvent(entityPM, contact, "UPEV");
+                if(entityPOCO.StatusCode !="3" && entityPM.StatusCode == "3")
+                {
+                    CreateTraceEvent(entityPM, contact, "CNEV");
+
+                }
+            }
+            base.Trace(entityPM, entityPOCO, changesXml);
+        }
 
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
@@ -183,11 +207,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public static ContactPM GetLoggedContact(int tenant)
         {
             if (OverrideGetLoggedContactFunc != null)
-            {
                 return OverrideGetLoggedContactFunc(tenant);
-            }
-            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
-            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
 
             ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
@@ -196,94 +216,117 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Validate(ReconcileExternalPagePM entityPM)
         {
-            //var validContext = AccountingValidationContextServiceProvider.NewReconcileExternalPageValidatorContext((MainContext as IAccountingContext), entityPM);
-            //ValidationResult result = ReconcileExternalPageValidator.IsReconcileExternalPageValid(entityPM, validContext);
-            //if (result != null)
-            //{
-            //    throw new ApplicationException(result.ErrorMessage);
-            //}
+            List<string> errors = new List<string>();
 
             if (entityPM.StatusCode != "1") // 1- Draft
             {
 
-                ContactPM currenctUser = GetLoggedContact(entityPM.Tenant);
-                bool useLocal = true;
-                if (currenctUser != null)
-                    useLocal = !currenctUser.DontShowLocal;
+                CheckPreviousPage(entityPM, errors);
+                ValidateLines(entityPM, errors);
 
-
-                List<string> errors = new List<string>();
-                ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(entityPM.Tenant);
-                ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(entityPM.PageNo, entityPM.BankAccountId, entityPM.Tenant);
-                if (prevPage != null)
-                {
-                    //1
-                    if (entityPM.FromDate.Date <= prevPage.ToDate.Date)
-                    {
-                        errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.FromDateShouldBiggerPrevToDate", entityPM.Tenant, useLocal));
-                    }
-
-                    //2
-                    if (entityPM.ToDate.Date < entityPM.FromDate.Date)
-                    {
-                        errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.ToDateShouldBiggerFromDate", entityPM.Tenant, useLocal));
-                    }
-
-                    //3
-                    if (entityPM.StartBalance != prevPage.CloseBalance)
-                    {
-                        errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.StartBalanceShouldEqualCloseBalance", entityPM.Tenant, useLocal));
-                    }
-                }
-
-                //4 validate lines
-                if (entityPM.ReconcileExternalPageLines.Count > 0)
-                {
-                    foreach (ReconcileExternalPageLinePM line in entityPM.ReconcileExternalPageLines)
-                    {
-                        string lineWord = TranslateTextsClass.Translate("Accounting.General.O.Line", entityPM.Tenant, useLocal);
-                        if (line.ReferenceDate < entityPM.FromDate || line.ReferenceDate > entityPM.ToDate)
-                        {
-                            errors.Add(lineWord + line.LineNumber + ": " + TranslateTextsClass.Translate("ReconcileExternalPage.O.RefDateShouldBiggerOrSmaller", entityPM.Tenant, useLocal));
-                        }
-                    }
-                }
-
-                //5 approve logic
                 if (entityPM.StatusCode == "2") // 2- Approved
-                {
-                    decimal sum = entityPM.StartBalance;
-                    if (entityPM.ReconcileExternalPageLines.Count > 0)
-                    {
-                        foreach (ReconcileExternalPageLinePM line in entityPM.ReconcileExternalPageLines)
-                        {
-                            sum += line.Amount;
-                        }
-                    }
-                    if (sum != entityPM.CloseBalance)
-                    {
-                        errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.StartBalanceNotEqualEndBalance", entityPM.Tenant, useLocal));
-                    }
-                }
-
-
-
-
-                if (errors.Count > 0)
-                {
-                    // Parse error msg
-                    string errorString = "";
-                    foreach (string error in errors)
-                        errorString = errorString + error + ";";
-                    errorString = errorString.Remove(errorString.Length - 1);
-                    //
-
-                    throw new ApplicationException(errorString);
-                }
+                    CheckPageBalance(entityPM, errors);
+               
             }
 
-            base.Validate(entityPM);
+            CheckCreditAndDebitFieldForLines(entityPM);
+
+            if (errors.Count > 0)
+            {
+                string errorString = ParseErrors(errors);
+                throw new ApplicationException(errorString);
+            }
+
+
         }
-        
+
+        private static string ParseErrors(List<string> errors)
+        {
+            // Parse error msg
+            string errorString = "";
+            foreach (string error in errors)
+                errorString = errorString + error + ";";
+            errorString = errorString.Remove(errorString.Length - 1);
+            //
+            return errorString;
+        }
+
+        private static void CheckPageBalance(ReconcileExternalPagePM entityPM, List<string> errors)
+        {
+            decimal sum = entityPM.StartBalance;
+            if (entityPM.ReconcileExternalPageLines.Count > 0)
+            {
+                foreach (ReconcileExternalPageLinePM line in entityPM.ReconcileExternalPageLines)
+                {
+                    sum -= line.DebitAmount;
+                    sum += line.CreditAmount;
+                }
+            }
+            if (sum != entityPM.CloseBalance)
+            {
+                bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.StartBalanceNotEqualEndBalance", entityPM.Tenant, useLocal));
+            }
+        }
+
+        private static void ValidateLines(ReconcileExternalPagePM entityPM, List<string> errors)
+        {
+            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+            //4 validate lines
+            if (entityPM.ReconcileExternalPageLines.Count > 0)
+            {
+                foreach (ReconcileExternalPageLinePM line in entityPM.ReconcileExternalPageLines)
+                {
+                    string lineWord = TranslateTextsClass.Translate("Accounting.General.O.Line", entityPM.Tenant, useLocal);
+                    if (line.ReferenceDate < entityPM.FromDate || line.ReferenceDate > entityPM.ToDate)
+                    {
+                        errors.Add(lineWord + line.LineNumber + ": " + TranslateTextsClass.Translate("ReconcileExternalPage.O.RefDateShouldBiggerOrSmaller", entityPM.Tenant, useLocal));
+                    }
+                }
+            }
+        }
+
+        private void CheckPreviousPage(ReconcileExternalPagePM pagePM, List<string> errors)
+        {
+            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(pagePM.Tenant);
+            ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(pagePM.Tenant);
+            ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(pagePM.PageNo, pagePM.BankAccountId, pagePM.Tenant);
+            bool isSamePage = prevPage?.Id == pagePM.Id;
+            if (prevPage != null && !isSamePage)
+            {
+                //1
+                if (pagePM.FromDate.Date <= prevPage.ToDate.Date)
+                {
+                    errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.FromDateShouldBiggerPrevToDate", pagePM.Tenant, useLocal));
+                }
+
+                //2
+                if (pagePM.ToDate.Date < pagePM.FromDate.Date)
+                {
+                    errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.ToDateShouldBiggerFromDate", pagePM.Tenant, useLocal));
+                }
+
+                //3
+                if (pagePM.StartBalance != prevPage.CloseBalance)
+                {
+                    errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.StartBalanceShouldEqualCloseBalance", pagePM.Tenant, useLocal));
+                }
+            }
+        }
+
+        private static void CheckCreditAndDebitFieldForLines(ReconcileExternalPagePM entityPM)
+        {
+            foreach (ReconcileExternalPageLinePM line in entityPM.ReconcileExternalPageLines)
+            {
+                if (line.CreditAmount != 0 && line.DebitAmount != 0)
+                {
+                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                    string msg = TextCodesTranslator.TranslateText("ReconcileExternalPage.O.NoCreditAndDebit", entityPM.Tenant, showLocal);
+                    msg = msg.Replace("#lineNo", line.LineNumber.ToString());
+                    throw new ApplicationException(msg);
+                }
+
+            }
+        }
     }
 }

@@ -77,7 +77,7 @@ namespace Logitude.BL.Validators
                 bool valid = temp.IsValid(value, context.ObjectInstance, context.MemberName);
 
                 List<ValidationResult> vList = new List<ValidationResult>();
-                if (!valid)
+                if (!valid && objectTableName != "ObjectField" && objectTableName != "ObjectTable")
                 {
                     ValidationResult v = new ValidationResult(temp.GetErrorMessage(context.ObjectInstance, context.MemberName), new string[] { context.MemberName });
                     return v;

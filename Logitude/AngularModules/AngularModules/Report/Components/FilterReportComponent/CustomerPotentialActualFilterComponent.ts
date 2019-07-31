@@ -26,6 +26,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 export class CustomerPotentialActualFilterComponent extends BaseComponent {
     public DataContext: CustomerPotentialActualFilterComponent = this;
     public ItemsSource: CustomerSummary[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -649,11 +650,11 @@ export class CustomerPotentialActualFilterComponent extends BaseComponent {
     }
 
     private GenerateReport(filter: ReportFliter) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
         
             var reportService: ReportService = new ReportService();
             reportService.GenerateReportForCustomerPotentialActual(filter).subscribe((myResponse: ServiceResponse) => {                
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse.HasError) {
                     var messageWindow = new MessageWindow();
@@ -679,6 +680,7 @@ export class CustomerPotentialActualFilterComponent extends BaseComponent {
 
 export class ProductTypeItemClass {
     public entityList: ProductTypeList;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityList: ProductTypeList) {
         this.entityList = entityList;
     }
@@ -693,6 +695,7 @@ export class ProductTypeItemClass {
 
 export class CustomerSummary {
     private entity: CustomersData;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(myEntity: CustomersData, public fatherComponent: CustomerPotentialActualFilterComponent) {
         this.entity = myEntity;
     }
@@ -750,7 +753,7 @@ export class CustomerSummary {
 
     ViewCustomerClicked() {
         if (!AppTool.IsNullOrEmpty(this.CustomerId)) {            
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.CustomerId, ObjectTableName: "Customer", BackButtonLabel: "Reports" });

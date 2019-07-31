@@ -1,4 +1,4 @@
-﻿
+
 declare var window: any;
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -35,6 +35,7 @@ export class JournalMenuButtonsHandler {
     private _journalOpService: JournalOpService = new JournalOpService();
     private _documentTypePMService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
     private _exportDocumentService: ExportDocumentService = new ExportDocumentService();
+    private CurrentSession = SessionLocator.SelectedSession;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -245,11 +246,11 @@ export class JournalMenuButtonsHandler {
     }
 
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
     private PrintJournal() {
@@ -258,7 +259,7 @@ export class JournalMenuButtonsHandler {
 
     documentOutPM: DocumentOutPM;
     BuildDocument() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Building document....");
+        this.CurrentSession.StartBusyIndicator("Building document....");
         var objectTable = window.ObjectTables.filter(d => d.Name === "Journal")[0];
         var objectTableId = objectTable.Id;
 
@@ -327,7 +328,7 @@ export class JournalMenuButtonsHandler {
                                 });
                             //} else {
                             //    console.warn("Cannot find document out copy, resend request...");
-                            //    //SessionLocator.CurrentSession.StopBusyIndicator();
+                            //    //this.CurrentSession.StopBusyIndicator();
                             //    this.BuildDocument(); // resend the request, the method [getCreateDocumentOut] does not create document out copy!!
                             //}
 
@@ -336,7 +337,7 @@ export class JournalMenuButtonsHandler {
 
                         } else {
                             console.error("Cannot create document out!", res);
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
                     }
 
@@ -347,7 +348,7 @@ export class JournalMenuButtonsHandler {
 
             } else {
                 var msg = new MessageWindow();
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 msg.Show("No document type found!");
             }
 

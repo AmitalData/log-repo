@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit, ChangeDetectorRef, OnInit, Input, Output}  from '@angular/core';
+import {Component, AfterViewInit, ChangeDetectorRef, OnInit, Input, Output}  from '@angular/core';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -16,6 +16,7 @@ export class DocumentsFilingTemplateComponent {
     _ImageLibraryService: ImageLibraryService;
     public rowData: any;
     public FieldName: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef) {
         
     }
@@ -25,7 +26,7 @@ export class DocumentsFilingTemplateComponent {
         this.cd.detectChanges();
     }
     FirePreventSelect() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("document");
+        this.CurrentSession.PseventRowSelectEvent.emit("document");
     }
     DownloadDocumentFile(documentFiling: DocumentsFilingPM) {
         this.FirePreventSelect();

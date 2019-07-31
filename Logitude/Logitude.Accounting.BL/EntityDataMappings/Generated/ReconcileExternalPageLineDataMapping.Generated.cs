@@ -25,14 +25,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ReconcileExternalPageId, 
 	         LineNumber, 
 	         Tenant, 
-	         Amount, 
+	         DebitAmount, 
 	         ReferenceDate, 
 	         Reference, 
 	         Notes, 
 	         IsReconciled, 
 	         SearchFields, 
 	         Id, 
-	         ReconcileRemarks,
+	         ReconcileRemarks, 
+	         CreditAmount,
 	      }
 
 
@@ -42,7 +43,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ReconcileExternalPageId, 
 	         LineNumber, 
 	         Tenant, 
-	         Amount, 
+	         DebitAmount, 
 	         ReferenceDate, 
 	         Reference, 
 	         Notes, 
@@ -51,7 +52,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Id, 
 	         ReconcileRemarks, 
 	         GroupHash, 
-	         ReconciliationNumber,
+	         ReconciliationNumber, 
+	         CreditAmount, 
+	         Amount,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -75,9 +78,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.Tenant = entityPM.Tenant;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Amount))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DebitAmount))
             {
-				entityPOCO.Amount = entityPM.Amount;
+				entityPOCO.DebitAmount = entityPM.DebitAmount;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReferenceDate))
@@ -110,6 +113,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.ReconcileRemarks = entityPM.ReconcileRemarks;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAmount))
+            {
+				entityPOCO.CreditAmount = entityPM.CreditAmount;
+			}
+			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -131,9 +139,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.Tenant = entityPOCO.Tenant;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Amount))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DebitAmount))
             {
-					entityPM.Amount = entityPOCO.Amount;
+					entityPM.DebitAmount = entityPOCO.DebitAmount;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReferenceDate))
@@ -171,6 +179,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ReconcileRemarks = entityPOCO.ReconcileRemarks;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreditAmount))
+            {
+					entityPM.CreditAmount = entityPOCO.CreditAmount;
+            }
+
 		}
 
 		public void PMToOldPM(ReconcileExternalPageLinePM entityPM, ReconcileExternalPageLinePM oldEntityPM)
@@ -192,9 +205,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.Tenant = entityPM.Tenant;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Amount))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DebitAmount))
             {
-                oldEntityPM.Amount = entityPM.Amount;
+                oldEntityPM.DebitAmount = entityPM.DebitAmount;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReferenceDate))
@@ -227,6 +240,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.ReconcileRemarks = entityPM.ReconcileRemarks;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAmount))
+            {
+                oldEntityPM.CreditAmount = entityPM.CreditAmount;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ReconcileExternalPageLinePM entityPM)
@@ -235,6 +253,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Reference)) //T4 find type == nText 
+            {
+                entityPM.Reference = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Reference));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
             {

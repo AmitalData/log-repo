@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -52,6 +52,7 @@ export class SocialMessagesComponent implements OnInit {
     MessageListsId: string = Guid.newGuid();
     ConversationHeaderListsId: string;
     ConversationHeader: ConversationHeaderViewModelData;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.conversationHeaderExtendedPMService = new ConversationHeaderExtendedPMService();
         this.conversationHeaderPMService = new ConversationHeaderPMService();
@@ -68,7 +69,7 @@ export class SocialMessagesComponent implements OnInit {
 
     Listen() {
         if (!this.SocialMessageRefreshEvent) {
-            this.SocialMessageRefreshEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SocialMessageRefreshEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "SocialMessagesRefresh") {
                     this.LoadingMessageList();
                 }
@@ -76,7 +77,7 @@ export class SocialMessagesComponent implements OnInit {
         }
 
         if (!this.RefreshSocialContactLogo) {
-            this.RefreshSocialContactLogo = SessionLocator.CurrentSession.SessionEvent.subscribe(arg => {
+            this.RefreshSocialContactLogo = this.CurrentSession.SessionEvent.subscribe(arg => {
                 if (arg) {
                     if (arg.Name == "RefreshSocialLogo") {
                         this.PostsArgs.LoggedContactImageDetailId = arg.ImageId;
@@ -163,7 +164,7 @@ export class SocialMessagesComponent implements OnInit {
         if (!this.IsLoadRun) {
             this.IsLoadRun = true;
             this.IsNoData = false;
-            //SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+            //this.CurrentSession.StartBusyIndicator("Loading...");
             this.BusyIndicatorText = "Loading...";
             this.ShowBusyIndicator = true;
             this.MessageFilters.PageIndex = this.PageIndex;
@@ -238,7 +239,7 @@ export class SocialMessagesComponent implements OnInit {
 
     StopBusyIndicator() {
         if (this.IsLoadedMessages ) {
-            //SessionLocator.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
             this.ShowBusyIndicator = false;
            
         }
@@ -247,7 +248,7 @@ export class SocialMessagesComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -320,7 +321,7 @@ export class SocialMessagesComponent implements OnInit {
     GotoInboxButtonClick() {
 
 
-        SessionLocator.DynamicLoader.Load("./Social/Components/SocialInboxMessageComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load("./Social/Components/SocialInboxMessageComponent", this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.InitializeMessageComponent(this.PostsArgs, this);
@@ -329,7 +330,7 @@ export class SocialMessagesComponent implements OnInit {
     }
     RefreshButtonClick() {
         this.LoadingMessageList();
-        SessionLocator.CurrentSession.FireEvent("SociaMessagesCountRefresh");
+        this.CurrentSession.FireEvent("SociaMessagesCountRefresh");
     }
 
     RemoveConversationHeader(item: ConversationHeaderViewModelData) {
@@ -385,6 +386,7 @@ export class ConversationHeaderViewModelData {
     Area: string = "";
     IsChange: boolean = false;
     private _entityResourceService: EntityResourceService
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityPM: ConversationHeaderPM, insideEntity: boolean , area:string ="Message") {
         this.EntityPM = entityPM;
         this.MessageBody = entityPM.LasMessageBody;
@@ -626,7 +628,7 @@ export class ConversationHeaderViewModelData {
             var table = window.ObjectTables.filter(d => d.Id == item.EntityPM.ObjectTableId)[0];
             if (table) {
                 this._entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe(response => {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
 
                             cmpRef.instance.ComponentRef = cmpRef;

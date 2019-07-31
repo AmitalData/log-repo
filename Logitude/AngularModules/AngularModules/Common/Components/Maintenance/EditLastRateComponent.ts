@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -28,6 +28,7 @@ export class EditLastRateComponent extends BaseComponent {
     public EntityPM: LastRate;
     public CurrentRate: number;
     public CurrentValueDate: Date;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -86,7 +87,7 @@ export class EditLastRateComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -122,18 +123,18 @@ export class EditLastRateComponent extends BaseComponent {
 
     SubmitChanges() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var myService: RatesTablePMService = new RatesTablePMService();
         myService.insert(this.RatesTable).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });

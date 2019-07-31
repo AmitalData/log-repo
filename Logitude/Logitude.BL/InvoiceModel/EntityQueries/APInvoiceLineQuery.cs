@@ -220,6 +220,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               Description = a.Description,
                                               VatPercentage = a.VatPercentage,
                                               LineNumber = a.LineNumber,
+                                              LocalCurrencyAmount = a.LocalCurrencyAmount,
                                           }).ToList();
 
 

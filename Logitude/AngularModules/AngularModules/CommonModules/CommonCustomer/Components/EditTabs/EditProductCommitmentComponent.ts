@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -41,11 +41,11 @@ export class EditProductCommitmentComponent extends BaseComponent {
         }
     }
     public DataLoaded: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         super();
-        this.SearchTextId += SessionLocator.CurrentSession.GetNewId(this.SearchTextId);
-        this.SearchDropButtonId += SessionLocator.CurrentSession.GetNewId(this.SearchDropButtonId);
+        this.SearchTextId += this.CurrentSession.GetNewId(this.SearchTextId);
+        this.SearchDropButtonId += this.CurrentSession.GetNewId(this.SearchDropButtonId);
         this._currencyListService = new CurrencyListService();
 
         if (!AppTool.IsNullOrEmpty(SessionLocator.TenantPM.ProfitCurrencyId)) {
@@ -153,7 +153,7 @@ export class EditProductCommitmentComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
     OkButtonClicked() {
 
@@ -223,7 +223,7 @@ export class EditProductCommitmentComponent extends BaseComponent {
         this.ValidationErrorsList = errorsArray;
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+            this.CurrentSession.CloseCurrentWindowEmit("ok");
         }
     }
 

@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -82,6 +82,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     QuoteTemplateSectionTypeName: string = "QuoteHeader";
     QuoteTemplateSectionTypeCode: string = "QH";
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
@@ -302,7 +303,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     CustomQuoteFieldList() {
         if (this.QuoteTemplateSectionTypeCode == "QD") {
 
-            var QuoteFieldNameString = "Expiration Date, Expiration Days, Shipper Name, Shipper Address, Quote Number, Shipper Contact, Shipper References , Consignee Name, Consignee Address, Consignee Contact, Consignee References, Customer Name, Customer Address, Customer Contact, Customer References, Pickup From, Delivery To, Incoterms, Service, Salesman, Description of goods , Dangerous goods, Chargeable Weight, Gross Weight, Volume, Volumetric Weight, Transit Time, Notify Name, Notify Address, Notify Contact"  ;
+            var QuoteFieldNameString = "Expiration Date, Expiration Days, Shipper Name, Shipper Address, Quote Number, Shipper Contact, Shipper References , Consignee Name, Consignee Address, Consignee Contact, Consignee References, Customer Name, Customer Address, Customer Contact, Customer References, Pickup From, Delivery To, Incoterms, Service, Salesman, Description of goods , Dangerous goods, Chargeable Weight, Gross Weight, Volume, Volumetric Weight, Transit Time, Notify Name, Notify Address, Notify Contact ,Move Type"  ;
 
 
             var quoteFieldList = QuoteFieldNameString.split(',');
@@ -402,7 +403,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
     LoadData() {
     
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.QuoteTemplateTextDesignPMLists = [];
         this.LoadTableDesign();
         this.CustomQuoteFieldList();
@@ -478,66 +479,62 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     LoadQuoteTemplateDetailsFields() {
         this.quoteTemplateDetailsFieldExtendedPMService.GetQuoteTemplateDetailsFieldByQuoteTemplateId(this.QuoteTemplatePM.Id, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-  
+
 
             this.IsLoadingQuoteField = false;
             this.LoadCompleted();
             this.ObjectFieldTextListColum2 = [];
             this.ObjectFieldTextListColum1 = [];
             this.AllObjectFieldTextList = [];
-           
+
             if (!pmResponse.HasError && pmResponse.Result) {
-           
+
                 this.QuoteTemplateDetailsFieldPMList = pmResponse.Result;
-                this.QuoteTemplateDetailsFieldPMList.forEach((item) => {
-                    var fieldCode: string = item.FieldCode;
-                    var field: string= this.GetNameFieldQuoteDetails(fieldCode);
-                    if (AppTool.IsNullOrEmpty(field)) {
-
-                        field = TextCodeTranslator.Translate(item.FieldCode);
-                    }
-
-                    this.ObjectFieldTextList = this.ObjectFieldTextList.filter(d => d.Code != fieldCode);
-                    if (item.Column == 0) this.ObjectFieldTextListColum1.push(new ObjectFieldText(field, fieldCode));
-                    else this.ObjectFieldTextListColum2.push(new ObjectFieldText(field, fieldCode));
-
-
-
-
-
-                });
-
-
+                this.FillObjectFieldTextColumLists(0, this.QuoteTemplateDetailsFieldPMList,"Details");
+                this.FillObjectFieldTextColumLists(1, this.QuoteTemplateDetailsFieldPMList,"Details");
             }
 
-
-            if (this.ObjectFieldTextList) {
-                this.ObjectFieldTextList.forEach((item) => {
-                    this.AllObjectFieldTextList.push(item);
-                });
-            }
-  
-                this.ObjectFieldTextListColum1.forEach((item) => {
-                    this.AllObjectFieldTextList.push(item);
-                });
-            
-   
-                this.ObjectFieldTextListColum2.forEach((item) => {
-                    this.AllObjectFieldTextList.push(item);
-                });
-            
-
-
-         
-
+            this.FillAllObjectFieldLists();
         });
 
     }
+
+
+
+
+    FillAllObjectFieldLists() {
+        if (this.ObjectFieldTextList) {
+            this.ObjectFieldTextList.forEach((item) => {
+                this.AllObjectFieldTextList.push(item);
+            });
+        }
+
+        this.ObjectFieldTextListColum1.forEach((item) => {
+            this.AllObjectFieldTextList.push(item);
+        });
+
+        this.ObjectFieldTextListColum2.forEach((item) => {
+            this.AllObjectFieldTextList.push(item);
+        });
+    }
+    
+    FillObjectFieldTextColumLists(column: number, quoteTemplateFieldPMList: any[] , type:string) {
+        quoteTemplateFieldPMList.filter(d => d.Column == column).sort((a, b) => { return a.Row - b.Row }).forEach((item) => {
+            var fieldCode: string = item.FieldCode;
+            var field: string = type == "Header" ? this.GetFieldNameQuoteHeader(fieldCode) : this.GetFieldNameQuoteDetails(fieldCode);
+
+            if (AppTool.IsNullOrEmpty(field)) field = TextCodeTranslator.Translate(item.FieldCode);
+            this.ObjectFieldTextList = this.ObjectFieldTextList.filter(d => d.Code != fieldCode);
+            if (item.Column == 0) this.ObjectFieldTextListColum1.push(new ObjectFieldText(field, fieldCode));
+            else this.ObjectFieldTextListColum2.push(new ObjectFieldText(field, fieldCode));
+        });
+    }
+
     
     LoadCompleted() {
 
         if (!this.IsLoadingTextDesign && !this.IsLoadingQuoteField) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.IsLoadPage = true;
         }
     }
@@ -549,44 +546,15 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
             this.IsLoadingQuoteField = false;
             this.LoadCompleted();
             if (!pmResponse.HasError && pmResponse.Result) {
-
                 this.QuoteTemplateHeaderFieldPMList = pmResponse.Result;
-
-                this.QuoteTemplateHeaderFieldPMList.forEach((item) => {
-                    var fieldCode: string = item.FieldCode;
-                    var field: string = this.GetNameFieldQuoteHeader(fieldCode);
-                    if (AppTool.IsNullOrEmpty(field)) {
-
-                        field = TextCodeTranslator.Translate(item.FieldCode);
-                    }
-
-                    this.ObjectFieldTextList = this.ObjectFieldTextList.filter(d => d.Code != fieldCode);
-                    if (item.Column == 0) this.ObjectFieldTextListColum1.push(new ObjectFieldText(field, fieldCode));
-                    else this.ObjectFieldTextListColum2.push(new ObjectFieldText(field, fieldCode));
-
-                });
-
-
+                this.FillObjectFieldTextColumLists(0, this.QuoteTemplateHeaderFieldPMList,"Header");
+                this.FillObjectFieldTextColumLists(1, this.QuoteTemplateHeaderFieldPMList,"Header");
             }
-
-            if (this.ObjectFieldTextList) {
-                this.ObjectFieldTextList.forEach((item) => {
-                    this.AllObjectFieldTextList.push(item);
-                });
-            }
-
-            this.ObjectFieldTextListColum1.forEach((item) => {
-                this.AllObjectFieldTextList.push(item);
-            });
-
-
-            this.ObjectFieldTextListColum2.forEach((item) => {
-                this.AllObjectFieldTextList.push(item);
-            });
+            this.FillAllObjectFieldLists();
 
         });
     }
-    private GetNameFieldQuoteDetails(fieldname: string) {
+    private GetFieldNameQuoteDetails(fieldname: string) {
 
         var Field: string = "";
 
@@ -661,8 +629,12 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
         else if (fieldname == "TRANSITTIME") {
             Field = "Transit Time";
         }     
-        
-        if (fieldname == "CUSTOMERREFERENCES") {
+
+        else if (fieldname == "MOVETYPE") {
+            Field = "Move Type";
+        }   
+
+       else if (fieldname == "CUSTOMERREFERENCES") {
             Field = "Customer References";
         }
         
@@ -751,7 +723,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
         return Field;
     }
 
-    private GetNameFieldQuoteHeader(fieldname: string) {
+    private GetFieldNameQuoteHeader(fieldname: string) {
 
 
         var Field: string = "";
@@ -860,7 +832,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
         if (this.IsSaveQuoteTemplateTextDesignRuning || this.IsSaveQuoteTemplateTableDesignRuning || this.IsSaveQuoteTemplateTextCodeRuning || this.IsSaveQuoteTemplateObjectField) {
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
                 this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
@@ -877,8 +849,8 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
                 this.SaveQuoteTemplateSetting();
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindow();
             }
 
 
@@ -1015,7 +987,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     }
 
     SaveQuoteTemplateSetting() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
             this.QuoteTemplateSettingPM.IsDirty = false;
             this.SaveCompleted();
@@ -1178,8 +1150,8 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
     SaveCompleted() {
         if (!this.IsSaveQuoteTemplateTextDesignRuning && !this.IsSaveQuoteTemplateTableDesignRuning && !this.IsSaveQuoteTemplateTextCodeRuning) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.Close("Refresh");
 
         }
 
@@ -1188,7 +1160,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     CloseButtonClicked() {
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 

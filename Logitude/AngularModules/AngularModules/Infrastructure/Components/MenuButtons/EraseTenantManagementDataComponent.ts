@@ -17,6 +17,7 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
     private myService: InfrastructureDomainService;
     private entityId: number;
     public Message: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myService = new InfrastructureDomainService();   
     }
@@ -30,14 +31,14 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
 
     private summaryRecord: BusinessRecordsSummary;
     private GetCounts() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Check Data Counts...");  
+        this.CurrentSession.StartBusyIndicator("Check Data Counts...");  
 
         this.myService.GetDataCountForTenant(this.entityId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.summaryRecord = response.Result;                
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -253,7 +254,7 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
     }
     
     private DoReset(code: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator("Reset Counters...");
+        this.CurrentSession.StartBusyIndicator("Reset Counters...");
 
         this.myService.ResetCountersForTenant(this.entityId, code).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
@@ -261,11 +262,11 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
                 window.Show("Reset Counters Completed Succesfully");
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
     public CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }    
 }

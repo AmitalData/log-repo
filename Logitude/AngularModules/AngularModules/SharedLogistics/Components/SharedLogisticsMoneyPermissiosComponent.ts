@@ -18,6 +18,7 @@ export class SharedLogisticsMoneyPermissiosComponent extends BaseComponent imple
     public ObjectTableName: string;
     private myService: SharedLogisticsSettingPMService;
     public IsResourcesReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityResourceService: EntityResourceService) {
         super();
         this.myService = new SharedLogisticsSettingPMService();
@@ -59,7 +60,7 @@ export class SharedLogisticsMoneyPermissiosComponent extends BaseComponent imple
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[] = [];
@@ -68,16 +69,16 @@ export class SharedLogisticsMoneyPermissiosComponent extends BaseComponent imple
 
         if (this.ValidationErrorsList.length == 0) {
             if (this.EntityPM.IsDirty) {
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
 
                 if (this.EntityPM.Tenant == null) {
                     this.EntityPM.Tenant = SessionLocator.Tenant;
                     this.myService.insert(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myRespone.HasError) {
                             ObjectsLocator.SharedLogisticsSettingPM = this.EntityPM;
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
 
                         else {
@@ -88,11 +89,11 @@ export class SharedLogisticsMoneyPermissiosComponent extends BaseComponent imple
 
                 else {
                     this.myService.update(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myRespone.HasError) {
                             ObjectsLocator.SharedLogisticsSettingPM = this.EntityPM;
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
 
                         else {
@@ -103,7 +104,7 @@ export class SharedLogisticsMoneyPermissiosComponent extends BaseComponent imple
             }
 
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
         }
     }

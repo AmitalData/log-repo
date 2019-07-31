@@ -1,6 +1,5 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {UserExtendedList} from '../../../Common/Services/ExtendedLists/UserExtendedListService';
-import {UserLicensePM} from '../../../Common/EntityPMs/UserLicensePM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -9,7 +8,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 })
 
 export class ColumnCheckBoxComponent {
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
 
     }
@@ -18,7 +17,7 @@ export class ColumnCheckBoxComponent {
     public fieldName: any;
     public packageCode: string;
     public columnIndex: string;
-
+    public IsEnabled: boolean = true;
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
         this.fieldName = fieldName.split(",");
@@ -35,6 +34,13 @@ export class ColumnCheckBoxComponent {
 
     private SetIsChecked() {
         switch (this.columnIndex) {
+            case "0":
+                {
+                    this.isChecked = this.rowData.AdditionalPackagesOnly ? false : true;
+                    this.IsEnabled = false;
+                    break;
+                }
+
             case "1":
                 {
                     this.isChecked = this.rowData.IsChecked1;
@@ -104,11 +110,11 @@ export class ColumnCheckBoxComponent {
             this.isChecked = newValue;
 
             if (newValue) {
-                SessionLocator.CurrentSession.PseventRowSelectEvent.emit({ Name: "Add", User: this.rowData, PackageCode: this.packageCode });
+                this.CurrentSession.PseventRowSelectEvent.emit({ Name: "Add", User: this.rowData, PackageCode: this.packageCode });
             }
 
             else {
-                SessionLocator.CurrentSession.PseventRowSelectEvent.emit({ Name: "Remove", User: this.rowData, PackageCode: this.packageCode });
+                this.CurrentSession.PseventRowSelectEvent.emit({ Name: "Remove", User: this.rowData, PackageCode: this.packageCode });
             }
         }
     }

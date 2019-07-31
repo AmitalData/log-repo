@@ -72,6 +72,10 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new BIReportMap());
 	
+            modelBuilder.Configurations.Add(new BIReportFolderMap());
+	
+            modelBuilder.Configurations.Add(new BIReportsExecutionLogMap());
+	
             modelBuilder.Configurations.Add(new BIReportsTypeMap());
 	
             modelBuilder.Configurations.Add(new BusinessProcessQueueMap());
@@ -382,6 +386,18 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<BIReport> BIReports 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BIReportFolder> BIReportFolders 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<BIReportsExecutionLog> BIReportsExecutionLogs 
 	 {
 	      get; set;
 	 

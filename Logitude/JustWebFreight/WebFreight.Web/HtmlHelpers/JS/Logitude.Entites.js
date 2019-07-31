@@ -47,7 +47,8 @@ var LogitudeRoutingClass = function () {
     this.DisplayAreaWhite = " ";
     this.DisplayAreaWhiteCarrier = " ";
     //this.EndListBorder = " ";
-    this.DisplayAcutalEstimateAera =" ";
+    this.DisplayAcutalEstimateAera = " ";
+    this.PortNameMarginVisibility = "visible";
  
 };
 
@@ -122,6 +123,7 @@ var ShipmentListClass = function () {
 
     this.DeliveryDate = "";
     this.DeliveryDateVisibility = "collapse";
+    this.MyPartnerVisibility = "collapse";
 };
 
 var InvoiceListClass = function () {
@@ -203,7 +205,7 @@ function IsLCLShipment(shipment) {
     return Result;
 }
 
-function BuildShipmentsList(shipments, TenantDateTimeFormat) {
+function BuildShipmentsList(shipments, TenantDateTimeFormat, IsAgentShared, IsShipperShared, IsConsigneeShared) {
     
     var ShipmentsList = [];
 
@@ -258,6 +260,12 @@ function BuildShipmentsList(shipments, TenantDateTimeFormat) {
         var _myPartnerName = "";
 
         if (shipment.ShipmentLevelCode == "C") {
+            if (!IsAgentShared) {
+                item.MyPartnerVisibility = "collapse";
+            }
+            else {
+                item.MyPartnerVisibility = "visible";
+            }
 
             _myPartnerName = shipment.AgentName;
 
@@ -269,10 +277,24 @@ function BuildShipmentsList(shipments, TenantDateTimeFormat) {
 
         else {
             if (shipment.DirectionId == "I") {
+                if (!IsShipperShared) {
+                    item.MyPartnerVisibility = "collapse";
+                }
+                else {
+                    item.MyPartnerVisibility = "visible";
+                }
+
                 _myPartnerName = shipment.Shipper;
             }
 
             else {
+                if (!IsConsigneeShared) {
+                    item.MyPartnerVisibility = "collapse";
+                }
+                else {
+                    item.MyPartnerVisibility = "visible";
+                }
+
                 _myPartnerName = shipment.Consignee;
             }
 
@@ -546,19 +568,30 @@ function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix
         PartnerAddress: ko.observable(""),
         PartnerContact: ko.observable(""),
         PartnerCountrySRC: ko.observable(""),
+        PartnerVisibility: "collapse",
 
         FromCountySRC: ko.observable(""),
-        ToCountySRC: ko.observable(""),
-
-        FromPortName: ko.observable(shipment.MainCarriageFromPortName),
-        ToPortName: ko.observable(shipment.MainCarriageFinalDestinationPortName),
+        ToCountySRC: ko.observable(""),        
 
         DeliveryDate: ko.observable(""),
     };
 
-    viewModel.FromCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
-    viewModel.ToCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFinalDestinationPortCountryCode + ".png";
+    if (shipment.DirectionId == "D" && shipment.TransportModeId == "I") {
+        viewModel.FromPortName = shipment.FromPartnerCity;
+        viewModel.ToPortName = shipment.ToPartnerCity;
 
+        viewModel.FromCountySRC = PathPrefix + "images/Flags/" + shipment.FromPartnerCountryCode + ".png";
+        viewModel.ToCountySRC = PathPrefix + "images/Flags/" + shipment.ToPartnerCountryCode + ".png";
+    }
+
+    else {
+        viewModel.FromPortName = shipment.MainCarriageFromPortName;
+        viewModel.ToPortName = shipment.MainCarriageFinalDestinationPortName;
+
+        viewModel.FromCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
+        viewModel.ToCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFinalDestinationPortCountryCode + ".png";
+    }
+    
     if ($.trim(shipment.StatusName) != "") {
 
         if ($.trim(shipment.StatusLocation) != "") {
@@ -571,14 +604,22 @@ function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix
     var _myRef = "";
     
     if (shipment.ShipmentLevelCode == "C") {
+        if (!shipment.IsSharedLogisticsAgentVisible) {
+            viewModel.PartnerVisibility = "collapse";
+        }
+        else {
+            viewModel.PartnerVisibility = "visible";
+        }
 
         viewModel.PartnerTitle = "Agent: ";
         viewModel.PartnerName = shipment.AgentName;
         viewModel.PartnerAddress = shipment.AgentAddressText;
 
-        if ($.trim(shipment.AgentAddressCountryCode) != "") {
-            viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.AgentAddressCountryCode + ".png";
-            $(".ShowPartnerData").show();
+        if (shipment.IsSharedLogisticsAgentVisible) {
+            if ($.trim(shipment.AgentAddressCountryCode) != "") {
+                viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.AgentAddressCountryCode + ".png";
+                $(".ShowPartnerData").show();
+            }
         }
 
         _myRef = shipment.AgentReference1;
@@ -589,26 +630,42 @@ function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix
 
     else {
         if (shipment.DirectionId == "I") {
+            if (!shipment.IsSharedLogisticsShipperVisible) {
+                viewModel.PartnerVisibility = "collapse";
+            }
+            else {
+                viewModel.PartnerVisibility = "visible";
+            }
 
             viewModel.PartnerTitle = "Shipper: ";
             viewModel.PartnerName = shipment.ShipperName;
             viewModel.PartnerAddress = shipment.ShipperAddressText;
 
-            if ($.trim(shipment.ShipperAddressCountryCode) != "") {
-                viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.ShipperAddressCountryCode + ".png";
-                $(".ShowPartnerData").show();
+            if (shipment.IsSharedLogisticsShipperVisible) {
+                if ($.trim(shipment.ShipperAddressCountryCode) != "") {
+                    viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.ShipperAddressCountryCode + ".png";
+                    $(".ShowPartnerData").show();
+                }
             }
         }
 
         else {
+            if (!shipment.IsSharedLogisticsConsigneeVisible) {
+                viewModel.PartnerVisibility = "collapse";
+            }
+            else {
+                viewModel.PartnerVisibility = "visible";
+            }
 
             viewModel.PartnerTitle = "Consignee: ";
             viewModel.PartnerName = shipment.ConsigneeName;
             viewModel.PartnerAddress = shipment.ConsigneeAddressText;
 
-            if ($.trim(shipment.ConsigneeAddressCountryCode) != "") {
-                viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.ConsigneeAddressCountryCode + ".png";
-                $(".ShowPartnerData").show();
+            if (shipment.IsSharedLogisticsConsigneeVisible) {
+                if ($.trim(shipment.ConsigneeAddressCountryCode) != "") {
+                    viewModel.PartnerCountrySRC = PathPrefix + "images/Flags/" + shipment.ConsigneeAddressCountryCode + ".png";
+                    $(".ShowPartnerData").show();
+                }
             }
         }
 
@@ -833,15 +890,33 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
     /* Main Carriage */
     var leg = new LogitudeRoutingClass();
     leg.LegHeader = "Main Carriage Leg 1";
-    leg.FromFlagSRC = "../images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
-    leg.FromPortCode = $.trim(shipment.MainCarriageFromPortCode);
-    leg.FromPortName = $.trim(shipment.MainCarriageFromPortName);
+
+    if (shipment.DirectionId == "D" && shipment.TransportModeId == "I") {
+        leg.PortNameMarginVisibility = "collapse";
+
+        leg.FromFlagSRC = "../images/Flags/" + shipment.FromPartnerCountryCode + ".png";        
+        leg.FromPortName = $.trim(shipment.FromPartnerCity);
+
+        leg.ToFlagSRC = "../images/Flags/" + shipment.ToPartnerCountryCode + ".png";        
+        leg.ToPortName = $.trim(shipment.ToPartnerCity);        
+    }
+
+    else {
+        leg.PortNameMarginVisibility = "visible";
+
+        leg.FromFlagSRC = "../images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
+        leg.FromPortCode = $.trim(shipment.MainCarriageFromPortCode);
+        leg.FromPortName = $.trim(shipment.MainCarriageFromPortName);
+
+        leg.ToFlagSRC = "../images/Flags/" + shipment.MainCarriageToPortCountryCode + ".png";
+        leg.ToPortCode = $.trim(shipment.MainCarriageToPortCode);
+        leg.ToPortName = $.trim(shipment.MainCarriageToPortName);
+    }
+    
     leg.FromDate = $.trim(shipment.MainCarriageATD) != "" ? $.Convert.ToShortDate(shipment.MainCarriageATD, TenantDateTimeFormat) : $.Convert.ToShortDate(shipment.MainCarriageETD, TenantDateTimeFormat);
     leg.FromTime = $.trim(shipment.MainCarriageATD) != "" ? $.Convert.ToShortTime(shipment.MainCarriageATD) : $.Convert.ToShortTime(shipment.MainCarriageETD);
     leg.FromDateTimeIsActual = $.trim(shipment.MainCarriageATD) != "";
-    leg.ToFlagSRC = "../images/Flags/" + shipment.MainCarriageToPortCountryCode + ".png";
-    leg.ToPortCode = $.trim(shipment.MainCarriageToPortCode);
-    leg.ToPortName = $.trim(shipment.MainCarriageToPortName);
+    
     leg.ToDate = $.trim(shipment.MainCarriageATA) != "" ? $.Convert.ToShortDate(shipment.MainCarriageATA, TenantDateTimeFormat) : $.Convert.ToShortDate(shipment.MainCarriageETA, TenantDateTimeFormat);
     leg.ToTime = $.trim(shipment.MainCarriageATA) != "" ? $.Convert.ToShortTime(shipment.MainCarriageATA) : $.Convert.ToShortTime(shipment.MainCarriageETA);
     leg.ToDateTimeIsActual = $.trim(shipment.MainCarriageATA) != "";
@@ -1179,13 +1254,22 @@ function BuildPackagesTabPageViewModel(shipment) {
         else {
 
             var imgTemplate = "";
-            imgTemplate += "<div style='width:20px; height:20px; vertical-align:middle; margin-left: -5px; position: relative;'>";
+            imgTemplate += "<div style='width:20px; height:20px; vertical-align:middle; margin-left: -5px; position: relative;' onmouseleave='OnMouseLeavePackageDescriptionIcon(this)'>";
             imgTemplate += "<img src='../images/icons/infoICON.png' style='width:20px; height:20px; vertical-align:middle; visibility: #= DescriptionIconVisibility #;' onmouseover='OnMouseOverPackageDescriptionIcon(this)' onmouseleave='OnMouseLeavePackageDescriptionIcon(this)' />";
-            imgTemplate += "<div style='width: 270px; height: 130px; margin-top: -75px; position: fixed; right: 60px; background: url(\"../images/icons/CellTooltip.png\") no-repeat; background-size: 100% 100%; visibility: #= DescriptionHelpVisibility #;'>";
+            imgTemplate += "<div style='width: 270px; height: 130px; margin-top: -75px; position: fixed; right: 90px; background: url(\"../images/icons/CellTooltip.png\") no-repeat; background-size: 100% 100%; visibility: #= DescriptionHelpVisibility #;'>";
             imgTemplate += "<div style='color: \\#1B90CB; height: 13px; font-size: 13px; line-height: 13px; margin-left: 10px; margin-top: 13px;'>Description</div>";
             imgTemplate += "<textarea style='width: 225px; height: 85px; margin-left: 10px; margin-top: 0px; line-height: 11px; background: transparent; font-size: 11px; resize: none; border: none !important; outline: none !important; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;' [readonly]='true' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>#= Description #</textarea>";
             imgTemplate += "</div>";
             imgTemplate += "</div>";
+
+            var imgCarTemplate = "";
+            imgCarTemplate += "<div style='width:20px; height:20px; vertical-align:middle; margin-left: -5px; position: relative;' onmouseleave='OnMouseLeavePackageCarIcon(this)'>";
+            imgCarTemplate += "<img src='../images/icons/infoICON.png' style='width:20px; height:20px; vertical-align:middle; visibility: #= CarIconVisibility #;' onmouseover='OnMouseOverPackageCarIcon(this)' onmouseleave='OnMouseLeavePackageCarIcon(this)' />";
+            imgCarTemplate += "<div style='width: 270px; height: 130px; margin-top: -75px; position: fixed; right: 60px; background: url(\"../images/icons/CellTooltip.png\") no-repeat; background-size: 100% 100%; visibility: #= CarHelpVisibility #;'>";
+            imgCarTemplate += "<div style='color: \\#1B90CB; height: 13px; font-size: 13px; line-height: 13px; margin-left: 10px; margin-top: 13px;'>Vehicle Details</div>";
+            imgCarTemplate += "<textarea style='width: 225px; height: 85px; margin-left: 10px; margin-top: 0px; line-height: 11px; background: transparent; font-size: 11px; resize: none; border: none !important; outline: none !important; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;' [readonly]='true' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>#= VehicleDetails  #</textarea>";
+            imgCarTemplate += "</div>";
+            imgCarTemplate += "</div>";
 
             if (IsLCLShipment(shipment)) {
                
@@ -1210,6 +1294,7 @@ function BuildPackagesTabPageViewModel(shipment) {
                 //PackagesGridColumns.push({ title: VolumetricTitle, field: "VolumetricWeight", width: "150px", template: "<div class='k-numeric'>#= VolumetricWeight #</div>" });
                 PackagesGridColumns.push({ title: GrossTitle, field: "GrossWeight", width: "120px", template: "<div class='k-numeric'>#= GrossWeight #</div>" });
                 PackagesGridColumns.push({ title: "", width: "25px", template: imgTemplate });
+                PackagesGridColumns.push({ title: "", width: "25px", template: imgCarTemplate });
 
                 $.each(shipment.ShipmentPackages, function (index, item) {
 
@@ -1223,6 +1308,15 @@ function BuildPackagesTabPageViewModel(shipment) {
                     var iCommodityCode = $.trim(item.CommodityNumber) == "" ? "" : item.CommodityNumber;
                     var iCommodityName = $.trim(item.CommodityName) == "" ? "" : item.CommodityName;
 
+                    var itemVehicleDetailsVolume = ""; 
+                    itemVehicleDetailsVolume += $.trim(item.Make) == "" ? "" : item.Make + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.Model) == "" ? "" : item.Model + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.Year) == "" ? "" : item.Year + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.Color) == "" ? "" : item.Color + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.ChassisNumber) == "" ? "" : item.ChassisNumber + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.RegistrationNumber) == "" ? "" : item.RegistrationNumber + "/ ";
+                    itemVehicleDetailsVolume += $.trim(item.CountryCode) == "" ? "\n" : item.CountryCode + "\n";
+
                     PackagesGridDataSource.push({
                         Type: itemType,
                         Quantity: itemQuantity,
@@ -1230,21 +1324,31 @@ function BuildPackagesTabPageViewModel(shipment) {
                         Volume: itemVolume.toFixed(3),
                         //VolumetricWeight: itemVolumetricWeight.toFixed(3),
                         GrossWeight: itemGrossWeight.toFixed(3),
-                        Description: item.Description,
-                        DescriptionIconVisibility: $.trim(item.Description) != "" ? "visible" : "collapse",
-                        DescriptionHelpVisibility: "collapse",
-
                         CommodityCode: iCommodityCode,
                         CommodityName: iCommodityName,
 
+                        Description: item.Description,
+                        DescriptionIconVisibility: $.trim(item.Description) != "" ? "visible" : "collapse",
+                        DescriptionHelpVisibility: "collapse",
                         showDescription: function (e) {
                             if (e == true)
                             {
                                 this.set("DescriptionHelpVisibility", "visible");
                             }
-                               
                             else {
                                 this.set("DescriptionHelpVisibility", "collapse");
+                            }
+                        },
+
+                        VehicleDetails: itemVehicleDetailsVolume,
+                        CarIconVisibility: $.trim(item.IsVehicle) != "" ? "visible" : "collapse",
+                        CarHelpVisibility: "collapse",
+                        showCarsIcon: function (e) {
+                            if (e == true) {
+                                this.set("CarHelpVisibility", "visible");
+                            }
+                            else {
+                                this.set("CarHelpVisibility", "collapse");
                             }
                         }
                     });
@@ -1262,6 +1366,7 @@ function BuildPackagesTabPageViewModel(shipment) {
                 //PackagesGridColumns.push({ title: VolumetricTitle, field: "VolumetricWeight", width: "150px", template: "<div class='k-numeric'>#= VolumetricWeight #</div>" });
                 PackagesGridColumns.push({ title: GrossTitle, field: "GrossWeight", width: "120px", template: "<div class='k-numeric'>#= GrossWeight #</div>" });
                 PackagesGridColumns.push({ title: "", width: "25px", template: imgTemplate });
+                PackagesGridColumns.push({ title: "", width: "25px", template: imgCarTemplate });
 
                 $.each(shipment.ShipmentPackages, function (index, item) {
 
@@ -1269,11 +1374,21 @@ function BuildPackagesTabPageViewModel(shipment) {
                     var itemQuantity = $.trim(item.Quantity) == "" ? 0 : item.Quantity;
                     var itemContainer = $.trim(item.ContainerNumber) == "" ? "" : item.ContainerNumber;
                     var itemNumberOfInsidePackages = $.trim(item.NumberOfInsidePackages) == "" ? 0 : item.NumberOfInsidePackages;                    
-                    var itemSeal = $.trim(item.Seal) == "" ? "" : item.Seal;
+                    var itemSeal = $.trim(item.ShipperSeal) == "" ? "" : item.ShipperSeal;
                     var itemVolume = $.trim(item.Volume) == "" ? 0 : item.Volume;
                     //var itemVolumetricWeight = $.trim(item.VolumetricWeight) == "" ? 0 : item.VolumetricWeight;
                     var itemGrossWeight = $.trim(item.Weight) == "" ? 0 : item.Weight;
 
+                    var itemVehicleDetailsVolume = "";
+                    $.each(item.InsideShipmentPackages, function (index, listItem) {
+                        itemVehicleDetailsVolume += $.trim(listItem.Make) == "" ? "" : listItem.Make + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.Model) == "" ? "" : listItem.Model + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.Year) == "" ? "" : listItem.Year + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.Color) == "" ? "" : listItem.Color + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.ChassisNumber) == "" ? "" : listItem.ChassisNumber + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.RegistrationNumber) == "" ? "" : listItem.RegistrationNumber + "/ ";
+                        itemVehicleDetailsVolume += $.trim(listItem.CountryName) == "" ? "\n" : listItem.CountryName + "\n";
+                    });
                     PackagesGridDataSource.push({
                         Type: itemType,
                         Quantity: itemQuantity,
@@ -1286,7 +1401,6 @@ function BuildPackagesTabPageViewModel(shipment) {
                         Description: item.Description,
                         DescriptionIconVisibility: $.trim(item.Description) != "" ? "visible" : "collapse",
                         DescriptionHelpVisibility: "collapse",
-
                         showDescription: function (e) {
                             if (e == true) {
                                 this.set("DescriptionHelpVisibility", "visible");
@@ -1294,6 +1408,18 @@ function BuildPackagesTabPageViewModel(shipment) {
 
                             else {
                                 this.set("DescriptionHelpVisibility", "collapse");
+                            }
+                        },
+
+                        VehicleDetails: itemVehicleDetailsVolume,
+                        CarIconVisibility: $.trim(item.IsVehicle) != "" ? "visible" : "collapse",
+                        CarHelpVisibility: "collapse",
+                        showCarsIcon: function (e) {
+                            if (e == true) {
+                                this.set("CarHelpVisibility", "visible");
+                            }
+                            else {
+                                this.set("CarHelpVisibility", "collapse");
                             }
                         }
                     });
@@ -1327,7 +1453,7 @@ function BuildPackagesTabPageViewModel(shipment) {
         columns: PackagesGridColumns,
         dataSource: {
             data: PackagesGridDataSource
-        }
+        },
     });
     
     // Summary
@@ -1401,6 +1527,27 @@ function OnMouseLeavePackageDescriptionIcon(sender) {
         var data = grid.dataItem($(sender).closest("tr"));
         if (data) {
             data.showDescription(false);
+        }
+    }
+}
+
+function OnMouseOverPackageCarIcon(sender) {
+    var grid = $('#PackagesGrid').data('kendoGrid');
+
+    if (grid) {
+        var data = grid.dataItem($(sender).closest("tr"));
+        if (data) {
+            data.showCarsIcon(true);
+        }
+    }
+}
+function OnMouseLeavePackageCarIcon(sender) {
+    var grid = $('#PackagesGrid').data('kendoGrid');
+
+    if (grid) {
+        var data = grid.dataItem($(sender).closest("tr"));
+        if (data) {
+            data.showCarsIcon(false);
         }
     }
 }

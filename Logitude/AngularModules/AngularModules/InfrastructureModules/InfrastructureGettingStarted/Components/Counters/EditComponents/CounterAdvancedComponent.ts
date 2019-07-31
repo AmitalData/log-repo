@@ -28,6 +28,7 @@ export class CounterAdvancedComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public ItemsSource: any[] = [];
     public HasAllTransportsFeature: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -40,7 +41,7 @@ export class CounterAdvancedComponent extends BaseComponent {
         this.CounterId = args["CounterId"];
 
         if (this.CounterId) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             var myService = new CountersDomainService();
             myService.GetCounterAPIHelper(this.CounterId).subscribe((myResponse: ServiceResponse) => {
@@ -58,16 +59,19 @@ export class CounterAdvancedComponent extends BaseComponent {
                         this.InitializeDefinitions();
                         this.SetUIProperties();
                     }
+
+                    this.CalculateSampleValue();
                 }
 
                 this.IsResourcesReady = true;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
     SetUIProperties() {
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, !this.IsCounterUsed);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, !this.IsCounterUsed);
+        this.UIProperties.SetEnabled("CounterSize", this.ObjectTableName, !this.IsCounterUsed);
     }
     InitializeDefinitions() {
 
@@ -212,6 +216,8 @@ export class CounterAdvancedComponent extends BaseComponent {
             this.APIHelper.CounterDefinitions.forEach(item => {
                 item.Prefix = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
@@ -223,6 +229,8 @@ export class CounterAdvancedComponent extends BaseComponent {
             this.APIHelper.CounterDefinitions.forEach(item => {
                 item.CounterSize = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
@@ -235,11 +243,13 @@ export class CounterAdvancedComponent extends BaseComponent {
             this.APIHelper.CounterDefinitions.forEach(item => {
                 item.StartNumber = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
 
@@ -333,24 +343,30 @@ export class CounterAdvancedComponent extends BaseComponent {
 
                 if (errors.length == 0) {
 
-                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    this.CurrentSession.StartBusyIndicatorSaving();
 
                     var myService = new CountersDomainService();
                     myService.Post(this.APIHelper).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (myResponse.HasError) {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
                         }
 
                         else {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                            this.CurrentSession.CloseCurrentWindowEmit("Ok");
                         }
                     });
                 }
             }
         }
+    }
+    public SampleValue: string;
+    CalculateSampleValue() {
+
+        this.SampleValue = AppTool.GetCounterResolvedNumber(this.Prefix, this.StartNumber, "", this.CounterSize);
+        
     }
 }
 export class CounterAdvancedColumnItem {

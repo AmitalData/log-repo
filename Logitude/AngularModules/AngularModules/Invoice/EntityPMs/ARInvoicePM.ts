@@ -98,6 +98,11 @@ export class ARInvoicePM {
     public set BillToName(newValue: string) { if (this.billToName != newValue) { this.billToName = newValue; this.MarkAsDirty("BillToName"); } }
        
 	 
+    private billToLocalName: string;
+    public get BillToLocalName() { return this.billToLocalName; }
+    public set BillToLocalName(newValue: string) { if (this.billToLocalName != newValue) { this.billToLocalName = newValue; this.MarkAsDirty("BillToLocalName"); } }
+       
+	 
     private billToType: string;
     public get BillToType() { return this.billToType; }
     public set BillToType(newValue: string) { if (this.billToType != newValue) { this.billToType = newValue; this.MarkAsDirty("BillToType"); } }
@@ -955,6 +960,31 @@ export class ARInvoicePM {
     private isFullAccounting: boolean;
     public get IsFullAccounting() { return this.isFullAccounting; }
     public set IsFullAccounting(newValue: boolean) { if (this.isFullAccounting != newValue) { this.isFullAccounting = newValue; this.MarkAsDirty("IsFullAccounting"); } }
+       
+	 
+    private concurrencyGUID: string;
+    public get ConcurrencyGUID() { return this.concurrencyGUID; }
+    public set ConcurrencyGUID(newValue: string) { if (this.concurrencyGUID != newValue) { this.concurrencyGUID = newValue; this.MarkAsDirty("ConcurrencyGUID"); } }
+       
+	 
+    private newConcurrencyGUID: string;
+    public get NewConcurrencyGUID() { return this.newConcurrencyGUID; }
+    public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
+       
+	 
+    private aRInvoiceStockId: string;
+    public get ARInvoiceStockId() { return this.aRInvoiceStockId; }
+    public set ARInvoiceStockId(newValue: string) { if (this.aRInvoiceStockId != newValue) { this.aRInvoiceStockId = newValue; this.MarkAsDirty("ARInvoiceStockId"); } }
+       
+	 
+    private isInvoiceNumberFromStock: boolean;
+    public get IsInvoiceNumberFromStock() { return this.isInvoiceNumberFromStock; }
+    public set IsInvoiceNumberFromStock(newValue: boolean) { if (this.isInvoiceNumberFromStock != newValue) { this.isInvoiceNumberFromStock = newValue; this.MarkAsDirty("IsInvoiceNumberFromStock"); } }
+       
+	 
+    private batchTaskExecutionId: string;
+    public get BatchTaskExecutionId() { return this.batchTaskExecutionId; }
+    public set BatchTaskExecutionId(newValue: string) { if (this.batchTaskExecutionId != newValue) { this.batchTaskExecutionId = newValue; this.MarkAsDirty("BatchTaskExecutionId"); } }
        
 	 
 

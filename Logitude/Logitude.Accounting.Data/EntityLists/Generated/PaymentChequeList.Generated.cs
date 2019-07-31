@@ -88,6 +88,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string JournalId  { get; set; }
        [DataMember]
        public string StatusEnglishName  { get; set; }
+       [DataMember]
+       public string APPaymentId  { get; set; }
    }
 
 }

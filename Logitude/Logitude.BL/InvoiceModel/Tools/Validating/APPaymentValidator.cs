@@ -1,27 +1,23 @@
-﻿using System;
-using System.Linq;
-using Simplog.Data.Helpers;
-using Logitude.BL.Helpers;
-using Logitude.Server.Tools.Helpers;
-using System.Transactions;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Linq;
+using System.Transactions;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -92,12 +88,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(msg);
                 }
             }
-
-            if (paymentMethodCode == "CH")
+          
+            if (paymentMethodCode == "CH" && !entityPM.AutomaticPaymentCheque)
             {
                 if (string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef))
                 {
-                    throw new ApplicationException(rmsg.Replace("%FieldName", "Cheque Ref"));
+                    throw new ApplicationException(rmsg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.ChequeOrPaymentRef", tenant)));
                 }
             }
 
@@ -105,7 +101,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 if (string.IsNullOrEmpty(entityPM.CreditCardTypeId))
                 {
-                    throw new ApplicationException(rmsg.Replace("%FieldName", "Credit Card Type"));
+                    throw new ApplicationException(rmsg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.CreditCardTypeId", tenant)));
                 }
             }
 
@@ -187,20 +183,28 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         {
             var errors = "";
             var tenant = entityPM.Tenant;
-            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
+            bool useLocal = true;
+            ContactPM user = GetLoggedContact(tenant);
+            useLocal = user == null ? true : (!user.DontShowLocal);
+
+            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, useLocal);
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
-                bool useLocal = true;
-                var user = GetLoggedContact(tenant);
-                if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+
 
 
                 if (entityPM.PaymentMethodCode == "BT" && entityPM.ValueDate != null && entityPM.ValueDate > TenantServerConfigration.GetCurrentDateTime(tenant))
                 {
                     string msg = TranslateTextsClass.Translate("APPayment.M.ValueDateCantBeFutureDate", tenant, useLocal);
                     errors += msg + ";";
+                }
+
+                if(entityPM.BankAccountId == null 
+                    && (entityPM.PaymentMethodCode == "BT" || entityPM.PaymentMethodCode == "CH" || entityPM.PaymentMethodCode == "CC"))
+                {
+                    errors += (rmsg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.BankAccountId", tenant, useLocal))) + ";";
                 }
 
                 if (entityPM.TaxDeductionPercentage == null)
@@ -213,6 +217,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     errors += (rmsg.Replace("%FieldName", TranslateTextsClass.Translate("APPayment.F.TaxDeductionLocalAmount", tenant, useLocal))) + ";";
                 }
 
+                GLAccountPM glAccount = getGLAccount(entityPM.VendorId, tenant);
+                if (glAccount == null)
+                {
+
+                    string msg = TranslateTextsClass.Translate("APPayment.O.VendorGLAccount", tenant, useLocal);
+                    errors += msg + ";";
+                    //throw new ApplicationException(msg);
+                }
                 decimal? percentage = null;
                 IGLAccountWithholdingTaxQueryServiceExt gLAccountWithholdingTaxQueryService = ContainerAccessor.Container.Resolve(typeof(IGLAccountWithholdingTaxQueryServiceExt), "GLAccountWithholdingTaxQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountWithholdingTaxQueryServiceExt;
                 CardRepository cardRep = new CardRepository(tenant);
@@ -237,6 +249,26 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
         }
 
+        private static GLAccountPM getGLAccount(string vandorId, int tenant)
+        {
+            GLAccountPM glaAccount = null;
+            CardRepository cardRep = new CardRepository(tenant);
+            Card card = cardRep.GetSingleCard(vandorId, tenant);
+            if (card != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
+            }
+
+            return glaAccount;
+        }
+
+        public static FullAccountingSettingPM GetFullAccountingSetting(APPaymentPM entityPM)
+        {
+            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+            return query.GetFullAccountingSettingByTenant(entityPM.Tenant );
+
+        }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         private static ContactPM GetLoggedContact(int tenant)
         {

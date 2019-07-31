@@ -8,7 +8,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 {
   public  class ImporterDepositionPM
     {
-        public int Tenant { get; set; }
+        public int? Tenant { get; set; }
         public string ShipperCode { get; set; }
         public string ShipperName { get; set; }
         public string ShipperCountry { get; set; }

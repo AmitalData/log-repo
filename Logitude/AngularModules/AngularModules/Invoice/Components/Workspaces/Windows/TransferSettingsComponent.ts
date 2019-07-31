@@ -43,11 +43,11 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     }
     private QBOWindowSessionEvent: any = null;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityResourceService: EntityResourceService) {
         super();
         this.OldSessionAccountingSystem = SessionLocator.AccountingSystemPM;
-        this.QBOWindowSessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(res => {
+        this.QBOWindowSessionEvent = this.CurrentSession.SessionEvent.subscribe(res => {
             if (res.Name == "QBOWindowCLosed") {
                 this.QBOWindowCLosed(res.Timer);
                 this.RefreshData();
@@ -67,7 +67,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     }
 
     RefreshData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.entityPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.EntityPM.QBOAccessToken = myResponse.Result.QBOAccessToken;
@@ -77,7 +77,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             }
 
             this.SetQuickBookProperties();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (!AppTool.IsNullOrEmpty(temp) && this.EntityPM.QBOrealMeID != temp) {
                 var window: MessageWindow = new MessageWindow();
@@ -94,15 +94,20 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     }
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.entityPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;
+                if (this.EntityPM.AccountingSystemCode != "QBO" && this.EntityPM.AccountingSystemCode != "QBOG") {
+                    this.EntityPM.QBOAccessToken = null;
+                    this.EntityPM.QBOAccessTokenSecret = null;
+                    this.EntityPM.QBOrealMeID = null;
+                }
             }
 
             this.SetUIProperties();
             this.SetQuickBookProperties();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.IsResourcesReady = true;
         });
     }
@@ -235,11 +240,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     public isLogedInQBO: boolean = false;
     public isQBO: boolean = false;
     SetQuickBookProperties() {
-        if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG"))
-            this.isQBO = true;
-        else
-            this.isQBO = false;
-
+       
         if (this.EntityPM.QBOAccessToken != null) {
             this.isLogedInQBO = true;
         }
@@ -424,17 +425,17 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     
     DissConnectQBO(loadeding = true) {
         if (loadeding) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Disconnecting..");
+            this.CurrentSession.StartBusyIndicator("Disconnecting..");
             this.EntityPM.QBOAccessToken = null;
             this.EntityPM.QBOAccessTokenSecret = null;
         }
 
-        if (this.EntityPM.AccountingSystemCode == "QBO" || this.EntityPM.AccountingSystemCode == "QBOG") {
+        if (this.EntityPM.AccountingSystemCode == "QBO" || this.EntityPM.AccountingSystemCode == "QBOG" ) {
             this.EntityPM.AccountingSystemCode = "NO";
             this.entityPMService.update(this.EntityPM).subscribe((myResponse1: ServiceResponse) => {
                 if (myResponse1.HasError) {
                     this.ValidationErrorsList = myResponse1.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -447,7 +448,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                     });
 
                     this.SetQuickBookProperties();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }
@@ -473,7 +474,9 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         var timer = setInterval(function () {
             if (new_window) {
                 if (new_window.closed) {
-                    SessionLocator.CurrentSession.SessionEvent.emit({ Name: "QBOWindowCLosed", Timer: timer });
+                    if (this.CurrentSession == null)
+                        this.CurrentSession = SessionLocator.SelectedSession;
+                    this.CurrentSession.SessionEvent.emit({ Name: "QBOWindowCLosed", Timer: timer });
                 }
             }
         }, 500);
@@ -500,7 +503,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     CancelButtonClicked() {
         this.ResetQBOSettings();
         SessionLocator.AccountingSystemPM = this.OldSessionAccountingSystem;
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }   
 
     ResetQBOSettings() {
@@ -509,11 +512,11 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
-            else if (loadedEntity.AccountingSystemCode != "QBO" && loadedEntity.AccountingSystemCode != "QBOG") {
+             if (loadedEntity.AccountingSystemCode != "QBO" && loadedEntity.AccountingSystemCode != "QBOG") {
                 this.EntityPM.AccountingSystemCode = loadedEntity.AccountingSystemCode;
                 this.EntityPM.QBOrealMeID = null;
                 this.EntityPM.QBOAccessToken = null;
-                this.EntityPM.QBOAccessTokenSecret = null;
+                 this.EntityPM.QBOAccessTokenSecret = null;
                 this.DissConnectQBO(false);
             }
         });
@@ -556,7 +559,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.AccountingSystemCode != "QBO" && this.AccountingSystemCode != "QBOG") {
                 //if (this.EntityPM.QBOrealMeID) {
@@ -576,7 +579,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                 this.entityPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
 
                     else {
@@ -607,14 +610,14 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
 
     SaveChanges() {
         if (!this.EntityPM.IsDirty) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
         else {
             this.entityPMService.update(this.EntityPM).subscribe((myResponse1: ServiceResponse) => {
                 if (myResponse1.HasError) {
                     this.ValidationErrorsList = myResponse1.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -626,8 +629,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                             this.OldSessionAccountingSystem = SessionLocator.AccountingSystemPM;
                         }
 
-                        SessionLocator.CurrentSession.FireEvent("RefreshTransferComponent");
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.FireEvent("RefreshTransferComponent");
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
                     });
                 }
             });

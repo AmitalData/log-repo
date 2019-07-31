@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UserLoginLogList} from '../../../../Common/EntityLists/UserLoginLogList';
@@ -31,6 +31,7 @@ export class AdvanceDocumentTypeTemplateComponent extends BaseComponent implemen
     private documentTypeTemplatePMService: DocumentTypeTemplatePMService;
     IsLoadPage: boolean = false;
     CountryLists: CountryList[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder) {
         super();
         if (this.documentTypeTemplatePMService == null) {
@@ -86,9 +87,9 @@ export class AdvanceDocumentTypeTemplateComponent extends BaseComponent implemen
 
 
     SaveButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
         this.documentTypeTemplatePMService.update(this.EntityPM).subscribe(res => {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.CloseButtonClicked();
         });
 
@@ -97,7 +98,7 @@ export class AdvanceDocumentTypeTemplateComponent extends BaseComponent implemen
 
     CloseButtonClicked() {
         this.EntityPM.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
 
     }
 

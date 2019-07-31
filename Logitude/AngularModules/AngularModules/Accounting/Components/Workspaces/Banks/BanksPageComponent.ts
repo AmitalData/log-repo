@@ -26,6 +26,8 @@ import {BankAccountSummary} from '../../../DataContracts/AccountingSummery';
 import {PaymentChequeSummary} from '../../../DataContracts/AccountingSummery';
 import {PaymentChequeExtendedListService} from '../../../Services/ExtendedLists/PaymentChequeExtendedListService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { BankDepositSummary } from '../../../DataContracts/AccountingSummery';
+import { CashBookSummary } from '../../../DataContracts/AccountingSummery';
 
 
 @Component({
@@ -45,6 +47,8 @@ export class BanksPageComponent {
     public RecentBankDepositCount: number = 0;
     _BankAccountSummary: BankAccountSummary = new BankAccountSummary();
     paymentChequeSummary: PaymentChequeSummary = new PaymentChequeSummary();
+    bankDepositSummary: BankDepositSummary = new BankDepositSummary();
+    cashBookSummary: CashBookSummary = new CashBookSummary();
     screenHeight: number = 0;
     get ScreenHeight() { return this.screenHeight; }
     set ScreenHeight(value: number) {
@@ -52,7 +56,8 @@ export class BanksPageComponent {
     }
 
 
-    //#region Queries Features 
+    //#region Queries Features
+    LoadBankPageMENUVisibility: boolean = false;
     public TodayDepositsVisibility: boolean = false;
     public cashDepositsVisibility: boolean = false;
     public chequeDepositVisibility: boolean = false;
@@ -63,10 +68,10 @@ export class BanksPageComponent {
     txt_chequeDeposit: string = TextCodeTranslator.Translate('BankDeposit.Q.chequeDeposit');
 
     public isRTL: boolean = false;
-    chartId: string = ""; 
-
+    chartId: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-      this.chartId = "CashBookChart_" + SessionLocator.CurrentSession.GetChartId();
+      this.chartId = "CashBookChart_" + this.CurrentSession.GetChartId();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this._entityResourceService.getEntityResourceByTableName("CashBook").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("BankDeposit").subscribe((response: any) => { });
@@ -77,6 +82,7 @@ export class BanksPageComponent {
         this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ExternalReconciliationLine").subscribe((response: any) => { });
         this.LoadTenantCurrency();
         this.LoadAllScreenData();
@@ -91,14 +97,14 @@ export class BanksPageComponent {
         this.ScreenHeight = this.getScreenHeight();
 
     }
-    
+
     LoadAllScreenData() {
         this.LoadRecentBankDeposits();
         this.SetQueriesVisibility();
         this.LoadTenantCurrency();
         this.LoadChartData();
         this.LoadQueriesCounts();
-   
+
     }
 
     SetQueriesVisibility() {
@@ -106,6 +112,7 @@ export class BanksPageComponent {
         this.cashDepositsVisibility = FeatureLocator.HasFeaturePermession("BankDeposit", "CashBankDeposit") ? true : false;
         this.chequeDepositVisibility = FeatureLocator.HasFeaturePermession("BankDeposit", "ChequeBankDeposit") ? true : false;
         this.TodayDepositsVisibility = FeatureLocator.HasFeaturePermession("BankDeposit", "TodayBankDeposit") ? true : false;
+        this.LoadBankPageMENUVisibility = FeatureLocator.HasFeaturePermession("ReconcileExternalPage", "LOADBANKPAGEMENU") ? true : false;
     }
 
     LoadQueriesCounts() {
@@ -118,6 +125,24 @@ export class BanksPageComponent {
         this.paymentChequeExtendedListService.GetPymentChequesSummary().subscribe(myResult => {
             if (myResult != null) {
                 this.paymentChequeSummary.AllPaymenChequesCount = myResult.AllPaymentChequesCount > 1000 ? "1000+" : myResult.AllPaymentChequesCount.toString();
+            }
+        });
+
+        this.myBankDepositService.GetBankDepositsSummary().subscribe(myResult => {
+            if (myResult != null) {
+                this.bankDepositSummary.TodaysDepositCount = myResult.TodaysDepositCount > 1000 ? "1000+" : myResult.TodaysDepositCount.toString();
+            }
+        });
+
+        this.myCashBookExtendedListService.GetCashBookSummary().subscribe(myResult => {
+            if (myResult != null) {
+                this.cashBookSummary.AllCashbookCount = myResult.AllCashbookCount > 1000 ? "1000+" : myResult.AllCashbookCount.toString();
+                this.cashBookSummary.CashCashbookCount = myResult.CashCashbookCount > 1000 ? "1000+" : myResult.CashCashbookCount.toString();
+
+                this.cashBookSummary.ChequeCashbookCount = myResult.ChequeCashbookCount > 1000 ? "1000+" : myResult.ChequeCashbookCount.toString();
+
+
+
             }
         });
     }
@@ -143,7 +168,7 @@ export class BanksPageComponent {
     }
 
     RunNewDepositWizard() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         var windowTitle = "New Deposit";
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewDeposit");
 
@@ -154,7 +179,7 @@ export class BanksPageComponent {
         //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/NewEntity/NewBankDepositComponent');
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
 
     }
 
@@ -212,20 +237,20 @@ export class BanksPageComponent {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
     }
-    
+
     EditBankDeposit(entity: any) {
         if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({
@@ -296,12 +321,12 @@ export class BanksPageComponent {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -309,7 +334,7 @@ export class BanksPageComponent {
 
     EditBank(entity: any) {
         if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'CashBook', BackButtonLabel: TextCodeTranslator.Translate('Accounting.General.O.Banks') });
@@ -330,13 +355,25 @@ export class BanksPageComponent {
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
-        logWindow.Height = 400;
+        logWindow.Height = 500;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/NewEntity/NewBankAccountComponent');
     }
+    LoadBankPagesFromFile() {
+        var logWindow = new LogitudeWindow();
+        logWindow.IsShowCloseButton = true;
+        logWindow.Width = 500;
+        logWindow.Height = 400;
+        logWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.BankPagesFromFile");
+        logWindow.WindowArgs = {};
+        logWindow.WindowClosed.subscribe(($event: any) => {
 
+        });
+        logWindow.Show('./Accounting/Components/NewEntity/LoadRecoExPageComponent');
+
+    }
     ViewBankAccountQuery(myQueryCode: string) {
         if (myQueryCode != null) {
 
@@ -363,12 +400,12 @@ export class BanksPageComponent {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -403,12 +440,12 @@ export class BanksPageComponent {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -417,7 +454,7 @@ export class BanksPageComponent {
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewPaymentCheque");
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 600;
+        logWindow.Width = 650;
         logWindow.Height = 500;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;
@@ -458,12 +495,12 @@ export class BanksPageComponent {
                             }
                         });
                     }
-                    
+
                 }
             }
         });
 
-        
+
     }
 
     ConvertToLocal(foreignAmount: number, currencyId) {
@@ -565,7 +602,7 @@ export class BanksPageComponent {
         }];
 
         // Graph Properties
-        var Graphs = Graphs = 
+        var Graphs = Graphs =
         //#endregion
 
 
@@ -584,7 +621,7 @@ export class BanksPageComponent {
             var name = "";
             if (element.CashBookTypeCode == "1") { // 1-cash
                 name = (useLocal ? "מזומן" : "Cash") + " (" + element.CurrencyCode + ")";
-            } else if (element.CashBookTypeCode == "2") { // 2-cheque 
+            } else if (element.CashBookTypeCode == "2") { // 2-cheque
               name = (useLocal ? "המחאות" :"Cheque") + " (" + element.CurrencyCode + ")";
                 isCheque = true;
             } else {
@@ -612,7 +649,7 @@ export class BanksPageComponent {
     BarClicking() {
         if (BarClick() != null) {
             this.OnBarClick(BarClick());
-            
+
         }
 
     }
@@ -632,16 +669,16 @@ export class BanksPageComponent {
                 listArgs.DisplayTitle = TextCodeTranslator.Translate("Accounting.General.O.AllCashbook");
                 listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
                 this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run(listArgs);
                             cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                            SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                            this.CurrentSession.AddMenuReference(cmpRef);
                         });
                 });
             } else {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({
@@ -651,7 +688,7 @@ export class BanksPageComponent {
                         });
                     });
             }
-            
+
         }
     }
 

@@ -23,32 +23,33 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public ObjectTableName: string = "User";
     public DataContext = this;
     public TechnologyList: CodeNameClass[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;    
     constructor(public entityArgs: EntityArgs, public TenantLoginPolicyListService: TenantLoginPolicyListService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.BuildTechnologyList();
         this.SetUIProperties();
         this.Listen();
-        this.CheckSecurityPolicySettingToShowPhone();
+        this.CheckSecurityPolicySettingToShowPhone();        
     }
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.SetUIProperties();
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.SetUIProperties();
                     }
                 });
@@ -103,8 +104,6 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
             
             }
         });
-
-
     }
 
     public IsEditingEnabled: boolean = false;
@@ -113,8 +112,8 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public IsSalesmanVisible: boolean = false;
     public IsLicencedUserVisible: boolean = false;
     public IsShowContactInMobileVisiable: boolean = false;
+    public IsAdditionalPackagesOnlyVisible: boolean = false;
     SetUIProperties() {
-
         if (FeatureLocator.HasFeaturePermession("User", "PERSONALID")) {
             this.IsPersonalIdVisible = true;
         }
@@ -133,6 +132,10 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
 
         if (FeatureLocator.HasFeaturePermession("General", "MOBILE")) {
             this.IsShowContactInMobileVisiable = true;
+        }
+
+        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+            this.IsAdditionalPackagesOnlyVisible = true;
         }
 
         var isEditingEnabled = true;
@@ -307,13 +310,17 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         }
     }
     
-    public get ShowLocalNameInLOV () { return this.EntityPM.ShowLocalNameInLOV ; }
+    public get ShowLocalNameInLOV () { return this.EntityPM.ShowLocalNameInLOV; }
     public set ShowLocalNameInLOV (value: boolean) {
         if (this.EntityPM.ShowLocalNameInLOV  != value) {
             this.EntityPM.ShowLocalNameInLOV  = value;
         }
     }
 
-
-
+    public get AdditionalPackagesOnly() { return this.EntityPM.AdditionalPackagesOnly; }
+    public set AdditionalPackagesOnly(value: boolean) {
+        if (this.EntityPM.AdditionalPackagesOnly != value) {
+            this.EntityPM.AdditionalPackagesOnly = value;
+        }
+    }
 }

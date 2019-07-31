@@ -125,8 +125,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				if(filters.Tenant != null)
-					tenant = filters.Tenant.Value;
+			
 				                
 				SecurityUtility.CheckContactFeature("CardExternalCodeByCurrency", "READ", authToken.Tenant);
 	

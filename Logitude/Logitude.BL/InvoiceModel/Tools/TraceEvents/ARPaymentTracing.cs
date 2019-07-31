@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -13,8 +14,9 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
         {
             string myEntityName = "ARPayment";
 
-            ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
-            
+            ContactPM loggedContact = GetLoggedContactPM(entityPM.Tenant);
+
+
             if (isNewState)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -83,6 +85,12 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     });
                 }
             }        
+        }
+        
+        public static ContactPM GetLoggedContactPM(int tenant)
+        {
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
     }
 }

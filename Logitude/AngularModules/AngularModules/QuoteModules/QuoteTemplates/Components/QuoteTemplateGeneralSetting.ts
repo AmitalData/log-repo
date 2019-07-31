@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../infrastructure/utilities/featurelocator.ts" />
+/// <reference path="../../../infrastructure/utilities/featurelocator.ts" />
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';
@@ -42,6 +42,7 @@ export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit
     public ValidationErrorsList: string[];
 
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
@@ -121,14 +122,14 @@ export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit
             this.QuoteTemplateSettingPM.QuoteTemplatePDFMarginLeft = this.QuoteTemplatePDFMarginLeft;
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+                this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
                 this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                     this.QuoteTemplateSettingPM.IsDirty = false;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 });
-            } else SessionLocator.CurrentSession.CloseCurrentWindow();
+            } else this.CurrentSession.CloseCurrentWindow();
 
            
         }
@@ -140,6 +141,6 @@ export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit
     CancelButtonClicked() {
 
         
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

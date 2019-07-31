@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -22,8 +22,9 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
     DocumentPermissiosLists: SharedDocumentsPermissionsViewModel[];
     ObjectTableId: string;
     FullComponentsVisibility: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypePMExtendedService: DocumentTypePMExtendedService) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
     }
 
     ngOnInit() {
@@ -50,7 +51,7 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
 
             }
             this.SortItemSource();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -74,14 +75,14 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
 
     
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
     SaveButtonClicked() {
         var documentTypePMList: DocumentTypePM[] = [];
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.DocumentPermissiosLists.forEach((item) => {
 

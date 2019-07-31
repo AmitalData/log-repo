@@ -23,6 +23,7 @@ import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDa
 export class AddEditPickListComponent extends BaseComponent {
     public ItemsSource: ObservableCollection;
     public CustomPickLists: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _customPickListPMExtendedService: CustomPickListPMExtendedService) {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -44,7 +45,7 @@ export class AddEditPickListComponent extends BaseComponent {
         }
 
         if (!AppTool.IsNullOrEmpty(args.PickListCode)) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.LoadData();
         }
 
@@ -55,7 +56,7 @@ export class AddEditPickListComponent extends BaseComponent {
     LoadData() {
         this.CustomPickListPMLists = [];
         this._customPickListPMExtendedService.GetCustomPickListsByCode(this.PickListCode, SessionLocator.Tenant).subscribe(response => {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.CustomPickListPMLists = response.Result;
 
             this.BuildItemsSource();
@@ -148,7 +149,7 @@ export class AddEditPickListComponent extends BaseComponent {
 
                     var customPickListLists: CustomPickListData[] = this.ItemsSource.Collection.filter(d => d.EntityPM.IsDirty == true);
                     if ((customPickListLists && customPickListLists.length > 0) || (this.RemoveCustomPickListPMLists && this.RemoveCustomPickListPMLists.length > 0)) {
-                        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                        this.CurrentSession.StartBusyIndicatorSaving();
 
                         var customPickListPMLists: CustomPickListPM[] = [];
                         customPickListLists.forEach((item) => {
@@ -171,8 +172,8 @@ export class AddEditPickListComponent extends BaseComponent {
                         }
 
                         this._customPickListPMExtendedService.InsertupdateCustomPickLists(customPickListPMLists).subscribe(res => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
-                          SessionLocator.CurrentSession.CurrentWindow.Close(this.PickListCode);
+                            this.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.CurrentWindow.Close(this.PickListCode);
                           CachedDataManager.RefreshTableData("CustomPickList", true);
 
                         });
@@ -185,7 +186,7 @@ export class AddEditPickListComponent extends BaseComponent {
         }
 
         CloseButtonClicked() {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
 

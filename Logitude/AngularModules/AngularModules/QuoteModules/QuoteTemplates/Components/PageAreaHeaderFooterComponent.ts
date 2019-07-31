@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplateTextDesignPMService} from '../../../Quote/Services/StandardPMs/QuoteTemplateTextDesignPMService';
 import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
@@ -38,6 +38,7 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
 
     //Text
     PageAreaFreeText: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
@@ -213,7 +214,7 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
 
         if (this.QuoteTemplateSettingPM.IsDirty || (this.DesignAreaFreeTextPM && this.DesignAreaFreeTextPM.IsDirty)) {
             this.IsSaveRuning = true;
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         }
 
 
@@ -247,15 +248,15 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
 
 
     SaveCompleted() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
-        if (this.IsSaveRuning) SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
-        else SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.StopBusyIndicator();
+        if (this.IsSaveRuning) this.CurrentSession.CurrentWindow.Close("Refresh");
+        else this.CurrentSession.CloseCurrentWindow();
     }
 
 
     CloseButtonClicked() {
 
-     SessionLocator.CurrentSession.CloseCurrentWindow();
+     this.CurrentSession.CloseCurrentWindow();
     
 
         

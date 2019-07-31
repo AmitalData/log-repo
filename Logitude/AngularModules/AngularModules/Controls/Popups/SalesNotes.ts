@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, OnDestroy} from '@angular/core';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {EntityArgs} from '../../Infrastructure/DataContracts/EntityArgs';
@@ -10,7 +10,7 @@ import {ConfirmWindow} from '../Windows/ConfirmWindow';
     selector: "SalesNotes",
     moduleId: module.id,
     templateUrl: './SalesNotes.html',
-    inputs: ['Title', 'IconCode', 'IsEnabled', 'EntityPM'],
+    inputs: ['Title', 'IconCode', 'IsEnabled', 'EntityPM', 'CustomerPM', 'IsFromQuote'],
 })
 
 export class SalesNotes implements OnInit, OnDestroy {
@@ -23,7 +23,20 @@ export class SalesNotes implements OnInit, OnDestroy {
     public MaxHeight: number = 350;
     public Title: string = "Notes";
     public EntityPM: CustomerPM;
+    public customerPM: CustomerPM;
+
+    get CustomerPM() {
+        return this.customerPM;
+    }
+    set CustomerPM(value: CustomerPM) {
+        if (this.customerPM != value) {
+            this.customerPM = value;
+            this.UpdateComponent();
+        }
+    }
+
     public IsEnabled: boolean = true;
+    public IsFromQuote: boolean = false;
     public IconCode: string;
     public IconPath: string;
     public IconOpacity: number = 1;
@@ -31,8 +44,9 @@ export class SalesNotes implements OnInit, OnDestroy {
     public NotesList: SalesNoteItem[] = [];
     @Output() OnAddButtonClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() OnEditButtonClicked: EventEmitter<CustomerSalesNotePM> = new EventEmitter<CustomerSalesNotePM>();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("SalesNotes");
+        var idIndex = this.CurrentSession.GetNewId("SalesNotes");
         this.ComponentId = "SalesNotes_" + idIndex;
         this.ComponentButtonId = "SalesNotesButton_" + idIndex;
         this.ComponentContentId = "SalesNotesContent_" + idIndex;
@@ -49,7 +63,7 @@ export class SalesNotes implements OnInit, OnDestroy {
     Listen() {
         if (this.entityArgs.EditComponent) {
             if (!this.SalesNotesChangedEvent) {
-                this.SalesNotesChangedEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+                this.SalesNotesChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                     switch (s) {
                         case "CustomerSalesNotesChanged":
                             {
@@ -216,8 +230,14 @@ export class SalesNotes implements OnInit, OnDestroy {
 
         var list: SalesNoteItem[] = [];
 
-        if (this.EntityPM) {
+        if (this.EntityPM && this.EntityPM.SalesNotes != null) {
             this.EntityPM.SalesNotes.forEach((item: CustomerSalesNotePM) => {
+                list.push(new SalesNoteItem(item));
+            });
+        }
+
+        if (this.CustomerPM && this.CustomerPM.SalesNotes != null) {
+            this.CustomerPM.SalesNotes.forEach((item: CustomerSalesNotePM) => {
                 list.push(new SalesNoteItem(item));
             });
         }

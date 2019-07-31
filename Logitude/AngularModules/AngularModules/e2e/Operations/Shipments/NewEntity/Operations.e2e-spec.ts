@@ -3,20 +3,12 @@ import { browser, by, element } from 'protractor';
 import { LoginComp } from '../../../Login/Login.po';
 
 describe('Operations Module', () => {
-  let page: OperationsComp;
-  let login: LoginComp;
+  let page: OperationsComp = new OperationsComp();
+  // let login: LoginComp=new LoginComp();
   let count: number = 0;
 
-
-  beforeEach(() => {
-    page = new OperationsComp();
-    login = new LoginComp();
-  });
   afterEach(() => {
-    console.log(' Cloose session');
-    browser.pause();
     // browser.switchTo().alert().accept();
-
   })
 
   it('Operations Success', function () {

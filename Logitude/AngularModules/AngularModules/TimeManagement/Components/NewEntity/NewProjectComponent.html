@@ -95,6 +95,24 @@
                     </td>
                 </tr>
 
+                <!-- DayOffTypeCode -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'DayOffTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov [ObjectFieldName]="'DayOffTypeCode'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="DayOffTypeCode"
+                                [LookUpTableName]="'TMDayOffType'">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
                 <!-- ExternalProjectNumber -->
                 <tr class="FormFieldRow">
                     <td>
@@ -116,6 +134,21 @@
 
                     <td>
                         <LogCheckBox [ObjectFieldName]="'IsProrated'" [Checked]="IsProrated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <!-- ExcludeFromProrating -->
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ExcludeFromProrating'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'ExcludeFromProrating'" [Checked]="ExcludeFromProrating" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                     </td>
 
                     <td>

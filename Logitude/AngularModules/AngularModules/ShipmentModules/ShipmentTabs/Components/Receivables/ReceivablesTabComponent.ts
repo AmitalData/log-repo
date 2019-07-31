@@ -58,6 +58,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     public IsProrateReceivablesVisible: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     private myDomainService: ShipmentDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -111,7 +112,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "ReceivablesGenerated") {
                     this.BuildItemsSource();
                     this.ComputeShipmentFields();
@@ -139,6 +140,9 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                    this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildSummaryData();
@@ -734,7 +738,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                 Generator.GeneratePayablesFromQuote(this.BaseQuote);
                 Generator.GenerateReceivablesFromQuote(this.BaseQuote);
                 this.OnEntityDataGenerated();
-                SessionLocator.CurrentSession.FireEvent("PayablesGenerated");
+                this.CurrentSession.FireEvent("PayablesGenerated");
                 break;
             }
 
@@ -757,7 +761,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
             case "QTLS": {
                 // FromQuoteList
                 var logWindow = new LogitudeWindow();
-                logWindow.Width = 880;
+                logWindow.Width = 950;
                 logWindow.Title = TextCodeTranslator.Translate("Shipment.O.Receivables.GenerateFromQuotesList")
                 logWindow.WindowArgs = { EntityPM: this.EntityPM, AllRates: this.AllRates };
                 logWindow.Show('./ShipmentModules/ShipmentTabs/Components/Windows/Quotes/QuotesComponent');
@@ -766,7 +770,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                         if (s) {
                             this.BaseQuote = comp.BaseQuote;
                             this.OnEntityDataGenerated();
-                            SessionLocator.CurrentSession.FireEvent("PayablesGenerated");
+                            this.CurrentSession.FireEvent("PayablesGenerated");
                         }
                     });
                 });
@@ -796,7 +800,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                             if (!myResponse.HasError) {
                                 this.OriginShipment = myResponse.Result;
                                 this.entityArgs.OriginEntity = myResponse.Result;
-                                SessionLocator.CurrentSession.FireEvent("OriginShipmentLoaded");
+                                this.CurrentSession.FireEvent("OriginShipmentLoaded");
 
                                 var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
                                 Generator.GenerateReceivablesFromOriginShipment(this.OriginShipment);
@@ -1045,7 +1049,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         if (this.SavingRequestParam) {
             var entityId = this.SavingRequestParam;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'ARInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });
@@ -1054,6 +1058,10 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
 
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                         if (isEditComponentSaved) {
+                            this.entityArgs.EditComponent.ReloadEntityPM();
+                        }
+
+                        else if (cmpRef.instance.IsReloadNeeded) {
                             this.entityArgs.EditComponent.ReloadEntityPM();
                         }
                     });
@@ -1076,7 +1084,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         if (this.SavingRequestParam) {
             var entityId = this.SavingRequestParam;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'Quote', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });
@@ -1148,7 +1156,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityPM: comp.EntityPM, ObjectTableName: 'ARInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });
@@ -1215,6 +1223,28 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
 
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
+                    case "CWKG": {
+                        if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+                    case "GWKG": {
+                        if (item.Quantity != this.EntityPM.GrossWeightInKG) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
+                    case "VCBM": {
+
+                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
+                            isDifferentOrders = true;
+                        }
+
+                        break;
+                    }
+
                     case "GRWT": {
 
                         if (item.Quantity != this.EntityPM.GrossWeight) {
@@ -1415,8 +1445,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             }
         }
         
-        //this.IsRateEnabled = isRateEnabled;
-        this.IsRateEnabled = true;
+        this.IsRateEnabled = isRateEnabled;
         this.IsQuantityEnabled = isQuantityEnabled;
         this.IsUnitPriceEnabled = isUnitPriceEnabled;
         this.IsTotalAmountEnabled = isTotalAmountEnabled;
@@ -1565,12 +1594,17 @@ export class ShipmentReceivableItem extends BaseComponent {
 
             this.SetPrepaidCollectId();
 
-            if (list.ChargesGroupCode == "FRT" || list.ChargesGroupCode == "SCH") {
-                this.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+            if (!AppTool.IsNullOrEmpty(list.ReceivablesDefaultCurrencyId)) {
+                this.CurrencyId = list.ReceivablesDefaultCurrencyId;
             }
-
             else {
-                this.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                if (list.ChargesGroupCode == "FRT" || list.ChargesGroupCode == "SCH") {
+                    this.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                }
+
+                else {
+                    this.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                }
             }
 
             if (this.fatherComponent.IsLCLEntity) {
@@ -1704,7 +1738,9 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 case "FIXD": { this.Quantity = 1; break; }
                                 case "GWTN": { this.Quantity = this.ShipmentPM.GrossWeightPerTon; break; }
                                 case "QTY": { this.Quantity = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
-
+                                case "CWKG": { this.Quantity = this.ShipmentPM.ChargeableWeightInKG; break; }
+                                case "GWKG": { this.Quantity = this.ShipmentPM.GrossWeightInKG; break; }
+                                case "VCBM": { this.Quantity = this.ShipmentPM.VolumeInCBM; break; }
                                 case "PRVL": {
                                     this.Quantity = this.ShipmentPM.ValueOfGoods;
                                     this.CurrencyId = this.ShipmentPM.ValueOfGoodsCurrencyId;
@@ -2240,6 +2276,14 @@ export class ShipmentReceivableItem extends BaseComponent {
 
                     this.InsideItemsSource.forEach(item => {
                         switch (this.MeasurementCode) {
+                            case "VCBM": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "VolumeInCBM");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.VolumeInCBM;
+                                break;
+                            }
+
                             case "VOLU": {
                                 _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "Volume");
                                 _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
@@ -2253,6 +2297,21 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
                                 unitPrice = _Ratio * this.UnitPrice;
                                 quantity = item.GrossWeight;
+                                break;
+                            }
+
+                            case "CWKG": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "ChargeableWeightInKG");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.ChargeableWeightInKG;
+                                break;
+                            }
+                            case "GWKG": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "GrossWeightInKG");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.GrossWeightInKG;
                                 break;
                             }
 
@@ -2424,6 +2483,9 @@ export class ShipmentReceivableItem extends BaseComponent {
             case "PRFR": { result = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
             case "GWTN": { result = this.ShipmentPM.GrossWeightPerTon; break; }
             case "QTY": { result = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
+            case "CWKG": { result = this.ShipmentPM.ChargeableWeightInKG; break; }
+            case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
+            case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
             case "BCNT": {
                 break;
             }
@@ -2487,6 +2549,9 @@ export class InsideReceivableViewModel {
     get FreightReceivablesAmount() { return this.ShipmentPM.FreightReceivablesAmount; }
     get NumberOfPackages() { return this.ShipmentPM.NumberOfPackages; }
     get NumberOfContainers() { return this.ShipmentPM.NumberOfContainers; }
+    get ChargeableWeightInKG() { return this.ShipmentPM.ChargeableWeightInKG; }
+    get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
+    get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
 
     // Receivable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -2546,6 +2611,30 @@ export class InsideReceivableViewModel {
         var myQuantity = null;
 
         switch (this.MeasurementCode) {
+            case "CWKG": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.ChargeableWeightInKG;
+                }
+
+                break;
+            }
+
+            case "GWKG": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.GrossWeightInKG;
+                }
+
+                break;
+            }
+
+            case "VCBM": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.VolumeInCBM;
+                }
+
+                break;
+            }
+
             case "GRWT": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.GrossWeight;

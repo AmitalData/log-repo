@@ -79,7 +79,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     txt_FiltersSelected: string = "";
     LoadGrids: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         super();
         this.isRTL = SessionLocator.TenantPM.LayoutDirection === 'rtl';
@@ -245,10 +245,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    });
 
         //    // 2- call the service
-        //    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        //    this.CurrentSession.StartBusyIndicatorSaving();
         //    this._ReconciliationExtendedPMService.delsertDraftLedgerTransaction(transactionsList).subscribe((serviceResponse: ServiceResponse) => {
         //        console.log("_ReconciliationExtendedPMService.delsertDraftLedgerTransaction", serviceResponse);
-        //        SessionLocator.CurrentSession.StopBusyIndicator();
+        //        this.CurrentSession.StopBusyIndicator();
 
         //        var result = serviceResponse.Result;
 
@@ -269,7 +269,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ExternalReco");
+        this.CurrentSession.CloseCurrentWindowEmit("ExternalReco");
     }
 
     RefreshButtonClicked() {
@@ -485,8 +485,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.GetCount = true;
 
         filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
+        // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
+        filters.addAdditionalFilter("DueDate", new Date(), null, null, "LessThanOrEqual", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
+        filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
-        return this.entityListService.getOpenReconciliationsByFilter("LedgerTransaction", this.BankAccountPM.GLAccountId, filters);
+        return this.entityListService.getReconciliationsByFilter("LedgerTransaction", this.BankAccountPM.GLAccountId, filters);
     }
 
     PushLine(row, RowIndex) {
@@ -524,7 +527,13 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         var total = 0;
         for (let line of this.TransactionSelectedLines.Collection) {
             //total += +line.OpenAmount;
-            total += +line.ForeignAmount;
+            // total += +line.ForeignAmount;
+
+            if(line.IsCredit)
+                total -= +line.ForeignAmount;
+            else
+                total += +line.ForeignAmount;
+
         }
         this.accountTransactionsTotal = total;
         var def = (this.bankTransactionsTotal - this.accountTransactionsTotal)
@@ -686,7 +695,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     BankPushLine(row, RowIndex) {
         var index = this.BankSelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
-            row.AmountToReconcile = row.Amount;
+             row.AmountToReconcile = row.CreditAmount!=0?row.CreditAmount:row.DebitAmount;
+            // row.AmountToReconcile = row.CreditAmount!=0?row.CreditAmount*-1:row.DebitAmount;
+            // row.Amount = row.AmountToReconcile;
             var r = new BankLineModel(row, this, RowIndex);
             this.BankSelectedLines.Insert(r);
             this.CalculateBankTotals();
@@ -730,7 +741,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         this.bankTransactionsTotal = 0;
         var total = 0;
         for (let line of this.BankSelectedLines.Collection) {
-            total += +line.Amount;
+            if(line.IsCredit)
+                total -= +line.Amount;
+            else
+                total += +line.Amount;
+
         }
         this.bankTransactionsTotal = total;
         var def = (this.bankTransactionsTotal - this.accountTransactionsTotal)
@@ -807,7 +822,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
             //#endregion
 
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
 
 
             this._ExternalReconciliationExtendedListService.getExternalAutomaticReconcilationsByFilter(this.AmountCheckBoxChecked, this.ReferenceCheckBoxChecked, this.ReferenceDateCheckBoxChecked,
@@ -859,9 +874,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                     }
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
 
         }, 200);
@@ -1115,9 +1130,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
     SubmitChanges(entity) {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.externalReconciliationPMService.insert(entity).subscribe(myResult => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;
             var entity = mm.Result;
@@ -1132,7 +1147,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -1210,7 +1225,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -1223,7 +1238,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
@@ -1235,12 +1250,12 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     OpenReco() {
         if (!AppTool.IsNullOrEmpty(this.ExternalRecoPM.Id)) {
             this.showAlert = false;
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.ExternalRecoPM.Id, ObjectTableName: 'ExternalReconciliation' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                     });
                 });
 
@@ -1381,7 +1396,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     IsGenerateButtonVisible: boolean = false;
     IsGeneratePasswordVisible: boolean = false;
     GenerateTestLines(txt: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator("Generate test lines... " + "(" + this.reapeatCount + "/" + 100 + ")");
+        this.CurrentSession.StartBusyIndicator("Generate test lines... " + "(" + this.reapeatCount + "/" + 100 + ")");
         this._ExternalReconciliationExtendedListService.getGenerateTestRecordsForExternalReco(this.BankAccountPM.Id, this.BankAccountPM.GLAccountId, txt).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
@@ -1392,7 +1407,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
                     if (this.reapeatCount == 100) {
                         var msg = new MessageWindow();
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         msg.Show("Test lines generated successfully :) ");
                         this.ReloadScreen();
@@ -1409,7 +1424,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -1502,6 +1517,10 @@ class TransactionLineModel extends BaseComponent {
 
     get GroupHash() { return this.LedgerTransactionPM.GroupHash };
 
+
+    get IsCredit(){
+        return this.ledgerTransaction.ForeignAmountCredit != 0;
+    }
 
     // Properties
     public IconCode: string;
@@ -1629,6 +1648,9 @@ class BankLineModel extends BaseComponent {
 
     }
 
+    get IsCredit(){
+        return this.pageLine.CreditAmount != 0;
+    }
     get GroupHash() { return this.pageLine.GroupHash };
 
     //#region Properties

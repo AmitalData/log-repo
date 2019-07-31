@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {SharedLogisticsService} from '../Services/Others/SharedLogisticsService';
@@ -37,12 +37,13 @@ export class EditRelatedCustomerComponent extends BaseComponent {
     public StatusList: Array<CustomerTenantAccessStatusTypeList> = [];
     public ValidationErrorsList: Array<string> = [];
     public SelectedStatus: string = null;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     public get StatusTypeCode() {
         return this.EntityPM.StatusTypeCode;
@@ -52,7 +53,7 @@ export class EditRelatedCustomerComponent extends BaseComponent {
             this.EntityPM.StatusTypeCode = value;
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving(); 
+        this.CurrentSession.StartBusyIndicatorSaving(); 
         var service: CommonDomainService = new CommonDomainService();
      
                 this.ValidationErrorsList = [];
@@ -85,8 +86,8 @@ export class EditRelatedCustomerComponent extends BaseComponent {
 
                     var updateService: CustomerTenantAccessPMService = new CustomerTenantAccessPMService();
                     updateService.update(this.Parent.EntityPM).subscribe(res => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
 
                     });
                 }

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {ChargesTypeList} from '../../../../../Common/EntityLists/ChargesTypeList';
@@ -18,6 +18,7 @@ export class ManageDefaultsComponent {
     public ShipmentLevelCode: string;
     public AllChargesList: AutoDisplayItemViewModel[];
     public AutoDisplaylist: AutoDisplayItemViewModel[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.AllChargesList = [];
         this.AutoDisplaylist = [];
@@ -27,7 +28,7 @@ export class ManageDefaultsComponent {
         this.ShipmentLevelCode = ShipmentLevelCode;
         this.ObjectTableName = this.ShipmentLevelCode == "C" ? "Consolidation" : "Shipment";
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.LoadData();
     }
 
@@ -104,7 +105,7 @@ export class ManageDefaultsComponent {
                 }
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -201,7 +202,7 @@ export class ManageDefaultsComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     EditChargeType(item: AutoDisplayItemViewModel) {

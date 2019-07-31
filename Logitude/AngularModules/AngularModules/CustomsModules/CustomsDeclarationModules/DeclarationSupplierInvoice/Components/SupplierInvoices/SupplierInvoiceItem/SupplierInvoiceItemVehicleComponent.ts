@@ -58,7 +58,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
     cardListService: CardListService = new CardListService();
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -117,7 +117,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
                                 if (!AppTool.IsNullOrEmpty(customsSetting)) {
                                     if (customsSetting.IsConnectedToUniFreight) {
                                         this.VehiclesFilesButtonVisibility = true;
-                                        ////let myDec = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                                        ////let myDec = this.CurrentSession.CurrentEditComponent.EntityPM;
                                         //let myDec = args.declarationPM;
                                         //if (AmitalGatewayUtil.Instance.IsDeclarationInUse(myDec.CustomFileNo, myDec.IsConvertedDeclaration, myDec.IsConnectedToUnifreight)) {
                                         //    this.VehiclesFilesButtonVisibility = true;
@@ -222,14 +222,14 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
                 }
                 else {
                     this.RejectChanges();
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
 
             });
 
         }
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
 
@@ -384,7 +384,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
                                     });
 
                                     logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
-                                    SessionLocator.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+                                    this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                                     
 
                                 } else {
@@ -481,7 +481,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
             //    });
             //}
 
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
         //} else {
         //    this.ValidationErrorsList = [];
@@ -656,12 +656,12 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
                     (myUnifreightMessageM.LogitudeEntity == "Customs.Declaration" || myUnifreightMessageM.LogitudeEntity == "Declaration") &&
                       myUnifreightMessageM.LogitudeEntityNumber == this.invoiceItemPM.DeclarationId) {
                         sub.unsubscribe();
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         this.UnifreightGetRihbitFromTransmissionsCallbackAction(myUnifreightMessageM);
                 }
             });
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");
+        this.CurrentSession.StartBusyIndicator("Loading ...");
 
         this.cardListService.getSingle(this.declarationPM.CustomerId)
             .subscribe(res => {
@@ -916,7 +916,7 @@ export class InvoiceItemVehicleLine extends BaseComponent {
 
                         ////lock focus
                         //SessionLocator.SustainFocusOnCell = true;
-                        //SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: VehicleChassisNumberTextBox.InputId });
+                        //this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: VehicleChassisNumberTextBox.InputId });
 
 
                         
@@ -1025,7 +1025,7 @@ export class InvoiceItemVehicleLine extends BaseComponent {
 
                         ////lock focus
                         //SessionLocator.SustainFocusOnCell = true;
-                        //SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: RichbitFileNumbernTextBox.InputId });
+                        //this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: RichbitFileNumbernTextBox.InputId });
 
                     }
                     else {

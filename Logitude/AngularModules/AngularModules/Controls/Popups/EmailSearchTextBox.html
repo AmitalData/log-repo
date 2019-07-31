@@ -181,7 +181,7 @@
                 <!-- Selected Items -->
                 <div [attr.id]="ContainerId" class="LogitudeEmailSearchTextBoxItem" *ngFor="let item of SelectedItems">
 
-                    <div style="float: left; line-height: 16px;">{{item.EnglishName}}</div>
+                    <div [style.color]="item.InActive && DontInCludeInactive ?'red':'black'" style="float: left; line-height: 16px;">{{item.EnglishName}}</div>
 
                     <div style="float: left; line-height: 16px; margin-left: 5px; margin-top: 1px;" class="LogitudeEmailSearchXButton" (mousedown)="RemoveItem(item)">
                         <div class="InnerControl CenterCenter">
@@ -222,6 +222,9 @@
                     </div>
                 </div>
             </div>
+
+            <div style="color:gray;font-size:13px;margin-left:-44px;margin-top:3px;font-style:italic" *ngIf="IsShowRedUserInActiveNote && DontInCludeInactive"> Note: Users in red are inactive </div>
+
         </td>
     </tr>
 </table>

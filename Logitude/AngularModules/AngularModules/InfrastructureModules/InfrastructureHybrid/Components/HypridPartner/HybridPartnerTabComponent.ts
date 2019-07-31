@@ -1,4 +1,4 @@
-﻿import {Component,ChangeDetectorRef} from '@angular/core'; 
+import {Component,ChangeDetectorRef} from '@angular/core'; 
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator'; 
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {HybridPartnerPM} from '../../../../Common/EntityPMs/HybridPartnerPM';
@@ -25,6 +25,7 @@ export class HybridPartnerTabComponent extends BaseComponent {
     _HybridPartnerPMService: HybridPartnerPMService;
     public Source: any = "";
     Tooltip: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super(); 
         this._HybridPartnerPMService = new HybridPartnerPMService(); 
@@ -122,11 +123,11 @@ export class HybridPartnerTabComponent extends BaseComponent {
       
        
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
             this._HybridPartnerPMService.insert(this.myentityPM).subscribe(myResult => {
                 if (!myResult.HasError) {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             });  
         }

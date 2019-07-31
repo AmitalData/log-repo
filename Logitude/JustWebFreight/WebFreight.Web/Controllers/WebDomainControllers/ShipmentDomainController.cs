@@ -7,12 +7,15 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.StorageService;
 using Logitude.WarehouseLib.BL.EntityQueryServices;
 using Logitude.WarehouseLib.Data;
 using Logitude.WarehouseLib.Data.EntityLists;
@@ -36,8 +39,12 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
+using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -312,6 +319,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        [ActionName("PostValidateShipmentMasterArgs")]
         public HttpResponseMessage PostValidateShipmentMasterArgs(ValidateShipmentMasterArgs args)
         {
             try
@@ -421,7 +430,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
                     WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
                     WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(warehouseContext);
-                     
+
                     IQueryable<WarehouseEntry> warehouseEntryLists = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant);
                     IQueryable<WarehouseRelease> warehouseReleaseLists = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentId, tenant);
 
@@ -499,7 +508,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             {
                                 UserQuery userQuery = new UserQuery(tenant);
                                 UserPM user = userQuery.GetSinglePM(myQuote.SalesmanUserId, tenant);
-                                if(user != null)
+                                if (user != null)
                                 {
                                     salesman = user.EnglishName;
                                 }
@@ -546,7 +555,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetShipmentsQueriesCounts(int tenant, string transportModeId, string SearchFilter, string serviceContextUser, string TypeCode = null)
+        public HttpResponseMessage GetShipmentsQueriesCounts(int tenant, string transportModeId, string directionId, string SearchFilter, string serviceContextUser, string TypeCode = null)
         {
             try
             {
@@ -559,7 +568,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ImporterQueriesDataCounts myResult = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, SearchFilter, serviceContextUser, TypeCode);
+                ImporterQueriesDataCounts myResult = shipmentQuery.GetShipmentsQueriesCounts(tenant, transportModeId, directionId, SearchFilter, serviceContextUser, TypeCode);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -749,7 +758,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-        public HttpResponseMessage GetShipmentByDirectionAndTransmode(string type,int lastMonths, int lastDays, int currentTenant, string customerid)
+        public HttpResponseMessage GetShipmentByDirectionAndTransmode(string type, int lastMonths, int lastDays, int currentTenant, string customerid)
         {
             try
             {
@@ -765,7 +774,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", currentTenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(currentTenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByDirectionAndTransMode(type,lastMonths, lastDays, currentTenant, customerid).AsQueryable().ToList();
+                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByDirectionAndTransMode(type, lastMonths, lastDays, currentTenant, customerid).AsQueryable().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
 
@@ -811,7 +820,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     ToDateOBJ = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                 }
 
-                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByDirectionAndTransModeCustom(type , FromDateOBJ, ToDateOBJ,tenant, customerid);
+                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByDirectionAndTransModeCustom(type, FromDateOBJ, ToDateOBJ, tenant, customerid);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
 
@@ -825,7 +834,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-        public HttpResponseMessage GetShipmentsByTop10CountriesDashBoard(string type,int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers, string customerid, string directionId, string transmodeId)
+        public HttpResponseMessage GetShipmentsByTop10CountriesDashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers, string customerid, string directionId, string transmodeId)
         {
             try
             {
@@ -844,7 +853,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", currentTenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(currentTenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByTop10CountriesDashBoard(type,lastMonths, lastDays, measurment, currentTenant, top, includeOthers, customerid, directionId, transmodeId).AsQueryable().ToList();
+                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByTop10CountriesDashBoard(type, lastMonths, lastDays, measurment, currentTenant, top, includeOthers, customerid, directionId, transmodeId).AsQueryable().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
             }
@@ -901,11 +910,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-        public HttpResponseMessage GetTop10DashBoardCustom(string type, string FromDate, string ToDate, int measurment, int currentTenant, int top, bool includeOthers, string directionId,string transportmodeid)
+        public HttpResponseMessage GetTop10DashBoardCustom(string type, string FromDate, string ToDate, int measurment, int currentTenant, int top, bool includeOthers, string directionId, string transportmodeid)
         {
             try
             {
-               
+
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -942,9 +951,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-
-
-        public HttpResponseMessage GetTop10DashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers,string directionid,string transportmodeId)
+        public HttpResponseMessage GetTop10DashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers, string directionid, string transportmodeId)
         {
             try
             {
@@ -959,7 +966,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", currentTenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(currentTenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoard(type, lastMonths, lastDays, measurment, currentTenant, top, includeOthers, directionid,transportmodeId).AsQueryable().ToList();
+                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoard(type, lastMonths, lastDays, measurment, currentTenant, top, includeOthers, directionid, transportmodeId).AsQueryable().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
             }
@@ -1415,7 +1422,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 ShipmentsDomainService service = new ShipmentsDomainService();
-                IQueryable<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId);
+                IQueryable<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d => d.StockType == "Champ");
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -1518,7 +1525,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
                 AnalyzeQueue analyzeQueue = new AnalyzeQueue()
                 {
-                    Subject =  "Voyage Response",
+                    Subject = "Voyage Response",
                     CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
                     From = "Artemus",
                     Id = IdCounter.GetNumber("AnalyzeQueue", 0),
@@ -1537,7 +1544,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ArtemusAnalyzer analyzer = new ArtemusAnalyzer(analyzeQueue, analyzeQueueReposiory);
                 analyzer.Simulate(tenant, shipmentNumber, Encoding.UTF8.GetBytes(xmlString1), "Voyage");
                 analyzer.Simulate(tenant, shipmentNumber, Encoding.UTF8.GetBytes(xmlString2), "Voyage");
-                analyzer.Simulate(tenant, shipmentNumber, Encoding.UTF8.GetBytes(xmlString3),"BL");
+                analyzer.Simulate(tenant, shipmentNumber, Encoding.UTF8.GetBytes(xmlString3), "BL");
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
@@ -1565,9 +1572,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     QuoteRepository quoteRepository = new QuoteRepository(tenant);
                     Quote myQuote = quoteRepository.GetSingleQuote(myShipment.QuoteId, tenant);
-                    if(myQuote != null)
+                    if (myQuote != null)
                     {
-                        if(myQuote.UsageCount == 1)
+                        if (myQuote.UsageCount == 1)
                         {
                             myQuote.UsageCount = null;
                         }
@@ -1609,14 +1616,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     if (receivables.Count > 0)
                     {
-                        foreach(ShipmentReceivable item in receivables)
+                        foreach (ShipmentReceivable item in receivables)
                         {
                             item.IsFromQuote = false;
                             item.QuoteChargeId = null;
                             item.QuoteSaleMinAmount = null;
                             item.QuoteSaleMaxAmount = null;
                             receivableRepository.Update(item);
-                        }                        
+                        }
                     }
 
                     if (payables.Count > 0)
@@ -1646,7 +1653,507 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetCreateMissingMasterData()
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    
+                    IShipmentsContext iContext = ShipmentsContext.GetContext(0);
+                    ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
+                    ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
+
+                    List<Shipment> iShipments = iShipmentRepository.GetMissingMasterDataShipments().ToList();
+
+                    if (iShipments.Count > 0)
+                    {
+                        foreach (Shipment shipment in iShipments)
+                        {
+                            int tenant = shipment.Tenant;
+
+                            bool isExist = (from d in iContext.ShipmentMasterDatas where d.Id == shipment.Id && d.Tenant == shipment.Tenant select d).Any();
+                            if (isExist)
+                            {
+                                shipment.MasterShipmentDataId = shipment.Id;
+                                iShipmentRepository.Update(shipment);
+                            }
+
+                            else
+                            {
+                                ShipmentPM shipmentPM = iShipmentQuery.GetSinglePM(shipment.Id, tenant);
+                                shipmentPM.ConvertFromHouseToDirect = true;
+                                //shipmentPM.DontCreateConvertEvent = true;
+
+                                string systemEmail = "system@tenant" + tenant + ".com";
+                                ShipmentService iShipmentService = new ShipmentService(iContext, shipmentPM, systemEmail);
+                                iShipmentService.Update();
+                            }
+                        }
+                    }
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, true);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetDownloadShipmentPackages(string shipmentNumber, string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                
+                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+                PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
+
+                List<ShipmentPackage> shipmentPackages = shipmentPackageRepository.GetShipmentPackagesForShipmentTenant(shipmentId, tenant).ToList();
+                List<PackageType> packageTypes = packageTypeRepository.GetPackageTypes(tenant).ToList();
+
+                ExportToExcelHelper helper = new ExportToExcelHelper();
+                byte[] data = this.ExportShipmentPackagesToExcel(shipmentPackages, packageTypes, tenant);
+
+                string fileName = "Shipment-" + shipmentNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
+
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = fileName,
+                    FolderName = "others",
+                    Extension = "xls",
+                    Tenant = tenant,
+                    FileSize = data.Length,
+                };
+
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                storageservice.Write(data, fileInfo);
+
+                return Request.CreateResponse(HttpStatusCode.OK, fileName);                
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public byte[] ExportShipmentPackagesToExcel(List<ShipmentPackage> shipmentPackages, List<PackageType> packageTypes, int tenant)
+        {
+            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
+
+            IWorksheet sheet1 = workbook.Worksheets[0];
+            sheet1.Name = "Packages";
+            sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
+            sheet1.Range["A1:I1"].CellStyle.Font.Size = 10;
+            sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
+            sheet1.Range["A1:I1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range["A1:I1"].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range["A1:I1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+            sheet1.Range["A1:G1"].ColumnWidth = 15;
+            sheet1.Range["H1:I1"].ColumnWidth = 17;
+
+            DataTable dataTable1 = new DataTable();
+            dataTable1.Columns.Add("Container Type");
+            dataTable1.Columns.Add("Container #");
+            dataTable1.Columns.Add("Volume");
+            dataTable1.Columns.Add("Gross Weight");
+            dataTable1.Columns.Add("Tare");
+            dataTable1.Columns.Add("Shipper Seal");
+            dataTable1.Columns.Add("Carrier Seal");
+            dataTable1.Columns.Add("Marks & Numbers");
+            dataTable1.Columns.Add("Description");
+
+            IWorksheet sheet2 = workbook.Worksheets[1];
+            sheet2.Name = "Package Types";
+            sheet2.Range["A1"].CellStyle.Font.Bold = true;
+            sheet2.Range["A1"].CellStyle.Font.Size = 11;
+            sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
+            sheet2.Range["A1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet2.Range["A1"].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet2.Range["A1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+            List<ExcelPackageType> types = new List<ExcelPackageType>();
+            if (packageTypes != null && packageTypes.Count > 0)
+            {
+                types = (from a in packageTypes
+                         where a.IsContainer == true
+                         select new ExcelPackageType()
+                         {
+                             Code = a.Code,
+                         }).ToList();
+            }
+
+            if (shipmentPackages != null && shipmentPackages.Count > 0)
+            {
+                foreach (ShipmentPackage package in shipmentPackages)
+                {
+                    DataRow row = dataTable1.NewRow();
+                    row[0] = package.PackageType == null ? null : package.PackageType.Code;
+                    row[1] = package.ContainerNumber;
+                    row[2] = package.Volume;
+                    row[3] = package.Weight;
+                    row[4] = package.Tare;
+                    row[5] = package.ShipperSeal;
+                    row[6] = package.CarrierSeal;
+                    row[7] = package.MarksAndNumbers;
+                    row[8] = package.Description;
+                    dataTable1.Rows.Add(row);
+                }
+            }
+
+            sheet1.Range["A2:A80"].DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
+            sheet1.Range["A2:A80"].DataValidation.IsSuppressDropDownArrow = false;
+            
+            DataTable dataTable2 = this.ConvertToDataTable(types);
+
+            sheet1.ImportDataTable(dataTable1, true, 1, 1);
+            sheet2.ImportDataTable(dataTable2, true, 1, 1);
+            
+            workbook.SaveAs(memory);
+
+            return memory.ToArray();
+        }
+        private DataTable ConvertToDataTable<T>(IList<T> data)
+        {
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
+            
+            foreach (PropertyDescriptor prop in properties)
+            {
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            }
+
+            foreach (T item in data)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                {
+                    if (table.Columns.Contains(prop.Name))
+                    {
+                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                    }
+                }
+
+                table.Rows.Add(row);
+            }
+
+            return table;
+        }
+
+        public HttpResponseMessage GetIfConnectedEntryOrRelease(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
+                WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);  
+                IQueryable<WarehouseEntry> warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant);
+               
+                bool myResult = false;
+                if (warehouseEntries.Count() > 0)
+                {
+                    myResult = true;
+                }
+
+                if (!myResult)
+                {
+                    WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(warehouseContext);
+                    IQueryable<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentId, tenant);
+
+                    if (warehouseReleases.Count() > 0)
+                    {
+                        myResult = true;
+                    }
+                }                
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [ActionName("PostUploadExcelFile")]
+        public HttpResponseMessage PostUploadExcelFile(ExcelPackageFilter filter)
+        {
+            try
+            {
+                string token = System.Web.HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                filter.Tenant = authToken.Tenant;
+                byte[] fileData = Convert.FromBase64String(filter.FileData);
+
+                System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
+                IWorksheet sheet = workbook.Worksheets[0];
+
+                List<ExcelPackage> packagesResult = this.BuildPackagesExcelLines(sheet, authToken.Tenant);                
+
+                return Request.CreateResponse(HttpStatusCode.OK, packagesResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private List<ExcelPackage> BuildPackagesExcelLines(IWorksheet sheet, int tenant)
+        {
+            List<ExcelPackage> myResult = new List<ExcelPackage>();
+
+            PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
+            foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
+            {
+                String[] rowData = new String[sheet.Columns.Count()];
+                ExcelPackage excelPackage = new ExcelPackage();
+                
+                for (int i = 0; i < sheet.Columns.Count(); i++)
+                {
+                    rowData[i] = row.Cells[i].Value2.ToString();
+                }
+
+                if (rowData.Length > 0)
+                {
+                    if (!string.IsNullOrEmpty(rowData[0]))
+                    {
+                        string packageTypeCode = rowData[0].Trim();
+
+                        PackageType packageType = packageTypeRepository.GetSinglePackageTypeByCode(packageTypeCode, tenant, true);
+                        if (packageType != null)
+                        {
+                            excelPackage.ContainerTypeId = packageType.Id;
+                            excelPackage.ContainerTypeCode = packageType.Code;
+                            excelPackage.ContainerTypeName = packageType.EnglishName;
+                            excelPackage.IsRefrigerated = packageType.IsRefrigerated;
+                        }
+
+                        else
+                        {
+                            excelPackage.HasErrors = true;
+                        }
+                    }
+
+                    else
+                    {
+                        excelPackage.HasErrors = true;
+                    }
+                }
+
+                if (rowData.Length > 1)
+                {
+                    if (!string.IsNullOrEmpty(rowData[1]))
+                    {
+                        string containerNumber = rowData[1].Trim();
+
+                        if (containerNumber.Length > 20)
+                        {
+                            excelPackage.ContainerNumber = containerNumber.Substring(0, 20).ToUpper();
+                        }
+
+                        else
+                        {
+                            excelPackage.ContainerNumber = containerNumber.ToUpper();
+                        }
+                    }
+                }
+
+                if (rowData.Length > 2)
+                {
+                    if (!string.IsNullOrEmpty(rowData[2]))
+                    {
+                        string volume = rowData[2].Trim();
+                        if (this.IsNumber(volume))
+                        {
+                            excelPackage.Volume = Convert.ToDouble(volume);
+                        }
+
+                        else
+                        {
+                            excelPackage.HasErrors = true;
+                        }
+                    }
+                }
+
+                if (rowData.Length > 3)
+                {
+                    if (!string.IsNullOrEmpty(rowData[3]))
+                    {
+                        string grossWeight = rowData[3].Trim();
+                        if (this.IsNumber(grossWeight))
+                        {
+                            excelPackage.GrossWeight = Convert.ToDouble(grossWeight);
+                        }
+
+                        else
+                        {
+                            excelPackage.HasErrors = true;
+                        }
+                    }
+
+                    else
+                    {
+                        excelPackage.HasErrors = true;
+                    }
+                }
+
+                if (rowData.Length > 4)
+                {
+                    if (!string.IsNullOrEmpty(rowData[4]))
+                    {
+                        string tare = rowData[4].Trim();
+                        if (this.IsNumber(tare))
+                        {
+                            excelPackage.Tare = Convert.ToDouble(tare);
+                        }
+                    }
+                }
+
+                if (rowData.Length > 5)
+                {
+                    if (!string.IsNullOrEmpty(rowData[5]))
+                    {
+                        string shipperSeal = rowData[5].Trim();
+
+                        if (shipperSeal.Length > 15)
+                        {
+                            excelPackage.ShipperSeal = shipperSeal.Substring(0, 15);
+                        }
+
+                        else
+                        {
+                            excelPackage.ShipperSeal = shipperSeal;
+                        }
+                    }
+                }
+
+                if (rowData.Length > 6)
+                {
+                    if (!string.IsNullOrEmpty(rowData[6]))
+                    {
+                        string carrierSeal = rowData[6].Trim();
+
+                        if (carrierSeal.Length > 15)
+                        {
+                            excelPackage.CarrierSeal = carrierSeal.Substring(0, 15);
+                        }
+
+                        else
+                        {
+                            excelPackage.CarrierSeal = carrierSeal;
+                        }
+                    }
+                }
+
+                if (rowData.Length > 7)
+                {
+                    if (!string.IsNullOrEmpty(rowData[7]))
+                    {
+                        string marks = rowData[7].Trim();
+
+                        if (marks.Length > 350)
+                        {
+                            excelPackage.MarksAndNumbers = marks.Substring(0, 350);
+                        }
+
+                        else
+                        {
+                            excelPackage.MarksAndNumbers = marks;
+                        }
+                    }
+                }
+
+                if (rowData.Length > 8)
+                {
+                    if (!string.IsNullOrEmpty(rowData[8]))
+                    {
+                        string description = rowData[8].Trim();
+
+                        if (description.Length > 2000)
+                        {
+                            excelPackage.Description = description.Substring(0, 2000);
+                        }
+
+                        else
+                        {
+                            excelPackage.Description = description;
+                        }
+                    }
+                }
+
+                myResult.Add(excelPackage);
+            }
+            
+            return myResult;
+        }
+        private bool IsNumber(string text)
+        {
+            bool isNumber = false;
+
+            if (!string.IsNullOrEmpty(text))
+            {
+                double value;
+                if (Double.TryParse(text, out value))
+                {
+                    isNumber = true;
+                }
+            }
+
+            return isNumber;
+        }
     }
+}
+
+public class ExcelPackage
+{
+    public string ContainerTypeId { get; set; }
+    public string ContainerTypeCode { get; set; }
+    public string ContainerTypeName { get; set; }
+    public string ContainerNumber { get; set; }
+    public double? Volume { get; set; }
+    public double? GrossWeight { get; set; }
+    public double? Tare { get; set; }
+    public string ShipperSeal { get; set; }
+    public string CarrierSeal { get; set; }
+    public string MarksAndNumbers { get; set; }
+    public string Description { get; set; }
+    public bool IsRefrigerated { get; set; }
+    public bool HasErrors { get; set; }
+}
+
+public class ExcelPackageFilter
+{
+    public int Tenant { get; set; }
+    public string FileData{ get; set; }
+    public string ShipmentId{ get; set; }
+}
+
+public class ExcelPackageType
+{
+    public string Code { get; set; }
 }
 
 public class ShipmentConnectedEntity

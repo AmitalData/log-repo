@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 
@@ -21,18 +21,19 @@ export class ToggleButton implements OnInit, OnDestroy {
     public DropDownWidth: number = 0;
     public DropDownHeight: number = 0;
     @Output() Opened: EventEmitter<boolean> = new EventEmitter<boolean>();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        var idIndex = SessionLocator.CurrentSession.GetNewId("HelperNotes");
+        var idIndex = this.CurrentSession.GetNewId("HelperNotes");
         this.ComponentId = "HelperNotes_" + idIndex;
         this.ComponentButtonId = "HelperNotesButton_" + idIndex;
         this.ComponentContentId = "HelperNotesContent_" + idIndex;
 
-        SessionLocator.CurrentSession.MouseDownEvent
+        this.CurrentSession.MouseDownEvent
     }
 
     private SessionEvent: any = null;
     ngOnInit() {
-        this.SessionEvent = SessionLocator.CurrentSession.MouseDownEvent.subscribe(s => {
+        this.SessionEvent = this.CurrentSession.MouseDownEvent.subscribe(s => {
             if (this.IsMouseOverButton == false && this.IsMouseOver == false) {
                 this.IsOpened = false;
             }

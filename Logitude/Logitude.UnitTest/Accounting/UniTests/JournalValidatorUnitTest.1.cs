@@ -13,7 +13,7 @@ using Logitude.Accounting.BL.Validators;
 
 namespace Logitude.UnitTest.Accounting.UniTests
 {
-    public partial class JournalValidatorUnitTest
+    public partial class JournalValidatorUnitTest:TestBase
     {
         #region pmAcc.Inactive.GetValueOrDefault
 

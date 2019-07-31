@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -19,7 +19,7 @@ export class LanguageSettingsComponent {
     public FormatsCollection: string[] = [];
     public ValidationErrorsList: string[] = [];
     public TenantPM: TenantPM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LoadTenantPMMethod();
     }
@@ -80,7 +80,7 @@ export class LanguageSettingsComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors = [];
@@ -93,18 +93,18 @@ export class LanguageSettingsComponent {
         //}
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+            this.CurrentSession.StartBusyIndicator("Saving...");
             var myService: TenantPMService = new TenantPMService();
             myService.update(this.TenantPM).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse) {
                     if (!myResponse.HasError) {
                         InfraSettings.TenantPM = this.TenantPM;
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
 
                     else {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }
             });

@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit} from '@angular/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
@@ -59,6 +59,7 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
     public DataContext: AWBAddEditPartnerComponent = this;
     public ObjectTableName: string = "Address";
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -94,7 +95,7 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
             }
 
             if (isLoadingAddress) {
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
                 this.CurrentAddressId = newValue;
                 this.LoadAddress();
             }
@@ -113,7 +114,7 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
                     if (confirmWindow.Yes) {
                         var isValid = this.Validate();
                         if (isValid) {
-                            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                            this.CurrentSession.StartBusyIndicatorSaving();
                             this.Save(true);
                         }
                     }
@@ -123,7 +124,7 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
                     }
 
                     else if (confirmWindow.No) {
-                        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                        this.CurrentSession.StartBusyIndicatorLoading();
                         this.CurrentAddressId = newValue;
                         this.LoadAddress();
                     }
@@ -242,7 +243,7 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
 
             if (!AppTool.IsNullOrEmpty(this.CurrentPartnerId)) {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
 
                 var myService: CardListService = new CardListService();
                 
@@ -251,7 +252,7 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
                     if (myResponse != null) {
                         if (myResponse.HasError) {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
 
                         else {
@@ -262,7 +263,7 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
                     }
 
                     else {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }
@@ -419,7 +420,7 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
     private OnLoadCompleted() {
         if (this.isPartnerLoaded && this.isAddressLoaded) {                        
             this.SetUIProperties();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }  
     }
 
@@ -811,21 +812,21 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
     private isPartnerDirty = false;
     CancelButtonClicked() {
         this.IsCancelled = true;
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var isValid = this.Validate();
         if (!isValid) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
 
         else {
             if (!this.EntityPM.IsDirty) {
                 this.IsUpdatingPartner = true;
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
 
             else {
@@ -1127,12 +1128,12 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
 
         this.myPartnersDomainService.PostPartnerAddress(args).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (!myResponse.HasError) {
 
                 if (isSelectedAddressSaving) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
                     this.CurrentAddressId = this.selectedAddressId;
                     this.LoadAddress();
                 }
@@ -1141,7 +1142,7 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
                     this.CurrentAddressId = myResponse.Result.AddressId;
                     this.CurrentPartnerId = myResponse.Result.PartnerId;
                     this.IsUpdatingPartner = true;
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             }
 

@@ -1,9 +1,10 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {QuoteUtilities} from '../../../Quote/Utilities/QuoteUtilities';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'ChargesTabComponent',
@@ -22,12 +23,32 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
     `,
 })
 
-export class ChargesTabComponent implements OnInit {
+export class ChargesTabComponent implements OnInit, OnDestroy {
     public EntityPM: QuotePM = null;
     public ObjectTableName: string = "Quote";
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
-    constructor(entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
+
+        this.Listen();
+    }
+
+    private isLCL: boolean = false;
+    private LoadCompletedEvent: any = null;
+    Listen() {
+        if (this.entityArgs.EditComponent) {            
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
+
+                    this.SelectTab();
+                }
+            });            
+        }
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
     ngOnInit() {
@@ -35,23 +56,26 @@ export class ChargesTabComponent implements OnInit {
             this.entityResourceService.getEntityResourceByTableName("QuotePriceSteps").subscribe((res2: any) => {
                 this.entityResourceService.getEntityResourceByTableName("TarrifHeader").subscribe((res3: any) => {
 
-                    var isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
-
-                    if (isLCL) {
-                        SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteCharges/Components/LCLChargesComponent', this.viewContainerRef)
-                            .then(cmpRef => {
-                                //cmpRef.instance
-                            });
-                    }
-
-                    else {
-                        SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteCharges/Components/FCLChargesComponent', this.viewContainerRef)
-                            .then(cmpRef => {
-                                //cmpRef.instance
-                            });
-                    }
+                    this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
+                    this.SelectTab();                   
                 });
             });
         });
+    }
+
+    private SelectTab() {
+        this.viewContainerRef.clear();
+
+        if (this.isLCL) {
+            SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteCharges/Components/LCLChargesComponent', this.viewContainerRef)
+                .then(cmpRef => {                    
+                });
+        }
+
+        else {
+            SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteCharges/Components/FCLChargesComponent', this.viewContainerRef)
+                .then(cmpRef => {                   
+                });
+        }
     }
 }

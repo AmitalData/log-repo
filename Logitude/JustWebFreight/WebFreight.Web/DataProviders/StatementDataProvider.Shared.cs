@@ -15,6 +15,14 @@ namespace WebFreight.Web.DataProviders
         public double? DaysPastDue31_60 { get; set; }
         public double? DaysPastDue61_90 { get; set; }
         public double? Over90DaysPastDue { get; set; }
+
+        public double? DaysPastDue1_15 { get; set; }
+        public double? DaysPastDue16_30 { get; set; }
+        //public double? DaysPastDue31_60 { get; set; }
+        //public double? DaysPastDue61_90 { get; set; }
+        public double? DaysPastDue91_120 { get; set; }
+        public double? Over120DaysPastDue { get; set; }
+
         public string Phone { get; set; }
         public string Fax { get; set; }
         public string BankDetails { get; set; }
@@ -58,6 +66,12 @@ namespace WebFreight.Web.DataProviders
             public double? Due31_60 { get; set; }
             public double? Due61_90 { get; set; }
             public double? Due90 { get; set; }
+            public double? Due1_15 { get; set; }
+            public double? Due16_30 { get; set; }
+            //public double? Due31_60 { get; set; }
+            //public double? Due61_90 { get; set; }
+            public double? Due91_120 { get; set; }
+            public double? Due120 { get; set; }
             public double? total { get; set; }
             public string SupplierName { get; set; }
             public string SupplierRefrence { get; set; }
@@ -107,6 +121,10 @@ namespace WebFreight.Web.DataProviders
 
             public string BillToVendorId { get; set; }
             public string BillToVendor { get; set; }
+
+            public string InvoiceStatus { get; set; }
+            public double? InvoiceAmount { get; set; }
+            public double? AmountPaid { get; set; }
         }
 
         public string Name { get; set; }
@@ -120,6 +138,12 @@ namespace WebFreight.Web.DataProviders
             public double? Due31_60 { get; set; }
             public double? Due61_90 { get; set; }
             public double? Due90 { get; set; }
+            public double? Due1_15 { get; set; }
+            public double? Due16_30 { get; set; }
+            //public double? Due31_60 { get; set; }
+            //public double? Due61_90 { get; set; }
+            public double? Due91_120 { get; set; }
+            public double? Due120 { get; set; }
             public string Currency { get; set; }
         }      
     }

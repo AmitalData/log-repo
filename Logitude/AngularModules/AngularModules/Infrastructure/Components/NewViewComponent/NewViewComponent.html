@@ -179,7 +179,7 @@
                         </td>
 
                         <td style="float:left;width:190px;">
-                            <input type="text" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled" />
+                            <input id="{{'ViewNameId' | IdGeneratorPipe}}"  type="text" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled" />
                         </td>
 
                         <td style="width:10px;">
@@ -196,7 +196,7 @@
             </td>
 
             <td *ngIf="RTL == true" style="float: right;width: 305px;">
-                <input type="text" style="float:left;width:190px;" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled"/>
+                <input [id]="ViewNameId"  type="text" style="float:left;width:190px;" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled"/>
                 <label style="float:left;width:80px;">{{'General.O.ViewName' | TextCodeTranslationPipe}}:</label>
                 <img style="float:left;" src="./Images/Icons/Validation.png" />
 
@@ -218,7 +218,7 @@
 
                                             </div>
                                         </li>
-                                        <li [class.Selected]="SelectedTabCode == 'FLT'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'FLT'" style="width:109px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
+                                        <li id="{{'NewTab.View.Filters ' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'FLT'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'FLT'" style="width:109px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
                                             <div class="InnerChild">
                                                 <img [style.float]="RTL == true ? 'right' : 'left'" src="./Images/Icons/Filter.png" style="margin-top:3px;" />
                                                 <span class="CenterCenter" [style.left.px]="RTL == true ? 750 : 140" [style.right.px]="RTL == true ? 120 : 175" style="top:2px;">{{'General.O.Filters' | TextCodeTranslationPipe}}</span>
@@ -301,12 +301,12 @@
                                                 </div>
                                             </td>
                                             <td style="width: 10%; vertical-align: middle;">
-                                                <button (click)="btnAdd_Click()" class="Button" [disabled]="!IsbtnAddEnabled" style="width:80px;margin: 7px;">
+                                                <button id="{{'NewButton.View.Add ' | IdGeneratorPipe}}" (click)="btnAdd_Click()" class="Button" [disabled]="!IsbtnAddEnabled" style="width:80px;margin: 7px;">
                                                     {{'General.B.Add' | TextCodeTranslationPipe}}
                                                     <img *ngIf="RTL == false" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                     <img *ngIf="RTL == true" src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                 </button>
-                                                <button (click)="btnRemove_Click()" class="Button" [disabled]="!IsbtnRemoveEnabled" style="width:80px;margin: 7px;">
+                                                <button id="{{'NewButton.View.Remove ' | IdGeneratorPipe}}" (click)="btnRemove_Click()" class="Button" [disabled]="!IsbtnRemoveEnabled" style="width:80px;margin: 7px;">
                                                     <img *ngIf="RTL == false" src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                     <img *ngIf="RTL == true" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                     {{'General.B.Remove' | TextCodeTranslationPipe}}
@@ -673,7 +673,7 @@
 
         <tr style="height:22px;float:right;margin-top:7px; width:100%;">
             <td style="width:100%;" [style.float]="RTL == true ? 'left' : 'right'">
-                <button class="RedButton" [disabled]="!IsSaveButtonEnabled" (click)="btnCreateNewQuery_Click()" [style.float]="RTL == true ? 'left' : 'right'" style="width:72px;">{{CreateBtnText}}</button>
+                <button id="{{'NewButton.View.Create ' | IdGeneratorPipe}}" class="RedButton" [disabled]="!IsSaveButtonEnabled" (click)="btnCreateNewQuery_Click()" [style.float]="RTL == true ? 'left' : 'right'" style="width:72px;">{{CreateBtnText}}</button>
                 <button class="Button" (click)="CancelButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                 <button *ngIf="!IsNew" class="Button" [disabled]="!IsSaveButtonEnabled" (click)="DeleteButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Delete' | TextCodeTranslationPipe}}</button>
             </td>

@@ -33,17 +33,13 @@ namespace WebFreight.Web.DataProviders
         public DateTime? RequestETD { get; set; }
         public DateTime? EstimateETD { get; set; }
         public DateTime? ActualETD { get; set; }
-        public DateTime? RequestETA { get; set; }
+        public string ShipmentField2 { get; set; }
         public DateTime? EstimateETA { get; set; }
         public string CustomRef { get; set; }
         public string Shipper { get; set; }
         public int? Pieces { get; set; }
         public string CommodityNumber { get; set; }
         public string ConsigneeAddress { get; set; }
-
-
+        public DateTime? ActualETA { get; set; }
     }
-
-
-
 }

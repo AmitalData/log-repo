@@ -60,6 +60,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             SearchFields = a.SearchFields,
                                             ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                             HasCitiesList = a.HasCitiesList,
+                                            IsNorthAmerica = a.IsNorthAmerica,
                                         };
 
                         if (tenant == 0)
@@ -102,6 +103,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              SearchFields = a.SearchFields,
                                              ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                              HasCitiesList = a.HasCitiesList,
+                                             IsNorthAmerica = a.IsNorthAmerica,
                                          }).FirstOrDefault();
                     entity = country;
                 }
@@ -134,6 +136,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SearchFields = a.SearchFields,
                                               ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                               HasCitiesList = a.HasCitiesList,
+                                              IsNorthAmerica = a.IsNorthAmerica,
                                           };
             return query;
         }
@@ -165,6 +168,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             SearchFields = a.SearchFields,
                             ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                             HasCitiesList = a.HasCitiesList,
+                            IsNorthAmerica = a.IsNorthAmerica,
                         };
 
             IQueryable<CountryPM> query2 = null;
@@ -214,6 +218,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  IsStateRequired = f.IsStateRequired,
                                                  SearchFields = f.SearchFields,
                                                  HasCitiesList = f.HasCitiesList,
+                                                 IsNorthAmerica = f.IsNorthAmerica,
                                              };
             return result;
         }
@@ -239,6 +244,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      SearchFields = a.SearchFields,
                                      ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                      HasCitiesList = a.HasCitiesList,
+                                     IsNorthAmerica = a.IsNorthAmerica,
                                  }).FirstOrDefault();
 
             return country;

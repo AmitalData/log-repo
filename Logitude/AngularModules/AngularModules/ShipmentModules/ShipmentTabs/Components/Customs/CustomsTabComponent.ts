@@ -26,7 +26,7 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     public DeclarationNumberLabel: string = TextCodeTranslator.Translate("Shipment.F.DeclarationNumber");
     public DeclarationDateLabel: string = TextCodeTranslator.Translate("Shipment.F.DeclarationDate");
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -135,7 +135,7 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "RefreshCustomsSummary") {
                     this.LoadSummaryData();
                 }

@@ -48,6 +48,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                   Length = a.Length,
                                                                   OriginalShipmentPackageId = a.OriginalShipmentPackageId,
                                                                   IsMultiHarmonize = a.IsMultiHarmonize,
+                                                                  Make = a.Make,
+                                                                  Year = a.Year,
+                                                                  Model = a.Model,
+                                                                  Color = a.Color,
+                                                                  ChassisNumber = a.ChassisNumber,
+                                                                  RegistrationNumber = a.RegistrationNumber,
+                                                                  CountryId = a.CountryId,
                                                               }).ToList();
 
             foreach (ShipmentPickUpDeliveryPackagePM package in packages)
@@ -88,6 +95,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                             Length = a.Length,
                                                             OriginalShipmentPackageId = a.OriginalShipmentPackageId,
                                                             IsMultiHarmonize = a.IsMultiHarmonize,
+                                                            Make = a.Make,
+                                                            Year = a.Year,
+                                                            Model = a.Model,
+                                                            Color = a.Color,
+                                                            ChassisNumber = a.ChassisNumber,
+                                                            RegistrationNumber = a.RegistrationNumber,
+                                                            CountryId = a.CountryId,
                                                         }).FirstOrDefault();
 
             myResult.PickUpDeliveryPackageHarmonizes = query.GetPickUpDeliveryPackageHarmonizes(myResult.Id, tenant);

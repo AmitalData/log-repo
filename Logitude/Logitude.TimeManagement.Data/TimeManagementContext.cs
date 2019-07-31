@@ -72,6 +72,8 @@ namespace Logitude.TimeManagement.Data
 	
             modelBuilder.Configurations.Add(new TMBudgetMap());
 	
+            modelBuilder.Configurations.Add(new TMDayOffTypeMap());
+	
             modelBuilder.Configurations.Add(new TMEmployeeTimeMap());
 	
             modelBuilder.Configurations.Add(new TMLocationMap());
@@ -328,8 +330,8 @@ namespace Logitude.TimeManagement.Data
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
-            modelBuilder.Configurations.Add(new CustomsShipperMap());
-            #endregion
+			modelBuilder.Configurations.Add(new CustomsShipperMap());
+			#endregion
 
             base.OnModelCreating(modelBuilder);
         }
@@ -375,6 +377,12 @@ namespace Logitude.TimeManagement.Data
 	 
 	 }
 	
+	 public IDbSet<TMDayOffType> TMDayOffTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<TMEmployeeTime> TMEmployeeTimes 
 	 {
 	      get; set;
@@ -414,4 +422,4 @@ namespace Logitude.TimeManagement.Data
  }
 
 
-}
+}

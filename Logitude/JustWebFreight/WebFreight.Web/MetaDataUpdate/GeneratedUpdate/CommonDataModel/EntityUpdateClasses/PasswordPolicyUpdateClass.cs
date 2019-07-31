@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class PasswordPolicyUpdateClass
@@ -163,7 +167,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
+					  						DefaultText =  "Code",
 					  						HelpTextCode =  "Code",
 					  						Code =  "Code",
 					  						DependencyFilter3IsList =  false,
@@ -221,9 +225,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "PasswordStrength",
-					  						DefaultText =  @"Password Strength",
+					  						DefaultText =  "Password Strength",
 					  						ListFieldLable =  "PasswordStrengthListLable",
-					  						ListLableDefaultText =  @"Password Strength",
+					  						ListLableDefaultText =  "Password Strength",
 					  						HelpTextCode =  "PasswordStrength",
 					  						Code =  "PasswordStrength",
 					  						DependencyFilter3IsList =  false,
@@ -279,9 +283,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search codes/ names",
+					  						DefaultText =  "Search codes/ names",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  @"Searching by :\n1: codes Tables\n2: names",
+					  						HelpTextDefaultText =  "Searching by :\n1: codes Tables\n2: names",
 					  						Code =  "SearchFields",
 					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,

@@ -25,6 +25,7 @@ export class SignStationListTemplate {
 
     _SignStationList: SignStationList;
     public fieldName: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         //        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
     }
@@ -75,7 +76,7 @@ export class SignStationListTemplate {
 
 
     //    this.CD.detectChanges();
-    //    SessionLocator.CurrentSession.StartBusyIndicator("");
+    //    this.CurrentSession.StartBusyIndicator("");
     //    let signStationExtendedListService = new SignStationExtendedListService();
     //    signStationExtendedListService.PostTestSign(this._SignStationList)
     //        .Subscribe(rsp ==>{

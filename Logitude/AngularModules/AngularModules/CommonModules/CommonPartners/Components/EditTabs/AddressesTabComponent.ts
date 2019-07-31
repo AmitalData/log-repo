@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
@@ -20,7 +20,7 @@ import {CountryFlagPipe} from '../../../../Controls/Pipes/CountryFlagPipe';
     templateUrl: './AddressesTabComponent.html',
 })
 
-export class AddressesTabComponent {
+export class AddressesTabComponent implements OnDestroy {
     public ItemsSource: AddressItemClass[];
     public EntityPM: any = null;
     public EntityId: string = null;
@@ -31,6 +31,7 @@ export class AddressesTabComponent {
     public DomainService: PartnersDomainService;
     public IsVisibile: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response=> {
             this.IsVisibile = true;
@@ -55,23 +56,26 @@ export class AddressesTabComponent {
         });
     }
 
+    private SessionEvent: any = null;
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.entityArgs.EditComponent != null) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                 }
             });
 
-            SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "EntityActivated") {
                     if (this.ObjectTableName == "Customer") {
                         this.SetUIProperties();
@@ -80,6 +84,13 @@ export class AddressesTabComponent {
             });
         }
     }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
     
     public IsEditingEnabled: boolean = false;
     public IsBlockingUnifreightCustomer: boolean = false;
@@ -103,12 +114,12 @@ export class AddressesTabComponent {
     public AllAddresses: AddressPM[] = [];
     private LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.DomainService.GetAllAddressesPMsbyCardId(this.EntityId).subscribe((myResult:any) => {
             this.AllAddresses = myResult;
             this.BuildItemsSource();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     public BuildItemsSource() {

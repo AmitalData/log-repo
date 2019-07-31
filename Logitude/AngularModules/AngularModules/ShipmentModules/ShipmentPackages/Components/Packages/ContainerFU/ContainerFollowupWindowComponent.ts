@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPackagePM';
@@ -25,7 +25,8 @@ export class ContainerFollowupWindowComponent implements OnDestroy {
     public ValidationErrorsList: string[];
     public IsNewFollowup: boolean;
     private IsNewFollowup_Totango: boolean;
-    @ViewChild('Child', { read: ViewContainerRef }) ChildViewContainerRef: ViewContainerRef; 
+    @ViewChild('Child', { read: ViewContainerRef }) ChildViewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -131,7 +132,7 @@ export class ContainerFollowupWindowComponent implements OnDestroy {
     private myRequestedCommand: string;
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var isValid: boolean = this.Validate();
@@ -212,7 +213,7 @@ export class ContainerFollowupWindowComponent implements OnDestroy {
         switch (this.myRequestedCommand) {
 
             case "Ok": {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
                 break;
             }
 

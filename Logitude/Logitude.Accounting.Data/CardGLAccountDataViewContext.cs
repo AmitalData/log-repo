@@ -59,7 +59,8 @@ namespace Logitude.Accounting.Data
                 currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             }
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             CardGLAccountDataViewContext context = new CardGLAccountDataViewContext(connection);
             return context;
 

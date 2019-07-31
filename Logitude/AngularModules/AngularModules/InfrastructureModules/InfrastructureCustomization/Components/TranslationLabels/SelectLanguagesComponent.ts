@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -13,7 +13,7 @@ import {CommonDomainService, TranslationHeader} from '../../../../Common/Service
 export class SelectLanguagesComponent {
 
     public LanguagesList: TranslationHeader[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LoadLanguages();
     }
@@ -49,7 +49,7 @@ export class SelectLanguagesComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         this.RunTranslationWindow();
@@ -60,6 +60,6 @@ export class SelectLanguagesComponent {
         logitudeWindow.Title = "Translate Labels";
         logitudeWindow.WindowArgs = this.selectedLanguageCode;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/TranslationLabels/TranslateLabelsComponent');
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

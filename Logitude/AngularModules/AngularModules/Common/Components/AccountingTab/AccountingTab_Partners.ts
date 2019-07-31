@@ -14,6 +14,7 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
     public EntityPM: any = null;
     public ObjectTableName: string;
     public DataContext = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -35,11 +36,11 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
                         if (this.isExternalByProductsRequestd) {
                             this.ApplyExternalByProducts();
@@ -51,9 +52,9 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
@@ -97,7 +98,7 @@ export class AccountingTab_Partners extends BaseComponent implements OnDestroy {
     ExternalByProductsClicked() {
         if (!this.isExternalByProductsRequestd) {
             this.isExternalByProductsRequestd = true;
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
     ApplyExternalByProducts() {

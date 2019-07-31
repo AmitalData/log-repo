@@ -9,7 +9,7 @@
                             <div class="ShortTitleControl" style="background: rgba(255, 0, 0, 0.1);display: flex;">
                                 <span>{{'ARInvoice.S.ShortTitle' | TextCodeTranslationPipe}}:</span>
                                 <span style="margin-left: 5px;">{{EntityNumber}}</span>
-                                <span class="TextTrimming" style="max-width: 200px;">{{EntityPM.BillToName}}</span>
+                                <span class="TextTrimming" style="max-width: 200px;">{{showLocal ? EntityPM.BillToLocalName : EntityPM.BillToName}}</span>
                             </div>
                         </td>
 

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {RolePM} from '../../../../Common/EntityPMs/RolePM';
 import {RoleList} from '../../../../Common/EntityLists/RoleList';
@@ -24,6 +24,7 @@ export class NewRoleComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
     public IsNewEntity: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.InitializeServices();
@@ -114,7 +115,7 @@ export class NewRoleComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -135,14 +136,14 @@ export class NewRoleComponent extends BaseComponent {
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
 
-                        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                        this.CurrentSession.StartBusyIndicatorSaving();
 
                         this.myRolePMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
 
                             if (!myResponse.HasError) {
-                                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                                this.CurrentSession.CloseCurrentWindowEmit("OK");
                             }
                         });
                     }
@@ -151,14 +152,14 @@ export class NewRoleComponent extends BaseComponent {
 
             else {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
 
                 this.myRolePMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (!myResponse.HasError) {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                        this.CurrentSession.CloseCurrentWindowEmit("OK");
                     }
                 });
             }

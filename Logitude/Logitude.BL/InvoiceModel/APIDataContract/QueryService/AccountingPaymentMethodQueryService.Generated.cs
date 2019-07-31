@@ -1,0 +1,114 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+using Logitude.BL.Helpers;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Simplog.Data.InvoiceModel;
+
+ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
+{ 
+   public partial class AccountingPaymentMethodQueryService
+   {
+   
+		IInvoiceContext  context;
+		//AccountingPaymentMethodService service; 
+		
+		AccountingPaymentMethodQuery query; 
+
+        public AccountingPaymentMethodQueryService(int tenant)
+        {
+				    context = InvoiceContext.GetContext(tenant); 
+			//service = new AccountingPaymentMethodService(context, tenant); 
+			query = new AccountingPaymentMethodQuery(tenant);
+        }
+
+		
+		public AccountingPaymentMethod GetAccountingPaymentMethodById(string Id,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePM(Id,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("AccountingPaymentMethod with Id " + Id + " doesn't exist");
+
+				return AccountingPaymentMethodDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
+		public AccountingPaymentMethod AccountingPaymentMethodDataMapping(AccountingPaymentMethodPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+        {
+		    try
+            {
+				   
+				   var temp = new AccountingPaymentMethod(); 
+				   temp.Id = MyEntityPM.Id;
+				   temp.Tenant = MyEntityPM.Tenant;
+				   temp.Code = MyEntityPM.Code;
+				   temp.Name = MyEntityPM.Name;					
+				   return temp;
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        } 
+
+		public AccountingPaymentMethodPM AccountingPaymentMethodDataMappingAndValidatin(AccountingPaymentMethod MyEntity,int Tenant,string ComputingPartnerName = "")
+        {
+		    try
+            {
+				   					var temp = new AccountingPaymentMethodPM();								  
+					if (!string.IsNullOrEmpty(MyEntity.Id))
+					{
+						temp = query.GetSinglePM(MyEntity.Id, Tenant);
+					} 
+										   
+					if(temp == null)
+					{
+					    throw new ApplicationException("AccountingPaymentMethod with Id " + MyEntity.Id + " doesn't exist");
+					} 
+					if(string.IsNullOrEmpty(temp.Id))
+					{
+						temp.Id = MyEntity.Id;
+					}
+					temp.Tenant = MyEntity.Tenant;
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+						temp.Code = MyEntity.Code;
+					}
+					temp.Name = MyEntity.Name;					   
+					   return temp;
+		    }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            } 
+        }
+		 
+   }
+}

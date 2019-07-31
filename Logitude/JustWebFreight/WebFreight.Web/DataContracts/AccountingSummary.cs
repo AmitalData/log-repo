@@ -103,4 +103,22 @@ namespace WebFreight.Web.DataContracts
         public int Id { get; set; }
         public int AllPaymentChequesCount { get; set; }
     }
+
+    public class BankDepositSummary
+    {
+        [Key]
+        public int Id { get; set; }
+        public int TodaysDepositCount { get; set; }
+    }
+
+    public class CashBookSummary
+    {
+        [Key]
+        public int Id { get; set; }
+        public int CashCashbookCount { get; set; }
+        public int ChequeCashbookCount { get; set; }
+        public int AllCashbookCount { get; set; }
+      
+    }
+
 }

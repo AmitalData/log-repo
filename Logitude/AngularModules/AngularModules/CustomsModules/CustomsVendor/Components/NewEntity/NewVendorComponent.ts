@@ -53,7 +53,7 @@ export class NewVendorComponent extends BaseComponent {
 
     IsFromDeclarationMode: boolean = false;
     IsImporterDespositionValide: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new CustomsVendorPM();
@@ -66,7 +66,7 @@ export class NewVendorComponent extends BaseComponent {
         this.entityResourceService.getEntityResourceByTableName("Customs.CustomsClosedTable").subscribe((response: any) => { });
         this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe((response: any) => { });
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null && SessionLocator.CurrentSession.CurrentEditComponent.ObjectTableName == "Customs.Declaration") {
+        if (this.CurrentSession.CurrentEditComponent != null && this.CurrentSession.CurrentEditComponent.ObjectTableName == "Customs.Declaration") {
             this.IsFromDeclarationMode = true;           
         }
         
@@ -158,7 +158,7 @@ export class NewVendorComponent extends BaseComponent {
             || this.VendorName == "TST"  || !AppTool.IsNullOrEmpty(this.VendorNumber)) {
 
             if (this.VendorName && this.VendorName.length < 2) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var msg = TextCodeTranslator.Translate("Customs.CustomsVendor.O.mustEnterAtLeast2Chars"); // Bug 28579: Customs Query - search Vendor
                 this.ValidationErrorsList = [];
                 this.ValidationErrorsList.push(msg);
@@ -241,7 +241,7 @@ export class NewVendorComponent extends BaseComponent {
                 if (!AppTool.IsNullOrEmpty(response)) {
                     var VendorResults: any[] = response.VendorResults;
                     if (response.IsCustomWarning) {
-                        SessionLocator.CurrentSession.CloseCurrentWindow();
+                        this.CurrentSession.CloseCurrentWindow();
                     }
                 }
                 }).catch((err) => {
@@ -309,7 +309,7 @@ export class NewVendorComponent extends BaseComponent {
 
         }
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             var msg = TextCodeTranslator.Translate("Customs.CustomsVendor.O.SearchRequieredFieldsError");
             this.ValidationErrorsList = [];
             this.ValidationErrorsList.push(msg);
@@ -345,7 +345,7 @@ export class NewVendorComponent extends BaseComponent {
 
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     AddButtonClicked(item: any) {
@@ -354,7 +354,7 @@ export class NewVendorComponent extends BaseComponent {
         var errors = [];
         this.ValidationErrorsList = errors;
 
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
         var newVendor = new CustomsVendorPM();
         newVendor.Tenant = SessionLocator.Tenant;
@@ -406,12 +406,12 @@ export class NewVendorComponent extends BaseComponent {
                 else {
                     this.ValidationErrorsList = res.ErrorsArray;
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
 
         }
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.ValidationErrorsList = errors;
         }
     }
@@ -422,7 +422,7 @@ export class NewVendorComponent extends BaseComponent {
         confirmWindow.Show(TextCodeTranslator.Translate("Customs.CustomsVendor.O.UpdateVendor"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+                this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
                 // Get vendor and update it
                 this.vendorMessagesService.GetVendorByNumber(item.VendorNumber).subscribe(res => {
@@ -434,7 +434,7 @@ export class NewVendorComponent extends BaseComponent {
                         console.log("entity:" , entity);
 
                     }
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                 });
             }
@@ -488,12 +488,12 @@ export class NewVendorComponent extends BaseComponent {
                 else {
                     this.ValidationErrorsList = res.ErrorsArray;
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
         else {
             this.ValidationErrorsList = errors;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
         }
 
@@ -520,7 +520,7 @@ export class NewVendorComponent extends BaseComponent {
     }
     
     GetImporterDeposition() {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         let customSendOptionsArgs: CustomSendOptionsArgs = new CustomSendOptionsArgs();
         var month = new Date().getMonth();
         var Year = new Date().getFullYear();
@@ -532,7 +532,7 @@ export class NewVendorComponent extends BaseComponent {
         currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.ImporterNumber = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.ImporterCode;
+        currRequestParams.ImporterNumber = this.CurrentSession.CurrentEditComponent.EntityPM.ImporterCode;
         currRequestParams.IsByExpireDate = true;
         currRequestParams.DeclarationExpire = new Date(Year + 1, month, day);
 
@@ -541,7 +541,7 @@ export class NewVendorComponent extends BaseComponent {
                 if (!AppTool.IsNullOrEmpty(myServiceResponse.Result)) {
                     this.JoinVendorDeposition(myServiceResponse.Result.PeriodDeclarationList);
                 }
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
     }
 

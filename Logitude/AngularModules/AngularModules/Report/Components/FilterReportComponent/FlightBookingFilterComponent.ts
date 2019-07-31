@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -15,12 +15,6 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 
     
 })
-
-   
-
-
-
-
 
 export class FlightBookingFilterComponent extends BaseComponent implements OnInit {
     public ReportsPreview: ReportsPreviewComponent;
@@ -64,44 +58,25 @@ export class FlightBookingFilterComponent extends BaseComponent implements OnIni
     }
 
     ngOnInit() {
-
-        //if (!this.ReportsPreview.FilterConrolHeight) {
-        //    this.ReportsPreview.SetFilterCotrolHeight(85);
-        //}
-        //else {
-
-        //    var month = new Date().getMonth();
-        //    var Year = new Date().getFullYear();
-        //    var daysofmonth = this.daysInMonth(new Date());
-
-
-        //    this.date = new Date(Year, month, 2);
-
-        //}
+        
     }
 
+    public CustomAgentId: string; 
     RunReport() {
-
         this.ValidationErrorsList = [];
         if (this.FlightNumber == null || this.FlightNumber.trim() == '') {
-
             this.ValidationErrorsList.push("Flight Number is required");
-
         }
 
         if (this.FlightDate == null) {
-
             this.ValidationErrorsList.push("Flight Date is required");
-
         }
+
         if (this.ValidationErrorsList.length==0) {
             this.queryFilterItems = new Array<QueryFilterItem>();
-
-
-
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CreateDate";
+            this.queryFilterItem.FieldName = "FlightDate";
             this.queryFilterItem.FieldValue = this.FlightDate;
             this.queryFilterItem.FieldDataType = "Date";
             this.queryFilterItem.Operator = "Equals";
@@ -114,14 +89,17 @@ export class FlightBookingFilterComponent extends BaseComponent implements OnIni
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "CustomAgentId";
+            this.queryFilterItem.FieldValue = this.CustomAgentId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
             if (!this.DateType) {
                 this.DateType = "CreateDate";
             }
-
-
-
-
+            
             this.reportFliter = new ReportFliter();
             this.reportFliter.DateType = this.DateType;
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
@@ -134,7 +112,5 @@ export class FlightBookingFilterComponent extends BaseComponent implements OnIni
 
             this.ReportsPreview.GenerateReport(this.reportFliter, true);
         }
-    }
-
-   
+    }   
 }

@@ -81,6 +81,17 @@ import { TenantManagmentPrivateLabelsListService } from '../../Infrastructure/Se
 import { BIReportsTypeListService } from  '../Services/StandardLists/BIReportsTypeListService'; 
 import { FeatureToggleListService } from '../Services/StandardLists/FeatureToggleListService';
 
+
+// Tariff Module
+import { TariffListService } from '../../TariffModule/Services/StandardLists/TariffListService';
+import { TariffTypeListService } from '../../TariffModule/Services/StandardLists/TariffTypeListService';
+
+
+//Occasions
+import { OccasionStatusListService } from '../../CRM/Services/StandardLists/OccasionStatusListService';
+import { OccasionTypeListService } from '../../CRM/Services/StandardLists/OccasionTypeListService';
+
+
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
 
@@ -179,7 +190,9 @@ export class CachedDataManagerServices {
             case "BIReportsTypeListService": { myResult = new BIReportsTypeListService(); break; }
             case "FeatureToggleListService": { myResult = new FeatureToggleListService(); break; }
             case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }
-
+            case "TariffListService": { myResult = new TariffListService(); break; }               
+            case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
+            case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
             default: {
                 alert(name + " is not declared in CachedDataManagerServices");
                 break;

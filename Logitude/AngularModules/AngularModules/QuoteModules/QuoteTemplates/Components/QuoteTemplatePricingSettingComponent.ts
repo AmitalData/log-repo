@@ -17,6 +17,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 @Component({
     selector: 'QuoteTemplatePricingSettingComponent',
     moduleId: module.id,
@@ -60,6 +61,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     QuoteTemplateSectionTypeName: string = "Packages";
     IsPerContainerChange: boolean = false;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
@@ -74,15 +76,28 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
     }
 
+    QuotePM: QuotePM;
     SelectedTabCode: string;
+    IsRoutingRates: boolean = false;
     SetWindowArgs(args: any) {
         this.SelectedTabCode = "PRT";
         this.QuoteTemplatePM = args.QuoteTemplatePM;
         this.QuoteTemplateSectionTypeName = args.QuoteTemplateSectionTypeName;
         this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
+        this.QuotePM = args.QuotePM;
+
+        this.IsRoutingRates = this.QuoteTemplatePM != null ? this.QuoteTemplatePM.TemplateTypeCode == "P" ? true : false : false;
+
+
         this.Alignment.push("Left"); this.Alignment.push("Center"); this.Alignment.push("Right");
+
+
         if (args.QuoteTemplateTextCodePMList) {
             this.QuoteTemplateTextCodePMList = args.QuoteTemplateTextCodePMList.filter(d => d.Area == this.QuoteTemplateSectionTypeName);
+            if (this.IsRoutingRates) {
+                this.QuoteTemplateTextCodePMList = this.QuoteTemplateTextCodePMList.filter(d => d.TextCode != "UNITSPACKAGES" && d.TextCode != "TOTALAMOUNTS");
+            }
+
             this.AllQuoteTemplateTextCodePMList = args.QuoteTemplateTextCodePMList;
 
             this.BuildItemsSource();
@@ -107,7 +122,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
     LoadData() {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.QuoteTemplateTextDesignPMLists = [];
         this.LoadTableDesign();
     }
@@ -141,7 +156,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
         this.quoteTemplateTextDesignExtendedPMService.GetQuoteTemplateTextDesignPMListByIds(ids, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.QuoteTemplateTextDesignPMLists = pmResponse.Result;
 
@@ -154,19 +169,19 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
                     this.RowTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == this.TableDesignPM.LinesDesignId)[0];
                     if (this.RowTextDesignPM) {
                         this.RowTextDesignPM.Title = "Rows";
-                        this.RowTextDesignPM.HideAlignment = true;
+                        //this.RowTextDesignPM.HideAlignment = true;
                     }
                 }
                 this.TotalLabelTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == totalsLabelTextDesignId)[0];
                 if (this.TotalLabelTextDesignPM) {
                    
                     this.TotalLabelTextDesignPM.Title = "Label";
-                    this.TotalLabelTextDesignPM.HideAlignment = true;
+                    //this.TotalLabelTextDesignPM.HideAlignment = true;
                 }
 
                 this.TotalValueTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == totalValueTextDesignId)[0];
                 if (this.TotalValueTextDesignPM) {
-                    this.TotalValueTextDesignPM.HideAlignment = true;
+                   // this.TotalValueTextDesignPM.HideAlignment = true;
                     this.TotalValueTextDesignPM.Title = "Value";
             
                 }
@@ -179,7 +194,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
                 this.GroupByTotalTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == groupByTotailTextDesignId)[0];
                 if (this.GroupByTotalTextDesignPM) {
-                    this.GroupByTotalTextDesignPM.HideAlignment = true;
+                   // this.GroupByTotalTextDesignPM.HideAlignment = true;
                     this.GroupByTotalTextDesignPM.Title = "Total";
                 }
 
@@ -598,6 +613,40 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
 
+    ShowHeaderLabelsKey: string = Guid.newGuid();
+    get ShowHeaderLabels() {
+        var showHeaderLabels: boolean = false;
+        if (this.QuoteTemplateSettingPM) showHeaderLabels = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.ShowHeaderLabelsPackages : this.QuoteTemplateSettingPM.ShowHeaderLabelsContainers;
+        return showHeaderLabels;
+    }
+    set ShowHeaderLabels(value: boolean) {
+        if (this.QuoteTemplateSettingPM != null) {
+            if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.ShowHeaderLabelsPackages = value;
+            else this.QuoteTemplateSettingPM.ShowHeaderLabelsContainers = value;
+        }
+    }
+
+
+
+    get SpaceLinesBeforeTable() {
+        var spaceLinesBeforeTable: number = 1;
+        if (this.QuoteTemplateSettingPM) spaceLinesBeforeTable = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.SpaceLinesBeforePackages : this.QuoteTemplateSettingPM.SpaceLinesBeforeContainers;
+        return spaceLinesBeforeTable;
+    }
+    set SpaceLinesBefore(value: number) {
+        if (this.QuoteTemplateSettingPM != null) {
+            if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.SpaceLinesBeforePackages = value;
+            else this.QuoteTemplateSettingPM.SpaceLinesBeforeContainers = value;
+        }
+    }
+
+
+
+
+
+
+
+
     DisablePricingSetting() {
         this.ShowChargeCode = false;
         this.ShowChargeName = false;
@@ -608,6 +657,8 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.ShowLocalCurrencyColumn = false;
         this.ShowChargeDescription = false;
         this.ShowSaleMaxMinAmountColumn = false;
+        this.ShowHeaderLabels = false;
+    
     }
 
 
@@ -630,7 +681,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
         if (this.IsSaveQuoteTemplateTextDesignRuning || this.IsSaveQuoteTemplateTableDesignRuning || this.IsSaveQuoteTemplateTextCodeRuning) {
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
                 this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
@@ -647,10 +698,10 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
                 this.SaveQuoteTemplateSetting();
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (this.IsPerContainerChange == true) {
-                    SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
-                } else SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CurrentWindow.Close("Refresh");
+                } else this.CurrentSession.CloseCurrentWindow();
 
             }
 
@@ -696,7 +747,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     }
 
     SaveQuoteTemplateSetting() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
         this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
             this.QuoteTemplateSettingPM.IsDirty = false;
             this.SaveCompleted();
@@ -746,8 +797,8 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
     SaveCompleted() {
         if (!this.IsSaveQuoteTemplateTextDesignRuning && !this.IsSaveQuoteTemplateTableDesignRuning && !this.IsSaveQuoteTemplateTextCodeRuning) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.Close("Refresh");
          
         }
 
@@ -756,7 +807,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     CloseButtonClicked() {
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

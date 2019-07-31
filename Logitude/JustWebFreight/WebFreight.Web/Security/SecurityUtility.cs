@@ -29,10 +29,13 @@ namespace WebFreight.Web.Security
     {
 		public static void AuthenticateAPICall(int tenant)
 		{
-			bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
-			if (!exist)
+			if (LogitudeSettings.WorkEnvironment != "logbox" && LogitudeSettings.WorkEnvironment != "cloud")
 			{
-				throw new AutenticationException("API is not activated. Please contact your system administrator");
+				bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
+				if (!exist)
+				{
+					throw new AutenticationException("API is not activated. Please contact your system administrator");
+				}
 			}
 		}
 
@@ -75,7 +78,7 @@ namespace WebFreight.Web.Security
 					{
 						foreach (string myRoleId in contactinfo.RolesIds)
 						{
-							Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant);
+							Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant, true);
 							if (features.Keys.Contains(featureCode + objectTable.Id))
 							{
 								FeaturePM feature = features[featureCode + objectTable.Id];
@@ -104,7 +107,7 @@ namespace WebFreight.Web.Security
                 string email = HttpContext.Current.User.Identity.Name;
 
                 if (HttpContext.Current.Items!=null)
-                {
+                { 
                     string val = HttpContext.Current.Items["Session"] as string;
                     if (val == "SessionExpiration")
                     {
@@ -187,22 +190,21 @@ namespace WebFreight.Web.Security
                     }
 
 
-                    bool isUpgrading;
+                    bool isBlocking;
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalcontext = GlobalContext.GetContext();
-                        isUpgrading = (from a in globalcontext.GlobalDBs
-                                       select a).FirstOrDefault().IsUpgrading;
+                        isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
 
-                        if (isUpgrading)
+                        if (isBlocking)
                         {
                             if (HttpContext.Current.Response.Headers["MobileUpgrading"] != null)
                             {
                                 HttpContext.Current.Response.Headers["MobileUpgrading"] = "Unifreight mobile is being updated, please try again later . Sorry for the inconvenience";
                             }
-                            else HttpContext.Current.Response.Headers.Add("MobileUpgrading", "Unifreight mobile is being updated, please try again later . Sorry for the inconvenience");
 
+                            else HttpContext.Current.Response.Headers.Add("MobileUpgrading", "Unifreight mobile is being updated, please try again later . Sorry for the inconvenience");
                         }
 
                         scope.Complete();
@@ -522,12 +524,11 @@ namespace WebFreight.Web.Security
             //}
             string key = email + "_" + tenant + "_info";
 
-            if (CacheManager.CacheWrapper.Get(key) != null)
+            if (CacheManager.CacheWrapper.Get(key) != null && !forceAPIFeaturesCheck)
             {
                 myContactInfo = (ContactInfo)CacheManager.CacheWrapper.Get(key);
             }
-
-            else
+			else
             {
                 if (tenant == 0)
                 {
@@ -659,24 +660,36 @@ namespace WebFreight.Web.Security
             return myContactInfo;
         }
 
-        //private static string GetComputingPartnerCode(AuthenticationToken authToken)
-        //{
-        //    string computingPartnerCode = "";
-        //    if (authToken != null && !string.IsNullOrEmpty(authToken.APICredentialID))
-        //    {
-        //            ApiCredintialsRepository apiCredintialsRepository = new ApiCredintialsRepository();
-        //            ApiCredintials apiCredintials = apiCredintialsRepository.GetSingleApiCredintials(authToken.APICredentialID, authToken.Tenant);
-        //            if (apiCredintials != null && !string.IsNullOrEmpty(apiCredintials.ComputingPartnerId))
-        //            {
-        //                ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(authToken.Tenant);
-        //                computingPartnerCode = computingPartnerRepository.GetSingleComputingPartnerCodeById(apiCredintials.ComputingPartnerId);
-        //            }
-                
-        //    }
-        //    return computingPartnerCode;
-        //}
+		public static void AuthenticationOnEntityTenant(string objectTableName, int entityTenant, int authTokenTenant)
+		{
+			//if (HttpContext.Current != null && string.IsNullOrWhiteSpace(overrideEmail))
+			//{
+			//	overrideEmail = HttpContext.Current.User.Identity.Name;
+			//}
 
-        private static List<string> GetAllPackagesCodes(string email, int tenant, bool isCustomerCare)
+			if (entityTenant != authTokenTenant)
+				throw new Exception("Sorry! you have no permission to do this operation on Tenant:" + entityTenant);
+			//string errorMessage = "Sorry! you have no permission to do this operation" + Environment.NewLine + "Table:" + objectTableName + Environment.NewLine + "User:" + overrideEmail + Environment.NewLine + "Tenant:" + entityTenant;
+
+		}
+		//private static string GetComputingPartnerCode(AuthenticationToken authToken)
+		//{
+		//    string computingPartnerCode = "";
+		//    if (authToken != null && !string.IsNullOrEmpty(authToken.APICredentialID))
+		//    {
+		//            ApiCredintialsRepository apiCredintialsRepository = new ApiCredintialsRepository();
+		//            ApiCredintials apiCredintials = apiCredintialsRepository.GetSingleApiCredintials(authToken.APICredentialID, authToken.Tenant);
+		//            if (apiCredintials != null && !string.IsNullOrEmpty(apiCredintials.ComputingPartnerId))
+		//            {
+		//                ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(authToken.Tenant);
+		//                computingPartnerCode = computingPartnerRepository.GetSingleComputingPartnerCodeById(apiCredintials.ComputingPartnerId);
+		//            }
+
+		//    }
+		//    return computingPartnerCode;
+		//}
+
+		private static List<string> GetAllPackagesCodes(string email, int tenant, bool isCustomerCare)
         {
             List<string> myResult = new List<string>();
 
@@ -843,25 +856,25 @@ namespace WebFreight.Web.Security
             return myResult;
         }
 
-        private static Dictionary<string, FeaturePM> GetFeaturesForRole(string roleId, List<string> allowedPackages, int tenant)
-        {
-            Dictionary<string, FeaturePM> features = null;
+		private static Dictionary<string, FeaturePM> GetFeaturesForRole(string roleId, List<string> allowedPackages, int tenant, bool forceAPIFeaturesCheck = false)
+		{
+			Dictionary<string, FeaturePM> features = null;
 
-            if (CacheManager.CacheWrapper.Get(roleId) == null)
-            {
-                FeatureQuery featuresQuery = new FeatureQuery(tenant);
-                List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
-                features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
-                CacheManager.CacheWrapper.Insert(roleId, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-            }
+			if (CacheManager.CacheWrapper.Get(roleId) == null || forceAPIFeaturesCheck)
+			{
+				FeatureQuery featuresQuery = new FeatureQuery(tenant);
+				List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
+				features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
+				CacheManager.CacheWrapper.Insert(roleId, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+			}
 
-            else
-            {
-                features = (Dictionary<string, FeaturePM>)CacheManager.CacheWrapper.Get(roleId);
-            }
+			else
+			{
+				features = (Dictionary<string, FeaturePM>)CacheManager.CacheWrapper.Get(roleId);
+			}
 
-            return features;
-        }
+			return features;
+		}
         private static Dictionary<string, FeaturePM> GetFeaturesForRoleNotCached(string roleId, List<string> allowedPackages, int tenant)
         {
             Dictionary<string, FeaturePM> features = null;
@@ -1022,7 +1035,7 @@ namespace WebFreight.Web.Security
             if (!string.IsNullOrEmpty(email))
             {
                 List<string> allowedPackages = new List<string>();
-                ContactInfo myContactInfo = GetContactInfo(email, tenant);
+                ContactInfo myContactInfo = GetContactInfo(email, tenant,true);
                 if (myContactInfo != null)
                 {
                     allowedPackages = myContactInfo.PackagesCodes;

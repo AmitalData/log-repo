@@ -76,8 +76,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
-                ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
+                Logitude.BL.Security.LoggedContactUtil loggedUtil = new Logitude.BL.Security.LoggedContactUtil();
+                ContactPM contact = loggedUtil.GetLoggedContact(tenant);
+                //ContactQuery contactQuery = new ContactQuery(tenant);
+                //ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
 
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("GLAccount", 0, true);
@@ -114,7 +116,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 var pm =list.First();
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, pm.Id, null);
                 ac.ReSetAccountList(false, false);
-                ac.CalculateBalance(totalDateType, theDate, true, false);
+                bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
+                ac.CalculateBalance(
+                    openBalancePlease_ReCalcYearTransfer,
+                    totalDateType, theDate, true, false);
 
                 ac.AccountBalance.LogMessage = null;
 
@@ -145,7 +150,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, accountId, null);
                 ac.ReSetAccountList(false, false);
-                ac.CalculateBalance(totalDateType, theDate, true, false);
+                bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
+                ac.CalculateBalance(openBalancePlease_ReCalcYearTransfer,totalDateType, theDate, true, false);
 
                 ac.AccountBalance.LogMessage = null;
 

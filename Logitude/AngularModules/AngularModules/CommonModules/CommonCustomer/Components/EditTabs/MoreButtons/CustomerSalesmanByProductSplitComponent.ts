@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {CustomerPM} from '../../../../../Common/EntityPMs/CustomerPM';
 import {ProductTypeList} from '../../../../../Common/EntityLists/ProductTypeList';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
@@ -20,6 +20,7 @@ export class CustomerSalesmanByProductSplitComponent extends BaseComponent {
     public ProductTypes: ProductTypeList[] = [];
     public ItemsSource: ObservableCollection;
     public IsUnifreightEditable: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -50,7 +51,7 @@ export class CustomerSalesmanByProductSplitComponent extends BaseComponent {
     }
     CencelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var myPipe = new GroupByPipe();
@@ -68,7 +69,7 @@ export class CustomerSalesmanByProductSplitComponent extends BaseComponent {
             this.EntityPM.SalesmanUserEnglishName = null;
         }
 
-        SessionLocator.CurrentSession.CurrentWindow.Close("OK");
+        this.CurrentSession.CurrentWindow.Close("OK");
     }
 
     private myCloner: Cloner;

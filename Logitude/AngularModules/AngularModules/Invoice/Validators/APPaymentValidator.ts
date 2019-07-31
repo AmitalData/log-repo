@@ -45,11 +45,18 @@ export class APPaymentValidator {
             }
         }
 
-        if (entityPm.PaymentMethodCode == "CH") {
+        if ( entityPm.PaymentMethodCode == "CH" && !entityPm.AutomaticPaymentCheque) {
             if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
                 validationResults.push(msg.replace("%FieldName", "Cheque Ref"));
             }
         }
+        //else {
+        //    if (entityPm.PaymentMethodCode == "CH" && !entityPm.AutomaticPaymentCheque) {
+        //        if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
+        //            validationResults.push(msg.replace("%FieldName", "Cheque Ref"));
+        //        }
+        //    }
+        //}
 
         if (entityPm.HasInvoicesErrors) {
             validationResults.push(TextCodeTranslator.Translate("APPayment.M.PaymentInvoicesHaveErrors"));

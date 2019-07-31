@@ -1,4 +1,4 @@
-﻿import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -29,7 +29,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
     private _ClaimPMService: ClaimPMService = new ClaimPMService();
     private _ClaimWebService: ClaimWebService = new ClaimWebService();
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
 
@@ -85,7 +85,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SubmitChanges(myResponse: ServiceResponse, sourceIsCostomFile: boolean) {
@@ -102,10 +102,10 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 var entity = mm.Result;
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                this.CurrentSession.CloseCurrentWindowEmit("ok");
 
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                    SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName, BackButtonLabel: this.QueryNameText });
@@ -116,7 +116,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

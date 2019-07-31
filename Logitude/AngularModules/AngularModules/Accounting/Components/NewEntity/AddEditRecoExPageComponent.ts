@@ -37,11 +37,19 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     public ValidationErrorsList: string[] = [];
     isNewEntity: boolean = false;
     IsCancelApprovedEnabled: boolean = false;
+    IsRestoreButtonVisibile: boolean = false;
     public IsDisplayOnly: boolean = false;
     public IsMultiCurrency: boolean = false;
+    RestoreToolTipMessage: string;
     currency: any;
     AMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount");
+    CreditAMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.CreditAmount");
+    DebitAMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.DebitAmount");
+
     AmountColHeader: string;
+    CreditAmountColHeader: string;
+    DebitAmountColHeader: string;
+
     PageLinesList: ObservableCollection;
     public isRTL: boolean = false;
     public TotalSum: number = 0.0;
@@ -53,7 +61,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
     currencyListService: CurrencyListService = new CurrencyListService();
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -62,11 +70,16 @@ export class AddEditRecoExPageComponent extends BaseComponent{
 
         this.SetUIProperties();
     }
-
+    IsEditButtonDisabled: boolean = false;
+    EditWindowToolTip: string = null;
     SetWindowArgs(args) {
         if (args != null) {
             var prevPageNo;
             this.BankAccountPM = args.BankAccount;
+            this.IsEditButtonDisabled = !args.EnableReconcileEditButton;
+            this.IsRestoreButtonVisibile = args.IsRestoreButtonVisibile;
+            this.EditWindowToolTip = args.message;
+            this.RestoreToolTipMessage = args.RestoreToolTipMessage;
             this.GetDefaultValues();
             if (args.entity)
             {
@@ -257,9 +270,18 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         this.SaveEntity();
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
+    closeScreen: boolean = true;
+    EditButtonClicked() {
+        this.ReconcileExternalPagePM.StatusCode = "1";
+        this.IsDisplayOnly = false;
+        this.SetUIProperties();
+        this.closeScreen = false;
+    
+        this.SaveEntity();
 
+    }
     //* grid handlers in seperate region
 
     //#endregion
@@ -294,7 +316,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                         error += TextCodeTranslator.Translate("Accounting.O.ReferenceDateIsRequired");
                         errors.push(error);
                     }
-                    if (AppTool.IsNullOrEmpty(line.Amount)) {
+                    if (AppTool.IsNullOrEmpty(line.CreditAmount) && AppTool.IsNullOrEmpty(line.DebitAmount)) {
                         var error = "";
                         error = TextCodeTranslator.Translate("Accounting.General.O.Line");
                         error += (line.LineNumber + ": ");
@@ -329,14 +351,19 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         }
     }
 
+    RestoreButtonClicked() {
+
+        this.EditButtonClicked();
+    }
+
     SubmitChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         if (this.isNewEntity) {
             this._ReconcileExternalPagePMService.insert(this.ReconcileExternalPagePM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
@@ -346,7 +373,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                         this.ReconcileExternalPagePM.StatusCode = '1' // 1- Draft
                     }
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         } else {
@@ -354,20 +381,40 @@ export class AddEditRecoExPageComponent extends BaseComponent{
             this._ReconcileExternalPagePMService.update(this.ReconcileExternalPagePM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
-                if (!mm.HasError) {
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                if (!mm.HasError && this.closeScreen) {
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
-
+                
                 else {
+                    if (!this.closeScreen) {
+                        this.CurrentSession.StartBusyIndicatorSaving();
+                        this._ReconcileExternalPagePMService.get(mm.Result.Id).subscribe(myResult => {
+                            
+                            var result: ServiceResponse = myResult;
+                            if (!result.HasError) {
+                                this.ReconcileExternalPagePM = result.Result;
+                                if (this.IsRestoreButtonVisibile) {
+                                    this.IsRestoreButtonVisibile = false;
+                                }
+                                
+                                this.FillGridsData();
+                            }
+                            this.CurrentSession.StopBusyIndicator();
 
-                    if (this.isApprovedButtonClicked) {
+                        });
+                    }
+                   else if (this.isApprovedButtonClicked) {
                         this.isApprovedButtonClicked = false;
                         this.ReconcileExternalPagePM.StatusCode = '1' // 1- Draft
                     }
 
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
+
+
+                this.closeScreen = true;
+                this.ReconcileExternalPagePM.StatusName = mm.Result.StatusName;
             });
 
         }
@@ -378,6 +425,8 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         {
             this.IsMultiCurrency = true;
             this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
+            this.CreditAmountColHeader = this.CreditAMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
+            this.DebitAmountColHeader = this.DebitAMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
         }
         else if (this.BankAccountPM.GLAccountCurrencyId)
         {
@@ -388,10 +437,14 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                 {
                     this.currency = currency;
                     this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.currency.Code +")"
+                    this.CreditAmountColHeader = this.CreditAMOUNT_TEXT + " (" + this.currency.Code + ")";
+                    this.DebitAmountColHeader = this.DebitAMOUNT_TEXT + " (" + this.currency.Code + ")";
                 }
                 else {
                     console.log("[!] Cannot find the currency !!");
                     this.AmountColHeader = this.AMOUNT_TEXT;
+                    this.CreditAmountColHeader = this.CreditAMOUNT_TEXT;
+                    this.DebitAmountColHeader = this.DebitAMOUNT_TEXT;
                 }
             });
         }
@@ -468,6 +521,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("StartBalance", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("CloseBalance", this.ObjectTableName, !this.IsDisplayOnly);
+
         //this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
         //this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
     }
@@ -568,7 +622,11 @@ export class AddEditRecoExPageComponent extends BaseComponent{
 
         if (this.PageLinesList.Length > 0) {
             for (var line of this.PageLinesList.Collection) {
-                sum += (line.Amount == null || line.Amount == undefined) ? 0 : line.Amount;
+
+                //debit
+                sum -= !line.DebitAmount?0:line.DebitAmount;
+                sum += !line.CreditAmount?0:line.CreditAmount;
+
             }
         }
 
@@ -589,6 +647,11 @@ export class PageLineModel extends BaseComponent {
     public DataContext = this;
     constructor(public pageLinePM: ReconcileExternalPageLinePM, public parent: AddEditRecoExPageComponent) {
         super();
+
+        if(AppTool.IsNullOrEmpty(this.CreditAmount))
+            this.CreditAmount = 0;
+        if(AppTool.IsNullOrEmpty(this.DebitAmount))
+            this.DebitAmount = 0;
     }
 
     //#region Properties
@@ -614,6 +677,33 @@ export class PageLineModel extends BaseComponent {
             this.parent.CalculateTotals();
         }
     }
+
+    get CreditAmount() { return this.pageLinePM.CreditAmount; }
+    set CreditAmount(value: number) {
+        if (this.pageLinePM.CreditAmount != value) {
+            this.pageLinePM.CreditAmount = value;
+            this.parent.CalculateTotals();
+
+            if(AppTool.IsNullOrEmpty(value))
+                this.CreditAmount = 0;
+            // if(value != 0)
+            //     this.DebitAmount = 0;
+        }
+    }
+
+    get DebitAmount() { return this.pageLinePM.DebitAmount; }
+    set DebitAmount(value: number) {
+        if (this.pageLinePM.DebitAmount != value) {
+            this.pageLinePM.DebitAmount = value;
+            this.parent.CalculateTotals();
+
+            if(AppTool.IsNullOrEmpty(value))
+                this.DebitAmount = 0;
+            // if(value != 0)
+            //     this.CreditAmount = 0;
+        }
+    }
+
 
     get Reference() { return this.pageLinePM.Reference; }
     set Reference(value: string) {

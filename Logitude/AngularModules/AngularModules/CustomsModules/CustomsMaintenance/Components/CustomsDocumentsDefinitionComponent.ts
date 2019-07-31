@@ -1,4 +1,4 @@
-﻿import { Component, Output, EventEmitter, OnInit, ComponentRef} from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, ComponentRef} from '@angular/core';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -41,7 +41,7 @@ export class CustomsDocumentsDefinitionComponent
     public DocumentsDefinitionResultList: ObservableCollection; 
     public DeleteDocumentsDefinitionList: ObservableCollection; 
     public DocumentTypeFilterItems: ApiQueryFilters;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.AllDocumentsDefinitionResultList = new ObservableCollection([]);
@@ -59,16 +59,16 @@ export class CustomsDocumentsDefinitionComponent
         this.DocumentTypeFilterItems.addAdditionalFilter("LocalName", "864", null, null, "NotContains", false, false, false, "string", false, true);
         this.DocumentTypeFilterItems.addAdditionalFilter("SearchFields", "864", null, null, "NotContains", false, false, false, "string", false, true);
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.BuildDocumentsDefinitionList();
             this.IsLoaded = true;
         });
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     ngOnInit() {
@@ -115,7 +115,7 @@ export class CustomsDocumentsDefinitionComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     CheckBeforeSave() {
@@ -179,7 +179,7 @@ export class CustomsDocumentsDefinitionComponent
             return;
         }
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));  
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));  
 
         if (this.DocumentsDefinitionResultList != null && this.DocumentsDefinitionResultList.Collection.length > 0) {
                 this.DocumentsDefinitionResultList.Collection.forEach((item: DocumentsDefinitionComponent) => {
@@ -190,7 +190,7 @@ export class CustomsDocumentsDefinitionComponent
                             var res: ServiceResponse = response;
                             if (res.HasError) {
                                 //this.ValidationErrorsList = res.ErrorsArray;
-                                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                                 return;
                             }
                         });
@@ -200,23 +200,23 @@ export class CustomsDocumentsDefinitionComponent
                             var res: ServiceResponse = response;
                             if (res.HasError) {
                                 //this.ValidationErrorsList = res.ErrorsArray;
-                                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                                 return;
                             }
                         });
                     }
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 });
                 console.log("..Saved Successfully ");
         }
         if (this.DeleteDocumentsDefinitionList != null && this.DeleteDocumentsDefinitionList.Collection.length > 0) {
             this.DeleteDocumentsDefinitionList.Collection.forEach((item: DocumentsDefinitionComponent) => {
                 if (!AppTool.IsNullOrEmpty(item.entityPM.Id)) {
-                    SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+                    this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
                     this._EntityPMExtendedService.delete(item.entityPM.Id).subscribe(response => {
                         var res: ServiceResponse = response;
                         if (res.HasError) {
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             return;
                         }
                     });
@@ -225,7 +225,7 @@ export class CustomsDocumentsDefinitionComponent
             console.log("..Deleted Successfully ");
         }
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SortResultList() {
@@ -299,7 +299,7 @@ export class CustomsDocumentsDefinitionComponent
 export class DocumentsDefinitionComponent extends BaseComponent {
     public ObjectTableName = "Customs.CustomsDocumentsDefinition";
     public DataContext: DocumentsDefinitionComponent = this;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityPM: CustomsDocumentsDefinitionPM, isNew: boolean) {
         super();
         this.IsNew = isNew;
@@ -367,7 +367,7 @@ export class DocumentsDefinitionComponent extends BaseComponent {
             messageWindow.Height = 150;
             messageWindow.WindowClosed.subscribe((event: any) => {
                 SessionLocator.SustainFocusOnCell = true;
-                SessionLocator.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, OnBlurEvent: documentTypeCodeLovBox.OnBlurEvent });
+                this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, OnBlurEvent: documentTypeCodeLovBox.OnBlurEvent });
             });
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             messageWindow.Show("לא ניתן להגדיר סוג מסמך מסוג 380/271/864");

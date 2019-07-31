@@ -84,7 +84,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return id;
         }
 
-
+        public string GetEventTypeNameById(string id, int tenant)
+        {
+            string name = (from a in context.EventType where a.Tenant == tenant && a.Id == id select a.FollowUpEnglishName).FirstOrDefault();
+            return name;
+        }
 
         public EventType GetSingleEventTypeByCodeAndObjectTableId(string code,string tableId, int tenant)
         {

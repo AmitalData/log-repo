@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -26,6 +26,7 @@ export class FVASimulatorComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     private myAirlineService: AirlineListService;
     private mySimulatingService: MessageSimulatingService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.mySimulatingService = new MessageSimulatingService();
@@ -236,14 +237,14 @@ export class FVASimulatorComponent extends BaseComponent {
     }
 
     CancelClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SendClicked() {
         var isValid = this.Validate();
 
         if (isValid) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Sending...");
+            this.CurrentSession.StartBusyIndicator("Sending...");
 
             var simulatorArgs = new SimulatorArgs();
             simulatorArgs.Id = SessionLocator.Tenant;
@@ -267,7 +268,7 @@ export class FVASimulatorComponent extends BaseComponent {
 
             this.mySimulatingService.Simulate(simulatorArgs).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (myResponse != null) {
                     if (myResponse.HasError) {

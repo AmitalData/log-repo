@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -41,9 +41,10 @@ export class EditCustomerAdditionalServiceComponent extends BaseComponent  {
         }
     }
     public CustomerAdditionalServiceRadio: string = "CustomerAdditionalServiceRadio_";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.CustomerAdditionalServiceRadio += SessionLocator.CurrentSession.GetNewId("RadioButton");
+        this.CustomerAdditionalServiceRadio += this.CurrentSession.GetNewId("RadioButton");
     }
 
 
@@ -65,10 +66,10 @@ export class EditCustomerAdditionalServiceComponent extends BaseComponent  {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        this.CurrentSession.CloseCurrentWindowEmit("ok");
 
     }
 

@@ -1,4 +1,4 @@
-﻿/// <reference path="../../controls/windows/messagewindow.ts" />
+/// <reference path="../../controls/windows/messagewindow.ts" />
 import {Component, OnInit}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
@@ -34,8 +34,9 @@ export class InviteCustomersComponent implements OnInit {
     InvitationStatus: string;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedLogisticContactService: SharedLogisticContactService) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
     }
 
     ngOnInit(
@@ -50,7 +51,7 @@ export class InviteCustomersComponent implements OnInit {
         this.SharedLogisticCustomerLineList = [];
         this._sharedLogisticContactService.getSharedLogisticContactsbyCardId(this.CurrentEntity.Id,SessionInfo.LoggedUserTenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
@@ -70,10 +71,10 @@ export class InviteCustomersComponent implements OnInit {
     sharedLogisticContact: SharedLogisticContactPM;
     SaveChanges(item: SharedLogisticContactPM) {
         this.sharedLogisticContact = item;
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
         this._sharedLogisticContactService.ContactInternetAccessInvitation(this.sharedLogisticContact).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {
@@ -108,7 +109,7 @@ export class InviteCustomersComponent implements OnInit {
 
     CloseButtonClicked() {
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

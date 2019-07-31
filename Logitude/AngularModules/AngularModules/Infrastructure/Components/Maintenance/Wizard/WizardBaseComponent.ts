@@ -39,6 +39,7 @@ export class WizardBaseComponent extends BaseComponent {
     @Output() SaveCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() SignOutCompleted: EventEmitter<boolean> = new EventEmitter<boolean>(); 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.InitServices();
@@ -344,7 +345,7 @@ export class WizardBaseComponent extends BaseComponent {
 
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var isSavingVAT: boolean = false;
             if (this.PercentagePM) {
@@ -494,7 +495,7 @@ export class WizardBaseComponent extends BaseComponent {
                         }
 
                         else {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             this.SaveCompleted.emit(true);
                         }
                     }
@@ -521,7 +522,7 @@ export class WizardBaseComponent extends BaseComponent {
                         SessionLocator.AllVatTypesGroups = myResponse2.Result;
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.SaveCompleted.emit(true);
                 });
             }
@@ -540,7 +541,7 @@ export class WizardBaseComponent extends BaseComponent {
                 }
 
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.SaveCompleted.emit(true);
             }
         });
@@ -556,7 +557,7 @@ export class WizardBaseComponent extends BaseComponent {
                     ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments = true;
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.SaveCompleted.emit(true);
             }
         });
@@ -570,7 +571,7 @@ export class WizardBaseComponent extends BaseComponent {
             else {
                 ObjectsUpdater.UpdateAccountingSettingPM(myResponse.Result);             
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.SaveCompleted.emit(true);
             }
         });
@@ -579,7 +580,7 @@ export class WizardBaseComponent extends BaseComponent {
     ShowServiceErrors(myResponse: ServiceResponse) {
         if (myResponse) {
             this.ValidationErrorsList = myResponse.ErrorsArray;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 }

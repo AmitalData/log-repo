@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 declare var SelectingElement: any;
 import {Input, Output, Component, OnInit, EventEmitter, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -49,22 +49,22 @@ export class SpotLightDateComponent extends BaseComponent implements OnInit, Aft
     onMouseOut() {
         this.IsMouseIn = false;
     }
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.ControlId = "SpotLightDate_-1_-1";
             this.DropdownId = "SpotLightDateDropdownId_-1_-1";
         }
 
         else {
-            var idIndex = SessionLocator.CurrentSession.GetNewId("SpotLightDate");
+            var idIndex = this.CurrentSession.GetNewId("SpotLightDate");
             this.ControlId = "SpotLightDate" + idIndex;
             this.DropdownId = "SpotLightDateDropdownId" + idIndex;
 
         }
 
-        SessionLocator.CurrentSession.MouseDownEvent.subscribe((res) => {
+        this.CurrentSession.MouseDownEvent.subscribe((res) => {
             if (this.IsMouseIn == false) {
                 this.OnLostFocus();
             }

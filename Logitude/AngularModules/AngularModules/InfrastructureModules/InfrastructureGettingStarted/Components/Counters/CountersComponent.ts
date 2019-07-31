@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -19,6 +19,7 @@ export class CountersComponent implements OnInit {
     public Counters: CounterItem[] = [];
     public IsDemoTenant: boolean = false;
     public IsResourcesReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         if (SessionLocator.Tenant == 65) {
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com") {
@@ -114,7 +115,7 @@ export class CountersComponent implements OnInit {
     }
 
     Close() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 export class CounterItem {

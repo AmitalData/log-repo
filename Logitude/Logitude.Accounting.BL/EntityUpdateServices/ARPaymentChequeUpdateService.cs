@@ -33,7 +33,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            
         }
 
-        protected override void OnUpdating(ARPaymentChequePM entityPM, ARPaymentCheque entityPOCO)
+        protected override void OnUpdating(ARPaymentChequePM entityPM, Data.EntityPOCOs.ARPaymentCheque entityPOCO)
         {
             //TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             //TenantPM tenant = tenantQuery.GetSinglePM(entityPM.Tenant);
@@ -156,7 +156,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         {
                             if (item.StatusCode != "6" && item.StatusCode != "5")
                             {
-                                if ((item.StatusCode == "2") || (item.StatusCode == "1" && item.ValueDate > DateTime.Today))
+                                if (item.ValueDate > DateTime.Today)
                                 {
                                     moreDataPM.TotFutureOpenChequesInLocalCur += item.LocalAmount;
 

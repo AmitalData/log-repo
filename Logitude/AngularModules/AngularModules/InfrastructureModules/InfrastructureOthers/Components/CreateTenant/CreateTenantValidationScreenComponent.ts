@@ -1,4 +1,4 @@
-﻿
+
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -18,7 +18,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 })
 export class CreateTenantValidationScreenComponent implements OnInit {
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     public ValidationErrorsList: string[];
     constructor() {
 
@@ -54,7 +54,7 @@ export class CreateTenantValidationScreenComponent implements OnInit {
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

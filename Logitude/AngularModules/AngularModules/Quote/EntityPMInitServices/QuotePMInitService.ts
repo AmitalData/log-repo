@@ -1,4 +1,4 @@
-﻿import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
+import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {DateTool} from '../../Infrastructure/Tools';
@@ -32,6 +32,8 @@ export class QuotePMInitService {
             entityPM.QuoteTypeCode = "A";
             entityPM.ExpirationDays = 30;
             entityPM.ExpirationDate = DateTool.AddDays(DateTool.GetCurrentDateAsUtc(), 30);
+            entityPM.StartDate = DateTool.GetCurrentDateAsUtc();
+
             entityPM.SaleCurrencyId = SessionLocator.TenantPM.QuoteSaleCurrencyId;
             entityPM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
             entityPM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;

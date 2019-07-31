@@ -59,8 +59,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
                     IWebFreightContext context = WebFreightContext.GetContext(0);
-                    zeroObjectTableRules = (from a in context.ObjectTableRules.Include("ObjectTable")
-                                            where a.Tenant == 0
+                    zeroObjectTableRules = (from a in context.ObjectTableRules.Include("ObjectTable").Include("RuleType")
+											where a.Tenant == 0
                                             select a).ToList();
                 }
                 if (tenant != 0)
@@ -68,8 +68,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IWebFreightContext context = WebFreightContext.GetContext(tenant);
-                        currentObjectTableRules = (from a in context.ObjectTableRules.Include("ObjectTable")
-                                                   where a.Tenant == tenant
+                        currentObjectTableRules = (from a in context.ObjectTableRules.Include("ObjectTable").Include("RuleType")
+												   where a.Tenant == tenant
                                                    select a).ToList();
                     }
                 }

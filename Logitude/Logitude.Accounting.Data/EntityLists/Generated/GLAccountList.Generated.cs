@@ -182,6 +182,22 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? TotFutureOpenChequesInLocalCur  { get; set; }
        [DataMember]
        public string CardId  { get; set; }
+       [DataMember]
+       public string CreatedByUserId  { get; set; }
+       [DataMember]
+       public string UpdatedByUserId  { get; set; }
+       [DataMember]
+       public DateTime CreateDate  { get; set; }
+       [DataMember]
+       public DateTime UpdateDate  { get; set; }
+       [DataMember]
+       public string CreatedByUserName  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public string CreatedByLocalName  { get; set; }
+       [DataMember]
+       public string UpdatedByLocalName  { get; set; }
    }
 
 }

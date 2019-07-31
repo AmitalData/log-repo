@@ -15,6 +15,7 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Simplog.Data.Helpers;
 //using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace WebFreight.Web.AccountingModel.DomainServices
@@ -115,7 +116,58 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
             return result;
         }
+
+
+
+        public BankDepositSummary GetBankDepositSummary(int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+
+            BankDepositSummary result = new BankDepositSummary();
+
+            if (SecurityUtility.CheckTableContactFeature("BankDeposit", "READ", tenant))
+            {
+
+                BankDepositRepository bankDepositRepository = new BankDepositRepository(tenant);
+                IQueryable<BankDeposit> iQueryable_Data = bankDepositRepository.GetAll(tenant);
+
+                
+                result.TodaysDepositCount = iQueryable_Data.Where(d=> d.DepositDate.Month == DateTime.Now.Month && d.DepositDate.Day == DateTime.Now.Day && d.DepositDate.Year == DateTime.Now.Year).Count();
+
+
+            }
+
+            return result;
+        }
+
+
+        public CashBookSummary GetCashbookSummary(int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+
+            CashBookSummary result = new CashBookSummary();
+
+            if (SecurityUtility.CheckTableContactFeature("Cashbook", "READ", tenant))
+            {
+
+                CashBookRepository cashBookRepository = new CashBookRepository(tenant);
+                IQueryable<CashBook> iQueryable_Data = cashBookRepository.GetAll(tenant);
+
+
+                result.AllCashbookCount = iQueryable_Data.Count();
+                result.CashCashbookCount = iQueryable_Data.Where(d=> d.CashBookTypeCode == "1").Count();
+                result.ChequeCashbookCount = iQueryable_Data.Where(d => d.CashBookTypeCode == "2").Count();
+              
+            }
+
+            return result;
+        }
+
+      
     }
+  
 }
 
 

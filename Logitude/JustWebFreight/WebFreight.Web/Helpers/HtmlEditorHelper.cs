@@ -60,6 +60,7 @@ using EvoPdf;
 using System.Drawing;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.Interfaces;
 
 namespace WebFreight.Web.Helpers
 {
@@ -114,7 +115,7 @@ namespace WebFreight.Web.Helpers
         }
     }
 
-    public class HtmlEditorHelper
+    public class HtmlEditorHelper : IHtmlEditorHelper
     {
         string DocumentTypeTemplateId = "";
         object entity = null;
@@ -1047,13 +1048,16 @@ namespace WebFreight.Web.Helpers
                 htmlString = htmlString.Replace("</tbody>", "");
                 htmlString = htmlString.Replace("]</P>", "]</span></P>");
                 htmlString = htmlString.Replace("<P>[", "<P><span>[");
+                htmlString = htmlString.Replace("[PageBreak]", "<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>");
+
+
 
                 if (htmlString.Contains("[") && htmlString.Contains("]"))
                 {
                     ReplaceHtmlStringWithTageHtml = true;
                     document = new HtmlDocument();
                     document.LoadHtml(htmlString);
-                    CorrectingBuildingHtml(document , htmlString);
+                    CorrectingBuildingHtml(document, htmlString);
                     HtmlNodeCollection spansList = document.DocumentNode.SelectNodes("//span");
                     if (spansList != null)
                     {
@@ -1376,12 +1380,12 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
-        private  void CorrectingBuildingHtml(HtmlDocument document, string htmlString)
+        private void CorrectingBuildingHtml(HtmlDocument document, string htmlString)
         {
-            if (!string.IsNullOrEmpty(htmlString) &&  htmlString.Contains("]</p>"))
+            if (!string.IsNullOrEmpty(htmlString) && htmlString.Contains("]</p>"))
             {
                 List<HtmlNode> pTagList = document.DocumentNode.SelectNodes("//p").Where(d => !string.IsNullOrEmpty(d.InnerHtml) && d.InnerHtml.Contains("[") && d.InnerHtml.Contains("]") && !d.InnerHtml.Contains("</span>")).ToList();
-                if (pTagList.Count>0)
+                if (pTagList.Count > 0)
                 {
                     foreach (HtmlNode node in pTagList)
                     {
@@ -2321,7 +2325,8 @@ namespace WebFreight.Web.Helpers
                 {
 
 
-                    IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
+                    //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
+                    DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
                     queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
                 }
                 catch (Exception ex)
@@ -2704,7 +2709,8 @@ namespace WebFreight.Web.Helpers
             try
             {
 
-                IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
+                //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
+                DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
                 queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
             }
             catch (Exception ex)
@@ -4208,7 +4214,7 @@ namespace WebFreight.Web.Helpers
 
                 }
                 else resultValue = " ";
-      
+
 
                 if (!string.IsNullOrEmpty(resultValue) && !CheckIfFieldHaveValueHtml(propertyName) && ReplaceHtmlStringWithTageHtml)
                 {
@@ -4277,7 +4283,7 @@ namespace WebFreight.Web.Helpers
         private static string ShowDigitsAfterPoint(string value, ObjectField field, int digitsAfterPoint = 2)
         {
             string result = string.Empty;
-            if (field.DataTypeCode.ToLower() == "double")
+            if (field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "sigdouble")
             {
                 double db = 0;
                 double.TryParse(value, out db);
@@ -4288,7 +4294,7 @@ namespace WebFreight.Web.Helpers
                 else result = db.ToString("N");
             }
 
-            if (field.DataTypeCode.ToLower() == "decimal")
+            else if (field.DataTypeCode.ToLower() == "decimal" || field.DataTypeCode.ToLower() == "sigdecimal")
             {
                 decimal db = 0;
                 decimal.TryParse(value, out db);
@@ -4298,6 +4304,7 @@ namespace WebFreight.Web.Helpers
                 }
                 else result = db.ToString("N");
             }
+            else result = value;
 
             return result;
         }
@@ -4629,21 +4636,32 @@ namespace WebFreight.Web.Helpers
             return resultValue;
         }
 
-        private string ResolveFieldValue(string resultValue, ObjectField field)
+        private string ResolveFieldValue(string fieldValue, ObjectField field)
         {
-            if (field != null && !string.IsNullOrEmpty(resultValue))
+            string result = string.Empty;
+
+            if (!string.IsNullOrEmpty(fieldValue))
             {
-                if ((field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal"))
+                result = fieldValue.Replace(" ", "");
+                if (!string.IsNullOrEmpty(result)) result = fieldValue;
+                else if (field != null && field.DataTypeCode.ToLower() == "boolean") result = "false";
+            }
+
+            if (field != null)
+            {
+                if (!string.IsNullOrEmpty(result))
                 {
-                    resultValue = FormatNumber(resultValue, field);
-                }
-                else if (field.DataTypeCode.ToLower() == "boolean")
-                {
-                    resultValue = resultValue.ToLower() == "false" ? "No" : "Yes";
+                    if (field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal" || field.DataTypeCode.ToLower() == "sigdouble" || field.DataTypeCode.ToLower() == "sigdecimal")
+                    {
+                        result = FormatNumber(result, field);
+                    }
+                    else if (field.DataTypeCode.ToLower() == "boolean") result = result.ToLower() == "false" ? "No" : "Yes";
                 }
             }
 
-            return resultValue;
+
+
+            return result;
         }
 
 
@@ -6242,7 +6260,7 @@ namespace WebFreight.Web.Helpers
                 if (isDateField)
                 {
                     if (data.Contains("systemdata.logo")) height = 8;
-                    else if (data.Contains("systemdata.smalllogo")|| data.Contains("systemdata.widelogo")) height = 4;
+                    else if (data.Contains("systemdata.smalllogo") || data.Contains("systemdata.widelogo")) height = 4;
 
                 }
                 else
@@ -6608,7 +6626,7 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
-        private string ConvertNormalHtmlToEvoHtml(string html, string area = "HeaderFooter")
+        public string ConvertNormalHtmlToEvoHtml(string html, string area = "HeaderFooter")
         {
 
             if (!string.IsNullOrEmpty(html))

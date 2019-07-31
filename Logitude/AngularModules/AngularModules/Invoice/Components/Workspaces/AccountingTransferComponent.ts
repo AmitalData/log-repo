@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -19,6 +19,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 export class AccountingTransferComponent   { 
     public IsResourcesReady: boolean = false;
     private invoiceDomainService: InvoiceDomainService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.invoiceDomainService = new InvoiceDomainService();
         entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe(res1 => {
@@ -40,7 +41,7 @@ export class AccountingTransferComponent   {
     }
 
     private Listen() {
-        SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+        this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "Accounting_T") {
                 this.LoadDataCount();
             }
@@ -376,9 +377,9 @@ export class AccountingTransferComponent   {
             listArgs.ObjectTableName = objectTableName;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.Accounting");
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
 
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);

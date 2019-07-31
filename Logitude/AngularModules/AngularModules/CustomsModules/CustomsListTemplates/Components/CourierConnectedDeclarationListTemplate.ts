@@ -32,7 +32,7 @@ export class CourierConnectedDeclarationListTemplate {
     {
         this.rowData = rowData;
         this.fieldName = fieldName;
-        this.entityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM as CourierMasterPM;
+        this.entityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM as CourierMasterPM;
 
         this.DisplayOnlyCheck();
         this.BuildDeclarationsCheckBox();       
@@ -59,7 +59,7 @@ export class CourierConnectedDeclarationListTemplate {
     ShowDeclarationScreen() {
       //  this.EditEntity("Customs.Declaration", this.rowData.Id, null, "DEGC");
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({

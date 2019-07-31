@@ -66,7 +66,9 @@ namespace Logitude.SystemLogs.OracleMigratrion
                 currentDb = GlobalDbHelper.GetGlobalDBById(dbId);
             }
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             SystemLogContext context = new SystemLogContext(connection);
 
             return context;

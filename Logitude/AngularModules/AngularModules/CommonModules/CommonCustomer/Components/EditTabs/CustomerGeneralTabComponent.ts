@@ -71,6 +71,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     IsShowProgressLoading: boolean = false;
     public ScreenCode: string = "Customer.AdditionalFields";
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public _imageLibraryService: ImageLibraryService, private CD: ChangeDetectorRef, private entityPMService: EntityPMService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -113,7 +114,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "EntityActivated") {
                     this.CloseScreen();
                 }
@@ -414,12 +415,12 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         this.UIProperties.SetVisibility("KnownConsignor", this.ObjectTableName, this.isRAFieldsVisibile);
         this.UIProperties.SetVisibility("KCExpirationDate", this.ObjectTableName, this.isRAFieldsVisibile);
 
-        this.SearchTextCompetitorsDropButtonCustomerId += SessionLocator.CurrentSession.GetNewId("SearchTextCompetitorsDropButtonId_1");
-        this.SearchTextCompetitorsCustomerId += SessionLocator.CurrentSession.GetNewId("SearchTextCompetitorsId_1");
-        this.SearchTextAdditionalServiceModeDropButtonCustomerId += SessionLocator.CurrentSession.GetNewId("SearchTextAdditionalServiceModeDropButtonId_1");
-        this.SearchTextAdditionalServiceCustomerId += SessionLocator.CurrentSession.GetNewId("SearchTextAdditionalServiceId_1");
-        this.SearchProductDropButtonCustomerId += SessionLocator.CurrentSession.GetNewId("SearchProductDropButtonId_1");
-        this.SearchProductsModeCustomerId += SessionLocator.CurrentSession.GetNewId("SearchProductsModeId_1");
+        this.SearchTextCompetitorsDropButtonCustomerId += this.CurrentSession.GetNewId("SearchTextCompetitorsDropButtonId_1");
+        this.SearchTextCompetitorsCustomerId += this.CurrentSession.GetNewId("SearchTextCompetitorsId_1");
+        this.SearchTextAdditionalServiceModeDropButtonCustomerId += this.CurrentSession.GetNewId("SearchTextAdditionalServiceModeDropButtonId_1");
+        this.SearchTextAdditionalServiceCustomerId += this.CurrentSession.GetNewId("SearchTextAdditionalServiceId_1");
+        this.SearchProductDropButtonCustomerId += this.CurrentSession.GetNewId("SearchProductDropButtonId_1");
+        this.SearchProductsModeCustomerId += this.CurrentSession.GetNewId("SearchProductsModeId_1");
 
         this.SetUIProperties_Partners();
     }
@@ -668,7 +669,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     }
 
     EditCompetitor(Item: CompetitorViewModelData) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: Item.CompetitorId, ObjectTableName: 'Competitor', BackButtonLabel: "CRM Details" });

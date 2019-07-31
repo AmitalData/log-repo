@@ -29,7 +29,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         SearchFields, 
 	         FromDate, 
 	         ToDate, 
-	         Name,
+	         Name, 
+	         IsCompleted,
 	      }
 
 
@@ -43,7 +44,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         SearchFields, 
 	         FromDate, 
 	         ToDate, 
-	         Name,
+	         Name, 
+	         IsCompleted,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -85,6 +87,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
             {
 				entityPOCO.Name = entityPM.Name;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCompleted))
+            {
+				entityPOCO.IsCompleted = entityPM.IsCompleted;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -133,6 +140,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 					entityPM.Name = entityPOCO.Name;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCompleted))
+            {
+					entityPM.IsCompleted = entityPOCO.IsCompleted;
+            }
+
 		}
 
 		public void PMToOldPM(SprintPM entityPM, SprintPM oldEntityPM)
@@ -172,6 +184,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
             {
                 oldEntityPM.Name = entityPM.Name;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCompleted))
+            {
+                oldEntityPM.IsCompleted = entityPM.IsCompleted;
             }
 			
 		}

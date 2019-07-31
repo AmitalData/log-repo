@@ -13,6 +13,7 @@ import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
 export class ChooseUserComponent {
     UsersItemsSource: UserItem[] = [];
     private args: ChooseUserArgs;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
@@ -72,7 +73,7 @@ export class ChooseUserComponent {
             this.MyQuery.AddSharedUserQueryPM(item);
         });
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -80,7 +81,7 @@ export class ChooseUserComponent {
         this.ValidationErrorsList = [];
         
         if (this.MyQuery.SharedUserQueries.length > 0) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
         else {
@@ -92,6 +93,7 @@ export class ChooseUserComponent {
 export class UserItem extends BaseComponent {
     private userList: UserList;
     private sharedUserQuery: SharedUserQueryPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: UserList, mySharedUser: SharedUserQueryPM, public fatherCompo: ChooseUserComponent) {
         super();
         this.userList = entity;

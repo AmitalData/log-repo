@@ -22,6 +22,7 @@ export class SendFSRComponent {
     private myFSRWebService: FSRWebService;
     public IsRecipientsVisible: boolean = false;
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ValidationErrorsList = [];
     }
@@ -259,12 +260,12 @@ export class SendFSRComponent {
     }
 
     CloseClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SendClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Sending in Progress..");
+        this.CurrentSession.StartBusyIndicator("Sending in Progress..");
 
         var objectTableName = (this.entityPM.ShipmentLevelCode == "C") ? "Master" : "Shipment";
         var ObjectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];
@@ -279,33 +280,33 @@ export class SendFSRComponent {
         if (errors.length == 0) {
             this.myFSRWebService.SendFSR(this.entityPM.Id, objectTableId, this.SelectedRecipient).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse == null) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
                     var myResult: FSRResultClass = myResponse.Result;
 
                     if (myResult != null) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         this.SendingResultForeground = this.greenForeground;
                         this.SendingResultMessage = "FSR has been sent Successfully";
                         this.ReloadEntity();
                     }
 
                     else {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }
             });
         }
 
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
     public StockAreaIsVisible: boolean;

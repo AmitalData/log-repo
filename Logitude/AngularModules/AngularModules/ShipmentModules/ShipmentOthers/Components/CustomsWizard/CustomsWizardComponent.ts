@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -15,6 +15,7 @@ export class CustomsWizardComponent {
     public EntityPM: ShipmentPM;
     public ValidationErrorsList: string[] = [];
     private myABMWebService: ABMWebService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.myABMWebService = new ABMWebService();
     }
@@ -24,7 +25,7 @@ export class CustomsWizardComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public IsSendingMessageVisible: boolean = false;
@@ -34,16 +35,16 @@ export class CustomsWizardComponent {
         this.ValidationErrorsList = [];
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator("Sending in Progress..");
+            this.CurrentSession.StartBusyIndicator("Sending in Progress..");
 
             this.myABMWebService.Send(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse == null) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -51,14 +52,14 @@ export class CustomsWizardComponent {
                     
                     if (myResult == null) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
 
                     else {
                         this.IsSendingMessageVisible = true;
                         this.IsSendButtonEnabled = false;
                         this.CancelButtonContent = "Close";
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 }
             });

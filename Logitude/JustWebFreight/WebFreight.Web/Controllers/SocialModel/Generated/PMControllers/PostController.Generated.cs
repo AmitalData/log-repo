@@ -33,6 +33,7 @@ using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
+using Logitude.BL.Helpers;
 using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL.EntityPMs;
 using Logitude.Social.Data;
@@ -61,6 +62,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 
                 ISocialContext MyContext = SocialContext.GetContext(authToken.Tenant);
                 PostQueryService postQuery = new PostQueryService(MyContext);
+				postQuery.InitializeSettings();
                 PostPM postPM = postQuery.GetSingle(id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -104,7 +106,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         //{
                            //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
                         //}
-
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -139,9 +140,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                         ISocialContext MyContext = SocialContext.GetContext(entityPM.Tenant);
                         PostUpdateService service = new PostUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+						service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
-
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
                         //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Post", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
@@ -151,6 +152,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         //{
                            //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
+
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);

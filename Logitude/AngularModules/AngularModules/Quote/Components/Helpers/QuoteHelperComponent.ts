@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy} from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -6,6 +6,9 @@ import {QuotePM} from '../../EntityPMs/QuotePM';
 import {QuoteTool} from '../../Tools';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { CustomerPMService } from '../../../Common/Services/StandardPMs/CustomerPMService';
+import { CustomerPM } from '../../../Common/EntityPMs/CustomerPM';
 
 @Component({
     moduleId: module.id,
@@ -14,12 +17,16 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 
 export class QuoteHelperComponent implements OnDestroy {
     public EntityPM: QuotePM;
+    public CustomerPM: CustomerPM;
     public IsFollowupsVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
 
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Quote", "Quote.Followups");
 
         this.EntityPM = this.entityArgs.EntityPM;
+
+        
 
         if (this.EntityPM) {
             this.Listen();
@@ -30,20 +37,22 @@ export class QuoteHelperComponent implements OnDestroy {
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
             if (!this.SaveCompletedEvent) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;                        
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;                        
                     }
                 });
             }
 
             if (!this.LoadCompletedEvent) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    
+                        this.GetSingleCustomer();
                     }
                 });
             }
@@ -55,6 +64,7 @@ export class QuoteHelperComponent implements OnDestroy {
     }
 
     private BuildComponent() {
+        this.GetSingleCustomer();
     }
 
     get Notes() { return this.EntityPM.Notes; }
@@ -63,5 +73,17 @@ export class QuoteHelperComponent implements OnDestroy {
             this.EntityPM.Notes = value;
             ServiceLocator.SendTotangoUserActivity("Quote", "Notes update");
         }
+    }
+
+    private GetSingleCustomer() {
+        var customerService = new CustomerPMService();
+        customerService.get(this.EntityPM.CustomerId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    this.CustomerPM = myResponse.Result;
+                    this.CurrentSession.FireEvent("CustomerSalesNotesChanged");
+                }
+            }
+        });
     }
 }

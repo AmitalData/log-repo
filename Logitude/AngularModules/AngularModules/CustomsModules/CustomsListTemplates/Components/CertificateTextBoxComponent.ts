@@ -26,7 +26,7 @@ export class CertificateTextBoxComponent
     public DataContext: any = this;
     public entityId: string;
     multiCertificatesService: MultiCertificatesService = new MultiCertificatesService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private cd: ChangeDetectorRef) {
         super();
        
@@ -68,7 +68,7 @@ export class CertificateTextBoxComponent
 
     public cellClicked;
     clicked() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("certificate");
+        this.CurrentSession.PseventRowSelectEvent.emit("certificate");
         this.cellClicked = true;
         this.cd.detectChanges();
     }

@@ -23,6 +23,7 @@ export class AddEditContactComponent {
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -106,20 +107,20 @@ export class AddEditContactComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.ValidationErrorsList = this.ContactTemplate.Validate();
         if (this.ValidationErrorsList.length > 0) {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
 
         else {
             if (!this.EntityPM.IsDirty) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
             }
 
             else {
@@ -157,30 +158,30 @@ export class AddEditContactComponent {
         this.DomainService.PostPartnerAddress(args).subscribe((myResponse: ServiceResponse) => {
 
             if (myResponse.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
             else {
                 this.DataContext.EntityPM = myResponse.Result.Contact;
 
-                if (!SessionLocator.CurrentSession.CurrentEditComponent) {
+                if (!this.CurrentSession.CurrentEditComponent) {
                     if (this.DataContext.IsNewEntity) {
                         this.DataContext.IsNewEntity = false;
                     }
 
-                    SessionLocator.CurrentSession.CloseCurrentWindow();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
 
                 else {
                     if (!this.LoadCompletedEvent) {
-                        this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
+                        this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
 
                             AppTool.KillEventEmitter(this.LoadCompletedEvent);
                             this.LoadCompletedEvent = null;
 
                             if (isSuccess == false) {
-                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.StopBusyIndicator();
                             }
 
                             else {
@@ -190,11 +191,11 @@ export class AddEditContactComponent {
                                     this.DataContext.fatherComponent.ItemsSource.push(this.DataContext);
                                 }
 
-                                SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                                this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                             }
                         });
 
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 }
             }            

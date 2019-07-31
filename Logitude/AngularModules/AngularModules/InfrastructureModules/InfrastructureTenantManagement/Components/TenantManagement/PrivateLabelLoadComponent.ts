@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
@@ -19,11 +19,12 @@ export class PrivateLabelLoadComponent implements AfterViewInit {
     public EntityPM: TenantManagmentPrivateLabelsPM;
     @ViewChild('WizardView', { read: ViewContainerRef }) target: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
     SetWindowArgs(entityId: string) {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.EntityId = entityId;
         this.Load();
     }
@@ -47,7 +48,7 @@ export class PrivateLabelLoadComponent implements AfterViewInit {
                     this.ImportWizard();
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
 
@@ -59,7 +60,7 @@ export class PrivateLabelLoadComponent implements AfterViewInit {
             SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/AddEditPrivateLabelsComponent', this.target)
                 .then(cmpRef => {
                     cmpRef.instance.SetWindowArgs(Args);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
         });
     }

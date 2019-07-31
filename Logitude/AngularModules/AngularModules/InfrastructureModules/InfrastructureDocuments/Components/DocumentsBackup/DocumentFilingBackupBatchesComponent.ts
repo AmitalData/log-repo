@@ -1,4 +1,4 @@
-﻿import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
@@ -17,6 +17,7 @@ import {DocumentFilingBackupBatchPMExtendedService} from '../../../../Common/Ser
 export class DocumentFilingBackupBatchesComponent extends BaseComponent implements OnInit {
     documentFilingBackupBatchPMExtendedService: DocumentFilingBackupBatchPMExtendedService;
     public BatchObsList: Array<DocumentFilingBackupBatchDataViewModel> = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.documentFilingBackupBatchPMExtendedService = new DocumentFilingBackupBatchPMExtendedService();
@@ -37,7 +38,7 @@ export class DocumentFilingBackupBatchesComponent extends BaseComponent implemen
 
 
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.BatchObsList = [];
         this.documentFilingBackupBatchPMExtendedService.GetDocumentFilingBackupBatchPMs().subscribe(res => {
             if (!res.HasError) {
@@ -56,7 +57,7 @@ export class DocumentFilingBackupBatchesComponent extends BaseComponent implemen
                 }
 
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -101,7 +102,7 @@ export class DocumentFilingBackupBatchesComponent extends BaseComponent implemen
 
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -109,7 +110,7 @@ export class DocumentFilingBackupBatchesComponent extends BaseComponent implemen
 
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

@@ -76,6 +76,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CustomMappedPOCOProperties.Add(POCOPropertyNames.ExternalNo);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.AccountingEntityId);
 
+            ContactPM loggedUser = GetLoggedContact(entityPOCO.Tenant);
+            bool showLocal = !(bool)loggedUser?.DontShowLocal;
             
 
             if (entityPOCO.OriginalJournalId != null)
@@ -109,8 +111,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 accContext = accContext ?? AccountingContext.GetContext(entityPOCO.Tenant);
                 JournalTypeQueryService journalTypeQueryService = new JournalTypeQueryService(accContext);
                 JournalTypePM type = journalTypeQueryService.GetSingle(entityPOCO.TypeCode, false, true);
-                entityPM.TypeName = type.EnglishName;
+                entityPM.TypeName = showLocal ? type.LocalName : type.EnglishName;
             }
+
             if (entityPOCO.StatusCode != null)
             {
                 accContext = accContext ?? AccountingContext.GetContext(entityPOCO.Tenant);
@@ -119,15 +122,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.StatusName = type.EnglishName;
 
                 ContactPM user = GetLoggedContact(entityPOCO.Tenant);
+                entityPM.StatusName = showLocal ? type.LocalName : type.EnglishName;
+                entityPM.StatusLocalName = type.LocalName;
 
-                if (user != null)
-                {
-                    entityPM.StatusLocalName = user.DontShowLocal ? type.EnglishName : type.LocalName;
-                }
-                else
-                {
-                    entityPM.StatusLocalName = type.EnglishName;
-                }
 
             }
 

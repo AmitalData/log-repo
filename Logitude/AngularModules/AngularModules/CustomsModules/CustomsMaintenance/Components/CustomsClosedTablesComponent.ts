@@ -40,6 +40,7 @@ export class CustomsClosedTablesComponent implements OnInit {
     onQueryChangeEvent = new EventEmitter();
 
     private _entityListService: EntityListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this._entityListService = new EntityListService();
 
@@ -213,7 +214,7 @@ export class CustomsClosedTablesComponent implements OnInit {
             .getExtendedByFilters("Customs.CustomsClosedTable", filters);
         myout.then(res => {
             this._stratSearch = false;
-            //SessionLocator.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
         });
 
         return myout;
@@ -233,7 +234,7 @@ export class CustomsClosedTablesComponent implements OnInit {
     }
     RefreshBtnClick() {
         this._stratSearch = true;
-        //SessionLocator.CurrentSession.StartBusyIndicator("");
+        //this.CurrentSession.StartBusyIndicator("");
         setTimeout(() => {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
@@ -264,7 +265,7 @@ export class CustomsClosedTablesComponent implements OnInit {
         myIIGGeneralMessagesService.PostUpdateClosedTables(systemTableRequestParams).subscribe(
             res => {
                 myCustomMessageProgressHelper.MessageArrived = true;        
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         )
 

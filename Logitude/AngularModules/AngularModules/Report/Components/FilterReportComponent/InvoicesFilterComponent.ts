@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -115,15 +115,15 @@ export class InvoicesFilterComponent extends BaseComponent   {
     public InvoiceTypeRadio: string;
     public LocalCurencyRadio: string;
     
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.LocalCurrency = "LocalCurrency_" + SessionLocator.CurrentSession.SessionIndex +SessionLocator.CurrentSession.GetNewId("LocalCurrency");
-        this.InvoiceCurrency = "InvoiceCurrency_" + SessionLocator.CurrentSession.SessionIndex +SessionLocator.CurrentSession.GetNewId("InvoiceCurrency");
-        this.InvoiceDate = "InvoiceDate_" + SessionLocator.CurrentSession.SessionIndex+ SessionLocator.CurrentSession.GetNewId("InvoiceDate");
-        this.CreateDate = "CreateDate_" + SessionLocator.CurrentSession.SessionIndex +SessionLocator.CurrentSession.GetNewId("CreateDate");
-        this.InvoiceTypeRadio = "InvoiceTypeRadio_" + SessionLocator.CurrentSession.SessionIndex + SessionLocator.CurrentSession.GetNewId("InvoiceTypeRadio");
-        this.LocalCurencyRadio = "LocalCurencyRadio_" + SessionLocator.CurrentSession.SessionIndex + SessionLocator.CurrentSession.GetNewId("LocalCurencyRadio");
+        this.LocalCurrency = "LocalCurrency_" + this.CurrentSession.SessionIndex +this.CurrentSession.GetNewId("LocalCurrency");
+        this.InvoiceCurrency = "InvoiceCurrency_" + this.CurrentSession.SessionIndex +this.CurrentSession.GetNewId("InvoiceCurrency");
+        this.InvoiceDate = "InvoiceDate_" + this.CurrentSession.SessionIndex+ this.CurrentSession.GetNewId("InvoiceDate");
+        this.CreateDate = "CreateDate_" + this.CurrentSession.SessionIndex +this.CurrentSession.GetNewId("CreateDate");
+        this.InvoiceTypeRadio = "InvoiceTypeRadio_" + this.CurrentSession.SessionIndex + this.CurrentSession.GetNewId("InvoiceTypeRadio");
+        this.LocalCurencyRadio = "LocalCurencyRadio_" + this.CurrentSession.SessionIndex + this.CurrentSession.GetNewId("LocalCurencyRadio");
     }
 
 

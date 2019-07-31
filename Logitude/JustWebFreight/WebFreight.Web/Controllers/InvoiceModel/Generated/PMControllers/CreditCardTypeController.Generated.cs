@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CreditCardType", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CreditCardType", entityPM.Tenant, authToken.Tenant);
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
                         CreditCardTypeService service = new CreditCardTypeService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CreditCardType", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CreditCardType", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "CreditCardType" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "CreditCardTypePM" + entityPM.Id + entityPM.Tenant;

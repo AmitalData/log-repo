@@ -11,9 +11,6 @@ namespace Simplog.Data.Helpers
     public class AutomatedBackup
     {
         [DataMember]
-        public string Id { get; set; }
-
-        [DataMember]
         public string Name { get; set; }
 
         [DataMember]

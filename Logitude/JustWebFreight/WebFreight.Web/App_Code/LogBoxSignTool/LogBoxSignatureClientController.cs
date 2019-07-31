@@ -1,25 +1,21 @@
-﻿using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
 using Logitude.Server.Tools;
-using Logitude.Server.Tools.SignalRHubs;
+//using Logitude.Server.Tools.SignalRHubs;
 using Logitude.SystemLogs;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Client;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.LogitudeCacheManager;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
@@ -279,6 +275,7 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                 string signersList = "";
                 ICommonDataContext commoncontext = CommonDataContext.GetContext(Tenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(Tenant);
+                ShipmentRepository ShipmentRepo = new ShipmentRepository(Tenant);
                 DocumentsFilingPM extDocPM = documentsFilingQuery.GetSinglePM(FileInfo.DocumentsFilingId, Tenant);
                 if (!string.IsNullOrEmpty(extDocPM.SignRequestByUserEmail))
                 {
@@ -317,9 +314,18 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                             extDocPM.SignersList = signersList;
                             extDocPM.SignRequestByUserEmail = null;
                             //extDocPM.DontAddToQueue = true;
-                            if (extDocPM.IsSharedWithCustomer == true || extDocPM.IsSharedWithForwarder == true)
+                            
+                            if (extDocPM.IsSharedWithForwarder == true)
                             {
-                                extDocPM.DontAddToQueue = false;
+                                var DocsEntity = ShipmentRepo.GetSingleShipment(extDocPM.EntityId, extDocPM.Tenant);
+                                if (!string.IsNullOrEmpty(DocsEntity.ForwarderShipmentNumber))
+                                {
+                                    extDocPM.DontAddToQueue = false;
+                                }
+                                else
+                                {
+                                    extDocPM.DontAddToQueue = true;
+                                }
                                 //sextDocPM.IsSharedWithForwarder = true;
                                 //extDocPM.ForwarderDocumentId = null;
                             }
@@ -327,11 +333,17 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                             {
                                 extDocPM.DontAddToQueue = true;
                             }
+                            if (extDocPM.IsSharedWithCustomer == true)
+                            {
+                                extDocPM.DontAddToQueue = false;
+                                //sextDocPM.IsSharedWithForwarder = true;
+                                //extDocPM.ForwarderDocumentId = null;
+                            }
                             Service.Update(extDocPM, false);
 
                             UserRepository userRep = new UserRepository(Tenant);
                             User loggedUser = userRep.GetSingleUserByEmail(authToken.Email, Tenant);
-                            SignalRHubMessageSender.SendSignalRMessage("DocumentSigned", "User" + loggedUser.Id + Tenant, FileInfo.DocumentsFilingId);
+                            //SignalRHubMessageSender.SendSignalRMessage("DocumentSigned", "User" + loggedUser.Id + Tenant, FileInfo.DocumentsFilingId);
                         }
                         return Request.CreateResponse(HttpStatusCode.OK, response.Result);
                     }

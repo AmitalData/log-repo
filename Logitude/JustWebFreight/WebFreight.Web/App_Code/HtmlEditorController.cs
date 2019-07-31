@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
+using System.Text; 
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
@@ -142,9 +142,17 @@ namespace WebFreight.Web.App_Code
             try
             {
                 string reslut = "";
+
+
+                if (!string.IsNullOrEmpty(filter.Subject) && filter.Subject.ToLower() == "exceptiontest") throw new Exception("Exception");
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+
+
                 if (filter.Tenant == authToken.Tenant)
                 {
                     

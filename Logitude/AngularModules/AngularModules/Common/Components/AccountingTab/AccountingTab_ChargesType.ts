@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -25,7 +25,7 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
     public IsAccountingActivated = false;
     public ReceivableCreditGLAccountFilterItems: ApiQueryFilters;
     public PayableDebitGLAcountFilterItems: ApiQueryFilters;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -50,11 +50,11 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildItemsSource();
 
                         if (this.isExternalByProductsRequestd) {
@@ -67,9 +67,9 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildItemsSource();
                     }
                 });
@@ -188,7 +188,7 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
     ExternalByProductsClicked() {
         if (!this.isExternalByProductsRequestd) {
             this.isExternalByProductsRequestd = true;
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
     ApplyExternalByProducts() {

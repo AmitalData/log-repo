@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomAgentUpdateClass
@@ -169,7 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "InvoiceCurrencyId",
-					  						DefaultText =  @"Invoice Currency",
+					  						DefaultText =  "Invoice Currency",
 					  						HelpTextCode =  "InvoiceCurrencyId",
 					  						Code =  "InvoiceCurrencyId",
 					  						DependencyFilter3IsList =  false,
@@ -228,7 +232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "VatTypeId",
-					  						DefaultText =  @"VAT Type",
+					  						DefaultText =  "VAT Type",
 					  						HelpTextCode =  "VatTypeId",
 					  						Code =  "VatTypeId",
 					  						DependencyFilter3IsList =  false,
@@ -286,7 +290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "BankName",
-					  						DefaultText =  @"Bank Name",
+					  						DefaultText =  "Bank Name",
 					  						HelpTextCode =  "BankName",
 					  						Code =  "BankName",
 					  						DependencyFilter3IsList =  false,
@@ -344,7 +348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "BankAddress",
-					  						DefaultText =  @"Bank Address",
+					  						DefaultText =  "Bank Address",
 					  						HelpTextCode =  "BankAddress",
 					  						Code =  "BankAddress",
 					  						DependencyFilter3IsList =  false,
@@ -402,7 +406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Swift",
-					  						DefaultText =  @"Swift",
+					  						DefaultText =  "Swift",
 					  						HelpTextCode =  "Swift",
 					  						Code =  "Swift",
 					  						DependencyFilter3IsList =  false,
@@ -460,7 +464,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "AccountNumber",
-					  						DefaultText =  @"Bank Account Number",
+					  						DefaultText =  "Bank Account Number",
 					  						HelpTextCode =  "AccountNumber",
 					  						Code =  "AccountNumber",
 					  						DependencyFilter3IsList =  false,
@@ -518,7 +522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "IBANNumber",
-					  						DefaultText =  @"IBAN No.",
+					  						DefaultText =  "IBAN No.",
 					  						HelpTextCode =  "IBANNumber",
 					  						Code =  "IBANNumber",
 					  						DependencyFilter3IsList =  false,
@@ -576,9 +580,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "EnableConsolidationInvoices",
-					  						DefaultText =  @"Consolidated Inv.",
+					  						DefaultText =  "Consolidated Inv.",
 					  						HelpTextCode =  "EnableConsolidationInvoices",
-					  						HelpTextDefaultText =  @"This client will receive one Invoice for multiple Shipments once a period",
+					  						HelpTextDefaultText =  "This client will receive one Invoice for multiple Shipments once a period",
 					  						Code =  "EnableConsolidationInvoices",
 					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -635,9 +639,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Website",
-					  						DefaultText =  @"Website",
+					  						DefaultText =  "Website",
 					  						ListFieldLable =  "WebsiteListLable",
-					  						ListLableDefaultText =  @"Website",
+					  						ListLableDefaultText =  "Website",
 					  						HelpTextCode =  "Website",
 					  						Code =  "Website",
 					  						DependencyFilter3IsList =  false,
@@ -695,9 +699,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  @"Code",
+					  						DefaultText =  "Code",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  @"Code",
+					  						ListLableDefaultText =  "Code",
 					  						HelpTextCode =  "Code",
 					  						Code =  "Code",
 					  						DependencyFilter3IsList =  false,
@@ -755,9 +759,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "EnglishNameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						HelpTextCode =  "Name",
 					  						Code =  "EnglishName",
 					  						DependencyFilter3IsList =  false,
@@ -815,9 +819,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "LocalName",
-					  						DefaultText =  @"Local Name",
+					  						DefaultText =  "Local Name",
 					  						ListFieldLable =  "LocalNameListLable",
-					  						ListLableDefaultText =  @"Local Name",
+					  						ListLableDefaultText =  "Local Name",
 					  						HelpTextCode =  "LocalName",
 					  						Code =  "LocalName",
 					  						DependencyFilter3IsList =  false,
@@ -875,7 +879,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "ComputedLocalName",
-					  						DefaultText =  @"Local Name",
+					  						DefaultText =  "Local Name",
 					  						HelpTextCode =  "ComputedLocalName",
 					  						Code =  "ComputedLocalName",
 					  						DependencyFilter3IsList =  false,
@@ -933,9 +937,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  @"Inactive Customs Agent",
+					  						DefaultText =  "Inactive Customs Agent",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  @"Inactive",
+					  						ListLableDefaultText =  "Inactive",
 					  						HelpTextCode =  "InActive",
 					  						Code =  "InActive",
 					  						DependencyFilter3IsList =  false,
@@ -993,9 +997,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "VatNumber",
-					  						DefaultText =  @"VAT No.",
+					  						DefaultText =  "VAT No.",
 					  						ListFieldLable =  "VatNumberListLable",
-					  						ListLableDefaultText =  @"VAT Number",
+					  						ListLableDefaultText =  "VAT Number",
 					  						HelpTextCode =  "VatNumber",
 					  						Code =  "VatNumber",
 					  						DependencyFilter3IsList =  false,
@@ -1053,9 +1057,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "AccountingCard",
-					  						DefaultText =  @"External ID",
+					  						DefaultText =  "External ID",
 					  						ListFieldLable =  "AccountingCardListLable",
-					  						ListLableDefaultText =  @"External ID",
+					  						ListLableDefaultText =  "External ID",
 					  						HelpTextCode =  "AccountingCard",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1107,7 +1111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "PaymentTermId",
-					  						DefaultText =  @"Payment Term",
+					  						DefaultText =  "Payment Term",
 					  						HelpTextCode =  "PaymentTermId",
 					  						Code =  "PaymentTermId",
 					  						DependencyFilter3IsList =  false,
@@ -1165,9 +1169,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "PaymentTermEnglishName",
-					  						DefaultText =  @"Payment Term",
+					  						DefaultText =  "Payment Term",
 					  						ListFieldLable =  "PaymentTermEnglishNameListLable",
-					  						ListLableDefaultText =  @"Payment Term",
+					  						ListLableDefaultText =  "Payment Term",
 					  						HelpTextCode =  "PaymentTermEnglishName",
 					  						Code =  "PaymentTermEnglishName",
 					  						DependencyFilter3IsList =  false,
@@ -1226,9 +1230,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  @"Notes",
+					  						DefaultText =  "Notes",
 					  						ListFieldLable =  "NotesListLable",
-					  						ListLableDefaultText =  @"Notes",
+					  						ListLableDefaultText =  "Notes",
 					  						HelpTextCode =  "Notes",
 					  						Code =  "Notes",
 					  						DependencyFilter3IsList =  false,
@@ -1249,11 +1253,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						PMPropertyPath =  "CityName",
 					  						ListPropertyPath =  "CityName",
 					  						FullFieldLable =  "CityName",
-					  						DefaultText =  @"City",
-					  						FullLocalDefaultText =  @"CityName",
+					  						DefaultText =  "City",
+					  						FullLocalDefaultText =  "CityName",
 					  						ListFieldLable =  "CityNameListLable",
-					  						ListLableDefaultText =  @"City",
-					  						ListLocalDefaultText =  @"CityName",
+					  						ListLableDefaultText =  "City",
+					  						ListLocalDefaultText =  "CityName",
 					  						ObjectTableName =  "CustomAgent",
 					  						ValidForQuerySection1 =  "CustomAgent",
 					  						Code =  "CityName",
@@ -1309,11 +1313,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						PMPropertyPath =  "CountryId",
 					  						ListPropertyPath =  "CountryId",
 					  						FullFieldLable =  "CountryId",
-					  						DefaultText =  @"Country",
-					  						FullLocalDefaultText =  @"CountryId",
+					  						DefaultText =  "Country",
+					  						FullLocalDefaultText =  "CountryId",
 					  						ListFieldLable =  "CountryIdListLable",
-					  						ListLableDefaultText =  @"CountryId",
-					  						ListLocalDefaultText =  @"CountryId",
+					  						ListLableDefaultText =  "CountryId",
+					  						ListLocalDefaultText =  "CountryId",
 					  						ObjectTableName =  "CustomAgent",
 					  						ValidForQuerySection1 =  "CustomAgent",
 					  						LookUpTableName =  "Country",
@@ -1370,11 +1374,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						PMPropertyPath =  "CountryName",
 					  						ListPropertyPath =  "CountryName",
 					  						FullFieldLable =  "CountryName",
-					  						DefaultText =  @"Country",
-					  						FullLocalDefaultText =  @"CountryName",
+					  						DefaultText =  "Country",
+					  						FullLocalDefaultText =  "CountryName",
 					  						ListFieldLable =  "CountryNameListLabel",
-					  						ListLableDefaultText =  @"Country",
-					  						ListLocalDefaultText =  @"CountryName",
+					  						ListLableDefaultText =  "Country",
+					  						ListLocalDefaultText =  "CountryName",
 					  						ObjectTableName =  "CustomAgent",
 					  						ValidForQuerySection1 =  "CustomAgent",
 					  						Code =  "CountryName",
@@ -1453,10 +1457,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MetodoPagoCode",
-					  						DefaultText =  @"Metodo Pago",
+					  						DefaultText =  "Metodo Pago",
 					  						ListFieldLable =  "MetodoPagoCodeListLable",
-					  						ListLableDefaultText =  @"Metodo Pago",
-					  						ListLocalDefaultText =  @"Metodo Pago",
+					  						ListLableDefaultText =  "Metodo Pago",
+					  						ListLocalDefaultText =  "Metodo Pago",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1480,7 +1484,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HelpTextCode =  "MetodoPagoCode",
-					  						HelpTextDefaultText =  @"Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
+					  						HelpTextDefaultText =  "Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1517,10 +1521,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UsoCFDICode",
-					  						DefaultText =  @"UsoCFDI",
+					  						DefaultText =  "UsoCFDI",
 					  						ListFieldLable =  "UsoCFDIListLable",
-					  						ListLableDefaultText =  @"UsoCFDI",
-					  						ListLocalDefaultText =  @"UsoCFDI",
+					  						ListLableDefaultText =  "UsoCFDI",
+					  						ListLocalDefaultText =  "UsoCFDI",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1544,7 +1548,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HelpTextCode =  "UsoCFDICode",
-					  						HelpTextDefaultText =  @"Use of Digital Fiscal Receipt through Internet",
+					  						HelpTextDefaultText =  "Use of Digital Fiscal Receipt through Internet",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1588,7 +1592,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
 					  						FullFieldLable =  "SATForeignRFC",
-					  						DefaultText =  @"SAT Foreign RFC",
+					  						DefaultText =  "SAT Foreign RFC",
 					  						HelpTextCode =  "SATForeignRFC",
 					  						Code =  "SATForeignRFC",
 					  						DependencyFilter3IsList =  false,
@@ -1653,7 +1657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExternalId2",
-					  						DefaultText =  @"External ID2",
+					  						DefaultText =  "External ID2",
 					  						HelpTextCode =  "ExternalId2",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1709,7 +1713,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IRSPlace",
-					  						DefaultText =  @"IRS Place",
+					  						DefaultText =  "IRS Place",
 					  						HelpTextCode =  "IRSPlace",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1765,7 +1769,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IRSNumber",
-					  						DefaultText =  @"IRS #",
+					  						DefaultText =  "IRS #",
 					  						HelpTextCode =  "IRSNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1821,9 +1825,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivablesAccountingCard",
-					  						DefaultText =  @"Receivables External ID",
+					  						DefaultText =  "Receivables External ID",
 					  						ListFieldLable =  "ReceivablesAccountingCardListLable",
-					  						ListLableDefaultText =  @"Receivables External ID",
+					  						ListLableDefaultText =  "Receivables External ID",
 					  						HelpTextCode =  "ReceivablesAccountingCard",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1879,9 +1883,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PayablesAccountingCard",
-					  						DefaultText =  @"Payables External ID",
+					  						DefaultText =  "Payables External ID",
 					  						ListFieldLable =  "PayablesAccountingCardListLable",
-					  						ListLableDefaultText =  @"Payables External ID",
+					  						ListLableDefaultText =  "Payables External ID",
 					  						HelpTextCode =  "PayablesAccountingCard",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1937,7 +1941,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExternalAccountingBusinessArea",
-					  						DefaultText =  @"Business Area",
+					  						DefaultText =  "Business Area",
 					  						HelpTextCode =  "ExternalAccountingBusinessArea",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1993,9 +1997,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentMethodCode",
-					  						DefaultText =  @"Forma Pago",
+					  						DefaultText =  "Forma Pago",
 					  						HelpTextCode =  "PaymentMethodCode",
-					  						HelpTextDefaultText =  @"Payment Method",
+					  						HelpTextDefaultText =  "Payment Method",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2050,9 +2054,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PrimaryContactName",
-					  						DefaultText =  @"Primary Contact Name",
+					  						DefaultText =  "Primary Contact Name",
 					  						ListFieldLable =  "PrimaryContactNameLabel",
-					  						ListLableDefaultText =  @"Primary Contact",
+					  						ListLableDefaultText =  "Primary Contact",
 					  						HelpTextCode =  "PrimaryContactName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2108,9 +2112,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PrimaryContactEmail",
-					  						DefaultText =  @"Primary Contact E-mail",
+					  						DefaultText =  "Primary Contact E-mail",
 					  						ListFieldLable =  "PrimaryContactEmailLabel",
-					  						ListLableDefaultText =  @"Primary Contact E-mail",
+					  						ListLableDefaultText =  "Primary Contact E-mail",
 					  						HelpTextCode =  "PrimaryContactEmail",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2166,7 +2170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PrimaryContactPhone",
-					  						DefaultText =  @"Primary Contact Phone",
+					  						DefaultText =  "Primary Contact Phone",
 					  						HelpTextCode =  "PrimaryContactPhone",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2333,6 +2337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable CustomAgentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomAgent" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature CustomAgentFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomAgentFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomAgentFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

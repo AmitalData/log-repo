@@ -19,6 +19,7 @@ export class AddEditARGeneralInvoiceLineComponent {
     public ObjectTableName = "ARInvoiceLine";
     public DataContext: ARInvoiceLineItem;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
@@ -48,7 +49,7 @@ export class AddEditARGeneralInvoiceLineComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -93,7 +94,7 @@ export class AddEditARGeneralInvoiceLineComponent {
                 this.DataContext.fatherComponent.SetUIProperties();
                 this.DataContext.fatherComponent.BuildScreenData();
             }
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
 
         else {

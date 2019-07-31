@@ -51,6 +51,8 @@ export class EditComponent implements OnDestroy {
     public HasHelper: boolean = false;
     public HasShortTitle: boolean = false;
     public HasMenuButtons: boolean = false;
+    public IsTabsHidden: boolean = false;
+
     public IsEntityLoaded: boolean = false;
     public ComponentBackground: string = "white";
     public BackButtonLabel: string;
@@ -62,7 +64,6 @@ export class EditComponent implements OnDestroy {
 
     LayoutDirection: string = 'ltr';
     WorkEnvironment: string = 'logitude';
-
     public NavigationIds: string[];
     public CurrentNavigatedIndex: number;
     @ViewChild('Helper', { read: ViewContainerRef }) HelperViewContainerRef: ViewContainerRef;
@@ -72,16 +73,19 @@ export class EditComponent implements OnDestroy {
     @ViewChild('WindowLocation', { read: ViewContainerRef }) WindowLocationViewContainerRef: ViewContainerRef;
     @ViewChild('TabControlBody', { read: ViewContainerRef }) TabControlBodyViewContainerRef: ViewContainerRef;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    public CurrentSession = SessionLocator.SelectedSession;
+    public IsReloadNeeded: boolean = false;
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-        this.ComponentIndex = SessionLocator.CurrentSession.GetNewEditComponentIndex();
-        this.HeaderId = "HeaderScreen_" + SessionLocator.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
-        this.ComponentId = "EditComponent_" + SessionLocator.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
-        this.EditComponentCellId = "EditComponentCellId_" + SessionLocator.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
+        this.ComponentIndex = this.CurrentSession.GetNewEditComponentIndex();
+        this.HeaderId = "HeaderScreen_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
+        this.ComponentId = "EditComponent_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
+        this.EditComponentCellId = "EditComponentCellId_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
     }
-
+  
+    private EntityFields: any[] = null;
     public Run(args: any) {
         this.EntityId = args['EntityId'];
         this.EntityPM = args['EntityPM'];
@@ -94,16 +98,21 @@ export class EditComponent implements OnDestroy {
         this.HasHelper = this.ObjectTable.HasHelper;
         this.HasShortTitle = this.ObjectTable.HasShortTitle;
         this.HasMenuButtons = this.ObjectTable.HasMenuButtons;
+        this.IsTabsHidden = this.ObjectTable.IsTabsHidden;
         this.NavigationIds = args['NavigationIds'];
+        this.EntityFields = args['EntityFields'];
+      
         if (this.NavigationIds) {
             this.NextPreviousVisible = true;
         }
+
         if (AppTool.IsNullOrEmpty(this.CurrentNavigatedIndex) && this.NavigationIds) {
             this.CurrentNavigatedIndex = 0;
             this.DeclarationNavigationMessage = (this.CurrentNavigatedIndex + 1).toString() + " מתוך " + this.NavigationIds.length.toString();
             //this.PreviousButtonDisabled = true;
             this.SetNextPreviousButtonsEnablity();
         }
+
         if (this.EntityPM != null) {
             this.entityArgs.EntityPM = this.EntityPM;
             this.entityArgs.ObjectTableName = this.ObjectTableName;
@@ -122,11 +131,10 @@ export class EditComponent implements OnDestroy {
         if (this.ObjectTableName == "CommunicationLog") {
             this.IsSaveBtnDisable = true;
         }
-
+        
+       
         this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible;
-
-
-
+        
         // Split Component
         var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
         if (!AppTool.IsNullOrEmpty(feature)) { // granted
@@ -138,20 +146,35 @@ export class EditComponent implements OnDestroy {
                 this.IsSplitBtnVisible = true;
                 this.ShowWindowsOverEditComponent = true;
             }
-
-
         }
+
+        //fullaccounting => hide arpayment save btn for new arp entity
+        var isNewEntity = true;
+        if (this.EntityId || (this.EntityId && this.EntityPM.Id))
+            isNewEntity = false;
+
+        if ((this.ObjectTableName == "ARPayment"  || this.ObjectTableName== "APPayment") && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
+            this.IsSaveBtnVisible = false;
+        }
+        //
 
     }
 
     private LoadEntityPM() {
-
         this.entityPMService.getSingle(this.ObjectTableName, this.EntityId).then((response: any) => {
             response.subscribe((res) => {
                 var pmResponse: ServiceResponse = res;
 
                 if (!pmResponse.HasError) {
                     this.EntityPM = pmResponse.Result;
+
+                    if (this.EntityFields) {
+                        this.EntityFields.forEach(itemField => {
+                            this.EntityPM[itemField["FieldName"]] = itemField["FieldValue"];
+                        });
+
+                        this.EntityPM.IsDirty = false;
+                    }
 
                     if (this.EntityPM) {
                         this.entityArgs.EntityPM = this.EntityPM;
@@ -197,13 +220,15 @@ export class EditComponent implements OnDestroy {
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
                 this.GetControllerByTableName(this.ObjectTableName).then(EditComponentController => {
                     //this.EditComponentController = EditComponentController as IEditComponentController;
-                    SessionLocator.CurrentSession.AddEditComponent(this);
+                    this.CurrentSession.AddEditComponent(this);
                     this.EditComponentController = EditComponentController as IEditComponentController;
                     this.EditComponentController.OnFirstTimeAfterSingleDataLoaded(this.EntityPM).then((isLock) => {
                         this.OnFirstTimeAfterSingleDataLoaded.emit(".EditComponentController.OnFirstTimeAfterSingleDataLoaded");
                         if (this.EditComponentController.ToCancell) {
                             this.Close();
-                        } else {
+                        }
+
+                        else {
 
                             this._SubEditComponentDefaultController =
                                 this.SaveCompleted.subscribe(isSaved => {
@@ -347,7 +372,9 @@ export class EditComponent implements OnDestroy {
             else {
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
-        } else if (this.ObjectTableName == "ARInvoice") {
+        }
+
+        else if (this.ObjectTableName == "ARInvoice") {
 
             //get f. acc. Settings
             if (SessionLocator.TenantPM.AccountingActivated) {
@@ -358,6 +385,18 @@ export class EditComponent implements OnDestroy {
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
+            else {
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+            }
+        }
+
+        else if (this.ObjectTableName == "Tariff") {
+            if (this.EntityPM.TypeCode == "ASC") {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.SurchagesHeaderScreen")[0];
+                myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+            }
+
             else {
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
@@ -455,6 +494,14 @@ export class EditComponent implements OnDestroy {
                         this.SavedWidthOfHeader = widthOfHeader;
                     }
 
+                    if (widthOfHeader == 0) {
+                        var ApplicationSession = document.getElementById("ApplicationSession");
+                        if (ApplicationSession) {
+                            var appWidth = ApplicationSession.clientWidth;
+                            widthOfHeader = appWidth - 42;
+                        }
+                    }
+
                     var widthOfSeparator = (HeaderScreen.NumberOfColumns - 1) * 20;
                     widthOfColumn = (widthOfHeader - widthOfSeparator) / HeaderScreen.NumberOfColumns;
                 }
@@ -472,10 +519,7 @@ export class EditComponent implements OnDestroy {
                             if (myObjectField != null) {
 
                                 myRow.Label = TextCodeTranslator.Translate(myObjectField.FullNameTextCodeCode);
-                                myRow.ObjectField = myObjectField;
-                                //if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "ARPayment") && myObjectField.FieldName == "SATTransferStatusName" && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
-                                //    myRow.HideField = true;
-                                //}
+                                myRow.ObjectField = myObjectField;                                
 
                                 if (!AppTool.IsNullOrEmpty(myRow.Label)) {
                                     myRow.Label += ":";
@@ -514,7 +558,28 @@ export class EditComponent implements OnDestroy {
     //public ObjectTableTabs: any[] = [];
     public TabsItemsSource: TabItem[] = [];
     private LoadedTabsList: LoadedTabItem[] = [];
+    private SingleDetailsTab: any = null;
     private BuildEditTabs() {
+
+        if (this.IsTabsHidden) {
+            this.BuildSingleEditTab();
+        }
+
+        else {
+            this.BuildTabsItemsSource();
+        }
+    }
+    private BuildSingleEditTab() {
+        var singleTab = window.ObjectTableTabs.filter(d => d.ObjectTableId === this.ObjectTableId && d.IndexOrder === 0)[0];
+        if (singleTab) {
+            if (FeatureLocator.IsFeatureGranted(singleTab.FeatureId)) {
+                if (!AppTool.IsNullOrEmpty(singleTab.HtmlComponentUrl)) {
+                    this.SingleDetailsTab = singleTab;
+                }
+            }
+        }
+    }
+    private BuildTabsItemsSource() {
         var allTabs: any[] = [];
         var myTabsSorted: any[] = [];
         this.TabsItemsSource = [];
@@ -724,6 +789,15 @@ export class EditComponent implements OnDestroy {
             }
             case "ARPayment": {
 
+                if (this.EntityPM.IsFullAccounting) {
+                    let indexOfTab = allTabs.findIndex(t => t.Code == 'ARPD');
+                    if (indexOfTab > -1)
+                        allTabs.splice(indexOfTab, 1);
+                } else {
+                    let indexOfTab = allTabs.findIndex(t => t.Code == 'PYDF');
+                    if (indexOfTab > -1)
+                        allTabs.splice(indexOfTab, 1);
+                }
 
                 break;
             }
@@ -754,18 +828,35 @@ export class EditComponent implements OnDestroy {
     }
 
     SetSelectedTab() {
-        if (this.TabsItemsSource != null) {
-            var selected: any = null;
+        if (this.IsTabsHidden) {
+            if (this.SingleDetailsTab) {
+                SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditTabComponent", this.TabControlBodyViewContainerRef)
+                    .then(cmpRef => {
 
-            if (this.PreSelectedTabCode != null) {
-                selected = this.TabsItemsSource.filter(d => d.Code == this.PreSelectedTabCode)[0];
+                        if (this.PreSelectedTabCode != null) {
+                            this.entityArgs.PreSelectedTabCode = this.PreSelectedTabCode;
+                        }
+
+                        cmpRef.instance.CurrentlySelected = true;
+                        cmpRef.instance.Run(this.SingleDetailsTab.Code, this.SingleDetailsTab.HtmlComponentUrl);
+                    });
             }
+        }
 
-            if (selected == null) {
-                selected = this.TabsItemsSource[0];
+        else {
+            if (this.TabsItemsSource != null) {
+                var selected: any = null;
+
+                if (this.PreSelectedTabCode != null) {
+                    selected = this.TabsItemsSource.filter(d => d.Code == this.PreSelectedTabCode)[0];
+                }
+
+                if (selected == null) {
+                    selected = this.TabsItemsSource[0];
+                }
+
+                this.SelectionChanged(selected);
             }
-
-            this.SelectionChanged(selected);
         }
     }
 
@@ -964,7 +1055,7 @@ export class EditComponent implements OnDestroy {
     }
     Close() {
         if (this.IsInsideWindow) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
         if (this.EditComponentController) {
@@ -1260,7 +1351,7 @@ export class EditComponent implements OnDestroy {
         //Abed Code
         if (this.ObjectTableName == "Shipment" && this.EntityPM.IsRefreshFollowUp) {
             this.EntityPM.IsRefreshFollowUp = false;
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
 
@@ -1274,7 +1365,7 @@ export class EditComponent implements OnDestroy {
     }
     DestroyEditControl() {
         if (this.ComponentRef != null) {
-            SessionLocator.CurrentSession.RemoveEditComponent(this);
+            this.CurrentSession.RemoveEditComponent(this);
             this.ComponentRef.destroy();
             this.ComponentRef = null;
         }
@@ -1291,7 +1382,7 @@ export class EditComponent implements OnDestroy {
         });
         this.LoadedTabsList = null;
 
-        SessionLocator.CurrentSession.UnsubscribeStaticEvent();
+        this.CurrentSession.UnsubscribeStaticEvent();
         this._Subscription.unsubscribe();//itzik
         if (this._SubEditComponentDefaultController) {
             this._SubEditComponentDefaultController.unsubscribe()
@@ -1437,12 +1528,12 @@ export class EditComponent implements OnDestroy {
         }
 
         //if (this.ComponentRef != null) {
-        //  SessionLocator.CurrentSession.RemoveEditComponent(this);
+        //  this.CurrentSession.RemoveEditComponent(this);
         //  this.ComponentRef.destroy();
         //  this.ComponentRef = null;
         //}
 
-        SessionLocator.CurrentSession.RemoveEditComponent(this);
+        this.CurrentSession.RemoveEditComponent(this);
         this.ngOnDestroy();
 
 
@@ -1458,21 +1549,24 @@ export class EditComponent implements OnDestroy {
     }
 
     SetNextPreviousButtonsEnablity() {
-        if (this.CurrentNavigatedIndex == 0) {
-            this.PreviousButtonDisabled = true;
-        }
-        else {
-            this.PreviousButtonDisabled = false;
-        }
+        if(this.NavigationIds)
+        {
+            if (this.CurrentNavigatedIndex == 0) {
+                this.PreviousButtonDisabled = true;
+            }
+            else {
+                this.PreviousButtonDisabled = false;
+            }
 
-        if (this.CurrentNavigatedIndex == this.NavigationIds.length - 1) {
-            this.NextButtonDisabled = true;
-        }
-        else {
-            this.NextButtonDisabled = false;
-        }
+            if (this.CurrentNavigatedIndex == this.NavigationIds.length - 1) {
+                this.NextButtonDisabled = true;
+            }
+            else {
+                this.NextButtonDisabled = false;
+            }
 
-        this.DeclarationNavigationMessage = (this.CurrentNavigatedIndex + 1).toString() + " מתוך " + this.NavigationIds.length.toString();
+            this.DeclarationNavigationMessage = (this.CurrentNavigatedIndex + 1).toString() + " מתוך " + this.NavigationIds.length.toString();
+        }
     }
 
     public SetSelectedTabByCode(code: string) {

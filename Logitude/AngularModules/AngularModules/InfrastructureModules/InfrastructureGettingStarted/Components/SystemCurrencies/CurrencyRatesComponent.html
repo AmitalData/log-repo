@@ -1,4 +1,4 @@
-﻿
+
 <table>
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
             <td>
@@ -61,7 +61,7 @@
                                 </td>
 
                                 <td class="GridViewCell" style="width: 150px;min-width: 150px">
-                                    <LogTextBox   [ObjectFieldName]="'item.Rate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'Rate'" [Text]="item.Rate" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
                                 </td>
 
                                 <td><div></div></td>

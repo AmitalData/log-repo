@@ -1,0 +1,575 @@
+
+<style>
+    .ListHeader {
+        font-weight: normal;
+        font-size: 12px;
+        border: 1px solid #DADADA;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+        background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    }
+
+    .hyperlink:hover{
+        cursor:pointer;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height:70px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:5px">
+                        <div></div>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:130px;">
+                                                            <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td style="width:220px;">
+                                                            <LogLov [ObjectFieldName]="'OriginPortId'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [LookUpTableName]="'Port'"
+                                                                    [DataContext]="DataContext"
+                                                                    (SelectedItemChanged)="OriginPortId"
+                                                                    [DisplayMemberPath]="'Code'"
+                                                                    [SelectedValue]="OriginPortId">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width:20px">
+                                                            <div>
+
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width:82px;">
+                                                            <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td style="width:220px;">
+                                                            <LogLov [ObjectFieldName]="'DestinationPortId'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [LookUpTableName]="'Port'"
+                                                                    [DataContext]="DataContext"
+                                                                    (SelectedItemChanged)="DestinationPortId"
+                                                                    [DisplayMemberPath]="'Code'"
+                                                                    [SelectedValue]="DestinationPortId">
+                                                            </LogLov>
+
+                                                        </td>
+
+
+                                                        <td style="width:75px">
+                                                            <LogLabel [ObjectFieldName]="'Date'" [NoObjectField]="true" [Text]="'Date'" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width:240px">
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
+
+                                                                    </td>
+
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+
+                                                        <td></td>
+
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:130px">
+                                                            <LogLabel [ObjectFieldName]="'Weight'" [NoObjectField]="true" [Text]="'Chargeable weight'" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+
+                                                        <td style="width:100px">
+                                                            <LogTextBox [NoObjectField]="true" [InputType]="'sigdouble'" [ObjectFieldName]="'Weight'" [Text]="Weight" [HideColumns]="true"
+                                                                        (ValueChanged)="Weight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+
+                                                        </td>
+                                                        <td style="width:4px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:100px">
+                                                            <LogLov [ObjectFieldName]="'WeightCode'"
+                                                                    [SelectedValue]="WeightCode"
+                                                                    [NoObjectField]="true"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'WeightUnit'"
+                                                                    [HideLastColumn]="true"
+                                                                    [RunToggleMode]="true">
+                                                            </LogLov>
+
+                                                        </td>
+                                                        <td style="width:25px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:90px">
+                                                            <LogLabel [ObjectFieldName]="'GrossWeight'" [NoObjectField]="true" [Text]="'Gross Weight'" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td style="width:4px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:100px">
+                                                            <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [Text]="GrossWeight" [ObjectFieldName]="'GrossWeight'" [HideColumns]="true"
+                                                                        (ValueChanged)="GrossWeight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+
+                                                        </td>
+                                                        <td style="width:4px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:100px">
+                                                            <LogLov [ObjectFieldName]="'GrossWeightCode'"
+                                                                    [SelectedValue]="GrossWeightCode"
+                                                                    [NoObjectField]="true"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'WeightUnit'"
+                                                                    [HideLastColumn]="true"
+                                                                    [RunToggleMode]="true">
+                                                            </LogLov>
+
+                                                        </td>
+
+                                                        <td style="width:15px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:70px">
+                                                            <LogLabel [ObjectFieldName]="'Volume'" [NoObjectField]="true" [Text]="'Volume'" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td style="width:4px">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width:100px">
+                                                            <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Volume'" [HideColumns]="true" [Text]="Volume"
+                                                                        (ValueChanged)="Volume=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+
+                                                        </td>
+                                                        <td style="width:4px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:100px">
+                                                            <LogLov [ObjectFieldName]="'VolumeUnitCode'"
+                                                                    [SelectedValue]="VolumeUnitCode"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'VolumeUnit'"
+                                                                    [HideColumns]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+
+
+
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="width: 100px">
+                                    <button class="GreenButton" style="height:60px;font-size:14px;font-weight:bold" (click)="SearchButtonClicked()">Search</button>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                    <td style="width:5px">
+                        <div></div>
+                    </td>
+
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+
+            <table>
+                <tr>
+                    <td style="width:5px">
+                        <div></div>
+                    </td>
+
+                    <td style="border: 1px solid lightgrey;">
+                        <table>
+                            <tr class="ListHeader" style="height:30px">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="padding-left:2px">
+                                                Results
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                            <td style="padding-right:3px;padding-top:3px; float:right;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:80px;">
+                                                            <LogLabel [NoObjectField]="true" [Text]="'Currency'" [ObjectFieldName]="'CurrencyId'" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width:100px;">
+                                                            <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                                    [NoObjectField]="true"
+                                                                    [DataContext]="DataContext"
+                                                                    [HideLastColumn]="true"
+                                                                    [HideAddLink]="true"
+                                                                    [HideMaintenanceIcon]="true"
+                                                                    [LookUpTableName]="'Currency'">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <ScrollViewer [Small]="true">
+                                        <table>
+                                            <tr *ngFor="let item of AvailableTariffs" style="height:1px">
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:90px;">
+                                                            <td>
+                                                                <table>
+                                                                    <tr style="height:3px">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table style="-webkit-border-radius: 14px 14px 14px 14px; background-color:#F5F5F5">
+
+                                                                                <tr>
+                                                                                    <td style="width:150px;min-width:150px">
+                                                                                        <div>
+                                                                                            <img style="width:120px;height:80px;border:1px solid #A0A0A0" *ngIf="item.ImageId" class="CenterCenter" [attr.id]="item.Name" src="{{item.ImageId}}" />
+
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td style="width:20px"></td>
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width:300px;max-width:300px">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:80px">
+                                                                                                                <label style="color:darkgray"> Seller</label>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <div class="TextTrimming">
+                                                                                                                    :{{item.Name}}
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+
+                                                                                                </td>
+                                                                                                <td style="width:15px">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td style="text-align:left">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:80px">
+                                                                                                                <label style="color:darkgray"> Effective till</label>
+
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                :{{item.EffictiveDate | DateTimePipe:'SD'}}
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+
+
+                                                                                                <td colspan="3">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:80px">
+                                                                                                                <label style="color:darkgray"> Remarks</label>
+
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <div class="TextTrimming" style="width:400px;max-width:400px">
+                                                                                                                    :{{item.Remarks}}
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+
+                                                                                                </td>
+
+                                                                                            </tr>
+
+                                                                                            <tr>
+                                                                                                <td colspan="3">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:80px">
+                                                                                                                <label style="color:darkgray"> All-In</label>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <div class="TextTrimming">
+                                                                                                                    :{{item.AllIn}}
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+
+
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+
+                                                                                                <td></td>
+                                                                                                <td style="width:100px;max-width:165px;font-size:x-large;font-weight:bold">
+                                                                                                    <span style="font-size:x-large;font-weight:bold;color:#0e276d;float:right">
+                                                                                                        {{item.WholePrice | NumbersPipe:'N2'}}                                                                                                     {{item.Currency}}
+                                                                                                    </span>
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <tr>
+                                                                                                <td></td>
+                                                                                                <td style="width:200px">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <span class="hyperlink" style="font-size:small;font-weight:bold;color:deepskyblue;float:right;" (click)="ShowTariffclicked(item)" *ngIf="!item.IsShown">Show Details</span>
+                                                                                                                <span class="hyperlink" style="font-size:small;font-weight:bold;color:deepskyblue;float:right;" (click)="ShowTariffclicked(item)" *ngIf="item.IsShown">Show Less</span>
+                                                                                                            </td>
+                                                                                                            <td style="width:3px"></td>
+                                                                                                            <td style="width:20px">
+                                                                                                                <img *ngIf="item.IsShown" (click)="ShowTariffclicked(item)" src="./Images/Buttons/uparrow.png" style="cursor:pointer;width:20px;float:right" title="Show Less" />
+                                                                                                                <img *ngIf="!item.IsShown" (click)="ShowTariffclicked(item)" src="./Images/Buttons/downarrow.png" style="cursor:pointer;width:20px;float:right" title="Show Details" />
+
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>                                                                                                 
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+
+                                                                                    <td style="width:5px">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                        </tr>
+                                                        <tr style="height:1px;background-color:white" *ngIf="item.IsShown">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:30px">
+                                                                            <div></div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr style="height:50px">
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width:500px">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:130px">
+                                                                                                                <p style="font-weight:bold;font-size:x-large">
+                                                                                                                    Air Freight
+                                                                                                                </p>
+                                                                                                            </td>
+                                                                                                            <td style="width:5px"></td>
+                                                                                                            <td style="font-size:larger">(All-In: {{item.AllIn}})</td>
+                                                                                                        </tr>
+                                                                                                    </table>
+
+                                                                                                </td>
+                                                                                                <td><div></div></td>
+                                                                                                <td style="float:right;width:200px;height:100%"  (click)="PriceClick(item)"><p style="float:right;padding-top:12px;" class="hyperlink" >{{item.price  | NumbersPipe:'N2'}} {{item.Currency}}</p></td>
+                                                                                                <td style="width:10px">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+
+                                                                                </tr>
+                                                                                <tr style="height:1px;background-color:deepskyblue">
+                                                                                    <td><div></div></td>
+                                                                                </tr>
+                                                                                <tr style="height:20px">
+                                                                                    <td style="font-size:larger">(All-In: {{item.AllIn}})</td>
+                                                                                </tr>
+                                                                                <tr style="height:40px">
+                                                                                    <td><div></div></td>
+                                                                                </tr>
+                                                                                <tr style="height:40px">
+                                                                                    <td>
+                                                                                        <p style="font-weight:bold;font-size:x-large">Surcharges</p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr style="height:1px;background-color:deepskyblue">
+                                                                                    <td><div></div></td>
+                                                                                </tr>
+                                                                                <tr *ngFor="let surcharge of item.Surcharges" style="height:10px;border-bottom:2px;border-color:deepskyblue">
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width:100px">
+                                                                                                    {{surcharge.Code}}
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    {{surcharge.Name}}
+                                                                                                </td>
+                                                                                                <td style="width:100px;float:right">
+                                                                                                    <div style="float:right">
+                                                                                                        {{surcharge.Price  | NumbersPipe:'N2'}}
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr style="height:1px;background-color:deepskyblue">
+                                                                                                <td colspan="3"></td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr style="height:20px">
+                                                                                    <td><div></div></td>
+                                                                                </tr>
+
+                                                                                <tr style="height:10px;border-bottom:2px;border-color:deepskyblue">
+                                                                                    <td>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <p style="font-weight:bold;font-size:x-large">Total</p>
+                                                                                                </td>
+                                                                                                <td style="width:200px;float:right;height:100%;padding-top:12px"><div style="float:right;margin-right:10px">{{item.WholePrice | NumbersPipe:'N2'}} {{item.Currency}}</div></td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr style="height:1px;background-color:deepskyblue">
+                                                                                    <td><div></div></td>
+                                                                                </tr>
+                                                                                <tr style="height:10px">
+                                                                                    <td><div></div></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td style="width:10px"><div></div></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </ScrollViewer>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width:5px">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="height: 32px;min-height:32px">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe
+    }}</button>
+</td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
