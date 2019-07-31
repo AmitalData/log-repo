@@ -416,7 +416,7 @@
                     </tr>
 
                     <!-- Cheque -->
-                    <tr style="height:1px;" *ngIf="CollapsedIfCash">
+                    <tr style="height:1px;" *ngIf="CollapsedIfCash || !IsMultipleCheques">
                         <td>
                             <table>
                                 <tr>
@@ -571,6 +571,9 @@
                             </table>
                         </td>
                     </tr>
+
+                    <!--Multiple Cheques-->
+                    <tr *ngIf="'IsMultipleCheques"> There are more than one cheques for this payment </tr>
 
                     <tr style="height:10px;">
                         <td>
