@@ -7,6 +7,7 @@ namespace Logitude.Global.OracleMigration.Migrations
     {
         public override void Up()
         {
+            return;
             DropForeignKey("dbo.TenantManagements", "BluesnapContractCode", "dbo.BluesnapContracts");
             DropIndex("dbo.TenantManagements", new[] { "BluesnapContractCode" });
             RenameColumn(table: "dbo.TenantManagements", name: "BluesnapContractCode", newName: "BluesnapOneTimeContractId");

@@ -30,12 +30,12 @@ namespace Logitude.Global.OracleMigration.Migrations
                 OracleConnectionInfo.CreateConnection(
                 //"User Id=aminetpre_GLOBAL;  Password=aminetpre_GLOBAL;Direct=True;Data Source=10.10.10.72;port=1521;sid=amital"
                 //"User Id=AMINET_GLOBAL;  Password=AMINET_GLOBAL;Direct=True;Data Source=Univ56;port=1521;sid=amital"
-                //"User Id=AMINET_GLOBAL;  Password=AMINET_GLOBAL;Direct=True;Data Source=Univ57;port=1521;sid=amital"
+                "User Id=AMINET_GLOBAL;  Password=AMINET_GLOBAL;Direct=True;Data Source=Univ57;port=1521;sid=amital"
                 //"User Id=AMINET_GLOBAL;  Password=AMINET_GLOBAL;Direct=True;Data Source=Univ57;port=1521;sid=amital"
                 //"User Id=AMINET_GLOBAL;  Password=AMINET_GLOBAL;Direct=True;Data Source=Univ58;port=1521;sid=amital"
-
+                //"User Id=AMINET_GLOBAL;  Password=AMINET_GLOBAL;Direct=True;Data Source=UNIDB2016;port=1521;sid=amital"
                 //"User Id=AMINET_GLOBAL;  Password=AMINET_GLOBAL;Direct=True;Data Source=localhost;port=1521;sid=xe"
-                "User Id=couriernet_global;  Password=couriernet_global;Direct=True;Data Source=Univ58;port=1521;sid=amital"
+                //"User Id=couriernet_global;  Password=couriernet_global;Direct=True;Data Source=Univ58;port=1521;sid=amital"
 
                 //                "User Id=logitude_GLOBAL;  Password=oracle;Direct=True;Data Source=10.10.10.58;port=1521;sid=amital"
                 //"User Id=logitude_global;  Password=oracle;Direct=True;Data Source=localhost;port=1521;sid=xe"
