@@ -105,7 +105,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant,true);
                 }
             }
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                var journalReconcileUpdateService = new JournalExternalReconcileUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                journalReconcileUpdateService.UpdateMulti(entityPM.JournalExternalReconciles, entityPM.DeletedJournalExternalReconciles, entityPM, true);
 
+
+                //var listTransactionId = entityPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
+                //if (listTransactionId.Count > 0)
+                //{
+                //    var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+                //    ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant, true);
+                //}
+            }
         }
 
 

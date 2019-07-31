@@ -33,7 +33,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         SearchFields, 
 	         Id, 
 	         ReconcileRemarks, 
-	         CreditAmount,
+	         CreditAmount, 
+	         InProgressExternalReconcile,
 	      }
 
 
@@ -54,7 +55,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         GroupHash, 
 	         ReconciliationNumber, 
 	         CreditAmount, 
-	         Amount,
+	         Amount, 
+	         InProgressExternalReconcile,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -116,6 +118,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAmount))
             {
 				entityPOCO.CreditAmount = entityPM.CreditAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InProgressExternalReconcile))
+            {
+				entityPOCO.InProgressExternalReconcile = entityPM.InProgressExternalReconcile;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -184,6 +191,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CreditAmount = entityPOCO.CreditAmount;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InProgressExternalReconcile))
+            {
+					entityPM.InProgressExternalReconcile = entityPOCO.InProgressExternalReconcile;
+            }
+
 		}
 
 		public void PMToOldPM(ReconcileExternalPageLinePM entityPM, ReconcileExternalPageLinePM oldEntityPM)
@@ -243,6 +255,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreditAmount))
             {
                 oldEntityPM.CreditAmount = entityPM.CreditAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InProgressExternalReconcile))
+            {
+                oldEntityPM.InProgressExternalReconcile = entityPM.InProgressExternalReconcile;
             }
 			
 		}

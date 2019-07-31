@@ -1017,7 +1017,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 if (entityPM.Inactive != entityPOCO.Inactive && entityPM.Inactive == false)
                 {
-                  
+
                     // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
                     //String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.LocalName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.LocalName;
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -1027,8 +1027,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         UserId = contact.Id,
                         ObjectTableName = "GLAccount",
                         IsAddedManually = false,
-                        EventTypeCode = "UBLK",
-                        
+                        EventTypeCode = "GLRC",
+
                     });
 
                 }

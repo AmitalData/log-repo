@@ -18,6 +18,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
+import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 @Component({
     selector: 'QuoteTemplatePricingSettingComponent',
     moduleId: module.id,
@@ -62,6 +63,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     IsPerContainerChange: boolean = false;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
+    ShowTotalPerContinerLink: boolean = false;
     constructor() {
         super();
         this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
@@ -70,6 +72,15 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.quoteTemplateTextDesignExtendedPMService = new QuoteTemplateTextDesignExtendedPMService();
         this.quoteTemplateTextCodeExtendedPMService =new QuoteTemplateTextCodeExtendedPMService();
         this.ItemsSource = new ObservableCollection([]);
+
+
+        if (FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) {
+            this.ShowTotalPerContinerLink = true;
+
+        }    
+
+
+
     }
 
     ngOnInit() {

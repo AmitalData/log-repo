@@ -9,6 +9,7 @@
 
 import {JournalLinePM} from './JournalLinePM';
 import {JournalReconcilePM} from './JournalReconcilePM';
+import {JournalExternalReconcilePM} from './JournalExternalReconcilePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -244,6 +245,20 @@ export class JournalPM {
     public set IsLedgerCreated(newValue: boolean) { if (this.isLedgerCreated != newValue) { this.isLedgerCreated = newValue; this.MarkAsDirty("IsLedgerCreated"); } }
        
 	 
+     
+	private journalExternalReconciles: JournalExternalReconcilePM[];
+    get  JournalExternalReconciles() {
+        if (this.journalExternalReconciles == null) {
+            this.journalExternalReconciles = [];
+        }
+
+        return this.journalExternalReconciles;
+    }
+    set  JournalExternalReconciles(newValue: JournalExternalReconcilePM[]) {
+        if (this.journalExternalReconciles != newValue) {
+            this.journalExternalReconciles = newValue;
+        }
+    }
 
     public OldEntityPM: JournalPM;
 		

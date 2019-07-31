@@ -1,0 +1,71 @@
+﻿using Logitude.BL.InvoiceModel.EntityPMs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Logitude.BL.InvoiceModel.EntityQueries
+{
+   public class ARPaymentChequeReplicaQuery
+    {
+
+
+        ARPaymentChequeReplicaRepository repository;
+        public ARPaymentChequeReplicaQuery()
+        {
+            repository = new ARPaymentChequeReplicaRepository();
+        }
+
+
+        public ARPaymentChequeReplicaQuery(int tenant)
+        {
+            repository = new ARPaymentChequeReplicaRepository(tenant);
+        }
+
+        public ARPaymentChequeReplicaQuery(ARPaymentChequeReplicaRepository arPaymentMethodRepository)
+        {
+            repository = arPaymentMethodRepository;
+        }
+
+        public ARPaymentChequeReplicaPM GetSinglePM(string id, int tenant)
+        {
+            return (from a in repository.context.ARPaymentChequeReplicas
+                    where a.Id == id && a.Tenant == tenant
+                    select new ARPaymentChequeReplicaPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                       
+                        
+                    }).FirstOrDefault();
+        }
+
+        public List<ARPaymentChequeReplicaPM> GetARPaymentChequeReplicaPMsByPaymentId(string paymentId, int tenant)
+        {
+
+            List<ARPaymentChequeReplica> paymentCheques = repository.GetARPaymentChequeReplicas(paymentId, tenant).ToList();
+            return (from a in paymentCheques
+                    where a.PaymentId == paymentId && a.Tenant == tenant
+                    select new ARPaymentChequeReplicaPM()
+                    {
+                        Tenant = a.Tenant,
+                        BankAccount = a.BankAccount,
+                        BankBranch = a.BankBranch ,
+                        ForeignAmount = a.ForeignAmount ,
+                        LocalAmount = a.LocalAmount ,
+                        ValueDate = a.ValueDate ,
+                        PaymentId = a.PaymentId ,
+                        ChequeNumber = a.ChequeNumber ,
+                        LineNumber = a.LineNumber ,
+                        BankId = a.BankId,
+                    }).ToList();
+           
+        }
+       
+
+
+    }
+}

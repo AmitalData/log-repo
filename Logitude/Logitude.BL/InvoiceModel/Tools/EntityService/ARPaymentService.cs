@@ -1007,49 +1007,79 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
                             else
                             {
-                                arPaymentcheque.PaymentId = theEntityPm.Id;
-                                arPaymentcheque.Tenant = tenant;
-                                arPaymentcheque.LineNumber = 1;
-                                arPaymentcheque.ChequeNumber = theEntityPm.ChequeOrPaymentRef;
-                                arPaymentcheque.ValueDate = theEntityPm.ValueDate.Value;
-                                arPaymentcheque.BankBranch = theEntityPm.BankBranch;
-                                arPaymentcheque.BankAccount = theEntityPm.Account;
-                                //arPaymentcheque.BankId = getBankCode(theEntityPm.Tenant);// "1-1";
-                                arPaymentcheque.BankId = theEntityPm.Bank;
-                                arPaymentcheque.CurrencyId = theEntityPm.PaymentCurrencyId;
-                                arPaymentcheque.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency.Value;
-                                arPaymentcheque.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency.Value;
-                                arPaymentcheque.ChangeSetOp = ChangeSetOperation.Insert;
-                                arPaymentcheque.StatusCode = "1"; // In Cashbook  
-                                arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
-                                arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
-                                
-                               IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
-                                paymentUpdate.Update(arPaymentcheque);
-
-                                CashBookLinePM cashBookLine = new CashBookLinePM();
-                                cashBookLine.CashBookId = cashBook.Id;
-                                cashBookLine.Tenant = tenant;
-                                cashBookLine.ARPChequeId = arPaymentcheque.Id;
-                                cashBookLine.ChangeSetOp = ChangeSetOperation.Insert;
-                                cashBookLine.IsDeposited = false;
-
-                                ICashBookLineUpdateServiceExt cashBookLineUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookLineUpdateServiceExt), "CashBookLineUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookLineUpdateServiceExt;
-                                cashBookLineUpdate.Update(cashBookLine);
-
-                                // Update Total Amount
-                                ICashBookUpdateServiceExt cashBookUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookUpdateServiceExt), "CashBookUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookUpdateServiceExt;
-                                if (cashBook.TotalAmount == null)
+                                if (theEntityPm.ARPaymentChequeReplicas.Count > 0)
                                 {
-                                    cashBook.TotalAmount = 0;
-                                }
-                                cashBook.TotalAmount += arPaymentcheque.ForeignAmount;
-                                cashBook.ChangeSetOp = ChangeSetOperation.Update;
-                                cashBookUpdate.Update(cashBook);
-                            }
+                                    foreach (ARPaymentChequeReplicaPM item in theEntityPm.ARPaymentChequeReplicas)
+                                    {
+                                         arPaymentcheque = new ARPaymentChequePM();
 
-                            // Create Journal with lines for cash or cheque
-                            this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
+                                        arPaymentcheque.PaymentId = theEntityPm.Id;
+                                        arPaymentcheque.Tenant = tenant;
+                                        arPaymentcheque.LineNumber = 1;
+                                        arPaymentcheque.ChequeNumber = theEntityPm.ChequeOrPaymentRef;
+                                        arPaymentcheque.ValueDate = theEntityPm.ValueDate.Value;
+                                        arPaymentcheque.BankBranch = theEntityPm.BankBranch;
+                                        arPaymentcheque.BankAccount = theEntityPm.Account;
+                                        //arPaymentcheque.BankId = getBankCode(theEntityPm.Tenant);// "1-1";
+                                        arPaymentcheque.BankId = theEntityPm.Bank;
+                                        arPaymentcheque.CurrencyId = theEntityPm.PaymentCurrencyId;
+                                        arPaymentcheque.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency.Value;
+                                        arPaymentcheque.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency.Value;
+                                        arPaymentcheque.ChangeSetOp = ChangeSetOperation.Insert;
+                                        arPaymentcheque.StatusCode = "1"; // In Cashbook  
+                                        arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
+                                        arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
+
+                                        IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
+                                        paymentUpdate.Update(arPaymentcheque);
+                                      //  CreateCashBook(arPaymentcheque);
+                                        CashBookLinePM cashBookLine = new CashBookLinePM();
+                                        cashBookLine.CashBookId = cashBook.Id;
+                                        cashBookLine.Tenant = tenant;
+                                        cashBookLine.ARPChequeId = arPaymentcheque.Id;
+                                        cashBookLine.ChangeSetOp = ChangeSetOperation.Insert;
+                                        cashBookLine.IsDeposited = false;
+
+                                        ICashBookLineUpdateServiceExt cashBookLineUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookLineUpdateServiceExt), "CashBookLineUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookLineUpdateServiceExt;
+                                        cashBookLineUpdate.Update(cashBookLine);
+
+                                        // Update Total Amount
+                                        ICashBookUpdateServiceExt cashBookUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookUpdateServiceExt), "CashBookUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookUpdateServiceExt;
+                                        if (cashBook.TotalAmount == null)
+                                        {
+                                            cashBook.TotalAmount = 0;
+                                        }
+                                        cashBook.TotalAmount += arPaymentcheque.ForeignAmount;
+                                        cashBook.ChangeSetOp = ChangeSetOperation.Update;
+                                        cashBookUpdate.Update(cashBook);
+                                    }
+                                }
+                                else
+                                {
+                                    arPaymentcheque.PaymentId = theEntityPm.Id;
+                                    arPaymentcheque.Tenant = tenant;
+                                    arPaymentcheque.LineNumber = 1;
+                                    arPaymentcheque.ChequeNumber = theEntityPm.ChequeOrPaymentRef;
+                                    arPaymentcheque.ValueDate = theEntityPm.ValueDate.Value;
+                                    arPaymentcheque.BankBranch = theEntityPm.BankBranch;
+                                    arPaymentcheque.BankAccount = theEntityPm.Account;
+                                    //arPaymentcheque.BankId = getBankCode(theEntityPm.Tenant);// "1-1";
+                                    arPaymentcheque.BankId = theEntityPm.Bank;
+                                    arPaymentcheque.CurrencyId = theEntityPm.PaymentCurrencyId;
+                                    arPaymentcheque.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency.Value;
+                                    arPaymentcheque.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency.Value;
+                                    arPaymentcheque.ChangeSetOp = ChangeSetOperation.Insert;
+                                    arPaymentcheque.StatusCode = "1"; // In Cashbook  
+                                    arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
+                                    arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
+
+                                    IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
+                                    paymentUpdate.Update(arPaymentcheque);
+                                    //CreatenCashBook(arPaymentcheque);
+                                }
+                                // Create Journal with lines for cash or cheque
+                                this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
+                            }
                         }
                     }
                     else

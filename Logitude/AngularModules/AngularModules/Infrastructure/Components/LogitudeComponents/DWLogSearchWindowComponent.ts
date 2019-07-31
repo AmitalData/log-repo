@@ -160,12 +160,12 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this.PseventRowSelectEventSub.unsubscribe();
         //this.CurrentSession.PseventRowSelectEvent.unsubscribe(); // this line commented, it cause object unsubscribed error
     } 
-
+    
     SetWindowArgs(args: CustomEntityArgs) {
         if (AppTool.IsNullOrEmpty(this.CurrentSession.Sessionkey)) {
             this.CurrentSession.Sessionkey = Guid.newGuid();
         }
-
+   
 
         ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "DWLogSearchWindow", this));
 
@@ -173,7 +173,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this.ObjectFieldName = args.DisplayFieldsFromList;
         this.LOVAdditionalColumns = this.BuildAdditionalColumns(args.LOVAdditionalColumns);
         this.ViewModel = args.DataContext; 
-
+     
         if (this.ViewModel) {
             this.MultiSelectedValueLists = this.ViewModel.MultiSelectedValueLists;
         }
@@ -325,12 +325,15 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         filters.ObjectTableName = this.ObjectTableName; 
-        //if (filters.AdditionalFilters.filter(a => a.FieldName == "SearchFields").length > 0) {
-        //    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
-        //}
-        //if (searchfields) {
-        //    filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, true, false, "String");
-        //}
+
+        if (this.ViewModel && this.ViewModel.CustomPickListCode && this.ViewModel.IsCustom  ) {
+            if (filters.AdditionalFilters.filter(a => a.FieldName == "CustomPickListCode").length > 0) {
+                filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "CustomPickListCode");
+            }
+       
+            filters.addAdditionalFilter("CustomPickListCode", this.ViewModel.CustomPickListCode, null, null, "Equals", false, true, false, "String");
+            
+        }
                 
         return this._entityListService.getDWDimByFilters(this.ObjectTableName, filters);
        

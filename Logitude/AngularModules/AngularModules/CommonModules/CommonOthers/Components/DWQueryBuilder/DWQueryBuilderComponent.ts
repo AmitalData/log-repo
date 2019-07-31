@@ -1263,6 +1263,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.IndexOrder = ParentClass.SelectedFieldsDataSource.length;
         }
         if (DWObjectField != null) {
+            this.CustomPickListCode = DWObjectField.CustomPickListCode;
             this.HideTree = DWObjectField.HideTree;
             this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
             if (!this.LOVAdditionalColumns && ParentClass && ParentClass.AllFieldsDataSource) {
@@ -1354,6 +1355,20 @@ export class DWObjectFieldsDetails extends BaseComponent {
     private lOVAdditionalColumns: string;
     public get LOVAdditionalColumns() { return this.lOVAdditionalColumns; }
     public set LOVAdditionalColumns(newValue: string) { this.lOVAdditionalColumns = newValue; }
+
+
+    private customPickListCode: string;
+    public get CustomPickListCode() { return this.customPickListCode; }
+    public set CustomPickListCode(newValue: string) { this.customPickListCode = newValue; }
+   
+
+
+
+
+
+
+
+
 
     private category1: string;
     public get Category1() { return this.category1; }

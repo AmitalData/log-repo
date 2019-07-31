@@ -21,6 +21,7 @@ import {JournalPM} from '../../EntityPMs/JournalPM';
 
 import {JournalLinePM} from '../../EntityPMs/JournalLinePM';
 import {JournalReconcilePM} from '../../EntityPMs/JournalReconcilePM';
+import {JournalExternalReconcilePM} from '../../EntityPMs/JournalExternalReconcilePM';
 import {JournalValidator} from '../../Validators/JournalValidator';
 
 @Injectable()
@@ -226,6 +227,7 @@ export class JournalPMService {
 			
                this.MapJournalLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapJournalReconciles(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapJournalExternalReconciles(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -248,6 +250,15 @@ export class JournalPMService {
 						
 							 
             entityPM.OldEntityPM.JournalReconciles.push(newJournalReconcilePM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.JournalExternalReconciles = [];
+            for (var item in entityPM.JournalExternalReconciles) {
+            var myJournalExternalReconcilePM = entityPM.JournalExternalReconciles[item];
+            var newJournalExternalReconcilePM: JournalExternalReconcilePM = this.clone(myJournalExternalReconcilePM);
+						
+							 
+            entityPM.OldEntityPM.JournalExternalReconciles.push(newJournalExternalReconcilePM);
             }
 			   
 		}
@@ -434,6 +445,96 @@ export class JournalPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.JournalReconciles.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapJournalExternalReconciles(entityPM: JournalPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldJournalExternalReconciles: JournalExternalReconcilePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldJournalExternalReconciles = entityPM.OldEntityPM.JournalExternalReconciles;
+        }
+
+        entityPM.JournalExternalReconciles = new Array<JournalExternalReconcilePM>();
+        for (var item in jsonPM.JournalExternalReconciles) {
+            var jItem = jsonPM.JournalExternalReconciles[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newJournalExternalReconcilePM: JournalExternalReconcilePM;
+	  
+            if (mapParent) {
+                newJournalExternalReconcilePM = new JournalExternalReconcilePM(entityPM);
+            }
+            else
+            {
+                newJournalExternalReconcilePM = new JournalExternalReconcilePM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newJournalExternalReconcilePM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newJournalExternalReconcilePM.UniqueKey = Guid.newGuid();
+                newJournalExternalReconcilePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newJournalExternalReconcilePM.OldEntityPM = this.clone(newJournalExternalReconcilePM);
+
+				
+            }
+            else {
+                if (newJournalExternalReconcilePM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newJournalExternalReconcilePM.ChangeSetOp = "Update";
+                }
+                else {
+                        newJournalExternalReconcilePM.ChangeSetOp = "Insert";
+                }
+ 
+                newJournalExternalReconcilePM.OldEntityPM = null;
+                newJournalExternalReconcilePM.EntityParentPM = null;
+            }
+			
+			 newJournalExternalReconcilePM.IsDirty = false;
+            entityPM.JournalExternalReconciles.push(newJournalExternalReconcilePM);
+        }
+        if (oldJournalExternalReconciles) {
+            
+            for (var itemKey in oldJournalExternalReconciles) {
+                if (entityPM.JournalExternalReconciles.filter(p=> p.UniqueKey === oldJournalExternalReconciles[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldJournalExternalReconciles[itemKey]) {
+                        //oldJournalExternalReconciles[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.JournalExternalReconciles.push(oldJournalExternalReconciles[itemKey]);
+						var oldItemJson = oldJournalExternalReconciles[itemKey];
+                        var deletedPM: JournalExternalReconcilePM = new JournalExternalReconcilePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.JournalExternalReconciles.push(deletedPM);
                     }
                 }
             }

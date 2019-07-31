@@ -396,19 +396,25 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
                 entityPM = myResult.Result;
 
                 this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(entity.Id).subscribe((myResult) => {
-                    if (!myResult.HasError) { 
-                    if (myResult.Result == null) {
-                        this.EnableReconcileEditButton = true;
-                        this.message = null;
+                    if (!myResult.HasError) {
+                        if (myResult.Result == null) {
+                            this.EnableReconcileEditButton = true;
+                            this.message = null;
                         }
-                    else {
-                        this.EnableReconcileEditButton = false;
-                        this.message = myResult.Result;
+                        else {
+                            this.EnableReconcileEditButton = false;
+                            this.message = myResult.Result;
                         }
+                        if (entityPM.StatusCode == "3") {
+                            this.CheckRestorePossibility(entity.Id, entityPM);
 
-                        this.CheckRestorePossibility(entity.Id, entityPM);
-                      
-                }
+                        }
+                        else {
+                            this.RestoreToolTipMessage = null;
+                            this.ShowWindow(entityPM);
+                            
+                        }
+                    }
                     
                 });
 
@@ -442,7 +448,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         }
     }
     CheckRestorePossibility(id: string, entityPM: any) {
-
+       
         this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response) => {
             if (!response.HasError) {
                 this.SetRestoreButtonVisibility(response.Result)
