@@ -5218,6 +5218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ARPaymentChequeReplicas",
+					  						OldFieldName =  "ARPaymentChequeReplicas",
 					  						ObjectTableName =  "ARPayment",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -5237,6 +5238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ARPaymentChequeReplicas",
 					  						ListPropertyPath =  "ARPaymentChequeReplicas",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

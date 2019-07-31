@@ -31,6 +31,7 @@ using Logitude.BL.Interfaces;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
+using WebFreight.Web.Security;
 
 namespace Logitude.BL.Helpers
 {
@@ -993,143 +994,145 @@ namespace Logitude.BL.Helpers
             #region TotalPerContainers Table
             if (isShowPerContainers)
             {
-                List<TotalPerContainerClass> totalPerContainerClassLists = new List<TotalPerContainerClass>();
-
-                BuildTotalPerContainerClassLists(quotePM, quotePM.QuoteSaleCharges, HtmlTemplate, setting, totalPerContainerClassLists);
-
-                IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainerGroupingListsByGroupCode = totalPerContainerClassLists.GroupBy(q => q.ChargeGroupCode);
-                IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainerGroupingListsByFieldCode = totalPerContainerClassLists.GroupBy(q => q.FieldCode);
-                QuoteTemplateTextDesignPM totalPerContainersAdditionalTextDesign = quoteTemplateTextDesignsList.Where(t => t.Id == setting.TotalPerContainersAdditionalTextDesignId).FirstOrDefault();
-                QuoteTemplateTableDesignPM totalPerContainersTableDesign = quoteTemplateTableDesignsList.Where(t => t.Id == setting.TotalPerContainersTableDesignId).FirstOrDefault();
-                QuoteTemplateTextDesignPM totalPerContainersTableHeader = quoteTemplateTextDesignsList.Where(t => t.Id == totalPerContainersTableDesign.HeaderDesignId).FirstOrDefault();
-                QuoteTemplateTextDesignPM totalPerContainersTableLines = quoteTemplateTextDesignsList.Where(t => t.Id == totalPerContainersTableDesign.LinesDesignId).FirstOrDefault();
-
-                if (totalPerContainerGroupingListsByGroupCode.Count() > 0)
+                bool exist = SecurityUtility.CheckFeature("Quote", "TOTALPERCONTAINER", tenant);
+                if (exist)
                 {
+                    List<TotalPerContainerClass> totalPerContainerClassLists = new List<TotalPerContainerClass>();
+                    BuildTotalPerContainerClassLists(quotePM, quotePM.QuoteSaleCharges, HtmlTemplate, setting, totalPerContainerClassLists);
 
-                    if (setting.ShowPageBreakBeforeTotalPerContainersTable)
+                    IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainerGroupingListsByGroupCode = totalPerContainerClassLists.GroupBy(q => q.ChargeGroupCode);
+                    IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainerGroupingListsByFieldCode = totalPerContainerClassLists.GroupBy(q => q.FieldCode);
+                    QuoteTemplateTextDesignPM totalPerContainersAdditionalTextDesign = quoteTemplateTextDesignsList.Where(t => t.Id == setting.TotalPerContainersAdditionalTextDesignId).FirstOrDefault();
+                    QuoteTemplateTableDesignPM totalPerContainersTableDesign = quoteTemplateTableDesignsList.Where(t => t.Id == setting.TotalPerContainersTableDesignId).FirstOrDefault();
+                    QuoteTemplateTextDesignPM totalPerContainersTableHeader = quoteTemplateTextDesignsList.Where(t => t.Id == totalPerContainersTableDesign.HeaderDesignId).FirstOrDefault();
+                    QuoteTemplateTextDesignPM totalPerContainersTableLines = quoteTemplateTextDesignsList.Where(t => t.Id == totalPerContainersTableDesign.LinesDesignId).FirstOrDefault();
+
+                    if (totalPerContainerGroupingListsByGroupCode.Count() > 0)
                     {
-                        HtmlTemplate.Append("<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>");
-                    }
 
-                    HtmlTemplate.Append(GetHtmlStringLine(setting.SpaceLinesBeforePerContainers, quoteTemplateBuildArges.FirstSectionInBody));
-
-                    //HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
-
-                    if (setting.ShowTitleTotalPerContainersTable)
-                    {
-                        BuildPricingTitle(HtmlTemplate, totalPerContainersAdditionalTextDesign, "TotalPerContainers", textcodes, setting.RightToLeft);
-                        HtmlTemplate.Append("<div  style='height:5px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
-
-                    }
-
-                    string styleTotalPerContainerTable = GetStyleTable(totalPerContainersTableDesign);
-
-
-                    string dir = "";
-                    if (setting.RightToLeft) dir = "dir='RTL'";
-
-
-                    if (totalPerContainersTableDesign.BorderTypeCode == "NONE")
-                    {
-                        HtmlTemplate.Append("<div " + dir + ">");
-
-                        HtmlTemplate.Append("<table " + dir + "style='border-collapse: collapse;'  width='100%' " + dir + " >");
-                    }
-                    else
-                    {
-                        HtmlTemplate.Append("<div " + dir + ">");
-
-                        HtmlTemplate.Append("<table " + dir + " width='width' " + styleTotalPerContainerTable + " >");
-                    }
-                    HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
-
-                    string fieldName = GetNameColum("CHARGEGROUP", textcodes, "TotalPerContainers");
-
-                    HtmlTemplate.Append(BuildTableColumn(fieldName, totalPerContainersTableHeader, totalPerContainersTableDesign, "Header", null, setting.RightToLeft));
-                    foreach (IGrouping<string, TotalPerContainerClass> totalPerContainer in totalPerContainerGroupingListsByFieldCode)
-                    {
-                        TotalPerContainerClass totalPerContainerClass = totalPerContainer.FirstOrDefault();
-                        if (totalPerContainerClass != null)
+                        if (setting.ShowPageBreakBeforeTotalPerContainersTable)
                         {
-                            HtmlTemplate.Append(BuildTableColumn(totalPerContainerClass.Name, totalPerContainersTableHeader, totalPerContainersTableDesign, "Header", null, setting.RightToLeft, true));
+                            HtmlTemplate.Append("<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>");
                         }
 
-                    }
-                    HtmlTemplate.Append("</tr>");
+                        HtmlTemplate.Append(GetHtmlStringLine(setting.SpaceLinesBeforePerContainers, quoteTemplateBuildArges.FirstSectionInBody));
 
-                    List<TotalPerContainerClass> totals = new List<TotalPerContainerClass>();
-                    foreach (IGrouping<string, TotalPerContainerClass> totalPerContainer in totalPerContainerGroupingListsByGroupCode)
-                    {
-                        HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
-                        IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainerGroupByFieldCode = totalPerContainer.GroupBy(q => q.FieldCode);
+                        //HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
-                        ChargesGroup group = groups.Where(d => d.Code == totalPerContainer.Key).FirstOrDefault();
-                        string chargeGroupName = setting.ShowLocalLanguage ? group.LocalName : group.Name;
-                        HtmlTemplate.Append(BuildTableColumn(chargeGroupName, totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, setting.RightToLeft));
-                        foreach (IGrouping<string, TotalPerContainerClass> totalPerContainerGroup in totalPerContainerGroupByFieldCode)
+                        if (setting.ShowTitleTotalPerContainersTable)
                         {
-                            List<TotalPerContainerClass> totalPerContainersLists = totalPerContainerGroup.ToList();
-                            double value = 0;
-                            foreach (TotalPerContainerClass item in totalPerContainersLists)
-                            {
-                                value += item.Value;
+                            BuildPricingTitle(HtmlTemplate, totalPerContainersAdditionalTextDesign, "TotalPerContainers", textcodes, setting.RightToLeft);
+                            HtmlTemplate.Append("<div  style='height:5px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
-                            }
-
-                            if (setting.TotalPerContainersCurrencyType == "LOCAL")
-                            {
-                                value = value * (double)totalPerContainersLists[0].SaleExchangeRate;
-                            }
-                            totals.Add(new TotalPerContainerClass() { Value = value, FieldCode = totalPerContainersLists[0].FieldCode });
-                            HtmlTemplate.Append(BuildTableColumn(value.ToString("N"), totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, true));
                         }
-                        HtmlTemplate.Append("</tr>");
-                    }
 
-                   
-                    AppendPerContainerTotalBySaleCurrency(quotePM, setting, HtmlTemplate, totalPerContainersTableDesign, totalPerContainersTableLines, totals);
+                        string styleTotalPerContainerTable = GetStyleTable(totalPerContainersTableDesign);
 
-                    if (setting.TotalPerContainersCurrencyType == "MULTIPLE")
-                    {
+
+                        string dir = "";
+                        if (setting.RightToLeft) dir = "dir='RTL'";
+
+
+                        if (totalPerContainersTableDesign.BorderTypeCode == "NONE")
+                        {
+                            HtmlTemplate.Append("<div " + dir + ">");
+
+                            HtmlTemplate.Append("<table " + dir + "style='border-collapse: collapse;'  width='100%' " + dir + " >");
+                        }
+                        else
+                        {
+                            HtmlTemplate.Append("<div " + dir + ">");
+
+                            HtmlTemplate.Append("<table " + dir + " width='width' " + styleTotalPerContainerTable + " >");
+                        }
                         HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
-                        HtmlTemplate.Append(BuildTableColumn("Total", totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, setting.RightToLeft));
+
+                        string fieldName = GetNameColum("CHARGEGROUP", textcodes, "TotalPerContainers");
+
+                        HtmlTemplate.Append(BuildTableColumn(fieldName, totalPerContainersTableHeader, totalPerContainersTableDesign, "Header", null, setting.RightToLeft));
                         foreach (IGrouping<string, TotalPerContainerClass> totalPerContainer in totalPerContainerGroupingListsByFieldCode)
                         {
-
-                            List<TotalPerContainerClass> items = new List<TotalPerContainerClass>();
-                            IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainersGroupByCurrencyCodeLists = totalPerContainer.ToList().GroupBy(d => d.CurrencyCode).ToList();
-                            foreach (IGrouping<string, TotalPerContainerClass> totalPerContainersGroupByCurrencyCodeList in totalPerContainersGroupByCurrencyCodeLists)
+                            TotalPerContainerClass totalPerContainerClass = totalPerContainer.FirstOrDefault();
+                            if (totalPerContainerClass != null)
                             {
-
-                                var totalPerContainersGroupByCurrencyCode = totalPerContainersGroupByCurrencyCodeList.ToList();
-                                var totalPerContainerClass = new TotalPerContainerClass() { CurrencyCode = totalPerContainersGroupByCurrencyCode[0].CurrencyCode };
-                                double orginalValue = 0;
-                                foreach (TotalPerContainerClass item in totalPerContainersGroupByCurrencyCode)
-                                {
-                                    orginalValue += ((double)item.OrginalValue);
-                                }
-                                totalPerContainerClass.OrginalValue = orginalValue;
-                                items.Add(totalPerContainerClass);
+                                HtmlTemplate.Append(BuildTableColumn(totalPerContainerClass.Name, totalPerContainersTableHeader, totalPerContainersTableDesign, "Header", null, setting.RightToLeft, true));
                             }
 
-
-                            string value = string.Empty;
-                            foreach (TotalPerContainerClass item in items.OrderBy(d => d.Name).ToList())
-                            {
-                                var x = (double)item.OrginalValue;
-                                value += ((x.ToString("N") + " " + item.CurrencyCode) + "<br/>");
-                            }
-                            HtmlTemplate.Append(BuildTableColumn(value, totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, true));
                         }
                         HtmlTemplate.Append("</tr>");
+
+                        List<TotalPerContainerClass> totals = new List<TotalPerContainerClass>();
+                        foreach (IGrouping<string, TotalPerContainerClass> totalPerContainer in totalPerContainerGroupingListsByGroupCode)
+                        {
+                            HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
+                            IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainerGroupByFieldCode = totalPerContainer.GroupBy(q => q.FieldCode);
+
+                            ChargesGroup group = groups.Where(d => d.Code == totalPerContainer.Key).FirstOrDefault();
+                            string chargeGroupName = setting.ShowLocalLanguage ? group.LocalName : group.Name;
+                            HtmlTemplate.Append(BuildTableColumn(chargeGroupName, totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, setting.RightToLeft));
+                            foreach (IGrouping<string, TotalPerContainerClass> totalPerContainerGroup in totalPerContainerGroupByFieldCode)
+                            {
+                                List<TotalPerContainerClass> totalPerContainersLists = totalPerContainerGroup.ToList();
+                                double value = 0;
+                                foreach (TotalPerContainerClass item in totalPerContainersLists)
+                                {
+                                    value += item.Value;
+
+                                }
+
+                                if (setting.TotalPerContainersCurrencyType == "LOCAL")
+                                {
+                                    value = value * (double)totalPerContainersLists[0].SaleExchangeRate;
+                                }
+                                totals.Add(new TotalPerContainerClass() { Value = value, FieldCode = totalPerContainersLists[0].FieldCode });
+                                HtmlTemplate.Append(BuildTableColumn(value.ToString("N"), totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, true));
+                            }
+                            HtmlTemplate.Append("</tr>");
+                        }
+
+
+                        AppendPerContainerTotalBySaleCurrency(quotePM, setting, HtmlTemplate, totalPerContainersTableDesign, totalPerContainersTableLines, totals);
+
+                        if (setting.TotalPerContainersCurrencyType == "MULTIPLE")
+                        {
+                            HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
+                            HtmlTemplate.Append(BuildTableColumn("Total", totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, setting.RightToLeft));
+                            foreach (IGrouping<string, TotalPerContainerClass> totalPerContainer in totalPerContainerGroupingListsByFieldCode)
+                            {
+
+                                List<TotalPerContainerClass> items = new List<TotalPerContainerClass>();
+                                IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainersGroupByCurrencyCodeLists = totalPerContainer.ToList().GroupBy(d => d.CurrencyCode).ToList();
+                                foreach (IGrouping<string, TotalPerContainerClass> totalPerContainersGroupByCurrencyCodeList in totalPerContainersGroupByCurrencyCodeLists)
+                                {
+
+                                    var totalPerContainersGroupByCurrencyCode = totalPerContainersGroupByCurrencyCodeList.ToList();
+                                    var totalPerContainerClass = new TotalPerContainerClass() { CurrencyCode = totalPerContainersGroupByCurrencyCode[0].CurrencyCode };
+                                    double orginalValue = 0;
+                                    foreach (TotalPerContainerClass item in totalPerContainersGroupByCurrencyCode)
+                                    {
+                                        orginalValue += ((double)item.OrginalValue);
+                                    }
+                                    totalPerContainerClass.OrginalValue = orginalValue;
+                                    items.Add(totalPerContainerClass);
+                                }
+
+
+                                string value = string.Empty;
+                                foreach (TotalPerContainerClass item in items.OrderBy(d => d.Name).ToList())
+                                {
+                                    var x = (double)item.OrginalValue;
+                                    value += ((x.ToString("N") + " " + item.CurrencyCode) + "<br/>");
+                                }
+                                HtmlTemplate.Append(BuildTableColumn(value, totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, true));
+                            }
+                            HtmlTemplate.Append("</tr>");
+                        }
+
+                        HtmlTemplate.Append("</table>");
+
+
                     }
-
-                    HtmlTemplate.Append("</table>");
- 
-
                 }
-
             }
 
             #endregion
@@ -1941,7 +1944,7 @@ namespace Logitude.BL.Helpers
                 SaleTotalAmountInLocalCurrency = 4000,
                 SaleTotalAmountInSaleCurrency = 1750,
                 SaleCurrencyCode = "USD",
-
+                TotalPerContainer = true,
             };
 
             quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT", Notes = "test", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description", SaleMaxAmount = 50, SaleMinAmount = 20 });

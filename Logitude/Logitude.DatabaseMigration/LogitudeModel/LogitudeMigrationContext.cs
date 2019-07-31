@@ -3385,6 +3385,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<TaxDeductionReport> TaxDeductionReports { get; set; }
         public IDbSet<TaxDeductionReportStatus> TaxDeductionReportStatuses { get; set; }
         public IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; set; }
+        public IDbSet<JournalExternalReconcile> JournalExternalReconciles{get; set;}
 
         public IDbSet<OpenFormatReport> OpenFormatReports { get; set; }
         public IDbSet<OpenFormatReportStatus> OpenFormatReportStatuses { get; set; }
@@ -4327,6 +4328,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TaxDeductionReportMap());
             modelBuilder.Configurations.Add(new TaxDeductionReportStatusMap());
             modelBuilder.Configurations.Add(new JournalAdditionalDataMap());
+            modelBuilder.Configurations.Add(new JournalExternalReconcileMap());
             modelBuilder.Configurations.Add(new OpenFormatReportMap());
         //    modelBuilder.Configurations.Add(new OpenFormatDateTypeMap());
             modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());

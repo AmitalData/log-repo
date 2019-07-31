@@ -42,6 +42,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             entityPM.JournalReconciles = journalReconcileQueryService.GetMulti(journalKeys, true);
 
+
+
+            var myJournalExternalReconcileQueryService = new JournalExternalReconcileQueryService(context);
+
+
+
+            //******getting all compositionTables for response service purposes only *****///
+
+            entityPM.JournalExternalReconciles= myJournalExternalReconcileQueryService.GetMulti(journalKeys, true);
         }
 
 
