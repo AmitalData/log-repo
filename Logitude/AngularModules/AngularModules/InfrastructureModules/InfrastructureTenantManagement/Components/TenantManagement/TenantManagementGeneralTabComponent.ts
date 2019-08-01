@@ -1136,6 +1136,13 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             }
         }
     }
+   
+    get MainAdditionalPackageApplied() { return this.EntityPM.MainAdditionalPackageApplied; }
+    set MainAdditionalPackageApplied(newValue: boolean) {
+        if (this.EntityPM.MainAdditionalPackageApplied != newValue) {
+            this.EntityPM.MainAdditionalPackageApplied = newValue;
+        }
+    }
 }
 
 export class PackageItem extends BaseComponent{
