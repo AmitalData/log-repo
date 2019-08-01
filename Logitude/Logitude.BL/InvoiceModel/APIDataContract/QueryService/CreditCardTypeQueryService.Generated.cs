@@ -88,7 +88,7 @@ using Simplog.Data.InvoiceModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("CreditCardType with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))

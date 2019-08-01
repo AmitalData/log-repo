@@ -22,8 +22,11 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.LastVersionNumber).IsRequired();
             this.Property(t => t.Notes).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(false);
+         
 
-//#if ORACLE_DB
+
+
+            //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
@@ -125,6 +128,9 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.NotifyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.NotifyAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.NotifyContactId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.QuoteHTMLDocumentId).HasMaxLength(15).IsUnicode(false);
+
+
 
             // Table & Column Mappings
             this.ToTable("Quotes");
@@ -288,6 +294,9 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.NumberOfFollowUps).HasColumnName("NumberOfFollowUps");
             this.Property(t => t.GrossWeightEdited).HasColumnName("GrossWeightEdited");
             this.Property(t => t.ChargeableWeightEdited).HasColumnName("ChargeableWeightEdited");
+            this.Property(t => t.QuoteHTMLDocumentId).HasColumnName("QuoteHTMLDocumentId");
+            
+
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
@@ -339,6 +348,10 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.NotifyCard).WithMany().HasForeignKey(d => d.NotifyId);
             this.HasOptional(t => t.NotifyAddress).WithMany().HasForeignKey(d => d.NotifyAddressId);
             this.HasOptional(t => t.NotifyContact).WithMany().HasForeignKey(d => d.NotifyContactId);
+
+            this.HasOptional(t => t.QuoteHTMLDocument).WithMany().HasForeignKey(d => d.QuoteHTMLDocumentId);
+            
+
         }
     }
 }

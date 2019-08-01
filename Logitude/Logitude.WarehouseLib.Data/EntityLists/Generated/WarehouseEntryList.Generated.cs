@@ -140,6 +140,12 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string ChargeableWeightUnitCode  { get; set; }
        [DataMember]
        public decimal TotalVolumetricWeight  { get; set; }
+       [DataMember]
+       public DateTime? LastStatusUpdateDate  { get; set; }
+       [DataMember]
+       public string MasterHouse  { get; set; }
+       [DataMember]
+       public string EntryReferencesAndDate  { get; set; }
    }
 
 }

@@ -17,8 +17,9 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Name { get; set; }
         public string SearchFields { get; set; }
         public string Description { get; set; }
+        public bool IsInternallyDefined { get; set; }
 
-       
+
 
     }
 }

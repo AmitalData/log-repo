@@ -9,12 +9,12 @@
             <td>
                 <table>
                     <tr>
-                        <td style="width: 350px;">
+                        <td style="width: 380px;">
                             <table>
 
                                 <!-- Email -->
                                 <tr class="FormFieldRow">
-                                    <td style="width: 130px;">
+                                    <td style="width: 160px;">
                                         <LogLabel [ObjectFieldName]="'Email'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>
@@ -205,7 +205,7 @@
 
                                 <!-- AdditionalPackagesOnly  -->
                                 <tr class="FormFieldRow" *ngIf="IsAdditionalPackagesOnlyVisible">
-                                    <td title="Additional Packages Only">
+                                    <td>
                                         <LogLabel [ObjectFieldName]="'AdditionalPackagesOnly'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td>

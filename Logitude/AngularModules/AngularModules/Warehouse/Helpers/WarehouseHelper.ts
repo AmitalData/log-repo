@@ -17,13 +17,11 @@ import {WarehouseEntryPackagePM} from '../../Warehouse/EntityPMs/WarehouseEntryP
 import {WarehouseEntryPM} from '../../Warehouse/EntityPMs/WarehouseEntryPM';
 import {WarehouseEntryPMService} from '../../Warehouse/Services/StandardPMs/WarehouseEntryPMService';
 import {EventTypeClass, EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
-import {TraceEventExtendedPMService } from '../../Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
 import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 export class WarehouseHelper {
     validator: ClassLevelValidator;
     public _warehouseEntryPMService: WarehouseEntryPMService;
-    public traceEventExtendedPMService: TraceEventExtendedPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
       
@@ -234,15 +232,7 @@ export class WarehouseHelper {
                 this.CurrentSession.StartBusyIndicatorSaving();
 
                 if (this._warehouseEntryPMService == null) this._warehouseEntryPMService = new WarehouseEntryPMService();
-                if (this.traceEventExtendedPMService == null) this.traceEventExtendedPMService = new TraceEventExtendedPMService();
-                
-                    var eventTypeCodeList: EventTypeClass[] = [];
-                    eventTypeCodeList.push(new EventTypeClass("CREN", null));
-                    if (entityPM.ExpectedEntryDate) eventTypeCodeList.push(new EventTypeClass("EXEN", entityPM.ExpectedEntryDate));
-                    if (entityPM.ActualEntryDate) eventTypeCodeList.push(new EventTypeClass("ENEN", entityPM.ActualEntryDate));
-                    if (eventTypeCodeList.filter(d => d.Code == "ENEN")[0]) entityPM.StatusCode = "ENTE";
-
-
+                if (entityPM.ActualEntryDate) entityPM.StatusCode = "ENTE";
 
                     this._warehouseEntryPMService.insert(entityPM).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
@@ -256,8 +246,8 @@ export class WarehouseHelper {
                                 if (viewModel.IsFromShipment && !viewModel.IsNotSetWarehouseIdForWarehouseLegShipment) {
                                     this.SetShipmentWarehouseLeg(viewModel.ShipmentPM, entityPM, "Entry");
                                 }
-
-                                this.UpdateEventType(viewModel.ObjectTableId, entityPM.Id, eventTypeCodeList);
+                                this.CurrentSession.StopBusyIndicator();
+                                this.CurrentSession.CurrentWindow.Close("Refresh");
                             }
                             else this.CurrentSession.StopBusyIndicator();
                         } else {
@@ -276,31 +266,7 @@ export class WarehouseHelper {
    
     }
 
-    UpdateEventType(objectTableId: string, entityId: string, eventTypeClass:EventTypeClass[]) {
 
-        if (eventTypeClass && eventTypeClass.length != 0) {
-
-            var traceEventArgs: EventTypeArgs = new EventTypeArgs();
-
-            traceEventArgs.EventTypeList = eventTypeClass;
-            traceEventArgs.Tenant = SessionLocator.Tenant;
-            traceEventArgs.ObjectTableId = objectTableId;
-            traceEventArgs.EntityId = entityId;
-            traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
-
-            this.traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
-                this.CurrentSession.StopBusyIndicator();
-                this.CurrentSession.CurrentWindow.Close("Refresh");
-
-            });
-
-        }
-        else {
-            this.CurrentSession.StopBusyIndicator();
-            this.CurrentSession.CurrentWindow.Close("Refresh");
-        }
-
-    }
 
     SetLabel(viewModel: any) {
         if (viewModel != null) {

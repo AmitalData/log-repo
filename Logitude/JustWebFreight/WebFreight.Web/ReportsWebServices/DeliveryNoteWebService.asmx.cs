@@ -139,6 +139,7 @@ namespace WebFreight.Web.ReportsWebServices
                 deliveryNotedataprovider.ShipmentSalesman = shipment.SalesmanUserName;
                 deliveryNotedataprovider.LastFreeDate = shipment.WarehouseLegLastFreeDate;
                 deliveryNotedataprovider.FinalDestinationCode = shipment.MainCarriageFinalDestinationPortCode;
+                deliveryNotedataprovider.AMSBL = shipment.AMSBL;
 
                 if (!string.IsNullOrEmpty(shipment.FreightLocationId))
                 {
@@ -945,6 +946,7 @@ namespace WebFreight.Web.ReportsWebServices
                 deliveryNotedataprovider.ShipmentSalesman = shipment.SalesmanUserName;
                 deliveryNotedataprovider.LastFreeDate = shipment.WarehouseLegLastFreeDate;
                 deliveryNotedataprovider.FinalDestinationCode = shipment.MainCarriageFinalDestinationPortCode;
+                deliveryNotedataprovider.AMSBL = shipment.AMSBL;
 
                 if (!string.IsNullOrEmpty(shipment.FreightLocationId))
                 {

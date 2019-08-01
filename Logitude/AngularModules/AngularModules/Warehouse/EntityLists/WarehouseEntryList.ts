@@ -71,6 +71,9 @@ export class WarehouseEntryList {
 	ToPartnerId: string;
 	ChargeableWeightUnitCode: string;
 	TotalVolumetricWeight: number;
+	LastStatusUpdateDate: Date;
+	MasterHouse: string;
+	EntryReferencesAndDate: string;
 	
 }
  

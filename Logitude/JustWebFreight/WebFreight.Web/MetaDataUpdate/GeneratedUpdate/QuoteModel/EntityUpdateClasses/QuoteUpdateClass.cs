@@ -12983,6 +12983,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "StartDate",
+					  						OldFieldName =  "StartDate",
 					  						ObjectTableName =  "Quote",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -13004,6 +13005,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StartDate",
 					  						ListPropertyPath =  "StartDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -13669,6 +13671,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 		   Feature QuoteFeature_TARIFFS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TARIFFS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Tariffs", NameTextCodeDefaultText = @"Tariffs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature QuoteFeature_QouteEditExchangeRate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QouteEditExchangeRate", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.EditExchangeRate", NameTextCodeDefaultText = @"Edit Exchange Rate" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature QuoteFeature_TOTALPERCONTAINER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TOTALPERCONTAINER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.TOTALPERCONTAINER", NameTextCodeDefaultText = @"Total Per Container" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

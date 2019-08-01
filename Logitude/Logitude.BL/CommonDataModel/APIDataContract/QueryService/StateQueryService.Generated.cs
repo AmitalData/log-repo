@@ -88,7 +88,7 @@ using Simplog.Data.CommonDataModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("State with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))

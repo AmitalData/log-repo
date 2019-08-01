@@ -2,15 +2,15 @@ import { Component, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import { TariffDomainService, TariffFilterParameter, ExcelTariffLines } from '../../../Services/TariffDomainService';
+import { TariffDomainService } from '../../../Services/TariffDomainService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { TariffPM } from '../../../EntityPMs/TariffPM';
 import { TariffLinePM } from '../../../EntityPMs/TariffLinePM';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
+import { TariffLineExpirationDatePM } from '../../../EntityPMs/TariffLineExpirationDatePM';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -513,7 +513,11 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 logWindow.ComponentLoaded.subscribe(s => {
                     logWindow.WindowClosed.subscribe(d => {
                         if (s && d == "ok") {
-                            //this.EntityPM.DeletedLinesExpirationDates.push(item.EntityPM.Id + "," + item.EntityPM.ExpirationDate.getUTCFullYear() + "," + item.EntityPM.ExpirationDate.getUTCMonth() + "," + item.EntityPM.ExpirationDate.getUTCDay());
+                            var deletedItem: TariffLineExpirationDatePM = new TariffLineExpirationDatePM();
+                            deletedItem.TariffLineId = item.EntityPM.Id;
+                            deletedItem.ExpirationDate = item.EntityPM.ExpirationDate;
+
+                            this.EntityPM.DeletedLinesExpirationDates.push(deletedItem);
                             this.CurrentVersion.RemoveTariffLine(item.EntityPM);
                             this.TariffsLinesSource.Remove(item);
                             this.FillTariffLines(this.CurrentVersion.TariffLines);

@@ -393,6 +393,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool GrossWeightEdited { get; set; }
         public bool ChargeableWeightEdited { get; set; }
 
+        public string QuoteHTMLDocumentId { get; set; }
+
+        
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? NumberOfFollowUps { get; set; }
 

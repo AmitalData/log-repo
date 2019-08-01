@@ -94,7 +94,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     throw new ApplicationException("Dates are not allowed in Surcharges versions");
                 }
 
-                //this.OnDeleteSurchargeTariffLine(entityPM);
+                this.OnDeleteSurchargeTariffLine(entityPM);
             }
 
             this.ValidateSurchargeUniqueSeller(entityPM);
@@ -384,43 +384,41 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
         private void OnDeleteSurchargeTariffLine(TariffPM entityPM)
         {
-            Dictionary<string, DateTime> expirationValuePairs = new Dictionary<string, DateTime>();
-            if(entityPM.DeletedLinesExpirationDates.Count > 0)
-            {
-                foreach(string expiredItem in entityPM.DeletedLinesExpirationDates)
-                {
-                    string[] expiredItemArray = expiredItem.Split(',');
-                    DateTime expDate = new DateTime(Convert.ToInt32(expiredItemArray[1]), Convert.ToInt32(expiredItemArray[2]), Convert.ToInt32(expiredItemArray[3]));
-                    expirationValuePairs.Add(expiredItemArray[0], expDate);
-                }
-            }            
-
             TariffVersionPM iDraftVersion = entityPM.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
-            TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
-            
-            if (iPreviousVersion != null)
+
+            if (iDraftVersion.TariffLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).Any())
             {
-                TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
-                List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
+                TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
 
-                foreach (TariffLinePM linePM in iDraftVersion.TariffLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete))
+                if (iPreviousVersion != null)
                 {
-                    DateTime myDate = expirationValuePairs.Where(d => d.Key == linePM.Id).FirstOrDefault().Value;
+                    TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
+                    List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
 
-                    TariffLine iPreviousLine = iPreviousVersionLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
-                    if (iPreviousLine != null)
+                    foreach (TariffLinePM linePM in iDraftVersion.TariffLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete))
                     {
-                        if (myDate < iPreviousLine.StartDate)
-                        {
-                            throw new ApplicationException("Expiration date can't be greater than start date");
-                        }
+                        TariffLineExpirationDatePM tariffLineExpirationDate = entityPM.DeletedLinesExpirationDates.Where(d => d.TariffLineId == linePM.Id).FirstOrDefault();
 
-                        else
+                        if (tariffLineExpirationDate != null)
                         {
-                            iPreviousLine.ExpirationDate = myDate;
-                            iTariffLineRepository.Update(iPreviousLine);
+                            TariffLine iPreviousLine = iPreviousVersionLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
+                            if (iPreviousLine != null)
+                            {
+                                if (tariffLineExpirationDate.ExpirationDate < iPreviousLine.StartDate)
+                                {
+                                    throw new ApplicationException("Expiration date can't be less than start date in the previous version line");
+                                }
+
+                                else
+                                {
+                                    iPreviousLine.ExpirationDate = tariffLineExpirationDate.ExpirationDate;
+                                    iTariffLineRepository.Update(iPreviousLine);                                    
+                                }
+                            }
                         }
                     }
+
+                    iTariffLineRepository.SubmitChanges();
                 }
             }
         }
