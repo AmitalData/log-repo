@@ -116,6 +116,24 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return myResult;
         }
 
+        public APInvoiceLinePM GetSinglePMByAPInvoiceIdAndLineNumber(string apinvoiceId,int lineNumber, int tenant)
+        {
+            List<APInvoiceLine> invoices
+                = ( from a in repository.context.APInvoiceLines
+                    where a.Tenant == tenant
+                    && a.APInvoiceId == apinvoiceId
+                    && a.LineNumber == lineNumber
+                    select a).ToList();
+
+            if (invoices.Count > 1)
+                throw new ApplicationException("GetSinglePMByAPInvoiceIdAndLineNumber has wrong data!");
+
+            List<APInvoiceLinePM> invoicePMs = MapToPM(invoices, apinvoiceId, tenant);
+            APInvoiceLinePM invoicePM = invoicePMs.FirstOrDefault();
+
+            return invoicePM;
+        }
+
         private List<APInvoiceLinePM> MapToPM(List<APInvoiceLine> myData, string invoiceId, int tenant)
         {
             List<APInvoiceLinePM> myResult = new List<APInvoiceLinePM>();

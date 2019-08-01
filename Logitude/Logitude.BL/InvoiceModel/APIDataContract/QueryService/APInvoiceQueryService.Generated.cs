@@ -165,7 +165,14 @@ using Simplog.Data.InvoiceModel;
 				   temp.IsExternalEntity = MyEntityPM.IsExternalEntity;
 				   temp.IsGeneralInvoice = MyEntityPM.IsGeneralInvoice;
 				   temp.ExternalAccountingEntityId = MyEntityPM.ExternalAccountingEntityId;
-				   temp.Id = MyEntityPM.Id;					
+				   temp.Id = MyEntityPM.Id;
+				if(MyEntityPM.InvoiceLines != null && MyEntityPM.InvoiceLines.Count > 0)
+				{
+					 APInvoiceLineQueryService APInvoiceLineService10 = new APInvoiceLineQueryService(Tenant);
+					 temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMapping(MyEntityPM.InvoiceLines,Tenant);
+				}
+
+							 					
 				   return temp;
 			}
             catch (Exception ex)
@@ -333,7 +340,15 @@ using Simplog.Data.InvoiceModel;
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 						temp.Id = MyEntity.Id;
-					}					   
+					} 
+
+					if(MyEntity.InvoiceLines != null && MyEntity.InvoiceLines.Count > 0)
+					{
+						APInvoiceLineQueryService APInvoiceLineService10 = new APInvoiceLineQueryService(Tenant);
+						temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMappingAndValidatin(MyEntity.InvoiceLines,Tenant,ComputingPartnerName);
+					}
+
+								 					   
 					   return temp;
 		    }
             catch (Exception ex)
