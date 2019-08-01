@@ -93,6 +93,11 @@ exports.config = {
             browser.params.Login.Email = "raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
         }
+        else if (browser.params.Env == "Prod_1") {
+            browser.params.Link = "https://system.logitudeworld.com";
+            browser.params.Login.Email = "raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
+        }
         else if (browser.params.Env == "test_1071") {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "sgautomation@pro.com";
@@ -129,7 +134,7 @@ exports.config = {
 
         // ********************* Login **********************************
         login: 'e2e/Login/**/Login.e2e-spec.ts',
-        NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
+      //  NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
 
      //   FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
         //   ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
@@ -148,9 +153,6 @@ exports.config = {
 
         // vendorgla: 'FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
         // APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
-
-
-
 
         //GLAccount: 'FullAccounting/**/GLAccounts/GlAccount-spec.ts',
 

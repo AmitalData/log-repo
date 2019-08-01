@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {TariffVersionPM} from './TariffVersionPM';
+import {TariffLineExpirationDatePM} from './TariffLineExpirationDatePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -334,7 +335,7 @@ export class TariffPM {
        
 	 
      
-	private deletedLinesExpirationDates: string[];
+	private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
     get  DeletedLinesExpirationDates() {
         if (this.deletedLinesExpirationDates == null) {
             this.deletedLinesExpirationDates = [];
@@ -342,7 +343,7 @@ export class TariffPM {
 
         return this.deletedLinesExpirationDates;
     }
-    set  DeletedLinesExpirationDates(newValue: string[]) {
+    set  DeletedLinesExpirationDates(newValue: TariffLineExpirationDatePM[]) {
         if (this.deletedLinesExpirationDates != newValue) {
             this.deletedLinesExpirationDates = newValue;
         }
