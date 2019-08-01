@@ -129,7 +129,7 @@ using Simplog.Data.CommonDataModel;
 					
 					   					   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("PackageType with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))

@@ -128,7 +128,7 @@ using Simplog.Data.CommonDataModel;
 					
 					   					   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("Vessel with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))

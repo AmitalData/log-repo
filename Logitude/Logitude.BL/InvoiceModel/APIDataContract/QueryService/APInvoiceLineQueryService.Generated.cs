@@ -108,21 +108,19 @@ using Simplog.Data.InvoiceModel;
 				foreach (var item in MyEntity)
 				{
 					   					var temp = new APInvoiceLinePM();
-                    if (!string.IsNullOrEmpty(item.APInvoiceId) && item.LineNumber != null)
-                    {
-                        temp = query.GetSinglePMByAPInvoiceIdAndLineNumber(item.APInvoiceId, item.LineNumber, Tenant);
-                    }
-                    //if (!string.IsNullOrEmpty(item.LineNumber))
-                    //{
-                    //	temp = query.GetSinglePMByLineNumber(item.LineNumber, Tenant);
-                    //} 
-                    if (temp == null)
+					if (!string.IsNullOrEmpty(item.APInvoiceId))
 					{
-					    throw new ApplicationException("APInvoiceLine with LineNumber " + item.LineNumber + " doesn't exist");
+						temp = query.GetSingle(item.APInvoiceId,item.LineNumber);
+					}
+										   
+					if(temp == null)
+					{   
+						throw new ApplicationException("APInvoiceLine with provided keys doesn't exist");
 					} 
 					temp.APInvoiceId = item.APInvoiceId;
 					temp.LineNumber = item.LineNumber;
-					temp.Tenant = item.Tenant;					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
+					temp.Tenant = item.Tenant;
+					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
 					{
 						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName);
@@ -136,7 +134,8 @@ using Simplog.Data.InvoiceModel;
 					
 					temp.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
 					temp.LocalCurrencyAmount = item.LocalCurrencyAmount;
-					temp.ProfitCurrencyAmount = item.ProfitCurrencyAmount;					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
+					temp.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
 					if(item.VatType != null)
 					{
 						var myVatTypePM = VatTypeVatTypeService.VatTypeDataMappingAndValidatin(item.VatType,Tenant,ComputingPartnerName);
@@ -149,7 +148,8 @@ using Simplog.Data.InvoiceModel;
 			
 					
 					temp.Notes = item.Notes;
-					temp.VatPercentage = item.VatPercentage;					CurrencyQueryService ForiegnCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					temp.VatPercentage = item.VatPercentage;
+					CurrencyQueryService ForiegnCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.ForiegnCurrency != null)
 					{
 						var myForiegnCurrencyPM = ForiegnCurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.ForiegnCurrency,Tenant,ComputingPartnerName);
@@ -166,7 +166,8 @@ using Simplog.Data.InvoiceModel;
 					temp.DebitAccount = item.DebitAccount;
 					temp.Description = item.Description;
 					temp.LocalDescription = item.LocalDescription;
-					temp.ChargeTypeGLAccountId = item.ChargeTypeGLAccountId;					PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
+					temp.ChargeTypeGLAccountId = item.ChargeTypeGLAccountId;
+					PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
 					if(item.PrepaidCollect != null)
 					{
 						var myPrepaidCollectPM = PrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(item.PrepaidCollect,Tenant,ComputingPartnerName);
