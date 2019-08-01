@@ -180,38 +180,46 @@ namespace CommunicationWorkerRole
                                     Task.LastRunStartTimeUTC = DateTime.UtcNow;
                                     if (Task != null)
                                     {
-                                        if (Version >= Task.Version)
+                                        if (Task.InActive)
                                         {
-                                            List<object> args = new List<object>();
-                                            if (!string.IsNullOrEmpty(Task.Id))
-                                            {
-                                                args.Add(Task.Id);
-                                            }
-                                            args.Add(Task.Tenant);
-
-
-                                            object[] ArrArgs = args.ToArray();
-                                            var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ServiceClassName), ArrArgs) as TaskManagerBase;
-                                            Task.Status = "In progress";
-                                            WRItem.Task = Task;
-                                            WRItem.queueservice = queueservice;
-                                            WRItem.RetryNumber = message.RetryNumber;
-                                            WRItem.MessageId = message.MessageId;
-                                            Thread thread = new Thread(WRItem.Run) { Name = Task.Name };
-                                            //Task.Status = "In progress";
-                                            service.Update(Task);
-                                            var CurThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
-                                            if (CurThread != null)
-                                            {
-                                                TasksThreads.Remove(CurThread);
-                                            }
-                                            thread.Start();
-                                            TasksThreads.Add(thread);
-                                            //queueservice.Complete();
-                                            //AddSchedulerQueue(Task);// need to be Moved
+                                            queueservice.Complete();
                                         }
+                                        else
+                                        {
+                                            if (Version >= Task.Version)
+                                            {
+                                                List<object> args = new List<object>();
+                                                if (!string.IsNullOrEmpty(Task.Id))
+                                                {
+                                                    args.Add(Task.Id);
+                                                }
+                                                args.Add(Task.Tenant);
 
-                                        queueservice.Complete();
+
+                                                object[] ArrArgs = args.ToArray();
+                                                var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ServiceClassName), ArrArgs) as TaskManagerBase;
+                                                Task.Status = "In progress";
+                                                WRItem.Task = Task;
+                                                WRItem.queueservice = queueservice;
+                                                WRItem.RetryNumber = message.RetryNumber;
+                                                WRItem.MessageId = message.MessageId;
+                                                Thread thread = new Thread(WRItem.Run) { Name = Task.Name };
+                                                //Task.Status = "In progress";
+                                                service.Update(Task);
+                                                var CurThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
+                                                if (CurThread != null)
+                                                {
+                                                    TasksThreads.Remove(CurThread);
+                                                }
+                                                thread.Start();
+                                                TasksThreads.Add(thread);
+                                                //queueservice.Complete();
+                                                //AddSchedulerQueue(Task);// need to be Moved
+                                            }
+
+                                            queueservice.Complete();
+                                        }
+                                      
 
 
                                     }
@@ -251,10 +259,16 @@ namespace CommunicationWorkerRole
         private void AddSchedulerQueue(TasksSchedulerPM task)
         {
             var queueservice = new DbQueueService();
+            bool RunTaskImmediately = false;
             if (task.NextRunTime < DateTime.Now)
             {
-                task.NextRunTime = DateTime.Now;
-                task.NextRunTimeUTC = DateTime.UtcNow;
+                RunTaskImmediately = true;
+                var NewNextRunTime = new DateTime(task.NextRunTime.Value.Year, task.NextRunTime.Value.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
+                var NewNextRunTimeUTC = new DateTime(task.NextRunTimeUTC.Value.Year, task.NextRunTimeUTC.Value.Month, DateTime.Now.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
+                task.NextRunTime = NewNextRunTime;
+                task.NextRunTimeUTC = NewNextRunTimeUTC;
+                //task.NextRunTime = DateTime.Now.Date;
+                //task.NextRunTimeUTC = DateTime.UtcNow;
             }
             switch (task.TriggerType)
             {
@@ -356,7 +370,9 @@ namespace CommunicationWorkerRole
             if (task.TriggerType.ToUpper() != "O")
             {
                 queueservice.InitializeQueue("SchedularQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTimeUTC);
+                queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, DateTime.Now);
+                //queueservice.InitializeQueue("SchedularQueue", 0);
+                //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTimeUTC);
 
             }
 

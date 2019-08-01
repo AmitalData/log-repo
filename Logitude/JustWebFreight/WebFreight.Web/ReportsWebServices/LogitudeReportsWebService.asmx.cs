@@ -7611,8 +7611,9 @@ namespace WebFreight.Web.ReportsWebServices
                     flightBookingRecord.CustomAgentImport = a.CustomAgentImportName;
                     flightBookingRecord.MoveType = a.MoveTypeName;
                     flightBookingRecord.SCI = a.SCI;
-                    
-                    if(a.ShipmentLevelCode == "C")
+                    flightBookingRecord.InvoiceNumber = a.ARInvoices;
+
+                    if (a.ShipmentLevelCode == "C")
                     {
                         flightBookingRecord.HAWBsNumbers = shipmentRepository.GetHouseShipmentsCountForMaster(a.Id, tenant);
                     }
@@ -7636,10 +7637,12 @@ namespace WebFreight.Web.ReportsWebServices
                             flightBookingRecord.ConsigneeAddress = DataProviders.General.GetAddress(address);
                         }
                     }
+
                     flightBookingRecord.PC  = a.FreightPrepaidCollectId;
                     flightBookingRecord.DestinationPortCode= a.MainCarriageFinalDestinationPortCode != null ? a.MainCarriageFinalDestinationPortCode : "";
                     flightBookingRecord.ChargeableWeight = a.ChargeableWeight != null ? a.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", a.ChargeableWeight)) : "" : "";
                     totalWeight = totalWeight + (a.GrossWeight != null ? a.GrossWeight.Value : 0);
+
                     totalPackagesQuantity = totalPackagesQuantity + (a.NumberOfPackages != null ? a.NumberOfPackages.Value : 0);
 
                     if (a.TransportModeId != "A")
@@ -12943,6 +12946,8 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.Openedby = Item.CreatedByUserName;
                     shipment.Direction = Item.DirectionName;
                     shipment.ShipmentId = Item.ShipmentNumber;
+                    shipment.ShipmentLevel = Item.ShipmentLevelName;
+
                     shipment.Shipper = Item.Shipper;
                     shipment.BUShipper = Item.ShipperNotExporterName;
                     shipment.ShipperRef1 = Item.ShipperReference1;
