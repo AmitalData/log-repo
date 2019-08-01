@@ -172,5 +172,6 @@ export class QuoteList {
 		NotifyNote: string;
 		NumberOfFollowUps: number;
 		IsDangerous: boolean;
+		QuoteHTMLDocumentId: string;
 	
 }

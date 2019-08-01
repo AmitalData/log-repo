@@ -425,6 +425,18 @@ s             b                   a
             int lineCounterNumber = 1;
             newBankPageLines.ForEach(line =>
             {
+
+
+                string Notes =  line.Bankactioncode;
+                //if (!string.IsNullOrWhiteSpace(line.Bankdetails))
+                //{
+                //    if (!String.IsNullOrWhiteSpace(Notes))
+                //    {
+                //        Notes += "-";
+                //    }
+                //    Notes += line.Bankdetails;
+                //}
+                Notes = line.Bankdetails;
                 entityPM.ReconcileExternalPageLines.Add(new ReconcileExternalPageLinePM()
                 {
                     Tenant = entityPM.Tenant,
@@ -436,7 +448,9 @@ s             b                   a
                     CreditAmount = line.DEBIT0_CREDIT1 == "0" ? line.Amount : 0,
 
                     ReferenceDate = line.ReferenceDate,
-                    Reference = line.Reference
+                    Reference = line.Reference,
+                    Notes = Notes
+
 
 
                 });
@@ -747,11 +761,13 @@ s             b                   a
         }
         public string RawLine { get; set; }
         public string Reference { get; private set; }
-        public DateTime ReferenceDate { get; private set; }
+        public string Bankactioncode { get; set; }
+        public DateTime ReferenceDate { get; set; }
         public decimal Amount { get; private set; }
         public decimal BalanceAfter { get; private set; }
         public string DEBIT0_CREDIT1 { get; private set; }
         public decimal RealAmount { get; internal set; }
+        public string Bankdetails { get; set; }
 
         public const string RowType = "033";
         public static BankPageLineDTO Create(string rawLine)
@@ -765,6 +781,10 @@ s             b                   a
             var rec = new BankPageLineDTO();
             rec.RawLine = rawLine;
             rec.Reference = rawLine.Substring(4 - 1, 16).Trim();
+
+            rec.Bankactioncode = rawLine.Substring(52 - 1, 10).Trim();
+            rec.Bankdetails = rawLine.Substring(62 - 1, 25).Trim();
+
 
             string txtDateTime = rawLine.Substring(87 - 1, 8);
             string fieldname = "ReferenceDate";

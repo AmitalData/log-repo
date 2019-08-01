@@ -339,6 +339,7 @@
       <DCField DCFieldName="&quot;IsGeneralInvoice&quot;" FieldName="&quot;IsGeneralInvoice&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Boolean&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
       <DCField DCFieldName="&quot;ExternalAccountingEntityId&quot;" FieldName="&quot;ExternalAccountingEntityId&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
       <DCField DCFieldName="&quot;Id&quot;" DCVersion="&quot;ApiV1&quot;" FieldName="&quot;Id&quot;" IsKey="true" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
+      <DCField DCFieldName="&quot;InvoiceLines&quot;" FieldName="&quot;InvoiceLines&quot;" IsKey="false" IsManualMapping="false" IsMulti="true" MultiTableName="&quot;APInvoiceLine&quot;" FieldsDataType="&quot;List&lt;APInvoiceLine&gt;&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="true" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

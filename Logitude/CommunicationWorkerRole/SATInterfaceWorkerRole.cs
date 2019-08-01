@@ -519,7 +519,7 @@ namespace CommunicationWorkerRole
 							Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
 							if (payment != null)
 							{
-								if (transError != payment.TransmissionError)
+								if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
 								{
 									payment.SATTransferStatusCode = "TE";
 									payment.TransmissionError = transError;
@@ -531,7 +531,7 @@ namespace CommunicationWorkerRole
 						else
 						{
 							Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
-							if (transError != invoice.TransmissionError)
+							if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
 							{
 								invoice.SATTransferStatusCode = "TE";
 								invoice.TransmissionError = transError;
@@ -957,7 +957,7 @@ namespace CommunicationWorkerRole
 									{
 										transError += Environment.NewLine + resultadoCancelacion.TipoExcepcion;
 									}
-									if (transError != invoice.TransmissionError)
+									if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
 									{
 										invoice.SATTransferStatusCode = "TE";
 										invoice.TransmissionError = transError;
@@ -1078,7 +1078,7 @@ namespace CommunicationWorkerRole
 									{
 										transError += Environment.NewLine + resultadoCancelacion.TipoExcepcion;
 									}
-									if (transError != payment.TransmissionError)
+									if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
 									{
 										payment.SATTransferStatusCode = "TE";
 										payment.TransmissionError = transError;

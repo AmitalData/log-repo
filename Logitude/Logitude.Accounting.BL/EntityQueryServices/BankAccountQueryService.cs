@@ -42,23 +42,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public BankAccountPM GetBankAccountByBankIdAccNumber(string BankId, string AccountNumber, int tenant)
         {
             BankAccount bankAccount = this.repository.GetBankAccountByBankIdAccNumber(BankId, AccountNumber, tenant);
-
-            if (bankAccount != null)
-            {
-                EntityPM = new BankAccountPM();
-                mapping.CustomPOCOToPM(EntityPM, bankAccount);
-                mapping.POCOToPM(EntityPM, bankAccount);
-            }
-
-            return EntityPM;
+            return this.GetEntityPM(bankAccount, false);
         }
         public BankAccountPM GetByAccountNumber(string number, int tenant)
         {
             BankAccount bankAccount = this.repository.GetBankAccountByNumber(number, tenant);
 
+            var EntityPM = new BankAccountPM();
             if (bankAccount != null)
             {
-                EntityPM = new BankAccountPM();
+                
                 mapping.CustomPOCOToPM(EntityPM, bankAccount);
                 mapping.POCOToPM(EntityPM, bankAccount);
             }
@@ -70,9 +63,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             BankAccount bankAccount = this.repository.GetBankAccountByGLAccountId(accountId, tenant);
 
+            var EntityPM = new BankAccountPM();
             if (bankAccount != null)
             {
-                EntityPM = new BankAccountPM();
+                
                 mapping.CustomPOCOToPM(EntityPM, bankAccount);
                 mapping.POCOToPM(EntityPM, bankAccount);
             }

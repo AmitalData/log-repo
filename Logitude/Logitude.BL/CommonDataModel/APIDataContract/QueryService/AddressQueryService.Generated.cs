@@ -113,7 +113,7 @@ using Simplog.Data.CommonDataModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("Address with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
@@ -122,7 +122,8 @@ using Simplog.Data.CommonDataModel;
 					}
 					temp.Name = MyEntity.Name;
 					temp.Address1 = MyEntity.Address1;
-					temp.Address2 = MyEntity.Address2;					CountryQueryService CountryCountryService = new CountryQueryService(Tenant);
+					temp.Address2 = MyEntity.Address2;
+					CountryQueryService CountryCountryService = new CountryQueryService(Tenant);
 					if(MyEntity.Country != null)
 					{
 						var myCountryPM = CountryCountryService.CountryDataMappingAndValidatin(MyEntity.Country,Tenant,ComputingPartnerName);
@@ -133,7 +134,8 @@ using Simplog.Data.CommonDataModel;
 						 
 					}
 			
-										CityQueryService CityCityService = new CityQueryService(Tenant);
+					
+					CityQueryService CityCityService = new CityQueryService(Tenant);
 					if(MyEntity.City != null)
 					{
 						var myCityPM = CityCityService.CityDataMappingAndValidatin(MyEntity.City,Tenant,ComputingPartnerName);
@@ -147,7 +149,8 @@ using Simplog.Data.CommonDataModel;
 					
 					temp.ZipCode = MyEntity.ZipCode;
 					temp.PhoneNumber = MyEntity.PhoneNumber;
-					temp.FaxNumber = MyEntity.FaxNumber;					StateQueryService StateStateService = new StateQueryService(Tenant);
+					temp.FaxNumber = MyEntity.FaxNumber;
+					StateQueryService StateStateService = new StateQueryService(Tenant);
 					if(MyEntity.State != null)
 					{
 						var myStatePM = StateStateService.StateDataMappingAndValidatin(MyEntity.State,Tenant,ComputingPartnerName);

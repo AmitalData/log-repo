@@ -413,9 +413,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
         this.EntityPM.AddTariffVersion(copiedVersion);
 
         this.tariffLines.forEach(item => {
-            var tariffLine = new TariffLinePM(copiedVersion);
-            tariffLine.StartDate = this.VersionPM.StartDate;
-            tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
+            var tariffLine = new TariffLinePM(copiedVersion);            
             tariffLine.Tenant = SessionLocator.Tenant;
             tariffLine.Version = copiedVersion.Version;
             tariffLine.OriginPortId = item.OriginPortId;
@@ -424,6 +422,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
             tariffLine.DestinationPortId = item.DestinationPortId;
             tariffLine.DestinationPortCode = item.DestinationPortCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
+            tariffLine.Index = item.Index;
+            tariffLine.Notes = item.Notes;
+            tariffLine.IsFromAllOtherPorts = item.IsFromAllOtherPorts;
+            tariffLine.IsToAllOtherPorts = item.IsToAllOtherPorts;
 
             if (this.EntityPM.TypeCode == "AFC") {
                 tariffLine.MinPrice = item.MinPrice;
@@ -435,6 +437,8 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Step6Price = item.Step6Price;
                 tariffLine.Step7Price = item.Step7Price;
                 tariffLine.Step8Price = item.Step8Price;
+                tariffLine.StartDate = this.VersionPM.StartDate;
+                tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
             }
 
             else if (this.EntityPM.TypeCode == "ASC") {
@@ -448,6 +452,8 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Surcharge8Price = item.Surcharge8Price;
                 tariffLine.Surcharge9Price = item.Surcharge9Price;
                 tariffLine.Surcharge10Price = item.Surcharge10Price;
+                tariffLine.StartDate = item.StartDate;
+                tariffLine.ExpirationDate = item.ExpirationDate;
             }
 
             copiedVersion.AddTariffLine(tariffLine);
