@@ -22,7 +22,8 @@ import {MeasurementListService} from '../../../../Common/Services/StandardLists/
 import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
 import {UserListService} from '../../../../Common/Services/StandardLists/UserListService';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
@@ -69,7 +70,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         this.myUserListService = new UserListService();
         this.Listen();
         this.SetEditEnabled();
-        this.LoadRequiredData();
+        this.LoadRequiredData();        
     }
 
     private SessionEvent: any = null;
@@ -218,7 +219,13 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
     // SetUIProperties
     public IsEditingEnabled: boolean = true;
+    public IsDeleteAllPayablesVisible: boolean = false;
     SetEditEnabled() {
+
+        if (FeatureLocator.HasFeaturePermession("Shipment", "DeleteAllPayables")) {
+            this.IsDeleteAllPayablesVisible = true;
+        }
+
         var isEditingEnabled: boolean = true;
 
         if (this.EntityPM) {
@@ -1104,6 +1111,34 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         });
 
         this.CheckUpdateQuantities();
+    }
+
+    DeleteAllClicked() {
+        if (this.IsEditingEnabled) {
+
+            var isDeletingAllowed: boolean = true;
+
+            if (this.EntityPM.ShipmentPayables.filter(f => f.ShipmentPayableLineStatusCode == 'PACC' || f.ShipmentPayableLineStatusCode == 'ACCT').length > 0) {
+                isDeletingAllowed = false;
+            }
+
+            if (!isDeletingAllowed) {
+                var messageWindow = new MessageWindow();
+                messageWindow.Show("Can't delete all, some lines are connected to invoices");
+            }
+
+            else {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Show("Please note that deleting will erase all the lines with the amounts inserted");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.EntityPM.ShipmentPayables = [];
+                        this.BuildItemsSource();
+                        this.ComputeShipmentFields();
+                    }
+                });
+            }
+        }
     }
 }
 export class ShipmentPayableItem extends BaseComponent {

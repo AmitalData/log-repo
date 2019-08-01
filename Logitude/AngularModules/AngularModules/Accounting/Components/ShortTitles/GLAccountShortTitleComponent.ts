@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -22,11 +22,32 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 export class GLAccountShortTitleComponent {
     public EntityPM: GLAccountPM;
     public isRTL: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         if (this.EntityPM != null) {
+        }
+        this.Listen();
+    }
+
+    private Listen() {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    
+                }
+            });
+
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    
+                }
+            });
         }
     }
 }

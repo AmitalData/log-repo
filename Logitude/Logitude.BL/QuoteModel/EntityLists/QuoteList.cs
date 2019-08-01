@@ -188,5 +188,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string NotifyNote { get; set; }
         public int? NumberOfFollowUps { get; set; }
         public bool IsDangerous { get; set; }
+
+        public string QuoteHTMLDocumentId { get; set; }
     }
 }
