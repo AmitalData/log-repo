@@ -497,10 +497,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
 
 
-                    if (!string.IsNullOrEmpty(MasterData.MainCarriageToPortId))
+                    if (!string.IsNullOrEmpty(MasterData.MainCarriageFinalDestinationPortId))
                     {
-
-                        PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.MainCarriageToPortId, true);
+                        PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.MainCarriageFinalDestinationPortId, true);
                         if (myPort != null)
                         {
                             Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
