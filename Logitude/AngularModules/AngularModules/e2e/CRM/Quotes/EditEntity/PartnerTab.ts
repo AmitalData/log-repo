@@ -1,7 +1,7 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
 
-export class OverviewTabComponent {
+export class PartnerTabComponent {
 
   private Helper: FieldsHelper;
 
@@ -9,12 +9,11 @@ export class OverviewTabComponent {
     this.Helper = new FieldsHelper();
 
   } 
-  OverviewTab(ShipmentType: string) {
+  PartnerTab(ShipmentType: string) {
 
-    this.Helper.WaitByIdAndClick('Quote.TH.Overview');
-    this.Helper.WaitByIdAndFill('Quote_Notes','Test From Lana');
+    this.Helper.WaitByIdAndClick('Quote.TH.Partners');
+ 
   }
 
 
 }
-
