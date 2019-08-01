@@ -2876,8 +2876,6 @@
     <Content Include="Integration Test\Reports\Reports.postman_collection.json" />
     <Content Include="Integration Test\Maintenance\Partners .postman_collection.json" />
     <Content Include="Integration Test\Shipment\CreateUpdateShipment.postman_collection.json" />
-    <Content Include="Integration Test\Shipment\EnvironmentVariables.json" />
-    <Content Include="Integration Test\Shipment\GlobalVariables.json" />
     <Content Include="Integration Test\Logbox\LogboxHeaders.postman_collection.json" />
     <Content Include="Integration Test\Security\DocumentDownloadTokenKey.postman_collection.json" />
     <Content Include="Integration Test\Security\ShipmentSecurityTest.postman_collection.json" />
