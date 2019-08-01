@@ -103,6 +103,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string ExternalAccountingEntityId { get; set; }
     
     public string Id { get; set; }
+    
+    public List<APInvoiceLine> InvoiceLines { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
