@@ -311,11 +311,11 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:80px">
-                                                                                                                <label style="color:darkgray"> Seller</label>
+                                                                                                                <label style="color:darkgray"> Seller:</label>
                                                                                                             </td>
                                                                                                             <td>
                                                                                                                 <div class="TextTrimming">
-                                                                                                                    :{{item.Name}}
+                                                                                                                    {{item.Name}}
                                                                                                                 </div>
                                                                                                             </td>
                                                                                                         </tr>
@@ -329,11 +329,11 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:80px">
-                                                                                                                <label style="color:darkgray"> Effective till</label>
+                                                                                                                <label style="color:darkgray"> Effective till:</label>
 
                                                                                                             </td>
                                                                                                             <td>
-                                                                                                                :{{item.EffictiveDate | DateTimePipe:'SD'}}
+                                                                                                                {{item.EffictiveDate | DateTimePipe:'SD'}}
                                                                                                             </td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -347,12 +347,12 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:80px">
-                                                                                                                <label style="color:darkgray"> Remarks</label>
+                                                                                                                <label style="color:darkgray"> Remarks:</label>
 
                                                                                                             </td>
                                                                                                             <td>
                                                                                                                 <div class="TextTrimming" style="width:400px;max-width:400px">
-                                                                                                                    :{{item.Remarks}}
+                                                                                                                    {{item.Remarks}}
                                                                                                                 </div>
                                                                                                             </td>
                                                                                                         </tr>
@@ -367,11 +367,11 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:80px">
-                                                                                                                <label style="color:darkgray"> All-In</label>
+                                                                                                                <label style="color:darkgray"> All-In:</label>
                                                                                                             </td>
                                                                                                             <td>
                                                                                                                 <div class="TextTrimming">
-                                                                                                                    :{{item.AllIn}}
+                                                                                                                    {{item.AllIn}}
                                                                                                                 </div>
                                                                                                             </td>
                                                                                                         </tr>
@@ -450,7 +450,7 @@
                                                                                                                 </p>
                                                                                                             </td>
                                                                                                             <td style="width:5px"></td>
-                                                                                                            <td style="font-size:larger">(All-In: {{item.AllIn}})</td>
+                                                                                                            <td style="font-size:larger"></td>
                                                                                                         </tr>
                                                                                                     </table>
 
@@ -465,7 +465,7 @@
                                                                                     </td>
 
                                                                                 </tr>
-                                                                                <tr style="height:1px;background-color:deepskyblue">
+                                                                                <tr style="height:1px;background-color:#D1D1D1">
                                                                                     <td><div></div></td>
                                                                                 </tr>
                                                                                 <tr style="height:20px">
@@ -479,10 +479,10 @@
                                                                                         <p style="font-weight:bold;font-size:x-large">Surcharges</p>
                                                                                     </td>
                                                                                 </tr>
-                                                                                <tr style="height:1px;background-color:deepskyblue">
+                                                                                <tr style="height:1px;background-color:#D1D1D1">
                                                                                     <td><div></div></td>
                                                                                 </tr>
-                                                                                <tr *ngFor="let surcharge of item.Surcharges" style="height:10px;border-bottom:2px;border-color:deepskyblue">
+                                                                                <tr *ngFor="let surcharge of item.Surcharges" style="height:10px;border-bottom:2px;border-color:#D1D1D1">
                                                                                     <td>
                                                                                         <table>
                                                                                             <tr>
@@ -499,7 +499,7 @@
                                                                                                     </div>
                                                                                                 </td>
                                                                                             </tr>
-                                                                                            <tr style="height:1px;background-color:deepskyblue">
+                                                                                            <tr style="height:1px;background-color:#D1D1D1">
                                                                                                 <td colspan="3"></td>
                                                                                             </tr>
                                                                                         </table>
@@ -510,7 +510,7 @@
                                                                                     <td><div></div></td>
                                                                                 </tr>
 
-                                                                                <tr style="height:10px;border-bottom:2px;border-color:deepskyblue">
+                                                                                <tr style="height:10px;border-bottom:2px;border-color:#D1D1D1">
                                                                                     <td>
                                                                                         <table>
                                                                                             <tr>
@@ -522,7 +522,7 @@
                                                                                         </table>
                                                                                     </td>
                                                                                 </tr>
-                                                                                <tr style="height:1px;background-color:deepskyblue">
+                                                                                <tr style="height:1px;background-color:#D1D1D1">
                                                                                     <td><div></div></td>
                                                                                 </tr>
                                                                                 <tr style="height:10px">
