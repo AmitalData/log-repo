@@ -106,6 +106,7 @@
     <Compile Include="EntityPMs\Generated\IntegrityCheckStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalActionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalAdditionalDataPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\JournalExternalReconcilePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalMoreDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalPM.Generated.cs" />

@@ -38,6 +38,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
 using WebFreight.Web.DataContracts;
+using System.Web.Script.Serialization;
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 {
@@ -207,7 +208,25 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 string WhereStmt = " where " + Field + " is not null";
                 string PagingString = " ORDER BY " + Field + " OFFSET " + filters.PageIndex + " ROWS FETCH NEXT " + filters.PageSize + " ROWS ONLY";
 
-                if (!string.IsNullOrEmpty(SearchData))
+
+
+                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                {
+                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+                    if (filters_list != null)
+                    {
+                        var customPickListFilter = filters_list.Where(d => d.FieldName == "CustomPickListCode").FirstOrDefault();
+                        if (customPickListFilter != null)
+                        {
+                            WhereStmt = WhereStmt + (" and ([Code] = '" + customPickListFilter.FieldValue + "' )");
+                        }
+                    }
+                }
+
+
+
+                    if (!string.IsNullOrEmpty(SearchData))
                 {
                     WhereStmt = WhereStmt + " and (" + (Field + " like '" + SearchData + "%')");
                 }

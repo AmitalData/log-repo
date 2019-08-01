@@ -2287,6 +2287,7 @@
     </Compile>
     <Compile Include="ExternalAPIs\QuoteDocumentController.cs" />
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
+    <Compile Include="ExternalAPIs\V1\APInvoiceController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />
     <Compile Include="ExternalAPIs\V1\ARPaymentCancellationController.cs" />
     <Compile Include="ExternalAPIs\V1\ARPaymentController.cs" />
@@ -2636,6 +2637,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountWithholdingTaxUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\IntegrityCheckStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalAdditionalDataUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalExternalReconcileUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalMoreDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalReconcileUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LBPTeamMemberUpdateClass.cs" />

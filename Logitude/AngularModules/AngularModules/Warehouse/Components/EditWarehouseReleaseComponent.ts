@@ -10,17 +10,16 @@ import {WarehouseReleasePackagePM} from '../../Warehouse/EntityPMs/WarehouseRele
 import {WarehouseReleasePM} from '../../Warehouse/EntityPMs/WarehouseReleasePM';
 import {BaseComponent} from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool, DateTool, FormatTool} from '../../Infrastructure/Tools';
-import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
 import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
-import {TraceEventExtendedPMService } from '../../Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
+
 import {ShipmentPMService } from '../../Shipment/Services/StandardPMs/ShipmentPMService';
 import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
-import {EventTypeClass} from '../../Infrastructure/DataContracts/EventTypeArgs';
+
 @Component({
     moduleId: module.id,
     selector: 'EditWarehouseReleaseComponent',
     templateUrl: './EditWarehouseReleaseComponent.html',
-    providers: [TraceEventExtendedPMService],
+
 })
 export class EditWarehouseReleaseComponent extends BaseComponent implements OnInit {
 
@@ -30,7 +29,6 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
     WarehouseReleasePackagesLists: WarehouseReleasePackagePM[] = [];
   
-    EventTypeCodeList: EventTypeClass[];
     ShipmentPM: any;
     SelectedWarehouseReleasePackage: WarehouseReleasePackagePM;
     warehouseReleasePM: WarehouseReleasePM;
@@ -47,7 +45,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
     ActualReleaseDateOldValue: Date;
     ExpectedReleaseDateOldValue: Date;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public _traceEventExtendedPMService: TraceEventExtendedPMService) {
+    constructor(public entityArgs: EntityArgs) {
         super();
         this.myShipmentPMService = new ShipmentPMService();
 
@@ -92,20 +90,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
             if (!this.SaveCompletedChangedEvent) {
                 this.SaveCompletedChangedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EventTypeCodeList = [];
-                        this.warehouseReleasePM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.EventTypeCodeList.push(new EventTypeClass("UPRE", null));
-                        if (this.warehouseReleasePM.ExpectedReleaseDate != this.ExpectedReleaseDateOldValue) {
-                            this.ExpectedReleaseDateOldValue = this.warehouseReleasePM.ExpectedReleaseDate;
-                            this.EventTypeCodeList.push(new EventTypeClass("EXRE", this.warehouseReleasePM.ExpectedReleaseDate));
-                        }
-
-                        if (this.warehouseReleasePM.ActualReleaseDate != this.ActualReleaseDateOldValue) {
-                            this.ActualReleaseDateOldValue = this.warehouseReleasePM.ActualReleaseDate;
-                            this.EventTypeCodeList.push(new EventTypeClass("ENRE", this.warehouseReleasePM.ActualReleaseDate));
-                        }
-
-                        this.UpdateEventType();
+                        this.CurrentSession.FireEvent("LoadEventTabData");
                     }
                 });
             }
@@ -226,19 +211,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
     }
 
 
-    UpdateEventType() {
-        if (this.EventTypeCodeList && this.EventTypeCodeList.length != 0) {
-            var traceEventArgs: EventTypeArgs = new EventTypeArgs();
-            traceEventArgs.EventTypeList = this.EventTypeCodeList;
-            traceEventArgs.Tenant = SessionLocator.Tenant;
-            traceEventArgs.ObjectTableId = this.ObjectTableId;
-            traceEventArgs.EntityId = this.warehouseReleasePM.Id;
-            traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
-            this._traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
-                this.CurrentSession.FireEvent("LoadEventTabData");
-            });
-        }
-    }
+   
 
    
 

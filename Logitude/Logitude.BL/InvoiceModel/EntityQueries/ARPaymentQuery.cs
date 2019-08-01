@@ -116,6 +116,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        FirstApproveDate = a.FirstApproveDate,
                                        IsFullAccounting = a.IsFullAccounting,
                                        FechaPago = a.FechaPago,
+                                       IsExternalEntity = a.IsExternalEntity 
                                    }).FirstOrDefault();
 
 
@@ -280,6 +281,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 AccountingPaymentMethod method = paymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
                 payment.AccountingPaymentMethodName = method != null ? method.Name : null;
                 payment.AccountingPaymentMethodCode = method != null ? method.Code : null;
+                payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
             }
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), payment, tenant); ;

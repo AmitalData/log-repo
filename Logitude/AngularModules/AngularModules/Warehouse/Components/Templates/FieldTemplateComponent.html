@@ -37,14 +37,16 @@
                 <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['DirectionName']" />
             </div>
 
+            <div *ngIf="ObjectTableName == 'WarehouseEntry' && IsHeaderScreenTemplate && FieldName == 'EntryReferencesAndDate'">
+                <span > {{Entity['EntryReference']}}</span>
+                <span style="font-weight: bold;margin-left:5px" [ngStyle]="{color: BackgroudColor}"> {{FieldValue | DateTimeToDatePipe}} {{WarehouseDateType}}</span>
+            </div>
+
+
             <div *ngIf="ObjectTableName == 'WarehouseEntry' && FieldName == 'ActualEntryDate'">
                 <span style="font-weight: bold;" [ngStyle]="{color: BackgroudColor}"> {{FieldValue | DateTimeToDatePipe}} {{WarehouseDateType}}</span>
             </div>
 
-
-            <!--<div *ngIf="ObjectTableName == 'WarehouseRelease' && FieldName == 'ActualReleaseDate'">
-                <span style="font-weight: bold;" [ngStyle]="{color: BackgroudColor}">{{FieldValue | DateTimeToDatePipe}} {{WarehouseDateType}}</span>
-            </div>-->
 
             <div *ngIf="ObjectTableName == 'WarehouseRelease' && FieldName == 'ReleaseDate'">
                 <span style="font-weight: bold;" [ngStyle]="{color: BackgroudColor}">{{FieldValue | DateTimeToDatePipe}} {{WarehouseDateType}}</span>

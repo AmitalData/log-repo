@@ -124,13 +124,14 @@ using Simplog.Data.QuoteModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("QuoteCharge with Id " + item.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 						temp.Id = item.Id;
-					}					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
+					}
+					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
 					{
 						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName);
@@ -141,7 +142,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										CurrencyQueryService CostCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					
+					CurrencyQueryService CostCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.CostCurrency != null)
 					{
 						var myCostCurrencyPM = CostCurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.CostCurrency,Tenant,ComputingPartnerName);
@@ -154,7 +156,8 @@ using Simplog.Data.QuoteModel;
 			
 					
 					temp.CostExchangeRate = item.CostExchangeRate;
-					temp.CostIsFixedRate = item.CostIsFixedRate;					MeasurementQueryService CostMeasurementMeasurementService = new MeasurementQueryService(Tenant);
+					temp.CostIsFixedRate = item.CostIsFixedRate;
+					MeasurementQueryService CostMeasurementMeasurementService = new MeasurementQueryService(Tenant);
 					if(item.CostMeasurement != null)
 					{
 						var myCostMeasurementPM = CostMeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.CostMeasurement,Tenant,ComputingPartnerName);
@@ -171,7 +174,8 @@ using Simplog.Data.QuoteModel;
 					temp.CostUnitPrice = item.CostUnitPrice;
 					temp.IsAllIN = item.IsAllIN;
 					temp.SaleExchangeRate = item.SaleExchangeRate;
-					temp.SaleIsFixedRate = item.SaleIsFixedRate;					MeasurementQueryService SaleMeasurementMeasurementService = new MeasurementQueryService(Tenant);
+					temp.SaleIsFixedRate = item.SaleIsFixedRate;
+					MeasurementQueryService SaleMeasurementMeasurementService = new MeasurementQueryService(Tenant);
 					if(item.SaleMeasurement != null)
 					{
 						var mySaleMeasurementPM = SaleMeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.SaleMeasurement,Tenant,ComputingPartnerName);

@@ -23,28 +23,28 @@ using Simplog.Data.InvoiceModel;
 
  namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 { 
-   public partial class ARPaymentChequeReplicaQueryService
+   public partial class ARPaymentChequeQueryService
    {
    
 		ARPaymentChequeReplicaQuery query; 
 
-        public ARPaymentChequeReplicaQueryService(int tenant)
+        public ARPaymentChequeQueryService(int tenant)
         {
 		
 			query = new ARPaymentChequeReplicaQuery(tenant);
         }
 
 		
-		public List<ARPaymentChequeReplica> ARPaymentChequeReplicaDataMapping(List<ARPaymentChequeReplicaPM> MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		public List<ARPaymentCheque> ARPaymentChequeDataMapping(List<ARPaymentChequeReplicaPM> MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				var MyList = new List<ARPaymentChequeReplica>();
+				var MyList = new List<ARPaymentCheque>();
 				foreach (var item in MyEntityPM)
 				{
 				   
-				   var temp = new ARPaymentChequeReplica(); 
+				   var temp = new ARPaymentCheque(); 
 				   temp.Id = item.Id;
 				   temp.Tenant = item.Tenant;
 				   temp.LineNumber = item.LineNumber;
@@ -67,7 +67,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public List<ARPaymentChequeReplicaPM> ARPaymentChequeReplicaDataMappingAndValidatin(List<ARPaymentChequeReplica> MyEntity,int Tenant,string ComputingPartnerName = "")
+		public List<ARPaymentChequeReplicaPM> ARPaymentChequeDataMappingAndValidatin(List<ARPaymentCheque> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -82,7 +82,7 @@ using Simplog.Data.InvoiceModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("ARPaymentChequeReplica with Id " + item.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))

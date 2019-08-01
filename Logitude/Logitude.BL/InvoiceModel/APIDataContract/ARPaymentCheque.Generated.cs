@@ -16,7 +16,7 @@ using System.Xml.Serialization;
 namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 {
    
-    public class ARPaymentChequeReplica
+    public class ARPaymentCheque
     {
 
 	    

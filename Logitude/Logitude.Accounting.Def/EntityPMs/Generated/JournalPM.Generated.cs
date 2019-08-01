@@ -870,7 +870,40 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<JournalExternalReconcilePM> journalExternalReconciles;
+	 
+		     
+	   [Include]
+	   [Association("JournalJournalExternalReconciles", "Id","JournalId")]
+	   [DataMember]
+	   public virtual List<JournalExternalReconcilePM> JournalExternalReconciles  
+	   {
+	        get
+             {
+                 if (journalExternalReconciles == null)
+                 {
+                     journalExternalReconciles = new List<JournalExternalReconcilePM>();
+                 }
+                 return journalExternalReconciles;
+              }
+             set { journalExternalReconciles = value; }
+	    }
+		   
+	   private List<JournalExternalReconcilePM>  deletedJournalExternalReconciles;
+	   public virtual List<JournalExternalReconcilePM> DeletedJournalExternalReconciles  
+	   {
+	        get
+             {
+                 if ( deletedJournalExternalReconciles == null)
+                 {
+                      deletedJournalExternalReconciles = new List<JournalExternalReconcilePM>();
+                 }
+                 return  deletedJournalExternalReconciles;
+              }
+             set {  deletedJournalExternalReconciles = value; }
+	    }
+	     }
    
 }
 	 

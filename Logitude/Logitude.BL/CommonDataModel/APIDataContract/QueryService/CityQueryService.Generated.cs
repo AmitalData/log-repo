@@ -110,7 +110,7 @@ using Simplog.Data.CommonDataModel;
 						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
 					} 					   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("CountryCity with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))

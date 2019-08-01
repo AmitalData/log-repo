@@ -73,7 +73,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public showLocal: boolean = false;
     public ARPaymentChequeStatus = "";
     public ARPaymentChequeStatusColor = "black";
-
+    isMultipleCheques: boolean = false;
     get TextStore(){
         return TextStore;
     }
@@ -93,7 +93,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
+
         this.EntityPM = entityArgs.EntityPM;
+        if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
+            this.isMultipleCheques = true;
+        }
         this.isFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.originalPaymentOpenAmount = this.EntityPM.OpenAmount;
         this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
@@ -1453,7 +1457,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
         return result;
     }
-
+    
+  
     get Bank() {
         if (this.EntityPM == null) {
             return null;

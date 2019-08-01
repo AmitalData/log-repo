@@ -81,7 +81,7 @@ using Simplog.Data.ShipmentsModel;
 						temp = query.GetSinglePM(MyEntity.Code);
 					} 					   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("ShipmentLevel with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Code))
