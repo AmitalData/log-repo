@@ -12943,6 +12943,8 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.Openedby = Item.CreatedByUserName;
                     shipment.Direction = Item.DirectionName;
                     shipment.ShipmentId = Item.ShipmentNumber;
+                    shipment.ShipmentNumber = Item.ShipmentNumber;
+
                     shipment.Shipper = Item.Shipper;
                     shipment.BUShipper = Item.ShipperNotExporterName;
                     shipment.ShipperRef1 = Item.ShipperReference1;
