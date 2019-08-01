@@ -134,7 +134,6 @@ export class NewViewComponent {
         this.NEWallFilterFieldsClass = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
         this.constantFilterFields = new FilterFieldsClass(true, this, this.pubSubAdvanceQueryFiltersService);
 
-        this.LoadUsers();
 
         if (!this.IsNew) {
             this.QueryName = args.QueryName;
@@ -153,8 +152,18 @@ export class NewViewComponent {
             this.ShareTabIsVisible = true;
         }
 
-        this.FillShareValuesList();
-        this.SetSelectedSharedValue();
+        if (this.ShareTabIsVisible) {
+            this.LoadUsers();
+            this.FillShareValuesList();
+            this.SetSelectedSharedValue();
+        }
+
+        else {
+            if (!this.IsNew) {
+                this.LoadQueryPM();
+            }
+        }
+
         this.Run();
     }
 
@@ -167,7 +176,7 @@ export class NewViewComponent {
         filters.PageSize = 100;
         filters.Tenant = SessionLocator.Tenant;
 
-        filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
+        //filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
 
         var userService: UserListService = new UserListService();
         userService.getByFilters(filters).subscribe(res => {

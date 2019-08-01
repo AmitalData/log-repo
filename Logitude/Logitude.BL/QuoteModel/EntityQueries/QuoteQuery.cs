@@ -262,6 +262,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                NumberOfFollowUps = f.NumberOfFollowUps,
                                                CustomerId = f.CustomerId,
                                                IsDangerous = f.IsDangerous,
+                                               QuoteHTMLDocumentId = f.QuoteHTMLDocumentId,
                                            };
             return result;
         }
@@ -468,6 +469,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         IsQuoteDocumentExternal = f.IsQuoteDocumentExternal,
                         QuotationSections = f.QuotationSections,
                         NumberOfFollowUps = f.NumberOfFollowUps,
+                        QuoteHTMLDocumentId = f.QuoteHTMLDocumentId,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -1274,6 +1276,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 QuoteLevel = entityPOCO.ShipmentTypeId,
                 GrossWeightEdited = entityPOCO.GrossWeightEdited,
                 ChargeableWeightEdited = entityPOCO.ChargeableWeightEdited,
+                QuoteHTMLDocumentId = entityPOCO.QuoteHTMLDocumentId,
             };
 
             int tenant = entityPOCO.Tenant;
@@ -2381,7 +2384,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
             entityPM.TotalSaleIncludingVATAmountInSaleCurrency = mySaleAmount + myTotalVAT;
             entityPM.TotalSaleIncludingVATAmountInLocalCurrency = mySaleAmountLocal + myTotalVATLocal;
-
+       
             return entityPM;
         }
 

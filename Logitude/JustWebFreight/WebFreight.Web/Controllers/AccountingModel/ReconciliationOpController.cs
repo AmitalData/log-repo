@@ -290,7 +290,7 @@ tenant);
                 LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
 
                 GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, false);
-                GenericCallBack callback_transfer = transactionQuery.GetReconciliationFilterCallBack(queryOperations, TransferGlAccountId, tenant, false);
+                GenericCallBack callback_transfer = transactionQuery.GetExternalReconciliationFilterCallBack(queryOperations, TransferGlAccountId, tenant);
 
                 List<LedgerTransactionList> openReconciliation = transactionQuery.GetReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
                 List<LedgerTransactionList> openReconciliation_transfer = transactionQuery.GetReconciliationFilterListForTransferGLAccount(queryOperations, callback_transfer, TransferGlAccountId, tenant);
@@ -302,7 +302,7 @@ tenant);
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = callback.TotalRecord;
+                    int count = callback.TotalRecord + callback_transfer.TotalRecord;
                     response.Count = count;
                 }
 
