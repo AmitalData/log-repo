@@ -257,13 +257,14 @@ using Simplog.Data.ShipmentsModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("Shipment with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 						temp.Id = MyEntity.Id;
-					}					DirectionQueryService DirectionDirectionService = new DirectionQueryService(Tenant);
+					}
+					DirectionQueryService DirectionDirectionService = new DirectionQueryService(Tenant);
 					if(MyEntity.Direction != null)
 					{
 						var myDirectionPM = DirectionDirectionService.DirectionDataMappingAndValidatin(MyEntity.Direction,Tenant,ComputingPartnerName);
@@ -274,7 +275,8 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										TransportModeQueryService TransportModeTransportModeService = new TransportModeQueryService(Tenant);
+					
+					TransportModeQueryService TransportModeTransportModeService = new TransportModeQueryService(Tenant);
 					if(MyEntity.TransportMode != null)
 					{
 						var myTransportModePM = TransportModeTransportModeService.TransportModeDataMappingAndValidatin(MyEntity.TransportMode,Tenant,ComputingPartnerName);
@@ -285,7 +287,8 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										ShipmentTypeQueryService ShipmentTypeShipmentTypeService = new ShipmentTypeQueryService(Tenant);
+					
+					ShipmentTypeQueryService ShipmentTypeShipmentTypeService = new ShipmentTypeQueryService(Tenant);
 					if(MyEntity.ShipmentType != null)
 					{
 						var myShipmentTypePM = ShipmentTypeShipmentTypeService.ShipmentTypeCustomDataMappingAndValidatin(MyEntity.ShipmentType,Tenant);
@@ -296,7 +299,8 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										CardQueryService ShipperCardService = new CardQueryService(Tenant);
+					
+					CardQueryService ShipperCardService = new CardQueryService(Tenant);
 					if(MyEntity.Shipper != null)
 					{
 						var myShipperPM = ShipperCardService.CardDataMappingAndValidatin(MyEntity.Shipper,Tenant,ComputingPartnerName);
@@ -309,7 +313,8 @@ using Simplog.Data.ShipmentsModel;
 			
 					
 					temp.ShipperReference1 = MyEntity.ShipperReference1;
-					temp.ShipperReference2 = MyEntity.ShipperReference2;					CardQueryService ConsigneeCardService = new CardQueryService(Tenant);
+					temp.ShipperReference2 = MyEntity.ShipperReference2;
+					CardQueryService ConsigneeCardService = new CardQueryService(Tenant);
 					if(MyEntity.Consignee != null)
 					{
 						var myConsigneePM = ConsigneeCardService.CardDataMappingAndValidatin(MyEntity.Consignee,Tenant,ComputingPartnerName);
@@ -322,7 +327,8 @@ using Simplog.Data.ShipmentsModel;
 			
 					
 					temp.ConsigneeReference1 = MyEntity.ConsigneeReference1;
-					temp.ConsigneeReference2 = MyEntity.ConsigneeReference2;					CardQueryService AgentCardService = new CardQueryService(Tenant);
+					temp.ConsigneeReference2 = MyEntity.ConsigneeReference2;
+					CardQueryService AgentCardService = new CardQueryService(Tenant);
 					if(MyEntity.Agent != null)
 					{
 						var myAgentPM = AgentCardService.CardDataMappingAndValidatin(MyEntity.Agent,Tenant,ComputingPartnerName);
@@ -335,7 +341,8 @@ using Simplog.Data.ShipmentsModel;
 			
 					
 					temp.AgentReference1 = MyEntity.AgentReference1;
-					temp.AgentReference2 = MyEntity.AgentReference2;					PortQueryService FromPortPortService = new PortQueryService(Tenant);
+					temp.AgentReference2 = MyEntity.AgentReference2;
+					PortQueryService FromPortPortService = new PortQueryService(Tenant);
 					if(MyEntity.FromPort != null)
 					{
 						var myFromPortPM = FromPortPortService.PortDataMappingAndValidatin(MyEntity.FromPort,Tenant,ComputingPartnerName);
@@ -346,7 +353,8 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										PortQueryService ToPortPortService = new PortQueryService(Tenant);
+					
+					PortQueryService ToPortPortService = new PortQueryService(Tenant);
 					if(MyEntity.ToPort != null)
 					{
 						var myToPortPM = ToPortPortService.PortDataMappingAndValidatin(MyEntity.ToPort,Tenant,ComputingPartnerName);
@@ -357,7 +365,8 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										WeightUnitQueryService GrossWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
+					
+					WeightUnitQueryService GrossWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
 					if(MyEntity.GrossWeightUnit != null)
 					{
 						var myGrossWeightUnitPM = GrossWeightUnitWeightUnitService.WeightUnitDataMappingAndValidatin(MyEntity.GrossWeightUnit,Tenant,ComputingPartnerName);
@@ -368,7 +377,8 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										WeightUnitQueryService ChargeableWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
+					
+					WeightUnitQueryService ChargeableWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
 					if(MyEntity.ChargeableWeightUnit != null)
 					{
 						var myChargeableWeightUnitPM = ChargeableWeightUnitWeightUnitService.WeightUnitDataMappingAndValidatin(MyEntity.ChargeableWeightUnit,Tenant,ComputingPartnerName);
@@ -379,7 +389,8 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										VolumeUnitQueryService VolumeUnitVolumeUnitService = new VolumeUnitQueryService(Tenant);
+					
+					VolumeUnitQueryService VolumeUnitVolumeUnitService = new VolumeUnitQueryService(Tenant);
 					if(MyEntity.VolumeUnit != null)
 					{
 						var myVolumeUnitPM = VolumeUnitVolumeUnitService.VolumeUnitDataMappingAndValidatin(MyEntity.VolumeUnit,Tenant,ComputingPartnerName);
@@ -392,7 +403,8 @@ using Simplog.Data.ShipmentsModel;
 			
 					
 					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
-					temp.AWBCommodityItemNumber = MyEntity.Commodity;					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
+					temp.AWBCommodityItemNumber = MyEntity.Commodity;
+					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
 					if(MyEntity.Branch != null)
 					{
 						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName);
@@ -403,7 +415,8 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										DepartmentQueryService DepartmentDepartmentService = new DepartmentQueryService(Tenant);
+					
+					DepartmentQueryService DepartmentDepartmentService = new DepartmentQueryService(Tenant);
 					if(MyEntity.Department != null)
 					{
 						var myDepartmentPM = DepartmentDepartmentService.DepartmentDataMappingAndValidatin(MyEntity.Department,Tenant,ComputingPartnerName);
@@ -415,7 +428,8 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-					temp.Master = MyEntity.MasterNumber;					CardQueryService MainCarriageCarrierCardService = new CardQueryService(Tenant);
+					temp.Master = MyEntity.MasterNumber;
+					CardQueryService MainCarriageCarrierCardService = new CardQueryService(Tenant);
 					if(MyEntity.MainCarriageCarrier != null)
 					{
 						var myMainCarriageCarrierPM = MainCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.MainCarriageCarrier,Tenant,ComputingPartnerName);
@@ -427,7 +441,8 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-					temp.MainCarriageCarrierNumber = MyEntity.MainCarriageCarrierNumber;					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
+					temp.MainCarriageCarrierNumber = MyEntity.MainCarriageCarrierNumber;
+					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
 						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName);
@@ -470,7 +485,8 @@ using Simplog.Data.ShipmentsModel;
 					}
 
 								 
-					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;					VesselQueryService VesselVesselService = new VesselQueryService(Tenant);
+					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;
+					VesselQueryService VesselVesselService = new VesselQueryService(Tenant);
 					if(MyEntity.Vessel != null)
 					{
 						var myVesselPM = VesselVesselService.VesselDataMappingAndValidatin(MyEntity.Vessel,Tenant,ComputingPartnerName);
@@ -500,7 +516,8 @@ using Simplog.Data.ShipmentsModel;
 						temp.ShipmentPayables = PayableService18.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName);
 					}
 
-								 					DimensionsUnitQueryService DimensionsUnitDimensionsUnitService = new DimensionsUnitQueryService(Tenant);
+								 
+					DimensionsUnitQueryService DimensionsUnitDimensionsUnitService = new DimensionsUnitQueryService(Tenant);
 					if(MyEntity.DimensionsUnit != null)
 					{
 						var myDimensionsUnitPM = DimensionsUnitDimensionsUnitService.DimensionsUnitDataMappingAndValidatin(MyEntity.DimensionsUnit,Tenant,ComputingPartnerName);

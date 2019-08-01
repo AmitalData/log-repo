@@ -82,7 +82,7 @@ using Simplog.Data.InvoiceModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("ARPaymentChequeReplica with Id " + item.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
