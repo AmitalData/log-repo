@@ -654,29 +654,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     }
 
     //Subscription Details
-    get IsMultiPackage() { return this.EntityPM.IsMultiPackage; }
-    set IsMultiPackage(newValue: boolean) {
-        if (this.EntityPM.IsMultiPackage != newValue) {
-            this.EntityPM.IsMultiPackage = newValue;
 
-            this.SetUIProperties_NumberOfUsers();
-            this.SetUIProperties_ManageLicencesPerUser();
-        }
-    }
-
-    get NumberOfUsers() { return this.EntityPM.NumberOfUsers; }
-    set NumberOfUsers(newValue: number) {
-        if (this.EntityPM.NumberOfUsers != newValue) {
-            this.EntityPM.NumberOfUsers = newValue;
-        }
-    }
-
-    get FreeUsers() { return this.EntityPM.FreeUsers; }
-    set FreeUsers(newValue: number) {
-        if (this.EntityPM.FreeUsers != newValue) {
-            this.EntityPM.FreeUsers = newValue;
-        }
-    }
 
 
     get BluesnapContractQTYs() { return this.EntityPM.BluesnapContractQTY; }
@@ -740,18 +718,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-
-
-    get PackageCode() { return this.EntityPM.PackageCode; }
-    set PackageCode(newValue: string) {
-        if (this.EntityPM.PackageCode != newValue) {
-            this.EntityPM.PackageCode = newValue;
-
-            if (newValue == "EAWB") {
-                this.IsAWBStockPrepaid = true;
-            }
-        }
-    }
 
     AddPackageClicked(packageType: string) {
         if (packageType == "AD") {
@@ -1003,12 +969,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-    get LicensePrice() { return this.EntityPM.LicensePrice; }
-    set LicensePrice(newValue: number) {
-        if (this.EntityPM.LicensePrice != newValue) {
-            this.EntityPM.LicensePrice = newValue;
-        }
-    }
 
     get BluesnapContractId() {
         return this.EntityPM.BluesnapContractId;
@@ -1019,8 +979,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-
-
     get BluesnapCRMContractId() {
         return this.EntityPM.BluesnapCRMContractId;
     }
@@ -1029,7 +987,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.EntityPM.BluesnapCRMContractId = newValue;
         }
     }
-
 
 
 
@@ -1136,11 +1093,60 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             }
         }
     }
-   
+
+    get IsMultiPackage() { return this.EntityPM.IsMultiPackage; }
+    set IsMultiPackage(newValue: boolean) {
+        if (this.EntityPM.IsMultiPackage != newValue) {
+            this.EntityPM.IsMultiPackage = newValue;
+
+            this.SetUIProperties_NumberOfUsers();
+            this.SetUIProperties_ManageLicencesPerUser();
+        }
+    }
+
     get MainAdditionalPackageApplied() { return this.EntityPM.MainAdditionalPackageApplied; }
     set MainAdditionalPackageApplied(newValue: boolean) {
         if (this.EntityPM.MainAdditionalPackageApplied != newValue) {
             this.EntityPM.MainAdditionalPackageApplied = newValue;
+        }
+    }
+
+    get PackageCode() { return this.EntityPM.PackageCode; }
+    set PackageCode(newValue: string) {
+        if (this.EntityPM.PackageCode != newValue) {
+            this.EntityPM.PackageCode = newValue;
+
+            if (newValue == "EAWB") {
+                this.IsAWBStockPrepaid = true;
+            }
+        }
+    }
+
+    get NumberOfUsers() { return this.EntityPM.NumberOfUsers; }
+    set NumberOfUsers(newValue: number) {
+        if (this.EntityPM.NumberOfUsers != newValue) {
+            this.EntityPM.NumberOfUsers = newValue;
+        }
+    }
+
+    get FreeUsers() { return this.EntityPM.FreeUsers; }
+    set FreeUsers(newValue: number) {
+        if (this.EntityPM.FreeUsers != newValue) {
+            this.EntityPM.FreeUsers = newValue;
+        }
+    }
+
+    get LicensePrice() { return this.EntityPM.LicensePrice; }
+    set LicensePrice(newValue: number) {
+        if (this.EntityPM.LicensePrice != newValue) {
+            this.EntityPM.LicensePrice = newValue;
+        }
+    }
+
+    get TotalPrice() { return this.EntityPM.TotalPrice; }
+    set TotalPrice(newValue: number) {
+        if (this.EntityPM.TotalPrice != newValue) {
+            this.EntityPM.TotalPrice = newValue;
         }
     }
 }
@@ -1184,6 +1190,27 @@ export class PackageItem extends BaseComponent{
     set NumberOfUsers(newValue: number) {
         if (this.EntityPM.NumberOfUsers != newValue) {
             this.EntityPM.NumberOfUsers = newValue;
+        }
+    }
+
+    get FreeUsers() { return this.EntityPM.FreeUsers; }
+    set FreeUsers(newValue: number) {
+        if (this.EntityPM.FreeUsers != newValue) {
+            this.EntityPM.FreeUsers = newValue;
+        }
+    }
+
+    get Price() { return this.EntityPM.Price; }
+    set Price(newValue: number) {
+        if (this.EntityPM.Price != newValue) {
+            this.EntityPM.Price = newValue;
+        }
+    }
+
+    get TotalPrice() { return this.EntityPM.TotalPrice; }
+    set TotalPrice(newValue: number) {
+        if (this.EntityPM.TotalPrice != newValue) {
+            this.EntityPM.TotalPrice = newValue;
         }
     }
 

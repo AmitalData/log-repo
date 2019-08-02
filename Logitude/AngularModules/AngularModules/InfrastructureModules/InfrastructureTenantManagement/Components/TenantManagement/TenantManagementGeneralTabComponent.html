@@ -554,6 +554,14 @@
                                                                                         <LogLabel [ObjectFieldName]="'LicensePrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
                                                                                     </td>
 
+                                                                                    <td style="width: 10px;">
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td style="width: 120px;">
+                                                                                        <LogLabel [ObjectFieldName]="'TotalPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
+                                                                                    </td>
+
                                                                                     <td>
                                                                                         <div></div>
                                                                                     </td>
@@ -592,6 +600,14 @@
 
                                                                                     <td>
                                                                                         <LogTextBox [ObjectFieldName]="'LicensePrice'" [Text]="LicensePrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'TotalPrice'" [Text]="TotalPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                                                     </td>
 
                                                                                     <td>
@@ -643,6 +659,9 @@
                                                                                                                                     <tr>
                                                                                                                                         <td style="width: 210px; min-width: 210px; max-width: 210px;">Name</td>
                                                                                                                                         <td style="width: 120px; min-width: 120px; max-width: 120px;">Number Of Users</td>
+                                                                                                                                        <td style="width: 120px; min-width: 120px; max-width: 120px;">Free Users</td>
+                                                                                                                                        <td style="width: 120px; min-width: 120px; max-width: 120px;">Price</td>
+                                                                                                                                        <td style="width: 120px; min-width: 120px; max-width: 120px;">Total Price</td>
                                                                                                                                         <td class="LastChild">
                                                                                                                                             <div></div>
                                                                                                                                         </td>
@@ -659,6 +678,18 @@
 
                                                                                                                                         <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
                                                                                                                                             {{item.NumberOfUsers}}
+                                                                                                                                        </td>
+
+                                                                                                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                                                                                            {{item.FreeUsers}}
+                                                                                                                                        </td>
+
+                                                                                                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                                                                                            {{item.Price}}
+                                                                                                                                        </td>
+
+                                                                                                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                                                                                            {{item.TotalPrice}}
                                                                                                                                         </td>
 
                                                                                                                                         <td class="CellTools">
@@ -686,7 +717,13 @@
                                                                                                                         <table>
                                                                                                                             <tr>
                                                                                                                                 <td style="width: 210px; padding-left: 4px;">Totals</td>
-                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">Totals</td>
+                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">111</td>
+                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">222</td>
+                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">333</td>
+                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">444</td>
+                                                                                                                                <td>
+                                                                                                                                    <div></div>
+                                                                                                                                </td>
                                                                                                                             </tr>
                                                                                                                         </table>
                                                                                                                     </div>
@@ -814,6 +851,8 @@
                                                                     <tr>
                                                                         <td>
                                                                             <table>
+
+                                                                                <!-- IsRecurring -->
                                                                                 <tr class="FormFieldRow">
                                                                                     <td style="width: 155px;">
                                                                                         <LogLabel [ObjectFieldName]="'IsRecurring'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -824,6 +863,7 @@
                                                                                     </td>
                                                                                 </tr>
 
+                                                                                <!-- RecurringPeriodCode -->
                                                                                 <tr class="FormFieldRow">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'RecurringPeriodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -838,6 +878,7 @@
                                                                                     </td>
                                                                                 </tr>
 
+                                                                                <!-- FirstPaymentDate -->
                                                                                 <tr class="FormFieldRow">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'FirstPaymentDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -848,6 +889,7 @@
                                                                                     </td>
                                                                                 </tr>
 
+                                                                                <!-- PaidUntilDate -->
                                                                                 <tr class="FormFieldRow">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'PaidUntilDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -858,6 +900,7 @@
                                                                                     </td>
                                                                                 </tr>
 
+                                                                                <!-- PaymentCurrencyCode -->
                                                                                 <tr class="FormFieldRow">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'PaymentCurrencyCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -872,6 +915,7 @@
                                                                                     </td>
                                                                                 </tr>
 
+                                                                                <!-- PaymentChannelCode -->
                                                                                 <tr class="FormFieldRow">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'PaymentChannelCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -886,6 +930,7 @@
                                                                                     </td>
                                                                                 </tr>
 
+                                                                                <!-- PaymentMethodCode -->
                                                                                 <tr class="FormFieldRow">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'PaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -900,7 +945,7 @@
                                                                                     </td>
                                                                                 </tr>
 
-
+                                                                                <!-- MainContract -->
                                                                                 <tr class="FormFieldRow" *ngIf="false">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'MainContract'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -911,18 +956,7 @@
                                                                                     </td>
                                                                                 </tr>
 
-                                                                                <!--<tr class="FormFieldRow">
-                                                                                    <td>
-                                                                                        <LogLabel [ObjectFieldName]="'LicensePrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogTextBox [ObjectFieldName]="'LicensePrice'" [Text]="LicensePrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-                                                                                </tr>-->
-
-
-
+                                                                                <!-- BillingByLogitude -->
                                                                                 <tr class="FormFieldRow">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'BillingByLogitude'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -952,6 +986,7 @@
                                                                                     </td>
                                                                                 </tr>
 
+                                                                                <!-- ResellerCommission -->
                                                                                 <tr class="FormFieldRow">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'ResellerCommission'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>

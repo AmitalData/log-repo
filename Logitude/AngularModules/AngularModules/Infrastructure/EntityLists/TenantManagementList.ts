@@ -131,5 +131,6 @@ export class TenantManagementList {
 		IsINTTRAOnlyDemo: boolean;
 		IsTestTenant: boolean;
 		MainAdditionalPackageApplied: boolean;
+		TotalPrice: number;
 	
 }
