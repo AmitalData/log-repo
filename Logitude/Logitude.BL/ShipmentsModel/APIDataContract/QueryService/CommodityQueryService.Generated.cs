@@ -82,7 +82,7 @@ using Simplog.Data.ShipmentsModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("ShipmentCommodity with Id " + item.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))

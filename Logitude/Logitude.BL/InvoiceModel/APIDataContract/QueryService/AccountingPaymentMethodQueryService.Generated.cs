@@ -88,7 +88,7 @@ using Simplog.Data.InvoiceModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("AccountingPaymentMethod with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))

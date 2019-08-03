@@ -55,5 +55,6 @@ namespace WebFreight.Web.DataProviders
         public int? HAWBsNumbers{ get; set; }
         public string MoveType { get; set; }
         public string SCI{ get; set; }
+        public string InvoiceNumber { get; set; }
     }
 }
