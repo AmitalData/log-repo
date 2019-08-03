@@ -143,7 +143,7 @@ namespace WebFreight.Web.DataProviders
         public string EmptyContainerReturnRef { get; set; }
 
         public DateTime? CutOffDateAsDate { get; set; }
-        public TimeSpan? CutOffTime { get; set; }
+        public string CutOffTime { get; set; }
 
         public string UserName { get; set; }
         public string IssuingCarrierAgentName { get; set; }

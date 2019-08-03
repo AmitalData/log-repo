@@ -159,8 +159,8 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     deliveryNotedataprovider.CutOffDate = String.Format("{0:dd MMM yyyy}", shipment.CutoffDate);
                     deliveryNotedataprovider.CutOffDateAsDate = shipment.CutoffDate;
-                    deliveryNotedataprovider.CutOffTime = shipment.CutoffDate.Value.TimeOfDay;
-                }                
+                    deliveryNotedataprovider.CutOffTime = shipment.CutoffDate != null ? String.Format("{0:hh:mm:ss}", shipment.CutoffDate) : "";
+                }
 
                 if (!string.IsNullOrEmpty(shipment.ConsigneeId))
                 {
@@ -966,7 +966,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     deliveryNotedataprovider.CutOffDate = shipment.CutoffDate != null ? String.Format("{0:dd MMM yyyy}", shipment.CutoffDate) : "";
                     deliveryNotedataprovider.CutOffDateAsDate = shipment.CutoffDate;
-                    deliveryNotedataprovider.CutOffTime = shipment.CutoffDate.Value.TimeOfDay;
+                    deliveryNotedataprovider.CutOffTime = shipment.CutoffDate != null ? String.Format("{0:hh:mm:ss}", shipment.CutoffDate) : "";
                 }
 
                 if (!string.IsNullOrEmpty(shipment.CustomerContactId))
