@@ -13,7 +13,7 @@
                                     <td>{{'Quote.TH.Packages' | TextCodeTranslationPipe}}</td>
 
                                     <td style="width: 90px" *ngIf="!QuoteIsFCL">
-                                        <button [disabled]="!IsAddButtonEnabled" class="Button" (click)="AddPackageClicked()">{{'Quote.B.AddPackage' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'AddPackage' | IdGeneratorPipe}}" [disabled]="!IsAddButtonEnabled" class="Button" (click)="AddPackageClicked()">{{'Quote.B.AddPackage' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width:5px;">
