@@ -2124,6 +2124,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return isNumber;
         }
+
+        public HttpResponseMessage GetIfHouseConnectedToMaster(string houseId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                Shipment houseShipment = shipmentRepository.GetSingleShipment(houseId, tenant);
+                bool myResult = false;
+
+                if(houseShipment != null)
+                {
+                    if(!string.IsNullOrEmpty(houseShipment.MasterShipmentDataId))
+                    {
+                        myResult = true;
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 
