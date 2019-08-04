@@ -162,7 +162,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ProrateReceivables).HasColumnName("ProrateReceivables");
             this.Property(t => t.DocumentsClosingDate).HasColumnName("DocumentsClosingDate");
             this.Property(t => t.OBLTypeCode).HasColumnName("OBLTypeCode");
-
+            this.Property(t => t.CutoffDate).HasColumnName("CutoffDate");
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
