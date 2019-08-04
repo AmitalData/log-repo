@@ -36,6 +36,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public IQueryable<Airline> GetAllAirlinesByPrefix(string prefix, int tenant)
+        {
+            return (from a in context.Airlines where a.Prefix == prefix && a.Tenant == tenant select a);
+        }
+
         public Airline GetSingleAirlineByCode(string code, int tenant)
         {
             return (from a in context.Airlines.Include("Card").Include("Card.PaymentTerm")

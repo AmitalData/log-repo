@@ -485,8 +485,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.GetCount = true;
 
         filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
+        // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
+        filters.addAdditionalFilter("DueDate", new Date(), null, null, "LessThanOrEqual", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
+        filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
-        return this.entityListService.getOpenReconciliationsByFilter("LedgerTransaction", this.BankAccountPM.GLAccountId, filters);
+        return this.entityListService.getReconciliationsByFilter("LedgerTransaction", this.BankAccountPM.GLAccountId, filters);
     }
 
     PushLine(row, RowIndex) {

@@ -48,6 +48,34 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "P01,Por definir", 
                 Name = "Por definir", 
 			});
+			 
+            all.Add(new UsoCFDIDetails()
+            {    
+                Code = "I02", 
+                Name = "Mobilario y equipo de oficina por inversiones", 
+                SearchFields = "I02,Mobilario y equipo de oficina por inversiones", 
+			});
+			 
+            all.Add(new UsoCFDIDetails()
+            {    
+                Code = "I03", 
+                Name = "Equipo de transporte", 
+                SearchFields = "I03,Equipo de transporte", 
+			});
+			 
+            all.Add(new UsoCFDIDetails()
+            {    
+                Code = "I04", 
+                Name = "Equipo de computo y accesorios", 
+                SearchFields = "I04,Equipo de computo y accesorios", 
+			});
+			 
+            all.Add(new UsoCFDIDetails()
+            {    
+                Code = "I06", 
+                Name = "Comunicaciones telefónicas", 
+                SearchFields = "I06,Comunicaciones telefónicas", 
+			});
 			
             return all;
        }

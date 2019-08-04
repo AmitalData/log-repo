@@ -154,29 +154,25 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, extDocPM);
 
         }
-        public HttpResponseMessage GetCreateDocumentShipmentEvent( string entityId, string objectTableName, string Notes)
+        public HttpResponseMessage GetCreateDocumentShipmentEvent( string entityId,  string notes, string eventCode)
         {
             string token = System.Web.HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             UserRepository userRepository = new UserRepository(authToken.Tenant);
-
             User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, authToken.Email, authToken.Tenant, true);
-            if (!string.IsNullOrEmpty(Notes))
+            if (!string.IsNullOrEmpty(notes))
             {
-                if (Notes.Contains('.'))
-                {
-                    Notes = Notes.Split('.')[0];
-                }
+                if (notes.Contains('.')) notes = notes.Split('.')[0];
             }
             EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = authToken.Tenant,
-                    EventTypeCode = "DOUP",
+                    EventTypeCode = eventCode,
                     UserId = loggedUser.Id,
                     EntityId = entityId,
                     ObjectTableName = "Shipment",
-                    Notes = Notes,
+                    Notes = notes,
                 });
         
             return Request.CreateResponse(HttpStatusCode.OK, true);

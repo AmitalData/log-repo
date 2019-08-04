@@ -1201,6 +1201,38 @@
     <Compile Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.Designer.cs">
       <DependentUpon>201907010918213_WithholdingTaxDeductionTypeMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907060950563_AddVolumeInCBMToQuote_Maheera.cs" />
+    <Compile Include="Migrations\201907060950563_AddVolumeInCBMToQuote_Maheera.Designer.cs">
+      <DependentUpon>201907060950563_AddVolumeInCBMToQuote_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907040809015_AddApplyVATSettingsForAllPartners_Samar.cs" />
+    <Compile Include="Migrations\201907040809015_AddApplyVATSettingsForAllPartners_Samar.Designer.cs">
+      <DependentUpon>201907040809015_AddApplyVATSettingsForAllPartners_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs" />
+    <Compile Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.Designer.cs">
+      <DependentUpon>201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907171756412_Add_Shipment_Facts_Fields_Khalid.cs" />
+    <Compile Include="Migrations\201907171756412_Add_Shipment_Facts_Fields_Khalid.Designer.cs">
+      <DependentUpon>201907171756412_Add_Shipment_Facts_Fields_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907210738114_ShipmentFields_To_ComputedShipmentTable.cs" />
+    <Compile Include="Migrations\201907210738114_ShipmentFields_To_ComputedShipmentTable.Designer.cs">
+      <DependentUpon>201907210738114_ShipmentFields_To_ComputedShipmentTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907210505358_ARPayment_FechaPago.cs" />
+    <Compile Include="Migrations\201907210505358_ARPayment_FechaPago.Designer.cs">
+      <DependentUpon>201907210505358_ARPayment_FechaPago.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs" />
+    <Compile Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.Designer.cs">
+      <DependentUpon>201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.cs" />
+    <Compile Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.Designer.cs">
+      <DependentUpon>201907231226064_ObjectTable_CodeField_NameField_60.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2043,6 +2075,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.resx">
       <DependentUpon>201907010918213_WithholdingTaxDeductionTypeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907060950563_AddVolumeInCBMToQuote_Maheera.resx">
+      <DependentUpon>201907060950563_AddVolumeInCBMToQuote_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907040809015_AddApplyVATSettingsForAllPartners_Samar.resx">
+      <DependentUpon>201907040809015_AddApplyVATSettingsForAllPartners_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.resx">
+      <DependentUpon>201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907171756412_Add_Shipment_Facts_Fields_Khalid.resx">
+      <DependentUpon>201907171756412_Add_Shipment_Facts_Fields_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907210505358_ARPayment_FechaPago.resx">
+      <DependentUpon>201907210505358_ARPayment_FechaPago.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907210738114_ShipmentFields_To_ComputedShipmentTable.resx">
+      <DependentUpon>201907210738114_ShipmentFields_To_ComputedShipmentTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.resx">
+      <DependentUpon>201907210822287_Add_DatesPickupsAndDeliveryComputedfields_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.resx">
+      <DependentUpon>201907231226064_ObjectTable_CodeField_NameField_60.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

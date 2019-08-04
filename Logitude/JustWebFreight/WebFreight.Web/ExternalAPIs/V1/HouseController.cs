@@ -40,9 +40,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-				SecurityUtility.AuthenticateAPICall(tenant);
+                SecurityUtility.AuthenticateAPICall(tenant);
 
-				HouseQueryService Service = new HouseQueryService(tenant);
+                HouseQueryService Service = new HouseQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetHouseById(id, tenant);
                 //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
@@ -63,9 +63,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-				SecurityUtility.AuthenticateAPICall(tenant);
+                SecurityUtility.AuthenticateAPICall(tenant);
 
-				HouseQueryService Service = new HouseQueryService(tenant);
+                HouseQueryService Service = new HouseQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetHouseByShipmentNumber(number, tenant);
                 //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
@@ -88,7 +88,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                    SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
 
                     ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
@@ -121,6 +121,33 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 foreach (OceanOrInlandPackage item in entity.OceanOrInlandPackages)
                                 {
+
+                                    if (item.InsidePackages != null && item.InsidePackages.Count > 0)
+                                    {
+                                        foreach (InsidePackage itemInside in item.InsidePackages)
+                                        {
+                                            if (itemInside.PackageType != null)
+                                            {
+                                                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PackageTypeQueryService PackageTypeService0 = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PackageTypeQueryService(authToken.Tenant);
+                                                PackageTypePM PackageTypePM = PackageTypeService0.PackageTypeDataMappingAndValidatin(itemInside.PackageType, authToken.Tenant);
+                                                if (PackageTypePM != null)
+                                                {
+                                                    if (PackageTypePM.IsContainer == true)
+                                                    {
+                                                        throw new ApplicationException("Invalid Inside Package Type Code");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    itemInside.PackageType = null;
+                                                }
+                                            }
+
+                                        }
+
+                                    }
+
+
                                     if (item.PackageType == null)
                                     {
                                         string message = entity.ShipmentType.Code.Contains("LCL") ? "Package Type is required" : "Container Type is required";
@@ -154,14 +181,24 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     {
                         foreach (Receivable item in entity.Receivables)
                         {
-                            if(item.ChargesType == null)
+                            if (item.ChargesType == null)
                             {
                                 throw new ApplicationException("Receivable Charges Type is required");
                             }
-                            
+
                             if (item.Currency == null)
                             {
-                                throw new ApplicationException("Receivable Currency is required");
+                                string currancy = null; 
+
+                                if (item.ChargesType != null)
+                                {
+                                    currancy = CheckReceivablesChargesTypeCurrency(item.ChargesType.Code, authToken.Tenant);
+                                }
+                               
+                                if(string.IsNullOrEmpty(currancy))
+                                {
+                                    throw new ApplicationException("Receivable Currency is required");
+                                }
                             }
                         }
                     }
@@ -174,24 +211,34 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 throw new ApplicationException("Payable Charges Type is required");
                             }
-                            
+
                             if (item.Currency == null)
                             {
-                                throw new ApplicationException("Payable Currency is required");
+                                string currancy = null;
+
+                                if (item.ChargesType != null)
+                                {
+                                    currancy = CheckPayablesChargesTypeCurrency(item.ChargesType.Code, authToken.Tenant);
+                                }
+
+                                if (string.IsNullOrEmpty(currancy))
+                                {
+                                    throw new ApplicationException("Payable Currency is required");
+                                }
                             }
                         }
                     }
-                    
+
                     HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.HouseCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        switch(entityPM.DirectionId)
+                        switch (entityPM.DirectionId)
                         {
                             case "I":
                                 {
-                                    if(string.IsNullOrEmpty(entityPM.ConsigneeId))
+                                    if (string.IsNullOrEmpty(entityPM.ConsigneeId))
                                     {
                                         throw new ApplicationException("Consignee is required for import houses");
                                     }
@@ -313,11 +360,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         {
                             throw new ApplicationException("Customer is missing");
                         }
-                        
+
                         if (!string.IsNullOrEmpty(entityPM.ShipperId))
                         {
                             Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, authToken.Tenant);
-                            if(address != null)
+                            if (address != null)
                             {
                                 entityPM.ShipperAddressId = address.Id;
                             }
@@ -331,18 +378,63 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.ConsigneeAddressId = address.Id;
                             }
                         }
-                        
+
                         if (entityPM.ShipmentPackages.Count > 0)
                         {
                             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
                             {
+                                bool hasContainerInsidePackages = false;
                                 if (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "FTL")
                                 {
                                     item.IsContainer = true;
                                 }
 
-                                item.Volume = ComputeHelper.ComputeVolume(item, entityPM);
+                                if (!item.IsContainer)
+                                {
+                                    if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
+                                    {
+                                        throw new ApplicationException("Inside Packages allowed in FCL/FTL shipments only");
+                                    }
+                                   
+                                }
+                                else
+                                {
+                                    if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
+                                    {
+                                       
+
+                                        hasContainerInsidePackages = true;
+                                        item.Weight = 0;
+                                        item.Volume = 0;
+                                        item.InsideShipmentPackages.ForEach(inside =>
+                                        {
+                                            if (inside.Weight != null)
+                                            {
+                                                item.Weight += inside.Weight;
+                                            }
+
+                                            if (inside.Volume != null)
+                                            {
+                                                item.Volume += inside.Volume;
+                                            }
+
+                                            if (inside.Quantity == null)
+                                            {
+                                                throw new ApplicationException("Inside Packages Quantity is required");
+                                            }
+                                            inside.Volume = ComputeHelper.ComputeInsideVolume(inside, entityPM);
+
+                                            inside.VolumetricWeight = ComputeHelper.ComputeInsideVolumetricWeight(inside, entityPM);
+
+                                        });
+                                    }
+                                }
+                                if (!hasContainerInsidePackages)
+                                {
+                                    item.Volume = ComputeHelper.ComputeVolume(item, entityPM);
+                                }
                                 item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
+                                hasContainerInsidePackages = false;
                             }
                         }
 
@@ -378,7 +470,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-        
+
         public HttpResponseMessage Put(House entity)
         {
             var apiExceptionResult = ApiExceptionHandler.HandleException(new Exception("Updates are not supported"));
@@ -478,7 +570,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     message = "cancelled";
                 }
-                else if(entityPM.IsAccountingClosed)
+                else if (entityPM.IsAccountingClosed)
                 {
                     message = "accounting closed";
                 }
@@ -763,6 +855,36 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
 
             service.Update(true);
+        }
+
+        private string CheckReceivablesChargesTypeCurrency(string chargeTypeCode, int tenant)
+        {
+            string currency = null;
+            if (!string.IsNullOrEmpty(chargeTypeCode))
+            {
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
+                var chergeType = chargesTypeRepository.GetSingleChargesTypeByCode(chargeTypeCode, tenant);
+                if (chergeType != null && !string.IsNullOrEmpty(chergeType.ReceivablesDefaultCurrencyId))
+                {
+                    currency = chergeType.ReceivablesDefaultCurrencyId;
+                }
+            }
+            return currency;
+        }
+
+        private string CheckPayablesChargesTypeCurrency(string chargeTypeCode, int tenant)
+        {
+            string currency = null;
+            if (!string.IsNullOrEmpty(chargeTypeCode))
+            {
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
+                var chergeType = chargesTypeRepository.GetSingleChargesTypeByCode(chargeTypeCode, tenant);
+                if (chergeType != null && !string.IsNullOrEmpty(chergeType.PayablesDefaultCurrencyId))
+                {
+                    currency = chergeType.PayablesDefaultCurrencyId;
+                }
+            }
+            return currency;
         }
     }
 }

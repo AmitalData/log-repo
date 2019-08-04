@@ -176,23 +176,24 @@ namespace WebFreight.Web.WcfApi
                     }
                     else
                     {
-                        
 
-                        List<RolePM> oldRoles = rolesQuery.GetRolesForContact(entity.Id, entity.Tenant).Where(r => r.Exists).ToList();
-                        foreach(RolePM role in oldRoles)
+                        if (entityPM.Roles != null && entityPM.Roles.Count != 0) // DON'T DELETE EXISTING ROLES IF NOT SENT BY HYBRID
                         {
-                            UserRolesPM userRolePM = new UserRolesPM()
+                            List<RolePM> oldRoles = rolesQuery.GetRolesForContact(entity.Id, entity.Tenant).Where(r => r.Exists).ToList();
+                            foreach (RolePM role in oldRoles)
                             {
-                                Id = role.Id,
-                                Name = role.Name,
-                                Removed = true,
-                                UserId = entity.Id,
-                                Tenant = entity.Tenant,
-                            };
+                                UserRolesPM userRolePM = new UserRolesPM()
+                                {
+                                    Id = role.Id,
+                                    Name = role.Name,
+                                    Removed = true,
+                                    UserId = entity.Id,
+                                    Tenant = entity.Tenant,
+                                };
 
-                            entityPM.Roles.Add(userRolePM);
+                                entityPM.Roles.Add(userRolePM);
+                            }
                         }
-
 
                         entityPM.Id = entity.Id;
                         service.Update(entityPM);

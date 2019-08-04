@@ -127,6 +127,7 @@ namespace WebFreight.Web.DataProviders
         public string LongMaster { get; set; }
 
         public string LastMainCarriageVesselNameAndNumber { get; set; }
+        public string MainCarriageVesselNameAndNumber { get; set; }
         public string LoadingPortName { get; set; }
         public string DischargePortName { get; set; }
         public DateTime? MainCarriageETD_DateTime { get; set; }
@@ -143,7 +144,7 @@ namespace WebFreight.Web.DataProviders
         public string EmptyContainerReturnRef { get; set; }
 
         public DateTime? CutOffDateAsDate { get; set; }
-        public TimeSpan? CutOffTime { get; set; }
+        public string CutOffTime { get; set; }
 
         public string UserName { get; set; }
         public string IssuingCarrierAgentName { get; set; }
@@ -151,6 +152,7 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeReference2 { get; set; }
         public string TransportMode { get; set; }
         public string ShipmentSalesman { get; set; }
+        public string FinalDestinationCode { get; set; }
 
         public string Reference1 { get; set; }
         public string Reference2 { get; set; }
@@ -167,7 +169,7 @@ namespace WebFreight.Web.DataProviders
         public string DriverName { get; set; }
 
         public string ProjectNumber { get; set; }
-
         public string ITNumber { get; set; }
+        public string AMSBL { get; set; }
     }
 }

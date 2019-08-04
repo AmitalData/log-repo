@@ -18,7 +18,8 @@ import {TenantImportComponent} from './Components/Maintenance/TenantImportCompon
 import {MeasurementGeneralComponent} from './Components/Maintenance/Measurement/MeasurementGeneralComponent';
 import {ChargesTypeGeneralTabComponent} from './Components/Maintenance/ChargesType/ChargesTypeGeneralTabComponent';
 import {CreditLimitSettingsComponent} from './Components/Maintenance/CreditLimit/CreditLimitSettingsComponent';
-import {CustomerActivationSettingsComponent} from '../Common/Components/Maintenance/CustomerActivationSettingsComponent';
+import { CustomerActivationSettingsComponent } from '../Common/Components/Maintenance/CustomerActivationSettingsComponent';
+import { VATSettingsComponent } from '../Common/Components/Maintenance/VATSettingsComponent';
 import {CompetitorComponent} from  '../Common/Components/Maintenance/CompetitorComponent';
 import {NewBusinessUnitComponent} from './Components/Maintenance/BusinessUnit/NewBusinessUnitComponent';
 import {BusinessUnitGeneralTabComponent} from  './Components/Maintenance/BusinessUnit/BusinessUnitGeneralTabComponent';
@@ -76,6 +77,7 @@ export const Components =
         NewBusinessUnitComponent,
         BusinessUnitGeneralTabComponent,
         CustomerActivationSettingsComponent,
+        VATSettingsComponent,
         AccountingTabComponent,
         AccountingTab_ChargesType,
         AccountingTab_Currency,
@@ -132,7 +134,8 @@ export class ModuleDeclarations {
             case "ChargesTypeGeneralTabComponent": { myResult = ChargesTypeGeneralTabComponent; break; }                        
             case "NewVatTypePercentageComponent": { myResult = NewVatTypePercentageComponent; break; }
             case "CreditLimitSettingsComponent": { myResult = CreditLimitSettingsComponent; break; }
-            case "CustomerActivationSettingsComponent": { myResult = CustomerActivationSettingsComponent; break }           
+            case "CustomerActivationSettingsComponent": { myResult = CustomerActivationSettingsComponent; break }
+            case "VATSettingsComponent": { myResult = VATSettingsComponent; break }
             case "CompetitorComponent": { myResult = CompetitorComponent; break }            
             case "CreditLimitSettingsComponent": { myResult = CreditLimitSettingsComponent; break; }
             case "NewBusinessUnitComponent": { myResult = NewBusinessUnitComponent; break; }

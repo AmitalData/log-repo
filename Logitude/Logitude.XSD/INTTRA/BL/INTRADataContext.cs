@@ -603,9 +603,24 @@ namespace Logitude.XSD.INTTRA.BL
                 {
                     this.Errors.Add("All Inside packages should have Description");
                 }
+
+                // Validate the Computing Partner of Packages
+                List<string> ids = this.ShipmentPackages.Select(s => s.PackageTypeId).ToList();
+                var allPackageTypes = (from d in CommonContext.PackageTypes
+                                        where d.Tenant == this.Tenant
+                                        && ids.Contains(d.Id)
+                                        select d).ToList();
+      
+                foreach (var item in allPackageTypes)
+                {
+                    string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(item.Code, "G-INTTRA", "PackageType");
+                    if (string.IsNullOrEmpty(myTranslatedCode))
+                    {
+                        this.Errors.Add( "Package Type : " + item.EnglishName +  " has no translation in the computing partner");
+                    }
+                }
             }
         }
-
 
         private Address AgentAddress;
         private Address ShipperAddress;

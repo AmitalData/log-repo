@@ -60,14 +60,19 @@ namespace WebFreight.Web.Helpers
         bool IsFirstTicket = false;
         bool IsContactUser { get; set; }
         string AnalyzeQueueId = null;
+        AnalyzeQueue AnalyzeQueue = null;
         string supportEmail = "";
         InboundEmailGeneralHelperMethods helper;
         bool isInternalUser = false;
 
-        public InboundParseWebhook(EmailUpload emailDetails, string AnalyzeQueueId)
+        public InboundParseWebhook(EmailUpload emailDetails, AnalyzeQueue analyzeQueue)
         {
             this.emailDetails = emailDetails;
-            this.AnalyzeQueueId = AnalyzeQueueId;
+            if(analyzeQueue != null)
+            {
+                this.AnalyzeQueue = analyzeQueue;
+                this.AnalyzeQueueId = analyzeQueue.Id;
+            }
             FillInboundEmailTable();
         }
 
@@ -340,6 +345,11 @@ namespace WebFreight.Web.Helpers
 
                     webContext.SaveChanges();
                     crmContext.SaveChanges();
+
+                    if(this.AnalyzeQueue != null)
+                    {
+                        this.AnalyzeQueue.EntityReference = myTicket.TicketNumber;
+                    }
 
                     if (myTicket != null && CorrespondenceLine != null)
                     {

@@ -10,7 +10,7 @@ import {ConfirmWindow} from '../Windows/ConfirmWindow';
     selector: "SalesNotes",
     moduleId: module.id,
     templateUrl: './SalesNotes.html',
-    inputs: ['Title', 'IconCode', 'IsEnabled', 'EntityPM'],
+    inputs: ['Title', 'IconCode', 'IsEnabled', 'EntityPM', 'CustomerPM', 'IsFromQuote'],
 })
 
 export class SalesNotes implements OnInit, OnDestroy {
@@ -23,7 +23,20 @@ export class SalesNotes implements OnInit, OnDestroy {
     public MaxHeight: number = 350;
     public Title: string = "Notes";
     public EntityPM: CustomerPM;
+    public customerPM: CustomerPM;
+
+    get CustomerPM() {
+        return this.customerPM;
+    }
+    set CustomerPM(value: CustomerPM) {
+        if (this.customerPM != value) {
+            this.customerPM = value;
+            this.UpdateComponent();
+        }
+    }
+
     public IsEnabled: boolean = true;
+    public IsFromQuote: boolean = false;
     public IconCode: string;
     public IconPath: string;
     public IconOpacity: number = 1;
@@ -217,8 +230,14 @@ export class SalesNotes implements OnInit, OnDestroy {
 
         var list: SalesNoteItem[] = [];
 
-        if (this.EntityPM) {
+        if (this.EntityPM && this.EntityPM.SalesNotes != null) {
             this.EntityPM.SalesNotes.forEach((item: CustomerSalesNotePM) => {
+                list.push(new SalesNoteItem(item));
+            });
+        }
+
+        if (this.CustomerPM && this.CustomerPM.SalesNotes != null) {
+            this.CustomerPM.SalesNotes.forEach((item: CustomerSalesNotePM) => {
                 list.push(new SalesNoteItem(item));
             });
         }

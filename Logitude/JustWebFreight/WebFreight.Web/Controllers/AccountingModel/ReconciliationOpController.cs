@@ -40,6 +40,8 @@ using Logitude.Accounting.Data.Repositories;
 using System.Transactions;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Simplog.Data.Helpers;
+
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
     //[RoutePrefix("api/ReconciliationOp")]
@@ -51,7 +53,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
         }
 
 
-       
+
 
         public HttpResponseMessage DeleteResetDraftOpenReconciliation(string gLAccountId, int tenant)
         {
@@ -75,7 +77,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             }
         }
 
-    
+
 
 
         //[Route("{obj:ReconciliationPM}/InsertReconciliation")]
@@ -166,11 +168,11 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             var qs = new LedgerTransactionListQueryService(accountingContext);
             GenericCallBack ReconciliationFilterCallBack = null;
             myQueryOperations = myQueryOperations ?? new FilteredReconciliation() { QueryFilterItems = new List<QueryFilterItem>() };
-            if (myQueryOperations.CallBack == null )
+            if (myQueryOperations.CallBack == null)
             {
 
-                agg.OpenReconciliationDraft= qs.OpenReconciliationDraft(gLAccountId, tenant);
-                myQueryOperations.CallBack = qs.GetOpenReconciliationFilterCallBack(myQueryOperations, gLAccountId, 
+                agg.OpenReconciliationDraft = qs.OpenReconciliationDraft(gLAccountId, tenant);
+                myQueryOperations.CallBack = qs.GetReconciliationFilterCallBack(myQueryOperations, gLAccountId,
 tenant);
             }
             var openReconciliation = qs.GetOpenReconciliationFilterList(myQueryOperations, myQueryOperations.CallBack, gLAccountId, tenant);
@@ -181,10 +183,10 @@ tenant);
             return Request.CreateResponse(HttpStatusCode.OK, agg);
         }
 
-        
 
 
-        public HttpResponseMessage PutDelsertDraftLedgerTransaction(List<LedgerTransactionList> OpenRecilationDrafts )
+
+        public HttpResponseMessage PutDelsertDraftLedgerTransaction(List<LedgerTransactionList> OpenRecilationDrafts)
         {
             try
             {
@@ -194,18 +196,18 @@ tenant);
                 //SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
                 //var accountingContext = AccountingContext.GetContext(tenant);
                 //LedgerTransactionListQueryService listService = new LedgerTransactionListQueryService(accountingContext);
-                if (OpenRecilationDrafts == null || OpenRecilationDrafts.Count==0)
+                if (OpenRecilationDrafts == null || OpenRecilationDrafts.Count == 0)
                 {
                     throw new Exception("PutDelSertDraftLedgerTransaction expected a list !");
                 }
-                
+
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                 var qs = new LedgerTransactionListQueryService(accountingContext);
 
                 LedgerTransactionUpdateService us = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), OpenRecilationDrafts.First().Tenant);
                 us.DelSertOpenRecilationDrafts(OpenRecilationDrafts);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { Ok=true });
+                return Request.CreateResponse(HttpStatusCode.OK, new { Ok = true });
             }
 
             catch (Exception ex)
@@ -215,18 +217,18 @@ tenant);
         }
 
 
-         public HttpResponseMessage PutAutomaticReconcileByFilter(string gLAccountId, int tenant, FilteredReconciliation myFilteredReconciliation)
+        public HttpResponseMessage PutAutomaticReconcileByFilter(string gLAccountId, int tenant, FilteredReconciliation myFilteredReconciliation)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+
 
                 var automaticReconcileService = new AutomaticReconcileService();
                 automaticReconcileService.AutomaticReconcile(gLAccountId, tenant, myFilteredReconciliation);
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, automaticReconcileService.AllLedgerTransactionList);
             }
 
@@ -241,94 +243,18 @@ tenant);
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = AuthinticateTenant();
 
-                int tenant = authToken.Tenant;
-               
-
-                QueryOperations queryOperations = new QueryOperations()
-                {
-                    ObjectTableName = "LedgerTransaction",
-                    PageIndex = filters.PageIndex,
-                    PageSize = filters.PageSize,
-                    QuerySection = "LedgerTransactions",
-                    SortByColumnName = filters.SortBy,
-                    SortDirectin = filters.SortDirection,
-                    GetAll = filters.GetAll,
-                };
-
-                #region filters
-                List<ObjectField> LedgerTransactionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("LedgerTransaction", tenant);
-                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
-                for (int i = 1; i <= 10; i++)
-                {
-                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
-                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
-                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
-                    object filterValue2 = null;
-
-                    if (filterNameProp != null)
-                    {
-                        string filterName = filterNameProp.ToString();
-                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
-                        ObjectField field = LedgerTransactionObjectFields.FirstOrDefault(f => f.FieldName == filterName);
-                        if (field != null)
-                        {
-                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-                        }
-                        else
-                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
-                    }
+                QueryOperations queryOperations = buildQueryOperationsForLedgerTransactions(filters, tenant);
 
 
+                LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
 
-                }
+                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant);
 
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
-                {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+                List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
 
-                    foreach (QueryFilterItem filter in filters_list)
-                    {
-                        ObjectField field = LedgerTransactionObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-                        if (field != null)
-                        {
-
-
-                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-                        }
-                        else
-                        {
-                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                        }
-                    }
-                }
-                #endregion
-
-                var accountingContext = AccountingContext.GetContext(tenant);
-                var qs = new LedgerTransactionListQueryService(accountingContext);
-                GenericCallBack ReconciliationFilterCallBack = null;
-
-                var callback = qs.GetOpenReconciliationFilterCallBack(queryOperations, gLAccountId, tenant);
-
-                var openReconciliation = qs.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
-
-                openReconciliation = openReconciliation.OrderByDescending(d=>d.DocumentDate).ToList();
+                openReconciliation = openReconciliation.OrderByDescending(d => d.DocumentDate).ToList();
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
@@ -348,6 +274,158 @@ tenant);
             }
 
         }
+        [HttpGet]
+        public HttpResponseMessage GetReconciliationsByFilter(string gLAccountId, [FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                int tenant = AuthinticateTenant();
+
+                QueryOperations queryOperations = buildQueryOperationsForLedgerTransactions(filters, tenant);
+
+
+                string TransferGlAccountId = GetAndRemoveFilter(queryOperations, "DUMMY_TransferAccountId");
+
+
+                LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
+
+                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, false);
+                GenericCallBack callback_transfer = transactionQuery.GetExternalReconciliationFilterCallBack(queryOperations, TransferGlAccountId, tenant);
+
+                List<LedgerTransactionList> openReconciliation = transactionQuery.GetReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
+                List<LedgerTransactionList> openReconciliation_transfer = transactionQuery.GetReconciliationFilterListForTransferGLAccount(queryOperations, callback_transfer, TransferGlAccountId, tenant);
+
+                openReconciliation = openReconciliation.Concat(openReconciliation_transfer).ToList();
+
+                openReconciliation = openReconciliation.OrderByDescending(d => d.DocumentDate).ToList();
+
+                ServiceResponse response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    int count = callback.TotalRecord + callback_transfer.TotalRecord;
+                    response.Count = count;
+                }
+
+                response.Result = openReconciliation;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private static string GetFilter(ApiQueryFilters filters, string fieldName)
+        {
+            JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+            var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+            var filter = filters_list.Find(d => d.FieldName == fieldName);
+            string value = filter?.FieldValue.ToString();
+            return value;
+        }
+        private static string GetAndRemoveFilter(QueryOperations queryOperations, string fieldName)
+        {
+            QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == fieldName);
+            string TransferGlAccountId = filterItem?.FieldValue.ToString();
+            queryOperations.QueryFilterItems.Remove(filterItem);
+            return TransferGlAccountId;
+        }
+
+
+        private static int AuthinticateTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+            int tenant = authToken.Tenant;
+            return tenant;
+        }
+
+        private static QueryOperations buildQueryOperationsForLedgerTransactions(ApiQueryFilters filters, int tenant)
+        {
+            QueryOperations queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "LedgerTransaction",
+                PageIndex = filters.PageIndex,
+                PageSize = filters.PageSize,
+                QuerySection = "LedgerTransactions",
+                SortByColumnName = filters.SortBy,
+                SortDirectin = filters.SortDirection,
+                GetAll = filters.GetAll,
+            };
+
+            #region filters
+            List<ObjectField> LedgerTransactionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("LedgerTransaction", tenant);
+            List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+            for (int i = 1; i <= 10; i++)
+            {
+                object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+                object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
+                object filterValue2 = null;
+
+                if (filterNameProp != null)
+                {
+                    string filterName = filterNameProp.ToString();
+                    string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
+                    ObjectField field = LedgerTransactionObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                    if (field != null)
+                    {
+                        string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                    }
+                    else
+                        queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                }
+
+
+
+            }
+
+            if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+            {
+                JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                foreach (QueryFilterItem filter in filters_list)
+                {
+                    ObjectField field = LedgerTransactionObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                    if (field != null)
+                    {
+
+
+                        string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        if (field.FieldName == "DueDate")
+                        {
+                            value1 = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        }
+
+                        string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                    }
+                }
+            }
+            #endregion
+            return queryOperations;
+        }
 
         [HttpGet]
         public HttpResponseMessage GetAutomaticReconcileByFilter(string method1, string method2, string method3, string gLAccountId, [FromUri] ApiQueryFilters filters)
@@ -357,11 +435,11 @@ tenant);
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+
                 #region filters
 
                 int tenant = authToken.Tenant;
-               
+
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -454,10 +532,10 @@ tenant);
                     method1 = m1,
                     method2 = m2,
                     method3 = m3,
-                    ClientChooseAutoMethod= true,
+                    ClientChooseAutoMethod = true,
                 };
 
-                
+
 
                 var automaticReconcileService = new AutomaticReconcileService();
                 automaticReconcileService.AutomaticReconcile(gLAccountId, tenant, myFilteredReconciliation);
@@ -493,7 +571,7 @@ tenant);
                 int tenant = authToken.Tenant;
 
                 LedgerTransactionQueryService transactionQuery = new LedgerTransactionQueryService(tenant);
-                List<LedgerTransactionPM>  draftTransactions = transactionQuery.DraftLedgerTransactionPMsByAccountId(gLAccountId, tenant);
+                List<LedgerTransactionPM> draftTransactions = transactionQuery.DraftLedgerTransactionPMsByAccountId(gLAccountId, tenant);
 
 
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, draftTransactions);
@@ -507,7 +585,7 @@ tenant);
 
         }
 
-        
+
         public HttpResponseMessage PostCreateJournalReconcile(
             List<ReconciliationLinePM> ReconciliationLines,
             string TheAccountId,
@@ -517,7 +595,7 @@ tenant);
             string Ref2,
             string Ref3,
             string Remarks
-            
+
             )
         {
             try
@@ -530,13 +608,13 @@ tenant);
 
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                 var createJournalReconcileService = new CreateJournalReconcileService();
-                var pm =createJournalReconcileService
+                var pm = createJournalReconcileService
                     .Create(
                     accountingContext, authToken.Tenant
                     , ReconciliationLines, TheAccountId, AdjustAccountId,
-                    AccountDate, Ref1, Ref2, Ref3,Remarks);
+                    AccountDate, Ref1, Ref2, Ref3, Remarks);
 
-                    HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, pm);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, pm);
 
 
                 return reponseMessage;

@@ -194,9 +194,9 @@ namespace CommunicationWorkerRole
                                     HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository); 
                                     HybridPartnerPM Partner = HybridPartnerQuerey.GetSinglePM(ForwarderShipment.ForwarderPartnerId);
                                     //var Shipment = shipmentQuery.GetSinglePM(ShipmentId, tenant);
-                                    //var Data = Repo.GetSingleShipmentAdditionalCloudData(Id, tenant);
-                                    //if (Data != null)
-                                    //{
+                                    var Data = Repo.GetSingleShipmentAdditionalCloudData(ShipmentId, tenant);
+                                    if (Data != null)
+                                    {
                                         var Objecttable = objectTabelRepository.GetObjectTableByName("Shipment", tenant, true);
                                         LogPM.ObjectTableId = Objecttable.Id;
                                         //LogPM.EntityId = Data.Id;
@@ -221,12 +221,26 @@ namespace CommunicationWorkerRole
                                                 apiLogsService.Create(LogPM);
                                             }
                                             var msg = "Start Sending Confirmation To Forwarder " + DateTime.Now;
-                                            
+                                            //ContactQuery myQuery = new ContactQuery(Data.Tenant);
+                                            //var MyContact = myQuery.GetFirstContactByEnglishNamePM(Data.ApprovedByUserName, Data.Tenant);
+                                            //string Remark = "";
+                                            //if (MyContact != null)
+                                            //{
+                                            //    Remark = MyContact.EnglishName + ", " + MyContact.LocalName + ", " + MyContact.Email + ", " + Data.VersionApproved;
+                                            //}
+                                            //else
+                                            //{
+                                            //    Remark = "Approved By - " + Data.ApprovedByUserName;
+                                            //}
                                             ShipmentAdditionalCloudDataAM DataAM = new ShipmentAdditionalCloudDataAM()
                                             {
                                                 ShipmentNumber = ForwarderShipment.ForwarderShipmentNumber,
                                                 Tenant = (int)Partner.PartnerTenant,
-                                                Code = "VDK"
+                                                Code = "VDK",
+                                                Date = Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
+                                                Time = Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
+                                                Remarks = "Approval Task Received",
+                                                Direction = ForwarderShipment.DirectionId
                                             };
                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
                                             
@@ -257,7 +271,7 @@ namespace CommunicationWorkerRole
                                         }
                                         #endregion
 
-                                    //}
+                                    }
                                 }
 
                                 LogDoneItemInMemory();

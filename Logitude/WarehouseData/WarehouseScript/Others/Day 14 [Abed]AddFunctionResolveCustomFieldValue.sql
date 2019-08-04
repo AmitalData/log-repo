@@ -7,12 +7,28 @@ IF object_id(N'ResolveCustomFieldValue', N'FN') IS NOT NULL
 IF object_id(N'dbo.ResolveCustomFieldValue', N'FN') IS  NULL
 begin 
 declare @functionsDataString as varchar(8000)
-set @functionsDataString = 'CREATE FUNCTION dbo.ResolveCustomFieldValue (@FieldValue varchar(2000) ,  @DataTypeCode varchar(10))  
+set @functionsDataString = 'CREATE FUNCTION dbo.ResolveCustomFieldValue (@FieldValue varchar(2000) ,@FieldName varchar(100) , @CustomFieldsValues varchar(1000))  
 RETURNS sql_variant
 AS  
 BEGIN  
  DECLARE @MyValueOut sql_variant
+  DECLARE @DataTypeCode varchar(10)
+  set @MyValueOut = null;
+  if(@CustomFieldsValues is not null)
+  begin
+-- set @CustomFieldsValues = dbo.SplitString(@CustomFieldsValues,@FieldName + '':'', 2) ;
+ --set @CustomFieldsValues = dbo.SplitString(@CustomFieldsValues,'','',1);
+  --set @DataTypeCode = dbo.SplitString(@CustomFieldsValues,'':'',2)
 
+     set @CustomFieldsValues =( SELECT value  FROM STRING_SPLIT(@CustomFieldsValues, '','')  WHERE RTRIM(value) LIKE ''%'' + @FieldName + '':%'');
+	 if(@CustomFieldsValues is not null)
+	begin
+	set @DataTypeCode =( SELECT value  FROM STRING_SPLIT(@CustomFieldsValues, '':'')  WHERE RTRIM(value) <> @FieldName);
+	 end
+
+  end
+if(@DataTypeCode is not null)
+begin
 
 if(@DataTypeCode = ''Date'' or  @DataTypeCode = ''DateTime'')
 begin
@@ -41,8 +57,14 @@ if(len(@FieldValue)>=15)begin  set @FieldValue = STUFF(@FieldValue, len(@FieldVa
 SET @MyValueOut = CONVERT(NUMERIC(38,3), @FieldValue)
 end
 
+ELSE if(@DataTypeCode = ''Text'' or @DataTypeCode = ''nText'') 
+begin 
+SET @MyValueOut = @FieldValue;
+end
 
 ELSE begin set @MyValueOut = null; end
+
+end
 
   RETURN(@MyValueOut); 
 

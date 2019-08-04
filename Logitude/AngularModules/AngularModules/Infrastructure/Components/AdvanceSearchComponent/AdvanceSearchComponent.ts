@@ -249,12 +249,12 @@ export class AdvanceSearchComponent implements OnInit {
 
                 if (this.ObjectFields) {
 
-                    this.allFilterFields = window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true));
+                    this.allFilterFields = window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true) && o.IsCustomFilter == false);
 
-                    this.constantFilterFieldsList = window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.DataTypeCode == "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true));
+                    this.constantFilterFieldsList = window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.DataTypeCode == "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true) && o.IsCustomFilter == false);
 
                     this.timeFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.FieldName != "TimeFrameFilter" && o.IsTimeFrameFilter == true && (o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection)), this.currentQuery.Id, myResult);
-                    var MyFields = window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true));
+                    var MyFields = window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection) || o.IsCustom == true) && o.IsCustomFilter == false);
                     var MyFilteredFields: any[] = [];
                     MyFields.forEach((item, key) => {
                         var Temp = MyFilteredFields.filter(a => a.FieldName == item.FieldName);

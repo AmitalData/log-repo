@@ -64,6 +64,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsImport = entityPM.IsImport;
             poco.IsExport = entityPM.IsExport;
 
+            poco.ReceivablesDefaultCurrencyId = entityPM.ReceivablesDefaultCurrencyId;
+            poco.PayablesDefaultCurrencyId = entityPM.PayablesDefaultCurrencyId;
+
             BuildSearchField(entityPM, poco);
         }
 

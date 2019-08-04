@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -69,6 +70,11 @@ namespace CommunicationWorkerRole.Tasks
 
                     scope.Complete();
                 }
+            }
+            catch (ThreadAbortException e)
+            {
+                //LogInfoToDB("After Aborting the thread ..");
+                //Thread.ResetAbort();
             }
             catch (Exception ex)
             {
@@ -263,8 +269,12 @@ namespace CommunicationWorkerRole.Tasks
             var queueservice = new DbQueueService();
             if (task.NextRunTime < DateTime.Now)
             {
-                task.NextRunTime = DateTime.Now;
-                task.NextRunTimeUTC = DateTime.UtcNow;
+                var NewNextRunTime = new DateTime(task.NextRunTime.Value.Year, task.NextRunTime.Value.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
+                var NewNextRunTimeUTC = new DateTime(task.NextRunTimeUTC.Value.Year, task.NextRunTimeUTC.Value.Month, DateTime.Now.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
+                task.NextRunTime = NewNextRunTime;
+                task.NextRunTimeUTC = NewNextRunTimeUTC;
+                //task.NextRunTime = DateTime.Now;
+                //task.NextRunTimeUTC = DateTime.UtcNow;
             }
             switch (task.TriggerType)
             {
@@ -366,7 +376,7 @@ namespace CommunicationWorkerRole.Tasks
             if (task.TriggerType.ToUpper() != "O")
             {
                 queueservice.InitializeQueue("SchedularQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTimeUTC);
+                queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
 
             }
 
