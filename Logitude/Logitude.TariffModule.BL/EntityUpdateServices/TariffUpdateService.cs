@@ -372,27 +372,35 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 }
                 else
                 {
-                    iDraftVersion.ExpirationDate = iDraftVersion.InitialEnddate;
-                    TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
+                     iDraftVersion.ExpirationDate = iDraftVersion.InitialEnddate;
+                    TariffVersionRepository tariffVersionRepository = new TariffVersionRepository(iDraftVersion.Tenant);
+                    
+                    TariffVersion iPreviousVersion = tariffVersionRepository.GetAllVersions(entityPM.Id, entityPM.Tenant).Where(o=> o.Version != iDraftVersion.Version).OrderByDescending(o => o.CreateDate).FirstOrDefault();
                     if (iPreviousVersion != null)
                     {
-                        TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
-                        List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
-                        iPreviousVersion.ExpirationDate = iDraftVersion.StartDate.Value.AddDays(-1);
-                        foreach (TariffLine line in iPreviousVersionLines)
+                        if (iPreviousVersion.Version != iDraftVersion.Version)
                         {
-                            line.ExpirationDate = iPreviousVersion.ExpirationDate;
-                            iTariffLineRepository.Update(line);
+                            TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
+                            List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
+                            iPreviousVersion.ExpirationDate = iDraftVersion.StartDate.Value.AddDays(-1);
+                            tariffVersionRepository.Update(iPreviousVersion);
+                            foreach (TariffLine line in iPreviousVersionLines)
+                            {
+                                line.ExpirationDate = iPreviousVersion.ExpirationDate;
+                                iTariffLineRepository.Update(line);
 
+                            }
+
+                            foreach (TariffLinePM line in iDraftVersion.TariffLines.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete).ToList())
+                            {
+                                line.ExpirationDate = iDraftVersion.ExpirationDate;
+
+
+                            }
+
+                            iTariffLineRepository.SubmitChanges();
+                            tariffVersionRepository.SubmitChanges();
                         }
-
-                        foreach (TariffLinePM line in iDraftVersion.TariffLines.Where(p=>p.ChangeSetOp!=ChangeSetOperation.Delete).ToList())
-                        {
-                            line.ExpirationDate = iDraftVersion.ExpirationDate;
-
-                        }
-
-                        iTariffLineRepository.SubmitChanges();
                     }
 
 
