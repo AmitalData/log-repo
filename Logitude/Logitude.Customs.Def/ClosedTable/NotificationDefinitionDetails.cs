@@ -611,6 +611,14 @@ namespace Logitude.Customs.Def.ClosedTable
                 AssigneeNotificationTypeCode = "A",
             });
 
+            all.Add(new NotificationDefinitionDetails() // Mirit 04/08/19 Task 53620
+            {
+                Code = "5108N",
+                EnglishName = "Deficit Customs Answer",
+                LocalName = "החלטה בגין גרעון",
+                AssigneeNotificationTypeCode = "A",
+            });
+
             return all;
         }
 
