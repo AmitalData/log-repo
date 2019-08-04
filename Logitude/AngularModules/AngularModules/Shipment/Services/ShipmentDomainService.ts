@@ -789,6 +789,23 @@ export class ShipmentDomainService {
         }
         );
     }
+
+    CheckIfHouseConnectedToMaster(houseId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetIfHouseConnectedToMaster?houseId=' + houseId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 
 export class ShipmentsSummary {
