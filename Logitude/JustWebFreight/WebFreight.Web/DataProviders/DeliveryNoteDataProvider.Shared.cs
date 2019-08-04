@@ -127,6 +127,7 @@ namespace WebFreight.Web.DataProviders
         public string LongMaster { get; set; }
 
         public string LastMainCarriageVesselNameAndNumber { get; set; }
+        public string MainCarriageVesselNameAndNumber { get; set; }
         public string LoadingPortName { get; set; }
         public string DischargePortName { get; set; }
         public DateTime? MainCarriageETD_DateTime { get; set; }
