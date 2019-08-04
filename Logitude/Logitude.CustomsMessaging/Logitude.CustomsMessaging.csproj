@@ -142,6 +142,7 @@
     <Compile Include="CustomsBook\CustomsItemDetailsHistoryImport.cs" />
     <Compile Include="CustomsBook\CustomsItemImport.cs" />
     <Compile Include="CustomsBook\PropertiesDetailsHistoryImport.cs" />
+    <Compile Include="DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
     <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
     <Compile Include="Dca\DCARenameIncomeFileService.cs" />
     <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
@@ -294,6 +295,7 @@
     <Compile Include="ResponseServices\CL_NG_8344_ClientSearchByIDResponseService.cs" />
     <Compile Include="ResponseServices\DeclarationErrorPointer\DeclarationCorrectionsPointerService.cs" />
     <Compile Include="ResponseServices\DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService.cs" />
+    <Compile Include="ResponseServices\DE_NG_5108_DecisionMessageResponseService.cs" />
     <Compile Include="ResponseServices\DF_9071_ExportDeclarationDataResponseService.cs" />
     <Compile Include="ResponseServices\GP_1035_GatepassFeedbackMessageResponseService.cs" />
     <Compile Include="ResponseServices\MN_MSG8374_CargoSplitResponseService.cs" />

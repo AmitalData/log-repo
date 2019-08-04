@@ -13,5 +13,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class DeficitDecisionUpdateService : EntityUpdateService<DeficitDecision, DeficitDecisionPM, DeficitPM>
     {
+        protected override void OnCreating(DeficitDecisionPM entityPM, DeficitPM entityParentPM)
+        {
+            if (entityParentPM == null)
+            {
+                return;
+            }
+            entityPM.DeficitId = entityParentPM.Id;
+            entityPM.Tenant = entityPM.Tenant;
+
+            base.OnCreating(entityPM, entityParentPM);
+
+        }
     }
 }

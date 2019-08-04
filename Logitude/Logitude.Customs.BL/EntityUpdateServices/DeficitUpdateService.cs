@@ -76,5 +76,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 tapagUpdateService.Update(tapagPM, false);
             }
         }
+
+        protected override void UpdateComposition(DeficitPM entityPM)
+        {
+            DeficitDecisionUpdateService deficitDecisionUpdateService = new DeficitDecisionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            deficitDecisionUpdateService.UpdateMulti(entityPM.DeficitDecisions, entityPM.DeletedDeficitDecisions, entityPM, false);
+            base.UpdateComposition(entityPM);
+
+        }
     }
 }

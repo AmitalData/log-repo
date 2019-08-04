@@ -2592,6 +2592,24 @@ namespace Logitude.Customs.Def.ClosedTable
                 //    NeedSignature = false
             });
 
+            ///DCAInDE_NG_5108_DecisionMessageMessagingService
+            all.Add(
+            new InterfaceManagementDetails()
+            {
+                Code = "5108",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר החלטה בתיק גרעון",
+                DcaPrefixName = "SendDE_NG_5108_MSG12_DecisionMessage_Out.",
+                DefaultSendOptionsCode = null,// Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.D.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //   NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                //  NeedSignature = false
+            });
+
 
             //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
             var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
