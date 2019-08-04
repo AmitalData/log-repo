@@ -1659,6 +1659,19 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
                     deliveryNotedataprovider.LastMainCarriageVesselNameAndNumber = vesselNameAndNumber;
+
+                    if (!string.IsNullOrEmpty(shipment.MainCarriageVesselId))
+                    {
+                        var vesselMCNameAndNumber = "";
+                        Vessel vessel = (from a in commonContext.Vessels
+                                         where a.Id == shipment.MainCarriageVesselId
+                                         select a).FirstOrDefault();
+                        if (vessel != null)
+                        {
+                            vesselMCNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
+                        }
+                        deliveryNotedataprovider.MainCarriageVesselNameAndNumber = vesselMCNameAndNumber;
+                    }
                     #endregion
 
                     #region EmptyContainer
