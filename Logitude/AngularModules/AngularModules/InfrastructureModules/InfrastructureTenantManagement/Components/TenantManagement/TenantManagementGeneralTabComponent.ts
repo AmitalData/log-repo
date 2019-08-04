@@ -319,7 +319,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         this.UIProperties.SetEnabled("PaymentCurrencyCode", "TenantManagement", !close);
     }
 
-    private IsTenantManagementEditable() {
+    private IsTenantManagementEditable () {
         var myResult = false;
 
         if (FeatureLocator.HasFeaturePermession("TenantManagement", "EnableTenantManagementEdit")) {
