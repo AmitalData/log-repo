@@ -775,6 +775,16 @@ export class TenantManagementPM {
     public set IsTestTenant(newValue: boolean) { if (this.isTestTenant != newValue) { this.isTestTenant = newValue; this.MarkAsDirty("IsTestTenant"); } }
        
 	 
+    private mainAdditionalPackageApplied: boolean;
+    public get MainAdditionalPackageApplied() { return this.mainAdditionalPackageApplied; }
+    public set MainAdditionalPackageApplied(newValue: boolean) { if (this.mainAdditionalPackageApplied != newValue) { this.mainAdditionalPackageApplied = newValue; this.MarkAsDirty("MainAdditionalPackageApplied"); } }
+       
+	 
+    private totalPrice: number;
+    public get TotalPrice() { return this.totalPrice; }
+    public set TotalPrice(newValue: number) { if (this.totalPrice != newValue) { this.totalPrice = newValue; this.MarkAsDirty("TotalPrice"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		

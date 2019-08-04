@@ -389,6 +389,24 @@ export class EditComponent implements OnDestroy {
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
+        else if (this.ObjectTableName == "ARPayment") {
+            var myObjectTable = window.ObjectTables.filter(x => x.Name === "ARPayment")[0];
+            var myObjectTableId = myObjectTable.Id;
+
+            //get f. acc. Settings
+            if (SessionLocator.TenantPM.AccountingActivated) {
+              
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARPayment.FullACCHeaderScreen")[0];
+                myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+            }
+            else {
+               
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARPayment.HeaderScreen")[0];
+
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+            }
+        }
 
         else if (this.ObjectTableName == "Tariff") {
             if (this.EntityPM.TypeCode == "ASC") {
