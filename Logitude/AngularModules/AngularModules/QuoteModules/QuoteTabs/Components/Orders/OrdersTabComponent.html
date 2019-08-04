@@ -103,16 +103,16 @@
                         <SectionBody>
                             <table>
                                 <tr>
-                                    <td style="width:310px;">
+                                    <td style="width:330px;">
                                         <table>
 
                                             <!-- Incoterm -->
                                             <tr class="FormFieldRow">
-                                                <td style="width: 110px;">
+                                                <td style="width: 100px;">
                                                     <LogLabel [ObjectFieldName]="'IncotermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td style="width: 210px;">
+                                                <td style="width: 230px;">
                                                     <LogLov [ObjectFieldName]="'IncotermId'"
                                                             [SelectedValue]="IncotermId"
                                                             [ObjectTableName]="ObjectTableName"
@@ -151,7 +151,7 @@
                                                             <td>
                                                                 <table>
                                                                     <tr>
-                                                                        <td>
+                                                                        <td style="width: 95px;">
                                                                             <LogDatePicker [ObjectFieldName]="'StartDate'"
                                                                                            [SelectedDateValue]="StartDate"
                                                                                            [ObjectTableName]="ObjectTableName"
@@ -199,35 +199,6 @@
                                             </tr>
 
                                             <!-- Expiration Date -->
-                                            <!--<tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
-
-        <td>
-            <LogDatePicker [ObjectFieldName]="'ExpirationDate'"
-                           [SelectedDateValue]="ExpirationDate"
-                           [ObjectTableName]="ObjectTableName"
-                           [DataContext]="DataContext">
-            </LogDatePicker>
-        </td>
-    </tr>-->
-                                            <!-- Expiration Time -->
-                                            <!--<tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.Details.ExpirationTime'"></LogLabel>
-        </td>
-
-        <td>
-            <LogDatePicker [ObjectFieldName]="'ExpirationDate'"
-                           [SelectedDateValue]="ExpirationDate"
-                           [ObjectTableName]="ObjectTableName"
-                           [DataContext]="DataContext"
-                           [InputType]="'time'">
-            </LogDatePicker>
-        </td>
-    </tr>-->
-                                            <!-- Expiration Date -->
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -239,7 +210,7 @@
                                                             <td>
                                                                 <table>
                                                                     <tr>
-                                                                        <td>
+                                                                        <td style="width: 95px;">
                                                                             <LogDatePicker [ObjectFieldName]="'ExpirationDate'"
                                                                                            [SelectedDateValue]="ExpirationDate"
                                                                                            [ObjectTableName]="ObjectTableName"
