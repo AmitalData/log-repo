@@ -17,6 +17,7 @@ export class OperationsComponent implements OnInit {
     public IsSharedManifestItemVisible: boolean = false;
     public IsContainersFUItemVisible: boolean = false;
     public IsResourcesReady: boolean = false;
+    public IsAMANACItemVisible: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService) {
 
@@ -41,6 +42,8 @@ export class OperationsComponent implements OnInit {
                     this.IsContainersFUItemVisible = true;
                     this.IsMenuVisible = true;
                 }
+
+                this.IsAMANACItemVisible = true;
 
                 this.RunComponent();
             });
@@ -103,6 +106,8 @@ export class OperationsComponent implements OnInit {
     private Page_BOOK: any = null;
     private Page_SHIP: any = null;
     private Page_CNFU: any = null;
+    private Page_AMANAC: any = null;
+
     SelectionChanged() {
         if (this.isLoaderReady) {
             if (this.SelectedItem != null) {
@@ -160,6 +165,17 @@ export class OperationsComponent implements OnInit {
                             SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/ContainersFUsComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.Page_CNFU = cmpRef.instance;
+                                });
+
+                            break;
+                        }
+
+
+                        case "AMANAC": {
+
+                            SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/AMANACComponent', myLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.Page_AMANAC = cmpRef.instance;
                                 });
 
                             break;
