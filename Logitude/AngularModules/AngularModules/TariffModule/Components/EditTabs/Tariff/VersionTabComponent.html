@@ -33,11 +33,11 @@
                         </td>
 
                         <td *ngIf="IsDraftVersion" style="width:150px;">
-                            <LogDatePicker [ObjectFieldName]="'ExpirationDate'" [SelectedDateValue]="ExpirationDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                            <LogDatePicker [ObjectFieldName]="'InitialEnddate'" [SelectedDateValue]="InitialEnddate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                         </td>
 
                         <td *ngIf="!IsDraftVersion" style="width:130px;">
-                            {{ExpirationDate | DateTimePipe:'SD'}}
+                            {{InitialEnddate | DateTimePipe:'SD'}}
                         </td>
 
                         <td>

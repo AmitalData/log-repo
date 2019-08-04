@@ -310,6 +310,16 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                             throw new ApplicationException("Approving past version is not allowed, please update the dates");
                         }
                     }
+                    else
+                    {
+                        if(iDraftVersion.InitialEnddate != null)
+                        {
+                            if (iDraftVersion.InitialEnddate.Value.Date < entityPM.UpdateDate.Date)
+                            {
+                                throw new ApplicationException("Approving past version is not allowed, please update the dates");
+                            }
+                        }
+                    }
                 }
 
                 iDraftVersion.IsDraft = false;
@@ -359,6 +369,33 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                         iTariffLineRepository.SubmitChanges();
                     }
+                }
+                else
+                {
+                    iDraftVersion.ExpirationDate = iDraftVersion.InitialEnddate;
+                    TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
+                    if (iPreviousVersion != null)
+                    {
+                        TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
+                        List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
+                        iPreviousVersion.ExpirationDate = iDraftVersion.StartDate.Value.AddDays(-1);
+                        foreach (TariffLine line in iPreviousVersionLines)
+                        {
+                            line.ExpirationDate = iPreviousVersion.ExpirationDate;
+                            iTariffLineRepository.Update(line);
+
+                        }
+
+                        foreach (TariffLinePM line in iDraftVersion.TariffLines.Where(p=>p.ChangeSetOp!=ChangeSetOperation.Delete).ToList())
+                        {
+                            line.ExpirationDate = iDraftVersion.ExpirationDate;
+
+                        }
+
+                        iTariffLineRepository.SubmitChanges();
+                    }
+
+
                 }
             }
         }
