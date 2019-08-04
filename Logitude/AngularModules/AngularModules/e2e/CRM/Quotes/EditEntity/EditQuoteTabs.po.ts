@@ -37,7 +37,7 @@ export class EditTabsComponent {
    this.OverviewTabScenario.OverviewTab(ShipmentType);
    this.DetailsTabScenario .DetailsTab(ShipmentType);
    this.PartnerTabScenario .PartnerTab(ShipmentType);
-   this.PackagesTabScenario .PackagesTab(ShipmentType);
+   this.PackagesTabScenario .PackagesTab(ShipmentType,QuoteType);
    this.RoutingsTabScenario .RoutingsTab(ShipmentType);
    this.ChargesTabScenario .ChargesTab(ShipmentType);
   

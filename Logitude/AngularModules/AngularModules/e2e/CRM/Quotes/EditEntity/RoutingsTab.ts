@@ -11,11 +11,16 @@ export class RoutingsTabComponent {
   } 
   RoutingsTab(ShipmentType: string) {
     this.Helper.WaitBusyIndicator();
-
+  
     this.Helper.WaitByIdAndClick('Quote.TH.Routings');
     this.Helper.WaitByIdAndFill('date_Quote_ETD','1');
     this.Helper.WaitByIdAndFill('date_Quote_ETA','2');
-    this.Helper.WaitByIdAndClick('IncludePickUp');
+    if(ShipmentType=='LTL'){
+        this.Helper.WaitByIdAndFill('Quote_MainCarriageCarrierId','Trucker1London');
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+    }
+    
     
 
   }
