@@ -154,8 +154,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         private ARPaymentPM SetJournalFields(ARPaymentPM payment)
         {
             JournalPM journal = GetJournalByPaymentId(payment.Id, payment.Tenant);
-            payment.JournalId = journal.Id;
-            payment.JournalNumber = journal.JournalNumber;
+            if (journal != null)
+            {
+                payment.JournalId = journal.Id;
+                payment.JournalNumber = journal.JournalNumber;
+            }
             return payment;
         }
 
