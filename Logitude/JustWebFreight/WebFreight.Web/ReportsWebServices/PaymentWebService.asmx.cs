@@ -292,9 +292,13 @@ namespace WebFreight.Web.ReportsWebServices
                                                 where a.Id == currentPayment.PaymentCurrencyId
                                                 select a).FirstOrDefault();
 
+                    string paymentCurrencyLocalName = "";
+
                     if (paymentCurrency != null)
                     {
                         paymentDataProvider.PaymentCurrencyCode = paymentCurrency.Code;
+
+                        paymentCurrencyLocalName = paymentCurrency.LocalName;
                     }
 
                     //internal notes
@@ -427,7 +431,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     paymentDataProvider.TotalAmount = totalAmount;
 
-                    this.PrintTotalAmountInEnglishAndSpanish(paymentDataProvider);
+                    this.PrintTotalAmountInEnglishAndSpanish(paymentDataProvider, paymentCurrencyLocalName);
                     
                     paymentDataProvider.OutstandingBalance = currentPayment.AmountInPaymentCurrency - totalAmount;
                     paymentDataProvider.Logo = DataProviders.General.GetLogo(tenantSettings.Id);
@@ -455,7 +459,7 @@ namespace WebFreight.Web.ReportsWebServices
             return paymentDataProvider;
         }
 
-        private void PrintTotalAmountInEnglishAndSpanish(PaymentDataProvider paymentDataProvider)
+        private void PrintTotalAmountInEnglishAndSpanish(PaymentDataProvider paymentDataProvider, string paymentCurrencyLocalName)
         {
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
             var resultOfTotalAmount = decimal.Parse(paymentDataProvider.TotalAmount + "") - Math.Truncate(decimal.Parse(paymentDataProvider.TotalAmount + ""));
@@ -470,8 +474,8 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 resultstr = "";
             }
-            paymentDataProvider.TotalAmountInWordsEnglish = numbersConverterToWords.NumbersToSpanish((int)paymentDataProvider.TotalAmount) + " " + paymentDataProvider.PaymentMethodLocalName + " " + resultstr;
-            paymentDataProvider.TotalAmountInWordsSpanish = numbersConverterToWords.NumbersToEnglish((int)paymentDataProvider.TotalAmount) + " " + paymentDataProvider.PaymentMethodLocalName + " " + resultstr;
+            paymentDataProvider.TotalAmountInWordsEnglish = numbersConverterToWords.NumbersToSpanish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
+            paymentDataProvider.TotalAmountInWordsSpanish = numbersConverterToWords.NumbersToEnglish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
         }
 
         private string GetPaymentMethodLocalName(string code)
