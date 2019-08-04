@@ -37,6 +37,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string PaymentMethodCode { get; set; }
         public string PaymentChannelCode { get; set; }
         public double? LicensePrice { get; set; }
+        public double? TotalPrice { get; set; }
         public string Notes { get; set; }
         public string TTY { get; set; }
         public DateTime? LastFWBSentDate { get; set; }

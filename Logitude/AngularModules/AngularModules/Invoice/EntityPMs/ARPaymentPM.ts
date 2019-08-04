@@ -508,6 +508,16 @@ export class ARPaymentPM {
     public set IsExternalEntity(newValue: boolean) { if (this.isExternalEntity != newValue) { this.isExternalEntity = newValue; this.MarkAsDirty("IsExternalEntity"); } }
        
 	 
+    private journalNumber: string;
+    public get JournalNumber() { return this.journalNumber; }
+    public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
+       
+	 
+    private journalId: string;
+    public get JournalId() { return this.journalId; }
+    public set JournalId(newValue: string) { if (this.journalId != newValue) { this.journalId = newValue; this.MarkAsDirty("JournalId"); } }
+       
+	 
      
 	private invoicesLedgerTransactions: LedgerTransactionPM[];
     get  InvoicesLedgerTransactions() {

@@ -55,6 +55,12 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         private JournalPM CreateJournal(LedgerTransactionPM myLedgerTransactionTransferPM, ReconcileExternalPageLinePM myReconcileExternalPageLinePM, BankAccountPM myBankAccountPM)
         {
+
+            if (string.IsNullOrWhiteSpace(myReconcileExternalPageLinePM.Reference))
+            {
+                throw new Exception("if (string.IsNullOrWhiteSpace(myReconcileExternalPageLinePM.Reference))");
+            }
+
             //newJournalMoveBankCheckFromTransfer2GLAccount/
                var journal = new JournalPM()
             {
@@ -79,8 +85,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             journal.UpdatedByUserId = AuthenticationUtil.ResolveUserId(myLedgerTransactionTransferPM.Tenant); ;
             journal.ApproveDate = TenantServerConfigration.GetCurrentDateTime(myLedgerTransactionTransferPM.Tenant);
             journal.ApprovedByUserId = AuthenticationUtil.ResolveUserId(myLedgerTransactionTransferPM.Tenant); ;
+            
             journal.ChangeSetOp = ChangeSetOperation.Insert;
-
+            const string MyNotes = "פרעון שיק מהתאמה";
 
             JournalLinePM journalLineDebitTransfer = new JournalLinePM();
             journalLineDebitTransfer.Tenant = myLedgerTransactionTransferPM.Tenant;
@@ -100,6 +107,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             journalLineDebitTransfer.DebitAccountId = myBankAccountPM.TransferGLAcccountId;
             journalLineDebitTransfer.CreditAccountId = myBankAccountPM.GLAccountId;
             //journalLine.CreditControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
+            journalLineDebitTransfer.Notes = MyNotes;
             journalLineDebitTransfer.ChangeSetOp = ChangeSetOperation.Insert;
             journal.JournalLines.Add(journalLineDebitTransfer);
 
@@ -120,7 +128,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             journalLineCreditBankGLId.Reference1 = myReconcileExternalPageLinePM.Reference;
             journalLineCreditBankGLId.DebitAccountId = myBankAccountPM.TransferGLAcccountId;
             journalLineCreditBankGLId.CreditAccountId = myBankAccountPM.GLAccountId;
-
+            journalLineCreditBankGLId.Notes = MyNotes;
             journalLineCreditBankGLId.ChangeSetOp = ChangeSetOperation.Insert;
             journal.JournalLines.Add(journalLineCreditBankGLId);
 
