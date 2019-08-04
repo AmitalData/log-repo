@@ -1035,7 +1035,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         paymentUpdate.Update(arPaymentcheque);
                                         CreateCashBook(arPaymentcheque);
                                         // Create Journal with lines for cash or cheque
-                                        this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
+                                       // this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
 
                                     }
                                 }
@@ -1063,9 +1063,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     CreateCashBook(arPaymentcheque);
 
                                     // Create Journal with lines for cash or cheque
-                                    this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
+                                 //   this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
                                 }
-                        
+
+                                this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
                             }
                         }
                     }
@@ -1138,7 +1139,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
             journalLine.DocumentDate = theEntityPm.RegisterDate.Value;
             journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
-            journalLine.DueDate = theEntityPm.ValueDate.Value;
+            journalLine.DueDate = arPaymentcheque.ValueDate;
             journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
             journalLine.CurrencyId = theEntityPm.PaymentCurrencyId;
             journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency;
@@ -1157,52 +1158,64 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journal.JournalLines.Add(journalLine);
 
             // [Debit- Cheque] 
-            if (theEntityPm.AccountingPaymentMethodCode == "CH")
-            {
-                journalLine = new JournalLinePM();
-                journalLine.Tenant = tenant;
-                journalLine.JournalId = journal.Id;
-                journalLine.Line = ++counter;
-                journalLine.ActionCode = "2";
-                journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
-                journalLine.DocumentDate = theEntityPm.RegisterDate.Value;
-                journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
-                journalLine.DueDate = arPaymentcheque.ValueDate;
-                journalLine.LocalAmount = arPaymentcheque.LocalAmount;
-                journalLine.CurrencyId = arPaymentcheque.CurrencyId;
-                journalLine.ForeignAmount = arPaymentcheque.ForeignAmount;
-                journalLine.ExchangeRate = arPaymentcheque.ExchangeRate;
-                journalLine.Reference1 = arPaymentcheque.PaymentNumber;
-                journalLine.Reference2 = arPaymentcheque.ChequeNumber;
-                journalLine.DebitAccountId = cashBook.AccountId;
-                journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
-                journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                journal.JournalLines.Add(journalLine);
-            }
-            // [Debit- Cash Book, Bank Transfer, Credit Card] 
-            else
-            {
-                journalLine = new JournalLinePM();
-                journalLine.Tenant = tenant;
-                journalLine.JournalId = journal.Id;
-                journalLine.Line = ++counter;
-                journalLine.ActionCode = "2";
-                journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
-                journalLine.DocumentDate = theEntityPm.ValueDate.Value;
-                journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
-                journalLine.DueDate = theEntityPm.ValueDate.Value;
-                journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
-                journalLine.CurrencyId = theEntityPm.PaymentCurrencyId;
-                journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency;
-                journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
-                journalLine.Reference1 = theEntityPm.PaymentNo;
-                journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
-                journalLine.DebitAccountId = this.getGLAccountByPaymentMethodCode(theEntityPm);
-                journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
-                journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                journal.JournalLines.Add(journalLine);
-            }
+            
 
+         
+                if (theEntityPm.AccountingPaymentMethodCode == "CH")
+                {
+                    if (theEntityPm.ARPaymentChequeReplicas.Count > 0)
+                    {
+                        journal = CreateDebitJournalLine(theEntityPm, journal, counter);
+                       
+                    }
+                    else
+                    {
+                        journalLine = new JournalLinePM();
+                        journalLine.Tenant = tenant;
+                        journalLine.JournalId = journal.Id;
+                        journalLine.Line = ++counter;
+                        journalLine.ActionCode = "2";
+                        journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
+                        journalLine.DocumentDate = theEntityPm.RegisterDate.Value;
+                        journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
+                        journalLine.DueDate = arPaymentcheque.ValueDate;
+                        journalLine.LocalAmount = arPaymentcheque.LocalAmount;
+                        journalLine.CurrencyId = arPaymentcheque.CurrencyId;
+                        journalLine.ForeignAmount = arPaymentcheque.ForeignAmount;
+                        journalLine.ExchangeRate = arPaymentcheque.ExchangeRate;
+                        journalLine.Reference1 = arPaymentcheque.PaymentNumber;
+                        journalLine.Reference2 = arPaymentcheque.ChequeNumber;
+                        journalLine.DebitAccountId = cashBook.AccountId;
+                        journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
+                        journalLine.ChangeSetOp = ChangeSetOperation.Insert;
+                        journal.JournalLines.Add(journalLine);
+                    }
+                }
+                // [Debit- Cash Book, Bank Transfer, Credit Card] 
+                else
+                {
+                    journalLine = new JournalLinePM();
+                    journalLine.Tenant = tenant;
+                    journalLine.JournalId = journal.Id;
+                    journalLine.Line = ++counter;
+                    journalLine.ActionCode = "2";
+                    journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
+                    journalLine.DocumentDate = theEntityPm.ValueDate.Value;
+                    journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
+                    journalLine.DueDate = theEntityPm.ValueDate.Value;
+                    journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
+                    journalLine.CurrencyId = theEntityPm.PaymentCurrencyId;
+                    journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency;
+                    journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
+                    journalLine.Reference1 = theEntityPm.PaymentNo;
+                    journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
+                    journalLine.DebitAccountId = this.getGLAccountByPaymentMethodCode(theEntityPm);
+                    journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
+                    journalLine.ChangeSetOp = ChangeSetOperation.Insert;
+                    journal.JournalLines.Add(journalLine);
+                }
+            
+        
 
 
             if (theEntityPm.PaymentInvoices.Any())
@@ -1233,6 +1246,40 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
             journalUpdate.Update(journal);
         }
+
+        private JournalPM CreateDebitJournalLine(ARPaymentPM payment, JournalPM journal, int counter)
+        {
+          
+            JournalLinePM journalLine;
+            GLAccountPM glAccount = getGLAccount(payment.BillToId, payment.Tenant);
+            foreach (ARPaymentChequeReplicaPM cheque in payment.ARPaymentChequeReplicas) {
+                journalLine = new JournalLinePM();
+                journalLine.Tenant = tenant;
+                journalLine.JournalId = journal.Id;
+                journalLine.Line = ++counter;
+                journalLine.ActionCode = "2";
+                journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
+                journalLine.DocumentDate = payment.RegisterDate.Value;
+                journalLine.AccountingDate = payment.RegisterDate.Value;
+                journalLine.DueDate = cheque.ValueDate;
+                journalLine.LocalAmount = cheque.LocalAmount;
+                journalLine.CurrencyId = payment.PaymentCurrencyId;
+                journalLine.ForeignAmount = cheque.ForeignAmount;
+                journalLine.ExchangeRate =(decimal) payment.PaymentCurrencyExchangeRate;
+                journalLine.Reference1 = payment.PaymentNo;
+                journalLine.Reference2 = cheque.ChequeNumber;
+                journalLine.DebitAccountId = cashBook.AccountId;
+                journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
+                journalLine.ChangeSetOp = ChangeSetOperation.Insert;
+                journal.JournalLines.Add(journalLine);
+            }
+            return journal;
+        }
+           
+
+
+
+        
 
         private JournalPM GetJournalByInvoiceNumber(ARPaymentInvoicePM paymentInvoice)
         {
