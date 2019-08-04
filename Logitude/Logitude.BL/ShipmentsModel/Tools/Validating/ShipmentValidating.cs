@@ -60,6 +60,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             ValidateShipmentBookingFields(entityPM, isNewEntity);
             ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
             ValidateConvertShipmentType(entityPM);
+            ValidateContainerNumbers(entityPM);
             //ValidateMultiVatPercentages(entityPM, myCommonContext);
 
             if (!entityPM.IsHybrid)
@@ -1285,6 +1286,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                             CountryIsEC = iAddress.Country.EC,
                             CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
                         });
+                    }
+                }
+            }
+        }
+        private static void ValidateContainerNumbers(ShipmentPM entityPM)
+        {
+            if (entityPM.ShipmentTypeId == "FCL" || entityPM.ShipmentTypeId == "FCLD")
+            {
+                if (entityPM.ShipmentPackages != null && entityPM.ShipmentPackages.Count() > 0)
+                {
+                    var IsDuplicate = entityPM.ShipmentPackages.Where(a => a.ContainerNumber != null).GroupBy(g => g.ContainerNumber).Any(g => g.Count() > 1);
+                    if (IsDuplicate)
+                    {
+                        throw new ApplicationException("Cannot have 2 containers with the same number, you can use inside packages to add detailed packages");
                     }
                 }
             }

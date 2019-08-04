@@ -1,7 +1,8 @@
 // General
 import {OperationsComponent} from './Components/Workspaces/OperationsComponent';
 import {ShipmentsComponent} from './Components/Workspaces/ShipmentsComponent';
-import {ContainersFUsComponent} from './Components/Workspaces/ContainersFUsComponent';
+import { ContainersFUsComponent } from './Components/Workspaces/ContainersFUsComponent';
+import { AMANACComponent } from './Components/Workspaces/AMANACComponent';
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {ShipmentHelperComponent} from './Components/Helpers/ShipmentHelperComponent';
 import {ShipmentShortTitleComponent} from './Components/ShortTitles/ShipmentShortTitleComponent';
@@ -42,6 +43,7 @@ export const Components =
         OperationsComponent,
         ShipmentsComponent,
         ContainersFUsComponent,
+        AMANACComponent,
         FieldTemplateComponent,
         ShipmentHelperComponent,
         ShipmentShortTitleComponent,
@@ -90,7 +92,8 @@ export class ModuleDeclarations {
         switch (name) {
             case "OperationsComponent": { myResult = OperationsComponent; break; }
             case "ShipmentsComponent": { myResult = ShipmentsComponent; break; }
-            case "ContainersFUsComponent": { myResult = ContainersFUsComponent; break; }          
+            case "ContainersFUsComponent": { myResult = ContainersFUsComponent; break; }
+            case "AMANACComponent": { myResult = AMANACComponent; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "ShipmentHelperComponent": { myResult = ShipmentHelperComponent; break; }
             case "ShipmentShortTitleComponent": { myResult = ShipmentShortTitleComponent; break; }

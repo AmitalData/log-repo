@@ -122,6 +122,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         [ForeignKey("OBLTypeCode")]
         public OBLType OBLType { get; set; }
 
+        public DateTime? CutoffDate { get; set; }
+
         #region Objects
 
         [ForeignKey("FWBStatusCode")]
