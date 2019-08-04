@@ -63,7 +63,21 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     }
 
-
+    SetWindowArgs(args: any) {
+        if (args != null) {
+            this.originPortId = args['FromPort'];
+            this.destinationPortId = args['ToPort'];
+            this.date = args['BetweenDate'];
+            this.weight = args['ChargeableWeight'];
+            this.ChargeableWeight = args['ChargeableWeight'];
+            this.weightCode = args['ChargeableWeightUnit'];
+            this.grossWeight = args['GrossWeight'];
+            this.grossWeightCode = args['GrossWeightUnit'];
+            this.volume = args['Volume'];
+            this.volumeUnitCode = args['VolumeUnit'];
+            this.SetUIProperties();
+        }
+    }
 
 
     private originPortId: string;
