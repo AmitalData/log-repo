@@ -341,6 +341,8 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public bool IsTestTenant { get; set; }
 
         public bool MainAdditionalPackageApplied { get; set; }
+        public double? TotalPrice { get; set; }
+
 
     }
 }
