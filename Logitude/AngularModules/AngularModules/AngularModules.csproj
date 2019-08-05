@@ -523,6 +523,7 @@
     <Content Include="Images\train.png" />
     <Content Include="Images\truck.png" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\MainSchedulerComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\ChooseProcedureCodeComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
@@ -1014,6 +1015,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\ListTemplates\SchedulerDurationListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\ListTemplates\SchedulerDateListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\MainSchedulerComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\ChooseProcedureCodeComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
