@@ -133,6 +133,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.IsINTTRAStockPrepaid = entityPM.IsINTTRAStockPrepaid;
             entityPOCO.IsINTTRAOnlyDemo = entityPM.IsINTTRAOnlyDemo;
             entityPOCO.MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied;
+            entityPOCO.TotalPrice = entityPM.TotalPrice;
 
             if (entityPM.IsMultiPackage)
             {

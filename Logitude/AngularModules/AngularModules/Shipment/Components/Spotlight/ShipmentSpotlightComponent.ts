@@ -124,10 +124,10 @@ export class ShipmentSpotlightComponent {
         if (allDeliveries.length == 0) {
             this.ItemsCollection.push(new LegItem(this, "NOD", "End"));
         }
-
+        
         else {
             for (var i = 0; i < allDeliveries.length; i++) {
-                var delvIndex: string = (i == 0) ? "End" : "Between";
+                var delvIndex: string = (i == (allDeliveries.length - 1)) ? "End" : "Between";
                 var delvItem: ShipmentDeliveryPM = allDeliveries[i];
                 this.ItemsCollection.push(new LegItem(this, "Delivery", delvIndex, null, delvItem));
             }
@@ -374,6 +374,7 @@ export class LegItem {
                 isHouseNotConnectedVisibile = false;
                 isHouseConnectedVisibile = false;
                 isHouseVisible = true;
+                break;
             }
 
             default:
@@ -389,6 +390,8 @@ export class LegItem {
                             isHouseConnectedVisibile = true;
                         }
                     }
+
+                    break;
                 }
         }
 

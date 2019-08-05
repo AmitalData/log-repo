@@ -10,7 +10,7 @@ export class OverviewTabComponent {
 
   } 
   OverviewTab(ShipmentType: string) {
-
+    this.Helper.WaitBusyIndicator();
     this.Helper.WaitByIdAndClick('Quote.TH.Overview');
     this.Helper.WaitByIdAndFill('Quote_Notes','Test From Lana');
   }

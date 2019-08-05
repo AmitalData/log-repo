@@ -143,6 +143,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public DateTime? FechaPago { get; set; }
         public bool IsExternalEntity { get; set; }
+        public string JournalNumber { get; set; }
+        public string JournalId { get; set; }
+
         private List<LedgerTransactionPM> invoicesLedgerTransactions;
         public virtual List<LedgerTransactionPM> InvoicesLedgerTransactions
         {

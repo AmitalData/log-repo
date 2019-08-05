@@ -4,7 +4,9 @@ import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
 import { OverviewTabComponent } from './OverviewTab';
 import { DetailsTabComponent} from './DetailsTab';
 import { PartnerTabComponent} from './PartnerTab';
-
+import { PackagesTabComponent} from './PackagesTab';
+import { RoutingsTabComponent} from './RoutingsTab';
+import { ChargesTabComponent} from './ChargesTab';
 
 export class EditTabsComponent {
   private Helper: FieldsHelper;
@@ -12,6 +14,9 @@ export class EditTabsComponent {
   private OverviewTabScenario: OverviewTabComponent;
   private DetailsTabScenario: DetailsTabComponent;
   private PartnerTabScenario: PartnerTabComponent;
+  private PackagesTabScenario: PackagesTabComponent;
+  private RoutingsTabScenario: RoutingsTabComponent;
+  private ChargesTabScenario: ChargesTabComponent;
  
 
   constructor() {
@@ -20,6 +25,9 @@ export class EditTabsComponent {
     this.OverviewTabScenario = new OverviewTabComponent();
     this.DetailsTabScenario = new DetailsTabComponent();
     this.PartnerTabScenario = new PartnerTabComponent();
+    this.PackagesTabScenario = new PackagesTabComponent();
+    this.RoutingsTabScenario = new RoutingsTabComponent();
+    this.ChargesTabScenario = new ChargesTabComponent();
    
   }
  
@@ -29,6 +37,9 @@ export class EditTabsComponent {
    this.OverviewTabScenario.OverviewTab(ShipmentType);
    this.DetailsTabScenario .DetailsTab(ShipmentType);
    this.PartnerTabScenario .PartnerTab(ShipmentType);
+   this.PackagesTabScenario .PackagesTab(ShipmentType,QuoteType);
+   this.RoutingsTabScenario .RoutingsTab(ShipmentType);
+   this.ChargesTabScenario .ChargesTab(ShipmentType);
   
 
   }
