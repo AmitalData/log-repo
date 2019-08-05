@@ -128,7 +128,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
             GetGLAccountFields(payment);
-
+            payment =  SetJournalFields(payment);
             ARPaymentPM securedPM = new ARPaymentPM();
             SecuredMapping.GetMappedPM(payment, securedPM, "ARPayment", tenant);
 
@@ -151,6 +151,32 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
             }
         }
+        private ARPaymentPM SetJournalFields(ARPaymentPM payment)
+        {
+            JournalPM journal = GetJournalByPaymentId(payment.Id, payment.Tenant);
+            if (journal != null)
+            {
+                payment.JournalId = journal.Id;
+                payment.JournalNumber = journal.JournalNumber;
+            }
+            return payment;
+        }
+
+        private JournalPM GetJournalByPaymentId(string paymentId, int tenant)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            JournalPM journal = journalQuery.GetJournalIdByAccountingEntityId(paymentId, tenant);
+            return journal;
+
+
+
+        }
+
+
+
+
+
+
 
         private GLAccountPM getGLAccount(string billToId, int tenant)
         {

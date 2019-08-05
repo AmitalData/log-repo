@@ -1,30 +1,25 @@
-﻿using System;
-using System.Web;
-using System.Linq;
-using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.BL.Helpers;
-using Logitude.BL.CommonDataModel.Tools.Validating;
-using Logitude.BL.CommonDataModel.Tools.TraceEvents;
-using Logitude.BL.CommonDataModel.Tools.DataMapping;
-using Logitude.BL.Security;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using System.Transactions;
-using Logitude.BL.GlobalModel;
+using Logitude.BL.CommonDataModel.Tools.DataMapping;
+using Logitude.BL.CommonDataModel.Tools.TraceEvents;
+using Logitude.BL.CommonDataModel.Tools.Validating;
+using Logitude.BL.Helpers;
+using Logitude.BL.Security;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Logitude.BL.GlobalModel.EntityQueries;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel;
-using Logitude.BL.DataContracts;
-using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Transactions;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -42,6 +37,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactTenantRepository contactTenantRepository;
         private UserPermittedBranchRepository userPermittedBranchRepository;
         private UserPermittedProductRepository userPermittedProductRepository;
+        private UserLicenseRepository userLicenseRepository;
         public UserService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -49,6 +45,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityRepository = new UserRepository(objectContext);
             this.userPermittedBranchRepository = new UserPermittedBranchRepository(objectContext);
             this.userPermittedProductRepository = new UserPermittedProductRepository(objectContext);
+            this.userLicenseRepository = new UserLicenseRepository(objectContext);
+
+            this.GetTenantManagement();
         }
 
         private List<UserPermittedBranchPM> userPermittedBranchPMChangeSet;
@@ -62,6 +61,36 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.userPermittedProductPMChangeSet = userPermittedProductPMChangeSet;
         }
         public bool SuppressMustChangePasswordDueSSO { get; set; }
+
+        private string packageCode;
+        private int? totalTenantManagementUsers = 0;
+        private bool isManageLicencesPerUser = false;
+        private bool isMultiPackages = false;
+        private bool mainAdditionalPackageApplied = false;
+        private void GetTenantManagement()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementRepository tenantMngmntRep = new TenantManagementRepository();
+                TenantManagement tenantManagement = tenantMngmntRep.GetSingleTenantManagement(tenant);
+
+                if (tenantManagement != null)
+                {
+                    packageCode = tenantManagement.PackageCode;
+                    isMultiPackages = tenantManagement.IsMultiPackage;
+                    mainAdditionalPackageApplied = tenantManagement.MainAdditionalPackageApplied;
+                    isManageLicencesPerUser = tenantManagement.ManageLicencesPerUser;
+
+                    totalTenantManagementUsers = tenantManagement.NumberOfUsers;
+                    if (tenantManagement.FreeUsers != null)
+                    {
+                        totalTenantManagementUsers += tenantManagement.FreeUsers;
+                    }
+                }
+
+                scope.Complete();
+            }
+        }
 
         public void Create(UserPM entityPM)
         {
@@ -87,7 +116,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 throw new Exception("This user personal Id already exists for another user!");
             }
-
+            
             contactRepository = new ContactRepository(objectContext);
             roleRepository = new RoleRepository(objectContext);
             contactTenantRoleRepository = new ContactTenantRoleRepository(objectContext);
@@ -105,11 +134,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 newContactTenant = InseartNewContact(entityPm);
             }
 
-
 			#region newUser roles
-
 			UpdateUserRolesForHybrid(entityPM, newContactTenant);
-
             #endregion
 
             foreach (UserPermittedBranchPM itemPM in entityPM.UserPermittedBranches)
@@ -134,17 +160,36 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 UserTracing.Trace(entityPM, Poco, isNewEntity);
             }
 
+            if (mainAdditionalPackageApplied && canAddUser && !entityPm.AdditionalPackagesOnly)
+            {
+                this.CreateUserLicense();
+            }
+
             entityPm.UserRoles = this.ComputeUserRoles();
             CheckDocumentFilingInbox(entityPm, Poco);
             UserMapping.MapEntity(entityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+
             if (!entityPM.IsHybrid)
             {
                 UpdateRolePM(entityPM);
             }
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "User");
+        }
+
+        private void CreateUserLicense()
+        {
+            UserLicense userLicense = new UserLicense()
+            {
+                Id = IdCounter.GetNumber("UserLicense", entityPm.Tenant).ToString(),
+                UserId = entityPm.Id,
+                PackageCode = this.packageCode,
+                Tenant = this.tenant,
+            };
+
+            userLicenseRepository.Add(userLicense);
         }
 
         private void UpdateUserRolesForHybrid(UserPM entityPM, ContactTenant contactTenant)
@@ -163,12 +208,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     foreach (UserRolesPM role in entityPM.Roles)
                     {
                         Role currentRole = allRoles.FirstOrDefault(r => r.Id == role.Id);
+
                         #region update role
                         if (role.Added)
                         {
                             ContactTenantRole contactTenantRole = new ContactTenantRole() { ContactTenantId = contactTenant.Id, RoleId = currentRole.Id, Id = IdCounter.GetNumber("ContactTenantRole", entityPM.Tenant).ToString(), Tenant = entityPM.Tenant };
                             contactTenantRoleRepository.Add(contactTenantRole);
                         }
+
                         if (role.Removed)
                         {
                             ContactTenantRole contactTenantRole = contactTenantRoleRepository.GetContactTenantRoleByRoleIdAndContactTenant(currentRole.Id, contactTenant.Id, entityPM.Tenant);
@@ -179,6 +226,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
 
                         roleRepository.Update(currentRole);
+
                         if (!entityPM.IsHybrid)
                         {
                             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Role");
@@ -279,9 +327,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     CacheManager.CacheWrapper.Invalidate(entityPmName);
                 }
             }
-
-            ContactPM contact = contactQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
-
+            
             this.UpdateUserPermittedPermitions();
 
             if (entityPM.IsBranchRestricted)
@@ -307,74 +353,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
 
-            bool isMultiPackages = false;
-            TenantManagement tenantMngmnt = null;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                GlobalContactRepository globalContactRepository = new GlobalContactRepository();
-                GlobalContact globalContact = globalContactRepository.GetSingleGlobalContact(entityPM.Id);
-                if (globalContact != null)
-                {
-                    globalContact.Email = entityPM.Email;
-                    globalContact.InActive = entityPM.InActive;
-                    globalContactRepository.Update(globalContact);
-                }
-
-                else
-                {
-                    GlobalContact gcontact = new GlobalContact() { Email = entityPM.Email, Id = entityPM.Id, GlobalTenantId = entityPM.Tenant, IsUser = true, };
-                    globalContactRepository.Add(gcontact);
-                }
-
-                globalContactRepository.SubmitChanges();
-
-                TenantManagementRepository tenantMngmntRep = new TenantManagementRepository();
-                tenantMngmnt = tenantMngmntRep.GetSingleTenantManagement(entityPM.Tenant);
-
-                isMultiPackages = tenantMngmnt.IsMultiPackage;
-
-                if (contact.Email.ToLower() != entityPm.Email.ToLower())
-                {
-                    IGlobalContext globalContext = GlobalContext.GetContext();
-
-                    if (!globalContext.ContactPasswords.Where(c => c.Email == entityPm.Email).Any())
-                    {
-                        ContactPassword contactPassword = new ContactPassword()
-                        {
-                            Email = entityPM.Email,
-                            Password = "123",
-                            IsLocked = false,
-                            NumberOfRetries = 0,
-                            MustChangePassword = false,
-                        };
-
-                        if (contactPassword.MustChangePassword && SuppressMustChangePasswordDueSSO)
-                        {
-                            contactPassword.MustChangePassword = false;
-                        }
-
-                        globalContext.ContactPasswords.Add(contactPassword);
-                        globalContext.SaveChanges();
-                    }
-                }
-
-                scope.Complete();
-            }
+            ContactPM contact = contactQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
+            this.UpdateGlobalContactAndPassword(contact);           
 
             if (!entityPM.IsHybrid)
             {
-                int? totalUsers = 0;
-                if (string.IsNullOrEmpty(tenantMngmnt.FreeUsers.ToString()))
-                {
-                    totalUsers = tenantMngmnt.NumberOfUsers;
-                }
-                else
-                {
-                    totalUsers = tenantMngmnt.NumberOfUsers + tenantMngmnt.FreeUsers;
-                }
-
                 int tenantUsersCount = 0;
-                if (tenantMngmnt.ManageLicencesPerUser)
+                if (isManageLicencesPerUser)
                 {
                     tenantUsersCount = entityRepository.GetUsers(entityPM.Tenant).Where(d => d.Contact.InActive == false && d.Contact.Email != "customercare@logitudeworld.com" && d.LicencedUser == true).Count();
 
@@ -387,7 +372,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             isUsersCountAllowed = true;
                         }
 
-                        else if (tenantUsersCount < totalUsers)
+                        else if (tenantUsersCount < totalTenantManagementUsers)
                         {
                             isUsersCountAllowed = true;
                         }
@@ -408,7 +393,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                     Tenant = 0,
                                     EventTypeCode = "UPMG",
                                     UserId = currentContact.Id,
-                                    EntityId = tenantMngmnt.Id.ToString(),
+                                    EntityId = tenant.ToString(),
                                     ObjectTableName = "TenantManagement",
                                     Notes = "The user " + entityPM.EnglishName + " is Licenced !!",
                                 });
@@ -424,78 +409,128 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 else
                 {
+                    bool isUsersCountAllowed = false;
                     tenantUsersCount = entityRepository.GetUsers(entityPM.Tenant).Where(d => d.Contact.InActive == false && d.Contact.Email != "customercare@logitudeworld.com").Count();
+                    string eventNotes = null;
 
-                    if (this.Poco.Contact.InActive && !entityPM.InActive)
+                    if (mainAdditionalPackageApplied)
                     {
-                        bool isUsersCountAllowed = false;
+                        int? userLicensesCount = userLicenseRepository.GetUserLicensesCountByPackageCode(packageCode, tenant);                        
 
-                        if (isMultiPackages)
+                        if (this.Poco.Contact.InActive && !entityPM.InActive)
                         {
-                            isUsersCountAllowed = true;
+                            if (userLicensesCount < totalTenantManagementUsers)
+                            {
+                                isUsersCountAllowed = true;
+                                eventNotes = "The user " + entityPM.EnglishName + " has been activated !!";
+                            }
+
+                            else
+                            {
+                                throw new Exception("Sorry You can't activate this user since you reached the maximum number of licenses !!");
+                            }
                         }
 
-                        else if (tenantUsersCount < totalUsers)
+                        if (this.Poco.AdditionalPackagesOnly && !entityPM.AdditionalPackagesOnly)
                         {
-                            isUsersCountAllowed = true;
-                        }
+                            if (userLicensesCount < totalTenantManagementUsers)
+                            {
+                                isUsersCountAllowed = true;
+                                eventNotes = "Additional packages only changes to false for the user: " + entityPM.EnglishName;
+                            }
 
-                        else if (entityPM.Tenant == 0 && !entityPm.IsDistributor)
-                        {
-                            isUsersCountAllowed = true;
+                            else
+                            {
+                                throw new Exception("Sorry You can't update this user since you reached the maximum number of licenses !!");
+                            }
                         }
 
                         if (isUsersCountAllowed)
                         {
-                            UserTracing.Trace(entityPM, Poco, isNewEntity);
+                            UserLicense userLicense = userLicenseRepository.GetSingleUserLicenseByUserAndPackage(entityPm.Id, packageCode, tenant);
+                            if(userLicense == null)
+                            {
+                                this.CreateUserLicense();
+                            }
 
-                            if (contact != null)
+                            if (currentContact != null)
                             {
                                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                                 {
                                     Tenant = 0,
                                     EventTypeCode = "UPMG",
                                     UserId = currentContact.Id,
-                                    EntityId = tenantMngmnt.Id.ToString(),
+                                    EntityId = tenant.ToString(),
                                     ObjectTableName = "TenantManagement",
-                                    Notes = "The user " + entityPM.EnglishName + " has been activated !!",
+                                    Notes = eventNotes,
                                 });
                             }
                         }
+                    }
 
-                        else
+                    else
+                    {
+                        if (this.Poco.Contact.InActive && !entityPM.InActive)
                         {
-                            throw new Exception("Sorry You can't activate this user since you reached the maximum number of users !!");
+                            if (isMultiPackages)
+                            {
+                                isUsersCountAllowed = true;
+                            }
+
+                            else if (tenantUsersCount < totalTenantManagementUsers)
+                            {
+                                isUsersCountAllowed = true;
+                            }
+
+                            else if (entityPM.Tenant == 0 && !entityPm.IsDistributor)
+                            {
+                                isUsersCountAllowed = true;
+                            }
+
+                            if (isUsersCountAllowed)
+                            {
+                                if (currentContact != null)
+                                {
+                                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                    {
+                                        Tenant = 0,
+                                        EventTypeCode = "UPMG",
+                                        UserId = currentContact.Id,
+                                        EntityId = tenant.ToString(),
+                                        ObjectTableName = "TenantManagement",
+                                        Notes = "The user " + entityPM.EnglishName + " has been activated !!",
+                                    });
+                                }
+                            }
+
+                            else
+                            {
+                                throw new Exception("Sorry You can't activate this user since you reached the maximum number of users !!");
+                            }
                         }
                     }
                 }
 
                 //inactive + licenses
-                if (tenantMngmnt.IsMultiPackage)
+                if (isMultiPackages || mainAdditionalPackageApplied)
                 {
-                    if (entityPM.InActive && !Poco.Contact.InActive)
+                    if ((entityPM.InActive && !Poco.Contact.InActive) || (entityPM.AdditionalPackagesOnly && !Poco.AdditionalPackagesOnly))
                     {
-                        UserLicenseRepository repository = new UserLicenseRepository(objectContext);
-                        List<UserLicense> licenses = repository.GetUserLicensesByUserId(entityPM.Id, tenant);
+                        List<UserLicense> licenses = userLicenseRepository.GetUserLicensesByUserId(entityPM.Id, tenant);
 
                         if (licenses.Count > 0)
                         {
                             foreach (UserLicense item in licenses)
                             {
-                                repository.Remove(item);
+                                userLicenseRepository.Remove(item);
                             }
-
-                            repository.SubmitChanges();
                         }
                     }
                 }
-            }
 
-            if (!entityPM.IsHybrid)
-            {
                 UserTracing.Trace(entityPM, Poco, isNewEntity);
             }
-
+            
             entityPm.UserRoles = this.ComputeUserRoles();
             CheckDocumentFilingInbox(entityPM, Poco);
             ContactService service = new ContactService(objectContext, entityPM.Tenant);
@@ -509,6 +544,56 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "User");
+        }
+
+        private void UpdateGlobalContactAndPassword(ContactPM contact)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                GlobalContactRepository globalContactRepository = new GlobalContactRepository();
+                GlobalContact globalContact = globalContactRepository.GetSingleGlobalContact(entityPm.Id);
+                if (globalContact != null)
+                {
+                    globalContact.Email = entityPm.Email;
+                    globalContact.InActive = entityPm.InActive;
+                    globalContactRepository.Update(globalContact);
+                }
+
+                else
+                {
+                    GlobalContact gcontact = new GlobalContact() { Email = entityPm.Email, Id = entityPm.Id, GlobalTenantId = entityPm.Tenant, IsUser = true, };
+                    globalContactRepository.Add(gcontact);
+                }
+
+                globalContactRepository.SubmitChanges();
+
+                if (contact.Email.ToLower() != entityPm.Email.ToLower())
+                {
+                    IGlobalContext globalContext = GlobalContext.GetContext();
+
+                    if (!globalContext.ContactPasswords.Where(c => c.Email == entityPm.Email).Any())
+                    {
+                        ContactPassword contactPassword = new ContactPassword()
+                        {
+                            Email = entityPm.Email,
+                            Password = "123",
+                            IsLocked = false,
+                            NumberOfRetries = 0,
+                            MustChangePassword = false,
+                        };
+
+                        if (contactPassword.MustChangePassword && SuppressMustChangePasswordDueSSO)
+                        {
+                            contactPassword.MustChangePassword = false;
+                        }
+
+                        globalContext.ContactPasswords.Add(contactPassword);
+                        globalContext.SaveChanges();
+                    }
+                }
+
+                scope.Complete();
+            }
         }
 
         private void MapUserToContact(UserPM user, Contact contact)
@@ -525,11 +610,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             contact.Mobile = user.Mobile;
             contact.Notes = user.Notes;
             contact.Tenant = user.Tenant;
-
-            //contact.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true; // bug 44449
-
+            
             string mySearchFields = "";
-
             MethodHelper.AddToSearchFields(ref mySearchFields, user.EnglishName);
             MethodHelper.AddToSearchFields(ref mySearchFields, user.LocalName);
             MethodHelper.AddToSearchFields(ref mySearchFields, user.Email);
@@ -567,7 +649,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private ContactTenant InseartNewContact(UserPM entityPM)
         {
-
             entityPM.Email = entityPM.Email.ToLower();
 
             Contact newContact = new Contact();
@@ -591,12 +672,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             newContact.UserType = "R";
             newContact.IndexColor = rnd.Next(1, 20);
             RoleQuery roleQuery = new RoleQuery(roleRepository);
+
             ContactTenant newContactTenant = new ContactTenant()
             {
                 Id = IdCounter.GetNumber("ContactTenant", entityPM.Tenant).ToString(),
                 TenantId = newContact.Tenant,
                 ContactId = newContact.Id,
             };
+
             contactRepository.Add(newContact);
             contactTenantRepository.Add(newContactTenant);
 
@@ -674,7 +757,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private ContactTenant ConnectToExistedContact(UserPM entityPM, Contact contact)
         {
-
             entityPM.Email = entityPM.Email.ToLower();
 
             Contact adminContact = contactRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
@@ -705,10 +787,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 MustChangePassword = (contact.Email != "customercare@logitudeworld.com"),
                                 IsBCrypt = true,
                             };
+
                             if (contactPassword.MustChangePassword && SuppressMustChangePasswordDueSSO)
                             {
                                 contactPassword.MustChangePassword = false;
                             }
+
                             globalContext.ContactPasswords.Add(contactPassword);
                         }
                     }
@@ -757,6 +841,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 contactTenantRepository.Add(contactTenant);
                 contactTenantRepository.SubmitChanges();
             }
+
             return contactTenant;
         }
 
@@ -820,6 +905,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
+        
         private bool CheckTenantManagementNumberOfUsers()
         {
             bool canAddUser = false;
@@ -831,34 +917,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             else
             {
-                int? totalUsers = 0;
-                bool isManageLicencesPerUser = false;
-                bool isMultiPackages = false;
-                bool mainAdditionalPackageApplied = false;
-
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    TenantManagementRepository tenantMngmntRep = new TenantManagementRepository();
-                    TenantManagement tenantManagement = tenantMngmntRep.GetSingleTenantManagement(tenant);
-
-                    isMultiPackages = tenantManagement.IsMultiPackage;
-                    mainAdditionalPackageApplied = tenantManagement.MainAdditionalPackageApplied;
-                    isManageLicencesPerUser = tenantManagement.ManageLicencesPerUser;
-
-                    totalUsers = tenantManagement.NumberOfUsers;
-                    if (tenantManagement.FreeUsers != null)
-                    {
-                        totalUsers += tenantManagement.FreeUsers;
-                    }
-                }
-
                 IQueryable<User> allTenantUsers = entityRepository.GetUsers(tenant);
                 allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false);
                 int tenantUsers = allTenantUsers.Count();
 
                 if (mainAdditionalPackageApplied)
                 {
-                    if (tenantUsers < totalUsers)
+                    int? userLicensesCount = userLicenseRepository.GetUserLicensesCountByPackageCode(packageCode, tenant);
+
+                    if (userLicensesCount < totalTenantManagementUsers)
                     {
                         canAddUser = true;
                     }
@@ -885,9 +952,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
 
                     else
-                    {
-                        
-
+                    {  
                         if (isManageLicencesPerUser)
                         {
                             allTenantUsers = allTenantUsers.Where(d => d.LicencedUser == true);
@@ -895,7 +960,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                             if (entityPm.LicencedUser)
                             {
-                                if (tenantUsers < totalUsers)
+                                if (tenantUsers < totalTenantManagementUsers)
                                 {
                                     canAddUser = true;
                                 }
@@ -909,7 +974,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         else
                         {
-                            if (tenantUsers < totalUsers)
+                            if (tenantUsers < totalTenantManagementUsers)
                             {
                                 canAddUser = true;
                             }
@@ -931,31 +996,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             UserPermittedBranchMapping.MapEntity(entityPM, Poco, true);
             userPermittedBranchRepository.Add(Poco);
-
         }
         private void UpdateUserPermittedBranch(UserPermittedBranchPM entityPM)
         {
-
             UserPermittedBranch Poco = userPermittedBranchRepository.GetSingleUserPermittedBranch(entityPM.Id, entityPM.Tenant);
-
             UserPermittedBranchValidating.Validate(entityPM);
-
             UserPermittedBranchMapping.MapEntity(entityPM, Poco, false);
             userPermittedBranchRepository.Update(Poco);
-
-
         }
         private void DeleteUserPermittedBranch(UserPermittedBranchPM entityPM)
         {
-
             UserPermittedBranch Poco = userPermittedBranchRepository.GetSingleUserPermittedBranch(entityPM.Id, entityPM.Tenant);
-
             UserPermittedBranchValidating.Validate(entityPM);
-
-
             userPermittedBranchRepository.Remove(Poco);
-
-
         }
 
         private void CreateUserPermittedProduct(UserPermittedProductPM entityPM)
@@ -967,7 +1020,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             UserPermittedProductValidating.Validate(entityPM);
             UserPermittedProductMapping.MapEntity(entityPM, Poco, true);
             userPermittedProductRepository.Add(Poco);
-
         }
         private void UpdateUserPermittedProduct(UserPermittedProductPM entityPM)
         {
@@ -993,6 +1045,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     RoleService roleService = new RoleService(MyContext, entityPM.Tenant);
                     roleService.Update(rolePM);
                 }
+
                 entityPM.RolePMLists = new List<RolePM>();
             }
         }
@@ -1020,6 +1073,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     exists = entityRepository.IsUserIdExist(entityPM.PersonalId, entityPM.Tenant);
                 }
             }
+
             return exists;
         }
 
@@ -1050,6 +1104,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
+
             else
             {
                 var isExists = entityRepository.IsDocumentFilingInboxExist(entityPM.DocumentFilingInbox);

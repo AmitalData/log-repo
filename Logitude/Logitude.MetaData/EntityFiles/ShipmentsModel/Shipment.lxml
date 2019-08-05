@@ -2296,6 +2296,7 @@
     <TextCode Code="&quot;Shipment.B.Packages.UploadPackages&quot;" DefaultText="&quot;Upload&quot;" LocalDefaultText="&quot;Upload&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.B.Master.NewMaster&quot;" DefaultText="&quot;New Master&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.Overview.ConnectedHouses&quot;" DefaultText="&quot;Connected Houses&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.M.AWB.ValidateFNA&quot;" DefaultText="&quot;SSR/NFY/OSI/COR can't be more than 216 characters, please edit the comments / handling info to enable sending&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;CSPV&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.CSPV&quot;" FeatureDefaultText="&quot;Allow user to control the spotlight per view&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
@@ -2307,5 +2308,6 @@
     <Feature Code="&quot;INTTRABookingSimulator&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.INTTRABookingSimulator&quot;" FeatureDefaultText="&quot;Send INTTRA Booking&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;NEWMASTERFROMHOUSE&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.NEWMASTERFROMHOUSE&quot;" FeatureDefaultText="&quot;New Master From House&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;DeleteAllPayables&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.DeleteAllPayables&quot;" FeatureDefaultText="&quot;Delete All Payables&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;ShipmentPriceCheck&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.ShipmentPriceCheck&quot;" FeatureDefaultText="&quot;Price Check&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

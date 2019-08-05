@@ -97,5 +97,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from d in context.UserLicenses where d.Tenant == tenant && d.UserId == userId select d).ToList();
         }
+
+        public int? GetUserLicensesCountByPackageCode(string packageCode,int tenant)
+        {
+            return (from d in context.UserLicenses where d.PackageCode == packageCode && d.Tenant == tenant select d).Count();
+        }
     }
 }

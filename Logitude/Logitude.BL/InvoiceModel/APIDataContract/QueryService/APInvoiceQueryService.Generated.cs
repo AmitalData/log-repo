@@ -74,8 +74,7 @@ using Simplog.Data.InvoiceModel;
 					   				   }
 				   
 				   temp.VATNumber = MyEntityPM.VATNumber;
-				   temp.InvoiceNumber = MyEntityPM.InvoiceNumber;
-				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;			  
+				   temp.InvoiceNumber = MyEntityPM.InvoiceNumber;			  
 				   if(MyEntityPM.InvoiceCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService1 = new CurrencyQueryService(Tenant);
@@ -165,7 +164,16 @@ using Simplog.Data.InvoiceModel;
 				   temp.IsExternalEntity = MyEntityPM.IsExternalEntity;
 				   temp.IsGeneralInvoice = MyEntityPM.IsGeneralInvoice;
 				   temp.ExternalAccountingEntityId = MyEntityPM.ExternalAccountingEntityId;
-				   temp.Id = MyEntityPM.Id;					
+				   temp.Id = MyEntityPM.Id;
+				if(MyEntityPM.InvoiceLines != null && MyEntityPM.InvoiceLines.Count > 0)
+				{
+					 APInvoiceLineQueryService APInvoiceLineService10 = new APInvoiceLineQueryService(Tenant);
+					 temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMapping(MyEntityPM.InvoiceLines,Tenant);
+				}
+
+							 
+				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;
+				   temp.InvoiceExpectedAmount = MyEntityPM.InvoiceExpectedAmount;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -186,11 +194,12 @@ using Simplog.Data.InvoiceModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("APInvoice with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					temp.Tenant = MyEntity.Tenant;
-					temp.InternalNumber = MyEntity.InternalNumber;					VendorQueryService VendorVendorService = new VendorQueryService(Tenant);
+					temp.InternalNumber = MyEntity.InternalNumber;
+					VendorQueryService VendorVendorService = new VendorQueryService(Tenant);
 					if(MyEntity.Vendor != null)
 					{
 						var myVendorPM = VendorVendorService.VendorDataMappingAndValidatin(MyEntity.Vendor,Tenant,ComputingPartnerName);
@@ -204,7 +213,7 @@ using Simplog.Data.InvoiceModel;
 					
 					temp.VATNumber = MyEntity.VATNumber;
 					temp.InvoiceNumber = MyEntity.InvoiceNumber;
-					temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;					CurrencyQueryService InvoiceCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					CurrencyQueryService InvoiceCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.InvoiceCurrency != null)
 					{
 						var myInvoiceCurrencyPM = InvoiceCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.InvoiceCurrency,Tenant,ComputingPartnerName);
@@ -218,7 +227,8 @@ using Simplog.Data.InvoiceModel;
 					
 					temp.InvoiceCurrencyExchangeRate = MyEntity.InvoiceCurrencyExchangeRate;
 					temp.InvoiceDate = MyEntity.InvoiceDate;
-					temp.AccountingDate = MyEntity.AccountingDate;					PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
+					temp.AccountingDate = MyEntity.AccountingDate;
+					PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
 					if(MyEntity.PaymentTerm != null)
 					{
 						var myPaymentTermPM = PaymentTermPaymentTermService.PaymentTermDataMappingAndValidatin(MyEntity.PaymentTerm,Tenant,ComputingPartnerName);
@@ -231,7 +241,8 @@ using Simplog.Data.InvoiceModel;
 			
 					
 					temp.DueDate = MyEntity.DueDate;
-					temp.ExchangeRateDate = MyEntity.ExchangeRateDate;					CurrencyQueryService LocalCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					temp.ExchangeRateDate = MyEntity.ExchangeRateDate;
+					CurrencyQueryService LocalCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.LocalCurrency != null)
 					{
 						var myLocalCurrencyPM = LocalCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.LocalCurrency,Tenant,ComputingPartnerName);
@@ -246,7 +257,8 @@ using Simplog.Data.InvoiceModel;
 					temp.InternalNotes = MyEntity.InternalNotes;
 					temp.SubTotalInLocalCurrency = MyEntity.SubTotalInLocalCurrency;
 					temp.SubTotalInInvoiceCurrency = MyEntity.SubTotalInInvoiceCurrency;
-					temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;					APInvoiceStatusQueryService StatusAPInvoiceStatusService = new APInvoiceStatusQueryService(Tenant);
+					temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;
+					APInvoiceStatusQueryService StatusAPInvoiceStatusService = new APInvoiceStatusQueryService(Tenant);
 					if(MyEntity.Status != null)
 					{
 						var myStatusPM = StatusAPInvoiceStatusService.APInvoiceStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName);
@@ -257,7 +269,8 @@ using Simplog.Data.InvoiceModel;
 						 
 					}
 			
-										CurrencyQueryService ProfitCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					
+					CurrencyQueryService ProfitCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.ProfitCurrency != null)
 					{
 						var myProfitCurrencyPM = ProfitCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.ProfitCurrency,Tenant,ComputingPartnerName);
@@ -270,7 +283,8 @@ using Simplog.Data.InvoiceModel;
 			
 					
 					temp.ProfitCurrencyExchangeRate = MyEntity.ProfitCurrencyExchangeRate;
-					temp.AmountInProfitCurrency = MyEntity.AmountInProfitCurrency;					UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
+					temp.AmountInProfitCurrency = MyEntity.AmountInProfitCurrency;
+					UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.UpdatedByUser != null)
 					{
 						var myUpdatedByUserPM = UpdatedByUserUserService.UserDataMappingAndValidatin(MyEntity.UpdatedByUser,Tenant,ComputingPartnerName);
@@ -286,7 +300,8 @@ using Simplog.Data.InvoiceModel;
 					temp.AmountDue = MyEntity.AmountDue;
 					temp.AmountDueInLocalCurrency = MyEntity.AmountDueInLocalCurrency;
 					temp.AmountDueInProfitCurrency = MyEntity.AmountDueInProfitCurrency;
-					temp.RefundAmount = MyEntity.RefundAmount;					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
+					temp.RefundAmount = MyEntity.RefundAmount;
+					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
 					if(MyEntity.Branch != null)
 					{
 						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName);
@@ -303,7 +318,8 @@ using Simplog.Data.InvoiceModel;
 					temp.Description = MyEntity.Description;
 					temp.AccountingExternalCode = MyEntity.AccountingExternalCode;
 					temp.CreditAccount = MyEntity.CreditAccount;
-					temp.PaymentTermExternalId = MyEntity.PaymentTermExternalId;					APInvoiceTransferStatusQueryService TransferStatusAPInvoiceTransferStatusService = new APInvoiceTransferStatusQueryService(Tenant);
+					temp.PaymentTermExternalId = MyEntity.PaymentTermExternalId;
+					APInvoiceTransferStatusQueryService TransferStatusAPInvoiceTransferStatusService = new APInvoiceTransferStatusQueryService(Tenant);
 					if(MyEntity.TransferStatus != null)
 					{
 						var myTransferStatusPM = TransferStatusAPInvoiceTransferStatusService.APInvoiceTransferStatusDataMappingAndValidatin(MyEntity.TransferStatus,Tenant,ComputingPartnerName);
@@ -315,7 +331,8 @@ using Simplog.Data.InvoiceModel;
 					}
 			
 					
-					temp.ApprovedDate = MyEntity.ApprovedDate;					UserQueryService ApprovedByUserUserService = new UserQueryService(Tenant);
+					temp.ApprovedDate = MyEntity.ApprovedDate;
+					UserQueryService ApprovedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.ApprovedByUser != null)
 					{
 						var myApprovedByUserPM = ApprovedByUserUserService.UserDataMappingAndValidatin(MyEntity.ApprovedByUser,Tenant,ComputingPartnerName);
@@ -333,7 +350,17 @@ using Simplog.Data.InvoiceModel;
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 						temp.Id = MyEntity.Id;
-					}					   
+					} 
+
+					if(MyEntity.InvoiceLines != null && MyEntity.InvoiceLines.Count > 0)
+					{
+						APInvoiceLineQueryService APInvoiceLineService10 = new APInvoiceLineQueryService(Tenant);
+						temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMappingAndValidatin(MyEntity.InvoiceLines,Tenant,ComputingPartnerName);
+					}
+
+								 
+					temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
+					temp.InvoiceExpectedAmount = MyEntity.InvoiceExpectedAmount;					   
 					   return temp;
 		    }
             catch (Exception ex)

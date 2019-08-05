@@ -81,7 +81,7 @@ using Simplog.Data.CommonDataModel;
 						temp = query.GetSinglePM(MyEntity.Code);
 					} 					   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("DimensionsUnit with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Code))

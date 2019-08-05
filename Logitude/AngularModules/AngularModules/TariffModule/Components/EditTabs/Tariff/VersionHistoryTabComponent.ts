@@ -76,6 +76,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
     }
 
     private SaveCompletedEvent: any = null;
+    private SessionEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -88,11 +89,21 @@ export class VersionHistoryTabComponent implements OnDestroy {
                     }
                 }
             });
+
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "TariffLinesDeleted") {
+
+                    if (this.EntityPM != null && this.VersionPM != null) {
+                        this.LoadTariffLines();
+                    }
+                }
+            });
         }
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     public Step1PriceLabel: string;
@@ -377,7 +388,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 450;
             logWindow.Height = 200;
-            logWindow.WindowArgs = this.VersionPM;
+            var windowArgs: any = {};
+            windowArgs.CurrentVersion = this.VersionPM;
+            windowArgs.TariffType = this.EntityPM.TypeCode;
+            logWindow.WindowArgs = windowArgs;
             logWindow.Title = windowTitle;
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe(d => {
@@ -413,9 +427,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
         this.EntityPM.AddTariffVersion(copiedVersion);
 
         this.tariffLines.forEach(item => {
-            var tariffLine = new TariffLinePM(copiedVersion);
-            tariffLine.StartDate = this.VersionPM.StartDate;
-            tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
+            var tariffLine = new TariffLinePM(copiedVersion);            
             tariffLine.Tenant = SessionLocator.Tenant;
             tariffLine.Version = copiedVersion.Version;
             tariffLine.OriginPortId = item.OriginPortId;
@@ -424,6 +436,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
             tariffLine.DestinationPortId = item.DestinationPortId;
             tariffLine.DestinationPortCode = item.DestinationPortCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
+            tariffLine.Index = item.Index;
+            tariffLine.Notes = item.Notes;
+            tariffLine.IsFromAllOtherPorts = item.IsFromAllOtherPorts;
+            tariffLine.IsToAllOtherPorts = item.IsToAllOtherPorts;
 
             if (this.EntityPM.TypeCode == "AFC") {
                 tariffLine.MinPrice = item.MinPrice;
@@ -435,6 +451,8 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Step6Price = item.Step6Price;
                 tariffLine.Step7Price = item.Step7Price;
                 tariffLine.Step8Price = item.Step8Price;
+                tariffLine.StartDate = this.VersionPM.StartDate;
+                tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
             }
 
             else if (this.EntityPM.TypeCode == "ASC") {
@@ -448,6 +466,8 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Surcharge8Price = item.Surcharge8Price;
                 tariffLine.Surcharge9Price = item.Surcharge9Price;
                 tariffLine.Surcharge10Price = item.Surcharge10Price;
+                tariffLine.StartDate = item.StartDate;
+                tariffLine.ExpirationDate = item.ExpirationDate;
             }
 
             copiedVersion.AddTariffLine(tariffLine);

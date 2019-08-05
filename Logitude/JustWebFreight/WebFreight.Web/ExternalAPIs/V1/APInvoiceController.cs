@@ -12,7 +12,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel; 
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -60,6 +60,69 @@ namespace WebFreight.Web.ExternalAPIs.V1
             catch (Exception ex)
             {
                 var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
+
+        public HttpResponseMessage Post(APInvoice apinvoice)
+        {
+            APInvoice oldEntity = apinvoice;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        int tenant = authToken.Tenant;
+
+                        SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+
+                        if (apinvoice != null) oldEntity = LogitudeXmlSerializer.DeserializeObject<APInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(apinvoice));
+
+                        IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+                        APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
+
+                        apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
+                        APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
+
+
+                        
+
+                        APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
+                        apinvoiceService.Create(apinvoicePM);
+
+
+                        APIHelper.AddCommunicationLog("D", oldEntity, apinvoice, "APInvoice", apinvoicePM.Id, "APInvoice API", tenant);
+
+
+
+
+
+                        scope.Complete();
+
+
+                        return Request.CreateResponse(HttpStatusCode.OK, apinvoice);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                    APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "APInvoice", null, "APInvoice API");
+                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                }
+            }
+
+            else
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
+                APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "APInvoice", null, "APInvoice API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }

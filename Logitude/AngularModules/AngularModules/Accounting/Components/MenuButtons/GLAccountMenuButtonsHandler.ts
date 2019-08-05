@@ -153,13 +153,13 @@ export class GLAccountMenuButtonsHandler {
 
 
                 case "GLAccountReactivate": {
-                    this.SetInactiveField(false);
+                    this.UpdateInactiveField(false);
                     break;
                 }
 
                 case "GLAccountInactive":
                     {
-                        this.SetInactiveField(true);
+                        this.UpdateInactiveField(true);
                         //var myGLAccountListService: GLAccountListService = new GLAccountListService();
                         //myGLAccountListService.getSingle(this.EntityPM.Id)
                         //    .subscribe((myResponse: ServiceResponse) => {
@@ -199,7 +199,7 @@ export class GLAccountMenuButtonsHandler {
         this.CurrentSession.StartBusyIndicator(message);
     }
 
-    private SetInactiveField(inactive:boolean) {
+    private UpdateInactiveField(inactive:boolean) {
        
         var myGLAccountListService: GLAccountListService = new GLAccountListService();
         myGLAccountListService.getSingle(this.EntityPM.Id)
@@ -208,9 +208,10 @@ export class GLAccountMenuButtonsHandler {
 
                 if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) {
                     this.EntityPM.Inactive = inactive;
-                    if (inactive)
-                    this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
-                    this.entityArgs.EditComponent.SaveChanges();
+                    if (inactive) {
+                        this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
+                    }
+                    this.SaveChenges();
                 } else {
                     this.entityArgs.EditComponent.ValidationErrorsList = [];
                     this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));

@@ -39,15 +39,15 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public VatType GetVatTypeById(string Id,int Tenant)
+		public VatType GetVatTypeByCode(string Code,int Tenant)
         { 
 		    try
             {
 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
 				 if (temp == null)
-                    throw new ApplicationException("VatType with Id " + Id + " doesn't exist");
+                    throw new ApplicationException("VatType with Code " + Code + " doesn't exist");
 
 				return VatTypeDataMapping(temp,Tenant);
 			}
@@ -86,10 +86,14 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-					    throw new ApplicationException("VatType with Id " + MyEntity.Id + " doesn't exist");
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
+					} 					   
+					if(temp == null)
+					{   
+					    throw new ApplicationException("VatType with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{

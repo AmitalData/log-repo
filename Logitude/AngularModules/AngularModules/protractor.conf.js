@@ -21,7 +21,7 @@ exports.config = {
         },
         QuoteParams: {
             Direction: null,
-            TransportMode: null, 
+            TransportMode: null,
             ShipmentType: null,
             QuoteType: null,
         },
@@ -93,6 +93,11 @@ exports.config = {
             browser.params.Login.Email = "raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
         }
+        else if (browser.params.Env == "prod_1") {
+            browser.params.Link = "https://system.logitudeworld.com";
+            browser.params.Login.Email = "Raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
+        }
         else if (browser.params.Env == "test_1071") {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "sgautomation@pro.com";
@@ -120,8 +125,8 @@ exports.config = {
         }
 
 
-     //   jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-       // jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'D:/Automation E2E reuslts/screenshots' }).getJasmine2Reporter());
+        //   jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+        // jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'D:/Automation E2E reuslts/screenshots' }).getJasmine2Reporter());
     },
 
     suites: {
@@ -131,38 +136,31 @@ exports.config = {
         login: 'e2e/Login/**/Login.e2e-spec.ts',
         NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
 
-     //   FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
-        //   ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
-        //   CRM: 'e2e/CRM/**/CRMModule-spec.ts',
-        //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
+        FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
+        ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
+        CRM: 'e2e/CRM/**/CRMModule-spec.ts',
+       //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
 
-        // NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
-        // NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
-        //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
-
-        //EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
-        //  ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
+        NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+        NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
+        Contact: 'e2e/Contacts/**/Contacts-spec.ts',
+        EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
+        ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
 
         // ********************* FullAccounting **********************************
-        //  NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
-
-        // vendorgla: 'FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
-        // APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
-
-
-
-
-        //GLAccount: 'FullAccounting/**/GLAccounts/GlAccount-spec.ts',
-
+        NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
+        vendorgla: 'FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
+        APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
+        GLAccount: 'FullAccounting/**/GLAccounts/GlAccount-spec.ts',
 
         //*************Report********************
-        //  Reports: 'e2e/Report/**/Report-spec.ts',
+        Reports: 'e2e/Report/**/Report-spec.ts',
 
-         //*************ShipmentView********************
-        ShipmentView: 'e2e/**/ShipmentView-spec.ts'
+        //*************ShipmentView********************
+        ShipmentView: 'e2e/**/ShipmentView-spec.ts',
 
         //*************DocOutTab***************
-       //  DocOut: 'e2e/**/DocsOut.e2e-spec.ts'
+        DocOut: 'e2e/**/DocsOut.e2e-spec.ts'
 
 
     },
