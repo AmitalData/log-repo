@@ -388,7 +388,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 450;
             logWindow.Height = 200;
-            logWindow.WindowArgs = this.VersionPM;
+            var windowArgs: any = {};
+            windowArgs.CurrentVersion = this.VersionPM;
+            windowArgs.TariffType = this.EntityPM.TypeCode;
+            logWindow.WindowArgs = windowArgs;
             logWindow.Title = windowTitle;
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe(d => {

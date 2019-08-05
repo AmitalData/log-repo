@@ -75,9 +75,9 @@ export class UserWorkspaceComponent implements OnInit {
         var isLicensesManagmentSystem: boolean = false;        
 
         if (SessionLocator.TenantManagementJS.IsMultiPackage) {
-            if (FeatureLocator.HasFeaturePermession("User", "User.Feature.LicensesManagment")) {
+            //if (FeatureLocator.HasFeaturePermession("User", "User.Feature.LicensesManagment")) {
                 isLicensesManagmentSystem = true;
-            }
+            //}
         }
 
         else if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
