@@ -828,6 +828,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.Notify1Card).WithMany().HasForeignKey(d => d.Notify1Id);
             this.HasOptional(t => t.Notify2Card).WithMany().HasForeignKey(d => d.Notify2Id);
             this.HasOptional(t => t.AgentCard).WithMany().HasForeignKey(d => d.AgentId);
+            this.HasOptional(t => t.AgentComputedCard).WithMany().HasForeignKey(d => d.AgentComputed);
             this.HasOptional(t => t.ShipperNotExporterCard).WithMany().HasForeignKey(d => d.ShipperNotExporterId);
             this.HasOptional(t => t.AgentContact).WithMany().HasForeignKey(d => d.AgentContactId);
             this.HasOptional(t => t.ShipperContact).WithMany().HasForeignKey(d => d.ShipperContactId);

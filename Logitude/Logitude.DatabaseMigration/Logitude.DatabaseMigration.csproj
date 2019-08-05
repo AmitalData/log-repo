@@ -1365,6 +1365,10 @@
     <Compile Include="Migrations\201908050856575_Nawras1.Designer.cs">
       <DependentUpon>201908050856575_Nawras1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908051220023_ShipmentcomputedField_Khalid_ForeignKey.cs" />
+    <Compile Include="Migrations\201908051220023_ShipmentcomputedField_Khalid_ForeignKey.Designer.cs">
+      <DependentUpon>201908051220023_ShipmentcomputedField_Khalid_ForeignKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2330,6 +2334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908050856575_Nawras1.resx">
       <DependentUpon>201908050856575_Nawras1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908051220023_ShipmentcomputedField_Khalid_ForeignKey.resx">
+      <DependentUpon>201908051220023_ShipmentcomputedField_Khalid_ForeignKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
