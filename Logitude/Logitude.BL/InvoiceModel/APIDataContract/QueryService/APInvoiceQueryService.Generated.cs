@@ -213,6 +213,7 @@ using Simplog.Data.InvoiceModel;
 					temp.VATNumber = MyEntity.VATNumber;
 					temp.InvoiceNumber = MyEntity.InvoiceNumber;
 					temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
+					temp.InvoiceExpectedAmount = MyEntity.AmountInInvoiceCurrency;
 					CurrencyQueryService InvoiceCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.InvoiceCurrency != null)
 					{

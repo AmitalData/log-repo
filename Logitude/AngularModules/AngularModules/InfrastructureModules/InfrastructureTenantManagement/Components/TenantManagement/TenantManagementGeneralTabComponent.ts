@@ -2,8 +2,8 @@ declare var window: any;
 import {Component, OnInit, OnDestroy}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {CodeNameClass} from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import {AppTool} from '../../../../Infrastructure/Tools';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ObjectTablePM} from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
@@ -115,6 +115,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.SetUIProperties_TemporalPackage();
             this.SetUIProperties_TenantType();
             this.SetUIProperties_ParentTenant();
+            this.SetUIProperties_TotalPrice();
         }
 
         else {
@@ -153,6 +154,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("TenantTypeCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("TenantConnectedToAirlineCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsParentTenant", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, false);            
         }
 
         if (SessionLocator.Tenant == 0) {
@@ -300,6 +302,9 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("IsParentTenant", this.ObjectTableName, true);
         }
     }
+    SetUIProperties_TotalPrice() {
+        this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, this.MainAdditionalPackageApplied == false);
+    }
 
     private CloseBillingFields(close: boolean) {
         this.UIProperties.SetEnabled("IsRecurring", "TenantManagement", !close);
@@ -314,7 +319,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         this.UIProperties.SetEnabled("PaymentCurrencyCode", "TenantManagement", !close);
     }
 
-    private IsTenantManagementEditable() {
+    private IsTenantManagementEditable () {
         var myResult = false;
 
         if (FeatureLocator.HasFeaturePermession("TenantManagement", "EnableTenantManagementEdit")) {
@@ -775,7 +780,20 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                     this.PackagesList.push(new PackageItem(item, this, false));
                 }
             });
+
+            this.ComputePackagesTotals();
         });
+    }
+
+    public PackagesTotalNumberOfUsers: number = 0;
+    public PackagesTotalFreeUsers: number = 0;
+    public PackagesTotalPrice: number = 0;
+    public PackagesTotalTotalPrice: number = 0;
+    ComputePackagesTotals() {  
+        this.PackagesTotalNumberOfUsers = ArrayTool.Sum(this.PackagesList, "NumberOfUsers");
+        this.PackagesTotalFreeUsers = ArrayTool.Sum(this.PackagesList, "FreeUsers");
+        this.PackagesTotalPrice = ArrayTool.Sum(this.PackagesList, "Price");
+        this.PackagesTotalTotalPrice = ArrayTool.Sum(this.PackagesList, "TotalPrice");
     }
 
     public AddOnsList: AddOnItem[];
@@ -1108,6 +1126,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set MainAdditionalPackageApplied(newValue: boolean) {
         if (this.EntityPM.MainAdditionalPackageApplied != newValue) {
             this.EntityPM.MainAdditionalPackageApplied = newValue;
+            this.SetUIProperties_TotalPrice();
         }
     }
 
