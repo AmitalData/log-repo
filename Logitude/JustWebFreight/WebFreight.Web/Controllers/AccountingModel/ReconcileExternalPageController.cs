@@ -338,32 +338,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                AuthenticationToken authToken = GetAuthenticationToken();
                 int tenant = authToken.Tenant;
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 ReconcileExternalPagePM reconcileExternalPage = GetReconcileExternalBankPage(reconcileExternalPageId, tenant);
                 ReconcileExternalPageQueryService reconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
 
-                bool OlderCancelledBankPage = false;
+                bool uncancelledPageExist = false;
                 if (reconcileExternalPage.StatusCode == "3")
                 {
-                     OlderCancelledBankPage = reconcileExternalPageQueryService.CheckFirstCancelledBankPage(reconcileExternalPage.BankAccountId, reconcileExternalPage.PageNo, tenant);
+                    uncancelledPageExist = reconcileExternalPageQueryService.CheckNextUnCancelledBankPage(reconcileExternalPage.BankAccountId, reconcileExternalPage.PageNo, tenant);
                 }
                 ServiceResponse response = new ServiceResponse();
-               
-                bool showlocal = GetShowLocal(authToken.Email, tenant);
-
-                if (OlderCancelledBankPage)
-                {
-                    response.Result = null;
-                }
-                else
-                {
-                    response.Result =  TextCodesTranslator.TranslateText("Accounting.General.O.RestoreIsNotPossible", tenant, showlocal);
-                }
-
+                response.Result = SetResponseResult(uncancelledPageExist, response, authToken);             
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
@@ -409,6 +396,24 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private AuthenticationToken GetAuthenticationToken()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+           return AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+        }
+         private string SetResponseResult(bool exist, ServiceResponse response,AuthenticationToken authToken)
+        {
+            bool showlocal = GetShowLocal(authToken.Email, authToken.Tenant);
+            if (exist)
+            {
+              return null;
+            }
+            else
+            {
+               return TextCodesTranslator.TranslateText("Accounting.General.O.RestoreIsNotPossible", authToken.Tenant, showlocal);
             }
         }
 

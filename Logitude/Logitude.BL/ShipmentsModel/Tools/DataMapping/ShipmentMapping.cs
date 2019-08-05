@@ -1530,6 +1530,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityMasterData.AirlinePrefix = entityPM.AirlinePrefix;
                     entityMasterData.MainCarriageCarrierNumber = entityPM.MainCarriageCarrierNumber;
                     entityMasterData.ProrateReceivables = entityPM.ProrateReceivables;
+                    entityMasterData.CutoffDate = entityPM.CutoffDate;
 
                     if (entityMasterData.MainCarriageSTD == null)
                     {

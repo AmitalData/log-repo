@@ -134,7 +134,7 @@ exports.config = {
 
         // ********************* Login **********************************
         login: 'e2e/Login/**/Login.e2e-spec.ts',
-      //  NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
+       NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
 
      //   FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
         //   ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
