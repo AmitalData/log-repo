@@ -1502,6 +1502,8 @@ namespace Logitude.XSD
             #region [9] Notify1
             if (!string.IsNullOrEmpty(Context.Notify1Name))
             {
+                Context.FNANotifyDetails = Context.Notify1Name;
+
                 myXSDElement.AlsoNotify = new CHAMP17.Contact()
                 {
                     Name = new string[] { Context.Notify1Name },
@@ -1518,14 +1520,18 @@ namespace Logitude.XSD
                     },
                 };
 
+                Context.FNANotifyDetails = String.Concat(Context.FNANotifyDetails, Context.Notify1Address, Context.Notify1City, Context.Notify1CountryCode);
+
                 if (!string.IsNullOrEmpty(Context.Notify1ZipCode))
                 {
                     myXSDElement.AlsoNotify.CodedLocation.PostCode = Context.Notify1ZipCode;
+                    Context.FNANotifyDetails = String.Concat(Context.FNANotifyDetails, Context.Notify1ZipCode);
                 }
 
                 if (!string.IsNullOrEmpty(Context.Notify1StateCode))
                 {
                     myXSDElement.AlsoNotify.Location.StateOrProvince = Context.Notify1StateCode;
+                    Context.FNANotifyDetails = String.Concat(Context.FNANotifyDetails, Context.Notify1StateCode);
                 }
 
                 List<CHAMP17.ContactDetail> ContactDetails_Notify1 = new List<CHAMP17.ContactDetail>();
@@ -1539,6 +1545,7 @@ namespace Logitude.XSD
                     };
 
                     ContactDetails_Notify1.Add(itemDetail);
+                    Context.FNANotifyDetails = String.Concat(Context.FNANotifyDetails, Context.Notify1Phone);
                 }
 
                 if (!string.IsNullOrEmpty(Context.Notify1Fax))
@@ -1550,6 +1557,7 @@ namespace Logitude.XSD
                     };
 
                     ContactDetails_Notify1.Add(itemDetail);
+                    Context.FNANotifyDetails = String.Concat(Context.FNANotifyDetails, Context.Notify1Fax);
                 }
 
                 if (ContactDetails_Notify1.Count > 0)

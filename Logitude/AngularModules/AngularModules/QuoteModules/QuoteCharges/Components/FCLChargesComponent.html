@@ -39,7 +39,7 @@
                                     </td>
 
                                     <td style="width: 1px;">
-                                        <button class="Button" (click)="AddChargeClicked()" [disabled]="!IsEditingEnabled">{{'Quote.B.Charges.AddCharge' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'AddCharges' | IdGeneratorPipe}}"  class="Button" (click)="AddChargeClicked()" [disabled]="!IsEditingEnabled">{{'Quote.B.Charges.AddCharge' | TextCodeTranslationPipe}}</button>
                                     </td>
                                 </tr>
                             </table>

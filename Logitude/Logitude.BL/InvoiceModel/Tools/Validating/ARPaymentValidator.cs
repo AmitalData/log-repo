@@ -103,7 +103,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             if (paymentMethodCode == "CH")
             {
-                if (string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef))
+                if (string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef) && entityPM.ARPaymentChequeReplicas.Count ==0)
                 {
                     throw new ApplicationException(rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ChequeOrPaymentRef", tenant)));
                 }
@@ -173,7 +173,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             ValidateAccountingSetting(entityPM);
-            ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account, entityPM.Bank );
+            ValidateFullAccounting(entityPM.ARPaymentChequeReplicas, entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account, entityPM.Bank );
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
@@ -321,7 +321,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             return glaAccount;
         }
        
-        public static void ValidateFullAccounting(int tenant, string billToId, string paymentCurrencyId, CashBookPM cashBook, string code, DateTime? registerDate, string bankAccountId, bool isOut = false, DateTime? valueDate = null, string branch = null, string account = null, string bank=null)
+        public static void ValidateFullAccounting(List<ARPaymentChequeReplicaPM> aRPaymentChequeReplicas, int tenant, string billToId, string paymentCurrencyId, CashBookPM cashBook, string code, DateTime? registerDate, string bankAccountId, bool isOut = false, DateTime? valueDate = null, string branch = null, string account = null, string bank=null)
         {
             var errors = "";
 
@@ -354,19 +354,19 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
                     bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
 
-                    if (code == "CH" && string.IsNullOrEmpty(branch))
+                    if (code == "CH" && string.IsNullOrEmpty(branch) && aRPaymentChequeReplicas.Count ==0)
                     {
                         string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
                         errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.BankBranch", tenant, useLocal)) + ";";
                     }
 
-                    if (code == "CH" && string.IsNullOrEmpty(account))
+                    if (code == "CH" && string.IsNullOrEmpty(account) && aRPaymentChequeReplicas.Count == 0)
                     {
                         string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
                         errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Account", tenant, useLocal)) + ";";
                     }
 
-                    if (code == "CH" && string.IsNullOrEmpty(bank))
+                    if (code == "CH" && string.IsNullOrEmpty(bank) && aRPaymentChequeReplicas.Count == 0)
                     {
                         string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
                         errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Bank", tenant, useLocal)) + ";";

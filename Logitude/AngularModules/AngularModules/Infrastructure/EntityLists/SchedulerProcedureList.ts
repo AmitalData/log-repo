@@ -11,5 +11,6 @@ export class SchedulerProcedureList {
 		Name: string;
 		SearchFields: string;
 		Description: string;
+       IsInternallyDefined: boolean;
 	
 }

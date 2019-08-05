@@ -1357,6 +1357,14 @@
     <Compile Include="Migrations\201907311545149_AbedAddQuoteHTMLDocumentIdToQuote.Designer.cs">
       <DependentUpon>201907311545149_AbedAddQuoteHTMLDocumentIdToQuote.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908041111120_AddCutoffDateToShipmentMasterData_Maheera.cs" />
+    <Compile Include="Migrations\201908041111120_AddCutoffDateToShipmentMasterData_Maheera.Designer.cs">
+      <DependentUpon>201908041111120_AddCutoffDateToShipmentMasterData_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908050856575_Nawras1.cs" />
+    <Compile Include="Migrations\201908050856575_Nawras1.Designer.cs">
+      <DependentUpon>201908050856575_Nawras1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2316,6 +2324,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907311545149_AbedAddQuoteHTMLDocumentIdToQuote.resx">
       <DependentUpon>201907311545149_AbedAddQuoteHTMLDocumentIdToQuote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908041111120_AddCutoffDateToShipmentMasterData_Maheera.resx">
+      <DependentUpon>201908041111120_AddCutoffDateToShipmentMasterData_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908050856575_Nawras1.resx">
+      <DependentUpon>201908050856575_Nawras1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

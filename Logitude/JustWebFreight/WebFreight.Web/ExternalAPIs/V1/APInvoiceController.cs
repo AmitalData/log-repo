@@ -79,23 +79,26 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        int tenant = apinvoice.Tenant;
+                        int tenant = authToken.Tenant;
 
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 
                         if (apinvoice != null) oldEntity = LogitudeXmlSerializer.DeserializeObject<APInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(apinvoice));
 
-                        IInvoiceContext MyContext = InvoiceContext.GetContext(apinvoice.Tenant);
-                        APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(apinvoice.Tenant);
-                        APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, apinvoice.Tenant);
+                        IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+                        APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
+
+                        apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
+                        APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
+
 
                         
 
-                        APInvoiceService apinvoiceService = new APInvoiceService(MyContext, apinvoice.Tenant);
+                        APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
                         apinvoiceService.Create(apinvoicePM);
 
 
-                        APIHelper.AddCommunicationLog("D", oldEntity, apinvoice, "APInvoice", apinvoicePM.Id, "APInvoice API", apinvoice.Tenant);
+                        APIHelper.AddCommunicationLog("D", oldEntity, apinvoice, "APInvoice", apinvoicePM.Id, "APInvoice API", tenant);
 
 
 

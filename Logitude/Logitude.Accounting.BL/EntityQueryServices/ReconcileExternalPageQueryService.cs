@@ -146,25 +146,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
-        public bool CheckFirstCancelledBankPage(string bankAccountId, int pageNo, int tenant)
+        public bool CheckNextUnCancelledBankPage(string bankAccountId, int pageNo, int tenant)
         {
-            //int LastPageNo= GetLastPageNo(bankAccountId, tenant);
-            //List<ReconcileExternalPage> reconcileExternalPages = GetBankAccountBankPages(bankAccountId, tenant);
-
-            //if (LastPageNo == pageNo)
-            //{
-            //    bool previouseCancelledPageExist = CheckPreviousBankPageStatus(reconcileExternalPages, pageNo );
-            //    if(previouseCancelledPageExist)
-            //    {
-            //        return false;
-            //    }
-            //    else
-            //    {
-            //        return true;
-            //    }
-            //}
-            //else
-            //{
+            
                 bool nextUncancelledBankPageExist = ChecNextUnCancelledBankPges(bankAccountId, pageNo,tenant );
                 if (nextUncancelledBankPageExist)
                 {
@@ -175,7 +159,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 {
                     return true;
                 }
-            //}
+            
           
         }
 

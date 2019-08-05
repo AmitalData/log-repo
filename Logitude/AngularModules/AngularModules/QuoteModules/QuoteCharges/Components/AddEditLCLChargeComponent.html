@@ -291,8 +291,8 @@
                                         </div>
                                     </log-header-template>
 
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice">
-                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.CostUnitPrice | NumbersPipe:'N2'">
+                                    <log-cell-template id="{{ 'CostPrice' | IdGeneratorPipe}}"   template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice">
+                                        <div  *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.CostUnitPrice | NumbersPipe:'N2'">
                                             <table>
                                                 <tr>
                                                     <td style="width:16px;" *ngIf="item.IsChargeBySteps">
@@ -316,7 +316,7 @@
                                         </div>
 
                                         <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CostUnitPrice'" [Text]="item.CostUnitPrice" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            <LogTextBox   [FocusOnMe]="'true'" [ObjectFieldName]="'CostUnitPrice'" [Text]="item.CostUnitPrice" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
                                         </div>
                                     </log-cell-template>
                                 </log-column>
@@ -816,7 +816,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'CancelAddCharges' | IdGeneratorPipe}}"  class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -824,7 +824,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'OKAddCharges' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

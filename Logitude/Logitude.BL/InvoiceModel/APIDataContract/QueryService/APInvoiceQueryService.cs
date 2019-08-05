@@ -36,7 +36,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
-            
 
+        public void APInvoiceCustomDataMapping(APInvoice apinvoice, int tenant)
+        {
+            apinvoice.Tenant = tenant;
+            apinvoice.InvoiceExpectedAmount = apinvoice.AmountInInvoiceCurrency;
+         
+
+
+            
+        }
     }
 }

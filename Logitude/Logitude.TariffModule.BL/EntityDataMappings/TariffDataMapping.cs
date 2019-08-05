@@ -38,7 +38,10 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 
             entityPOCO.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
-
+            if (entityPM.TypeCode == "AFC")
+            {
+                entityPM.ExpirationDate = entityPOCO.ExpirationDate;
+            }
             entityPM.SetAsInActive = false;
             entityPM.SetAsReActive = false;
             entityPM.TariffLinesAdded = false;
