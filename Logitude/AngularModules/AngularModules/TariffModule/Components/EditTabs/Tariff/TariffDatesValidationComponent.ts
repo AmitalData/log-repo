@@ -23,7 +23,6 @@ export class TariffDatesValidationComponent extends BaseComponent {
     public TariffType: string;
     constructor() {
         super();
-
         this.EntityVersionPM = new TariffVersionPM(null);
         this.EntityLinePM= new  TariffLinePM(null);
     }
