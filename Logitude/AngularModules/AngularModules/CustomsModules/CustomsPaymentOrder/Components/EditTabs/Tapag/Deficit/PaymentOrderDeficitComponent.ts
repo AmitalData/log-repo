@@ -220,21 +220,9 @@ export class PaymentOrderDeficitComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 
-    //to do.....
-//    public RelayCommand ParagraphTypeAmountCommand { get { return new RelayCommand(() => OpenParagraphTypeAmountScreen()); } }
-//SimplogWindow window;
-//        private void OpenParagraphTypeAmountScreen()
-//{
-//    ParagraphTypeAmountLines control = new ParagraphTypeAmountLines() { DataContext = this };
-//    window = new SimplogWindow();
-//    window.Height = 600;
-//    window.Width = 800;
-//    window.CancelButton.Visibility = Visibility.Collapsed;
-//    window.Title = TextCodeTranslator.Translate("Customs.PaymentOrder.O.ParagraphTypesAmountLines");
-//    window.CloseButton.Visibility = Visibility.Visible;
-//    window.Add(control);
-//    window.Show();
-//}
+    DeficitDecisionButtonClicked(item: ConnectedEntityLineComponent) {
+
+    }
 }
 
 export class ConnectedEntityLineComponent extends BaseComponent {
@@ -287,4 +275,5 @@ export class ConnectedEntityLineComponent extends BaseComponent {
             this.TotalTax = total.toString();
         }
     }
+
 }

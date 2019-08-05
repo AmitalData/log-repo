@@ -872,7 +872,7 @@ export class AmitalGatewayUtil {
     }
 }
 export class RequestWrapperM {
-    private CurrentSession = SessionLocator.SelectedSession;
+    ////////itzik : why Ayman1 add this line ?!?!?  private CurrentSession = SessionLocator.SelectedSession;
     //String SENDERID : In = "SessionViewModel"
     public SenderID: string;
     //String RECEIVERID : In = "GGGQWBLOGITUDE"
