@@ -18,8 +18,10 @@ namespace MeatadataGeneratorTool.ScreensModule
         public ObservableCollection<ScreenFieldViewModel> ScreenFieldCol3ObsList { get; set; }
         public ObservableCollection<ScreenFieldViewModel> ScreenFieldCol4ObsList { get; set; }
         public ObservableCollection<ScreenFieldViewModel> ScreenFieldCol5ObsList { get; set; }
-        public ScreensViewModel(ObjectTableViewModel OTableVM, bool IsNew)
+        public bool IsNew { get; set; }
+        public ScreensViewModel(ObjectTableViewModel OTableVM, bool isNew)
         {
+            this.IsNew = isNew;
             viewModel = OTableVM;
             if (IsHeaderScreen)
             {

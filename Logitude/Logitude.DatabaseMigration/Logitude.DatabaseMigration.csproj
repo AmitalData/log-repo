@@ -1357,6 +1357,10 @@
     <Compile Include="Migrations\201907311545149_AbedAddQuoteHTMLDocumentIdToQuote.Designer.cs">
       <DependentUpon>201907311545149_AbedAddQuoteHTMLDocumentIdToQuote.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908011016297_AbedAddRatioToWarehouseEntry.cs" />
+    <Compile Include="Migrations\201908011016297_AbedAddRatioToWarehouseEntry.Designer.cs">
+      <DependentUpon>201908011016297_AbedAddRatioToWarehouseEntry.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201908041111120_AddCutoffDateToShipmentMasterData_Maheera.cs" />
     <Compile Include="Migrations\201908041111120_AddCutoffDateToShipmentMasterData_Maheera.Designer.cs">
       <DependentUpon>201908041111120_AddCutoffDateToShipmentMasterData_Maheera.cs</DependentUpon>
@@ -2337,6 +2341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908051220023_ShipmentcomputedField_Khalid_ForeignKey.resx">
       <DependentUpon>201908051220023_ShipmentcomputedField_Khalid_ForeignKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908011016297_AbedAddRatioToWarehouseEntry.resx">
+      <DependentUpon>201908011016297_AbedAddRatioToWarehouseEntry.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

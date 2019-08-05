@@ -74,6 +74,7 @@ export class WarehouseEntryList {
 	LastStatusUpdateDate: Date;
 	MasterHouse: string;
 	EntryReferencesAndDate: string;
+	Ratio: number;
 	
 }
  
