@@ -61,7 +61,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.VatTypeId != null)
 				   {
 					   VatTypeQueryService VatTypeService1 = new VatTypeQueryService(Tenant);
-					   					   temp.VatType = VatTypeService1.GetVatTypeById(item.VatTypeId,Tenant); 
+					   					   temp.VatType = VatTypeService1.GetVatTypeByCode(item.VatTypeId,Tenant); 
 			       
 					   				   }
 				   

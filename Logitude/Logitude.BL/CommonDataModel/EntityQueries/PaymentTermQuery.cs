@@ -65,6 +65,40 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return securedPm;
         }
 
+        public PaymentTermPM GetSinglePMByExternalId(string externalId , int tenant)
+        {
+
+            PaymentTermPM entityPM = null;
+            PaymentTerm entityPOCO = repository.GetSinglePaymentTermByExternalId(externalId, tenant);
+
+            if (entityPOCO != null)
+            {
+                entityPM = new PaymentTermPM()
+                {
+                    AddedManually = entityPOCO.AddedManually,
+                    Days = entityPOCO.Days,
+                    EnglishName = entityPOCO.EnglishName,
+                    Id = entityPOCO.Id,
+                    InActive = entityPOCO.InActive,
+                    LocalName = entityPOCO.LocalName,
+                    Tenant = entityPOCO.Tenant,
+                    DisplayInLOV = entityPOCO.DisplayInLOV,
+                    Description = entityPOCO.Description,
+                    LocalDescription = entityPOCO.LocalDescription,
+                    SearchFields = entityPOCO.SearchFields,
+                    ComputedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
+                    IsManuallySet = entityPOCO.IsManuallySet,
+                    ExternalId = entityPOCO.ExternalId,
+                    CurrentMonth = entityPOCO.CurrentMonth,
+                    FromDateTypeCode = entityPOCO.FromDateTypeCode,
+                    CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
+                    CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
+                };
+            }
+
+            return entityPM;
+        }
+
         public IQueryable<PaymentTermPM> GetPaymenTermPMsByTenant(int tenant)
         {
             IQueryable<PaymentTermPM> paymentTerms = from a in repository.context.PaymentTerms
