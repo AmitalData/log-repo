@@ -1010,6 +1010,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 arPaymentcheque = new ARPaymentChequePM();
                                 if (theEntityPm.ARPaymentChequeReplicas.Count > 0)
                                 {
+                                    int LineNumberCounter = 1;
                                     foreach (ARPaymentChequeReplicaPM item in theEntityPm.ARPaymentChequeReplicas)
                                     {
                                         arPaymentcheque = new ARPaymentChequePM();
@@ -1017,7 +1018,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                                         arPaymentcheque.PaymentId = theEntityPm.Id;
                                         arPaymentcheque.Tenant = tenant;
-                                        arPaymentcheque.LineNumber = 1;
+                                        arPaymentcheque.LineNumber = LineNumberCounter++;
                                         arPaymentcheque.ChequeNumber = item.ChequeNumber;
                                         arPaymentcheque.ValueDate = item.ValueDate;
                                         arPaymentcheque.BankBranch = item.BankBranch;
@@ -1153,7 +1154,29 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             else
             {
-                journalLine.Reference2 = arPaymentcheque != null? arPaymentcheque.ChequeNumber : theEntityPm.ChequeOrPaymentRef;
+                if (theEntityPm.ARPaymentChequeReplicas.Count > 0)
+                {
+                    string reference = "";
+                    int count = 0;
+                    foreach (ARPaymentChequeReplicaPM cheque in theEntityPm.ARPaymentChequeReplicas)
+                    {
+                        count++;
+                       if(count == theEntityPm.ARPaymentChequeReplicas.Count())
+                        {
+                            reference = reference + cheque.ChequeNumber;
+                        }
+                        else
+                        {
+                            reference = reference + cheque.ChequeNumber + ",";
+                        }
+                      
+                    }
+
+                    journalLine.Reference2 = reference;
+                }
+                else {
+                    journalLine.Reference2 = arPaymentcheque != null ? arPaymentcheque.ChequeNumber : theEntityPm.ChequeOrPaymentRef;
+                }
             }
             journalLine.Notes = theEntityPm.InternalNotes;
             journalLine.ChangeSetOp = ChangeSetOperation.Insert;
