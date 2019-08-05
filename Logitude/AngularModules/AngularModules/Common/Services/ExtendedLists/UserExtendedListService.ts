@@ -121,7 +121,8 @@ export class UserExtendedList {
     public Email: string;
     public AdditionalPackagesOnly: boolean;
     public SearchFields: string;
-    
+
+    public PackageCode0: string;
     public PackageCode1: string;
     public PackageCode2: string;
     public PackageCode3: string;
@@ -133,6 +134,7 @@ export class UserExtendedList {
     public PackageCode9: string;
     public PackageCode10: string;
 
+    public IsChecked0: boolean;
     public IsChecked1: boolean;
     public IsChecked2: boolean;
     public IsChecked3: boolean;

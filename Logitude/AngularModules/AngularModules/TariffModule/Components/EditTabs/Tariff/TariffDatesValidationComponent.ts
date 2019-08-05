@@ -45,12 +45,12 @@ export class TariffDatesValidationComponent extends BaseComponent {
         }
     }
 
-    get ExpirationDate() {
-        return this.EntityVersionPM.ExpirationDate;
+    get InitialEnddate() {
+        return this.EntityVersionPM.InitialEnddate;
     }
-    set ExpirationDate(value: Date) {
-        if (this.EntityVersionPM.ExpirationDate != value) {
-            this.EntityVersionPM.ExpirationDate = value;
+    set InitialEnddate(value: Date) {
+        if (this.EntityVersionPM.InitialEnddate != value) {
+            this.EntityVersionPM.InitialEnddate = value;
         }
     }
 
@@ -74,13 +74,10 @@ export class TariffDatesValidationComponent extends BaseComponent {
 
         if (this.TariffType == "AFC") {
             if (this.StartDate == null) {
-                this.ValidationErrorsList.push("Satrt date must be less than start date");
-            }
-            if (this.ExpirationDate == null) {
-                this.ValidationErrorsList.push("Expiration date must be less than start date");
-            }
+                this.ValidationErrorsList.push("Start date must be less than start date");
+            }           
 
-            if (this.ExpirationDate != null && DateTool.GetDateParts(this.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+            if (this.InitialEnddate != null && DateTool.GetDateParts(this.InitialEnddate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
                 this.ValidationErrorsList.push("Can't set Expiration date Field to past date");
             }
         }

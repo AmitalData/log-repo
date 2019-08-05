@@ -510,6 +510,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         ManageLicencesPerUser = entityPM.ManageLicencesPerUser,
                         ManagesRegisteredAgent = entityPM.ManagesRegisteredAgent,
                         NumberOfUsers = entityPM.NumberOfUsers,
+                        NumberOfFreeUsers = entityPM.FreeUsers == null ? 0 : entityPM.FreeUsers.Value,
                         PaidDaysLeft = entityPM.PaidDaysLeft,
                         PaymentFailure = entityPM.PaymentFailure,
                         PrivateLabelId = entityPM.PrivateLabelId,
@@ -674,6 +675,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public int PaidDaysLeft { get; set; }
         public int SuspendDaysLeft { get; set; }
         public int NumberOfUsers { get; set; }
+        public int NumberOfFreeUsers { get; set; }
         public string BluesnapContractId { get; set; }
         public string BluesnapAccount { get; set; }
         public string BluesnapCRMContractId { get; set; }

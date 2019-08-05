@@ -137,6 +137,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public bool IsINTTRAOnlyDemo { get; set; }
         public bool IsTestTenant { get; set; }
         public bool MainAdditionalPackageApplied { get; set; }
+        public double? TotalPrice { get; set; }
 
     }
 }

@@ -333,7 +333,11 @@
                                         </tr>
                                     </table>
                                 </div>
-
+                                <div *ngIf="FieldName == 'JournalNumber' && IsHeaderScreenTemplate">
+                                    <div>
+                                        <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
+                                    </div>
+                                </div>
                                 <div class="TextTrimming" *ngIf="FieldName == 'TransferError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
                                 <div class="TextTrimming" *ngIf="FieldName == 'TransmissionError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
 

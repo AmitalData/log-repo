@@ -67,6 +67,14 @@
                                         <button id="{{'ReceiveInvoice' | IdGeneratorPipe}}" class="Button" [disabled]="!IsEditingEnabled" (click)="ReceiveInvoiceClicked()">{{'Shipment.B.Payables.ReceiveInvoice' | TextCodeTranslationPipe}}</button>
                                     </td>
 
+                                    <td style="width:15px;" *ngIf="IsPriceCheckVisible" >
+                                        <div style="width:1px; height: 22px; background: #DADADA; margin:auto;"></div>
+                                    </td>
+
+                                    <td style="width: 90px" *ngIf="IsPriceCheckVisible">
+                                        <button id="{{'PriceCheck' | IdGeneratorPipe}}" class="Button" (click)="PriceCheck()">{{'Shipment.Features.ShipmentPriceCheck' | TextCodeTranslationPipe}}</button>
+                                    </td>
+
                                     <td style="width:5px;" *ngIf="EntityPM.ShipmentLevelCode != 'H' && EntityPM.TransportModeId == 'A'">
                                         <div></div>
                                     </td>

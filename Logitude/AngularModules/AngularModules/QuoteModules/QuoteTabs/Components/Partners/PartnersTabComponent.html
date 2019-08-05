@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .BoxItemContent .Body > td {
         background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 49.79%,rgba(238, 238, 238, 1) 69.34%,rgba(226, 226, 226, 1) 83.57%,rgba(209, 209, 209, 1) 95.15%,rgba(199, 199, 199, 1) 100%);
@@ -115,10 +115,10 @@
                                 <label>{{'Quote.B.Partners.AddPartners' | TextCodeTranslationPipe}}</label>
                                 <img src="./Images/ToggleIcon.png" />
                                 <div class="ToggleButtonMenu" style="width: 150px">
-                                    <button [disabled]="IsAddDisabled_SHIPR" (click)="AddPartner('SHIPR')">{{'Quote.B.Partners.AddShipper' | TextCodeTranslationPipe}}</button>
-                                    <button [disabled]="IsAddDisabled_CONSI" (click)="AddPartner('CONSI')">{{'Quote.B.Partners.AddConsignee' | TextCodeTranslationPipe}}</button>
-                                    <button [disabled]="IsAddDisabled_AGENT" (click)="AddPartner('AGENT')">{{'Quote.B.Partners.AddAgent' | TextCodeTranslationPipe}}</button>
-                                    <button [disabled]="IsAddDisabled_NOTFY" (click)="AddPartner('NOTFY')">{{'Quote.B.Partners.AddNotify' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'SHIPR' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_SHIPR" (click)="AddPartner('SHIPR')">{{'Quote.B.Partners.AddShipper' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'CONSI' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_CONSI" (click)="AddPartner('CONSI')">{{'Quote.B.Partners.AddConsignee' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'AGENT' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_AGENT" (click)="AddPartner('AGENT')">{{'Quote.B.Partners.AddAgent' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'NOTFY' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_NOTFY" (click)="AddPartner('NOTFY')">{{'Quote.B.Partners.AddNotify' | TextCodeTranslationPipe}}</button>
                                 </div>
                             </div>
                         </td>

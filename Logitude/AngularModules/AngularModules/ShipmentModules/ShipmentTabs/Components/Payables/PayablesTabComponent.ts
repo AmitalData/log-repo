@@ -33,7 +33,6 @@ import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
 import {QuotePMService} from '../../../../Quote/Services/StandardPMs/QuotePMService';
 import {CardList} from '../../../../Common/EntityLists/CardList';
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
-
 @Component({
     moduleId: module.id,
     templateUrl: './PayablesTabComponent.html',
@@ -54,7 +53,9 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public ItemsSource: ObservableCollection;
     public IsResourcesReady: boolean = false;  
     public myDomainService: ShipmentDomainService;
+    public IsPriceCheckVisible:boolean=false;
     public myUserListService: UserListService = null;
+    public ComponentRef: any;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
@@ -211,6 +212,38 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         }
     }
 
+    PriceCheck() {
+        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageATD)) {
+                betweenDate = this.EntityPM.MainCarriageATD;
+            }
+            else if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageETD)) {
+                betweenDate = this.EntityPM.MainCarriageETD;
+            }
+
+    
+
+            var WindowArgs: any = { BetweenDate: betweenDate, FromPort: this.EntityPM.MainCarriageFromPortId, ToPort: this.EntityPM.MainCarriageToPortId, GrossWeight: this.EntityPM.GrossWeight, ChargeableWeight: this.EntityPM.ChargeableWeight, Volume: this.EntityPM.Volume, ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode, GrossWeightUnit: this.EntityPM.GrossWeightUnitCode, VolumeUnit: this.EntityPM.VolumeUnitCode };
+            var logWindow = new LogitudeWindow();
+            logWindow.IsFillScreenHeight = true;
+            logWindow.Width = 1200;
+            logWindow.Title = "Price Check";
+            logWindow.ComponentLoaded.subscribe(cmpRef => {
+                this.ComponentRef = cmpRef;
+
+                if (WindowArgs != null) {
+                    if (this.ComponentRef['SetWindowArgs']) {
+                        this.ComponentRef.SetWindowArgs(WindowArgs);
+                    }
+                }
+            });
+
+            logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
+           
+        });      
+    }
+
     // Set Labels
     public ExpectedAmountLocalHeader: string;
     SetLabels() {
@@ -226,6 +259,11 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             this.IsDeleteAllPayablesVisible = true;
         }
 
+        if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentPriceCheck") && this.EntityPM.TransportModeId == "A") {
+            this.IsPriceCheckVisible = true;
+        }
+
+        
         var isEditingEnabled: boolean = true;
 
         if (this.EntityPM) {

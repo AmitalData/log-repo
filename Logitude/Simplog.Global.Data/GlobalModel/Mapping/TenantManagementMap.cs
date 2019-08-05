@@ -153,6 +153,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.PackageCodeSearchField).HasColumnName("PackageCodeSearchField");
             this.Property(t => t.IsINTTRAOnlyDemo).HasColumnName("IsINTTRAOnlyDemo");
             this.Property(t => t.MainAdditionalPackageApplied).HasColumnName("MainAdditionalPackageApplied");
+            this.Property(t => t.TotalPrice).HasColumnName("TotalPrice");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -179,9 +180,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapCRMContractId);
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapEAWBContractId);
             this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapEAWBSContractId);
-            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapInttraStockContractId);
-
-            
+            this.HasOptional(t => t.BluesnapContract).WithMany().HasForeignKey(d => d.BluesnapInttraStockContractId);            
             this.HasOptional(t => t.AWBMessagesCCSType).WithMany().HasForeignKey(d => d.AWBMessagesCCSTypeCode);
             this.HasOptional(t => t.TenantType).WithMany().HasForeignKey(d => d.TenantTypeCode);
 
