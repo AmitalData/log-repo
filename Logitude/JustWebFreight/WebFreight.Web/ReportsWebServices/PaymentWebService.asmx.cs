@@ -474,8 +474,8 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 resultstr = "";
             }
-            paymentDataProvider.TotalAmountInWordsEnglish = numbersConverterToWords.NumbersToSpanish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
-            paymentDataProvider.TotalAmountInWordsSpanish = numbersConverterToWords.NumbersToEnglish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
+            paymentDataProvider.TotalAmountInWordsSpanish = numbersConverterToWords.NumbersToSpanish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
+            paymentDataProvider.TotalAmountInWordsEnglish = numbersConverterToWords.NumbersToEnglish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
         }
 
         private string GetPaymentMethodLocalName(string code)
