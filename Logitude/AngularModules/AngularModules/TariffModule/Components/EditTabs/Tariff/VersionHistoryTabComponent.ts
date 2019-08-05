@@ -76,6 +76,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
     }
 
     private SaveCompletedEvent: any = null;
+    private SessionEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -88,11 +89,21 @@ export class VersionHistoryTabComponent implements OnDestroy {
                     }
                 }
             });
+
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "TariffLinesDeleted") {
+
+                    if (this.EntityPM != null && this.VersionPM != null) {
+                        this.LoadTariffLines();
+                    }
+                }
+            });
         }
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     public Step1PriceLabel: string;

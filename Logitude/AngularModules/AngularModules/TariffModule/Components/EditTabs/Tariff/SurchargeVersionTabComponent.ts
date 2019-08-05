@@ -130,6 +130,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
+                    if (this.isTariffLinesDeleted) {
+                        this.isTariffLinesDeleted = false;
+                        this.CurrentSession.FireEvent("TariffLinesDeleted");                       
+                    }
   
                     this.SetSurchargesLabelsAndVisibility();
                 }
@@ -499,6 +503,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
+    private isTariffLinesDeleted: boolean = false;
     DeleteTariffButtonClicked(item: AirSurchargeTariffLineData) {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show("Delete this Tariff Line?");
@@ -507,7 +512,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 var logWindow = new LogitudeWindow();
                 logWindow.Width = 450;
                 logWindow.Height = 200;
-                logWindow.WindowArgs = { CurrentLine: item.EntityPM, TariffType: this.EntityPM.TypeCode };
+                logWindow.WindowArgs = { CurrentLine: item.EntityPM, TariffType: this.EntityPM.TypeCode, };
                 logWindow.Title = "Expiration Date";
 
                 logWindow.ComponentLoaded.subscribe(s => {
@@ -521,6 +526,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                             this.CurrentVersion.RemoveTariffLine(item.EntityPM);
                             this.TariffsLinesSource.Remove(item);
                             this.FillTariffLines(this.CurrentVersion.TariffLines);
+
+                            this.isTariffLinesDeleted = true;
                         }
                     });
                 });
