@@ -4,6 +4,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.WarehouseLib.BL.EntityPMs;
+using Logitude.WarehouseLib.BL.Helpers;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -51,6 +52,56 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
             }
         }
 
+
+
+        private void AddTraceEvent(List<string> eventCodeList, string userId)
+        {
+            if (eventCodeList != null && eventCodeList.Count > 0)
+            {
+                foreach (string eventCode in eventCodeList)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = EntityPM.Tenant,
+                        EventTypeCode = eventCode,
+                        UserId = userId,
+                        EntityId = EntityPM.Id,
+                        ObjectTableName = "WarehouseEntry",
+                    });
+                }
+            }
+
+        }
+
+
+
+
+        protected override void OnUpdating(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)
+        {
+            AddTraceEvents(entityPM, entityPOCO);
+
+            if (entityPM.StatusCode != entityPOCO.StatusCode)
+            {
+                entityPM.LastStatusUpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            }
+
+            base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private void AddTraceEvents(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)
+        {
+            List<string> eventCodeLists = new List<string>();
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert) eventCodeLists.Add("CREN");
+            else eventCodeLists.Add("UPEN");
+            if (entityPM.ExpectedEntryDate != entityPOCO.ExpectedEntryDate) eventCodeLists.Add("EXEN");
+            if (entityPM.ActualEntryDate != entityPOCO.ActualEntryDate) eventCodeLists.Add("ENEN");
+
+            var eventTracerArgs = new EventTracerArgs() { Tenant = entityPM.Tenant, UserId = entityPM.UpdatedByUserId, EntityId = entityPM.Id, ObjectTableName = "WarehouseEntry", };
+            WarehouseEntryReleaseHelper warehouseEntryReleaseHelper = new WarehouseEntryReleaseHelper();
+            warehouseEntryReleaseHelper.AddTraceEvents(eventCodeLists, eventTracerArgs);
+
+        }
+
         protected override void OnUpdating(WarehouseEntryPM entityPM)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
@@ -87,7 +138,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("WarehouseEntry", 0, true);
             string email = HttpContext.Current.User.Identity.Name;
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant,true);
             if (loggedContact != null)
             {
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, typeCode, loggedContact.Id);

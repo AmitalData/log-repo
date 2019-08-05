@@ -11,6 +11,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -353,14 +354,24 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 usersList = entityLists.ToList();
                 #endregion
 
-                #region Tenant Management Licenses
-                TenantManagementLicenseRepository myTenantRepository = new TenantManagementLicenseRepository(tenant);
+                #region Tenant Management & Tenant Management Licenses
+                IGlobalContext globalContext = GlobalContext.GetContext();
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository(globalContext);
+                TenantManagementLicenseRepository myTenantRepository = new TenantManagementLicenseRepository(globalContext);
+
+                TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(tenant);                
                 IQueryable<TenantManagementLicense> myTenantResult = myTenantRepository.GetTenantManagementLicenses(tenant);
                 tenantManagementLicenses = myTenantResult.ToList();
                 #endregion
 
                 #region Users Licenses
                 List<string> Codes = tenantManagementLicenses.Select(s => s.PackageCode).ToList();
+
+                if (tenantManagement.MainAdditionalPackageApplied)
+                {
+                    Codes.Add(tenantManagement.PackageCode);
+                }
+
                 UserLicenseRepository myRepository = new UserLicenseRepository(tenant);
                 IQueryable<UserLicense> myResult = myRepository.GetUserLicenses(tenant);
                 usersLicenses = (from d in myResult
@@ -379,6 +390,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                         AdditionalPackagesOnly = user.AdditionalPackagesOnly,
                         SearchFields = user.EnglishName + "," + user.Email,
                     };
+
+                    if(tenantManagement.MainAdditionalPackageApplied)
+                    {
+                        UserLicense item = usersLicenses.Where(d => d.PackageCode == tenantManagement.PackageCode && d.UserId == user.Id).FirstOrDefault();
+                        if (item != null)
+                        {
+                            this.SetUserLicenseExists(myResultItem, 0, tenantManagement.PackageCode);
+                        }
+                    }
 
                     int index = 0;
                     foreach (TenantManagementLicense license in tenantManagementLicenses.OrderBy(o => o.PackageCode))
@@ -473,6 +493,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
         {
             switch (index)
             {
+                case 0:
+                    {
+                        myResultItem.IsChecked0 = true;
+                        myResultItem.PackageCode0 = packageCode;
+                        break;
+                    }
+
                 case 1:
                     {
                         myResultItem.IsChecked1 = true;
@@ -551,6 +578,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             result.Add(new UserExtendedListField() { FieldName = "EnglishName", DataType = "Text" });
             result.Add(new UserExtendedListField() { FieldName = "Email", DataType = "Text" });
             result.Add(new UserExtendedListField() { FieldName = "SearchFields", DataType = "nText" });
+            result.Add(new UserExtendedListField() { FieldName = "IsChecked0", DataType = "Boolean" });
             result.Add(new UserExtendedListField() { FieldName = "IsChecked1", DataType = "Boolean" });
             result.Add(new UserExtendedListField() { FieldName = "IsChecked2", DataType = "Boolean" });
             result.Add(new UserExtendedListField() { FieldName = "IsChecked3", DataType = "Boolean" });
@@ -784,6 +812,7 @@ public class UserExtendedList
     public bool AdditionalPackagesOnly { get; set; }
     public string SearchFields { get; set; }
 
+    public string PackageCode0 { get; set; }
     public string PackageCode1 { get; set; }
     public string PackageCode2 { get; set; }
     public string PackageCode3 { get; set; }
@@ -795,6 +824,7 @@ public class UserExtendedList
     public string PackageCode9 { get; set; }
     public string PackageCode10 { get; set; }
 
+    public bool IsChecked0 { get; set; }
     public bool IsChecked1 { get; set; }
     public bool IsChecked2 { get; set; }
     public bool IsChecked3 { get; set; }

@@ -184,7 +184,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
             entityPoco.GrossWeightEdited = entityPM.GrossWeightEdited;
             entityPoco.ChargeableWeightEdited = entityPM.ChargeableWeightEdited;
-
+            entityPoco.QuoteHTMLDocumentId = entityPM.QuoteHTMLDocumentId;
             BuildSearchField(entityPM, entityPoco);
 
             entityPM.ConvertToLCL = false;

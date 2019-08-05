@@ -103,6 +103,7 @@
     <Compile Include="EntityPMs\Generated\TariffTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffVersionAllInChargePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffVersionPM.Generated.cs" />
+    <Compile Include="EntityPMs\TariffLineExpirationDatePM.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffSettingQueryService.Generated.cs" />

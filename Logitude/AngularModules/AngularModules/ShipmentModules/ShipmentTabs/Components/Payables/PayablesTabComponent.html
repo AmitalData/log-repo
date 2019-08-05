@@ -55,12 +55,24 @@
                                         <IconButton [Name]="'Add'" [IsEnabled]="IsEditingEnabled" (click)="AddPayable()"></IconButton>
                                     </td>
 
+                                    <td style="width: 1px; padding-left: 5px;" *ngIf="IsDeleteAllPayablesVisible">
+                                        <button id="{{'DeleteAll' | IdGeneratorPipe}}" class="Button" [disabled]="IsEditingEnabled == false || ItemsSource.Length == 0" (click)="DeleteAllClicked()">Delete All</button>
+                                    </td>
+
                                     <td style="width:15px;">
                                         <div style="width:1px; height: 22px; background: #DADADA; margin:auto;"></div>
                                     </td>
 
                                     <td style="width: 90px">
-                                        <button id="{{'ReceiveInvoice' | IdGeneratorPipe}}"  class="Button" [disabled]="!IsEditingEnabled" (click)="ReceiveInvoiceClicked()">{{'Shipment.B.Payables.ReceiveInvoice' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{'ReceiveInvoice' | IdGeneratorPipe}}" class="Button" [disabled]="!IsEditingEnabled" (click)="ReceiveInvoiceClicked()">{{'Shipment.B.Payables.ReceiveInvoice' | TextCodeTranslationPipe}}</button>
+                                    </td>
+
+                                    <td style="width:15px;" *ngIf="IsPriceCheckVisible" >
+                                        <div style="width:1px; height: 22px; background: #DADADA; margin:auto;"></div>
+                                    </td>
+
+                                    <td style="width: 90px" *ngIf="IsPriceCheckVisible">
+                                        <button id="{{'PriceCheck' | IdGeneratorPipe}}" class="Button" (click)="PriceCheck()">{{'Shipment.Features.ShipmentPriceCheck' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width:5px;" *ngIf="EntityPM.ShipmentLevelCode != 'H' && EntityPM.TransportModeId == 'A'">

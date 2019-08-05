@@ -1208,6 +1208,11 @@ export class QuotePM {
     public set ChargeableWeightEdited(newValue: boolean) { if (this.chargeableWeightEdited != newValue) { this.chargeableWeightEdited = newValue; this.MarkAsDirty("ChargeableWeightEdited"); } }
        
 	 
+    private quoteHTMLDocumentId: string;
+    public get QuoteHTMLDocumentId() { return this.quoteHTMLDocumentId; }
+    public set QuoteHTMLDocumentId(newValue: string) { if (this.quoteHTMLDocumentId != newValue) { this.quoteHTMLDocumentId = newValue; this.MarkAsDirty("QuoteHTMLDocumentId"); } }
+       
+	 
     private numberOfFollowUps: number;
     public get NumberOfFollowUps() { return this.numberOfFollowUps; }
     public set NumberOfFollowUps(newValue: number) { if (this.numberOfFollowUps != newValue) { this.numberOfFollowUps = newValue; this.MarkAsDirty("NumberOfFollowUps"); } }

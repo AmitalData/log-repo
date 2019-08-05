@@ -137,7 +137,7 @@ using Simplog.Data.CommonDataModel;
 					
 					   					   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("Card with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
@@ -149,7 +149,8 @@ using Simplog.Data.CommonDataModel;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 						temp.Code = MyEntity.Code;
-					}					AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
+					}
+					AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.MainAddress != null)
 					{
 						var myMainAddressPM = MainAddressAddressService.AddressDataMappingAndValidatin(MyEntity.MainAddress,Tenant,ComputingPartnerName);

@@ -121,6 +121,18 @@ export class UserWorkspaceComponent implements OnInit {
     }
 
     private FillLicensesManagmentsList() {
+        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+            var usersCount: number = this.allUserLicenses.filter(d => d.PackageCode == SessionLocator.TenantManagementJS.PackageCode).length;
+            var numberOfUsers: number = SessionLocator.TenantManagementJS.NumberOfFreeUsers + SessionLocator.TenantManagementJS.NumberOfUsers;
+            var myCountText: string = usersCount + "/" + numberOfUsers;
+
+            var mainItem: LicensesManagementDataItem = new LicensesManagementDataItem();
+            mainItem.PackageCode = SessionLocator.TenantManagementJS.PackageCode;
+            mainItem.PackageName = SessionLocator.TenantManagementJS.PackageName;
+            mainItem.CountText = myCountText;
+            this.LicensesManagmentsList.push(mainItem);
+        }
+
         var index: number = 0;
         SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
             index++;
@@ -133,14 +145,13 @@ export class UserWorkspaceComponent implements OnInit {
                 }
 
                 var usersCount: number = this.allUserLicenses.filter(d => d.PackageCode == item.PackageCode).length;
-                var numberOfUsers: number = AppTool.IsNullOrZero(item.NumberOfUsers) ? 0 : item.NumberOfUsers;
+                var numberOfUsers: number = (AppTool.IsNullOrZero(item.NumberOfUsers) ? 0 : item.NumberOfUsers) + (AppTool.IsNullOrZero(item.FreeUsers) ? 0 : item.FreeUsers);
                 var myCountText: string = usersCount + "/" + numberOfUsers;
 
                 var newItem: LicensesManagementDataItem = new LicensesManagementDataItem();
                 newItem.PackageCode = item.PackageCode;
                 newItem.PackageName = myPackageName;
                 newItem.CountText = myCountText;
-
                 this.LicensesManagmentsList.push(newItem);                    
             }
         });        
@@ -153,7 +164,7 @@ export class UserWorkspaceComponent implements OnInit {
         if (this.allUserLicenses != null) {
             SessionLocator.TenantManagementJS.TenantManagementLicenses.forEach(item => {
                 var usersCount: number = this.allUserLicenses.filter(d => d.PackageCode == item.PackageCode).length;
-                var numberOfUsers: number = AppTool.IsNullOrZero(item.NumberOfUsers) ? 0 : item.NumberOfUsers;
+                var numberOfUsers: number = (AppTool.IsNullOrZero(item.NumberOfUsers) ? 0 : item.NumberOfUsers) + (AppTool.IsNullOrZero(item.FreeUsers) ? 0 : item.FreeUsers);
 
                 if (usersCount < numberOfUsers) {
                     this.ShowUserLicenseExclamationMark = true;

@@ -111,7 +111,7 @@ using Simplog.Data.CommonDataModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
@@ -121,7 +121,8 @@ using Simplog.Data.CommonDataModel;
 					temp.EnglishName = MyEntity.EnglishName;
 					temp.LocalName = MyEntity.LocalName;
 					temp.VatNumber = MyEntity.VatNumber;
-					temp.CreateDate = MyEntity.CreateDate;					PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
+					temp.CreateDate = MyEntity.CreateDate;
+					PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
 					if(MyEntity.PaymentTerm != null)
 					{
 						var myPaymentTermPM = PaymentTermPaymentTermService.PaymentTermDataMappingAndValidatin(MyEntity.PaymentTerm,Tenant,ComputingPartnerName);
@@ -132,7 +133,8 @@ using Simplog.Data.CommonDataModel;
 						 
 					}
 			
-										AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
+					
+					AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.MainAddress != null)
 					{
 						var myMainAddressPM = MainAddressAddressService.AddressDataMappingAndValidatin(MyEntity.MainAddress,Tenant,ComputingPartnerName);
@@ -143,7 +145,8 @@ using Simplog.Data.CommonDataModel;
 						 
 					}
 			
-										GLAccountQueryService GLAccountGLAccountService = new GLAccountQueryService(Tenant);
+					
+					GLAccountQueryService GLAccountGLAccountService = new GLAccountQueryService(Tenant);
 					if(MyEntity.GLAccount != null)
 					{
 						var myGLAccountPM = GLAccountGLAccountService.GLAccountCustomDataMappingAndValidatin(MyEntity.GLAccount,Tenant);

@@ -74,7 +74,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         FromPartnerId, 
 	         ToPartnerId, 
 	         ChargeableWeightUnitCode, 
-	         TotalVolumetricWeight,
+	         TotalVolumetricWeight, 
+	         LastStatusUpdateDate,
 	      }
 
 
@@ -142,7 +143,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         FromPartnerId, 
 	         ToPartnerId, 
 	         ChargeableWeightUnitCode, 
-	         TotalVolumetricWeight,
+	         TotalVolumetricWeight, 
+	         LastStatusUpdateDate, 
+	         MasterHouse, 
+	         EntryReferencesAndDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -409,6 +413,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
             {
 				entityPOCO.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
+            {
+				entityPOCO.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -682,6 +691,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.TotalVolumetricWeight = entityPOCO.TotalVolumetricWeight;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastStatusUpdateDate))
+            {
+					entityPM.LastStatusUpdateDate = entityPOCO.LastStatusUpdateDate;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseEntryPM entityPM, WarehouseEntryPM oldEntityPM)
@@ -946,6 +960,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
             {
                 oldEntityPM.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
+            {
+                oldEntityPM.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
             }
 			
 		}

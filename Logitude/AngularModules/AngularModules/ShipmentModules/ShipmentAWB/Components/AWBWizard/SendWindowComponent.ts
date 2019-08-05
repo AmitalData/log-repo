@@ -773,6 +773,11 @@ export class SendWindowComponent {
                         this.CurrentSession.StopBusyIndicator();
                     }
 
+                    if (myResult.IsFNAValidationLong) {
+                        this.ValidationErrorsList.push(TextCodeTranslator.Translate("Shipment.M.AWB.ValidateFNA"));
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+
                     else {
                         this.SendData();
                     }

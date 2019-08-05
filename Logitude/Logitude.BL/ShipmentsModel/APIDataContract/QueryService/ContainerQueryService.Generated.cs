@@ -100,13 +100,14 @@ using Simplog.Data.ShipmentsModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("ShipmentPackage with Id " + item.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 						temp.Id = item.Id;
-					}					PackageTypeQueryService ContainerTypePackageTypeService = new PackageTypeQueryService(Tenant);
+					}
+					PackageTypeQueryService ContainerTypePackageTypeService = new PackageTypeQueryService(Tenant);
 					if(item.ContainerType != null)
 					{
 						var myContainerTypePM = ContainerTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.ContainerType,Tenant,ComputingPartnerName);

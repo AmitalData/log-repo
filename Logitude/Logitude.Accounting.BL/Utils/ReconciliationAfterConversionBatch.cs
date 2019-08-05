@@ -148,12 +148,16 @@ namespace Logitude.Accounting.BL.Utils
                 rv = false;
             }
             //           else if (!journalLineRecoList.Exists(line => line._journalLine.ActionCode == "1") ||  !journalLineRecoList.Exists(line => line._journalLine.ActionCode == "2"))
-            else if ((journalLineRecoList.Sum(line => line._journalLine.LocalAmount) != 0m))
-            {
 
-                _WrongSum.Add(groupKey);
-                rv = false;
-            }
+
+            //else if ((journalLineRecoList.Sum(line => line._journalLine.LocalAmount) != 0m))
+            //{
+
+            //    _WrongSum.Add(groupKey);
+            //    rv = false;
+            //}
+
+
             else if (journalLineRecoList.Exists(line => line._oneLineLedger == null))
             {
                 rv = false;
@@ -200,7 +204,8 @@ namespace Logitude.Accounting.BL.Utils
             public ReconciableGroup(string reference, List<JournalLineReco> lineGroup)
             {
                 _LineGroup = lineGroup;
-                _Ref = Int64.Parse(reference);
+                _Ref = ///Int64.Parse(reference);
+                (Int64)Decimal.Parse(reference);
             }
         }
 

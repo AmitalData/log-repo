@@ -23,7 +23,6 @@ import {WarehouseEntryPackagePM} from '../../Warehouse/EntityPMs/WarehouseEntryP
 import {AppTool, DateTool, FormatTool, DateParts} from '../../Infrastructure/Tools';
 
 import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
-import {TraceEventExtendedPMService } from '../../Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
 import {EventTypeClass} from '../../Infrastructure/DataContracts/EventTypeArgs';
 
 import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
@@ -37,7 +36,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
     moduleId: module.id,
     selector: 'NewWarehouseReleaseComponent',
     templateUrl: './NewWarehouseReleaseComponent.html',
-    providers: [WarehouseReleasePMExtendedService, TraceEventExtendedPMService, WarehouseEntryPackagePMExtendedService],
+    providers: [WarehouseReleasePMExtendedService, WarehouseEntryPackagePMExtendedService],
 
 })
 export class NewWarehouseReleaseComponent extends BaseComponent implements OnInit {
@@ -54,7 +53,6 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     public PackageTypeColumnHeader: string;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     validator: ClassLevelValidator;
-    EventTypeCodeList: EventTypeClass[];
     ObjectTableId: string;
    
     ActualReleaseDateOldValue: Date;
@@ -70,9 +68,8 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
     DataContext: any = this;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public _warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService, public _traceEventExtendedPMService: TraceEventExtendedPMService, private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
+    constructor(public _warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService, private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         super();
-        this.EventTypeCodeList = [];
         this.GetNewInstance();
         this.validator = new ClassLevelValidator();
    
@@ -328,6 +325,8 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         }
 
 
+
+
         if (this.ValidationErrorsList.length == 0) {
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
@@ -341,13 +340,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
                 }
                 
                 this.ComputeAndFullTotalPackage();
-                this.EventTypeCodeList.push(new EventTypeClass("CRRE",null));
-                if (this.warehouseReleasePM.ExpectedReleaseDate) this.EventTypeCodeList.push(new EventTypeClass("EXRE", this.warehouseReleasePM.ExpectedReleaseDate));
-                if (this.warehouseReleasePM.ActualReleaseDate) this.EventTypeCodeList.push(new EventTypeClass("ENRE", this.warehouseReleasePM.ActualReleaseDate));
-
-
-                if (this.EventTypeCodeList.filter(d => d.Code == "ENRE")[0]) this.warehouseReleasePM.StatusCode = "RELE";
-
+                if (this.warehouseReleasePM.ActualReleaseDate) this.warehouseReleasePM.StatusCode = "RELE";
 
                 this._warehouseReleasePMExtendedService.Insert(this.warehouseReleasePM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
@@ -363,8 +356,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
                             var warehouseHelper: WarehouseHelper = new WarehouseHelper();
                             warehouseHelper.SetShipmentWarehouseLeg(this.ShipmentPM, this.warehouseReleasePM, "Release");
-
-                            this.UpdateEventType();
+                            this.CurrentSession.CurrentWindow.Close("Refresh");
                         }
                     } else {
                         pmResponse.ErrorsArray.forEach((item) => {
@@ -549,33 +541,6 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
 
 
-
     }
-
-    UpdateEventType() {
-
-        if (this.EventTypeCodeList && this.EventTypeCodeList.length != 0) {
-
-            var traceEventArgs: EventTypeArgs = new EventTypeArgs();
-
-            traceEventArgs.EventTypeList = this.EventTypeCodeList;
-            traceEventArgs.Tenant = SessionLocator.Tenant;
-            traceEventArgs.ObjectTableId = this.ObjectTableId;
-            traceEventArgs.EntityId = this.warehouseReleasePM.Id;
-            traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
-
-            this._traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
-
-                this.CurrentSession.CurrentWindow.Close("Refresh");
-
-            });
-
-        }
-        else {
-            this.CurrentSession.CurrentWindow.Close("Refresh");
-        }
-
-    }
-
 
 }

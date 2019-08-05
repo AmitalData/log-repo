@@ -192,6 +192,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
+                //used when create master from house, to check if house already connected to another master
+                Shipment houseShipment = null;
+                if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
+                {
+                    houseShipment = entityRepository.GetSingleShipment(entityPM.MasterCreatedFromHouseId, tenant);
+                    if (houseShipment != null && !string.IsNullOrEmpty(houseShipment.MasterShipmentDataId))
+                    {
+                        throw new ApplicationException("House shipment already connected to a Master, in order to connect to another please disconnect it first");
+                    }
+                }
+
                 this.isNewEntity = true;
                 this.calculateProfit = false;
                 this.calculatePayables = false;
@@ -293,7 +304,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 if(!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
-                    Shipment houseShipment = entityRepository.GetSingleShipment(entityPM.MasterCreatedFromHouseId, tenant);
+                    //Shipment houseShipment = entityRepository.GetSingleShipment(entityPM.MasterCreatedFromHouseId, tenant);
 
                     if (houseShipment != null)
                     {

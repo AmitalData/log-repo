@@ -1766,6 +1766,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.NoReconciliationFound", DefaultText = "There is no reconciliation found", LocalDefaultText = "לא נמצאו התאמות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ThereRTransactions4GLAccountCantUpdated", DefaultText = "There are transactions for the current GL Account, therefore , it can’t be updated", LocalDefaultText = "ישנם תנועות בכרטיס הנה”ח המקושר, ולכן לא ניתן לעדכן את הכרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MoreThanPaymentCheque", DefaultText = "There are more than one cheques for this payment", LocalDefaultText = "קיימת יותר מהמחאה אחת עבור קבלה זו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             AddTextCodes.AddTextCode(new TextCodeDetails()

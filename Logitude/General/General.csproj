@@ -596,11 +596,13 @@
     <Content Include="Main Branch\2019\06 - 2019\Day 19 [Abed] SetDefultValueToShowHeaderLabelsInQuoteTemplateSetting.sql" />
     <Content Include="Main Branch\2019\07 - 2019\Day 16 [Abdullah] update bankaccounts currencies.sql" />
     <Content Include="Main Branch\2019\07 - 2019\Day 14 [Maheera] Update Shipment e-Booking INTTRA Statuses.sql" />
+    <Content Include="Main Branch\2019\07 - 2019\Day 31 [Abed] updateHeaderScreenWarehouseEntry.sql" />
     <Content Include="Main Branch\2019\07 - 2019\Day 31 [Nawras] updateSchedulerProceduresetDefualtIsInternallyDefined.sql" />
     <Content Include="Main Branch\2019\07 - 2019\Day 31 [Nawras] Delete Duplicate ServiceClassNameHelpText LastRunTimeHelpText .sql" />
     <Content Include="Main Branch\2019\07 - 2019\Day 29 [Rabaia] Delete Service Class Name OField.sql" />
     <Content Include="Main Branch\2019\07 - 2019\Day 22 [Abed] updateQuoteTemplateSettingsSetDefultSpaceLines.sql" />
     <Content Include="Main Branch\2019\07 - 2019\Day 28 [Maheera]Add BIReportsExecutionLogWorkerRole.sql" />
+    <Content Include="Main Branch\2019\07 - 2019\Day 31 [Abed] updateFieldLastStatusUpdateDateOnWarehouseEntry.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
