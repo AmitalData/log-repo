@@ -83,16 +83,16 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             PaymentChequePM paymentChequePM = PaymentChequeQuery.GetSingle(entityId, true, false);
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSinglePM(tenantPM.AddressId, tenant);
-            InvoiceWebService invoiceWebService = new InvoiceWebService();
+            NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
             if (paymentChequePM.CurrencyCode == "NIS" || paymentChequePM.CurrencyCode == "ILS")
             {
                 string curr_name = "ש\"ח";
                 string subunit_name = "אגורות";
-                PaymentChequeDP.AmountInHebrew = invoiceWebService.NumbersToHebrew((double)paymentChequePM.ForeignAmount, curr_name, subunit_name, false);
+                PaymentChequeDP.AmountInHebrew = numbersConverterToWords.NumbersToHebrew((double)paymentChequePM.ForeignAmount, curr_name, subunit_name, false);
             }
             else
             { 
-                PaymentChequeDP.AmountInHebrew = invoiceWebService.NumbersToHebrew((double)paymentChequePM.ForeignAmount, paymentChequePM.CurrencyCode, "", false);
+                PaymentChequeDP.AmountInHebrew = numbersConverterToWords.NumbersToHebrew((double)paymentChequePM.ForeignAmount, paymentChequePM.CurrencyCode, "", false);
             }
             if (paymentChequePM != null)
             {
