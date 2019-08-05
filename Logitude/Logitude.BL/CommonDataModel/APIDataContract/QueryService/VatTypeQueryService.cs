@@ -48,7 +48,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             {
 
                 VatTypeQueryService VatTypeService0 = new VatTypeQueryService(Tenant);
-                var VatType = VatTypeService0.GetVatTypeById(Id, Tenant);
+                var VatType = VatTypeService0.GetVatTypeByCode(Id, Tenant);
                 return VatType;
             }
             catch (Exception ex)

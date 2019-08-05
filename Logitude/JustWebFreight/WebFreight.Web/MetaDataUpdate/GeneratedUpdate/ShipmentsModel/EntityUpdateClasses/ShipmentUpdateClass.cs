@@ -128,7 +128,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  true,
 			      				    IsLookUp =  false,
-			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Shipment,Shipments,Simplog.ShipmentLib.NewShipmentCommand,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -42988,6 +42987,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentBMasterNewMaster = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Master.NewMaster", DefaultText = "New Master",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentOOverviewConnectedHouses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.ConnectedHouses", DefaultText = "Connected Houses",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMAWBValidateFNA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AWB.ValidateFNA", DefaultText = "SSR/NFY/OSI/COR can't be more than 216 characters, please edit the comments / handling info to enable sending",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

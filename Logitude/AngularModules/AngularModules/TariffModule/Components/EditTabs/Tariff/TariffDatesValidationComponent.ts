@@ -23,7 +23,6 @@ export class TariffDatesValidationComponent extends BaseComponent {
     public TariffType: string;
     constructor() {
         super();
-
         this.EntityVersionPM = new TariffVersionPM(null);
         this.EntityLinePM= new  TariffLinePM(null);
     }
@@ -83,8 +82,13 @@ export class TariffDatesValidationComponent extends BaseComponent {
         }
 
         else if (this.TariffType == "ASC") {
+            if (this.LineExpirationDate == null) {
+                this.ValidationErrorsList.push("Expiration Date is required");
+            }
 
-
+            else {
+                
+            }
         }
 
         if (this.ValidationErrorsList.length == 0) {

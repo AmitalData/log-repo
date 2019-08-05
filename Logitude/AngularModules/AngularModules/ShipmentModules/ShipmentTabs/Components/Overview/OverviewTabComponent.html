@@ -194,7 +194,7 @@
                                                                                                 <td class="Label" [ngStyle]="{width: MasterDataLableWidth}">{{CarrierDateLabel}}:</td>
                                                                                                 <td class="Value">{{MasterDepartureDate | DateTimeToDatePipe}} {{MasterDepartureDate | DateTimeToTimePipe}}</td>
                                                                                             </tr>
-                                                                                            <tr class="FieldRow">
+                                                                                            <tr class="FieldRow" *ngIf="EntityPM.ShipmentLevelCode == 'C'">
                                                                                                 <td class="Label" [ngStyle]="{width: MasterDataLableWidth}">{{'Shipment.O.Overview.ConnectedHouses' | TextCodeTranslationPipe}}:</td>
                                                                                                 <td class="Value">
                                                                                                     <label style="font-size: 16px;" class="QueryLink" (click)="ConnectedHousesClicked()">{{ConnectedHousesCount}}</label>
