@@ -94,7 +94,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                         }
                     }
-                    if (declarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                    if (declarationCourierStatusPM != null && declarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
                     {
                         declarationCourierStatusUpdateService.Update(declarationCourierStatusPM, true);
                     }
