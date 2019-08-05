@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Rx';
@@ -141,6 +141,7 @@ export class CCSResult {
     public IsValid: boolean;
     public IsMasterFieldMissing: boolean;
     public HasStockError: boolean;
+    public IsFNAValidationLong: boolean;
     public SendingCount: number;
     public StockRemainingBefore: number;
     public StockRemainingAfter: number;

@@ -40,7 +40,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Name = a.Name,
                         SearchFields = a.SearchFields,
                         Description = a.Description,
-
+                        IsInternallyDefined = a.IsInternallyDefined
                     }).FirstOrDefault();
         }
 
@@ -56,22 +56,23 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Name = a.Name,
                         SearchFields = a.SearchFields,
                         Description = a.Description,
+                        IsInternallyDefined = a.IsInternallyDefined
 
-
-                    }).ToList();
+        }).ToList();
         }
 
    
 
-        public IQueryable<SchedulerProcedureList> GetIQueryableEntityList(IQueryable<SchedulerProcedure> iQueryable) { 
+        public IQueryable<SchedulerProcedureList> GetIQueryableEntityList(IQueryable<SchedulerProcedure> iQueryable) {
             IQueryable<SchedulerProcedureList> result = from a in iQueryable
-                                                          select new SchedulerProcedureList()
-                                                          {
-                                                              Code = a.Code,
-                                                              Name = a.Name,
-                                                              SearchFields = a.SearchFields,
-                                                              Description = a.Description,
-
+                                                        where a.IsInternallyDefined == false
+                                                        select new SchedulerProcedureList()
+                                                        {
+                                                            Code = a.Code,
+                                                            Name = a.Name,
+                                                            SearchFields = a.SearchFields,
+                                                            Description = a.Description,
+                                                            IsInternallyDefined = a.IsInternallyDefined
                                                           };
             return result;
         }

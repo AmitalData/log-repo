@@ -388,69 +388,73 @@ namespace Logitude.XSD
                     else
                     {
                         #region FWB
-
                         FWBDataContext dataContext = new FWBDataContext(this.Shipment, this.MasterData, this.AWBMessagesCCSTypeCode);
                         FWBDataBuilder dataBuilder = new FWBDataBuilder(dataContext);
+                        var champ17Item = dataBuilder.GetChampFWB17();
+                        this.ValidateFNAStringLength(dataContext);
 
-                        if (this.AWBMessagesCCSTypeCode == "CHAMP")
+                        if (this.IsValid)
                         {
-                            CHAMP17.Envelope envelop = new CHAMP17.Envelope()
+                            if (this.AWBMessagesCCSTypeCode == "CHAMP")
                             {
-                                Sender = this.TTY,
-                                Recipient = this.Recipient,
-                                Item = dataBuilder.GetChampFWB17(),
-                            };
-
-                            this.SendXMLFile(envelop, "champmessageoutqueue");
-                            this.UpdateStock();
-                        }
-
-                        else if (this.AWBMessagesCCSTypeCode == "GLSHK")
-                        {
-                            #region GLSHK
-
-                            //string myRefID = "HMF" + dataContext.Master.Substring(0, 7) + "X" + dataContext.AirlinePrefix;
-                            string myFullRefID = "HMF" + dataContext.Master + "X" + dataContext.AirlinePrefix;
-
-                            string myShipmentNumber = dataContext.ShipmentNumber;
-                            if (myShipmentNumber != null)
-                            {
-                                if (myShipmentNumber.Length > 14)
+                                CHAMP17.Envelope envelop = new CHAMP17.Envelope()
                                 {
-                                    myShipmentNumber = myShipmentNumber.Substring(0, 14);
+                                    Sender = this.TTY,
+                                    Recipient = this.Recipient,
+                                    Item = champ17Item,
+                                };
+
+                                this.SendXMLFile(envelop, "champmessageoutqueue");
+                                this.UpdateStock();
+                            }
+
+                            else if (this.AWBMessagesCCSTypeCode == "GLSHK")
+                            {
+                                #region GLSHK
+
+                                //string myRefID = "HMF" + dataContext.Master.Substring(0, 7) + "X" + dataContext.AirlinePrefix;
+                                string myFullRefID = "HMF" + dataContext.Master + "X" + dataContext.AirlinePrefix;
+
+                                string myShipmentNumber = dataContext.ShipmentNumber;
+                                if (myShipmentNumber != null)
+                                {
+                                    if (myShipmentNumber.Length > 14)
+                                    {
+                                        myShipmentNumber = myShipmentNumber.Substring(0, 14);
+                                    }
                                 }
-                            }
 
-                            GLSHK.Message message = new GLSHK.Message()
-                            {
-                                Envelope = new GLSHK.Envelope()
+                                GLSHK.Message message = new GLSHK.Message()
                                 {
-                                    SenderID = this.PIMA,
-                                    RecipientID = this.Recipient,
-                                    MsgFormat = "XML",
-                                    MsgType = "CIMFWB",
-                                    Version = 17,
-                                    MsgDateTime = this.TodayDateTime,
-                                    RefID = myFullRefID,
-                                    MessageRefNum = myShipmentNumber,
-                                    InterchangeControlRef = myShipmentNumber,
-                                    Item = this.Tenant.ToString(),
-                                    ItemElementName = GLSHK.ItemChoiceType4.CompanyID,
-                                },
+                                    Envelope = new GLSHK.Envelope()
+                                    {
+                                        SenderID = this.PIMA,
+                                        RecipientID = this.Recipient,
+                                        MsgFormat = "XML",
+                                        MsgType = "CIMFWB",
+                                        Version = 17,
+                                        MsgDateTime = this.TodayDateTime,
+                                        RefID = myFullRefID,
+                                        MessageRefNum = myShipmentNumber,
+                                        InterchangeControlRef = myShipmentNumber,
+                                        Item = this.Tenant.ToString(),
+                                        ItemElementName = GLSHK.ItemChoiceType4.CompanyID,
+                                    },
 
-                                Item = dataBuilder.GetGLSHKFWB(),
-                                version = GLSHK.MessageVersion.Item20,
-                            };
+                                    Item = dataBuilder.GetGLSHKFWB(),
+                                    version = GLSHK.MessageVersion.Item20,
+                                };
 
-                            if (dataContext.IsViaColoader && !string.IsNullOrEmpty(dataContext.ColoaderKey))
-                            {
-                                message.Envelope.Item = dataContext.ColoaderKey;
-                                message.Envelope.ItemElementName = GLSHK.ItemChoiceType4.ColoaderKey;
+                                if (dataContext.IsViaColoader && !string.IsNullOrEmpty(dataContext.ColoaderKey))
+                                {
+                                    message.Envelope.Item = dataContext.ColoaderKey;
+                                    message.Envelope.ItemElementName = GLSHK.ItemChoiceType4.ColoaderKey;
+                                }
+
+                                this.SendXMLFile(message, "glshkmessageoutqueue");
+                                this.UpdateStock();
+                                #endregion
                             }
-
-                            this.SendXMLFile(message, "glshkmessageoutqueue");
-                            this.UpdateStock();
-                            #endregion
                         }
                         #endregion
                     }
@@ -467,6 +471,17 @@ namespace Logitude.XSD
 
                     scope.Complete();
                 }
+            }
+        }
+
+        private void ValidateFNAStringLength(FWBDataContext dataContext)
+        {
+            var FNAString = dataContext.Shipment.SCI + dataContext.Shipment.AWBHandlingInformation + dataContext.Shipment.AWBComments + dataContext.FNANotifyDetails;
+            if (FNAString != null && FNAString.Count() > 216)
+            {
+                this.IsValid = false;
+                this.Result.IsValid = false;
+                this.Result.IsFNAValidationLong = true;
             }
         }
 
@@ -1021,6 +1036,7 @@ namespace Logitude.XSD
         public int Id { get; set; }
         public bool IsValid { get; set; }
         public bool IsMasterFieldMissing { get; set; }
+        public bool IsFNAValidationLong { get; set; }
         public bool HasStockError { get; set; }
         public int SendingCount { get; set; }
         public int StockRemainingBefore { get; set; }
