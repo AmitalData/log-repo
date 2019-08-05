@@ -444,7 +444,11 @@ export class AmitalGatewayUtil {
             //BackButtonLabel: "הצהרות ללא התרה"EntityId :"1-103991" ,ObjectTableName:"Customs.Declaration"
             let isSaved: boolean = false;
             let BackButtonLabel = "תיק עמילות"
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', myEditTab.SessionComponent.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
+                //myEditTab.SessionComponent.viewContainerRef
+                //this.CurrentSession.SessionLocation.viewContainerRef
+                SessionLocator.AllSessions[1].SessionLocation.viewContainerRef
+            )
                 .then(cmpRef => {
                     //this.SelectionChanged(myDeclarationEditTab);
                     cmpRef.instance.ComponentRef = cmpRef;
