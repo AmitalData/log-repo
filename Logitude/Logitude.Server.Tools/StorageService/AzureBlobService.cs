@@ -277,8 +277,23 @@ namespace Logitude.Server.Tools.StorageService
             return result;
         }
 
+        public void AppendText(string text, BlobFileInfo fileInfo)
+        {
+            string localPath = null;
+            CloudBlobContainer blobContainer = null;
+            GetFileBlobContainerInfo(fileInfo, out localPath, out blobContainer);
 
+            var blobfile = blobContainer.GetAppendBlobReference(localPath);
+            if (!blobfile.Exists())
+            {
+                blobfile.CreateOrReplace();
+            }
 
+         
+            blobfile.AppendText(text);
+
+          
+        }
     }
 }
 

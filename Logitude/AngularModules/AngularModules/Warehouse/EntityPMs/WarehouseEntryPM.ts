@@ -384,6 +384,11 @@ export class WarehouseEntryPM {
     public set EntryReferencesAndDate(newValue: string) { if (this.entryReferencesAndDate != newValue) { this.entryReferencesAndDate = newValue; this.MarkAsDirty("EntryReferencesAndDate"); } }
        
 	 
+    private ratio: number;
+    public get Ratio() { return this.ratio; }
+    public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPM;
 		

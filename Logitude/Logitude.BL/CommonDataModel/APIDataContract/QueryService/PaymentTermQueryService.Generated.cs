@@ -58,6 +58,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public PaymentTerm GetPaymentTermByExternalId(string ExternalId,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByExternalId(ExternalId,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("PaymentTerm with ExternalId " + ExternalId + " doesn't exist");
+
+				return PaymentTermDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public PaymentTerm PaymentTermDataMapping(PaymentTermPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -67,7 +86,8 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;
-				   temp.Days = MyEntityPM.Days;					
+				   temp.Days = MyEntityPM.Days;
+				   temp.ExternalId = MyEntityPM.ExternalId;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -86,10 +106,14 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+					
+					if (!string.IsNullOrEmpty(MyEntity.ExternalId))
+					{
+						temp = query.GetSinglePMByExternalId(MyEntity.ExternalId, Tenant);
+					} 					   
 					if(temp == null)
 					{   
-					    throw new ApplicationException("PaymentTerm with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("PaymentTerm with ExternalId " + MyEntity.ExternalId + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -97,7 +121,8 @@ using Simplog.Data.CommonDataModel;
 					}
 					temp.EnglishName = MyEntity.EnglishName;
 					temp.LocalName = MyEntity.LocalName;
-					temp.Days = MyEntity.Days;					   
+					temp.Days = MyEntity.Days;
+					temp.ExternalId = MyEntity.ExternalId;					   
 					   return temp;
 		    }
             catch (Exception ex)

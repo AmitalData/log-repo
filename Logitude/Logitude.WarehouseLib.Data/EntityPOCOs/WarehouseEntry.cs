@@ -169,6 +169,8 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public decimal TotalVolumetricWeight { get; set; }
         [Column("LastStatusUpdateDate")]
 	    public DateTime? LastStatusUpdateDate { get; set; }
+        [Column("Ratio")]
+	    public double? Ratio { get; set; }
     }
 }
 	 

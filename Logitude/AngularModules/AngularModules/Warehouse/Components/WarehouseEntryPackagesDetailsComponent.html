@@ -71,7 +71,7 @@
                                 </LogLov>
                             </div>
 
-                            <!--<div style="width: 170px; display: block; float:left; margin-left: 15px;">
+                            <div style="width: 140px; display: block; float:left; margin-left: 15px;">
                                 <LogLabel [HideColumns]="true" [ObjectFieldName]="'ChargeableWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightUnitCodeLabel"></LogLabel>
                                 <LogLov [ObjectFieldName]="'ChargeableWeightUnitCode'"
                                         [SelectedValue]="ChargeableWeightUnitCode"
@@ -80,7 +80,7 @@
                                         [LookUpTableName]="'WeightUnit'"
                                         [HideColumns]="true">
                                 </LogLov>
-                            </div>-->
+                            </div>
 
                             <div style="width: 140px; display: block; float:left; margin-left: 15px;">
                                 <LogLabel [HideColumns]="true" [ObjectFieldName]="'DimensionsUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Dimension Unit Code'"></LogLabel>
@@ -105,6 +105,17 @@
                                         [HideColumns]="true">
                                 </LogLov>
                             </div>
+
+                            <div style="width: 70px; display: block; float:left; margin-left: 15px;">
+                                <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [Text]="'Ratio'" [DataContext]="DataContext"></LogLabel>
+                                <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="warehouseEntryPM" ></RatioBox>
+                            </div>
+
+
+
+
+
+
 
                             <!--<div style="width: 70px; display: block; float:left; margin-left: 15px;">
                                 <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>

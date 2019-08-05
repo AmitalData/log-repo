@@ -35,6 +35,7 @@ namespace Logitude.XSD
         public bool IsKnownCargo { get; set; }
         public string KnownConsignorNumber { get; set; }
         public string MainHarmonize { get; set; }
+        public string FNANotifyDetails { get; set; }
 
         #region Carriers
         public string AirlinePrefix { get; set; }

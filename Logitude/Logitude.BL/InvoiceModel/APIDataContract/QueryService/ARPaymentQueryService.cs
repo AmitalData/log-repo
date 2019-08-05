@@ -67,6 +67,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw new ApplicationException("Payment currency field  is required");
             }
 
+
                 return entity;
 
         }
