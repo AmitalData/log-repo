@@ -1369,6 +1369,10 @@
     <Compile Include="Migrations\201908050856575_Nawras1.Designer.cs">
       <DependentUpon>201908050856575_Nawras1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908051659281_AbedAddQuoteTemplateMarginSetting.cs" />
+    <Compile Include="Migrations\201908051659281_AbedAddQuoteTemplateMarginSetting.Designer.cs">
+      <DependentUpon>201908051659281_AbedAddQuoteTemplateMarginSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2337,6 +2341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908011016297_AbedAddRatioToWarehouseEntry.resx">
       <DependentUpon>201908011016297_AbedAddRatioToWarehouseEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908051659281_AbedAddQuoteTemplateMarginSetting.resx">
+      <DependentUpon>201908051659281_AbedAddQuoteTemplateMarginSetting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

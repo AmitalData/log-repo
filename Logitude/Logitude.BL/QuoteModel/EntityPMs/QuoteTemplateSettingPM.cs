@@ -267,5 +267,10 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public int SpaceLinesBeforeHeaders { get; set; }
         public int SpaceLinesBeforeFooters { get; set; }
         public int SpaceLinesBeforePerContainers { get; set; }
+
+
+        public int QuoteTemplatePDFMarginTop { get; set; }
+        public int QuoteTemplatePDFMarginBottom { get; set; }
+
     }
 }

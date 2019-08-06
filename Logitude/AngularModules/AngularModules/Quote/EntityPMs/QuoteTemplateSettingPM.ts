@@ -869,8 +869,13 @@ export class QuoteTemplateSettingPM {
     public set SpaceLinesBeforePerContainers(newValue: number) { if (this.spaceLinesBeforePerContainers != newValue) { this.spaceLinesBeforePerContainers = newValue; this.MarkAsDirty("SpaceLinesBeforePerContainers"); } }
 
 
+    private quoteTemplatePDFMarginTop: number;
+    public get QuoteTemplatePDFMarginTop() { return this.quoteTemplatePDFMarginTop; }
+    public set QuoteTemplatePDFMarginTop(newValue: number) { if (this.quoteTemplatePDFMarginTop != newValue) { this.quoteTemplatePDFMarginTop = newValue; this.MarkAsDirty("QuoteTemplatePDFMarginTop"); } }
 
-
+    private quoteTemplatePDFMarginBottom: number;
+    public get QuoteTemplatePDFMarginBottom() { return this.quoteTemplatePDFMarginBottom; }
+    public set QuoteTemplatePDFMarginBottom(newValue: number) { if (this.quoteTemplatePDFMarginBottom != newValue) { this.quoteTemplatePDFMarginBottom = newValue; this.MarkAsDirty("QuoteTemplatePDFMarginBottom"); } }
 
     public OldEntityPM: QuoteTemplateSettingPM;
 		

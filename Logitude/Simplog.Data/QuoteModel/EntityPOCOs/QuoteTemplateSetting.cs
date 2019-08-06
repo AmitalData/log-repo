@@ -336,6 +336,8 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
 
 
+        public int QuoteTemplatePDFMarginTop { get; set; }
+        public int QuoteTemplatePDFMarginBottom { get; set; }
 
 
         [ForeignKey("TotalPerContainersAdditionalTextDesignId")]
