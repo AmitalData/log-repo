@@ -18,21 +18,13 @@
                                 </td>
                             </tr>
 
-                            <tr class="FormFieldRow">
-                                <td style="width: 150px;">
+                            <tr class="FormFieldRow" *ngIf="Code == 'Air'">
+                                <td style="width: 200px;">
                                     <LogLabel [ObjectFieldName]="'AMCAirStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
                                 <td style="width: 220px;">
                                     <LogDatePicker [ObjectFieldName]="'AMCAirStartDate'" [SelectedDateValue]="AMCAirStartDate" [HideColumns]=" true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                </td>
-
-                                <td style="width:5px;">
-                                    <div></div>
-                                </td>
-
-                                <td style="width: 25px;">
-                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditStartDate('AIR')"></IconButton>
                                 </td>
 
                                 <td>
@@ -41,21 +33,13 @@
                             </tr>
 
 
-                            <tr class="FormFieldRow">
-                                <td>
+                            <tr class="FormFieldRow" *ngIf="Code == 'Ocean'">
+                                <td style="width: 200px;">
                                     <LogLabel [ObjectFieldName]="'AMCOceanStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td>
+                                <td style="width: 220px;">
                                     <LogDatePicker [ObjectFieldName]="'AMCOceanStartDate'" [SelectedDateValue]="AMCOceanStartDate" [HideColumns]=" true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                </td>
-
-                                <td style="width:5px;">
-                                    <div></div>
-                                </td>
-
-                                <td>
-                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditStartDate('OCEAN')"></IconButton>
                                 </td>
 
                                 <td>
@@ -64,8 +48,19 @@
                             </tr>
 
                             <tr>
-                                <td colspan="5">
-                                    <div></div>
+                                <td colspan="3">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 90px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="vertical-align: top;">
+                                                <div class="ItalicArialText" *ngIf="IsNoDataTextVisible">{{NoDataText}}</div>
+                                                <div class="ItalicArialText" *ngIf="IsUpdateTextVisible">{{UpdatedDataText}}</div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
                         </table>

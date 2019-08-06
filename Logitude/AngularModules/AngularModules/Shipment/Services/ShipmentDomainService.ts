@@ -9,7 +9,7 @@ import {ShipmentPM} from '../EntityPMs/ShipmentPM';
 import {ShipmentPMService} from './StandardPMs/ShipmentPMService';
 import {ShipmentList} from '../EntityLists/ShipmentList';
 import { MessagingStockUsageHistoryList } from '../EntityLists/MessagingStockUsageHistoryList';
-
+import { AppTool } from '../../Infrastructure/Tools';
 @Injectable()
 
 export class ShipmentDomainService {
@@ -803,6 +803,60 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    SetAMANACStartDate(entityCode: string, myStartDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var myStartDateString: string = ServiceHelper.GetDateString(myStartDate);
+        var url = this._apiUrl + '/GetSetAMANACStartDate?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
+
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    GetOnStartDateEntitiesIds(entityCode: string, myStartDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var myStartDateString: string = ServiceHelper.GetDateString(myStartDate);
+        var url = this._apiUrl + '/GetOnStartDateEntitiesIds?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
+
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    BlockTransferEntities(ids: string[], entityCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetBlockForTransfer?allIdsString=' + AppTool.GetIdsArrayText(ids) + "&entityCode=" + entityCode;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
+
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
