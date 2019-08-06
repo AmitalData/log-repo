@@ -438,6 +438,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Currency AWBCurrency { get; set; }
         public virtual Card ShipperCard { get; set; }
         public virtual Card AgentCard { get; set; }
+        public virtual Card AgentComputedCard { get; set; }
         public virtual Card CustomAgentImportCard { get; set; }
         public virtual Card Notify1Card { get; set; }
         public virtual Card Notify2Card { get; set; }

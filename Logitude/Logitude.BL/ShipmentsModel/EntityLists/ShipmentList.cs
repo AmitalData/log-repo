@@ -58,6 +58,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageCarrierName { get; set; }
         public string AgentComputed { get; set; }
+        public string AgentComputedName { get; set; }
+
         public string CustomFieldId { get; set; }
         public string FromPortId { get; set; }
         public string FromPort { get; set; }
