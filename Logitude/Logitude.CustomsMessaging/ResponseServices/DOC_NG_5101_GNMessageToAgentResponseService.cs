@@ -334,7 +334,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (this._MyDeclarationPM.IsCourierDeclaration == true && this._MyDeclarationPM.HatraDate.HasValue)
                 {
                     LogMessagingUtil.Instance.AppendLine("Declaration has already been released (" + this._MyDeclarationPM.CustomFileNo + ")");
-                    MyResponseData = new INF_MSG_GenericResponseData() { Succeeded = true, HasException = false, UserMessage = "Declaration has already been released (" + this._MyDeclarationPM.CustomFileNo + ")" };
+                    MyResponseData = new INF_MSG_GenericResponseData() { Succeeded = true, HasException = false, UserMessage = "Declaration has already been released (" + this._MyDeclarationPM.CustomFileNo + ")" , ApplicationID = requestParams.AppicationId};
+                    if(this.MyRequestSheetParam != null)
+                    {
+                        this.MyRequestSheetParam.EntityId1 = requestParams.AppicationId;
+                        this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                        this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
+                    }
                     return;
                 }
 
