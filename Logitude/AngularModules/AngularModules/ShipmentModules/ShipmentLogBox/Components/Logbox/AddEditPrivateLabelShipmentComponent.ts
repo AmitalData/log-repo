@@ -428,12 +428,12 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
      
 
     ValidateContainerNumber(input: string) {
+        //this.ValidationErrorsList = [];
         this.ValidationErrorsList = [];
-        this.WarningErrorsList = [];
         var error = FormatTool.ValidateContainerNumber(input);
 
         if (!AppTool.IsNullOrEmpty(error)) {
-            this.WarningErrorsList.push(error);
+            this.ValidationErrorsList.push(error);
         }
     }
     

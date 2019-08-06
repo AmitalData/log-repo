@@ -127,6 +127,8 @@ namespace WebFreight.Web.App_Code
                         shipmentService.Update();
                         HandelCancelledShipmentDocuments(ImporterShipment.Id, ImporterShipment.Tenant);
                     }
+                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(ImporterShipment), null, null, "");
+
                     return Request.CreateResponse(HttpStatusCode.OK, "Ok");
                 }
                 catch (Exception ex)

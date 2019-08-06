@@ -129,7 +129,7 @@ namespace CommunicationWorkerRole
 
                             string ShipmentId = response.MessageValues["ShipmentId"].ToString();
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
-                            string CorrelationId = response.MessageValues.ContainsKey("CorrelationId") ? response.MessageValues["CorrelationId"].ToString() : Guid.NewGuid().ToString();
+                            string CorrelationId = response.MessageValues["CorrelationId"].ToString();//response.MessageValues.ContainsKey("CorrelationId") ? response.MessageValues["CorrelationId"].ToString() : Guid.NewGuid().ToString();
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
 
                             #region APILogs
@@ -237,8 +237,8 @@ namespace CommunicationWorkerRole
                                                 ShipmentNumber = ForwarderShipment.ForwarderShipmentNumber,
                                                 Tenant = (int)Partner.PartnerTenant,
                                                 Code = "VDK",
-                                                Date = Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
-                                                Time = Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
+                                                Date = DateTime.Now.ToShortDateString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
+                                                Time = DateTime.Now.ToShortTimeString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
                                                 Remarks = "Approval Task Received",
                                                 Direction = ForwarderShipment.DirectionId
                                             };
@@ -269,6 +269,11 @@ namespace CommunicationWorkerRole
 
 
                                         }
+                                        //if (!IsNewLog)
+                                        //{
+                                        //    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
+
+                                        //}
                                         #endregion
 
                                     }
@@ -280,7 +285,7 @@ namespace CommunicationWorkerRole
                             {
                                 #region HandleException
                                 ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "WorkerRole", "", null);
-                                if (response.MessageValues.Keys.Contains("Id"))
+                                if (response.MessageValues.Keys.Contains("ShipmentId"))
                                 {
                                     //if (IsNewLog)
                                     //{
