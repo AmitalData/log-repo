@@ -249,6 +249,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                   SpaceLinesBeforeQuoteDetails = a.SpaceLinesBeforeQuoteDetails,
                                                   SpaceLinesBeforeQuoteHeaders = a.SpaceLinesBeforeQuoteHeaders,
                                                   SpaceLinesBeforePerContainers = a.SpaceLinesBeforePerContainers,
+                                                  QuoteTemplatePDFMarginBottom = a.QuoteTemplatePDFMarginBottom,
+                                                  QuoteTemplatePDFMarginTop = a.QuoteTemplatePDFMarginTop,
 
                                               }).FirstOrDefault();
 
@@ -468,6 +470,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                        SpaceLinesBeforeQuoteDetails = a.SpaceLinesBeforeQuoteDetails,
                                                        SpaceLinesBeforeQuoteHeaders = a.SpaceLinesBeforeQuoteHeaders,
                                                        SpaceLinesBeforePerContainers = a.SpaceLinesBeforePerContainers,
+                                                                          QuoteTemplatePDFMarginBottom = a.QuoteTemplatePDFMarginBottom,
+                                                                          QuoteTemplatePDFMarginTop = a.QuoteTemplatePDFMarginTop,
 
 
                                                                       };
@@ -681,6 +685,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                     SpaceLinesBeforeQuoteDetails = quoteTemplateSetting.SpaceLinesBeforeQuoteDetails,
                                                     SpaceLinesBeforeQuoteHeaders = quoteTemplateSetting.SpaceLinesBeforeQuoteHeaders,
                                                     SpaceLinesBeforePerContainers = quoteTemplateSetting.SpaceLinesBeforePerContainers,
+                                                              QuoteTemplatePDFMarginBottom = quoteTemplateSetting.QuoteTemplatePDFMarginBottom,
+                                                              QuoteTemplatePDFMarginTop = quoteTemplateSetting.QuoteTemplatePDFMarginTop,
                                                           };
             return result;
         }
