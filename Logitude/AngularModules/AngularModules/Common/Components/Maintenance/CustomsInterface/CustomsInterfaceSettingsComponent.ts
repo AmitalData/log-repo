@@ -94,7 +94,9 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.LocalCustomsInterfaceCode)) {
             if (this.EntityPM.LocalCustomsInterfaceCode != "NO") {
                 if (this.EntityPM.LocalCustomsInterfaceCode == "AMC") {
-
+                    if (this.EntityPM.AMCAirStartDate != null && this.EntityPM.AMCOceanStartDate != null) {
+                        localTickVisible = true;
+                    }
                 }
 
                 else {
@@ -141,6 +143,7 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
             }
 
             this.SetUIProperties();
+            this.SetTickProperties();
         }
     }
 
@@ -174,19 +177,20 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
 
         switch (type) {
             case "Local": {
+                var windowTitle: string;
+
                 if (this.LocalCustomsInterfaceCode == "AMC") {
-                    logitudeWindow.Title = "AMANAC Start Dates";
-                    logitudeWindow.WindowArgs = this.EntityPM;
-                    logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
-                    logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/CustomsInterfaceStartDatesComponent');
+                    windowTitle = "AMANAC Start Dates";                    
                 }
 
                 else {
-                    logitudeWindow.Title = "Local Interface Credintials";
-                    logitudeWindow.WindowArgs = this.EntityPM;
-                    logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
-                    logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/CustomsInterfaceCredintialsComponent');
+                    windowTitle = "Local Interface Credintials";
                 }
+
+                logitudeWindow.Title = windowTitle;
+                logitudeWindow.WindowArgs = this.EntityPM;
+                logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
+                logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/LocalCustomsInterfaceDetailsComponent');
 
                 break;
             }
