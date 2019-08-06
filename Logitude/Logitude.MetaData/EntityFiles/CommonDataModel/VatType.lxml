@@ -60,8 +60,8 @@
   <Records />
   <DataContracts>
     <DataContract Name="&quot;VatType&quot;" Version="&quot;ApiV1&quot;">
-      <DCField DCFieldName="&quot;Id&quot;" DCVersion="&quot;ApiV1&quot;" FieldName="&quot;Id&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
-      <DCField DCFieldName="&quot;Code&quot;" FieldName="&quot;Code&quot;" IsKey="true" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
+      <DCField DCFieldName="&quot;Id&quot;" DCVersion="&quot;ApiV1&quot;" FieldName="&quot;Id&quot;" IsKey="true" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
+      <DCField DCFieldName="&quot;Code&quot;" FieldName="&quot;Code&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
       <DCField DCFieldName="&quot;EnglishName&quot;" FieldName="&quot;EnglishName&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
       <DCField DCFieldName="&quot;LocalName&quot;" FieldName="&quot;LocalName&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;nText&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
     </DataContract>
