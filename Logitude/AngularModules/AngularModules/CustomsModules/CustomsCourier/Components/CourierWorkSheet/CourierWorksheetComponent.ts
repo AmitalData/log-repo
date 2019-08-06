@@ -28,7 +28,8 @@ import { CustomsSettingExtendedListService } from '../../../../Customs/Services/
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { SendUnCorrectDocumentsRequestParams } from '../../../../Customs/DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
-
+import { CourierPendingReasonListService } from '../../../../Customs/Services/StandardLists/CourierPendingReasonListService';
+import { CourierPendingReasonList } from '../../../../Customs/EntityLists/CourierPendingReasonList';
 
 @Component({
     moduleId: module.id,
@@ -1134,9 +1135,11 @@ implements OnDestroy
             .subscribe(resu => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var list: string[];
+                var itemPname = null;
                 list = resu.Result;
                 list.forEach(itemP => {
-                    this._PendingCodes.push({ 'Key': itemP, 'Value': itemP });
+                    itemPname = this.getCourierPendingReasonName(itemP);
+                    this._PendingCodes.push({ 'Key': itemP, 'Value': itemPname });
                 });
                 if (AppTool.IsNullOrEmpty(this.PendingFilter)) this.PendingFilter = "A";
                 if (!AppTool.IsNullOrEmpty(this.PendingFilter) && this._PendingCodes != null && this._PendingCodes.length > 0) {
@@ -1152,6 +1155,20 @@ implements OnDestroy
             });
     }
 
+
+    getCourierPendingReasonName(courierPendingReason: string) {
+        var toolTip = courierPendingReason
+        if (!AppTool.IsNullOrEmpty(toolTip) && toolTip.indexOf(',') < 0) {
+
+            var myCourierPendingReasonListService = new CourierPendingReasonListService();
+            myCourierPendingReasonListService.getSingleFromCache(toolTip)
+                .subscribe(serviceResponse => {
+                    var CourierPendingReason = serviceResponse.Result as CourierPendingReasonList;
+                    toolTip = CourierPendingReason.LocalName;
+                });
+        }
+        return toolTip;
+    }
 
     HOLDFilterClicked(value) {
 
