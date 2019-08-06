@@ -260,6 +260,8 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.SpaceLinesBeforeQuoteDetails = itemPM.SpaceLinesBeforeQuoteDetails;
             itemPoco.SpaceLinesBeforeQuoteHeaders = itemPM.SpaceLinesBeforeQuoteHeaders;
             itemPoco.SpaceLinesBeforePerContainers = itemPM.SpaceLinesBeforePerContainers;
+            itemPoco.QuoteTemplatePDFMarginBottom = itemPM.QuoteTemplatePDFMarginBottom;
+            itemPoco.QuoteTemplatePDFMarginTop = itemPM.QuoteTemplatePDFMarginTop;
 
 
         }

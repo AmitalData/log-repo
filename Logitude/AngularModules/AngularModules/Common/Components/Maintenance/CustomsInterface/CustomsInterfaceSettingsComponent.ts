@@ -93,8 +93,14 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.LocalCustomsInterfaceCode)) {
             if (this.EntityPM.LocalCustomsInterfaceCode != "NO") {
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.LocalCompanyId) && !AppTool.IsNullOrEmpty(this.EntityPM.LocalUserId) && !AppTool.IsNullOrEmpty(this.EntityPM.LocalPassword)) {
-                    localTickVisible = true;
+                if (this.EntityPM.LocalCustomsInterfaceCode == "AMC") {
+
+                }
+
+                else {
+                    if (!AppTool.IsNullOrEmpty(this.EntityPM.LocalCompanyId) && !AppTool.IsNullOrEmpty(this.EntityPM.LocalUserId) && !AppTool.IsNullOrEmpty(this.EntityPM.LocalPassword)) {
+                        localTickVisible = true;
+                    }
                 }
             }
         }
@@ -167,11 +173,21 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
         var logitudeWindow = new LogitudeWindow();
 
         switch (type) {
-            case "Local": {               
-                logitudeWindow.Title = "Local Interface Credintials";
-                logitudeWindow.WindowArgs = this.EntityPM;
-                logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
-                logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/CustomsInterfaceCredintialsComponent');
+            case "Local": {
+                if (this.LocalCustomsInterfaceCode == "AMC") {
+                    logitudeWindow.Title = "AMANAC Start Dates";
+                    logitudeWindow.WindowArgs = this.EntityPM;
+                    logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
+                    logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/CustomsInterfaceStartDatesComponent');
+                }
+
+                else {
+                    logitudeWindow.Title = "Local Interface Credintials";
+                    logitudeWindow.WindowArgs = this.EntityPM;
+                    logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
+                    logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/CustomsInterfaceCredintialsComponent');
+                }
+
                 break;
             }
 

@@ -37,6 +37,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactTenantRepository contactTenantRepository;
         private UserPermittedBranchRepository userPermittedBranchRepository;
         private UserPermittedProductRepository userPermittedProductRepository;
+        private UserLicenseRepository userLicenseRepository;
         public UserService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -44,6 +45,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityRepository = new UserRepository(objectContext);
             this.userPermittedBranchRepository = new UserPermittedBranchRepository(objectContext);
             this.userPermittedProductRepository = new UserPermittedProductRepository(objectContext);
+            this.userLicenseRepository = new UserLicenseRepository(objectContext);
 
             this.GetTenantManagement();
         }
@@ -179,7 +181,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void CreateUserLicense()
         {
-            UserLicenseRepository userLicenseRepository = new UserLicenseRepository(objectContext);
             UserLicense userLicense = new UserLicense()
             {
                 Id = IdCounter.GetNumber("UserLicense", entityPm.Tenant).ToString(),
@@ -410,17 +411,60 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     bool isUsersCountAllowed = false;
                     tenantUsersCount = entityRepository.GetUsers(entityPM.Tenant).Where(d => d.Contact.InActive == false && d.Contact.Email != "customercare@logitudeworld.com").Count();
+                    string eventNotes = null;
 
                     if (mainAdditionalPackageApplied)
                     {
+                        int? userLicensesCount = userLicenseRepository.GetUserLicensesCountByPackageCode(packageCode, tenant);                        
+
                         if (this.Poco.Contact.InActive && !entityPM.InActive)
                         {
+                            if (userLicensesCount < totalTenantManagementUsers)
+                            {
+                                isUsersCountAllowed = true;
+                                eventNotes = "The user " + entityPM.EnglishName + " has been activated !!";
+                            }
 
+                            else
+                            {
+                                throw new Exception("Sorry You can't activate this user since you reached the maximum number of licenses !!");
+                            }
                         }
 
                         if (this.Poco.AdditionalPackagesOnly && !entityPM.AdditionalPackagesOnly)
                         {
+                            if (userLicensesCount < totalTenantManagementUsers)
+                            {
+                                isUsersCountAllowed = true;
+                                eventNotes = "Additional packages only changes to false for the user: " + entityPM.EnglishName;
+                            }
 
+                            else
+                            {
+                                throw new Exception("Sorry You can't update this user since you reached the maximum number of licenses !!");
+                            }
+                        }
+
+                        if (isUsersCountAllowed)
+                        {
+                            UserLicense userLicense = userLicenseRepository.GetSingleUserLicenseByUserAndPackage(entityPm.Id, packageCode, tenant);
+                            if(userLicense == null)
+                            {
+                                this.CreateUserLicense();
+                            }
+
+                            if (currentContact != null)
+                            {
+                                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                {
+                                    Tenant = 0,
+                                    EventTypeCode = "UPMG",
+                                    UserId = currentContact.Id,
+                                    EntityId = tenant.ToString(),
+                                    ObjectTableName = "TenantManagement",
+                                    Notes = eventNotes,
+                                });
+                            }
                         }
                     }
 
@@ -445,8 +489,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                             if (isUsersCountAllowed)
                             {
-                                UserTracing.Trace(entityPM, Poco, isNewEntity);
-
                                 if (currentContact != null)
                                 {
                                     EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -470,21 +512,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 //inactive + licenses
-                if (isMultiPackages)
+                if (isMultiPackages || mainAdditionalPackageApplied)
                 {
-                    if (entityPM.InActive && !Poco.Contact.InActive)
+                    if ((entityPM.InActive && !Poco.Contact.InActive) || (entityPM.AdditionalPackagesOnly && !Poco.AdditionalPackagesOnly))
                     {
-                        UserLicenseRepository repository = new UserLicenseRepository(objectContext);
-                        List<UserLicense> licenses = repository.GetUserLicensesByUserId(entityPM.Id, tenant);
+                        List<UserLicense> licenses = userLicenseRepository.GetUserLicensesByUserId(entityPM.Id, tenant);
 
                         if (licenses.Count > 0)
                         {
                             foreach (UserLicense item in licenses)
                             {
-                                repository.Remove(item);
+                                userLicenseRepository.Remove(item);
                             }
-
-                            repository.SubmitChanges();
                         }
                     }
                 }
@@ -884,7 +923,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 if (mainAdditionalPackageApplied)
                 {
-                    if (tenantUsers < totalTenantManagementUsers)
+                    int? userLicensesCount = userLicenseRepository.GetUserLicensesCountByPackageCode(packageCode, tenant);
+
+                    if (userLicensesCount < totalTenantManagementUsers)
                     {
                         canAddUser = true;
                     }

@@ -185,7 +185,8 @@ export class QuoteTemplateSettingList {
         SpaceLinesBeforeFooters: number;
         SpaceLinesBeforePerContainers:number;
 
-
+        QuoteTemplatePDFMarginBottom: number;
+        QuoteTemplatePDFMarginTop: number;
 
 
 }     

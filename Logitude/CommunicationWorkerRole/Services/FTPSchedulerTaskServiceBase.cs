@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Server.Tools.QueueService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,13 @@ namespace CommunicationWorkerRole.Services
 
         public int DownloadedFilesCount = 0;
         public int FailedFilesCount = 0;
+        ConcurrentQueueService<LogQueueMessage> QueueService;
         public FTPSchedulerTaskServiceBase()
         {
             this.WarningsList = new List<string>();
             this.MessagesList = new List<string>();
+
+            QueueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
         }
 
         public void AddWarning(string warningMessage)
@@ -26,6 +30,8 @@ namespace CommunicationWorkerRole.Services
             {
                 this.WarningsList.Add(warningMessage);
             }
+
+            //QueueService.Enqueue(new LogQueueMessage() { })
         }
 
         public void AddMessage(string message)

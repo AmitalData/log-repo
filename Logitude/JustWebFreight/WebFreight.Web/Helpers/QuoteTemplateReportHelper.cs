@@ -74,7 +74,6 @@ namespace Logitude.BL.Helpers
             string footerHtmlString = null;
             string bodyHtmlString = null;
             string RequestArea = "Maintenance";
-            bool isSaveQuotationDocumentAsHtml = true;
             QuoteTemplatePM template = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
             ObjectTableRepository objectTabelRepository = null;
             ObjectTable objectTable = null;
@@ -87,7 +86,7 @@ namespace Logitude.BL.Helpers
 
             if (quotePM == null) quotePM = BuildingQuotePM();
 
-            
+
             if (templateSections == null)
             {
                 if (quotePM.QuoteTemplateId == quoteTemplateId)
@@ -155,7 +154,7 @@ namespace Logitude.BL.Helpers
                 }
             }
 
-       
+
 
             quoteTemplateBuildArges.Tenant = tenant;
             quoteTemplateBuildArges.IsResultPDF = true;
@@ -171,7 +170,7 @@ namespace Logitude.BL.Helpers
 
 
 
-    
+
 
 
 
@@ -183,14 +182,7 @@ namespace Logitude.BL.Helpers
             pdfConverter.PdfDocumentOptions.EnhancedGraphicsQuality = true;
             pdfConverter.PdfDocumentOptions.PdfPageOrientation = PdfPageOrientation.Portrait;
             pdfConverter.TriggeringMode = TriggeringMode.Auto;
-            if (setting != null)
-            {
-                int marginleft = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
-                int marginRight = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
-                pdfConverter.PdfDocumentOptions.LeftMargin = marginleft;
-                pdfConverter.PdfDocumentOptions.RightMargin = marginRight;
-            }
-
+            SetPdfMargins(setting, pdfConverter.PdfDocumentOptions);
 
 
             // set the header HTML area
@@ -203,19 +195,14 @@ namespace Logitude.BL.Helpers
                 byte[] headerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
                 headerHtmlString += GetBodyString(headerdata);
 
-            
+
 
                 headerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, headerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
                 HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, headerHtmlString, null, 2040, 0);
                 pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
                 pdfConverter.PdfHeaderOptions.HeaderHeight = 1;
                 pdfConverter.PdfHeaderOptions.HeaderHeight = setting.PageHeaderAreaHeight * 29;
-                if (setting.SpaceLinesBeforeHeaders > 0)
-                {
-                    //4 * 7 = 28;
-                    //28 -------------- > 40px
-                    pdfConverter.PdfDocumentOptions.TopMargin = (float)((double)setting.SpaceLinesBeforeHeaders * (double)21);
-                }
+            
 
             }
 
@@ -286,8 +273,26 @@ namespace Logitude.BL.Helpers
                 string fullHtml = headerHtmlString + bodyHtmlString + footerHtmlString;
                 CreateHtmlQuotationDocument(tenant, quotePM, fullHtml);
             }
-      
+
             return pdfData;
+        }
+
+        private  void SetPdfMargins(QuoteTemplateSettingPM setting, PdfDocumentOptions PdfDocumentOptions)
+        {
+            if (setting != null)
+            {
+                int marginleft = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
+                int marginRight = (setting.QuoteTemplatePDFMarginRight * 72) / 96;
+                int marginTop = (setting.QuoteTemplatePDFMarginTop * 72) / 96;
+                int marginBottom = (setting.QuoteTemplatePDFMarginBottom * 72) / 96;
+
+
+                PdfDocumentOptions.LeftMargin = marginleft;
+                PdfDocumentOptions.RightMargin = marginRight;
+                PdfDocumentOptions.TopMargin = marginTop;
+                PdfDocumentOptions.BottomMargin = marginBottom;
+
+            }
         }
 
         private static void CreateHtmlQuotationDocument(int tenant, QuotePM quotePM, string fullHtml)
@@ -400,15 +405,12 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("</head>");
             HtmlTemplate.Append("<body>");
 
-
-
-            if (type != "Header" || !quoteTemplateBuildArges.IsResultPDF)
+            if (type == "Footer")
             {
                 var perc = isPdf ? 2.2 : 1;
-                var spaceLinesBefore = type == "Header" ? GetHtmlStringLine(setting.SpaceLinesBeforeHeaders, false,perc) : GetHtmlStringLine(setting.SpaceLinesBeforeFooters, false, perc);
+                var spaceLinesBefore = GetHtmlStringLine(setting.SpaceLinesBeforeFooters, false, perc);
                 HtmlTemplate.Append(spaceLinesBefore);
             }
-     
 
             string dir = "dir='RTL'";
             if (!setting.RightToLeft) dir = "";
@@ -3483,16 +3485,7 @@ namespace Logitude.BL.Helpers
             PdfConverter pdfConverter = new PdfConverter();
             pdfConverter.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
             pdfConverter.PdfDocumentOptions.PdfPageSize = PdfPageSize.A4;
-
-            if (setting != null)
-            {
-                int marginleft = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
-                int marginRight = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
-
-                pdfConverter.PdfDocumentOptions.LeftMargin = marginleft;
-                pdfConverter.PdfDocumentOptions.RightMargin = marginRight;
-
-            }
+            SetPdfMargins(setting, pdfConverter.PdfDocumentOptions);
 
             pdfConverter.PdfDocumentOptions.PdfCompressionLevel = PdfCompressionLevel.Normal;
             pdfConverter.PdfDocumentOptions.PdfPageOrientation = PdfPageOrientation.Portrait;

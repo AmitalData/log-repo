@@ -41,7 +41,7 @@ export class NewQuote {
       this.Helper.WaitWindowClosed();
       this.Helper.WaitBusyIndicator();
       
-      this.Quotes.UseSearchBox('Quote_Search', QuoteNumber);
+      this.Quotes.UseSearchBox('Quote_Search', QuoteNumber,'LogitudeQuickSearchItem');
       this.EditQuoteTabs.EditTabs(QuoteNumber, ShipmentType,Direction,TransportMode,QuoteType);
       
      
