@@ -60,6 +60,14 @@ namespace Logitude.BL.CommonDataModel
                 InterfaceType = "NO", 
                 Name = "None", 
 			});
+			 
+            all.Add(new CustomsInterfaceDetails()
+            {    
+                Code = "AMC", 
+                Name = "AMANAC ( Mexico )", 
+                SearchFields = "AMC,AMANAC ( Mexico )", 
+                InterfaceType = "LO", 
+			});
 			
             return all;
        }

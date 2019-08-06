@@ -1377,6 +1377,10 @@
     <Compile Include="Migrations\201908051220023_ShipmentcomputedField_Khalid_ForeignKey.Designer.cs">
       <DependentUpon>201908051220023_ShipmentcomputedField_Khalid_ForeignKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar.cs" />
+    <Compile Include="Migrations\201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar.Designer.cs">
+      <DependentUpon>201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2351,6 +2355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908051659281_AbedAddQuoteTemplateMarginSetting.resx">
       <DependentUpon>201908051659281_AbedAddQuoteTemplateMarginSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar.resx">
+      <DependentUpon>201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
