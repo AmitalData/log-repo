@@ -7,13 +7,13 @@ namespace Logitude.DatabaseMigration.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ShipmentcomputedField_Khalid_ForeignKey : IMigrationMetadata
+    public sealed partial class AddAMANACStartDatesToCustomsInterfaceSettings_Samar : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ShipmentcomputedField_Khalid_ForeignKey));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddAMANACStartDatesToCustomsInterfaceSettings_Samar));
         
         string IMigrationMetadata.Id
         {
-            get { return "201908051220023_ShipmentcomputedField_Khalid_ForeignKey"; }
+            get { return "201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar"; }
         }
         
         string IMigrationMetadata.Source
