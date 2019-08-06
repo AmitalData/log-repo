@@ -340,6 +340,12 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public int QuoteTemplatePDFMarginBottom { get; set; }
 
 
+        public bool ShowIncludedChargesPerContainers { get; set; }
+        public bool ShowIncludedChargesPackages { get; set; }
+        public bool ShowIncludedChargesContainers { get; set; }
+        
+
+
         [ForeignKey("TotalPerContainersAdditionalTextDesignId")]
         public virtual QuoteTemplateTextDesign TotalPerContainersAdditionalTextDesign { get; set; }
 

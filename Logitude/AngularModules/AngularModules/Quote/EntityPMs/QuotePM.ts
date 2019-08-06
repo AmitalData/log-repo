@@ -1342,6 +1342,21 @@ export class QuotePM {
     }
     //public QuoteCostCharges: Array<QuoteCostChargePMPM>= [];
       
+	private quotationSaleCharges: QuoteSaleChargePM[];
+    get  QuotationSaleCharges() {
+        if (this.quotationSaleCharges == null) {
+            this.quotationSaleCharges = [];
+        }
+
+        return this.quotationSaleCharges;
+    }
+    set  QuotationSaleCharges(newValue: QuoteSaleChargePM[]) {
+        if (this.quotationSaleCharges != newValue) {
+            this.quotationSaleCharges = newValue;
+        }
+    }
+    //public QuotationSaleCharges: Array<QuoteSaleChargePMPM>= [];
+      
 	private quoteSaleCharges: QuoteSaleChargePM[];
     get  QuoteSaleCharges() {
         if (this.quoteSaleCharges == null) {

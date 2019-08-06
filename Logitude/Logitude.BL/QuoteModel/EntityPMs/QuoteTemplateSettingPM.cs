@@ -272,5 +272,10 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public int QuoteTemplatePDFMarginTop { get; set; }
         public int QuoteTemplatePDFMarginBottom { get; set; }
 
+
+        public bool ShowIncludedChargesPackages { get; set; }
+        public bool ShowIncludedChargesContainers { get; set; }
+        public bool ShowIncludedChargesPerContainers { get; set; }
+
     }
 }
