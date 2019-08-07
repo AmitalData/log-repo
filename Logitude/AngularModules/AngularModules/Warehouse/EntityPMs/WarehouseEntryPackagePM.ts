@@ -267,6 +267,11 @@ export class WarehouseEntryPackagePM {
     public set CommodityNumber(newValue: string) { if (this.commodityNumber != newValue) { this.commodityNumber = newValue; this.MarkAsDirty("CommodityNumber"); } }
        
 	 
+    private releasesNumber: string;
+    public get ReleasesNumber() { return this.releasesNumber; }
+    public set ReleasesNumber(newValue: string) { if (this.releasesNumber != newValue) { this.releasesNumber = newValue; this.MarkAsDirty("ReleasesNumber"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPackagePM;
 	
