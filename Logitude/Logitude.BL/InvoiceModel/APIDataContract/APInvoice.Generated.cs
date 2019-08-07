@@ -30,8 +30,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     
     public string InvoiceNumber { get; set; }
     
-    public double? AmountInInvoiceCurrency { get; set; }
-    
     public Currency InvoiceCurrency { get; set; }
     
     public double? InvoiceCurrencyExchangeRate { get; set; }
@@ -103,6 +101,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string ExternalAccountingEntityId { get; set; }
     
     public string Id { get; set; }
+    
+    public List<APInvoiceLine> InvoiceLines { get; set; }
+    
+    public double? AmountInInvoiceCurrency { get; set; }
+    
+    public double? InvoiceExpectedAmount { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

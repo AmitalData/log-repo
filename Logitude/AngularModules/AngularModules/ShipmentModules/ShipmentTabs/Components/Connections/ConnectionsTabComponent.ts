@@ -70,10 +70,10 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
         if (this.EntityPM.ShipmentLevelCode == "H") {
             this.IsMasterGridVisible = true;
-        }
 
-        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "NEWMASTERFROMHOUSE")) {
-            this.IsNewMasterVisible = true;
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "NEWMASTERFROMHOUSE")) {
+                this.IsNewMasterVisible = true;
+            }
         }
 
         this.Listen();
@@ -289,6 +289,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     ShowWarehouseScreen(widnowName: string) {
         var windowArgs: any = {};
         windowArgs.ShipmentPM = this.EntityPM;
+        windowArgs.ConnectedTo = "Shipment";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 960;
         logWindow.Height = 620;
@@ -382,20 +383,29 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
     private isNewMasterClicked: boolean = false;
     NewMasterButtonClicked() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Show("House shipment already connected to a Master, in order to connect to another please disconnect it first");
+        this.myDomainService.CheckIfHouseConnectedToMaster(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                var result: boolean = myResponse.Result;
+
+                if (result) {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Show("House shipment already connected to a Master, in order to connect to another please disconnect it first");
+                }
+
+                else {
+                    this.ProceedToNewMaster();
+                }                
+            }
+        }); 
+    }
+    private ProceedToNewMaster() {
+        if (this.EntityPM.IsDirty) {
+            this.isNewMasterClicked = true;
+            this.entityArgs.EditComponent.SaveChanges();
         }
 
         else {
-            if (this.EntityPM.IsDirty) {
-                this.isNewMasterClicked = true;
-                this.entityArgs.EditComponent.SaveChanges();
-            }
-
-            else {
-                this.RunNewMasterWizard();
-            }
+            this.RunNewMasterWizard();
         }
     }
     private RunNewMasterWizard() {

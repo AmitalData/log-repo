@@ -75,7 +75,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ToPartnerId, 
 	         ChargeableWeightUnitCode, 
 	         TotalVolumetricWeight, 
-	         LastStatusUpdateDate,
+	          
+	         ConnectedTo,
+	         LastStatusUpdateDate, 
+	         Ratio,
 	      }
 
 
@@ -146,7 +149,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         TotalVolumetricWeight, 
 	         LastStatusUpdateDate, 
 	         MasterHouse, 
-	         EntryReferencesAndDate,
+	          
+	         ConnectedTo,
+	         EntryReferencesAndDate, 
+	         Ratio,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -418,6 +424,16 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
             {
 				entityPOCO.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+				entityPOCO.ConnectedTo = entityPM.ConnectedTo;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+				entityPOCO.Ratio = entityPM.Ratio;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -696,6 +712,15 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.LastStatusUpdateDate = entityPOCO.LastStatusUpdateDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConnectedTo))
+            {
+					entityPM.ConnectedTo = entityPOCO.ConnectedTo;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Ratio))
+            {
+					entityPM.Ratio = entityPOCO.Ratio;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseEntryPM entityPM, WarehouseEntryPM oldEntityPM)
@@ -965,6 +990,16 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
             {
                 oldEntityPM.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+                oldEntityPM.ConnectedTo = entityPM.ConnectedTo;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+                oldEntityPM.Ratio = entityPM.Ratio;
             }
 			
 		}

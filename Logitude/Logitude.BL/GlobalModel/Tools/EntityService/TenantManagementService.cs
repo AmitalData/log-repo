@@ -274,6 +274,9 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 Tenant = itemPM.Tenant,
                 PackageCode = itemPM.PackageCode,
                 NumberOfUsers = itemPM.NumberOfUsers,
+                FreeUsers = itemPM.FreeUsers,
+                Price = itemPM.FreeUsers,
+                TotalPrice = itemPM.TotalPrice,
             };
 
             tenantManagementLicenseRepository.Add(itemPoco);
@@ -297,6 +300,9 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             {
                 itemPoco.PackageCode = itemPM.PackageCode;
                 itemPoco.NumberOfUsers = itemPM.NumberOfUsers;
+                itemPoco.FreeUsers = itemPM.FreeUsers;
+                itemPoco.Price = itemPM.Price;
+                itemPoco.TotalPrice = itemPM.TotalPrice;
                 tenantManagementLicenseRepository.Update(itemPoco);
             }
         }

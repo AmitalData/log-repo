@@ -146,6 +146,10 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string MasterHouse  { get; set; }
        [DataMember]
        public string EntryReferencesAndDate  { get; set; }
+       [DataMember]
+       public string ConnectedTo  { get; set; }
+       [DataMember]
+       public double? Ratio  { get; set; }
    }
 
 }

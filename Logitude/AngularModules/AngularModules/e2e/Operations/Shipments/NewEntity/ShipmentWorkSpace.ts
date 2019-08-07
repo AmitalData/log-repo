@@ -54,7 +54,7 @@ export class ShipmentWorkSpace {
         this.Helper.WaitBusyIndicator();
 
         
-        this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
+        this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1,'ListBoxItem');
         this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
 
       }
@@ -63,7 +63,7 @@ export class ShipmentWorkSpace {
         this.DirectShipment.CreateDirectShipment(shipperRef1, Direction, TransportMode, ShipmentType);
         this.Helper.WaitBusyIndicator();
 
-        this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
+        this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1,'ListBoxItem');
         this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
       }
       // this.shipHelper.OperationalCloseShipment();
@@ -79,7 +79,7 @@ export class ShipmentWorkSpace {
       this.HouseShipment.CreateHouseShipment(shipperRef1, ShipmentLevelCode, Direction, TransportMode, ShipmentType);// Create shipment 
       this.Helper.WaitBusyIndicator();
 
-      this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
+      this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1,'ListBoxItem');
       this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
 
     }
@@ -93,7 +93,7 @@ export class ShipmentWorkSpace {
     // this.Helper.WaitWindowClosed();
     this.Helper.WaitBusyIndicator();
       
-       this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
+       this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1,'ListBoxItem');
       this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
     }
 

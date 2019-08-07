@@ -69,6 +69,9 @@ export class AddEditLicenceComponent {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('PackageCode');
         this.myCloner.AddField('NumberOfUsers');
+        this.myCloner.AddField('FreeUsers');
+        this.myCloner.AddField('Price');
+        this.myCloner.AddField('TotalPrice');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.TenantManagementPM);
     }
