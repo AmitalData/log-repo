@@ -363,26 +363,54 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     Reference = Reference.Replace("-", "");
                 }
-                if(Reference.Length > 20)
+                if (Reference.Length > 20)
                 {
                     Reference = Reference.Substring(0, 19);
                 }
-                var array = Regex.Matches(Reference, @"\D+|\d+")
-                    .Cast<Match>()
-                    .Select(m => m.Value)
-                    .ToArray();
-                if (array.Length > 1)
+                //var array = Regex.Matches(Reference, @"\D+|\d+")
+                //    .Cast<Match>()
+                //    .Select(m => m.Value)
+                //    .ToArray();
+                //if (array.Length > 1)
+                //{
+                //    referenceGroup = array[0];
+                //    reference = array[1];
+                //}
+                //else
+                //{
+                //    reference = Reference;
+                //    referenceGroup = "0000";
+                //}
+                Regex isMatche = new Regex("([A-Za-z])");
+                bool letters = isMatche.IsMatch(Reference);
+                if (letters)
                 {
-                    referenceGroup = array[0];
-                    reference = array[1];
+                    for (int i = Reference.Length; i > 0; i--)
+                    {
+                        string d = Reference.Substring(i - 1, 1);
+                        MatchCollection match = Regex.Matches(d, @"^[a-zA-Z]*$");
+                        if (match.Count != 0)
+                        {
+                            referenceGroup = Reference.Substring(0, i);
+                            break;
+                        }
+                        else
+                        {
+                            reference = d + reference;
+                        }
+                        //var array = Regex.Matches("12s4rt", @"\D+|\d+")
+                        //.Cast<Match>()
+                        //.Select(m => m.Value)
+                        //.ToArray();
+                    }
                 }
                 else
                 {
                     reference = Reference;
                     referenceGroup = "0000";
                 }
-            }
 
+            }
         }
 
         public static BatchTaskExecutionPM CreatePNCFileInBatch(string taxReportId, int tenant)
