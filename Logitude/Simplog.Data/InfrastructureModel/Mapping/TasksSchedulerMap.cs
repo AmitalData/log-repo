@@ -64,7 +64,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Status)
               .HasMaxLength(25)
               .IsUnicode(false);
-
+            this.Property(t => t.AverageRunTime);
 
             // Table & Column Mappings
             this.ToTable("TasksScheduler");
@@ -108,7 +108,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Retries).HasColumnName("Retries");
             this.Property(t => t.LastRunEndTimeUTC).HasColumnName("LastRunEndTimeUTC"); 
             this.Property(t => t.LastRunEndTime).HasColumnName("LastRunEndTime");
-
+            this.Property(t => t.AverageRunTime).HasColumnName("AverageRunTime");
 
 
         }

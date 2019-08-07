@@ -304,6 +304,10 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     }
     SetUIProperties_TotalPrice() {
         this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, this.MainAdditionalPackageApplied == false);
+
+        this.PackagesList.forEach(item => {
+            item.SetUIProperties_TotalPrice();
+        });
     }
 
     private CloseBillingFields(close: boolean) {
@@ -794,6 +798,22 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         this.PackagesTotalFreeUsers = ArrayTool.Sum(this.PackagesList, "FreeUsers");
         this.PackagesTotalPrice = ArrayTool.Sum(this.PackagesList, "Price");
         this.PackagesTotalTotalPrice = ArrayTool.Sum(this.PackagesList, "TotalPrice");
+
+        if (this.NumberOfUsers) {
+            this.PackagesTotalNumberOfUsers += this.NumberOfUsers;
+        }
+
+        if (this.FreeUsers) {
+            this.PackagesTotalFreeUsers += this.FreeUsers;
+        }
+
+        if (this.LicensePrice) {
+            this.PackagesTotalPrice += this.LicensePrice;
+        }
+
+        if (this.TotalPrice) {
+            this.PackagesTotalTotalPrice += this.TotalPrice;
+        }
     }
 
     public AddOnsList: AddOnItem[];
@@ -1145,6 +1165,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set NumberOfUsers(newValue: number) {
         if (this.EntityPM.NumberOfUsers != newValue) {
             this.EntityPM.NumberOfUsers = newValue;
+            this.ComputeTotalPrice();
+            this.ComputePackagesTotals();
         }
     }
 
@@ -1152,6 +1174,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set FreeUsers(newValue: number) {
         if (this.EntityPM.FreeUsers != newValue) {
             this.EntityPM.FreeUsers = newValue;
+            this.ComputePackagesTotals();
         }
     }
 
@@ -1159,6 +1182,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set LicensePrice(newValue: number) {
         if (this.EntityPM.LicensePrice != newValue) {
             this.EntityPM.LicensePrice = newValue;
+            this.ComputeTotalPrice();
+            this.ComputePackagesTotals();
         }
     }
 
@@ -1166,6 +1191,17 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set TotalPrice(newValue: number) {
         if (this.EntityPM.TotalPrice != newValue) {
             this.EntityPM.TotalPrice = newValue;
+            this.ComputePackagesTotals();
+        }
+    }
+
+    ComputeTotalPrice() {
+        if (this.NumberOfUsers && this.LicensePrice) {
+            this.TotalPrice = this.NumberOfUsers * this.LicensePrice;
+        }
+
+        else {
+            this.TotalPrice = null;
         }
     }
 }
@@ -1182,6 +1218,10 @@ export class PackageItem extends BaseComponent{
         this.TenantManagementPM = fatherComponent.EntityPM;
 
         this.GetPackageName();
+    }
+
+    SetUIProperties_TotalPrice() {
+        this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, this.fatherComponent.MainAdditionalPackageApplied == false);
     }
 
     private old_PackageCode: string;
@@ -1209,6 +1249,7 @@ export class PackageItem extends BaseComponent{
     set NumberOfUsers(newValue: number) {
         if (this.EntityPM.NumberOfUsers != newValue) {
             this.EntityPM.NumberOfUsers = newValue;
+            this.ComputeTotalPrice();
         }
     }
 
@@ -1223,6 +1264,7 @@ export class PackageItem extends BaseComponent{
     set Price(newValue: number) {
         if (this.EntityPM.Price != newValue) {
             this.EntityPM.Price = newValue;
+            this.ComputeTotalPrice();
         }
     }
 
@@ -1230,6 +1272,16 @@ export class PackageItem extends BaseComponent{
     set TotalPrice(newValue: number) {
         if (this.EntityPM.TotalPrice != newValue) {
             this.EntityPM.TotalPrice = newValue;
+        }
+    }
+
+    ComputeTotalPrice() {
+        if (this.NumberOfUsers && this.Price) {
+            this.TotalPrice = this.NumberOfUsers * this.Price;
+        }
+
+        else {
+            this.TotalPrice = null;
         }
     }
 
@@ -1253,7 +1305,6 @@ export class PackageItem extends BaseComponent{
         });
     }
 }
-
 export class AddOnItem extends BaseComponent {
     public EntityPM: TenantAddOnPM;
     public TenantManagementPM: TenantManagementPM;
