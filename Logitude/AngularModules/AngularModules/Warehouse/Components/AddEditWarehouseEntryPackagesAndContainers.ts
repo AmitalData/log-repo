@@ -332,9 +332,9 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     }
 
     private ComputeVolumetricWeight() {
-        var ratio = AppTool.GetRatio(this.WarehouseEntryPM.DirectionId, this.WarehouseEntryPM.TransportModeId, this.WarehouseEntryPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+      
 
-        this.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.Volume, this.Weight, ratio, this.DimensionsUnitCode, this.VolumeUnitCode, this.GrossWeightUnitCode, this.ChargeableWeightUnitCode);
+        this.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.Volume, this.Weight, this.WarehouseEntryPM.Ratio, this.DimensionsUnitCode, this.VolumeUnitCode, this.GrossWeightUnitCode, this.ChargeableWeightUnitCode);
     }
 
 

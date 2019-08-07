@@ -233,6 +233,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
         windowArgs.ExpectedReleaseDate = this.EntityPM.ETA;
         windowArgs.ActualReleaseDate = this.EntityPM.ATA;
         windowArgs.ShipmentPM = this.ShipmentPM;
+        windowArgs.ConnectedTo = "Delivery";
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 960;

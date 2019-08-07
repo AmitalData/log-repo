@@ -84,17 +84,17 @@ export class FreightChargesTabComponent extends BaseComponent {
         else {
             var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(this.EntityPM.RateClassCode);
 
-            if (rateClassGroupCode == "S") {
-                this.AWBChargeRate = null;
-                this.UIProperties.SetEnabled("AWBChargeRate", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("AWBChargeAmount", this.ObjectTableName, this.IsEditingEnabled);
+            //if (rateClassGroupCode == "S") {
+            //    this.AWBChargeRate = null;
+            //    this.UIProperties.SetEnabled("AWBChargeRate", this.ObjectTableName, false);
+            //    this.UIProperties.SetEnabled("AWBChargeAmount", this.ObjectTableName, this.IsEditingEnabled);
 
-            }
+            //}
 
-            else {
+            //else {
                 this.UIProperties.SetEnabled("AWBChargeRate", this.ObjectTableName, this.IsEditingEnabled);
                 this.UIProperties.SetEnabled("AWBChargeAmount", this.ObjectTableName, false);
-            }
+           // }
         }
     }
 
@@ -146,11 +146,11 @@ export class FreightChargesTabComponent extends BaseComponent {
                     if (!this.AsAgreedFreight) {
 
                         var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(this.RateClassCode);
-                        if (rateClassGroupCode != "S") {
+                        //if (rateClassGroupCode != "S") {
                             if (AppTool.IsNullOrZero(this.AWBChargeRate)) {
                                 isShowWarning_AWBChargeRate = true;
                             }
-                        }
+                        //}
 
                         if (AppTool.IsNullOrZero(this.AWBChargeAmount)) {
                             isShowWarning_AWBChargeAmount = true;
