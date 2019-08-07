@@ -109,7 +109,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
                 this.warehouseEntryPM.ShipmentLevelCode = this.ShipmentPM.ShipmentLevelCode;
                 this.warehouseEntryPM.TransportModeId = this.ShipmentPM.TransportModeId;
                 this.warehouseEntryPM.ShipmentTypeId = this.ShipmentPM.ShipmentTypeId;
-
+                this.warehouseEntryPM.ConnectedTo = args.ConnectedTo;
 
                 this.warehouseEntryPM.DirectionId = this.ShipmentPM.DirectionId;
 

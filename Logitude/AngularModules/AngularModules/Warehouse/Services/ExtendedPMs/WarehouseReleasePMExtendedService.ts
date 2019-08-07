@@ -1,4 +1,4 @@
-﻿
+
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
@@ -263,6 +263,23 @@ export class WarehouseReleasePMExtendedService {
 
         }
         return entityPM;
+    }
+
+    GetWarehouseConnectedReleaseByEntityId(entityId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/GetWarehouseConnectedReleaseByEntityId" + '?entityId=' + entityId, { headers: authHeader }).map(response => {
+
+            var result = response.json();
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = result;
+            return pmresponse;
+
+
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 

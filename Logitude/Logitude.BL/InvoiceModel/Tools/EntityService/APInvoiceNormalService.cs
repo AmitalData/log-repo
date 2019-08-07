@@ -233,6 +233,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 this.UpdateAllPayablesAccountedAmountAndStatus();
             }
+            this.UpdateInvoiceAmountDue();
 
             // Journal Work
             this.AddAPInvoiceJournalAndJournalLines(entityPM, setApproved);

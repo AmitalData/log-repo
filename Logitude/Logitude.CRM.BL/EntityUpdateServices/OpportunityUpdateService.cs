@@ -653,46 +653,42 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         private void SetCustomerDateFields(OpportunityPM entityPM, Opportunity entityPOCO)
         {
             int myTenant = entityPM.Tenant;
-            DateTime myDate = TenantServerConfigration.GetCurrentDateTime(myTenant);            
+            DateTime myDate = TenantServerConfigration.GetCurrentDateTime(myTenant);
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
-                if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                {
-                    CustomerRepository customerRepository = new CustomerRepository(myTenant);
-                    Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, myTenant, false);
-                    if (customer != null)
-                    {
-                        customer.LastOpportunityDate = myDate;
-                        customer.LastInteractionDate = myDate;
-                        customerRepository.Update(customer);
-                        customerRepository.SubmitChanges();
-                    }
-                }
+                CalculateCustomerFeilds(entityPM, entityPOCO, false);
             }
 
             else if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
                 if (entityPM.CustomerId != entityPOCO.CustomerId)
                 {
-                    CustomerRepository customerRepository = new CustomerRepository(myTenant);
+                    CalculateCustomerFeilds(entityPM, entityPOCO, true);
+                }
+            }
+        }
 
-                    if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                    {
-                        Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, myTenant, false);
-                        if (customer != null)
-                        {
-                            customer.LastOpportunityDate = myDate;
-                            customer.LastInteractionDate = myDate;
-                            customerRepository.Update(customer);
-                            customerRepository.SubmitChanges();
-                        }
-                    }
+        private void CalculateCustomerFeilds(OpportunityPM opportunityPM, Opportunity opportunity, bool isUpdate)
+        {
+            if (!string.IsNullOrEmpty(opportunityPM.CustomerId))
+            {
+                DateTime myDate = TenantServerConfigration.GetCurrentDateTime(opportunityPM.Tenant);
+                CustomerRepository iCustomerRepository = new CustomerRepository(opportunityPM.Tenant);
+                Customer customer = iCustomerRepository.GetSingleCustomer(opportunityPM.CustomerId, opportunityPM.Tenant, false);
+                if (customer != null)
+                {
+                    customer.LastOpportunityStatus = opportunityPM.StageName ;
+                    customer.LastOpportunitySubject = opportunityPM.Subject;
+                    SubmitCustomerChanges(customer, iCustomerRepository, myDate);                  
+                }
 
-                    if (!string.IsNullOrEmpty(entityPOCO.CustomerId))
+                if (isUpdate == true)
+                {
+                    if (!string.IsNullOrEmpty(opportunity.CustomerId))
                     {
-                        OpportunityRepository myOpportunityRepository = new OpportunityRepository(myTenant);
-                        IQueryable<Opportunity> oldCustomerEntities = myOpportunityRepository.GetOppListByCustomerIdAndTenant(entityPOCO.CustomerId, myTenant);
+                        OpportunityRepository myOpportunityRepository = new OpportunityRepository(opportunity.Tenant);
+                        IQueryable<Opportunity> oldCustomerEntities = myOpportunityRepository.GetOppListByCustomerIdAndTenant(opportunity.CustomerId, opportunity.Tenant);
 
                         if (oldCustomerEntities != null)
                         {
@@ -701,15 +697,12 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                                 DateTime? oldestDate = oldCustomerEntities.OrderByDescending(d => d.CreateDate).FirstOrDefault().CreateDate;
                                 if (oldestDate != null)
                                 {
-                                    Customer customer = customerRepository.GetSingleCustomer(entityPOCO.CustomerId, myTenant, false);
+                                    customer = iCustomerRepository.GetSingleCustomer(opportunity.CustomerId, opportunity.Tenant, false);
                                     if (customer != null)
                                     {
-                                        customer.LastOpportunityDate = oldestDate;
-
-                                        customer.LastInteractionDate = customerRepository.ComputeLastInteractionDate(customer, oldestDate);
- 
-                                        customerRepository.Update(customer);
-                                        customerRepository.SubmitChanges();
+                                        customer.LastOpportunityStatus = opportunity.Stage != null ? opportunity.Stage.Name: null;
+                                        customer.LastOpportunitySubject = opportunity.Subject;
+                                        SubmitCustomerChanges(customer, iCustomerRepository, oldestDate);
                                     }
                                 }
                             }
@@ -717,6 +710,14 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     }
                 }
             }
+        }
+
+        private void SubmitCustomerChanges(Customer customer, CustomerRepository iCustomerRepository, DateTime? date)
+        {
+            customer.LastOpportunityDate = date;
+            customer.LastInteractionDate = date;
+            iCustomerRepository.Update(customer);
+            iCustomerRepository.SubmitChanges();
         }
 
         private void SetNextActivityData(OpportunityPM entityPM)

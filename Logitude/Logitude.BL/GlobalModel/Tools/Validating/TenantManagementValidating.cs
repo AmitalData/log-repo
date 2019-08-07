@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -147,108 +148,6 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
                     }
                 }
             }
-        }
-
-        public static void ValidateNumberOfActiveUsers(NumberOfActiveUsersArgs numberOfActiveUsersArgs)
-        {          
-            if (numberOfActiveUsersArgs.ManageLicencesPerUser)
-            {
-                if (!numberOfActiveUsersArgs.UserPOCOLicencedUser && numberOfActiveUsersArgs.UserPMLicencedUser)
-                {
-                    bool isUsersCountAllowed = false;
-
-                    if (numberOfActiveUsersArgs.IsMultiPackage)
-                    {
-                        isUsersCountAllowed = true;
-                    }
-
-                    else if (numberOfActiveUsersArgs.TenantUsersCount < numberOfActiveUsersArgs.TenantManagementTotalNumberOfUsers)
-                    {
-                        isUsersCountAllowed = true;
-                    }
-
-                    else if (numberOfActiveUsersArgs.UserTenantNumber == 0 && !numberOfActiveUsersArgs.IsUserDistributor)
-                    {
-                        isUsersCountAllowed = true;
-                    }
-
-                    if (isUsersCountAllowed)
-                    {
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                        {
-                            Tenant = 0,
-                            EventTypeCode = "UPMG",
-                            UserId = numberOfActiveUsersArgs.LoggedContactId,
-                            EntityId = numberOfActiveUsersArgs.TenantManagementId.ToString(),
-                            ObjectTableName = "TenantManagement",
-                            Notes = "The user " + numberOfActiveUsersArgs.UserEnglishName + " is Licenced !!",
-                        });
-                    }
-
-                    else
-                    {
-                        throw new ApplicationException("Sorry You can't Licence this user since you reached the maximum number of users !!");
-                    }
-                }
-            }
-
-            else
-            {
-                if (numberOfActiveUsersArgs.UserPOCOInactive && !numberOfActiveUsersArgs.UserPMInactive)
-                {
-                    bool isUsersCountAllowed = false;
-
-                    if (numberOfActiveUsersArgs.IsMultiPackage)
-                    {
-                        isUsersCountAllowed = true;
-                    }
-
-                    else if (numberOfActiveUsersArgs.TenantUsersCount < numberOfActiveUsersArgs.TenantManagementTotalNumberOfUsers)
-                    {
-                        isUsersCountAllowed = true;
-                    }
-
-                    else if (numberOfActiveUsersArgs.UserTenantNumber == 0 && !numberOfActiveUsersArgs.IsUserDistributor)
-                    {
-                        isUsersCountAllowed = true;
-                    }
-
-                    if (isUsersCountAllowed)
-                    {
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                        {
-                            Tenant = 0,
-                            EventTypeCode = "UPMG",
-                            UserId = numberOfActiveUsersArgs.LoggedContactId,
-                            EntityId = numberOfActiveUsersArgs.TenantManagementId.ToString(),
-                            ObjectTableName = "TenantManagement",
-                            Notes = "The user " + numberOfActiveUsersArgs.UserEnglishName + " has been activated !!",
-                        });
-                    }
-
-                    else
-                    {
-                        throw new Exception("Sorry You can't activate this user since you reached the maximum number of users !!");
-                    }
-                }
-            }
-        }
-    }
-
-    public class NumberOfActiveUsersArgs
-    {
-        public int TenantManagementId { get; set; }
-        public int? TenantManagementTotalNumberOfUsers { get; set; }
-        public int? TenantUsersCount { get; set; }
-        public bool ManageLicencesPerUser { get; set; }
-        public bool IsMultiPackage { get; set; }
-        public string LoggedContactId { get; set; }
-        public string UserEnglishName { get; set; }
-        public bool IsUserDistributor { get; set; }
-        public int UserTenantNumber { get; set; }
-        public bool UserPOCOInactive { get; set; }
-        public bool UserPMInactive { get; set; }
-        public bool UserPOCOLicencedUser { get; set; }
-        public bool UserPMLicencedUser { get; set; }
+        }        
     }
 }
