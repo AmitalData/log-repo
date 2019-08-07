@@ -19,7 +19,7 @@ BEGIN
 		END
 	FETCH NEXT FROM DataCursor INTO @EntityId, @Tenant, @CustomerId, @Subject, @StageId
 	END
-	CLOSE DataCursor
+	CLOSE DataCursor   
 	DEALLOCATE DataCursor
 END
 
