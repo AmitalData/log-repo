@@ -409,7 +409,8 @@ namespace CommunicationWorkerRole
 						payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
 						payment.SATXML = resultadoTimbre.Xml;
 						payment.SATTransferStatusCode = "TD";
-						arpaymentRep.Update(payment);
+                        payment.TransmissionError = null;
+                        arpaymentRep.Update(payment);
 						arpaymentRep.SubmitChanges();
 						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante, arinvoiceRep, arpaymentRep);
 
@@ -459,7 +460,8 @@ namespace CommunicationWorkerRole
 
 						invoice.SATXML = resultadoTimbre.Xml;
 						invoice.SATTransferStatusCode = "TD";
-						invoice.SATInvoiceStatusCode = "OP";
+                        invoice.TransmissionError = null;
+                        invoice.SATInvoiceStatusCode = "OP";
 
 						invoice.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
 
@@ -594,7 +596,8 @@ namespace CommunicationWorkerRole
 						payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
 						payment.SATXML = resultadoConsulta.Xml;
 						payment.SATTransferStatusCode = "TD";
-						arpaymentRep.Update(payment);
+                        payment.TransmissionError = null;
+                        arpaymentRep.Update(payment);
 						arpaymentRep.SubmitChanges();
 						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, paymentComprobante, arinvoiceRep, arpaymentRep);
 
@@ -665,8 +668,8 @@ namespace CommunicationWorkerRole
 						invoice.SATXML = resultadoConsulta.Xml;
 						invoice.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString<SATAdditionalFields>(additional);
 						invoice.SATTransferStatusCode = "TD";
-
-						arinvoiceRep.Update(invoice);
+                        invoice.TransmissionError = null;
+                        arinvoiceRep.Update(invoice);
 						arinvoiceRep.SubmitChanges();
 
 						Encoding encoding = Encoding.UTF8;
@@ -923,7 +926,8 @@ namespace CommunicationWorkerRole
 						communicationLogRep.SubmitChanges();
 
 						invoice.SATTransferStatusCode = "TD";
-						arinvoiceRep.Update(invoice);
+                        invoice.TransmissionError = null;
+                        arinvoiceRep.Update(invoice);
 						arinvoiceRep.SubmitChanges();
 					}
 					else
@@ -1042,7 +1046,8 @@ namespace CommunicationWorkerRole
 
 						payment.SATXML = null;
 						payment.SATTransferStatusCode = "TD";
-						arPaymentRep.Update(payment);
+                        payment.TransmissionError = null;
+                        arPaymentRep.Update(payment);
 						arPaymentRep.SubmitChanges();
 
 						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante, arInvoiceRep, arPaymentRep);
