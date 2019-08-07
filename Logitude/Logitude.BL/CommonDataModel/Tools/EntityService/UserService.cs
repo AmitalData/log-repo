@@ -25,6 +25,7 @@ using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
+using Logitude.BL.GlobalModel.Tools.Validating;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -363,113 +364,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                int? totalUsers = 0;
-                if (string.IsNullOrEmpty(tenantMngmnt.FreeUsers.ToString()))
-                {
-                    totalUsers = tenantMngmnt.NumberOfUsers;
-                }
-                else
-                {
-                    totalUsers = tenantMngmnt.NumberOfUsers + tenantMngmnt.FreeUsers;
-                }
-
-                int tenantUsersCount = 0;
-                if (tenantMngmnt.ManageLicencesPerUser)
-                {
-                    tenantUsersCount = entityRepository.GetUsers(entityPM.Tenant).Where(d => d.Contact.InActive == false && d.Contact.Email != "customercare@logitudeworld.com" && d.LicencedUser == true).Count();
-
-                    if (!Poco.LicencedUser && entityPM.LicencedUser)
-                    {
-                        bool isUsersCountAllowed = false;
-
-                        if (isMultiPackages)
-                        {
-                            isUsersCountAllowed = true;
-                        }
-
-                        else if (tenantUsersCount < totalUsers)
-                        {
-                            isUsersCountAllowed = true;
-                        }
-
-                        else if (entityPM.Tenant == 0 && !entityPm.IsDistributor)
-                        {
-                            isUsersCountAllowed = true;
-                        }
-
-                        if (isUsersCountAllowed)
-                        {
-                            UserTracing.Trace(entityPM, Poco, isNewEntity);
-
-                            if (currentContact != null)
-                            {
-                                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                {
-                                    Tenant = 0,
-                                    EventTypeCode = "UPMG",
-                                    UserId = currentContact.Id,
-                                    EntityId = tenantMngmnt.Id.ToString(),
-                                    ObjectTableName = "TenantManagement",
-                                    Notes = "The user " + entityPM.EnglishName + " is Licenced !!",
-                                });
-                            }
-                        }
-
-                        else
-                        {
-                            throw new ApplicationException("Sorry You can't Licence this user since you reached the maximum number of users !!");
-                        }
-                    }
-                }
-
-                else
-                {
-                    tenantUsersCount = entityRepository.GetUsers(entityPM.Tenant).Where(d => d.Contact.InActive == false && d.Contact.Email != "customercare@logitudeworld.com").Count();
-
-                    if (this.Poco.Contact.InActive && !entityPM.InActive)
-                    {
-                        bool isUsersCountAllowed = false;
-
-                        if (isMultiPackages)
-                        {
-                            isUsersCountAllowed = true;
-                        }
-
-                        else if (tenantUsersCount < totalUsers)
-                        {
-                            isUsersCountAllowed = true;
-                        }
-
-                        else if (entityPM.Tenant == 0 && !entityPm.IsDistributor)
-                        {
-                            isUsersCountAllowed = true;
-                        }
-
-                        if (isUsersCountAllowed)
-                        {
-                            UserTracing.Trace(entityPM, Poco, isNewEntity);
-
-                            if (contact != null)
-                            {
-                                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                {
-                                    Tenant = 0,
-                                    EventTypeCode = "UPMG",
-                                    UserId = currentContact.Id,
-                                    EntityId = tenantMngmnt.Id.ToString(),
-                                    ObjectTableName = "TenantManagement",
-                                    Notes = "The user " + entityPM.EnglishName + " has been activated !!",
-                                });
-                            }
-                        }
-
-                        else
-                        {
-                            throw new Exception("Sorry You can't activate this user since you reached the maximum number of users !!");
-                        }
-                    }
-                }
-
+                this.ValidateActiveUsers(tenantMngmnt, currentContact);
+                
                 //inactive + licenses
                 if (tenantMngmnt.IsMultiPackage)
                 {
@@ -489,10 +385,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
                     }
                 }
-            }
 
-            if (!entityPM.IsHybrid)
-            {
                 UserTracing.Trace(entityPM, Poco, isNewEntity);
             }
 
@@ -509,6 +402,53 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "User");
+        }
+
+        private void ValidateActiveUsers(TenantManagement tenantMngmnt, ContactPM loggedContact)
+        {
+            int? totalUsers = 0;
+            int tenantUsersCount = 0;
+
+            if (tenantMngmnt != null && loggedContact != null)
+            {
+                if (tenantMngmnt.FreeUsers == null || tenantMngmnt.FreeUsers == 0)
+                {
+                    totalUsers = tenantMngmnt.NumberOfUsers;
+                }
+                else
+                {
+                    totalUsers = tenantMngmnt.NumberOfUsers + tenantMngmnt.FreeUsers;
+                }
+
+                if (tenantMngmnt.ManageLicencesPerUser)
+                {
+                    tenantUsersCount = entityRepository.GetUsers(this.entityPm.Tenant).Where(d => d.Contact.InActive == false && d.Contact.Email != "customercare@logitudeworld.com" && d.LicencedUser == true).Count();
+                }
+
+                else
+                {
+                    tenantUsersCount = entityRepository.GetUsers(this.entityPm.Tenant).Where(d => d.Contact.InActive == false && d.Contact.Email != "customercare@logitudeworld.com").Count();
+                }
+
+                NumberOfActiveUsersArgs numberOfActiveUsersArgs = new NumberOfActiveUsersArgs()
+                {
+                    TenantManagementId = tenantMngmnt.Id,
+                    TenantManagementTotalNumberOfUsers = totalUsers,
+                    TenantUsersCount = tenantUsersCount,
+                    ManageLicencesPerUser = tenantMngmnt.ManageLicencesPerUser,
+                    IsMultiPackage = tenantMngmnt.IsMultiPackage,
+                    LoggedContactId = loggedContact.Id,
+                    UserEnglishName = this.entityPm.EnglishName,
+                    IsUserDistributor = this.entityPm.IsDistributor,
+                    UserTenantNumber = this.entityPm.Tenant,
+                    UserPOCOInactive = this.Poco.Contact.InActive,
+                    UserPMInactive = this.entityPm.InActive,
+                    UserPOCOLicencedUser = this.Poco.LicencedUser,
+                    UserPMLicencedUser = this.entityPm.LicencedUser,
+                };
+
+                TenantManagementValidating.ValidateNumberOfActiveUsers(numberOfActiveUsersArgs);
+            }
         }
 
         private void MapUserToContact(UserPM user, Contact contact)

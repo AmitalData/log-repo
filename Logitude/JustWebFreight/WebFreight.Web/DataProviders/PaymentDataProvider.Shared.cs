@@ -40,6 +40,8 @@ namespace WebFreight.Web.DataProviders
 
         public double? OutstandingBalance  { get; set; }
         public double? TotalAmount { get; set; }
+        public string TotalAmountInWordsEnglish { get; set; }
+        public string TotalAmountInWordsSpanish { get; set; }
 
         public string CopyName { get; set; }
         public string ChequeOrPaymentRef { get; set; }
