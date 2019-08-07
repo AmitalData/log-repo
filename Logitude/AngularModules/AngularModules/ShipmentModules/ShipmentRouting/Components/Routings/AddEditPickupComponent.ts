@@ -536,6 +536,7 @@ export class AddEditPickupComponent implements OnDestroy {
         windowArgs.EntityPM = this.ShipmentPM;
         windowArgs.EntityChildPM = this.EntityPM;
         windowArgs.PageRequest = "ShipmentPickUp";
+        windowArgs.ConnectedTo = "PickUp";
 
         var warehouseHelper: WarehouseHelper = new WarehouseHelper();
         warehouseHelper.ShowNewWarehouseEntryComponent(windowArgs);

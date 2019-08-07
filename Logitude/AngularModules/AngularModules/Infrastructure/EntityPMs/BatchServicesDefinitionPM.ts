@@ -84,7 +84,18 @@ export class BatchServicesDefinitionPM {
     public get DoneItemsInFiveMinutes() { return this.doneItemsInFiveMinutes; }
     public set DoneItemsInFiveMinutes(newValue: number) { if (this.doneItemsInFiveMinutes != newValue) { this.doneItemsInFiveMinutes = newValue; this.MarkAsDirty("DoneItemsInFiveMinutes"); } }
        
-	 
+
+
+    private waitingItems: number;
+    public get WaitingItems() { return this.waitingItems; }
+    public set WaitingItems(newValue: number) { if (this.waitingItems != newValue) { this.waitingItems = newValue; this.MarkAsDirty("WaitingItems"); } }
+
+
+    private failedItems: number;
+    public get FailedItems() { return this.failedItems; }
+    public set FailedItems(newValue: number) { if (this.failedItems != newValue) { this.failedItems = newValue; this.MarkAsDirty("FailedItems"); } }
+
+
 
     public OldEntityPM: BatchServicesDefinitionPM;
 		

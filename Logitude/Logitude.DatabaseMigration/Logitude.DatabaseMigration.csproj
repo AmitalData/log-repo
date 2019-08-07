@@ -1369,6 +1369,10 @@
     <Compile Include="Migrations\201908050856575_Nawras1.Designer.cs">
       <DependentUpon>201908050856575_Nawras1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908051348482_Nawras_addConnectedToFeild_Entry_Release.cs" />
+    <Compile Include="Migrations\201908051348482_Nawras_addConnectedToFeild_Entry_Release.Designer.cs">
+      <DependentUpon>201908051348482_Nawras_addConnectedToFeild_Entry_Release.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201908051659281_AbedAddQuoteTemplateMarginSetting.cs" />
     <Compile Include="Migrations\201908051659281_AbedAddQuoteTemplateMarginSetting.Designer.cs">
       <DependentUpon>201908051659281_AbedAddQuoteTemplateMarginSetting.cs</DependentUpon>
@@ -1380,6 +1384,14 @@
     <Compile Include="Migrations\201908061032164_AbedAddQuotationShowIncludedChargesFieldsToQuoteTemplateSettings.cs" />
     <Compile Include="Migrations\201908061032164_AbedAddQuotationShowIncludedChargesFieldsToQuoteTemplateSettings.Designer.cs">
       <DependentUpon>201908061032164_AbedAddQuotationShowIncludedChargesFieldsToQuoteTemplateSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908051229100_AddLastOpportunitySubjectandStatus_Maheera.cs" />
+    <Compile Include="Migrations\201908051229100_AddLastOpportunitySubjectandStatus_Maheera.Designer.cs">
+      <DependentUpon>201908051229100_AddLastOpportunitySubjectandStatus_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908071122203_Nawras_averageRunTime_TasksScheduler.cs" />
+    <Compile Include="Migrations\201908071122203_Nawras_averageRunTime_TasksScheduler.Designer.cs">
+      <DependentUpon>201908071122203_Nawras_averageRunTime_TasksScheduler.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2358,6 +2370,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar.resx">
       <DependentUpon>201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908051348482_Nawras_addConnectedToFeild_Entry_Release.resx">
+      <DependentUpon>201908051348482_Nawras_addConnectedToFeild_Entry_Release.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908051229100_AddLastOpportunitySubjectandStatus_Maheera.resx">
+      <DependentUpon>201908051229100_AddLastOpportunitySubjectandStatus_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908071122203_Nawras_averageRunTime_TasksScheduler.resx">
+      <DependentUpon>201908071122203_Nawras_averageRunTime_TasksScheduler.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
