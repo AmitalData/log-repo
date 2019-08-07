@@ -63,6 +63,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.LastCallDate = entityPM.LastCallDate;
             entityPOCO.LastMeetingDate = entityPM.LastMeetingDate;
             entityPOCO.LastOpportunityDate = entityPM.LastOpportunityDate;
+            entityPOCO.LastOpportunitySubject = entityPM.LastOpportunitySubject;
+            entityPOCO.LastOpportunityStatus = entityPM.LastOpportunityStatus;
             entityPOCO.LastQuoteDate = entityPM.LastQuoteDate;
             entityPOCO.LastInteractionDate = entityPM.LastInteractionDate;
             entityPOCO.ActivityWatch = entityPM.ActivityWatch;
@@ -345,6 +347,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                                     LastCallDate = a.LastCallDate,
                                     LastMeetingDate = a.LastMeetingDate,
                                     LastOpportunityDate = a.LastOpportunityDate,
+                                    LastOpportunityStatus = a.LastOpportunityStatus,
+                                    LastOpportunitySubject = a.LastOpportunitySubject,
                                     FirstInvoiceDate = a.FirstInvoiceDate,
                                     FirstShipmentDate = a.FirstShipmentDate,
                                     LastShipmentDate = a.LastShipmentDate,
