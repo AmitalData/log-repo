@@ -289,6 +289,7 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     ShowWarehouseScreen(widnowName: string) {
         var windowArgs: any = {};
         windowArgs.ShipmentPM = this.EntityPM;
+        windowArgs.ConnectedTo = "Shipment";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 960;
         logWindow.Height = 620;

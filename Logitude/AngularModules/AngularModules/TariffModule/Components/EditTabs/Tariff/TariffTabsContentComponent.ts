@@ -75,6 +75,15 @@ export class TariffTabsContentComponent implements OnDestroy {
             else {
                 from = datePipe.transform(draftVersion.StartDate, 'dd/MMM/yy');
                 to = datePipe.transform(draftVersion.ExpirationDate, 'dd/MMM/yy');
+
+                if (!from) {
+                    from = "";
+                }
+
+                if (!to) {
+                    to = "";
+                }
+
                 header = from + " - " + to;
             }
 
@@ -90,6 +99,15 @@ export class TariffTabsContentComponent implements OnDestroy {
             else {
                 from = datePipe.transform(item.StartDate, 'dd/MMM/yy');
                 to = datePipe.transform(item.ExpirationDate, 'dd/MMM/yy');
+
+                if (!from) {
+                    from = "";
+                }
+
+                if (!to) {
+                    to = "";
+                }
+
                 header = from + " - " + to;
             }
 

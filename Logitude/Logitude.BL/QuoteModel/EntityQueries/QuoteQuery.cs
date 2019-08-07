@@ -1928,6 +1928,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             #endregion
 
             entityPM.TotalReceivablesAmount = 0;
+   
             foreach (QuoteChargePM receviable in entityPM.QuoteCharges)
             {
                 if (receviable.SaleTotalAmountLocal != null)
@@ -1936,6 +1937,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 }
             }
 
+            entityPM.QuotationSaleCharges = new List<QuoteSaleChargePM>();
             #region QuoteCostCharges || QuoteSaleCharges
             foreach (QuoteChargePM item in entityPM.QuoteCharges)
             {
@@ -2032,6 +2034,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 }
 
                 bool isSaleChargeAddable = !(item.IsAllIN);
+                bool isSaleChargeQuotationAddable = true;
+
 
                 if (entityPM.TransportModeId.ToUpper() == "A"
                     ||
@@ -2045,6 +2049,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         if (item.QuoteChargePriceSteps.Count == 0)
                         {
                             isSaleChargeAddable = false;
+                            isSaleChargeQuotationAddable = false;
                         }
                     }
 
@@ -2053,6 +2058,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         if (item.SaleUnitPrice == null)
                         {
                             isSaleChargeAddable = false;
+                            isSaleChargeQuotationAddable = false;
                         }
                     }
                 }
@@ -2064,6 +2070,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         if (item.QuoteChargePriceSteps.Count == 0)
                         {
                             isSaleChargeAddable = false;
+                            isSaleChargeQuotationAddable = false;
                         }
                     }
 
@@ -2078,11 +2085,14 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                             )
                         {
                             isSaleChargeAddable = false;
+                            isSaleChargeQuotationAddable = false;
                         }
                     }
                 }
 
-                if (isSaleChargeAddable)
+            
+
+                if (isSaleChargeAddable || isSaleChargeQuotationAddable)
                 {
                     QuoteSaleChargePM saleChargePM = new QuoteSaleChargePM()
                     {
@@ -2153,8 +2163,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
                         ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
                     };
-
-
                     if (item.IsChargeBySteps)
                     {
                         if (item.QuoteChargePriceSteps.Count > 0)
@@ -2198,7 +2206,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         }
                     }
 
-                    entityPM.QuoteSaleCharges.Add(saleChargePM);
+                    if (isSaleChargeAddable) entityPM.QuoteSaleCharges.Add(saleChargePM);
+                    else if (isSaleChargeQuotationAddable) entityPM.QuotationSaleCharges.Add(saleChargePM);
+             
                 }
             }
             #endregion

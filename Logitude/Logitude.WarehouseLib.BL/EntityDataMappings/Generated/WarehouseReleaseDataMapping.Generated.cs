@@ -55,7 +55,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         SearchFields, 
 	         DirectionId, 
 	         TotalQuantity, 
-	         ChargeableWeightUnitCode,
+	         ChargeableWeightUnitCode, 
+	         ConnectedTo,
 	      }
 
 
@@ -101,7 +102,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         DirectionId, 
 	         ReleaseDate, 
 	         TotalQuantity, 
-	         ChargeableWeightUnitCode,
+	         ChargeableWeightUnitCode, 
+	         ConnectedTo,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -273,6 +275,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeightUnitCode))
             {
 				entityPOCO.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+				entityPOCO.ConnectedTo = entityPM.ConnectedTo;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -451,6 +458,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.ChargeableWeightUnitCode = entityPOCO.ChargeableWeightUnitCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConnectedTo))
+            {
+					entityPM.ConnectedTo = entityPOCO.ConnectedTo;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseReleasePM entityPM, WarehouseReleasePM oldEntityPM)
@@ -620,6 +632,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChargeableWeightUnitCode))
             {
                 oldEntityPM.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+                oldEntityPM.ConnectedTo = entityPM.ConnectedTo;
             }
 			
 		}

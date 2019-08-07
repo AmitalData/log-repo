@@ -189,4 +189,9 @@ export class QuoteTemplateSettingList {
         QuoteTemplatePDFMarginTop: number;
 
 
+
+        ShowIncludedChargesPerContainers: boolean
+        ShowIncludedChargesPackages: boolean
+        ShowIncludedChargesContainers: boolean;
+
 }     
