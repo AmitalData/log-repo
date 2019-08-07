@@ -258,6 +258,19 @@
                                                                                                     </tr>
 
 
+                                                                                                    <tr style="height:22px">
+                                                                                                        <td style="width:8px"></td>
+                                                                                                        <td>
+                                                                                                            <div class="CheckBox">
+                                                                                                                <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowIncludedCharges" class="LeftCenter" style="text-align:center" [attr.id]="ShowIncludedChargesKey" type="checkbox" />
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowIncludedChargesKey">{{'QuoteTemplate.S.ShowIncludedCharges' | TextCodeTranslationPipe}} </label>
+                                                                                                            </div>
+
+
+                                                                                                        </td>
+
+                                                                                                    </tr>
+
 
                                                                                                 </table>
                                                                                             </td>

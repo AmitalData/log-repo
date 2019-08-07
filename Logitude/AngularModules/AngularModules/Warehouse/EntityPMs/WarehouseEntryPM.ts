@@ -384,6 +384,11 @@ export class WarehouseEntryPM {
     public set EntryReferencesAndDate(newValue: string) { if (this.entryReferencesAndDate != newValue) { this.entryReferencesAndDate = newValue; this.MarkAsDirty("EntryReferencesAndDate"); } }
        
 	 
+    private connectedTo: string;
+    public get ConnectedTo() { return this.connectedTo; }
+    public set ConnectedTo(newValue: string) { if (this.connectedTo != newValue) { this.connectedTo = newValue; this.MarkAsDirty("ConnectedTo"); } }
+       
+	 
     private ratio: number;
     public get Ratio() { return this.ratio; }
     public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }

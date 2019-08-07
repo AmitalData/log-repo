@@ -794,6 +794,16 @@ export class CustomerPM {
     public set LastOpportunityDate(newValue: Date) { if (this.lastOpportunityDate != newValue) { this.lastOpportunityDate = newValue; this.MarkAsDirty("LastOpportunityDate"); } }
        
 	 
+    private lastOpportunitySubject: string;
+    public get LastOpportunitySubject() { return this.lastOpportunitySubject; }
+    public set LastOpportunitySubject(newValue: string) { if (this.lastOpportunitySubject != newValue) { this.lastOpportunitySubject = newValue; this.MarkAsDirty("LastOpportunitySubject"); } }
+       
+	 
+    private lastOpportunityStatus: string;
+    public get LastOpportunityStatus() { return this.lastOpportunityStatus; }
+    public set LastOpportunityStatus(newValue: string) { if (this.lastOpportunityStatus != newValue) { this.lastOpportunityStatus = newValue; this.MarkAsDirty("LastOpportunityStatus"); } }
+       
+	 
     private firstInvoiceDate: Date;
     public get FirstInvoiceDate() { return this.firstInvoiceDate; }
     public set FirstInvoiceDate(newValue: Date) { if (this.firstInvoiceDate != newValue) { this.firstInvoiceDate = newValue; this.MarkAsDirty("FirstInvoiceDate"); } }

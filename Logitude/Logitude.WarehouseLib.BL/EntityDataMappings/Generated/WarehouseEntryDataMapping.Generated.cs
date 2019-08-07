@@ -75,6 +75,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ToPartnerId, 
 	         ChargeableWeightUnitCode, 
 	         TotalVolumetricWeight, 
+	          
+	         ConnectedTo,
 	         LastStatusUpdateDate, 
 	         Ratio,
 	      }
@@ -147,6 +149,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         TotalVolumetricWeight, 
 	         LastStatusUpdateDate, 
 	         MasterHouse, 
+	          
+	         ConnectedTo,
 	         EntryReferencesAndDate, 
 	         Ratio,
 	      }
@@ -420,6 +424,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
             {
 				entityPOCO.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+				entityPOCO.ConnectedTo = entityPM.ConnectedTo;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
@@ -703,6 +712,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.LastStatusUpdateDate = entityPOCO.LastStatusUpdateDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConnectedTo))
+            {
+					entityPM.ConnectedTo = entityPOCO.ConnectedTo;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Ratio))
             {
 					entityPM.Ratio = entityPOCO.Ratio;
@@ -977,6 +990,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
             {
                 oldEntityPM.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+                oldEntityPM.ConnectedTo = entityPM.ConnectedTo;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
