@@ -75,7 +75,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ToPartnerId, 
 	         ChargeableWeightUnitCode, 
 	         TotalVolumetricWeight, 
-	         LastStatusUpdateDate,
+	         LastStatusUpdateDate, 
+	         ConnectedTo,
 	      }
 
 
@@ -146,7 +147,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         TotalVolumetricWeight, 
 	         LastStatusUpdateDate, 
 	         MasterHouse, 
-	         EntryReferencesAndDate,
+	         EntryReferencesAndDate, 
+	         ConnectedTo,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -418,6 +420,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
             {
 				entityPOCO.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+				entityPOCO.ConnectedTo = entityPM.ConnectedTo;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -696,6 +703,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.LastStatusUpdateDate = entityPOCO.LastStatusUpdateDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConnectedTo))
+            {
+					entityPM.ConnectedTo = entityPOCO.ConnectedTo;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseEntryPM entityPM, WarehouseEntryPM oldEntityPM)
@@ -965,6 +977,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastStatusUpdateDate))
             {
                 oldEntityPM.LastStatusUpdateDate = entityPM.LastStatusUpdateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
+            {
+                oldEntityPM.ConnectedTo = entityPM.ConnectedTo;
             }
 			
 		}
