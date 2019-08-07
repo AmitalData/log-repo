@@ -48,6 +48,7 @@ export class WarehouseReleaseList {
 	ReleaseDate: Date;
 	TotalQuantity: number;
 	ChargeableWeightUnitCode: string;
+	ConnectedTo: string;
 	
 }
  

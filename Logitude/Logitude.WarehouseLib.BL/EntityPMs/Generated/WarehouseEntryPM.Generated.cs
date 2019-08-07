@@ -1550,6 +1550,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string connectedTo ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConnectedTo  
+	   {
+	    
+	     get
+		{
+		   return connectedTo;
+		 }
+		 set
+		 {
+		   if(connectedTo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConnectedTo",OldValue=connectedTo,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   connectedTo=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
