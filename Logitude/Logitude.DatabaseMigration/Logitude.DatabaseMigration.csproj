@@ -1385,6 +1385,10 @@
     <Compile Include="Migrations\201908061032164_AbedAddQuotationShowIncludedChargesFieldsToQuoteTemplateSettings.Designer.cs">
       <DependentUpon>201908061032164_AbedAddQuotationShowIncludedChargesFieldsToQuoteTemplateSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908051229100_AddLastOpportunitySubjectandStatus_Maheera.cs" />
+    <Compile Include="Migrations\201908051229100_AddLastOpportunitySubjectandStatus_Maheera.Designer.cs">
+      <DependentUpon>201908051229100_AddLastOpportunitySubjectandStatus_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2365,6 +2369,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908051348482_Nawras_addConnectedToFeild_Entry_Release.resx">
       <DependentUpon>201908051348482_Nawras_addConnectedToFeild_Entry_Release.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908051229100_AddLastOpportunitySubjectandStatus_Maheera.resx">
+      <DependentUpon>201908051229100_AddLastOpportunitySubjectandStatus_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -28,7 +28,7 @@ dbo.Customers.Id, dbo.Customers.Tenant,dbo.cards.EnglishName,dbo.cards.ZipCode,d
 ,dbo.Customers.RankId, dbo.Customers.LeadSourceId, LeadSources.Name as LeadSourceName, dbo.Customers.IndustryId
 ,dbo.cards.CountryId ,dbo.cards.CountryCode, dbo.cards.CountryName
 ,dbo.customers.AccountManagerUserId,CreatedByUserContacts.EnglishName as CreatedByUserName,dbo.cards.code,customers.FirstShipmentDate,dbo.cards.IsActiveForMobile as  IsActiveForMobile
-,SalesmanUsers.BusinessUnitId as SalesmanBusinessUnitId,dbo.customers.FirstInvoiceDate,customers.LastOpportunityDate,customers.LastMeetingDate,customers.LastCallDate,customers.LastQuoteDate,customers.LastInteractionDate
+,SalesmanUsers.BusinessUnitId as SalesmanBusinessUnitId,dbo.customers.FirstInvoiceDate,customers.LastOpportunityDate,customers.LastOpportunitySubject,customers.LastOpportunityStatus, customers.LastMeetingDate,customers.LastCallDate,customers.LastQuoteDate,customers.LastInteractionDate
 ,InvoiceCurrency.Code as InvoiceCurrencyCode
 ,dbo.Customers.KnownConsignor, dbo.Customers.KCExpirationDate,
 dbo.Cards.PartnerTypeId, dbo.customers.CustomerSizeId, CustomerSizes.Name as CustomerSizeName, dbo.Cards.SupportNotes,

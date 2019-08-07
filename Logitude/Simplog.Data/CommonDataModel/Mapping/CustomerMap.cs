@@ -49,6 +49,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivatedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SetAsInactiveByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ActivationRequestedByUserId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.LastOpportunitySubject).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.LastOpportunityStatus).HasMaxLength(60).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Customers");
@@ -88,6 +90,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RegionId).HasColumnName("RegionId");
             this.Property(t => t.CustomerSizeId).HasColumnName("CustomerSizeId");
             this.Property(t => t.LastOpportunityDate).HasColumnName("LastOpportunityDate");
+            this.Property(t => t.LastOpportunityStatus).HasColumnName("LastOpportunityStatus");
+            this.Property(t => t.LastOpportunitySubject).HasColumnName("LastOpportunitySubject");
             this.Property(t => t.LastMeetingDate).HasColumnName("LastMeetingDate");
             this.Property(t => t.LastCallDate).HasColumnName("LastCallDate");
             this.Property(t => t.FirstShipmentDate).HasColumnName("FirstShipmentDate");

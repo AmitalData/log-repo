@@ -445,9 +445,16 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         }
         this.isSaveClicked = true;
         this.ValidationErrorsList = [];
+       
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber)) {
+            var error = FormatTool.ValidateContainerNumber(this.ContainerNumber);
 
+            if (!AppTool.IsNullOrEmpty(error)) {
+                this.ValidationErrorsList.push(error);
+            }
+        }
         if (!this.SelectedTransportationTypes) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportationTypes"));
         }
