@@ -28,8 +28,8 @@ import {UserLicenseArgs} from '../../../Infrastructure/Args';
 
 export class UserWorkspaceComponent implements OnInit {
     public ComponentRef: ComponentRef<UserWorkspaceComponent>;
-    filterAgrs: ApiQueryFilters;    
-    private _entityResourceService: EntityResourceService;    
+    filterAgrs: ApiQueryFilters;
+    private _entityResourceService: EntityResourceService;
     SearchText: string = "Search names /positions";
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _userExtendedPMService: UserExtendedPMService) {
@@ -56,7 +56,7 @@ export class UserWorkspaceComponent implements OnInit {
             this.CheckVisibilityProperties();
             this.InitLicensesManagment();
             this.LoadAllData();
-        }   
+        }
     }
 
     private InitCounts() {
@@ -72,12 +72,12 @@ export class UserWorkspaceComponent implements OnInit {
     public LicensesManagmentsList: LicensesManagementDataItem[];
     private allUserLicenses: UserLicensePM[];
     private InitLicensesManagment() {
-        var isLicensesManagmentSystem: boolean = false;        
+        var isLicensesManagmentSystem: boolean = false;
 
         if (SessionLocator.TenantManagementJS.IsMultiPackage) {
-            //if (FeatureLocator.HasFeaturePermession("User", "User.Feature.LicensesManagment")) {
+            if (FeatureLocator.HasFeaturePermession("User", "User.Feature.LicensesManagment")) {
                 isLicensesManagmentSystem = true;
-            //}
+            }
         }
 
         else if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
@@ -117,7 +117,7 @@ export class UserWorkspaceComponent implements OnInit {
         service.getAllFromCache().subscribe(result => {
             this.allPackages = result.Result;
             this.FillLicensesManagmentsList();
-        }); 
+        });
     }
 
     private FillLicensesManagmentsList() {
@@ -152,9 +152,9 @@ export class UserWorkspaceComponent implements OnInit {
                 newItem.PackageCode = item.PackageCode;
                 newItem.PackageName = myPackageName;
                 newItem.CountText = myCountText;
-                this.LicensesManagmentsList.push(newItem);                    
+                this.LicensesManagmentsList.push(newItem);
             }
-        });        
+        });
     }
 
     public ShowUserLicenseExclamationMark: boolean;
@@ -169,7 +169,7 @@ export class UserWorkspaceComponent implements OnInit {
                 if (usersCount < numberOfUsers) {
                     this.ShowUserLicenseExclamationMark = true;
                     //break;
-                }                
+                }
             });
         }
     }
@@ -206,9 +206,10 @@ export class UserWorkspaceComponent implements OnInit {
         this.LoadRecentUsers();
         this.BuildCustomQueriesList();
     }
-    
+
     RefreshButtonClicked() {
         this.LoadAllData();
+        this.LoadUserLicenses();
     }
 
     public AllUsersCount: string;
@@ -257,29 +258,29 @@ export class UserWorkspaceComponent implements OnInit {
                         item.IPSiteUri = "http://www.infosniper.net/index.php?ip_address=" + item.IP;
                     });
 
-                    this.SelectedUserViewModel = this.RecentUserLists[0];  
+                    this.SelectedUserViewModel = this.RecentUserLists[0];
                     this.isLoadRecentUsersCompleted = true;
-                    this.RefreshBackButtonEnabled();              
+                    this.RefreshBackButtonEnabled();
                 }
             }
         });
     }
-    
+
     @Output() ReloadUserQueries = new EventEmitter();
     BuildCustomQueriesList() {
         this.ReloadUserQueries.emit();
     }
-    
+
     onUserQueriesBackComplete(event) {
-        this.LoadAllData();
+        this.RefreshButtonClicked();
     }
-    
+
     public AllUsersQueryVisibility: boolean = false;
     public ActiveUsersQueryVisibility: boolean = false;
     public InactiveUsersQueryVisibility: boolean = false;
     public ActiveNotLicensedQueryVisibility: boolean = false;
     public MyViewsQueryVisibility: boolean = false;
-    public IsLicensesVisibile: boolean = false;    
+    public IsLicensesVisibile: boolean = false;
     private CheckVisibilityProperties() {
         if (FeatureLocator.HasFeaturePermession("User", "User.Query.AllUsers")) {
             this.AllUsersQueryVisibility = true;
@@ -365,14 +366,14 @@ export class UserWorkspaceComponent implements OnInit {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
                     this.CurrentSession.AddMenuReference(cmpRef);
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllData());
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.RefreshButtonClicked());
 
                 });
         }
     }
-    
+
     BackButtonClicked() {
-        if (this.ComponentRef != null) {           
+        if (this.ComponentRef != null) {
             this.ComponentRef.destroy();
             this.ComponentRef = null;
         }
@@ -382,15 +383,13 @@ export class UserWorkspaceComponent implements OnInit {
         if (selectedItem) {
             SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
-
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: selectedItem.Id, ObjectTableName: 'User', BackButtonLabel: 'Users Workspace' });
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllData());
-
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.RefreshButtonClicked());
                 });
         }
     }
-    
+
     ShowHistory(selectedItem: UsersWorkspaceRecentItem) {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 800;
@@ -399,7 +398,7 @@ export class UserWorkspaceComponent implements OnInit {
         logWindow.DataContext = selectedItem;
         logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/UserLoginHistoryComponent');
     }
-    
+
     SupportManagement() {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 300;
@@ -422,11 +421,11 @@ export class UserWorkspaceComponent implements OnInit {
 
     ViewNewUserWindow() {
         this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe(response => {
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 965;
-        logWindow.Height = 600;
-        logWindow.Title = "New User";
-        logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/NewUserComponent');
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 965;
+            logWindow.Height = 600;
+            logWindow.Title = "New User";
+            logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/NewUserComponent');
         });
     }
 }
