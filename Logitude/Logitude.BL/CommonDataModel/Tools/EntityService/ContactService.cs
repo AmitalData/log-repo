@@ -21,6 +21,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.Helpers;
+using Logitude.BL.GlobalModel.Tools.Validating;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -149,6 +150,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.ComputeCompanyName();
+
+            if (entityPM.IsUser)
+            {
+                this.ValidateActiveUsers();
+            }
 
             ContactMapping.MapEntity(entityPM, Poco, isNewEntity);
 
@@ -545,6 +551,72 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardContact.IsOceanImport = contactPM.IsOceanImport;
             cardContact.IsCustomsImport = contactPM.IsCustomsImport;
             cardContact.IsInlandDomestic = contactPM.IsInlandDomestic;
+        }
+        private void ValidateActiveUsers()
+        {
+            UserRepository userRepository = new UserRepository(objectContext);
+            User user = userRepository.GetSingleUser(entityPM.Id, entityPM.Tenant);
+
+            if (user != null)
+            {
+                ContactPM loggedContact = new ContactQuery(0).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), 0);
+                if (loggedContact == null)
+                {
+                    loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                }
+
+                TenantManagement tenantMngmnt = null;
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    TenantManagementRepository tenantMngmntRep = new TenantManagementRepository();
+                    tenantMngmnt = tenantMngmntRep.GetSingleTenantManagement(entityPM.Tenant);
+                    scope.Complete();
+                }
+
+                if (tenantMngmnt != null && loggedContact != null)
+                {
+                    int? totalUsers = 0;
+                    int tenantUsersCount = 0;
+
+                    if (tenantMngmnt.FreeUsers == null || tenantMngmnt.FreeUsers == 0)
+                    {
+                        totalUsers = tenantMngmnt.NumberOfUsers;
+                    }
+                    else
+                    {
+                        totalUsers = tenantMngmnt.NumberOfUsers + tenantMngmnt.FreeUsers;
+                    }
+
+                    if (tenantMngmnt.ManageLicencesPerUser)
+                    {
+                        tenantUsersCount = userRepository.GetUsers(this.entityPM.Tenant).Where(d => d.Contact.InActive == false && d.Contact.Email != "customercare@logitudeworld.com" && d.LicencedUser == true).Count();
+                    }
+
+                    else
+                    {
+                        tenantUsersCount = userRepository.GetUsers(this.entityPM.Tenant).Where(d => d.Contact.InActive == false && d.Contact.Email != "customercare@logitudeworld.com").Count();
+                    }
+
+                    NumberOfActiveUsersArgs numberOfActiveUsersArgs = new NumberOfActiveUsersArgs()
+                    {
+                        TenantManagementId = tenantMngmnt.Id,
+                        TenantManagementTotalNumberOfUsers = totalUsers,
+                        TenantUsersCount = tenantUsersCount,
+                        ManageLicencesPerUser = tenantMngmnt.ManageLicencesPerUser,
+                        IsMultiPackage = tenantMngmnt.IsMultiPackage,
+                        LoggedContactId = loggedContact.Id,
+                        UserEnglishName = this.entityPM.EnglishName,
+                        IsUserDistributor = user.IsDistributor,
+                        UserTenantNumber = this.entityPM.Tenant,
+                        UserPOCOInactive = this.Poco.InActive,
+                        UserPMInactive = this.entityPM.InActive,
+                        UserPOCOLicencedUser = false,
+                        UserPMLicencedUser = false,
+                    };
+
+                    TenantManagementValidating.ValidateNumberOfActiveUsers(numberOfActiveUsersArgs);
+                }                
+            }
         }
     }
 }

@@ -139,20 +139,31 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 }
 
                 else {
+                    //if (this.isTariffLinesDeleted) {
+                    //    this.ResetDeletedLinesExpirationDates();                        
+                    //}
+
                     this.StopAllFlags();
                 }
             });
         }
     }
 
-    StopAllFlags() {
-
+    private StopAllFlags() {
         if (this.EntityPM.IsApprovingDraftVersion) {
             this.EntityPM.IsApprovingDraftVersion = false;
         }
 
         this.isApproveButtonClicked = false;
+        this.isTariffLinesDeleted = false;
     }
+    //private ResetDeletedLinesExpirationDates() {
+    //    this.CurrentVersion.TariffLines.forEach(item => {
+    //        item.ExpirationDate = null;
+    //    });
+
+    //    this.EntityPM.DeletedLinesExpirationDates = [];
+    //}
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);

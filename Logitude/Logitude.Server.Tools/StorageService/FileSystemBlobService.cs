@@ -107,5 +107,10 @@ namespace Logitude.Server.Tools.StorageService
 
             return (result != null);
         }
+
+        public void AppendText(string text, BlobFileInfo fileInfo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

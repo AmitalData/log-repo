@@ -17,5 +17,7 @@ export class CustomsInterfaceSettingList {
 		ActivateCustomsManagementInShipments: boolean;
 		ArtemusOutSettingsId: string;
 		ArtemusInSettingsId: string;
+		AMCAirStartDate: Date;
+		AMCOceanStartDate: Date;
 	
 }

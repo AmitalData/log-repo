@@ -171,6 +171,8 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public DateTime? LastStatusUpdateDate { get; set; }
         [Column("ConnectedTo")]
 	    public string ConnectedTo { get; set; }
+        [Column("Ratio")]
+	    public double? Ratio { get; set; }
     }
 }
 	 

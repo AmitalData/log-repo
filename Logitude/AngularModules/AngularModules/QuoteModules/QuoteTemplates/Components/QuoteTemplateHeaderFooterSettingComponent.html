@@ -147,9 +147,9 @@
                                                     </tr>
 
 
-                                                    <tr style="height:5px"><td style="height:5px" colspan="5"></td></tr>
+                                                    <tr *ngIf="QuoteTemplateSectionTypeName == 'Footer'" style="height:5px"><td style="height:5px" colspan="5"></td></tr>
 
-                                                    <tr style="height:30px">
+                                                    <tr *ngIf="QuoteTemplateSectionTypeName == 'Footer'" style="height:30px">
                                                         <td style="width:145px;"><div style="width:115px;font-size:15px;color:gray">{{'QuoteTemplate.S.SpaceLinesBefore' | TextCodeTranslationPipe}}:</div></td>
                                                         <td style="width:120px">
 

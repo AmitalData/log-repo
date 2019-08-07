@@ -389,6 +389,11 @@ export class WarehouseEntryPM {
     public set ConnectedTo(newValue: string) { if (this.connectedTo != newValue) { this.connectedTo = newValue; this.MarkAsDirty("ConnectedTo"); } }
        
 	 
+    private ratio: number;
+    public get Ratio() { return this.ratio; }
+    public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPM;
 		

@@ -1573,6 +1573,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private double? ratio ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? Ratio  
+	   {
+	    
+	     get
+		{
+		   return ratio;
+		 }
+		 set
+		 {
+		   if(ratio != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Ratio",OldValue=ratio,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   ratio=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

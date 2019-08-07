@@ -33,7 +33,8 @@ import {AccountingTab_QuickBooksOnline} from './Components/AccountingTab/Account
 import {AccountingTab_VatType} from './Components/AccountingTab/AccountingTab_VatType';
 import {ExternalAccountsByProductsComponent} from './Components/Partners/AddEdit/ExternalAccountsByProductsComponent';
 import {CustomsInterfaceSettingsComponent} from './Components/Maintenance/CustomsInterface/CustomsInterfaceSettingsComponent';
-import {CustomsInterfaceCredintialsComponent} from './Components/Maintenance/CustomsInterface/CustomsInterfaceCredintialsComponent';
+import { LocalCustomsInterfaceDetailsComponent } from './Components/Maintenance/CustomsInterface/LocalCustomsInterfaceDetailsComponent';
+import { CustomsInterfaceStartDatesComponent } from './Components/Maintenance/CustomsInterface/CustomsInterfaceStartDatesComponent';
 import {FTPDetailComponent} from './Components/Maintenance/CustomsInterface/FTPDetailComponent';
 import {ArtemusSettingsComponent} from './Components/Maintenance/CustomsInterface/ArtemusSettingsComponent';
 import { VatTypeGeneralTabComponent } from './Components/Maintenance/VatType/VatTypeGeneralTabComponent';
@@ -88,7 +89,8 @@ export const Components =
         AccountingTab_VatType,
         ExternalAccountsByProductsComponent,        
         CustomsInterfaceSettingsComponent,
-        CustomsInterfaceCredintialsComponent,
+        LocalCustomsInterfaceDetailsComponent,
+        CustomsInterfaceStartDatesComponent,
         FTPDetailComponent,
         ArtemusSettingsComponent,
         VatTypeGeneralTabComponent,
@@ -151,7 +153,8 @@ export class ModuleDeclarations {
             case "AccountingTab_VatType": { myResult = AccountingTab_VatType; break; }
             case "ExternalAccountsByProductsComponent": { myResult = ExternalAccountsByProductsComponent; break; }
             case "CustomsInterfaceSettingsComponent": { myResult = CustomsInterfaceSettingsComponent; break; }
-            case "CustomsInterfaceCredintialsComponent": { myResult = CustomsInterfaceCredintialsComponent; break; }
+            case "LocalCustomsInterfaceDetailsComponent": { myResult = LocalCustomsInterfaceDetailsComponent; break; }
+            case "CustomsInterfaceStartDatesComponent": { myResult = CustomsInterfaceStartDatesComponent; break; }
             case "FTPDetailComponent": { myResult = FTPDetailComponent; break; }
             case "ArtemusSettingsComponent": { myResult = ArtemusSettingsComponent; break; }
             case "VatTypeGeneralTabComponent": { myResult = VatTypeGeneralTabComponent; break; }
