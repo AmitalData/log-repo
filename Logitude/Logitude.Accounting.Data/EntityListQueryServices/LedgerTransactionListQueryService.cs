@@ -339,6 +339,19 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return myGenericCallBack;
         }
 
+        public GenericCallBack GetExternalReconciliationFilterCallBack(QueryOperations queryOperations, string AccountId, int tenant)
+        {
+
+            IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+
+            const int MaxTotal = 99001;
+            
+            query2 = AddFiltersForExternalReconciliations(AccountId, query2, tenant);
+
+            GenericCallBack myGenericCallBack = GetGenericCallback(query2, MaxTotal);
+            return myGenericCallBack;
+        }
+
         private static GenericCallBack GetGenericCallback(IQueryable<LedgerTransactionList> query2, int MaxTotal)
         {
             var callback11 =
@@ -461,17 +474,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
 
-            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-            query2 = query2
-                .Where(rec =>
-                rec.AccountId == AccountId
-            && (rec.SourceTypeCode == "5" || rec.SourceTypeCode == "9")
-            && rec.DueDate <= _today
-            && rec.IsExternalReconcile == false
-            && rec.OpenAmount == (rec.LocalAmountCredit + rec.LocalAmountDebit)
-            )
-                .OrderBy(rec => rec.AccountingDate);
+            query2 = AddFiltersForExternalReconciliations(AccountId, query2, tenant);
 
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
             query2 = query2
@@ -487,6 +490,24 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             var mylist = query2.ToList();
 
             return mylist;
+        }
+
+        private static IQueryable<LedgerTransactionList> AddFiltersForExternalReconciliations(string AccountId, IQueryable<LedgerTransactionList> query2, int tenant)
+        {
+
+            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
+            _today = new DateTime(_today.Year, _today.Month, _today.Day, 11, 59, 59);
+
+            query2 = query2
+                .Where(rec =>
+                rec.AccountId == AccountId
+            && (rec.SourceTypeCode == "5" || rec.SourceTypeCode == "9")
+            && rec.DueDate <= _today
+            && rec.IsExternalReconcile == false
+            && Math.Abs(rec.OpenAmount) == Math.Abs(rec.LocalAmountCredit + rec.LocalAmountDebit)
+            )
+                .OrderBy(rec => rec.AccountingDate);
+            return query2;
         }
 
         private IQueryable<LedgerTransactionList> BasicListFilter(QueryOperations queryOperations, int tenant)
