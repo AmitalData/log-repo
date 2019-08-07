@@ -179,6 +179,9 @@
     <TextCode Code="&quot;QuoteTemplate.S.ShowHeaderLabels&quot;" DefaultText="&quot;Show Header Labels&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;QuoteTemplate.S.ShowTotalSplitToMultipleCurrencies&quot;" DefaultText="&quot;Show Total Split To Multiple Currencies&quot;" LocalDefaultText="&quot;&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;QuoteTemplate.S.SpaceLinesBefore&quot;" DefaultText="&quot;Space Lines Before&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;QuoteTemplate.S.QuoteTemplatePDFMarginTop&quot;" DefaultText="&quot;Margin Top&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;QuoteTemplate.S.QuoteTemplatePDFMarginBottom&quot;" DefaultText="&quot;Margin Bottom&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;QuoteTemplate.S.ShowIncludedCharges&quot;" DefaultText="&quot;Show Included Charges&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;COPYATSIGNUP&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;QuoteTemplate.Features.CopyAtSignup&quot;" FeatureDefaultText="&quot;Copy At Signup&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />

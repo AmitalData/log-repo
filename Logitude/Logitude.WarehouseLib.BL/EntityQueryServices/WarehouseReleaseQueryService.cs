@@ -227,6 +227,40 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             return warehouseReleaseLists;
         }
 
+        public List<WarehouseReleaseList> GetWarehouseReleasesByEntryId(string entityId, int tenant)
+        {
+         
+            List<string> warehouseEntryPackagesIds = (from a in context.WarehouseEntryPackages where a.Tenant == tenant && a.WarehouseEntryId == entityId select a.Id).ToList();
+            List<string> warehouseReleasePackagesIds = (from a in context.WarehouseEntryPackagesReleases where a.Tenant == tenant && warehouseEntryPackagesIds.Contains(a.EntryPackageId) select a.ReleasePackageId).ToList();
+            List<string> warehouseReleaseIds = (from a in context.WarehouseReleasePackages where a.Tenant == tenant && warehouseEntryPackagesIds.Contains(a.Id) select a.WarehouseReleaseId).ToList();
+            List<string> ReleaseStatus = (from b in context.WarehouseReleaseStatuses  select b.Name).ToList();
+            List<WarehouseReleaseList> SDDS = (from a in context.WarehouseReleases
+                                               where a.Tenant == tenant && warehouseReleaseIds.Contains(a.Id)
+                                               select new WarehouseReleaseList()
+                                               {
+                                                   ActualReleaseDate = a.ActualReleaseDate,
+                                                   ExpectedReleaseDate = a.ExpectedReleaseDate,
+                                                   ReleaseNumber = a.ReleaseNumber,
+                                                   Id = a.Id,
+                                                   ReleaseDate = a.ActualReleaseDate == null ? a.ExpectedReleaseDate : a.ActualReleaseDate,
+                                                  
+                                                   ShipmentNumber = a.ShipmentNumber,
+                                                   StatusName = ReleaseStatus.FirstOrDefault(d => d.Contains(a.StatusCode)),
+                                                   ConnectedTo = a.ConnectedTo,
+                                                 
+                                           }
+
+                                          ).ToList();
+
+            //List<WarehouseRelease> myResult = (from a in context.WarehouseReleases where a.Tenant == tenant && a.Id ==
+            //                                   (from b in context.WarehouseReleasePackages
+            //                                    where  b.Id.Contains(from c in context.WarehouseEntryPackagesReleases
+            //                                   where c.EntryPackageId.Contains('1') select c.ReleasePackageId)
+            //                                   select a).ToList();
+            return SDDS;
+        }
+
+
 
 
     }

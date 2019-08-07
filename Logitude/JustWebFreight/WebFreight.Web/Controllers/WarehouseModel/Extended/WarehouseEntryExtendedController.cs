@@ -101,6 +101,9 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                     To = myShipment.MainCarriageFinalDestinationPortCode,
                     GrossWeight = myShipment.GrossWeight,
                     VolumeInKG = myShipment.Volume,
+                    Direction = myShipment.DirectionId,
+                    TransportMode = myShipment.TransportModeId,
+
                 });
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -132,5 +135,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
         public string To { get; set; }
         public Double? GrossWeight { get; set; }
         public Double? VolumeInKG { get; set; }
+        public string Direction { get; set; }
+        public string TransportMode { get; set; }
     }
 }

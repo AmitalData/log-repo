@@ -299,6 +299,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         windowArgs.WarehouseId = this.WarehouseLegWarehouseId;
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.IsNotSetWarehouseIdForWarehouseLegShipment = true;
+        windowArgs.ConnectedTo = "Warehouse/Terminal";
         var warehouseHelper: WarehouseHelper = new WarehouseHelper();
         warehouseHelper.ShowNewWarehouseEntryComponent(windowArgs);
     }

@@ -792,6 +792,9 @@ namespace WebFreight.Web.Helpers
                     SpaceLinesBeforeQuoteDetails = setting.SpaceLinesBeforeQuoteDetails,
                     SpaceLinesBeforeQuoteHeaders = setting.SpaceLinesBeforeQuoteHeaders,
                     SpaceLinesBeforePerContainers = setting.SpaceLinesBeforePerContainers,
+                    QuoteTemplatePDFMarginTop = setting.QuoteTemplatePDFMarginTop,
+                    QuoteTemplatePDFMarginBottom = setting.QuoteTemplatePDFMarginBottom,
+                    
 
                 };
 

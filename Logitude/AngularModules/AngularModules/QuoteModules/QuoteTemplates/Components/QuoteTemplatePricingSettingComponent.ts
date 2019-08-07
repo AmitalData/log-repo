@@ -505,6 +505,35 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
 
+
+
+    ShowIncludedChargesKey: string = Guid.newGuid();
+    get ShowIncludedCharges() {
+        var showIncludedCharges: boolean = false;
+        if (this.QuoteTemplateSettingPM) showIncludedCharges = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.ShowIncludedChargesPackages : this.QuoteTemplateSettingPM.ShowIncludedChargesContainers;
+        return showIncludedCharges;
+    }
+    set ShowIncludedCharges(value: boolean) {
+        if (this.QuoteTemplateSettingPM != null) {
+            if (this.QuoteTemplateSectionTypeName == "Packages") {
+                this.QuoteTemplateSettingPM.ShowIncludedChargesPackages = value;
+            } else this.QuoteTemplateSettingPM.ShowIncludedChargesContainers = value;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     get ShowPrice2Label() {
 
         var showPrice2Label = "";
@@ -514,8 +543,6 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
         return showPrice2Label;
     }
-
- 
 
     ShowPrice2Key: string = Guid.newGuid();
     get ShowPrice2() {
@@ -794,7 +821,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         windowArgs.QuoteTemplateTextCodePMList = this.AllQuoteTemplateTextCodePMList;
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 930;
-        logWindow.Height = 580;
+        logWindow.Height = 610;
         logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.TotalPerContainerSettings")  ;
         logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteTemplateTotalPerContainerSetting");
         logWindow.WindowClosed.subscribe(($event: any) => {

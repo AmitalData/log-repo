@@ -109,7 +109,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
                 this.warehouseEntryPM.ShipmentLevelCode = this.ShipmentPM.ShipmentLevelCode;
                 this.warehouseEntryPM.TransportModeId = this.ShipmentPM.TransportModeId;
                 this.warehouseEntryPM.ShipmentTypeId = this.ShipmentPM.ShipmentTypeId;
-
+                this.warehouseEntryPM.ConnectedTo = args.ConnectedTo;
 
                 this.warehouseEntryPM.DirectionId = this.ShipmentPM.DirectionId;
 
@@ -138,6 +138,17 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
 
 
             }
+
+
+            this.warehouseEntryPM.Ratio = AppTool.GetRatio(this.warehouseEntryPM.DirectionId, this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+
+
+
+
+
+
+
+
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
             this.IsNotSetWarehouseIdForWarehouseLegShipment = args.IsNotSetWarehouseIdForWarehouseLegShipment;

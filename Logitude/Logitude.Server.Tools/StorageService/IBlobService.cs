@@ -14,5 +14,7 @@ namespace Logitude.Server.Tools.StorageService
         void Delete(BlobFileInfo fileInfo);
         bool FileExists(BlobFileInfo fileInfo);
 
+        void AppendText(string text, BlobFileInfo fileInfo);
+
     }
 }

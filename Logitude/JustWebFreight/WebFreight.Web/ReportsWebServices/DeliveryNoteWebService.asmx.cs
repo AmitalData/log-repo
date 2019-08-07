@@ -159,8 +159,8 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     deliveryNotedataprovider.CutOffDate = String.Format("{0:dd MMM yyyy}", shipment.CutoffDate);
                     deliveryNotedataprovider.CutOffDateAsDate = shipment.CutoffDate;
-                    deliveryNotedataprovider.CutOffTime = shipment.CutoffDate.Value.TimeOfDay;
-                }                
+                    deliveryNotedataprovider.CutOffTime = shipment.CutoffDate != null ? String.Format("{0:hh:mm:ss}", shipment.CutoffDate) : "";
+                }
 
                 if (!string.IsNullOrEmpty(shipment.ConsigneeId))
                 {
@@ -291,10 +291,10 @@ namespace WebFreight.Web.ReportsWebServices
                     deliveryNotedataprovider.DriverName = myPickup.Driver;
 
                     ShipmentPackage myShipmentPackage = (from a in shipmentsContext.ShipmentPackages
-                                                       where a.DeliveryId == myPickup.Id && a.Tenant == tenant
-                                                       select a).FirstOrDefault();
+                                                         where a.DeliveryId == myPickup.Id && a.Tenant == tenant
+                                                         select a).FirstOrDefault();
 
-                    if(myShipmentPackage != null)
+                    if (myShipmentPackage != null)
                     {
                         deliveryNotedataprovider.Reference1 = myShipmentPackage.Reference1;
                         deliveryNotedataprovider.Reference2 = myShipmentPackage.Reference2;
@@ -536,20 +536,21 @@ namespace WebFreight.Web.ReportsWebServices
                     #endregion
 
                     #endregion
-    
+
                     #region Packages
                     deliveryNotedataprovider.DescriptionOfGoods = shipment.DescriptionOfGoods != null ? shipment.DescriptionOfGoods : "";
                     List<ShipmentPickUpDeliveryPackage> packages = shipmentsContext.ShipmentPickUpDeliveryPackages.Where(d => d.ShipmentPickUpDeliveryId == myPickup.Id && d.Tenant == tenant).ToList();
                     List<string> shipmentPackagesIds = shipmentsContext.ShipmentPackages.Where(d => d.ShipmentId == shipment.Id && d.Tenant == tenant).Select(s => s.Id).ToList();
 
-                    if (shipmentPackagesIds != null && shipmentPackagesIds.Count > 0) {
+                    if (shipmentPackagesIds != null && shipmentPackagesIds.Count > 0)
+                    {
                         List<InsideShipmentPackage> insidePackages = shipmentsContext.InsideShipmentPackages.Where(d => shipmentPackagesIds.Contains(d.ShipmentPackageId)).ToList();
 
-                        if(insidePackages != null && insidePackages.Count > 0)
+                        if (insidePackages != null && insidePackages.Count > 0)
                         {
                             deliveryNotedataprovider.InsidePackagesLines = new List<InsidePackageLine>();
 
-                            foreach(InsideShipmentPackage item in insidePackages)
+                            foreach (InsideShipmentPackage item in insidePackages)
                             {
                                 InsidePackageLine insidePackageLine = new InsidePackageLine();
 
@@ -645,7 +646,7 @@ namespace WebFreight.Web.ReportsWebServices
                             packageline.Dimensions = package.Length + " x " + package.Width + " x " + package.Height + " " + shipment.DimensionsUnitCode;
                         }
 
-                        packageline.ContainerNumber = package.ContainerNumber;                        
+                        packageline.ContainerNumber = package.ContainerNumber;
 
                         PackageType packtype = (from pa in commonContext.PackageTypes
                                                 where pa.Id == package.PackageTypeId
@@ -755,6 +756,20 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
                     deliveryNotedataprovider.LastMainCarriageVesselNameAndNumber = vesselNameAndNumber;
+
+                    if (!string.IsNullOrEmpty(shipment.MainCarriageVesselId))
+                    {
+                        var vesselMCNameAndNumber = ""; 
+                        Vessel vessel = (from a in commonContext.Vessels
+                                         where a.Id == shipment.MainCarriageVesselId
+                                         select a).FirstOrDefault();
+                        if (vessel != null)
+                        {
+                            vesselMCNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
+                        }
+                        deliveryNotedataprovider.MainCarriageVesselNameAndNumber = vesselMCNameAndNumber;
+                    }
+
                     #endregion
 
                     #region EmptyContainer
@@ -966,7 +981,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     deliveryNotedataprovider.CutOffDate = shipment.CutoffDate != null ? String.Format("{0:dd MMM yyyy}", shipment.CutoffDate) : "";
                     deliveryNotedataprovider.CutOffDateAsDate = shipment.CutoffDate;
-                    deliveryNotedataprovider.CutOffTime = shipment.CutoffDate.Value.TimeOfDay;
+                    deliveryNotedataprovider.CutOffTime = shipment.CutoffDate != null ? String.Format("{0:hh:mm:ss}", shipment.CutoffDate) : "";
                 }
 
                 if (!string.IsNullOrEmpty(shipment.CustomerContactId))
@@ -1644,6 +1659,19 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
                     deliveryNotedataprovider.LastMainCarriageVesselNameAndNumber = vesselNameAndNumber;
+
+                    if (!string.IsNullOrEmpty(shipment.MainCarriageVesselId))
+                    {
+                        var vesselMCNameAndNumber = "";
+                        Vessel vessel = (from a in commonContext.Vessels
+                                         where a.Id == shipment.MainCarriageVesselId
+                                         select a).FirstOrDefault();
+                        if (vessel != null)
+                        {
+                            vesselMCNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
+                        }
+                        deliveryNotedataprovider.MainCarriageVesselNameAndNumber = vesselMCNameAndNumber;
+                    }
                     #endregion
 
                     #region EmptyContainer
