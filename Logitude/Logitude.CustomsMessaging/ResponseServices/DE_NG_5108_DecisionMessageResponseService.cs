@@ -40,7 +40,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.UserMessage = userMessage;
 
             this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Deficit");
             this.MyRequestSheetParam.RequestDescription = userMessage;
 
             foreach (var deficitFileItem in customResponse.DeficitFile)
@@ -51,42 +50,54 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     LogMessagingUtil.Instance.AppendLine("Analyze Deficit Decision for :" + deficitFileItem.TapagIdentifier.fileNumber);
                     userMessage = userMessage + " " + deficitFileItem.TapagIdentifier.fileNumber;
+                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Deficit");
                     this.MyRequestSheetParam.EntityId1 = deficitPM.Id;
+                    this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                    this.MyRequestSheetParam.EntityId2 = tapagConnectionTablePM.DeclarationId;
                     this.MyRequestSheetParam.RequestDescription = userMessage;
                     this.MyResponseData.UserMessage = userMessage;
 
+                    DeficitDecisionPM deficitDecisionPM = new DeficitDecisionPM();
                     if (deficitPM.DeficitDecisions != null)
                     {
-                        DeficitDecisionPM deficitDecisionPM = deficitPM.DeficitDecisions.FirstOrDefault(si => si.DeclarationId == tapagConnectionTablePM.DeclarationId);
-                        if(deficitDecisionPM != null)
+                        deficitDecisionPM = deficitPM.DeficitDecisions.FirstOrDefault(si => si.DeclarationId == tapagConnectionTablePM.DeclarationId);
+                        if (deficitDecisionPM != null)
                         {
                             deficitDecisionPM.ChangeSetOp = ChangeSetOperation.Update;
-                            deficitDecisionPM.RequestID = customResponse.DecisionMessage.requestID.ToString();
-                            deficitDecisionPM.RequestTypeCode = customResponse.DecisionMessage.requestType.ToString();
-                            deficitDecisionPM.RequestDate = customResponse.DecisionMessage.requestDate;
-                            deficitDecisionPM.ApprovedProfessionCode = customResponse.DecisionMessage.approvedProfession.ToString();
-                            deficitDecisionPM.DecisionCode = customResponse.DecisionMessage.decisionCode.ToString();
-                            deficitDecisionPM.DecisionNoteForLetter = customResponse.DecisionMessage.decisionNoteForLetter;
-                            if (deficitFileItem.DebtBalance != null)
-                            {
-                                deficitDecisionPM.TotalComponentAmount = deficitFileItem.DebtBalance.totalComponentAmount;
-                                deficitDecisionPM.TotalEstimatedAmount = deficitFileItem.DebtBalance.totalEstimatedAmount;
-                                deficitDecisionPM.TotalFinancialPenaltyAmount = deficitFileItem.DebtBalance.totalFinancialPenaltyAmount;
-                                deficitDecisionPM.TotalInterestAmount = deficitFileItem.DebtBalance.totalInterestAmount;
-                                deficitDecisionPM.TotalLinkingAmount = deficitFileItem.DebtBalance.totalLinkingAmount;
-                            }
-
-                            var declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
-                            DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(deficitDecisionPM.DeclarationId, false, false);
-
-                            string decisionTypeName = GetDecisionTypeName(customResponse.DecisionMessage.decisionCode.ToString(), requestParams.Tenant);
-                            string description = "החלטת מכס בגין גרעון " + connectedDeclarationPM.CustomFileNo + " - " + decisionTypeName;
-                            DoUpdateNotification("5108N", deficitPM, requestParams.Tenant, connectedDeclarationPM, description, "A");
-
-                            deficitPM.ChangeSetOp = ChangeSetOperation.Update;
-                            myDeficitUpdateService.Update(deficitPM, true);
                         }
-                    }                   
+                    }
+                    else
+                    {
+                        deficitDecisionPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        deficitDecisionPM.DeclarationId = tapagConnectionTablePM.DeclarationId;
+                    }
+
+                    deficitDecisionPM.RequestID = customResponse.DecisionMessage.requestID.ToString();
+                    deficitDecisionPM.RequestTypeCode = customResponse.DecisionMessage.requestType.ToString();
+                    deficitDecisionPM.RequestDate = customResponse.DecisionMessage.requestDate;
+                    deficitDecisionPM.ApprovedProfessionCode = customResponse.DecisionMessage.approvedProfession.ToString();
+                    deficitDecisionPM.DecisionCode = customResponse.DecisionMessage.decisionCode.ToString();
+                    deficitDecisionPM.DecisionNoteForLetter = customResponse.DecisionMessage.decisionNoteForLetter;
+                    if (deficitFileItem.DebtBalance != null)
+                    {
+                        deficitDecisionPM.TotalComponentAmount = deficitFileItem.DebtBalance.totalComponentAmount;
+                        deficitDecisionPM.TotalEstimatedAmount = deficitFileItem.DebtBalance.totalEstimatedAmount;
+                        deficitDecisionPM.TotalFinancialPenaltyAmount = deficitFileItem.DebtBalance.totalFinancialPenaltyAmount;
+                        deficitDecisionPM.TotalInterestAmount = deficitFileItem.DebtBalance.totalInterestAmount;
+                        deficitDecisionPM.TotalLinkingAmount = deficitFileItem.DebtBalance.totalLinkingAmount;
+                    }
+
+                    var declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+                    DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(deficitDecisionPM.DeclarationId, false, false);
+
+                    this.MyRequestSheetParam.CustomFileNo = connectedDeclarationPM.CustomFileNo;
+                    string decisionTypeName = GetDecisionTypeName(customResponse.DecisionMessage.decisionCode.ToString(), requestParams.Tenant);
+                    string description = "החלטת מכס בגין גרעון " + connectedDeclarationPM.CustomFileNo + " - " + decisionTypeName;
+                    DoUpdateNotification("5108N", deficitPM, requestParams.Tenant, connectedDeclarationPM, description, "A");
+
+                    deficitPM.ChangeSetOp = ChangeSetOperation.Update;
+                    myDeficitUpdateService.Update(deficitPM, true);
+              
                 }
             }
         }

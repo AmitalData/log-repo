@@ -270,7 +270,7 @@ namespace Logitude.OracleDatabaseMigration.Migrations
             AddForeignKey("dbo.BankAccounts", "CurrencyId", "dbo.Currencies", "Id");
             AddForeignKey("dbo.GLAccounts", "CreatedByUserId", "dbo.Users", "Id");
             AddForeignKey("dbo.GLAccounts", "UpdatedByUserId", "dbo.Users", "Id");
-            / AddForeignKey("dbo.BIReports", "BIReportFolderId", "dbo.BIReportFolders", "Id");
+            // AddForeignKey("dbo.BIReports", "BIReportFolderId", "dbo.BIReportFolders", "Id");
             AddForeignKey("dbo.InsideShipmentPackages", "CountryId", "dbo.Countries", "Id");
             AddForeignKey("dbo.ShipmentPackages", "CountryId", "dbo.Countries", "Id");
             AddForeignKey("dbo.ShipmentPickUpDeliveryPackages", "CountryId", "dbo.Countries", "Id");
