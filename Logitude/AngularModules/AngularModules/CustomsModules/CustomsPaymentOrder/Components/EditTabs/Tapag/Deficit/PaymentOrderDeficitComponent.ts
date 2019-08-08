@@ -19,7 +19,7 @@ import { TapagMessagesService } from '../../../../../../Customs/Services/WebServ
 import { DeclarationWebService } from '../../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../../../Infrastructure/Services/EntityResourceService';
-
+import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
 declare var window: any;
 
 @Component({
@@ -221,7 +221,29 @@ export class PaymentOrderDeficitComponent extends BaseComponent {
     }
 
     DeficitDecisionButtonClicked(item: ConnectedEntityLineComponent) {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = item.deficitPM;
+        windowArgs.DeclarationId = item.entityPM.Id;
 
+        if (item.deficitPM != null && item.deficitPM.DeficitDecisions != null && item.deficitPM.DeficitDecisions.length > 0) {
+            windowArgs.DeficitDecisionItem = item.deficitPM.DeficitDecisions.filter(d => d.DeclarationId == item.entityPM.Id);
+        }
+
+        if (windowArgs.DeficitDecisionItem == null) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("טרם התקבלה החלטת מכס בגין הגרעון");
+            return;
+        }
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 750;
+        logWindow.Height = 700;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        //logWindow.Title = TextCodeTranslator.Translate("Customs.PaymentOrder.TH.Deficits");
+        logWindow.Show('./CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deficit/DeficitDecisionComponent');
     }
 }
 

@@ -2599,7 +2599,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Code = "5108",
                 InOut = InOutEnum.I.ToString(),
                 Description = "מסר החלטה בתיק גרעון",
-                DcaPrefixName = "SendDE_NG_5108_MSG12_DecisionMessage_Out.",
+                DcaPrefixName = "SendDE_MSG5108_DecisionMessage_Out.",
                 DefaultSendOptionsCode = null,// Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.D.ToString(),
                 DefaultPriority = 5,
                 AllowRestore = true,
