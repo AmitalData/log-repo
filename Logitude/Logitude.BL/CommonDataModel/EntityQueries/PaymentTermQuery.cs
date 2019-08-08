@@ -99,6 +99,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entityPM;
         }
 
+        public PaymentTerm GetSingleByDaysDifference(int daysDifference, int tenant)
+        {
+
+            PaymentTermPM entityPM = null;
+            PaymentTerm entityPOCO = repository.GetSingleByDaysDifference(daysDifference, tenant);
+            
+
+            return entityPOCO;
+        }
+
         public IQueryable<PaymentTermPM> GetPaymenTermPMsByTenant(int tenant)
         {
             IQueryable<PaymentTermPM> paymentTerms = from a in repository.context.PaymentTerms

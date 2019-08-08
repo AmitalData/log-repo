@@ -89,10 +89,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
 
                         apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
+                        apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
+
                         APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
 
+                        apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
 
-                        
+                        if (apinvoicePM.TransferStatusCode == null)
+                            apinvoicePM.TransferStatusCode = "NR";
 
                         APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
                         apinvoiceService.Create(apinvoicePM);

@@ -40,6 +40,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public DateTime? DoneDateTimeUTC { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("ShouldFix")]
+	    public bool ShouldFix { get; set; }
     }
 }
 	 

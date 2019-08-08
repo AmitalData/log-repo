@@ -1381,6 +1381,10 @@
     <Compile Include="Migrations\201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar.Designer.cs">
       <DependentUpon>201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908061157373_IntegrityCheckShouldFixMigration.cs" />
+    <Compile Include="Migrations\201908061157373_IntegrityCheckShouldFixMigration.Designer.cs">
+      <DependentUpon>201908061157373_IntegrityCheckShouldFixMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201908061032164_AbedAddQuotationShowIncludedChargesFieldsToQuoteTemplateSettings.cs" />
     <Compile Include="Migrations\201908061032164_AbedAddQuotationShowIncludedChargesFieldsToQuoteTemplateSettings.Designer.cs">
       <DependentUpon>201908061032164_AbedAddQuotationShowIncludedChargesFieldsToQuoteTemplateSettings.cs</DependentUpon>
@@ -1388,6 +1392,10 @@
     <Compile Include="Migrations\201908051229100_AddLastOpportunitySubjectandStatus_Maheera.cs" />
     <Compile Include="Migrations\201908051229100_AddLastOpportunitySubjectandStatus_Maheera.Designer.cs">
       <DependentUpon>201908051229100_AddLastOpportunitySubjectandStatus_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908071122203_Nawras_averageRunTime_TasksScheduler.cs" />
+    <Compile Include="Migrations\201908071122203_Nawras_averageRunTime_TasksScheduler.Designer.cs">
+      <DependentUpon>201908071122203_Nawras_averageRunTime_TasksScheduler.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2367,11 +2375,17 @@
     <EmbeddedResource Include="Migrations\201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar.resx">
       <DependentUpon>201908060630376_AddAMANACStartDatesToCustomsInterfaceSettings_Samar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908061157373_IntegrityCheckShouldFixMigration.resx">
+      <DependentUpon>201908061157373_IntegrityCheckShouldFixMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908051348482_Nawras_addConnectedToFeild_Entry_Release.resx">
       <DependentUpon>201908051348482_Nawras_addConnectedToFeild_Entry_Release.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908051229100_AddLastOpportunitySubjectandStatus_Maheera.resx">
       <DependentUpon>201908051229100_AddLastOpportunitySubjectandStatus_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908071122203_Nawras_averageRunTime_TasksScheduler.resx">
+      <DependentUpon>201908071122203_Nawras_averageRunTime_TasksScheduler.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

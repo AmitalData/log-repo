@@ -259,7 +259,43 @@
                                                             </td>
 
                                                             <td *ngIf="IsEditMode" class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;text-align:right">
-                                                                {{item.Instock}}
+                                                             
+
+                                                                <div>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>{{item.Instock}}</td>
+                                                                           <td style="width:5px"><div style="width:5px"></div></td>
+                                                                            <td *ngIf="item.ReleasesNumber" style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
+                                                                                <CellTooltip [IconWidth]="20" [IconHeight]="15" [IconPath]="'./Images/Help.png'" [Head]="'Instock'">
+                                                                                    <table>
+
+                                                                                        <tr style="height:20px"><td style="width:2px;"><div></div></td><td><div class="Label">Related Releases:</div></td><td style="width:2px;"><div></div></td></tr>
+
+                                                                                        <tr *ngFor="let releasesNumber of item.ReleasesNumber.split(',')" style="vertical-align:top;height:22px;">
+                                                                                            <td style="width:2px;"><div></div></td>
+                                                                                       
+                                                                                            <td style="width: 140px;max-width:140px;">
+                                                                                                <div style="width:140px;float:left" class="TextTrimming Label">
+                                                                                                    {{releasesNumber}}
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td style="width:2px;"><div></div></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td colspan="3">
+                                                                                            
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </CellTooltip>
+                                                                            </td>
+                                                                        </tr>
+                                                                        
+                                                                    </table>
+                                                                </div>
+
+
                                                             </td>
 
                                                             <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
