@@ -441,7 +441,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
                 savedItem.CountryId = item.CountryId;
                 savedItem.Model = item.Model;
                 savedItem.Color = item.Color;
-
+                savedItem.ReleasesNumber = item.ReleasesNumber;
                 this.savedItems.push(savedItem);
                 this.WarehouseEntryPackagesLists.push(item);
 

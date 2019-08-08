@@ -51,6 +51,8 @@ namespace Logitude.Accounting.Data.EntityMapping
 
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsUnicode(true);
+
+            this.Property(t => t.ShouldFix).HasColumnName("ShouldFix");
         }
     }
 }

@@ -76,6 +76,24 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             WarehouseEntryPackageQueryService queryService = new WarehouseEntryPackageQueryService(context);
             entityPM.WarehouseEntryPackages = queryService.GetMulti(warehouseEntryKeys, true);
             PackageTypeRepository packageTypeRepository = new PackageTypeRepository(entityPM.Tenant);
+
+            #region Related Releases
+            List<string> warehouseEntryPackagesIds = entityPM.WarehouseEntryPackages.Where(d=>d.Instock!=d.Quantity).Select(d => d.Id).ToList();
+            List<WarehouseReleasePackageList> warehouseReleasePackagesLists = null;
+            List<WarehouseEntryPackagesReleaseList> warehouseEntryPackagesReleaseLists = null;
+
+            if (warehouseEntryPackagesIds.Count > 0)
+            {
+                WarehouseEntryPackagesReleaseQueryService warehouseEntryPackagesReleaseQueryService = new WarehouseEntryPackagesReleaseQueryService(entityPM.Tenant);
+                warehouseEntryPackagesReleaseLists = warehouseEntryPackagesReleaseQueryService.GetWarehouseEntryPackagePMListsByCustomerIdIdAndWarehouseId(warehouseEntryPackagesIds, entityPM.Tenant);
+                if (warehouseEntryPackagesReleaseLists.Count > 0)
+                {
+                    WarehouseReleasePackageQueryService warehouseReleasePackageQueryService = new WarehouseReleasePackageQueryService(entityPM.Tenant);
+                    warehouseReleasePackagesLists = warehouseReleasePackageQueryService.GetWarehouseReleasePackageListsByIds(warehouseEntryPackagesReleaseLists.Select(d => d.ReleasePackageId).ToList(), entityPM.Tenant);
+                }
+            }
+            #endregion
+
             foreach (WarehouseEntryPackagePM item in entityPM.WarehouseEntryPackages)
             {
                 PackageType packageType = packageTypeRepository.GetSinglePackageType(item.PackageTypeId, item.Tenant);
@@ -89,6 +107,24 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                 item.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
                 item.DimensionUnitCode = entityPM.DimensionsUnitCode;
                 item.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
+
+                #region Related Releases
+                if (warehouseEntryPackagesReleaseLists != null && warehouseReleasePackagesLists != null)
+                {
+                    var releasePackageIds = warehouseEntryPackagesReleaseLists.Where(d => d.EntryPackageId == item.Id).Select(d => d.ReleasePackageId).ToList();
+                    if (releasePackageIds.Count > 0)
+                    {
+                        var lists = warehouseReleasePackagesLists.Where(d => releasePackageIds.Contains(d.Id)).GroupBy(d => d.ReleaseNumber).Select(d => d.FirstOrDefault().ReleaseNumber).ToList();
+                        foreach (string releaseNumber in lists)
+                        {
+                            if (string.IsNullOrEmpty(item.ReleasesNumber)) item.ReleasesNumber = releaseNumber;
+                            else item.ReleasesNumber += ("," + releaseNumber);
+                        }
+                    }
+                }
+
+                #endregion
+
             }
 
         }
