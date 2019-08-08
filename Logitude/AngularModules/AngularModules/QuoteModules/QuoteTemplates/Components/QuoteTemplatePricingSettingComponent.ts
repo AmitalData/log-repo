@@ -622,16 +622,16 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
     DisablePricingSetting() {
-        this.ShowChargeCode = false;
-        this.ShowChargeName = false;
-        this.ShowMeasurement = false;
-        this.ShowPrice1 = false;
-        this.ShowPrice2 = false;
-        this.ShowSaleCurrencyColumn = false;
-        this.ShowLocalCurrencyColumn = false;
-        this.ShowChargeDescription = false;
-        this.ShowSaleMaxMinAmountColumn = false;
-        this.ShowHeaderLabels = false;
+        //this.ShowChargeCode = false;
+        //this.ShowChargeName = false;
+        //this.ShowMeasurement = false;
+        //this.ShowPrice1 = false;
+        //this.ShowPrice2 = false;
+        //this.ShowSaleCurrencyColumn = false;
+        //this.ShowLocalCurrencyColumn = false;
+        //this.ShowChargeDescription = false;
+        //this.ShowSaleMaxMinAmountColumn = false;
+        //this.ShowHeaderLabels = false;
     
     }
 
