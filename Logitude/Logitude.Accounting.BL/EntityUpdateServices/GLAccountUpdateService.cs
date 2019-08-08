@@ -1503,17 +1503,55 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (EntityPOCO.RevaluationEnabled != EntityPM.RevaluationEnabled)
             {
                 eventCode = "RVUP";
-                if(EntityPOCO.RevaluationEnabled == null)
+                string oldValue = null;
+                string newValue = null;
+               
+
+                if (EntityPOCO.RevaluationEnabled == true)
                 {
-                    EntityPOCO.RevaluationEnabled = false;
+                    oldValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
                 }
-                CreateUpdateTraceEvent(EntityPOCO.RevaluationEnabled.ToString(), EntityPM.RevaluationEnabled.ToString(), eventCode);
+                else if(EntityPOCO.RevaluationEnabled == false || EntityPOCO.RevaluationEnabled== null)
+                {
+                    oldValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+                }
+               
+                if(EntityPM.RevaluationEnabled == true)
+                {
+                    newValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+                }
+                else
+                {
+                    newValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+                }
+                CreateUpdateTraceEvent(oldValue, newValue, eventCode);
 
             }
             if (EntityPOCO.IsMultiCurrency != EntityPM.IsMultiCurrency)
             {
                 eventCode = "MLUP";
-                CreateUpdateTraceEvent(EntityPOCO.IsMultiCurrency.ToString(), EntityPM.IsMultiCurrency.ToString(), eventCode);
+                string oldValue = null;
+                string newValue = null;
+
+
+                if (EntityPOCO.IsMultiCurrency == true)
+                {
+                    oldValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+                }
+                else if (EntityPOCO.IsMultiCurrency == false || EntityPOCO.IsMultiCurrency == null)
+                {
+                    oldValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+                }
+
+                if (EntityPM.IsMultiCurrency == true)
+                {
+                    newValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+                }
+                else
+                {
+                    newValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+                }
+                CreateUpdateTraceEvent(oldValue, newValue, eventCode);
 
             }
             if (EntityPOCO.ReconcileMethodCode != EntityPM.ReconcileMethodCode)
