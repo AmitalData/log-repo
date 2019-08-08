@@ -139,8 +139,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 }
 
                 else {
-                    //if (this.isTariffLinesDeleted) {
-                    //    this.ResetDeletedLinesExpirationDates();                        
+                    //if (this.isApproveButtonClicked) {
+                        //if (this.isTariffLinesDeleted) {
+                        //    this.ResetDeletedLinesExpirationDates();                        
+                        //}
                     //}
 
                     this.StopAllFlags();
