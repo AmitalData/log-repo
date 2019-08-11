@@ -134,7 +134,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         if (!string.IsNullOrWhiteSpace(customsVendorId))
                         {
-                            SendImporterDeclarationRequest(requestParams, importerVAT, customsVendorId);
+                            SendImporterDeclarationRequest(requestParams, importerVAT, customsVendorCode);
                         }
                     }
                     else
@@ -609,6 +609,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LoggingEnabled = true,
                 LoggingUserId = loggingUserId,
                 Tenant = requestParams.Tenant,
+                InterfaceTypeCode = "8326",
                 RequestName = "Importer Declaration Request",
                 ResponseName = "Importer Declaration Request",
                 IsByExpireDate = false,
