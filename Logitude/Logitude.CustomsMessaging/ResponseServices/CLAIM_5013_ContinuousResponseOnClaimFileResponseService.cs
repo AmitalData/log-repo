@@ -36,6 +36,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.HasException = false;
             this.MyResponseData.UserMessage = userMessage;
 
+            if(customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null)
+            {
+                LogMessagingUtil.Instance.AppendLine("Exception :" + customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription);
+                this.MyResponseData.HasException = true;
+                this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription;
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
             {
                 LogMessagingUtil.Instance.AppendLine("Can not find claim: " + requestParams.AppicationId);

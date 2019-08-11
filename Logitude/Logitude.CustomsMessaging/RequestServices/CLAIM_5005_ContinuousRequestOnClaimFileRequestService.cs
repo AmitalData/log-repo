@@ -46,7 +46,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.continuousRequestType = continuousRequestTypeCode;
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.messageSourceCode = 6;
                 int claimRequestNumber;
-                int.TryParse(myClaimsRelatedEntityPM.ContinuousRequestTypeCode, out claimRequestNumber);
+                int.TryParse(myClaimsRelatedEntityPM.ClaimRequestNumber, out claimRequestNumber);
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.claimRequestNumber = claimRequestNumber;
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.explanation = myClaimsRelatedEntityPM.Explanation;
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.TPGIdentifier = new TPGIdentifier();
