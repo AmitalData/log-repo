@@ -78,6 +78,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 ClaimsRelatedEntityPM myClaimsRelatedEntityPM = _ClaimPM.ClaimsRelatedEntities.Where(r => r.EntityCounterKey.ToString() == requestParams.ClaimRelatedEntityCounterKey).FirstOrDefault();
                 if (myClaimsRelatedEntityPM != null)
                 {
+                    this._ClaimPM.ChangeSetOp = ChangeSetOperation.Update;
                     myClaimsRelatedEntityPM.ChangeSetOp = ChangeSetOperation.Update;
                     myClaimsRelatedEntityPM.ContinuousMessagesTypeCode = customResponse.SystemAnswer.FirstOrDefault().continuousMessagesTypecode.ToString();
                     if(customResponse.SystemAnswer.FirstOrDefault().requestNumber != null)

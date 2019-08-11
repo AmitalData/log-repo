@@ -48,6 +48,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 int claimRequestNumber;
                 int.TryParse(myClaimsRelatedEntityPM.ClaimRequestNumber, out claimRequestNumber);
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.claimRequestNumber = claimRequestNumber;
+                myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.claimRequestNumberSpecified = claimRequestNumber > 0 ? true : false;
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.explanation = myClaimsRelatedEntityPM.Explanation;
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.TPGIdentifier = new TPGIdentifier();
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.TPGIdentifier.fileNumber = myClaimsRelatedEntityPM.TapagNumber;
