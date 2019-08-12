@@ -14,7 +14,7 @@ namespace Unifreight.BL.EntityPMs
         public string COMID { get; set; }
 
         public int PAGENUM { get; set; }
-  
+
         public int LINENUM { get; set; }
 
         public string PRATMEHES { get; set; }

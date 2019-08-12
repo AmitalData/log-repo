@@ -16,13 +16,13 @@ namespace Unifreight.BL.EntityPMs
         public DateTime? CREATEDATE { get; set; }
 
         public DateTime? UPDATEDATE { get; set; }
-       
+
         public string CREATEBY { get; set; }
-       
+
         public string UPDATEBY { get; set; }
-       
+
         public short? STATUS { get; set; }
-       
+
         public string REMARK { get; set; }
 
         public int? TOTALPAGES { get; set; }

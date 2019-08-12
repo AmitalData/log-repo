@@ -457,7 +457,7 @@ export class SInvoiceClassificationTabComponent
             var windowTitle = "Supplier Invoice";
 
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 995; // don't change this width!
+            logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
             logWindow.Height = 600;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) && !AppTool.IsNullOrEmpty(decPM/*this.EntityPM*/.DeclarationNumber)) {

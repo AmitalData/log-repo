@@ -28,7 +28,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     public class CustomDocumentViewerController : ApiController
     {
 
-        public HttpResponseMessage GetDocumentPage(string documentId, int currPage, bool isConnectedToUni)
+        public HttpResponseMessage GetDocumentPage(string documentId, int currPage, bool isConnectedToUni, int? angle=0)
         {
             string TiffPageLines;
             string ErrorMessage;
@@ -45,17 +45,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     currPage = currPage + 1;
 
                     Uploader up = new Uploader();
-                    byte[] _DatainByte = null;
-                    _DatainByte = up.GetPageTiffAsB64FromTarByTenantComIdPage(documentId, tenant, currPage, out TiffPageLines, out ErrorMessage);
-                    if (_DatainByte != null)
+                    byte[] imageBytes = null;
+                    imageBytes = up.GetPageTiffAsB64FromTarByTenantComIdPage(documentId, tenant, currPage, out TiffPageLines, out ErrorMessage);
+                    if (imageBytes != null)
                     {
+                        Bitmap bmp = GetBitmap(imageBytes);
+                        RotateBitmap(bmp,angle);
 
-                        MemoryStream st = new MemoryStream(_DatainByte);
-                        Bitmap bmp = (Bitmap)Image.FromStream(st);
-                        //pageObj.Page = GetPageTiffAsB64FromTarByTenantComIdPage(documentId, tenant, currPage, out TiffPageLines, out ErrorMessage);
-                        pageObj.Page = //BinaryImageToSerializeListBytes(_DatainByte, 0);
-                            Resize(new MemoryStream(_DatainByte));
-
+                        byte[] newBytes = GetImageBytes(bmp);
+                        pageObj.Page = Resize(new MemoryStream(newBytes));
                         pageObj.TiffPageLines = TiffPageLines;
                         pageObj.ErrorMessage = ErrorMessage;
 
@@ -67,20 +65,21 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 else
                 {
                     Uploader up = new Uploader();
-                    byte[] _DatainByte = null;
+                    byte[] imageBytes = null;
                     string documentExtension = up.GetFileExtension(documentId, tenant);
 
                     if (!string.IsNullOrEmpty(documentExtension) && (documentExtension == "tiff" || documentExtension == "tif"))
                     {
-                        _DatainByte = up.DownloadFile(documentId, documentExtension, "", tenant);
+                        imageBytes = up.DownloadFile(documentId, documentExtension, "", tenant);
                     }
-                    if (_DatainByte != null)
+                    if (imageBytes != null)
                     {
                         //get multi pages tiff count
-                        MemoryStream st = new MemoryStream(_DatainByte);
-                        Bitmap bmp = (Bitmap)Image.FromStream(st);
+                        Bitmap bmp = GetBitmap(imageBytes);
+                        RotateBitmap(bmp, angle);
+                        byte[] newBytes = GetImageBytes(bmp);
                         pageObj.Count = bmp.GetFrameCount(FrameDimension.Page);
-                        pageObj.Page = BinaryImageToSerializeListBytes(_DatainByte, currPage);
+                        pageObj.Page = BinaryImageToSerializeListBytes(newBytes, currPage);
                     }
 
                 }
@@ -92,6 +91,42 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private static Bitmap RotateBitmap(Bitmap bmp,int? angle)
+        {
+            switch (angle)
+            {
+                case 90:
+                    bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    break;
+                case 180:
+                    bmp.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    break;
+                case 270:
+                    bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    break;
+                default:
+                    bmp.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                    break;
+            }
+            return bmp;
+        }
+
+        public byte[] GetImageBytes(Bitmap img)
+        {
+            using (var stream = new MemoryStream())
+            {
+                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                return stream.ToArray();
+            }
+        }
+
+        public Bitmap GetBitmap(byte [] imageBytes)
+        {
+            MemoryStream st = new MemoryStream(imageBytes);
+            Bitmap bmp = (Bitmap)Image.FromStream(st);
+            return bmp;
         }
 
         // Service Methods:
@@ -220,6 +255,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
             return image;
         }
+
+     
     }
 
 

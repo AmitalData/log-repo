@@ -1886,12 +1886,12 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     if (buffered) {
                         buffered.styles = {
                             'top': top + "px",
-                            'min-width': this.TotalWidth + 22 + 'px',
+                            'min-width': this.TotalWidth + 12 + 'px',
                             'width': '100%'
                         };
                         buffered.Detailsstyles = {
                             'top': Bodytop + "px",
-                            'min-width': this.TotalWidth + 22 + 'px',
+                            'min-width': this.TotalWidth + 12 + 'px',
                             'width': '100%'
                         };
                         if (buffered.IsDetailesOpened == true) {
@@ -1907,12 +1907,12 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                         row.rowData.rowIndex = (row.rowIndex);
                         row.styles = {
                             'top': top + "px",
-                            'min-width': this.TotalWidth + 22 + 'px',
+                            'min-width': this.TotalWidth + 12 + 'px',
                             'width': '100%'
                         };
                         row.Detailsstyles = {
                             'top': Bodytop + "px",
-                            'min-width': this.TotalWidth + 22 + 'px',
+                            'min-width': this.TotalWidth + 12 + 'px',
                             'width': '100%'
                         };
                         //row.styles = {
