@@ -12095,7 +12095,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() {
                 HtmlComponentName = "CustomsDocumentsComponent",
                 HtmlComponentUrl = "./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent",
-                FeatureId = vehicleCustomDocumentFeature.Id, ControlPath = "", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.CustomDocuments" && d.Tenant == 0).FirstOrDefault().Id, Code = "VCCD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                FeatureId = vehicleCustomDocumentFeature.Id, ControlPath = "", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.CustomDocuments" && d.Tenant == 0).FirstOrDefault().Id, Code = "VCCD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
             #endregion
 
@@ -14313,6 +14313,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.O.Search", DefaultText = "Search", LocalDefaultText = "חיפוש לפי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.O.VehiclesFiles", DefaultText = "Vehicles Files", LocalDefaultText = "קבצי רכבים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.RequestSheet", DefaultText = "Request Sheet", LocalDefaultText = "גיליון בקשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.CustomDocuments", DefaultText = "Customs Documents", LocalDefaultText = "צרופות מכס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.NewVehicle", DefaultText = "New Vehicle", LocalDefaultText = "רכב חדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.O.Select", DefaultText = "Select Communication", LocalDefaultText = "בחירת שידור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
         }

@@ -375,6 +375,7 @@ namespace Logitude.CustomsMessaging.Dca
 
 
                 DoDcaMessageFile(messageDCA, dcaFile);
+                
                 Debug.WriteLine("DoDcaMessageFile:" + dcaFile.SelectedFileDownload + " Elapsed:" + _swDownAll.Elapsed);
                 LogMessagingUtil.Instance.Clear();
 
@@ -753,7 +754,7 @@ out myMessageOut);
             string fileContentsBASE64 = "";
             string fileContents = "";
             myMoreParams = "";// _DownloadMoreParams;
-
+            SetLastActivity?.Invoke();
 
             try
             {
@@ -778,6 +779,7 @@ out myMessageOut);
                 SaveRequestSheet(messageDCA, dcaFile, fileContentsBASE64
                     //messageBytes
                 );
+                
                 LogDoneItemInMemoryAction?.Invoke();
             }
             catch (DbEntityValidationException ex)
@@ -996,6 +998,7 @@ out myMessageOut);
 
         public bool AddUnifreightTester { get; set; }
         public Action LogDoneItemInMemoryAction { get; set; }
+        public Action SetLastActivity { get; set; }
     }
 
 
