@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.SystemTableServiceReference;
 using Logitude.CustomsMessaging.Utils;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -121,34 +122,41 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private static void Create2750CRS(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPoco)
         {
-            UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(requestParams, listPoco);
+            var listDeclarationIdCreateCRS = new List<string>();
             foreach (var itemPM in listPoco)
             {
                 try
                 {
-                    var requestParams2750 = new GenericRequestParams()
+                    using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                     {
-                        Tenant = requestParams.Tenant,
-                        //IsFakeResponse = true,
-                        //RequestName = requestName,
-                        //ResponseName = responseName,
-                        LoggingEnabled = true,
-                        LoggingObjectTableId = objectTableId,
-                        LoggingEntityId = itemPM.DeclarationId,
-                        LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
-                        LoggingEntityId2 = objectTableIdCourierMaster,
-                        AppicationId = itemPM.DeclarationId,
-                        InterfaceTypeCode = "2750",
+                        
+                        var requestParams2750 = new GenericRequestParams()
+                        {
+                            Tenant = requestParams.Tenant,
+                            //IsFakeResponse = true,
+                            //RequestName = requestName,
+                            //ResponseName = responseName,
+                            LoggingEnabled = true,
+                            LoggingObjectTableId = objectTableId,
+                            LoggingEntityId = itemPM.DeclarationId,
+                            LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
+                            LoggingEntityId2 = objectTableIdCourierMaster,
+                            AppicationId = itemPM.DeclarationId,
+                            InterfaceTypeCode = "2750",
 
-                        //LoggingEntityReference = declarationNumber,
-                        LoggingUserId = requestParams.LoggingUserId,
-                        RequestVIA = SendRequestVIA.WebServiceBatch,
+                            //LoggingEntityReference = declarationNumber,
+                            LoggingUserId = requestParams.LoggingUserId,
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
 
-                    };
+                        };
 
-                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false);
-                    LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
-                    mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false);
+                        LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                        mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+
+                        scopeNewCRS.Complete();
+                    }
+                    listDeclarationIdCreateCRS.Add(itemPM.DeclarationId);
 
                 }
                 catch (System.Exception ee1)
@@ -157,15 +165,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
                     mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
                 }
+
+                UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(requestParams, listDeclarationIdCreateCRS);
             }
         }
 
-        private static void UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(GenericRequestParams requestParams, List<DeclarationCourierStatus> listPoco)
+        private static void UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(GenericRequestParams requestParams,  List<string> listDeclarationIdCreateCRS)
         {
-            listPoco.ChunkBy(100)
+            listDeclarationIdCreateCRS.ChunkBy(100)
 .ForEach(list100 =>
 {
-string inList = String.Join(",", list100.Select(r => $"'{r.DeclarationId}'").ToArray());
+string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
 string updateSql = $"Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
 
 CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);

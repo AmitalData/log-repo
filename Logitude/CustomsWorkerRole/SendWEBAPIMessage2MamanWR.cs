@@ -97,7 +97,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             {
                 if (_OnStartDone) return true;
                 _OnStartDone = true;
-
+                DoneItemsInRange = new Dictionary<DateTime, int>();
 
 
                 var myClass = this.GetType().Name;
@@ -233,7 +233,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         {
             if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < 2)
             {
-
+                LastActivity = DateTime.UtcNow;
                 LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
 
                 PostWebAPIAnalyzeAndSaveCommDone();//if failed throw exception

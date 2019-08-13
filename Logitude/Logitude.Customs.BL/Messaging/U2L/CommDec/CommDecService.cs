@@ -106,7 +106,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             DeclarationUpsertService myDeclarationUpsertService = new DeclarationUpsertService();
             try
             {
-                var upsertParam = "CommDecService"; 
+                var upsertParam = "CommDecService";
+                ///myDeclarationUpsertService.suppressNewTrans = true;
                 myDeclarationUpsertService.ProccessGenericRequest(xmlLOGICUSTFILE, ref upsertParam, out MessageOut);
             }
             catch (DbEntityValidationException ex)

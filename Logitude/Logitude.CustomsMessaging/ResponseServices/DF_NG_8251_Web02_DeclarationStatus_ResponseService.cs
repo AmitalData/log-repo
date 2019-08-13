@@ -38,7 +38,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DF_NG_8251_Web02_DeclarationStatus_Response customResponse,
             DeclarationStatusRequestParams requestParams)
         {
+            
+            
+            
+
+
             this.MyResponseData = new DeclarationStatusResponseData();
+            if (!String.IsNullOrWhiteSpace(requestParams.TesterSendOption))
+            {
+                TesterSendOption(requestParams);
+                return;
+
+            }
             string declarationStatusCodeName = "";
             string declarationStatusCode = "";
             string warningMess = "";
@@ -468,6 +479,49 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+        private static void TesterSendOption(DeclarationStatusRequestParams requestParams)
+        {
+            string testerSendOption = requestParams.TesterSendOption??"";
+            testerSendOption = testerSendOption.ToUpper();
+            var context = CustomContext.GetContext(requestParams.Tenant);
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+
+
+            LogMessagingUtil.Instance.AppendLine(testerSendOption);
+            switch (testerSendOption)
+            {
+                case "NOTHING"://this._SendOptionList.push(new KeyValuePair
+                    {
+                        return;
+                    }
+                    break;
+                case "READ"://this._SendOptionList.push(new KeyValuePair("Read".toUpperCase(), "Read"));
+                    {
+
+                        var declarationId = declarationQueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
+                        LogMessagingUtil.Instance.AppendLine("declarationQueryService.GetIdByDeclarationNumber");
+                        return;
+                    }
+                    break;
+                case "UPDATE"://this._SendOptionList.push(new KeyValuePair("Update".toUpperCase(), "Update"));
+                    {
+                        var declarationId = declarationQueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
+                        LogMessagingUtil.Instance.AppendLine("declarationQueryService.GetIdByDeclarationNumber");
+                        var pm=declarationQueryService.GetSingle(declarationId, false, false);
+                        LogMessagingUtil.Instance.AppendLine("declarationQueryService..GetSingle(declarationId, false, false);");
+                        pm.ChangeSetOp = ChangeSetOperation.Update;
+                        pm.UpdateDateTime = DateTime.UtcNow;
+                        declarationUpdateService.Update(pm, true);
+                        LogMessagingUtil.Instance.AppendLine("declarationUpdateService.Update(pm, true);");
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
 
         public static void RaiseStatus(DeclarationPM dirtyDeclarationPM, string loggingUserId, string statusId)
         {

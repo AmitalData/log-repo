@@ -25,6 +25,7 @@ using UnifreightIIG.Common.SystemTableServiceReference;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Utils;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -144,20 +145,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private static void CreateCRS1170UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPM)
         {
-            listPM.ChunkBy(100)
-.ForEach(list100 =>
-{
-string inList = String.Join(",", list100.Select(r => $"'{r.DeclarationId}'").ToArray());
-string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
-
-CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-});
-
+            
+            var listDeclarationIdCreateCRS = new List<string>();
             foreach (var itemPM in listPM)
             {
                 try
                 {
-                    Create1170(requestParams, mess, objectTableId, objectTableIdCourierMaster, itemPM);
+                    using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                    {
+                        Create1170(requestParams, mess, objectTableId, objectTableIdCourierMaster, itemPM);
+                        scopeNewCRS.Complete();
+                    }
+                    listDeclarationIdCreateCRS.Add(itemPM.DeclarationId);
+
+
                 }
                 catch (System.Exception ee1)
                 {
@@ -166,6 +167,14 @@ CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
                     mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
                 }
             }
+            listDeclarationIdCreateCRS.ChunkBy(100)
+.ForEach(list100 =>
+{
+    string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
+    string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
+
+    CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+});
         }
 
         private static void Create1170(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM)

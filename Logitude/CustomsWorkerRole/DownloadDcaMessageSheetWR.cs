@@ -77,6 +77,7 @@ namespace CustomsWorkerRole
         {
             if (_OnStartDone) return true;
             _OnStartDone = true;
+            DoneItemsInRange = new Dictionary<DateTime, int>();
             MessagingServiceFactoryHelper.InitContainer();
             if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>("190"))
             {
@@ -156,7 +157,13 @@ namespace CustomsWorkerRole
             {
                 try
                 {
+                    LastActivity = DateTime.UtcNow;
                     var myDcaService = new DcaDownloadTenantService(costomSetting);
+
+                    myDcaService.SetLastActivity = () =>
+                    {
+                        this.LastActivity = DateTime.UtcNow;
+                    };
                     myDcaService.LogDoneItemInMemoryAction = this.LogDoneItemInMemory;
                     myDcaService.DownloadAll(debugIIGMessageId);
                 }

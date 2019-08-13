@@ -320,7 +320,8 @@
                                                                     <tr>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
-                                                                            style="width:220px">
+                                                                            style="width:400px">
+                                                                            
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
                                                                                           [ButtonText]=_ReadyMNFToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
@@ -339,7 +340,7 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
-                                                                            style="width:220px">
+                                                                            style="width:400px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
                                                                                           [ButtonText]=SelectedMNFToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
@@ -362,7 +363,7 @@
 
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
-                                                                            style="width:220px">
+                                                                            style="width:400px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
                                                                                           [ButtonText]=_ReadyDECToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
@@ -381,7 +382,7 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
-                                                                            style="width:220px">
+                                                                            style="width:400px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('M')"
                                                                                           [ButtonText]=SelectedDECToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
