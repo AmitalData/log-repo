@@ -117,7 +117,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
             {
                 if (_OnStartDone) return true;
                 _OnStartDone = true;
-
+                DoneItemsInRange = new Dictionary<DateTime, int>();
 
 
                 var myClass = this.GetType().Name;
@@ -219,6 +219,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
                 foreach (CustomsPartnerFtpPM ftpDef in _FtpDefinitions)
                 {
+                    LastActivity = DateTime.UtcNow;
                     DownloadFTPFiles(ftpDef);
                 }
 
@@ -281,6 +282,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                         Debug.WriteLine($"continue>BadFileNamesCache({fileName})");
                         continue;
                     }
+
                     var fileWithFolder = ftpDetail.Folder + "/" + Path.GetFileName(fileName);//in linux i get folder\fileName  in win only file name !!
                     Debug.WriteLine($"ftpService.Download({fileWithFolder})");
 					string p_message = "";
@@ -291,6 +293,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                     Debug.WriteLine($"SaveMessageToAnalyzeQueue");
 
                     int tenant = customsPartnerFtpPM.Tenant;
+                    LastActivity = DateTime.UtcNow;
                     try
                     {
                         Debug.WriteLine($"fileData.Length == {fileData.Length}");
@@ -301,6 +304,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                         }
                         Debug.WriteLine($"ftpService.Delete({fileName})");
                         ftpService.Delete(fileWithFolder);
+                        LogDoneItemInMemory();
 
                     }
                     catch (Exception ex1)

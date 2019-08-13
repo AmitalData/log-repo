@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.SystemTableServiceReference;
 using Logitude.CustomsMessaging.Utils;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -49,7 +50,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 mess.AppendLine($"מפוצל כבר !!!");
                 listPoco = repo.GetDeclarationsByIds(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
-                Send2715WhereDocumentStatusCodeIs2(mess, context, myCustomsDocumentUpdateService, listPoco);
+                Send2715WhereDocumentStatusCodeIs2(mess, context, /*myCustomsDocumentUpdateService,*/ listPoco);
             }
             else
             {
@@ -99,7 +100,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
     
 
-        private static void Send2715WhereDocumentStatusCodeIs2(StringBuilder mess, ICustomContext context, CustomsDocumentUpdateService myCustomsDocumentUpdateService, List<DeclarationCourierStatus> listPoco)
+        private static void Send2715WhereDocumentStatusCodeIs2(StringBuilder mess, ICustomContext context, 
+            //CustomsDocumentUpdateService myCustomsDocumentUpdateService, 
+            List<DeclarationCourierStatus> listPoco)
         {
             foreach (var itemPoco in listPoco)
             {
@@ -112,17 +115,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         try
                         {
-                            customsDocumentPMItem.ChangeSetOp = ChangeSetOperation.Update;
-                            customsDocumentPMItem.IsSendToQueue = false;
-                            myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPMItem);
-                            myCustomsDocumentUpdateService.Update(customsDocumentPMItem, true);
+                            using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                            {
+                                var context1 = CustomContext.GetContext(itemPoco.Tenant);//context each CRS TRANS
+                                var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(context1, new Dictionary<string, IContext>(), itemPoco.Tenant);
 
-                            customsDocumentPMItem.ChangeSetOp = ChangeSetOperation.Update;
-                            customsDocumentPMItem.IsSendToQueue = true;
-                            myCustomsDocumentUpdateService.IgnoreSendFailure = true;
-                            myCustomsDocumentUpdateService.Update(customsDocumentPMItem, true);
-                            LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
-                            mess.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
+                                customsDocumentPMItem.ChangeSetOp = ChangeSetOperation.Update;
+                                customsDocumentPMItem.IsSendToQueue = false;
+                                myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPMItem);
+                                myCustomsDocumentUpdateService.Update(customsDocumentPMItem, true);
+
+                                customsDocumentPMItem.ChangeSetOp = ChangeSetOperation.Update;
+                                customsDocumentPMItem.IsSendToQueue = true;
+                                myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+                                myCustomsDocumentUpdateService.Update(customsDocumentPMItem, true);
+                                LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
+                                mess.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
+                                scopeNewCRS.Complete();
+                            }
+
                         }
                         catch (System.Exception ee1)
                         {

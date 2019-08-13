@@ -1005,7 +1005,7 @@ implements OnDestroy
                 break;
             }
             case "NAV": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", "0", null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("AcceptanceStatusCode", "null", null, null, "Equals", false, false, false, "string");
                 break;
             }
         }

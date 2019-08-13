@@ -40,23 +40,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(DCAInUCBCMSSWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             var mess = new StringBuilder();
-            var context = CustomContext.GetContext(requestParams.Tenant);           
+            var context = CustomContext.GetContext(requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
-            var objectTableId =ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
             var qs = new DeclarationCourierStatusQueryService(context);
             List<DeclarationPM> lockedDeclarations = new List<DeclarationPM>();
-            List <DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
+            List<DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
             //listPM = qs.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.AppicationId);
-            if (customResponse.ServerSplitDeclarationsList == null || (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count==0))
+            if (customResponse.ServerSplitDeclarationsList == null || (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count == 0))
             {
                 LogMessagingUtil.Instance.AppendLine("Splitter to 100 - Create new CRS");
                 mess.AppendLine($"Splitter to 100 - Create new CRS master {requestParams.AppicationId} ");
 
 
-                var DeclarationIdList =qs.GetByMasterID_DeclarationIdList(requestParams.Tenant, requestParams.AppicationId);
+                var DeclarationIdList = qs.GetByMasterID_DeclarationIdList(requestParams.Tenant, requestParams.AppicationId);
                 DeclarationIdList.ChunkBy(100).ForEach(list100 =>
                 {
                     //CreateCRS(customResponse, requestParams,list100);
@@ -77,45 +77,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
             LogMessagingUtil.Instance.AppendLine("Handle 100 DeclarationIdList");
 
             listPM = qs.GetByDeclarationIdList(requestParams.Tenant, customResponse.ServerSplitDeclarationsList);
-            
+
             if (listPM.Count == 0)
             {
                 mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Manifest) send for master {requestParams.AppicationId} ");
             }
-            bool multiThread = false;
-            if (multiThread)
-            {
-                var listOf50items = listPM.ChunkBy(50);
-                Parallel.For(0, listOf50items.Count, new ParallelOptions { MaxDegreeOfParallelism = 5 }, count =>
-                {
-                    Debug.WriteLine($"Parallel-count {count}, CurrentThread{Thread.CurrentThread.ManagedThreadId.ToString()}");
-                    
-                    using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromSeconds(100)))
-                    {
-                        var context1 = CustomContext.GetContext(requestParams.Tenant);
-                        foreach (DeclarationCourierStatusPM itemPM in listOf50items[count])
-                        {
-                            var changeStorgeSiteService = new ChangeStorgeSiteService(context1);
-                            changeStorgeSiteService.ChangeStorgeSite(customResponse.StorageSiteCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM);
 
-                        }
-                        scope.Complete();
-                    }
-                });
-            }
-            else
+
+            
+            foreach (DeclarationCourierStatusPM itemPM in listPM)
             {
-                var context1 = CustomContext.GetContext(requestParams.Tenant);
-                foreach (DeclarationCourierStatusPM itemPM in listPM)
+                
+                using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                 {
+                    var context1 = CustomContext.GetContext(requestParams.Tenant);//context each CRS TRANS
                     LogMessagingUtil.Instance.AppendLine("ChangeStorgeSite for declaration: " + itemPM.DeclarationId + "\n");
                     var changeStorgeSiteService = new ChangeStorgeSiteService(context1);
                     changeStorgeSiteService.ChangeStorgeSite(customResponse.StorageSiteCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM);
+
+                    scopeNewCRS.Complete();
                 }
 
             }
 
-            if(lockedDeclarations != null && lockedDeclarations.Count() > 0)
+
+
+            if (lockedDeclarations != null && lockedDeclarations.Count() > 0)
             {
                 List<string> declarationsList = new List<string>();
                 string message = string.Concat("אתר אחסון בטיסה השתנה ל ", customResponse.StorageSiteCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
