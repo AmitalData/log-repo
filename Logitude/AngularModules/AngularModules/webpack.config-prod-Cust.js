@@ -417,7 +417,7 @@ module.exports = {
              "_Resources\\Froala\\js\\plugins\\save.min.js",
              "_Resources\\Froala\\js\\plugins\\url.min.js",
              "_Resources\\Froala\\js\\plugins\\video.min.js",
-             "_Resources\\Froala\\js\\plugins\\line_height.min.js"
+             //"_Resources\\Froala\\js\\plugins\\line_height.min.js"
   
 
 
