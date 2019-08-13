@@ -64,6 +64,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (!String.IsNullOrWhiteSpace(entityPM.CargoDescription))
             {
                 ConsignmentPM dbOccConsignmentPM = GetDBEntity(entityPM);
+                if (IsAfterDeclarationCourierStatusInsert) dbOccConsignmentPM.CargoDescription = null;
                 if (entityPM.CargoDescription != dbOccConsignmentPM.CargoDescription)
                 {
                     List<string> pendingReasonCodeList = new List<string>();
