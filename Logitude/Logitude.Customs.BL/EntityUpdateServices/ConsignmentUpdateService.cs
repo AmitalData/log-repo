@@ -40,7 +40,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             maxCounter = entityPM.ConsignmentNumber = maxCounter.Value + 1;
 
         }
-        
+
+
         protected override void OnUpdating(ConsignmentPM entityPM, Consignment entityPOCO)
         {
             if (String.IsNullOrWhiteSpace(entityPM.UnloadPortCode))
@@ -51,10 +52,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 
             }
-            if(!String.IsNullOrWhiteSpace(entityPM.CargoDescription))
+
+            UpdatePendingByKeyWords(entityPM);
+
+            base.OnUpdating(entityPM, entityPOCO);
+        }
+
+
+        public void UpdatePendingByKeyWords(ConsignmentPM entityPM, Boolean IsAfterDeclarationCourierStatusInsert = false)
+        {
+            if (!String.IsNullOrWhiteSpace(entityPM.CargoDescription))
             {
                 ConsignmentPM dbOccConsignmentPM = GetDBEntity(entityPM);
-                if(entityPM.CargoDescription != dbOccConsignmentPM.CargoDescription)
+                if (entityPM.CargoDescription != dbOccConsignmentPM.CargoDescription)
                 {
                     List<string> pendingReasonCodeList = new List<string>();
                     ICustomContext context = MainContext as CustomContext;
@@ -102,9 +112,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
             }
-            
-            base.OnUpdating(entityPM, entityPOCO);
         }
+
 
         private ConsignmentPM GetDBEntity(ConsignmentPM entityPM)
         {
