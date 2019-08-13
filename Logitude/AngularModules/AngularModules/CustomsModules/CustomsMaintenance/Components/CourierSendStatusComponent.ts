@@ -57,7 +57,7 @@ export class CourierSendStatusComponent extends BaseComponent {
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.Close("");
+        SessionLocator.SelectedSession.CurrentWindow.Close("");
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -71,10 +71,10 @@ export class CourierSendStatusComponent extends BaseComponent {
         }
 
         //http://192.116.221.103:584/Courier58/api/CourierMaster/GetSendALLDeclarationsStatusRequest?CourierMasterId=1-490
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this._CourierMasterId, this.SelectedSendOption.Key)
             .subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
                 this.CancelButtonClicked();
