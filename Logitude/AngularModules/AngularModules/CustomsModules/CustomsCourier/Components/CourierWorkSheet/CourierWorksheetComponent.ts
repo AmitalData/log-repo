@@ -653,7 +653,7 @@ implements OnDestroy
                             this._HOLD_Total = item.Value;
                             var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
                             TabFilter.Total = item.Value;
-
+                            this.GetPending();
                             break;
                         }
                         default: {
@@ -668,7 +668,7 @@ implements OnDestroy
 
             });
         if (this._SelectedTabFilter.Code == "HOLD") {
-            this.GetPending();
+            
         }
     }
 
@@ -1045,7 +1045,8 @@ implements OnDestroy
                 break;
             }
         }
-        if (this.SelectedPendingCodeFilter != null) {
+
+        if (this.SelectedPendingCodeFilter != null && this._SelectedTabFilter.Code == "HOLD") {
             switch (this.SelectedPendingCodeFilter.Key) {
                 case "A": {
                     break;
@@ -1056,6 +1057,7 @@ implements OnDestroy
                 }
             }
         }
+
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
         }
@@ -1150,7 +1152,7 @@ implements OnDestroy
                     else {
                         this.SelectedPendingCodeFilter = this._PendingCodes[0];
                     }
-                    this.RefreshList();
+                    //this.RefreshList();
                 }
             });
     }

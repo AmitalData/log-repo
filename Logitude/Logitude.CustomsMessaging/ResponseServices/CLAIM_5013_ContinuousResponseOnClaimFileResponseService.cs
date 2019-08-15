@@ -81,11 +81,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this._ClaimPM.ChangeSetOp = ChangeSetOperation.Update;
                     myClaimsRelatedEntityPM.ChangeSetOp = ChangeSetOperation.Update;
                     myClaimsRelatedEntityPM.ContinuousMessagesTypeCode = customResponse.SystemAnswer.FirstOrDefault().continuousMessagesTypecode.ToString();
-                    if(customResponse.SystemAnswer.FirstOrDefault().requestNumber != null)
-                    {
-                        myClaimsRelatedEntityPM.ClaimRequestNumber = customResponse.SystemAnswer.FirstOrDefault().requestNumber.ToString();
-                    }
                     myClaimsRelatedEntityPM.Note = customResponse.SystemAnswer.FirstOrDefault().note;
+                    this.MyResponseData.UserMessage = "ניתוח מסר ביטול/ערר תביעה. מספר בקשה: " + customResponse.SystemAnswer.FirstOrDefault().requestNumber;
                 }
             }
 

@@ -116,11 +116,15 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
         //connectedItem1.Name = TextCodeTranslator.Translate("Customs.Claim");
 
         var connectedItem2 = new ConnectedToItem();
-        connectedItem2.Id = 0;
+        connectedItem2.Id = 1;
         connectedItem2.Name = TextCodeTranslator.Translate("Customs.ClaimsRelatedEntity");
-
-        //connectedItems.push(connectedItem1);
         connectedItems.push(connectedItem2);
+
+        var connectedItem3 = new ConnectedToItem();
+        connectedItem3.Id = 2;
+        connectedItem3.Name = TextCodeTranslator.Translate("Customs.Claim.TH.CancelOrObjection");
+        connectedItems.push(connectedItem3);
+
         return connectedItems;
     }
 
@@ -148,6 +152,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
     }
 
     ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean) {
+        //if customParam: true-ClaimsRelatedEntity false=ClaimRelatedEntityCancelOrObjection
         var windowArgs: any = {};
         windowArgs.ClaimPM = entityPM;
         windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
@@ -160,7 +165,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    this.SelectionClaimRelatedEntitiesCompleted(comp, customsDocumentsTicket);
+                    this.SelectionClaimRelatedEntitiesCompleted(comp, customsDocumentsTicket, customParam);
                 }
             });
         });
@@ -168,59 +173,37 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
         logWindow.Show('./CustomsModules/CustomsClaim/Components/Documents/PointersFromClaimRelatedEntitiesSelectionComponent');
     }
 
-    SelectionClaimRelatedEntitiesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM) {
+    SelectionClaimRelatedEntitiesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM, customParam: boolean) {
         if (args.SelectedClaimRelatedEntities != null) {
             customsDocumentsTicket.ConnectedCREsSequences = args.ConnectedClaimRelatedEntities;
-            var pointers: CustomsDocumentPointerPM[] = [];
-            customsDocumentsTicket.CustomsDocumentPointers.forEach((pointer) => {
-                pointers.push(pointer);
-            });
-            pointers.forEach((pointer) => {
-                if (pointer.Child1EntityId != null) {
-                    var exists = args.SelectedClaimRelatedEntities.Collection.filter(d => d.EntityCounterKey + "" == pointer.Child1EntityId)[0];
-                    if (!exists) {
-                        var editedPointer: CustomsDocumentPointerPM = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Id == pointer.Id)[0];
-                        if (editedPointer != null) {
-                            if (customsDocumentsTicket.CustomsDocumentPointers.length > 1) {
-                                customsDocumentsTicket.RemoveCustomsDocumentPointer(editedPointer);
-                            }
-                            else {
-                                editedPointer.Child1EntityCode = null;
-                                editedPointer.Child1EntityId = null;
-                            }
-                        }
-                    }
-                }
-                
-            });
+            //var pointers: CustomsDocumentPointerPM[] = [];
+            //customsDocumentsTicket.CustomsDocumentPointers.forEach((pointer) => {
+            //    pointers.push(pointer);
+            //});
 
-            args.SelectedClaimRelatedEntities.Collection.forEach((CRE) => {
-               
-                var exists = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Child1EntityId == CRE.EntityCounterKey + "")[0];
-                    if (!exists) {
-                        var declarationPointer: CustomsDocumentPointerPM = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.ParentEntityId == CRE.ClaimId && d.Child1EntityId == null)[0];
-                        if (declarationPointer == null) {
-                            var newPointer: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(customsDocumentsTicket)
+            var child1EntityCode: string = "ClaimsRelatedEntity";
+            if (!customParam) { //true-ClaimsRelatedEntity //false=ClaimRelatedEntityCancelOrObjection
+                child1EntityCode = "ClaimRelatedEntityCancelOrObjection";
+            }
 
-                            newPointer.Tenant = SessionLocator.Tenant;
-                            newPointer.ParentEntityId = this.claimPM.Id;
-                            newPointer.ParentEntityCode = "Claim";
-                            newPointer.Child1EntityCode = "ClaimsRelatedEntity";
-                            newPointer.Child2EntityCode = null;
-                            newPointer.Child3EntityCode = null;
-                            newPointer.Child1EntityId = CRE.EntityCounterKey + "";
-                            newPointer.Child2EntityId = null;
-                            newPointer.Child3EntityId = null;
-                            customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
-
-                        }
-                        else {
-                            declarationPointer.Child1EntityId = CRE.EntityCounterKey + "";
-                            declarationPointer.Child1EntityCode = "ClaimsRelatedEntity";
-                        }
-                    }
-               
-            });
+            if (customsDocumentsTicket.CustomsDocumentPointers != null && customsDocumentsTicket.CustomsDocumentPointers[0] != null) {
+                //Update pointer details
+                customsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityCode = child1EntityCode;
+                customsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityId = args.ConnectedClaimRelatedEntities + "";
+            }
+            else { // Create new pointer
+                var newPointer: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(customsDocumentsTicket)
+                newPointer.Tenant = SessionLocator.Tenant;
+                newPointer.ParentEntityId = this.claimPM.Id;
+                newPointer.ParentEntityCode = "Claim";
+                newPointer.Child1EntityCode = child1EntityCode;
+                newPointer.Child2EntityCode = null;
+                newPointer.Child3EntityCode = null;
+                newPointer.Child1EntityId = args.ConnectedClaimRelatedEntities + "";
+                newPointer.Child2EntityId = null;
+                newPointer.Child3EntityId = null;
+                customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
+            }
         }
 
         this.SelectionCompleted.emit(args);
