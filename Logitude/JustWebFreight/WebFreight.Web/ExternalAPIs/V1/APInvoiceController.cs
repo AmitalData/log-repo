@@ -95,7 +95,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
 
                         apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
-                        
+
+                        // VendorGLAccountId
+                        CardQuery cardQuery = new CardQuery(tenant);
+                        CardPM vendor = cardQuery.GetSinglePM(apinvoicePM.VendorId, tenant);
+                        apinvoicePM.VendorGLAccountId = vendor.GLAccountId;
+
+                        // SET approved
+                        apinvoicePM.SetVoided = false;
+                        apinvoicePM.SetApproved = true;
+                        apinvoicePM.SetReTransfer = false;
+                        apinvoicePM.SetCancelApproval = false;
+
                         if (apinvoicePM.TransferStatusCode == null)
                             apinvoicePM.TransferStatusCode = "NR";
 
