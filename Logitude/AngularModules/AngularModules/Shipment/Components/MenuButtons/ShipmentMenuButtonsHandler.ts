@@ -23,6 +23,7 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ConvertDirectionArgs } from './ShipmenDirectionConvertComponent';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
@@ -1318,7 +1319,24 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         }
     }
     private DoSendToAMANA() {
+        this.CurrentSession.StartBusyIndicatorLoading();
 
+        this.shipmentService.SendToAMANAC(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var fileName: string = myResponse.Result;               
+
+                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + fileName;
+                {
+                    window.open(url);
+                }
+            }
+
+            else {
+                
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 
     private myCloner: Cloner;
