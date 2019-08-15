@@ -692,6 +692,21 @@ export class SupplierInvoiceItemPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private marksAndNumbers: string;
+    public get MarksAndNumbers() { return this.marksAndNumbers; }
+    public set MarksAndNumbers(newValue: string) { if (this.marksAndNumbers != newValue) { this.marksAndNumbers = newValue; this.MarkAsDirty("MarksAndNumbers"); } }
+       
+	 
+    private packageQuantity: number;
+    public get PackageQuantity() { return this.packageQuantity; }
+    public set PackageQuantity(newValue: number) { if (this.packageQuantity != newValue) { this.packageQuantity = newValue; this.MarkAsDirty("PackageQuantity"); } }
+       
+	 
+    private weight: number;
+    public get Weight() { return this.weight; }
+    public set Weight(newValue: number) { if (this.weight != newValue) { this.weight = newValue; this.MarkAsDirty("Weight"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemPM;
 	
