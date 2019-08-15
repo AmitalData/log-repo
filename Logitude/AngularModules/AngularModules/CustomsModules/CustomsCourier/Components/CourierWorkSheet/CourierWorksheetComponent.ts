@@ -151,7 +151,13 @@ implements OnDestroy
         this._SelectedDECValue = 'A';
         this._SelectedDOCValue = 'A';
         this._SelectedACCValue = 'A';
-        if (this.SelectedPendingCodeFilter == null && this._PendingCodes != null && this._PendingCodes.length > 0) this.SelectedPendingCodeFilter = this._PendingCodes[0];
+        //if (this.SelectedPendingCodeFilter == null && this._PendingCodes != null && this._PendingCodes.length > 0) this.SelectedPendingCodeFilter = this._PendingCodes[0];
+        if (this._PendingCodes != null && this._PendingCodes.length > 0) {
+            this.SelectedPendingCodeFilter = this._PendingCodes[0];
+        }
+        else {
+            this.SelectedPendingCodeFilter = null;
+            }
 
         switch (item.Code) {
             case "DECR": 
@@ -490,7 +496,7 @@ implements OnDestroy
         //this.onQueryChangeEvent.emit({ Filters: this.filterAgrs, Reload: true });
         this.RefreshStatistic();
         this.RefreshMasterRequiredFields();
-        this.RefreshList();
+        if (this._SelectedTabFilter.Code != "HOLD")this.RefreshList();
         this.DisplayOnlyCheck();
 
     }
@@ -1152,7 +1158,7 @@ implements OnDestroy
                     else {
                         this.SelectedPendingCodeFilter = this._PendingCodes[0];
                     }
-                    //this.RefreshList();
+                    this.RefreshList();
                 }
             });
     }
