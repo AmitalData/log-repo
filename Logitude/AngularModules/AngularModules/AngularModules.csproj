@@ -142,6 +142,8 @@
     <Content Include="Common\Components\AccountingTab\Advanced\ChargesExternalByProductsComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\CustomerActivation\ReadyForActivationComponent.html" />
     <Content Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.html" />
+    <Content Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.html" />
+    <Content Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.html" />
     <Content Include="Controls\All\SplitButtonComponent.html" />
     <Content Include="CRMModules\CRMEmployeeGroup\Components\NewEntity\NewEmployeeComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.html" />
@@ -342,7 +344,6 @@
     <Content Include="Common\Components\Maintenance\CustomerActivationSettingsComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomerFieldsUpdateSetting\AddEditCustomerFieldsUpdateSettingComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\ArtemusSettingsComponent.html" />
-    <Content Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceCredintialsComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceSettingsComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\FTPDetailComponent.html" />
     <Content Include="Common\Components\Maintenance\DocumentFilingEmailSettings\DocumentFilingEmailSettingsComponent.html" />
@@ -437,6 +438,8 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.ts" />
     <TypeScriptCompile Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.ts" />
     <TypeScriptCompile Include="Common\Components\MenuButtons\ContactMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
@@ -3380,7 +3383,6 @@
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomerActivationSettingsComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomerFieldsUpdateSetting\AddEditCustomerFieldsUpdateSettingComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\ArtemusSettingsComponent.ts" />
-    <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceCredintialsComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceSettingsComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\FTPDetailComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\DocumentFilingEmailSettings\DocumentFilingEmailSettingsComponent.ts" />
