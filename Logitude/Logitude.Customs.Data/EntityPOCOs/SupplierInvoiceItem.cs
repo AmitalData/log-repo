@@ -153,6 +153,12 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ClasifiedRemarks { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("MarksAndNumbers")]
+	    public string MarksAndNumbers { get; set; }
+        [Column("PackageQuantity")]
+	    public int? PackageQuantity { get; set; }
+        [Column("Weight")]
+	    public decimal? Weight { get; set; }
     }
 }
 	 
