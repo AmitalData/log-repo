@@ -1697,6 +1697,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string marksAndNumbers ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MarksAndNumbers  
+	   {
+	    
+	     get
+		{
+		   return marksAndNumbers;
+		 }
+		 set
+		 {
+		   if(marksAndNumbers != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MarksAndNumbers",OldValue=marksAndNumbers,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   marksAndNumbers=value;
+		   }
+			
+		 }
+	   }
+	  private int? packageQuantity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? PackageQuantity  
+	   {
+	    
+	     get
+		{
+		   return packageQuantity;
+		 }
+		 set
+		 {
+		   if(packageQuantity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantity",OldValue=packageQuantity,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   packageQuantity=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? weight ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Weight  
+	   {
+	    
+	     get
+		{
+		   return weight;
+		 }
+		 set
+		 {
+		   if(weight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Weight",OldValue=weight,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   weight=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
