@@ -1,0 +1,87 @@
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td class="Label" style="width: 1px;">From Date:</td>
+                    <td style="width: 155px; padding-left: 5px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [SelectedDateValue]="FromDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                    </td>
+
+                    <td style="width: 15px;">
+                        <div></div>
+                    </td>
+
+                    <td class="Label" style="width: 1px;">To Date:</td>
+                    <td style="width: 155px; padding-left: 5px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [SelectedDateValue]="ToDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                    </td>
+
+                    <td style="padding-left: 5px;">
+                        <HelperNotes [Title]="'Notes'" [Text]="Notes" (TextChanged)="Notes = $event"></HelperNotes>
+                    </td>
+
+                    <td style="width: 200px;">
+                        <SearchBox [UseTimer]="true" (TextChanged)="SearchText = $event"></SearchBox>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 3px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                       
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div>
+                            <span class="Label">Selected:</span>
+                            <span class="Value" style="padding-left: 5px; padding-right: 5px;">{{SelectedCount}}</span>
+                            <span class="Label">(Max: 100)</span>
+                        </div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="ExportButtonClicked()" [disabled]="!ExportButtonIsEnabled">Export</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
