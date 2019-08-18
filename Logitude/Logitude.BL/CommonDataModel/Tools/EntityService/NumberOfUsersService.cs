@@ -123,9 +123,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             
             if (canAddUser)
             {
-                if (mainAdditionalPackageApplied && !numberOfUsersArgs.UserPMAdditionalPackagesOnly)
+                if (!numberOfUsersArgs.IsNewUser)
                 {
-                    this.CreateUserLicense(numberOfUsersArgs.UserId);
+                    this.CreateUserLicense(numberOfUsersArgs.UserId, numberOfUsersArgs.UserPMAdditionalPackagesOnly);
                 }
             }
 
@@ -376,24 +376,28 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        private void CreateUserLicense(string userId)
+        public void CreateUserLicense(string userId, bool additionalPackagesOnly)
         {
-            UserLicense userLicense = new UserLicense()
+            if (mainAdditionalPackageApplied && !additionalPackagesOnly)
             {
-                Id = IdCounter.GetNumber("UserLicense", this.tenant).ToString(),
-                UserId = userId,
-                PackageCode = this.packageCode,
-                Tenant = this.tenant,
-            };
+                UserLicense userLicense = new UserLicense()
+                {
+                    Id = IdCounter.GetNumber("UserLicense", this.tenant).ToString(),
+                    UserId = userId,
+                    PackageCode = this.packageCode,
+                    Tenant = this.tenant,
+                };
 
-            userLicenseRepository.Add(userLicense);
+                userLicenseRepository.Add(userLicense);
+                userLicenseRepository.SubmitChanges();
+            }
         }
 
         public void DeleteUserLicenses(NumberOfUsersArgs numberOfUsersArgs)
         {
             if (isMultiPackage || mainAdditionalPackageApplied)
             {
-                if ((numberOfUsersArgs.UserPMInactive && !numberOfUsersArgs.UserPOCOInactive) || (numberOfUsersArgs.UserPMAdditionalPackagesOnly && !numberOfUsersArgs.UserPMAdditionalPackagesOnly))
+                if ((numberOfUsersArgs.UserPMInactive && !numberOfUsersArgs.UserPOCOInactive) || (numberOfUsersArgs.UserPMAdditionalPackagesOnly && !numberOfUsersArgs.UserPOCOAdditionalPackagesOnly))
                 {
                     List<UserLicense> licenses = userLicenseRepository.GetUserLicensesByUserId(numberOfUsersArgs.UserId, tenant);
 
@@ -420,5 +424,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public bool UserPOCOAdditionalPackagesOnly { get; set; }
         public bool UserPMAdditionalPackagesOnly { get; set; }
         public bool UserPMIsDistributor { get; set; }
+        public bool IsNewUser { get; set; }
     }
 }
