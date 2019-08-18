@@ -74,7 +74,7 @@ export class TariffTabsContentComponent implements OnDestroy {
 
             else {
                 from = datePipe.transform(draftVersion.StartDate, 'dd/MMM/yy');
-                to = datePipe.transform(draftVersion.ExpirationDate, 'dd/MMM/yy');
+                to = datePipe.transform(draftVersion.ExpirationDate == null ? draftVersion.InitialEnddate : draftVersion.ExpirationDate, 'dd/MMM/yy');
 
                 if (!from) {
                     from = "";
