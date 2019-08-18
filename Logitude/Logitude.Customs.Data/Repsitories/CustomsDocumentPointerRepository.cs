@@ -189,6 +189,15 @@ namespace Logitude.Customs.Data.Repsitories
             return q;
         }
 
+        public IQueryable<CustomsDocumentPointer> GetCustomsDocumentPointerListParentOnly(GetTicketsParams parameters, int tenant)
+        {
+            var q = GetAll(tenant);
+            q = q.Where(a => a.ParentEntityCode == parameters.ParentEntityCode && a.ParentEntityId == parameters.ParentEntityId);
+            q = q.Distinct();
+
+            return q;
+        }
+
         public IQueryable<CustomsDocumentPointer> GetCustomDocumentPoinersForItems(string parentEntityId, string invCounterKey, string itemsLineNumbers, int tenant)
         {
             string[] numbers = itemsLineNumbers.Split(',');
