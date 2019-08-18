@@ -7506,7 +7506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "ARUP",
+                Code =  "ARCP",
                 EnglishName =  "Automatic Reconcile Method Changed",
                 LocalName =  " שינוי התאמה אוטומטית  ",
                 IsManualEntry =  false,
