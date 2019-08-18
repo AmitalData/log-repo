@@ -51,6 +51,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 else
                 {
                     Result = Service.GetAPInvoiceByInvoiceNumber(number, tenant);
+
                 }
 
 
@@ -88,8 +89,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
 
-                        apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
                         apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
+                        apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
 
                         //
                         APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
@@ -172,7 +173,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 // vat
                 VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(tenant);
                 VatTypePercentagePM vat = vatTypePercentageQuery.GetVatTypePercentagesForVatType(tenant, line.VatTypeId).FirstOrDefault();
-                line.VatPercentage = vat.Percentage;
+                line.VatPercentage = vat?.Percentage;
 
 
                 // LocalCurrencyAmount,ForiegnCurrencyAmount

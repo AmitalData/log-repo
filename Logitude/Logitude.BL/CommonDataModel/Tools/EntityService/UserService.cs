@@ -132,6 +132,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
+            this.numberOfUsersService.CreateUserLicense(this.entityPm.Id, this.entityPm.AdditionalPackagesOnly);
+
             if (!entityPM.IsHybrid)
             {
                 UpdateRolePM(entityPM);
@@ -283,6 +285,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     UserPMIsDistributor = this.entityPm.IsDistributor,
                     UserPMAdditionalPackagesOnly = this.entityPm.AdditionalPackagesOnly,
                     UserPMLicencedUser = this.entityPm.LicencedUser,
+                    IsNewUser = true,
                 };
 
                 this.numberOfUsersService.CheckNumberOfUsersOnCreateUser(numberOfUsersArgs);
@@ -301,6 +304,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     UserPOCOAdditionalPackagesOnly = Poco.AdditionalPackagesOnly,
                     UserPMAdditionalPackagesOnly = entityPm.AdditionalPackagesOnly,
                     UserId = this.entityPm.Id,
+                    IsNewUser = false,
                 };
 
                 this.numberOfUsersService.CheckNumberOfUsersOnUpdateUser(numberOfUsersArgs);

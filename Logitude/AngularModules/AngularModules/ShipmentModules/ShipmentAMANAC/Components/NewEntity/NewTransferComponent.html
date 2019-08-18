@@ -35,14 +35,24 @@
                         <HelperNotes [Title]="'Notes'" [Text]="Notes" (TextChanged)="Notes = $event"></HelperNotes>
                     </td>
 
-                    <td style="width:80px;">
-                        <div>
-                            <DirectionsFilter [HideAMANACFilters]="'true'" (SelectedValueChanged)="CurrentDirectionId = $event"></DirectionsFilter>
-                        </div>
+                    <td style="float:right;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td style="width:90px;">
+                                    <div class="MediaFill">
+                                        <DirectionsFilter [HideAMANACFilters]="'true'" (SelectedValueChanged)="CurrentDirectionId = $event"></DirectionsFilter>
+                                    </div>
+                                </td>
+                                <td style="width: 200px;">
+                                    <SearchBox [UseTimer]="true" (TextChanged)="SearchText = $event"></SearchBox>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
-                    <td style="width: 200px;">
-                        <SearchBox [UseTimer]="true" (TextChanged)="SearchText = $event"></SearchBox>
-                    </td>
+
                 </tr>
             </table>
         </td>

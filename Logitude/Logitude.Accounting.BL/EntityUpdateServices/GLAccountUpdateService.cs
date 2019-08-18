@@ -1503,8 +1503,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (EntityPOCO.RevaluationEnabled != EntityPM.RevaluationEnabled)
             {
                 eventCode = "RVUP";
-                string oldValue = null;
-                string newValue = null;
+                string oldValue = GetBooleanText(EntityPOCO.RevaluationEnabled);
+                string newValue = GetBooleanText(EntityPM.RevaluationEnabled);
+               
                
 
                 if (EntityPOCO.RevaluationEnabled == true)
@@ -1594,7 +1595,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             if (EntityPOCO.AutomaticReconcileId != EntityPM.AutomaticReconcileId)
             {
-                eventCode = "ARUP";
+                eventCode = "ARCP";
                 string oldValue = null;
                 string newValue = null;
                 AutomaticReconcileQueryService automaticReconcileQueryService = new AutomaticReconcileQueryService(EntityPM.Tenant);
@@ -1631,6 +1632,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
+        private string GetBooleanText(bool? value)
+        {
+            if (value == true)
+            {
+               return  TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+            }
+            else if (value == false || value == null)
+            {
+                return TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+            }
+            else return TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+        }
         private void CreateUpdateTraceEvent(string oldValue, string newValue, string eventCode)
         {
             String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0,showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0,showLocals) + newValue;
