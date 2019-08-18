@@ -84,7 +84,13 @@ export class TariffTabsContentComponent implements OnDestroy {
                     to = "";
                 }
 
-                header = from + " - " + to;
+                if (!AppTool.IsNullOrEmpty(from) && !AppTool.IsNullOrEmpty(to)) {
+                    header = from + " - " + to;
+                }
+
+                else {
+                    header = from + to;
+                }
             }
 
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, draftVersion));
@@ -108,7 +114,13 @@ export class TariffTabsContentComponent implements OnDestroy {
                     to = "";
                 }
 
-                header = from + " - " + to;
+                if (!AppTool.IsNullOrEmpty(from) && !AppTool.IsNullOrEmpty(to)) {
+                    header = from + " - " + to;
+                }
+
+                else {
+                    header = from + to;
+                }
             }
 
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, item));
