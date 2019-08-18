@@ -304,10 +304,24 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
             else {
                 var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-                var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
-                newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
-            }
+                var to: string = datePipe.transform(item.ExpirationDate == null ? item.InitialEnddate : item.ExpirationDate, 'dd/MM/yyyy');
 
+                if (!from) {
+                    from = "";
+                }
+
+                if (!to) {
+                    to = "";
+                }
+
+                if (!AppTool.IsNullOrEmpty(from) && !AppTool.IsNullOrEmpty(to)) {
+                    newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+                }
+
+                else {
+                    newVersion.Name = "Version " + item.Version + " (" + from + to + ")";
+                }                
+            }
 
             this.VersionsList.push(newVersion);
         });
@@ -388,7 +402,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 450;
             logWindow.Height = 200;
-            logWindow.WindowArgs = this.VersionPM;
+            var windowArgs: any = {};
+            windowArgs.CurrentVersion = this.VersionPM;
+            windowArgs.TariffType = this.EntityPM.TypeCode;
+            logWindow.WindowArgs = windowArgs;
             logWindow.Title = windowTitle;
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe(d => {

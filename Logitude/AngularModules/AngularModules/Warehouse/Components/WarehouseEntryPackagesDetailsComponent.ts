@@ -1,6 +1,6 @@
 declare var System: any;
 declare var window: any;
-import {AppTool, DateTool} from '../../Infrastructure/Tools';
+import {AppTool, DateTool, ArrayTool} from '../../Infrastructure/Tools';
 import {BaseComponent} from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 
 import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
@@ -159,25 +159,26 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         }
     }
 
-    //get ChargeableWeightUnitCode() { return this.warehouseEntryPM.ChargeableWeightUnitCode; }
-    //set ChargeableWeightUnitCode(newValue: string) {
-    //    if (this.warehouseEntryPM.ChargeableWeightUnitCode != newValue) {
-    //        this.warehouseEntryPM.ChargeableWeightUnitCode = newValue;
+    get ChargeableWeightUnitCode() { return this.warehouseEntryPM.ChargeableWeightUnitCode; }
+    set ChargeableWeightUnitCode(newValue: string) {
+        if (this.warehouseEntryPM.ChargeableWeightUnitCode != newValue) {
+            this.warehouseEntryPM.ChargeableWeightUnitCode = newValue;
+            this.ComputeDimFactor();
+            this.OnMeasurmentsSettingsChanged();
+        }
+    }
 
-    //        this.ComputeDimFactor();
-    //        this.OnMeasurmentsSettingsChanged();
-    //    }
-    //}
+   
 
-    //get Ratio() { return this.warehouseEntryPM.Ratio; }
-    //set Ratio(newValue: number) {
-    //    if (this.warehouseEntryPM.Ratio != newValue) {
-    //        this.warehouseEntryPM.Ratio = newValue;
+    get Ratio() { return this.warehouseEntryPM.Ratio; }
+    set Ratio(newValue: number) {
+        if (this.warehouseEntryPM.Ratio != newValue) {
+            this.warehouseEntryPM.Ratio = newValue;
+            this.OnWarehouseEntryRatioChanged(this.warehouseEntryPM);
+        }
+    }
 
-    //        this.ComputeDimFactor();
-    //        ShipmentTool.OnShipmentRatioChanged(this.EntityPM);
-    //    }
-    //}
+
 
 
     ComputeDimFactor() {
@@ -199,7 +200,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
         //this.UIProperties.SetVisibility("DimFactor", this.ObjectTableName, isDimFactorVisibile);
     }
-
+    ChargeableWeightUnitCodeLabel: string;
     public DimensionsDependencyProperty1: string = null;
     public DimensionsDependencyProperty1IsList: boolean = false;
     private SetUIProperties_DimensionsUnitCode() {
@@ -228,7 +229,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         this.GrossWeightLabel = "Gross Weight (" + this.warehouseEntryPM.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dim(L-W-H) (" + this.warehouseEntryPM.DimensionsUnitCode + ")";
         this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseEntryPM.ChargeableWeightUnitCode + ")";
-
+        this.ChargeableWeightUnitCodeLabel = "Chargeable Weight (" + this.warehouseEntryPM.ChargeableWeightUnitCode + ")";
     }
 
 
@@ -268,19 +269,16 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
         if (warehouseEntryPM != null) {
 
-            //if (warehouseEntryPM.Ratio == null) {
-            //    warehouseEntryPM.Ratio = AppTool.GetRatio(warehouseEntryPM.DirectionId, warehouseEntryPM.TransportModeId, warehouseEntryPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
-            //}
+            if (warehouseEntryPM.Ratio == null) {
+                warehouseEntryPM.Ratio = AppTool.GetRatio(warehouseEntryPM.DirectionId, warehouseEntryPM.TransportModeId, warehouseEntryPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+            }
 
             if (warehouseEntryPM.WarehouseEntryPackages.length == 0) {
                 warehouseEntryPM.TotalPieces = null;
                 warehouseEntryPM.TotalGrossWeight = null;
                 warehouseEntryPM.TotalVolume = null;
                 warehouseEntryPM.TotalVolumetricWeight = null;
-                // warehouseEntryPM.ChargeableWeight = null;
-                // warehouseEntryPM.AWBCommodityItemNumber = null;
-                // warehouseEntryPM.GrossWeightEdited = false;
-                // warehouseEntryPM.ChargeableWeightEdited = false;
+         
             }
 
             else {
@@ -292,11 +290,10 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
                 warehouseEntryPM.WarehouseEntryPackages.forEach((item) => {
 
-                    //item.Volume = AppTool.ComputePackageVolume(item.Quantity, item.Width, item.Height, item.Length, item.Weight, warehouseEntryPM.Ratio, warehouseEntryPM.DimensionsUnitCode, warehouseEntryPM.VolumeUnitCode, warehouseEntryPM.GrossWeightUnitCode);
+            
+                    item.Volume = AppTool.ComputePackageVolume(item.Quantity, item.Width, item.Height, item.Length, item.Weight, warehouseEntryPM.Ratio, warehouseEntryPM.DimensionsUnitCode, warehouseEntryPM.VolumeUnitCode, warehouseEntryPM.GrossWeightUnitCode);
 
-                    item.Volume = AppTool.ComputePackageVolume(item.Quantity, item.Width, item.Height, item.Length, item.Weight, null, warehouseEntryPM.DimensionsUnitCode, warehouseEntryPM.VolumeUnitCode, warehouseEntryPM.GrossWeightUnitCode);
-
-                    //item.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(item.Quantity, item.Width, item.Height, item.Length, item.Volume, item.Weight, warehouseEntryPM.Ratio, warehouseEntryPM.DimensionsUnitCode, warehouseEntryPM.VolumeUnitCode, warehouseEntryPM.GrossWeightUnitCode, warehouseEntryPM.ChargeableWeightUnitCode);
+                    item.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(item.Quantity, item.Width, item.Height, item.Length, item.Volume, item.Weight, warehouseEntryPM.Ratio, warehouseEntryPM.DimensionsUnitCode, warehouseEntryPM.VolumeUnitCode, warehouseEntryPM.GrossWeightUnitCode, warehouseEntryPM.ChargeableWeightUnitCode);
 
                     if (item.Quantity != null) {
                         myQuantity += item.Quantity;
@@ -323,7 +320,31 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     }
 
 
+    public  OnWarehouseEntryRatioChanged(warehouseEntryPM: WarehouseEntryPM) {
+        if (warehouseEntryPM) {
+            if (warehouseEntryPM.Ratio == null) {
+                warehouseEntryPM.Ratio = AppTool.GetRatio(warehouseEntryPM.DirectionId, warehouseEntryPM.TransportModeId, warehouseEntryPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+            }
+            // ShipmentPackages
+            if (warehouseEntryPM.WarehouseEntryPackages.length == 0) {
 
+                warehouseEntryPM.TotalGrossWeight = null;
+                warehouseEntryPM.TotalVolume = null;
+                warehouseEntryPM.TotalVolumetricWeight = null;
+            }
+
+            else {
+                warehouseEntryPM.WarehouseEntryPackages.forEach((item) => {
+                    if (item.Volume) {
+                        item.VolumetricWeight = AppTool.GetWeightFromVolume(warehouseEntryPM.VolumeUnitCode, warehouseEntryPM.ChargeableWeightUnitCode, item.Volume, warehouseEntryPM.Ratio);
+                    }
+                });
+                warehouseEntryPM.TotalVolumetricWeight = AppTool.Round(ArrayTool.Sum(warehouseEntryPM.WarehouseEntryPackages, "VolumetricWeight"), 3);
+
+            }
+
+        }
+    }
 
    
     get TotalVolume() {
@@ -369,6 +390,13 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         
         if (this.warehouseEntryPM) {
 
+            if (this.warehouseEntryPM.Ratio == null) {
+                var isDirty = this.warehouseEntryPM.IsDirty;
+                this.warehouseEntryPM.Ratio = AppTool.GetRatio(this.warehouseEntryPM.DirectionId, this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+
+                if (!isDirty) this.warehouseEntryPM.IsDirty = false;
+            }
+
             this.VolumeLabel = "Volume (" + this.warehouseEntryPM.VolumeUnitCode + ")";
             this.GrossWeightLabel = "Gross Weight (" + this.warehouseEntryPM.GrossWeightUnitCode + ")";
             this.DimensionsLabel = "Dim(L-W-H) (" + this.warehouseEntryPM.DimensionsUnitCode + ")";
@@ -413,7 +441,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
                 savedItem.CountryId = item.CountryId;
                 savedItem.Model = item.Model;
                 savedItem.Color = item.Color;
-
+                savedItem.ReleasesNumber = item.ReleasesNumber;
                 this.savedItems.push(savedItem);
                 this.WarehouseEntryPackagesLists.push(item);
 

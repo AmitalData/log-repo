@@ -3,6 +3,10 @@
     .FormFieldRow {
         height: 30px;
     }
+    .disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
 </style>
 
 
@@ -20,7 +24,7 @@
                 <table>
                     <tr>
                         <td style="width: 115px;">
-                            <LogTextBox [HideColumns]="true" [IsFreeText]="true" [ObjectFieldName]="'ProcedureCode'" [Text]="ProcedureCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            <LogTextBox class="disabled" [HideColumns]="true"  [IsFreeText]="true" [ObjectFieldName]="'ProcedureCode'" [Text]="ProcedureCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </td>
                         <td style="width: 20px; padding-left: 4px;">
                             <span class="hyperlink"  (click)="ChooseCodeClicked()">

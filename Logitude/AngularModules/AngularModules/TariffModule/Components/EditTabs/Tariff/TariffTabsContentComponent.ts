@@ -74,8 +74,23 @@ export class TariffTabsContentComponent implements OnDestroy {
 
             else {
                 from = datePipe.transform(draftVersion.StartDate, 'dd/MMM/yy');
-                to = datePipe.transform(draftVersion.ExpirationDate, 'dd/MMM/yy');
-                header = from + " - " + to;
+                to = datePipe.transform(draftVersion.ExpirationDate == null ? draftVersion.InitialEnddate : draftVersion.ExpirationDate, 'dd/MMM/yy');
+
+                if (!from) {
+                    from = "";
+                }
+
+                if (!to) {
+                    to = "";
+                }
+
+                if (!AppTool.IsNullOrEmpty(from) && !AppTool.IsNullOrEmpty(to)) {
+                    header = from + " - " + to;
+                }
+
+                else {
+                    header = from + to;
+                }
             }
 
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, draftVersion));
@@ -90,7 +105,22 @@ export class TariffTabsContentComponent implements OnDestroy {
             else {
                 from = datePipe.transform(item.StartDate, 'dd/MMM/yy');
                 to = datePipe.transform(item.ExpirationDate, 'dd/MMM/yy');
-                header = from + " - " + to;
+
+                if (!from) {
+                    from = "";
+                }
+
+                if (!to) {
+                    to = "";
+                }
+
+                if (!AppTool.IsNullOrEmpty(from) && !AppTool.IsNullOrEmpty(to)) {
+                    header = from + " - " + to;
+                }
+
+                else {
+                    header = from + to;
+                }
             }
 
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, item));

@@ -1171,6 +1171,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
                         this.EntityPM.ShipmentPayables = [];
+                        this.EntityPM.IsDirty = true;
                         this.BuildItemsSource();
                         this.ComputeShipmentFields();
                     }

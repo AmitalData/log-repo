@@ -653,21 +653,13 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         private void SetCustomerDateFields(OpportunityPM entityPM, Opportunity entityPOCO)
         {
             int myTenant = entityPM.Tenant;
-            DateTime myDate = TenantServerConfigration.GetCurrentDateTime(myTenant);            
-
+            DateTime myDate = TenantServerConfigration.GetCurrentDateTime(myTenant);
+            CustomerRepository iCustomerRepository = new CustomerRepository(entityPM.Tenant);
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                 if (!string.IsNullOrEmpty(entityPM.CustomerId))
                 {
-                    CustomerRepository customerRepository = new CustomerRepository(myTenant);
-                    Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, myTenant, false);
-                    if (customer != null)
-                    {
-                        customer.LastOpportunityDate = myDate;
-                        customer.LastInteractionDate = myDate;
-                        customerRepository.Update(customer);
-                        customerRepository.SubmitChanges();
-                    }
+                    UpdateCustomerFields(entityPM, iCustomerRepository);
                 }
             }
 
@@ -675,48 +667,61 @@ namespace Logitude.CRM.BL.EntityUpdateServices
             {
                 if (entityPM.CustomerId != entityPOCO.CustomerId)
                 {
-                    CustomerRepository customerRepository = new CustomerRepository(myTenant);
+                    CalculateCustomerFeildsInUpdate(entityPM, entityPOCO, iCustomerRepository);
+                }
+            }
+        }
 
-                    if (!string.IsNullOrEmpty(entityPM.CustomerId))
+        private void UpdateCustomerFields(OpportunityPM opportunityPM, CustomerRepository iCustomerRepository)
+        {
+            DateTime myDate = TenantServerConfigration.GetCurrentDateTime(opportunityPM.Tenant);
+          
+            Customer customer = iCustomerRepository.GetSingleCustomer(opportunityPM.CustomerId, opportunityPM.Tenant, false);
+            if (customer != null)
+            {
+                customer.LastOpportunityStatus = opportunityPM.StageName;
+                customer.LastOpportunitySubject = opportunityPM.Subject;
+                SubmitCustomerChanges(customer, iCustomerRepository, myDate);
+            }
+        }
+
+        private void CalculateCustomerFeildsInUpdate(OpportunityPM opportunityPM, Opportunity opportunity, CustomerRepository iCustomerRepository)
+        {
+            if (!string.IsNullOrEmpty(opportunityPM.CustomerId))
+            {
+                UpdateCustomerFields(opportunityPM, iCustomerRepository);
+                if (!string.IsNullOrEmpty(opportunity.CustomerId))
+                {
+                    OpportunityRepository myOpportunityRepository = new OpportunityRepository(opportunity.Tenant);
+                    IQueryable<Opportunity> oldCustomerEntities = myOpportunityRepository.GetOppListByCustomerIdAndTenant(opportunity.CustomerId, opportunity.Tenant);
+
+                    if (oldCustomerEntities != null)
                     {
-                        Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, myTenant, false);
-                        if (customer != null)
+                        if (oldCustomerEntities.Count() > 0)
                         {
-                            customer.LastOpportunityDate = myDate;
-                            customer.LastInteractionDate = myDate;
-                            customerRepository.Update(customer);
-                            customerRepository.SubmitChanges();
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(entityPOCO.CustomerId))
-                    {
-                        OpportunityRepository myOpportunityRepository = new OpportunityRepository(myTenant);
-                        IQueryable<Opportunity> oldCustomerEntities = myOpportunityRepository.GetOppListByCustomerIdAndTenant(entityPOCO.CustomerId, myTenant);
-
-                        if (oldCustomerEntities != null)
-                        {
-                            if (oldCustomerEntities.Count() > 0)
+                            DateTime? oldestDate = oldCustomerEntities.OrderByDescending(d => d.CreateDate).FirstOrDefault().CreateDate;
+                            if (oldestDate != null)
                             {
-                                DateTime? oldestDate = oldCustomerEntities.OrderByDescending(d => d.CreateDate).FirstOrDefault().CreateDate;
-                                if (oldestDate != null)
+                                Customer customer = iCustomerRepository.GetSingleCustomer(opportunity.CustomerId, opportunity.Tenant, false);
+                                if (customer != null)
                                 {
-                                    Customer customer = customerRepository.GetSingleCustomer(entityPOCO.CustomerId, myTenant, false);
-                                    if (customer != null)
-                                    {
-                                        customer.LastOpportunityDate = oldestDate;
-
-                                        customer.LastInteractionDate = customerRepository.ComputeLastInteractionDate(customer, oldestDate);
- 
-                                        customerRepository.Update(customer);
-                                        customerRepository.SubmitChanges();
-                                    }
+                                    customer.LastOpportunityStatus = opportunity.Stage != null ? opportunity.Stage.Name : null;
+                                    customer.LastOpportunitySubject = opportunity.Subject;
+                                    SubmitCustomerChanges(customer, iCustomerRepository, oldestDate);
                                 }
                             }
                         }
                     }
                 }
             }
+        }
+
+        private void SubmitCustomerChanges(Customer customer, CustomerRepository iCustomerRepository, DateTime? date)
+        {
+            customer.LastOpportunityDate = date;
+            customer.LastInteractionDate = date;
+            iCustomerRepository.Update(customer);
+            iCustomerRepository.SubmitChanges();
         }
 
         private void SetNextActivityData(OpportunityPM entityPM)

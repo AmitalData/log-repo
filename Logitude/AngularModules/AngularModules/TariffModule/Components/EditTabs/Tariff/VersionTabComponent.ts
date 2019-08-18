@@ -206,7 +206,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     get InitialEnddate() {
-        return (this.CurrentVersion == null ? null : this.CurrentVersion.InitialEnddate);
+        return (this.CurrentVersion == null ? null : this.CurrentVersion.ExpirationDate != null ? this.CurrentVersion.ExpirationDate : this.CurrentVersion.InitialEnddate);
     }
     set InitialEnddate(value: Date) {
         if (this.CurrentVersion.InitialEnddate != value) {

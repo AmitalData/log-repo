@@ -44,10 +44,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             repository = apInvoiceRepository;
         }
 
-        public APInvoicePM GetSinglePM(string id, int tenant)
+        public APInvoicePM GetSinglePM(string id,  int tenant, string number= "")
         {
-            APInvoicePM entityPM = (from a in repository.context.APInvoices.Include("Status").Include("LocalCurrency").Include("InvoiceCurrency").Include("TransferStatus").Include("VendorCard").Include("PaymentTerm").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("CreatedByUser").Include("CreatedByUser.Contact")
-                                    where a.Id == id && a.Tenant == tenant
+            IQueryable<APInvoicePM> query = (from a in repository.context.APInvoices.Include("Status").Include("LocalCurrency").Include("InvoiceCurrency").Include("TransferStatus").Include("VendorCard").Include("PaymentTerm").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("CreatedByUser").Include("CreatedByUser.Contact")
                                     select new APInvoicePM()
                                     {
                                         ProfitCurrencyExchangeRate = a.ProfitCurrencyExchangeRate,
@@ -119,7 +118,15 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         IsGeneralInvoice = a.IsGeneralInvoice,
                                         ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                                         FirstApproveDate = a.FirstApproveDate,
-                                    }).FirstOrDefault();
+                                    });
+
+            APInvoicePM entityPM = null;
+
+            if (string.IsNullOrWhiteSpace(id) && !string.IsNullOrWhiteSpace(number))
+                entityPM = query.Where(d => d.InvoiceNumber == number && d.Tenant == tenant).FirstOrDefault();
+            else
+                entityPM = query.Where(d => d.Id == id && d.Tenant == tenant).FirstOrDefault();
+
 
             APInvoiceLineRepository invoiceLineRepository = new APInvoiceLineRepository(repository.context);
             APInvoiceEntityRepository invoiceEntityRepository = new APInvoiceEntityRepository(repository.context);

@@ -407,9 +407,21 @@
 
                     <div *ngIf="FieldName == 'StatusName'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'" style="padding:0 3px;"
-                            [style.color]="GetAccountingIntegrityCheckStatus()">{{FieldValue}}</div>
+                             [style.color]="GetAccountingIntegrityCheckStatus()">{{FieldValue}}</div>
                     </div>
+                    <div *ngIf="FieldName == 'ShouldFix'">
+                        <div *ngIf="!IsHeaderScreenTemplate">
+                            <div style="text-align: left; ">
+                                <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                            </div>
+                        </div>
 
+                        <div *ngIf="IsHeaderScreenTemplate">
+                            <div>
+                                <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Tax Report -->

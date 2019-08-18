@@ -152,5 +152,47 @@ namespace Logitude.Server.Tools.StorageService
             return (file != null);
 
         }
+
+        public void AppendText(string text, BlobFileInfo fileInfo)
+        {
+          
+            BlobFileRepository blobFileRepository = new BlobFileRepository(0);
+            BlobFile file = blobFileRepository.GetSingleBlobFile(fileInfo.FileName);
+
+            if (file != null)
+            {
+                if (file.Blob == null || !string.IsNullOrEmpty(text))
+                {
+                    var txtBytes = Encoding.UTF8.GetBytes(text);
+                    file.Blob = txtBytes;
+                }
+                else
+                {
+                   var fileText =  Encoding.UTF8.GetString(file.Blob);
+                    fileText += text;
+
+                    var txtBytes = Encoding.UTF8.GetBytes(fileText);
+
+                    file.Blob = txtBytes;
+
+                }
+
+                blobFileRepository.Update(file);
+            }
+            else
+            {
+                var txtBytes = Encoding.UTF8.GetBytes(text);
+                file = new BlobFile()
+                {
+                    Id = fileInfo.FileName,
+                    Blob = txtBytes,
+                };
+
+                blobFileRepository.Add(file);
+
+            }
+
+            blobFileRepository.SubmitChanges();
+        }
     }
 }

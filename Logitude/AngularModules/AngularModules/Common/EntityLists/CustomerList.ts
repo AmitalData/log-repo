@@ -106,6 +106,8 @@ export class CustomerList {
 		LastCallDate: Date;
 		LastMeetingDate: Date;
 		LastOpportunityDate: Date;
+		LastOpportunitySubject: string;
+		LastOpportunityStatus: string;
 		FirstInvoiceDate: Date;
 		FirstShipmentDate: Date;
 		LastShipmentDate: Date;

@@ -127,6 +127,7 @@ namespace WebFreight.Web.DataProviders
         public string LongMaster { get; set; }
 
         public string LastMainCarriageVesselNameAndNumber { get; set; }
+        public string MainCarriageVesselNameAndNumber { get; set; }
         public string LoadingPortName { get; set; }
         public string DischargePortName { get; set; }
         public DateTime? MainCarriageETD_DateTime { get; set; }
@@ -143,7 +144,7 @@ namespace WebFreight.Web.DataProviders
         public string EmptyContainerReturnRef { get; set; }
 
         public DateTime? CutOffDateAsDate { get; set; }
-        public TimeSpan? CutOffTime { get; set; }
+        public string CutOffTime { get; set; }
 
         public string UserName { get; set; }
         public string IssuingCarrierAgentName { get; set; }

@@ -1664,6 +1664,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
  		   TextCode QuoteTemplateTextCode_QuoteTemplateSSpaceLinesBefore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.SpaceLinesBefore", DefaultText = "Space Lines Before",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSQuoteTemplatePDFMarginTop = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteTemplatePDFMarginTop", DefaultText = "Margin Top",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSQuoteTemplatePDFMarginBottom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.QuoteTemplatePDFMarginBottom", DefaultText = "Margin Bottom",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSShowIncludedCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowIncludedCharges", DefaultText = "Show Included Charges",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }
