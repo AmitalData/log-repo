@@ -270,6 +270,7 @@ export class DynamicLoader {
             case "ShipmentModules/ShipmentRouting": { myResult = "ShipmentModules/ShipmentRouting/ModuleShipmentRouting#ModuleShipmentRouting"; break; }
             case "ShipmentModules/ShipmentLogBox": { myResult = "ShipmentModules/ShipmentLogBox/ModuleShipmentLogBox#ModuleShipmentLogBox"; break; }
             case "ShipmentModules/ShipmentSharedManifest": { myResult = "ShipmentModules/ShipmentSharedManifest/ModuleShipmentSharedManifest#ModuleShipmentSharedManifest"; break; }
+            case "ShipmentModules/ShipmentAMANAC": { myResult = "ShipmentModules/ShipmentAMANAC/ModuleShipmentAMANAC#ModuleShipmentAMANAC"; break; }
 
             case "Social": { myResult = "Social/Module_SOCL#SocialModule"; break; }
             case "TimeManagement": { myResult = "TimeManagement/Module_TIME#TimeManagementModule"; break; }

@@ -4,7 +4,7 @@ import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'DirectionsFilter',
-    inputs: ['SelectedValue','HideCustomsImport','HideImportDomistic'],
+    inputs: ['SelectedValue', 'HideCustomsImport', 'HideImportDomistic', 'HideAMANACFilters'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
@@ -19,13 +19,13 @@ import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
         <li *ngIf="!itmImportDomistic" (click)="itemClicked('I')" (mouseover)="itemMouseOver('I')" (mouseleave)="itemMouseLeave('I')" [class.SelectedFilter]="SelectedValue === 'I'" title="Import">
             <img [attr.id]="FilterId_I" class="CenterCenter"  [attr.src]="SelectedValue === 'I' ? './_Resources/Images/Icons/Directions/I_w.png' : './_Resources/Images/Icons/Directions/I_g.png'"  />
         </li>
-        <li (click)="itemClicked('R')" (mouseover)="itemMouseOver('R')" (mouseleave)="itemMouseLeave('R')" [class.SelectedFilter]="SelectedValue === 'R'" title="Drop">
+        <li *ngIf="!HideAMANACFilters"  (click)="itemClicked('R')" (mouseover)="itemMouseOver('R')" (mouseleave)="itemMouseLeave('R')" [class.SelectedFilter]="SelectedValue === 'R'" title="Drop">
             <img [attr.id]="FilterId_R" class="CenterCenter" [attr.src]="SelectedValue === 'R' ? './_Resources/Images/Icons/Directions/R_w.png' : './_Resources/Images/Icons/Directions/R_g.png'"  />
         </li>
-        <li *ngIf="!itmImportDomistic" (click)="itemClicked('D')" (mouseover)="itemMouseOver('D')" (mouseleave)="itemMouseLeave('D')" [class.SelectedFilter]="SelectedValue === 'D'" title="Domestic">
+        <li *ngIf="!itmImportDomistic && !HideAMANACFilters" (click)="itemClicked('D')" (mouseover)="itemMouseOver('D')" (mouseleave)="itemMouseLeave('D')" [class.SelectedFilter]="SelectedValue === 'D'" title="Domestic">
             <img [attr.id]="FilterId_D" class="CenterCenter"  [attr.src]="SelectedValue === 'D' ? './_Resources/Images/Icons/Directions/D_w.png' : './_Resources/Images/Icons/Directions/D_g.png'" />
         </li>
-        <li *ngIf="itmImportShipments || itmImportDomistic" (click)="itemClicked('C')" (mouseover)="itemMouseOver('C')" (mouseleave)="itemMouseLeave('C')" [class.SelectedFilter]="SelectedValue === 'C'" title="Customs Import">
+        <li *ngIf="!HideAMANACFilters && (itmImportShipments || itmImportDomistic)" (click)="itemClicked('C')" (mouseover)="itemMouseOver('C')" (mouseleave)="itemMouseLeave('C')" [class.SelectedFilter]="SelectedValue === 'C'" title="Customs Import">
             <img [attr.id]="FilterId_C" class="CenterCenter" [attr.src]="SelectedValue === 'C' ? './_Resources/Images/Icons/Directions/C_w.png' : './_Resources/Images/Icons/Directions/C_g.png'" />
         </li>
     </ul>
@@ -42,6 +42,7 @@ export class DirectionsFilter {
   
     public itmImportShipments: boolean = false;
     public itmImportDomistic: boolean = false;
+    public HideAMANACFilters: boolean = false;
 
     @Output() SelectedValueChanged = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
