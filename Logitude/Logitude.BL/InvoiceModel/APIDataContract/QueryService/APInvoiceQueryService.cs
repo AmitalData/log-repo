@@ -70,6 +70,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             if (apinvoice.AccountingDate == null)
                 apinvoice.AccountingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
+            if(apinvoice.AmountDueInLocalCurrency != null)
+                apinvoice.AmountDueInLocalCurrency = apinvoice.AmountInLocalCurrency == null ? 0 : apinvoice.AmountInLocalCurrency;
+
+            if(apinvoice.AmountDueInProfitCurrency != null)
+                apinvoice.AmountDueInProfitCurrency = apinvoice.AmountInProfitCurrency == null ? 0 : apinvoice.AmountInProfitCurrency;
 
         }
 
@@ -159,6 +164,38 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             if (apinvoice.AccountingDate == null)
                 throw new ApplicationException("AccountingDate is not provided");
 
+            if(apinvoice.Vendor == null)
+                throw new ApplicationException("Vendor is not provided");
+
+            
+            if (apinvoice.VATNumber == null)
+                throw new ApplicationException("VATNumber is not provided");
+
+
+            if (apinvoice.AmountInInvoiceCurrency == null)
+                throw new ApplicationException("AmountInInvoiceCurrency is not provided");
+
+
+            if (apinvoice.InvoiceCurrency == null)
+                throw new ApplicationException("InvoiceCurrency is not provided");
+
+
+            if (apinvoice.DueDate == null)
+                throw new ApplicationException("DueDate is not provided");
+
+            if (apinvoice.Branch == null)
+                throw new ApplicationException("Branch is not provided");
+
+            foreach (APInvoiceLine line in apinvoice.InvoiceLines)
+            {
+                if (line.ChargesType == null)
+                    throw new ApplicationException("ChargesType is not provided");
+                if (line.InvoiceCurrencyAmount == null)
+                    throw new ApplicationException("InvoiceCurrencyAmount is not provided");
+                if (line.VatType == null)
+                    throw new ApplicationException("VatType is not provided"); 
+
+            }
 
 
         }

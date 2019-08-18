@@ -240,7 +240,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     }
                     SetReferenceFields(a.Reference);
-                   
+                    string transmitStatusCode = SetTransmitStatusByDocumentDate(a.ReferenceDate);
                     TaxReportLinePM taxReportLine = new TaxReportLinePM()
                     {
 
@@ -259,7 +259,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         LastUpdateDateTime = DateTime.Now,
                         UpdatedByUserId = taxReport.UpdatedByUserId,
                         Tenant = tenant,
-                        TransmitStatusCode = "1",
+                        TransmitStatusCode = transmitStatusCode,
 
 
                     };
@@ -354,7 +354,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
        static string  reference = null;
         static string referenceGroup = null;
-        public static void SetReferenceFields(string Reference)
+        private static void SetReferenceFields(string Reference)
         {
             if (Reference != null)
             {
@@ -411,6 +411,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
             }
+        }
+
+        private static string SetTransmitStatusByDocumentDate(DateTime referenceDate)
+        {
+            DateTime date = DateTime.Now.AddDays(-180);
+            DateTime last180days = new DateTime(date.Year, date.Month, 1);
+            if (referenceDate <= last180days)
+            {
+                return "3";
+            }
+            else return "1";
         }
 
         public static BatchTaskExecutionPM CreatePNCFileInBatch(string taxReportId, int tenant)
