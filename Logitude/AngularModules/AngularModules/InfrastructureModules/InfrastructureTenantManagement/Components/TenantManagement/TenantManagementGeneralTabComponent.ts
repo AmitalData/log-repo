@@ -36,7 +36,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public BluesnapEAWBSContractIdFilterItems: ApiQueryFilters;
     public BluesnapCRMContractIdFilterItems: ApiQueryFilters;
     public BluesnapInttraStockContractIdFilterItems: ApiQueryFilters;
-
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -63,8 +62,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
     }
 
-    private SessionEvent: any = null;
-    private TabChangedEvent: any = null;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {
@@ -73,6 +70,9 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.BuildPackagesList();
+                    this.BuildAddOnsList();
+                    this.SetUIProperties();
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
             });
@@ -80,6 +80,9 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.BuildPackagesList();
+                    this.BuildAddOnsList();
+                    this.SetUIProperties();
                     this.iGlobalDomainService.UpdateTenantManagementJS(this.EntityPM);
                 }
             });
