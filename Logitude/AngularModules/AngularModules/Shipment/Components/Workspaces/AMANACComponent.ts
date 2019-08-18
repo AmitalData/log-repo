@@ -33,7 +33,7 @@ export class AMANACComponent implements OnInit {
         }
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
+        logWindow.Width = 980;
         logWindow.Height = 570;
         logWindow.Title = logWindowTitle;
         logWindow.WindowArgs = transferTypeCode;

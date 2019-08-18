@@ -143,6 +143,8 @@ export class NewTransferComponent extends BaseComponent {
         filters.PageIndex = 0;
         filters.PageSize = 100;
 
+        filters.addAdditionalFilter("LocalCustomsTransmissionsStatusCode", "NSEN", null, null, "Equals", false, true, false, "string");
+
         if (!AppTool.IsNullOrEmpty(this.CurrentDirectionId)) {
             if (this.CurrentDirectionId == "All") this.CurrentDirectionId = "";
             else {
@@ -205,11 +207,11 @@ export class NewTransferComponent extends BaseComponent {
                     var myResultItem = new NewTransferLine(this);
                     myResultItem.Id = item.Id;
 
-                    if (item.FinalArrivalDate != null) {
-                        myResultItem.Date = item.FinalArrivalDate;
+                    if (item.MainCarriageATA != null) {
+                        myResultItem.Date = item.MainCarriageATA;
                     }
                     else {
-                        myResultItem.Date = item.EstimatedFinalArrivalDate;
+                        myResultItem.Date = item.MainCarriageETA;
                     }
 
                     myResultItem.DateTicks = DateTool.GetDateParts(item.FinalArrivalDate).DateTicks;
