@@ -304,7 +304,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
             else {
                 var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-                var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+                var to: string = datePipe.transform(item.ExpirationDate == null ? item.InitialEnddate : item.ExpirationDate, 'dd/MM/yyyy');
 
                 if (!from) {
                     from = "";
