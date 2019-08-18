@@ -91,6 +91,7 @@ namespace Logitude.XSD.INTTRA_Booking
         public void SendXMLFile(object myRequest)
         {
             this.GetObjectTableData();
+            this.UpdateShipmentStatus();
 
             Type myType = myRequest.GetType();
             MemoryStream myMemoryStream = new MemoryStream();
@@ -154,6 +155,11 @@ namespace Logitude.XSD.INTTRA_Booking
                     ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "INTTRA controller", null, ip);
                 }
             }
+        }
+        private void UpdateShipmentStatus()
+        {
+            this.DataContext.Shipment.INTTRABookingStatusCode = "ST";
+            this.DataContext.shipmentRepository.Update(this.DataContext.Shipment);
         }
 
         private string myObjectTableId;

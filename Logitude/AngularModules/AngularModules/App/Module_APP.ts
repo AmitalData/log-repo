@@ -87,7 +87,8 @@ import { AppComponent } from './AppComponent';
             { loadChildren: 'ShipmentModules/ShipmentRouting/ModuleShipmentRouting#ModuleShipmentRouting' },
             { loadChildren: 'ShipmentModules/ShipmentLogBox/ModuleShipmentLogBox#ModuleShipmentLogBox' },
             { loadChildren: 'ShipmentModules/ShipmentSharedManifest/ModuleShipmentSharedManifest#ModuleShipmentSharedManifest' },
-                   
+            { loadChildren: 'ShipmentModules/ShipmentAMANAC/ModuleShipmentAMANAC#ModuleShipmentAMANAC' },
+
             { loadChildren: 'Social/Module_SOCL#SocialModule' },
             { loadChildren: 'TimeManagement/Module_TIME#TimeManagementModule' },
             { loadChildren: 'Warehouse/Module_WARH#WarehouseModule' },
