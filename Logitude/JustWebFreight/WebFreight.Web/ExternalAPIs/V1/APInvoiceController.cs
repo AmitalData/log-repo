@@ -88,8 +88,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
 
-                        apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
                         apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
+                        apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
 
                         //
                         APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
