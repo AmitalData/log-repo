@@ -2148,59 +2148,99 @@ namespace Logitude.XSD
             #region [13] Other Charges
             if (!Context.AsAgreedOtherCharges)
             {
-                if (Context.AWBPrintOnlies != null && Context.AWBPrintOnlies.Count > 0)
-                {
-                    List<ShipmentAWBPrintOnly> otherChargesList = new List<ShipmentAWBPrintOnly>();
+                List<FWBOtherChargesItem> dataItems = new List<FWBOtherChargesItem>();
 
+                if (Context.AWBPrintOnlies != null)
+                {
                     foreach (ShipmentAWBPrintOnly item in Context.AWBPrintOnlies)
                     {
                         if (!string.IsNullOrEmpty(item.IATACodeId) && !string.IsNullOrEmpty(item.PrepaidCollectId) && item.Amount != null && (item.DueTypeCode == "AG" || item.DueTypeCode == "CA"))
                         {
-                            otherChargesList.Add(item);
+                            dataItems.Add(new FWBOtherChargesItem()
+                            {
+                                IATACodeId = item.IATACodeId,
+                                DueTypeCode = item.DueTypeCode,
+                                PrepaidCollectId = item.PrepaidCollectId,
+                                Amount = item.Amount,
+                            });
                         }
                     }
+                }
 
-                    if (otherChargesList.Count > 0)
+                if (Context.ShipmentPayables != null)
+                {
+                    foreach (ShipmentPayable item in Context.ShipmentPayables)
                     {
-                        IATACodeRepository iATACodeRepository = new IATACodeRepository(Context.Tenant);
-
-                        List<CHAMP17.OtherChargesBody> bodyList = new List<CHAMP17.OtherChargesBody>();
-
-                        foreach (ShipmentAWBPrintOnly item in otherChargesList)
+                        if (!string.IsNullOrEmpty(item.IATACodeId) && !string.IsNullOrEmpty(item.PrepaidCollectId) && item.ExpectedAmount != null && (item.DueTypeCode == "AG" || item.DueTypeCode == "CA"))
                         {
-                            string itemIATACode = "";
-                            IATACode iATACode = iATACodeRepository.GetSingleIATACode(item.IATACodeId);
-                            if (iATACode != null)
+                            dataItems.Add(new FWBOtherChargesItem()
                             {
-                                itemIATACode = iATACode.Code;
-                            }
+                                IATACodeId = item.IATACodeId,
+                                DueTypeCode = item.DueTypeCode,
+                                PrepaidCollectId = item.PrepaidCollectId,
+                                Amount = item.ExpectedAmount,
+                            });
+                        }
+                    }
+                }
 
-                            decimal itemAmount = (decimal)item.Amount;
-                            string itemDueCode = (item.DueTypeCode.Length <= 1) ? item.DueTypeCode : item.DueTypeCode.Substring(0, 1);
-                            itemIATACode = (itemIATACode.Length <= 2) ? itemIATACode : itemIATACode.Substring(0, 2);
-
-                            CHAMP17.OtherChargeItems items = new CHAMP17.OtherChargeItems()
+                if (Context.ShipmentReceivables != null)
+                {
+                    foreach (ShipmentReceivable item in Context.ShipmentReceivables)
+                    {
+                        if (!string.IsNullOrEmpty(item.IATACodeId) && !string.IsNullOrEmpty(item.PrepaidCollectId) && item.TotalAmount != null && (item.DueTypeCode == "AG" || item.DueTypeCode == "CA"))
+                        {
+                            dataItems.Add(new FWBOtherChargesItem()
                             {
-                                ChargeAmount = itemAmount,
-                                EntitlementCode = itemDueCode,
-                                OtherChargeCode = itemIATACode,                                
-                            };
+                                IATACodeId = item.IATACodeId,
+                                DueTypeCode = item.DueTypeCode,
+                                PrepaidCollectId = item.PrepaidCollectId,
+                                Amount = item.TotalAmount,
+                            });
+                        }
+                    }
+                }
 
-                            CHAMP17.OtherChargesBody body = new CHAMP17.OtherChargesBody()
-                            {
-                                ChargeLine = new CHAMP17.ChargeLine()
-                                {
-                                    PrepaidCollectIndicatorOfOtherCharges = item.PrepaidCollectId,
-                                },
+                if (dataItems.Count > 0)
+                {
+                    IATACodeRepository iATACodeRepository = new IATACodeRepository(Context.Tenant);
 
-                                OtherChargeItems = new CHAMP17.OtherChargeItems[] { items }
-                            };
+                    List<CHAMP17.OtherChargesBody> bodyList = new List<CHAMP17.OtherChargesBody>();
 
-                            bodyList.Add(body);
+                    foreach (FWBOtherChargesItem item in dataItems)
+                    {
+                        string itemIATACode = "";
+                        IATACode iATACode = iATACodeRepository.GetSingleIATACode(item.IATACodeId);
+                        if (iATACode != null)
+                        {
+                            itemIATACode = iATACode.Code;
                         }
 
-                        myXSDElement.OtherCharges = bodyList.ToArray<CHAMP17.OtherChargesBody>();
+                        decimal itemAmount = (decimal)item.Amount;
+                        string itemDueCode = (item.DueTypeCode.Length <= 1) ? item.DueTypeCode : item.DueTypeCode.Substring(0, 1);
+                        itemIATACode = (itemIATACode.Length <= 2) ? itemIATACode : itemIATACode.Substring(0, 2);
+
+                        CHAMP17.OtherChargeItems items = new CHAMP17.OtherChargeItems()
+                        {
+                            ChargeAmount = itemAmount,
+                            EntitlementCode = itemDueCode,
+                            OtherChargeCode = itemIATACode,                             
+                        };
+
+                        CHAMP17.OtherChargesBody body = new CHAMP17.OtherChargesBody()
+                        {
+                            ChargeLine = new CHAMP17.ChargeLine()
+                            {
+                                PrepaidCollectIndicatorOfOtherCharges = item.PrepaidCollectId,
+                            },
+
+                            OtherChargeItems = new CHAMP17.OtherChargeItems[] { items }
+                        };
+
+                        bodyList.Add(body);
                     }
+
+                    myXSDElement.OtherCharges = bodyList.ToArray<CHAMP17.OtherChargesBody>();
                 }
             }
             #endregion
@@ -3795,5 +3835,13 @@ namespace Logitude.XSD
 
             return myXSDElement;
         }        
+
+        class FWBOtherChargesItem
+        {
+            public string IATACodeId { get; set; }
+            public string DueTypeCode { get; set; }
+            public string PrepaidCollectId { get; set; }
+            public double? Amount { get; set; }
+        }
     }
 }
