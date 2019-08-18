@@ -115,7 +115,7 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td style="width:600px">{{'ARPayment.TH.Details' | TextCodeTranslationPipe}}</td>
+                                    <td style="width:600px">XXXXXX{{'ARPayment.TH.Details' | TextCodeTranslationPipe}}</td>
                                     <td>
                                         <div></div>
                                     </td>
@@ -207,10 +207,10 @@
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
+                                                    <LogTextBoxV3 [ObjectFieldName]="'AmountInPaymentCurrency'"
                                                                 [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'"
                                                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogTextBox>
+                                                    </LogTextBoxV3>
                                                 </td>
 
                                                 <td>
@@ -493,10 +493,10 @@
 
                                             <tr class="customtrclass">
                                                 <td style="width:150px;">
-                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
+                                                    <LogTextBoxV3 [ObjectFieldName]="'AmountInPaymentCurrency'"
                                                                 [Text]="AmountInPaymentCurrency" [InputType]="'double'"
                                                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogTextBox>
+                                                    </LogTextBoxV3>
                                                 </td>
 
                                                 <td style="width:150px;">
