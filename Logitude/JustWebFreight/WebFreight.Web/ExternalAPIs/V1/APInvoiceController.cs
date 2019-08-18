@@ -172,7 +172,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 // vat
                 VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(tenant);
                 VatTypePercentagePM vat = vatTypePercentageQuery.GetVatTypePercentagesForVatType(tenant, line.VatTypeId).FirstOrDefault();
-                line.VatPercentage = vat.Percentage;
+                line.VatPercentage = vat?.Percentage;
 
 
                 // LocalCurrencyAmount,ForiegnCurrencyAmount
