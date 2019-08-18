@@ -186,7 +186,7 @@ export class UserWorkspaceComponent implements OnInit {
         logitudeWindow.WindowArgs = args;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureUser/Components/LicensesManagementComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            this.LoadUserLicenses();
+            this.RefreshButtonClicked();
         });
     }
 
@@ -426,6 +426,9 @@ export class UserWorkspaceComponent implements OnInit {
             logWindow.Height = 600;
             logWindow.Title = "New User";
             logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/NewUserComponent');
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                this.RefreshButtonClicked();
+            });
         });
     }
 }
