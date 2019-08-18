@@ -33,6 +33,7 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
     AccountingIntegrityCheckPMService: AccountingIntegrityCheckPMService = new AccountingIntegrityCheckPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     HasException: boolean = false;
+    ShouldFix: boolean = false;
     Fixing: boolean = false;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
@@ -41,6 +42,7 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
         this.showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
         this.entityPM = entityArgs.EntityPM;
         this.HasException = this.entityPM.HasException;
+        this.ShouldFix = this.entityPM.ShouldFix;
         // this.encodeParameters();
         // this.decodeParameters();
         if(this.entityPM.StatusCode =="2") this.Fixing =true;

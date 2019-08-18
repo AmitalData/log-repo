@@ -27,6 +27,7 @@ export class TenantManagementJS {
     public PaidDaysLeft: number;
     public SuspendDaysLeft: number;
     public NumberOfUsers: number;
+    public NumberOfFreeUsers: number;
     public BluesnapContractId: string;
     public BluesnapCRMContractId: string;
     public BluesnapEAWBContractId: string;

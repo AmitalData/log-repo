@@ -61,7 +61,7 @@ using Simplog.Data.InvoiceModel;
 				   if(item.VatTypeId != null)
 				   {
 					   VatTypeQueryService VatTypeService1 = new VatTypeQueryService(Tenant);
-					   					   temp.VatType = VatTypeService1.GetVatTypeById(item.VatTypeId,Tenant); 
+					   					   temp.VatType = VatTypeService1.VatTypeCustomDataMapping(item.VatTypeId,Tenant); 
 			       
 					   				   }
 				   
@@ -138,7 +138,7 @@ using Simplog.Data.InvoiceModel;
 					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
 					if(item.VatType != null)
 					{
-						var myVatTypePM = VatTypeVatTypeService.VatTypeDataMappingAndValidatin(item.VatType,Tenant,ComputingPartnerName);
+						var myVatTypePM = VatTypeVatTypeService.VatTypeCustomDataMappingAndValidatin(item.VatType,Tenant);
 												if(myVatTypePM != null)
 						{
 							temp.VatTypeId = myVatTypePM.Id;

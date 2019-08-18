@@ -401,40 +401,40 @@ User/Pass",
         private void button6_Click(object sender, EventArgs e)
         {
 
-            SupplierInvoicePM invoice = new SupplierInvoicePM()
-            { DeclarationId = "1-104235", InvoiceCounterKey = 1, Tenant = 1, SequenceNumeric = 1, InvoiceNumber = "1000", ChangeSetOp = ChangeSetOperation.Insert };
-            for (int a = 1; a < 15000; a = a + 1)
-            {
-                SupplierInvoiceItemPM item = new SupplierInvoiceItemPM()
-                {
-                    DeclarationId = "1-104235",
-                    CounterKey = 1,
-                    LineNumber = a,
-                    ItemCode = "a",
-                    Tenant = 1,
-                    SequenceNumeric = a,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                };
+            //SupplierInvoicePM invoice = new SupplierInvoicePM()
+            //{ DeclarationId = "1-104235", InvoiceCounterKey = 1, Tenant = 1, SequenceNumeric = 1, InvoiceNumber = "1000", ChangeSetOp = ChangeSetOperation.Insert };
+            //for (int a = 1; a < 15000; a = a + 1)
+            //{
+            //    SupplierInvoiceItemPM item = new SupplierInvoiceItemPM()
+            //    {
+            //        DeclarationId = "1-104235",
+            //        CounterKey = 1,
+            //        LineNumber = a,
+            //        ItemCode = "a",
+            //        Tenant = 1,
+            //        SequenceNumeric = a,
+            //        ChangeSetOp = ChangeSetOperation.Insert,
+            //    };
 
-                SupplierInvioceItemCertificatPM certificate = new SupplierInvioceItemCertificatPM()
-                {
+            //    SupplierInvioceItemCertificatPM certificate = new SupplierInvioceItemCertificatPM()
+            //    {
 
-                    DeclarationId = "1-104235",
-                    InvoiceCounterKey = 1,
-                    LineNumber = a,
-                    ItemCertificateCounterKey = a,
-                    AttachmentTypeCode = "3",
-                    Tenant = 1,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    SequenceNumeric = a,
+            //        DeclarationId = "1-104235",
+            //        InvoiceCounterKey = 1,
+            //        LineNumber = a,
+            //        ItemCertificateCounterKey = a,
+            //        AttachmentTypeCode = "3",
+            //        Tenant = 1,
+            //        ChangeSetOp = ChangeSetOperation.Insert,
+            //        SequenceNumeric = a,
 
-                };
-                item.SupplierInvioceItemCertificats.Add(certificate);
-                invoice.SupplierInvoiceItems.Add(item);
-            }
-            ICustomContext context = CustomContext.GetContext(1);
-            SupplierInvoiceUpdateService serivce = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), 1);
-            serivce.Update(invoice, true);
+            //    };
+            //    item.SupplierInvioceItemCertificats.Add(certificate);
+            //    invoice.SupplierInvoiceItems.Add(item);
+            //}
+            //ICustomContext context = CustomContext.GetContext(1);
+            //SupplierInvoiceUpdateService serivce = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), 1);
+            //serivce.Update(invoice, true);
 
 
             //public EntitySet GetMetaDataEntitySet<TEntity>(DbContext dbCtx)
@@ -479,8 +479,32 @@ User/Pass",
             //    var reader = new StreamReader(memstream);
             //    string content = reader.ReadToEnd();
             //    byte[] bytearray = memstream.ToArray();
-
-
+            string value = "R01";
+            string reference = null;
+            string group = null;
+            Regex isMatche = new Regex("([A-Za-z])");
+            bool letters = isMatche.IsMatch(value);
+            if (letters)
+            {
+                for (int i = value.Length; i > 0; i--)
+                {
+                    string d = value.Substring(i - 1, 1);
+                    MatchCollection match = Regex.Matches(d, @"^[a-zA-Z]*$");
+                    if (match.Count != 0)
+                    {
+                        group = value.Substring(0, i);
+                        break;
+                    }
+                    else
+                    {
+                        reference = d + reference;
+                    }
+                    //var array = Regex.Matches("12s4rt", @"\D+|\d+")
+                    //.Cast<Match>()
+                    //.Select(m => m.Value)
+                    //.ToArray();
+                }
+            }
         }
 
         private void button7_Click(object sender, EventArgs e)

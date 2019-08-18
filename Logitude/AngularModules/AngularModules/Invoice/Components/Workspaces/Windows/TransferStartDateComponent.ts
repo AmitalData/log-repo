@@ -142,26 +142,34 @@ export class TransferStartDateComponent extends BaseComponent {
     GetConfirmMessage(myStartDate: Date) {
         var myResult: string = "";
         var myDateString: string = "";
-
-        if (!AppTool.IsNullOrEmpty(this.ARPaymentTransferStartDate)) {
-            myDateString = DateTool.GetDateFormats(this.ARPaymentTransferStartDate).ShortDateString;
-        }
-
+        
         switch (this.Code) {
             case "ARInvoice":
                 {
+                    if (!AppTool.IsNullOrEmpty(this.ARInvoiceTransferStartDate)) {
+                        myDateString = DateTool.GetDateFormats(this.ARInvoiceTransferStartDate).ShortDateString;
+                    }
+
                     myResult = "Please note that all the AR invoices with an invoice date smaller than " + myDateString + ", will be updated and marked as blocked for transfer";
                     break;
                 }
 
             case "APInvoice":
                 {
+                    if (!AppTool.IsNullOrEmpty(this.APInvoiceTransferStartDate)) {
+                        myDateString = DateTool.GetDateFormats(this.APInvoiceTransferStartDate).ShortDateString;
+                    }
+
                     myResult = "Please note that all the AP invoices with an invoice date smaller than " + myDateString + ", will be updated and marked as blocked for transfer";
                     break;
                 }
 
             case "ARPayment":
                 {
+                    if (!AppTool.IsNullOrEmpty(this.ARPaymentTransferStartDate)) {
+                        myDateString = DateTool.GetDateFormats(this.ARPaymentTransferStartDate).ShortDateString;
+                    }
+
                     myResult = "Please note that all the AR payments with a register date smaller than " + myDateString + ", will be updated and marked as blocked for transfer";
                     break;
                 }

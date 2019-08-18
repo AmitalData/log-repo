@@ -150,6 +150,10 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function numberWithSeparators(x,separator) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+}
+
 function querySelection(id) {
     return document.querySelector("#" + id).files[0];
 }

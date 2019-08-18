@@ -485,7 +485,7 @@
                                                                 <table>
 
                                                                     <!-- RadioButton -->
-                                                                    <tr style="height: 1px;">
+                                                                    <tr style="height: 20px;">
                                                                         <td>
                                                                             <table>
                                                                                 <tr>
@@ -522,11 +522,11 @@
                                                                     </tr>
 
                                                                     <!-- Fields -->
-                                                                    <tr style="height: 1px;">
+                                                                    <tr style="height: 35px;">
                                                                         <td>
                                                                             <table>
-                                                                                <tr style="height: 1px;">
-                                                                                    <td style="width: 150px;">
+                                                                                <tr>
+                                                                                    <td style="width: 200px;">
                                                                                         <LogLabel [ObjectFieldName]="'PackageCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [Text]="'Main Package'"></LogLabel>
                                                                                     </td>
 
@@ -534,7 +534,7 @@
                                                                                         <div></div>
                                                                                     </td>
 
-                                                                                    <td style="width: 120px;">
+                                                                                    <td style="width: 110px;">
                                                                                         <LogLabel [ObjectFieldName]="'NumberOfUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
                                                                                     </td>
 
@@ -542,7 +542,7 @@
                                                                                         <div></div>
                                                                                     </td>
 
-                                                                                    <td style="width: 120px;">
+                                                                                    <td style="width: 110px;">
                                                                                         <LogLabel [ObjectFieldName]="'FreeUsers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
                                                                                     </td>
 
@@ -550,7 +550,7 @@
                                                                                         <div></div>
                                                                                     </td>
 
-                                                                                    <td style="width: 120px;">
+                                                                                    <td style="width: 110px;">
                                                                                         <LogLabel [ObjectFieldName]="'LicensePrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
                                                                                     </td>
 
@@ -558,7 +558,7 @@
                                                                                         <div></div>
                                                                                     </td>
 
-                                                                                    <td style="width: 120px;">
+                                                                                    <td style="width: 110px;">
                                                                                         <LogLabel [ObjectFieldName]="'TotalPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogLabel>
                                                                                     </td>
 
@@ -692,10 +692,11 @@
                                                                                                                                             {{item.TotalPrice}}
                                                                                                                                         </td>
 
+                                                                                                                                        <!-- [disabled]="!IsEditable" -->
                                                                                                                                         <td class="CellTools">
                                                                                                                                             <span class="CellSeparator"></span>
-                                                                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)" [disabled]="!IsEditable"></IconButton>
-                                                                                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)" [disabled]="!IsEditable"></IconButton>
+                                                                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
+                                                                                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)"></IconButton>
                                                                                                                                         </td>
                                                                                                                                     </tr>
 
@@ -717,10 +718,10 @@
                                                                                                                         <table>
                                                                                                                             <tr>
                                                                                                                                 <td style="width: 210px; padding-left: 4px;">Totals</td>
-                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">111</td>
-                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">222</td>
-                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">333</td>
-                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">444</td>
+                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalNumberOfUsers}}</td>
+                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalFreeUsers}}</td>
+                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalPrice}}</td>
+                                                                                                                                <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalTotalPrice}}</td>
                                                                                                                                 <td>
                                                                                                                                     <div></div>
                                                                                                                                 </td>
@@ -770,8 +771,8 @@
                                                                                                                             <div class="SimpleGridViewHeader">
                                                                                                                                 <table>
                                                                                                                                     <tr>
-                                                                                                                                        <td style="width: 330px; min-width: 330px; max-width: 330px;">Name</td>
-                                                                                                                                        <td class="LastChild">
+                                                                                                                                        <td>Name</td>
+                                                                                                                                        <td style="width: 100px; min-width: 100px; max-width: 100px;" class="LastChild">
                                                                                                                                             <div></div>
                                                                                                                                         </td>
                                                                                                                                     </tr>
@@ -781,11 +782,11 @@
                                                                                                                             <div class="SimpleGridViewBody">
                                                                                                                                 <table>
                                                                                                                                     <tr class="SimpleGridViewRow" *ngFor="let item of AddOnsList">
-                                                                                                                                        <td class="CellStretched" style="width: 330px; min-width: 330px; max-width: 330px;">
+                                                                                                                                        <td class="CellStretched">
                                                                                                                                             {{item.PackageName}}
                                                                                                                                         </td>
 
-                                                                                                                                        <td class="CellTools">
+                                                                                                                                        <td style="width: 100px; min-width: 100px; max-width: 100px;" class="CellTools">
                                                                                                                                             <span class="CellSeparator"></span>
                                                                                                                                             <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditAddOn(item)"></IconButton>
                                                                                                                                             <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteAddOn(item)"></IconButton>

@@ -93,8 +93,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 {
                     throw new ApplicationException("Dates are not allowed in Surcharges versions");
                 }
-
-                this.OnDeleteSurchargeTariffLine(entityPM);
             }
 
             this.ValidateSurchargeUniqueSeller(entityPM);
@@ -279,10 +277,13 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             //tariffVersionUpdateService.Update(tariffVersionPM, true);
         }
 
+        private TariffLineRepository iTariffLineRepository;
         private void ApproveDraftVersion(TariffPM entityPM)
         {
             if (entityPM.IsApprovingDraftVersion)
             {
+                this.iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
+
                 TariffVersionPM iDraftVersion = entityPM.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
                 List<TariffLinePM> iDraftVersionLines = new List<TariffLinePM>();
 
@@ -293,10 +294,10 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                 else
                 {
-                    iDraftVersionLines = iDraftVersion.TariffLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                    iDraftVersionLines = iDraftVersion.TariffLines;
                 }
 
-                if (iDraftVersionLines.Where(d => d.HasErrors).Count() > 0)
+                if (iDraftVersionLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.HasErrors).Count() > 0)
                 {
                     throw new ApplicationException("Invalid Tariff Lines");
                 }
@@ -308,6 +309,16 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         if (iDraftVersion.ExpirationDate.Value.Date < entityPM.UpdateDate.Date)
                         {
                             throw new ApplicationException("Approving past version is not allowed, please update the dates");
+                        }
+                    }
+                    else
+                    {
+                        if (iDraftVersion.InitialEnddate != null)
+                        {
+                            if (iDraftVersion.InitialEnddate.Value.Date < entityPM.UpdateDate.Date)
+                            {
+                                throw new ApplicationException("Approving past version is not allowed, please update the dates");
+                            }
                         }
                     }
                 }
@@ -332,27 +343,29 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                     if (iPreviousVersion != null)
                     {
-                        TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
                         List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
 
-                        foreach (TariffLinePM linePM in iDraftVersionLines)
+                        foreach (TariffLinePM tariffLinePM in iDraftVersionLines)
                         {
-                            if (linePM.StartDate != null)
-                            {
-                                var iPreviousLine = iPreviousVersionLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
-                                if (iPreviousLine != null)
-                                {
-                                    if (iPreviousLine.StartDate != null)
-                                    {
-                                        if (linePM.StartDate < iPreviousLine.StartDate)
-                                        {
-                                            string msg = "Line (" + linePM.OriginPortCode + " > " + linePM.DestinationPortCode + ") Start Date is less than the previous version line";
-                                            throw new ApplicationException(msg);
-                                        }
-                                    }
+                            TariffLine previousLine = iPreviousVersionLines.Where(d => d.OriginPortId == tariffLinePM.OriginPortId && d.DestinationPortId == tariffLinePM.DestinationPortId).FirstOrDefault();
 
-                                    iPreviousLine.ExpirationDate = linePM.StartDate.Value.AddDays(-1);
-                                    iTariffLineRepository.Update(iPreviousLine);
+                            if (previousLine != null)
+                            {
+                                if (tariffLinePM.ChangeSetOp == ChangeSetOperation.Delete)
+                                {
+                                    TariffLineExpirationDatePM tariffLineExpirationDateItem = entityPM.DeletedLinesExpirationDates.Where(d => d.TariffLineId == tariffLinePM.Id).FirstOrDefault();
+                                    if (tariffLineExpirationDateItem != null)
+                                    {
+                                        this.UpdateVersionPreviousLineExpirationDate(tariffLineExpirationDateItem, previousLine, tariffLinePM);
+                                    }
+                                }
+
+                                else
+                                {
+                                    if (tariffLinePM.StartDate != null)
+                                    {
+                                        this.UpdateVersionPreviousLineSatrtDate(tariffLinePM, previousLine);
+                                    }
                                 }
                             }
                         }
@@ -360,7 +373,92 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         iTariffLineRepository.SubmitChanges();
                     }
                 }
+
+                else
+                {
+                    iDraftVersion.ExpirationDate = iDraftVersion.InitialEnddate;
+                    TariffVersionRepository tariffVersionRepository = new TariffVersionRepository(iDraftVersion.Tenant);
+
+                    TariffVersion iPreviousVersion = tariffVersionRepository.GetAllVersions(entityPM.Id, entityPM.Tenant).Where(o => o.Version != iDraftVersion.Version).OrderByDescending(o => o.CreateDate).FirstOrDefault();
+                    if (iPreviousVersion != null)
+                    {
+                        if (iPreviousVersion.Version != iDraftVersion.Version)
+                        {
+                            List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
+                            iPreviousVersion.ExpirationDate = iDraftVersion.StartDate.Value.AddDays(-1);
+                            tariffVersionRepository.Update(iPreviousVersion);
+
+                            foreach (TariffLine line in iPreviousVersionLines)
+                            {
+                                line.ExpirationDate = iPreviousVersion.ExpirationDate;
+                                iTariffLineRepository.Update(line);
+                            }
+
+                            foreach (TariffLinePM line in iDraftVersion.TariffLines.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete).ToList())
+                            {
+                                line.ExpirationDate = iDraftVersion.ExpirationDate;
+                            }
+
+                            iTariffLineRepository.SubmitChanges();
+                            tariffVersionRepository.SubmitChanges();
+                        }
+                    }
+                }
             }
+        }
+        private void UpdateVersionPreviousLineExpirationDate(TariffLineExpirationDatePM tariffLineExpirationDateItem, TariffLine previousLine, TariffLinePM tariffLinePM)
+        {
+            bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "expiration", TariffLinePM = tariffLinePM, TariffLineExpirationDateItem = tariffLineExpirationDateItem, PreviousLine = previousLine });
+
+            if(isExpirationDateValid)
+            {
+                previousLine.ExpirationDate = tariffLineExpirationDateItem.ExpirationDate;
+                iTariffLineRepository.Update(previousLine);
+            }
+
+            else
+            {
+                tariffLinePM.ChangeSetOp = ChangeSetOperation.None;
+                throw new ApplicationException("Expiration date can't be less than start date in the previous version line");
+            }
+        }
+        private void UpdateVersionPreviousLineSatrtDate(TariffLinePM tariffLinePM, TariffLine previousLine)
+        {
+            bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "start", TariffLinePM = tariffLinePM, PreviousLine = previousLine });
+
+            if (isExpirationDateValid)
+            {
+                previousLine.ExpirationDate = tariffLinePM.StartDate.Value.AddDays(-1);
+                iTariffLineRepository.Update(previousLine);
+            }
+
+            else
+            {
+                string msg = "Line (" + tariffLinePM.OriginPortCode + " > " + tariffLinePM.DestinationPortCode + ") Start Date is less than the previous version line";
+                throw new ApplicationException(msg);
+            }
+        }
+        private bool ValidatePreviousLineDates(dynamic previousLineDatesArgs)
+        {
+            bool isExpirationDateValid = true;
+
+            if (previousLineDatesArgs.DateField == "expiration")
+            {
+                if (previousLineDatesArgs.TariffLineExpirationDateItem.ExpirationDate < previousLineDatesArgs.PreviousLine.StartDate)                {
+                    
+                    isExpirationDateValid = false;                    
+                }
+            }
+
+            else if (previousLineDatesArgs.DateField == "start")
+            {
+                if (previousLineDatesArgs.TariffLinePM.StartDate < previousLineDatesArgs.PreviousLine.StartDate)
+                {
+                    isExpirationDateValid = false;                    
+                }
+            }
+
+            return isExpirationDateValid;
         }
 
         private void ValidateSurchargeUniqueSeller(TariffPM entityPM)
@@ -378,47 +476,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 if (iCount >= 1)
                 {
                     throw new ApplicationException("Tariff surcharge seller should be unique");
-                }
-            }
-        }
-
-        private void OnDeleteSurchargeTariffLine(TariffPM entityPM)
-        {
-            TariffVersionPM iDraftVersion = entityPM.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
-
-            if (iDraftVersion.TariffLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete).Any())
-            {
-                TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
-
-                if (iPreviousVersion != null)
-                {
-                    TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
-                    List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
-
-                    foreach (TariffLinePM linePM in iDraftVersion.TariffLines.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete))
-                    {
-                        TariffLineExpirationDatePM tariffLineExpirationDate = entityPM.DeletedLinesExpirationDates.Where(d => d.TariffLineId == linePM.Id).FirstOrDefault();
-
-                        if (tariffLineExpirationDate != null)
-                        {
-                            TariffLine iPreviousLine = iPreviousVersionLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
-                            if (iPreviousLine != null)
-                            {
-                                if (tariffLineExpirationDate.ExpirationDate < iPreviousLine.StartDate)
-                                {
-                                    throw new ApplicationException("Expiration date can't be less than start date in the previous version line");
-                                }
-
-                                else
-                                {
-                                    iPreviousLine.ExpirationDate = tariffLineExpirationDate.ExpirationDate;
-                                    iTariffLineRepository.Update(iPreviousLine);                                    
-                                }
-                            }
-                        }
-                    }
-
-                    iTariffLineRepository.SubmitChanges();
                 }
             }
         }

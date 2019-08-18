@@ -224,7 +224,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
     
 
-            var WindowArgs: any = { BetweenDate: betweenDate, FromPort: this.EntityPM.MainCarriageFromPortId, ToPort: this.EntityPM.MainCarriageToPortId, GrossWeight: this.EntityPM.GrossWeight, ChargeableWeight: this.EntityPM.ChargeableWeight, Volume: this.EntityPM.Volume, ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode, GrossWeightUnit: this.EntityPM.GrossWeightUnitCode, VolumeUnit: this.EntityPM.VolumeUnitCode };
+            var WindowArgs: any = { BetweenDate: betweenDate, FromPort: this.EntityPM.MainCarriageFromPortId, ToPort: this.EntityPM.ToPortId, GrossWeight: this.EntityPM.GrossWeight, ChargeableWeight: this.EntityPM.ChargeableWeight, Volume: this.EntityPM.Volume, ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode, GrossWeightUnit: this.EntityPM.GrossWeightUnitCode, VolumeUnit: this.EntityPM.VolumeUnitCode };
             var logWindow = new LogitudeWindow();
             logWindow.IsFillScreenHeight = true;
             logWindow.Width = 1200;
@@ -1171,6 +1171,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
                         this.EntityPM.ShipmentPayables = [];
+                        this.EntityPM.IsDirty = true;
                         this.BuildItemsSource();
                         this.ComputeShipmentFields();
                     }

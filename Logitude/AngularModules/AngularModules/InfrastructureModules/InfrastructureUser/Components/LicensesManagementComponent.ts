@@ -51,9 +51,9 @@ export class LicensesManagementComponent implements OnDestroy {
         this.AllPackages = args.AllPackages;
         this.dirtyItem = null;
 
-        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
-            this.HeaderColumnWidth = 240;
-        }
+        //if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+        //    this.HeaderColumnWidth = 240;
+        //}
 
         this.InitColumns();
         this.LoadUserLicenses();
@@ -136,22 +136,31 @@ export class LicensesManagementComponent implements OnDestroy {
     public LicensesManagmentsList: LicensesManagementDataItem[];
     private BuildHeaders() {
         this.LicensesManagmentsList = [];
-        
+
+        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+            var usersCount: number = this.AllUserLicenses.filter(d => d.PackageCode == SessionLocator.TenantManagementJS.PackageCode).length;
+            var numberOfUsers: number = SessionLocator.TenantManagementJS.NumberOfFreeUsers + SessionLocator.TenantManagementJS.NumberOfUsers;
+
+            var foreground = FontTool.Black;
+            if (usersCount > numberOfUsers) {
+                foreground = FontTool.Red;
+            }
+
+            var mainItem: LicensesManagementDataItem = new LicensesManagementDataItem();
+            mainItem.Header = usersCount + "/" + numberOfUsers;
+            mainItem.Color = foreground;
+            mainItem.UsersCount = usersCount;
+            mainItem.NumberOfUsers = numberOfUsers;
+            this.LicensesManagmentsList.push(mainItem);
+        }
+
         var index: number = 0;
         SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode === b.PackageCode) ? 0 : (a.PackageCode < b.PackageCode) ? -1 : 1 }).forEach(item => {
             index++;
 
             if (index <= 10) {
-                var myPackageName: string = "";
-                var myPackageCode: string = null;
-                var list: PackageList = this.AllPackages.filter(d => d.Code == item.PackageCode)[0];
-                if (list != null) {
-                    myPackageName = list.Name;
-                    myPackageCode = list.Code;
-                }
-                
                 var usersCount: number = this.AllUserLicenses.filter(d => d.PackageCode == item.PackageCode).length;
-                var numberOfUsers: number = AppTool.IsNullOrZero(item.NumberOfUsers) ? 0 : item.NumberOfUsers;
+                var numberOfUsers: number = (AppTool.IsNullOrZero(item.NumberOfUsers) ? 0 : item.NumberOfUsers) + (AppTool.IsNullOrZero(item.FreeUsers) ? 0 : item.FreeUsers);;
 
                 var foreground = FontTool.Black;
                 if (usersCount > numberOfUsers) {
@@ -260,7 +269,7 @@ export class LicensesManagementComponent implements OnDestroy {
         var tenantLicenses: TenantManagementLicensePM = SessionLocator.TenantManagementJS.TenantManagementLicenses.filter(d => d.PackageCode == myPackageCode)[0];
 
         var usersCount: number = userLicenses.length;
-        var numberOfUsers: number = tenantLicenses.NumberOfUsers;
+        var numberOfUsers: number = (AppTool.IsNullOrZero(tenantLicenses.NumberOfUsers) ? 0 : tenantLicenses.NumberOfUsers) + (AppTool.IsNullOrZero(tenantLicenses.FreeUsers) ? 0 : tenantLicenses.FreeUsers);;
 
         if (usersCount > numberOfUsers) {
             errors.push("Some Packages have exceeded the allowed number of users");

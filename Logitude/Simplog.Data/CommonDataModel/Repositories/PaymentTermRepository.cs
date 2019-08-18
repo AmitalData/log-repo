@@ -43,7 +43,19 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.PaymentTerms where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();           
         }
+        public PaymentTerm GetSinglePaymentTermByExternalId(string externalId, int tenant)
+        {
+            return (from record in context.PaymentTerms where record.ExternalId == externalId && record.Tenant == tenant select record).FirstOrDefault();
+        }
+        public PaymentTerm GetSingleByDaysDifference(int daysDifference, int tenant)
+        {
+            PaymentTerm query = (from a in context.PaymentTerms
+                         where a.Days == daysDifference && a.Tenant == tenant && a.ExternalId != "MS"
+                         select a).FirstOrDefault();
 
+
+            return query;
+        }
         public void Add(PaymentTerm entity)
         {
             context.PaymentTerms.Add(entity);

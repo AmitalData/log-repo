@@ -261,6 +261,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ImportManifest = masterData.ImportManifest;
                 shipmentPM.CarrierTransportDocumentNumber = masterData.CarrierTransportDocumentNumber;
                 shipmentPM.MAWBOBLDate = masterData.MAWBOBLDate;
+                shipmentPM.CutoffDate = masterData.CutoffDate;
                 shipmentPM.BookingConfirmationNumber = masterData.BookingConfirmationNumber;
                 shipmentPM.BookingConfirmationNotes = masterData.BookingConfirmationNotes;
                 shipmentPM.BookingConfirmedBy = masterData.BookingConfirmedBy;
@@ -1178,6 +1179,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.FlightDate = masterData.MainCarriageETD;
                     shipmentPM.IsFlightDateActual = false;
                 }
+
+                shipmentPM.CutoffDate = masterData.CutoffDate;
             }
 
             /* Bills*/
@@ -1385,7 +1388,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ShipmentLevelName = shipment.ShipmentLevel != null ? shipment.ShipmentLevel.Name : null;
             shipmentPM.NextLegName = shipment.NextLeg != null ? shipment.NextLeg.Name : null;
             shipmentPM.ShipmentTypeViewField = (shipment.ShipmentType != null ? shipment.ShipmentType.Name : "") + " " + (shipment.ShipmentLevel != null ? shipment.ShipmentLevel.Name : "");
-            shipmentPM.CutoffDate = shipment.CutoffDate;
             shipmentPM.CASSCode = shipment.CASSCode;
             shipmentPM.NoFreightFile = shipment.NoFreightFile;
             shipmentPM.DeliveryOrder = shipment.DeliveryOrder;
@@ -3163,7 +3165,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
             shipmentPM.TransportModeId = shipment.TransportModeId;
             shipmentPM.IncotermId = shipment.IncotermId;
-
+            shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;
@@ -4062,6 +4064,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.IncotermId = shipment.IncotermId;
                     shipmentPM.CustomerContactId = shipment.CustomerContactId;
                     shipmentPM.AgentContactId = shipment.AgentContactId;
+                    shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
 
                     if (m != null)
                     {

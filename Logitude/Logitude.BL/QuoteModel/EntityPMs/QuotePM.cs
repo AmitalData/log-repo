@@ -494,6 +494,29 @@ namespace Logitude.BL.QuoteModel.EntityPMs
             }
         }
 
+        private List<QuoteSaleChargePM> quotationSaleCharges;
+        public List<QuoteSaleChargePM> QuotationSaleCharges
+        {
+            get
+            {
+                if (quotationSaleCharges == null)
+                {
+                    quotationSaleCharges = new List<QuoteSaleChargePM>();
+                }
+
+                return quotationSaleCharges;
+            }
+
+            set
+            {
+                if (value != null)
+                {
+                    quotationSaleCharges = value;
+                }
+            }
+        }
+
+
         private List<QuoteSaleChargePM> quoteSaleCharges;
         public List<QuoteSaleChargePM> QuoteSaleCharges
         {

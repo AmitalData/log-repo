@@ -109,14 +109,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ARPaymentService service = new ARPaymentService(MyContext, tenant);
                         entityPM = mappingService.SetARPaymentPMFields(entityPM);
                         service.Create(entityPM);
-
+                      
                        
 
                         entity = mappingService.ARPaymentDataMapping(entityPM, tenant);
+
                         APIHelper.AddCommunicationLog("D", oldEntity, entity, "ARPayment", entityPM.Id, "ARPayment API", tenant);
 
                         scope.Complete();
-
+                        if (entityPM.AccountingPaymentMethodCode == "CA")
+                        {
+                            entity.ARPaymentCheques = null;
+                        }
                         entity.PaymentInvoices = null;
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }

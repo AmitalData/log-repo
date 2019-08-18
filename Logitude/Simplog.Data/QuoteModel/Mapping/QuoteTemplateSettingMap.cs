@@ -1005,7 +1005,18 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.SpaceLinesBeforeHeaders).HasColumnName("SpaceLinesBeforeHeaders");
             this.Property(t => t.SpaceLinesBeforeFooters).HasColumnName("SpaceLinesBeforeFooters");
             this.Property(t => t.SpaceLinesBeforePerContainers).HasColumnName("SpaceLinesBeforePerContainers");
-            
+
+
+
+
+            this.Property(t => t.QuoteTemplatePDFMarginBottom).HasColumnName("QuoteTemplatePDFMarginBottom");
+            this.Property(t => t.QuoteTemplatePDFMarginTop).HasColumnName("QuoteTemplatePDFMarginTop");
+
+
+            this.Property(t => t.ShowIncludedChargesPerContainers).HasColumnName("ShowIncludedChargesPerContainers");
+            this.Property(t => t.ShowIncludedChargesPackages).HasColumnName("ShowIncludedChargesPackages");
+            this.Property(t => t.ShowIncludedChargesContainers).HasColumnName("ShowIncludedChargesContainers");
+
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

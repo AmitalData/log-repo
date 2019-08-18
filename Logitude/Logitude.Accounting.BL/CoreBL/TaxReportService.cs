@@ -240,7 +240,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     }
                     SetReferenceFields(a.Reference);
-                   
+                    string transmitStatusCode = SetTransmitStatusByDocumentDate(a.ReferenceDate);
                     TaxReportLinePM taxReportLine = new TaxReportLinePM()
                     {
 
@@ -259,7 +259,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         LastUpdateDateTime = DateTime.Now,
                         UpdatedByUserId = taxReport.UpdatedByUserId,
                         Tenant = tenant,
-                        TransmitStatusCode = "1",
+                        TransmitStatusCode = transmitStatusCode,
 
 
                     };
@@ -354,7 +354,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
        static string  reference = null;
         static string referenceGroup = null;
-        public static void SetReferenceFields(string Reference)
+        private static void SetReferenceFields(string Reference)
         {
             if (Reference != null)
             {
@@ -363,26 +363,65 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     Reference = Reference.Replace("-", "");
                 }
-                if(Reference.Length > 20)
+                if (Reference.Length > 20)
                 {
                     Reference = Reference.Substring(0, 19);
                 }
-                var array = Regex.Matches(Reference, @"\D+|\d+")
-                    .Cast<Match>()
-                    .Select(m => m.Value)
-                    .ToArray();
-                if (array.Length > 1)
+                //var array = Regex.Matches(Reference, @"\D+|\d+")
+                //    .Cast<Match>()
+                //    .Select(m => m.Value)
+                //    .ToArray();
+                //if (array.Length > 1)
+                //{
+                //    referenceGroup = array[0];
+                //    reference = array[1];
+                //}
+                //else
+                //{
+                //    reference = Reference;
+                //    referenceGroup = "0000";
+                //}
+                Regex isMatche = new Regex("([A-Za-z])");
+                bool letters = isMatche.IsMatch(Reference);
+                if (letters)
                 {
-                    referenceGroup = array[0];
-                    reference = array[1];
+                    for (int i = Reference.Length; i > 0; i--)
+                    {
+                        string d = Reference.Substring(i - 1, 1);
+                        MatchCollection match = Regex.Matches(d, @"^[a-zA-Z]*$");
+                        if (match.Count != 0)
+                        {
+                            referenceGroup = Reference.Substring(0, i);
+                            break;
+                        }
+                        else
+                        {
+                            reference = d + reference;
+                        }
+                        //var array = Regex.Matches("12s4rt", @"\D+|\d+")
+                        //.Cast<Match>()
+                        //.Select(m => m.Value)
+                        //.ToArray();
+                    }
                 }
                 else
                 {
                     reference = Reference;
                     referenceGroup = "0000";
                 }
-            }
 
+            }
+        }
+
+        private static string SetTransmitStatusByDocumentDate(DateTime referenceDate)
+        {
+            DateTime date = DateTime.Now.AddDays(-180);
+            DateTime last180days = new DateTime(date.Year, date.Month, 1);
+            if (referenceDate <= last180days)
+            {
+                return "3";
+            }
+            else return "1";
         }
 
         public static BatchTaskExecutionPM CreatePNCFileInBatch(string taxReportId, int tenant)

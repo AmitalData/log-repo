@@ -40,6 +40,7 @@ export class TasksSchedulerList {
 		LastRunStartTime: Date;
 		Version: number;
 		Status: string;
-		Retries: number;
+    Retries: number;
+    AverageRunTime: number;
 	
 }

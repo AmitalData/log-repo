@@ -51,6 +51,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 else
                 {
                     Result = Service.GetAPInvoiceByInvoiceNumber(number, tenant);
+
                 }
 
 
@@ -79,23 +80,44 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        int tenant = apinvoice.Tenant;
+                        int tenant = authToken.Tenant;
 
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 
                         if (apinvoice != null) oldEntity = LogitudeXmlSerializer.DeserializeObject<APInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(apinvoice));
 
-                        IInvoiceContext MyContext = InvoiceContext.GetContext(apinvoice.Tenant);
-                        APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(apinvoice.Tenant);
-                        APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, apinvoice.Tenant);
+                        IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+                        APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
 
-                        
+                        apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
+                        apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
 
-                        APInvoiceService apinvoiceService = new APInvoiceService(MyContext, apinvoice.Tenant);
+                        //
+                        APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
+
+                        apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
+
+                        // VendorGLAccountId
+                        CardQuery cardQuery = new CardQuery(tenant);
+                        CardPM vendor = cardQuery.GetSinglePM(apinvoicePM.VendorId, tenant);
+                        apinvoicePM.VendorGLAccountId = vendor.GLAccountId;
+
+                        // SET approved
+                        apinvoicePM.SetVoided = false;
+                        apinvoicePM.SetApproved = true;
+                        apinvoicePM.SetReTransfer = false;
+                        apinvoicePM.SetCancelApproval = false;
+
+                        if (apinvoicePM.TransferStatusCode == null)
+                            apinvoicePM.TransferStatusCode = "NR";
+
+                        MapLines(apinvoice, tenant, apinvoicePM);
+
+                        APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
                         apinvoiceService.Create(apinvoicePM);
 
 
-                        APIHelper.AddCommunicationLog("D", oldEntity, apinvoice, "APInvoice", apinvoicePM.Id, "APInvoice API", apinvoice.Tenant);
+                        APIHelper.AddCommunicationLog("D", oldEntity, apinvoice, "APInvoice", apinvoicePM.Id, "APInvoice API", tenant);
 
 
 
@@ -122,6 +144,87 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "APInvoice", null, "APInvoice API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
+        }
+
+        private void MapLines(APInvoice apinvoice, int tenant, APInvoicePM apinvoicePM)
+        {
+            foreach (APInvoiceLinePM line in apinvoicePM.InvoiceLines)
+            {
+                line.Tenant = apinvoice.Tenant;
+
+                if (line.InvoiceCurrencyAmount == null)
+                    line.InvoiceCurrencyAmount = 0;
+
+                if (line.ForiegnCurrencyId == null)
+                    line.ForiegnCurrencyId = apinvoicePM.InvoiceCurrencyId;
+
+                // ForiegnExchangeRate
+                if (line.ForiegnCurrencyId == apinvoicePM.InvoiceCurrencyId)
+                {
+                    line.ForiegnExchangeRate = apinvoice.InvoiceCurrencyExchangeRate;
+                    line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
+                }
+                else
+                {
+                    line.ForiegnExchangeRate = GetRateByTenantAndCurrency(line.ForiegnCurrencyId, GetTenantPM(tenant));
+                    line.ProfitCurrencyAmount = line.LocalCurrencyAmount / apinvoice.ProfitCurrencyExchangeRate;
+                }
+
+                // vat
+                VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(tenant);
+                VatTypePercentagePM vat = vatTypePercentageQuery.GetVatTypePercentagesForVatType(tenant, line.VatTypeId).FirstOrDefault();
+                line.VatPercentage = vat?.Percentage;
+
+
+                // LocalCurrencyAmount,ForiegnCurrencyAmount
+                double? valueInLocal = line.InvoiceCurrencyAmount * apinvoice.InvoiceCurrencyExchangeRate;
+                line.LocalCurrencyAmount = valueInLocal.Value;
+                line.ForiegnCurrencyAmount = valueInLocal / line.ForiegnExchangeRate;
+
+                // ProfitCurrencyAmount
+                if (line.ForiegnCurrencyId == apinvoicePM.InvoiceCurrencyId)
+                    line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
+                else
+                    line.ProfitCurrencyAmount = line.LocalCurrencyAmount / apinvoice.ProfitCurrencyExchangeRate;
+
+                // charge types
+                // get charges
+                ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(tenant);
+                ChargesTypePM charge = chargesTypeQuery.GetSinglePM(line.ChargesTypeId, tenant);
+
+                if (string.IsNullOrWhiteSpace(line.Description))
+                    line.Description = charge.EnglishName;
+                if (string.IsNullOrWhiteSpace(line.LocalDescription))
+                    line.LocalDescription = charge.LocalName ?? charge.EnglishName;
+
+                line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
+            }
+        }
+
+        private TenantPM GetTenantPM(int tenant)
+        {
+            TenantQuery tenantQuery = new TenantQuery();
+            TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant);
+            return tenantPM;
+        }
+
+        private double GetRateByTenantAndCurrency(string currencyId, TenantPM tenantPM)
+        {
+            var tenant = tenantPM.Id;
+            double rate;
+            if (currencyId == tenantPM?.CurrencyId)
+            {
+                rate = 1;
+
+            }
+            else
+            {
+                RatesTableQuery ratesTableQuery = new RatesTableQuery(tenant);
+                LastRate lastRate = ratesTableQuery.GetLastRecord(tenant, currencyId, tenantPM?.CurrencyId);
+                rate = (double)lastRate.Rate;
+            }
+
+            return rate;
         }
 
     }

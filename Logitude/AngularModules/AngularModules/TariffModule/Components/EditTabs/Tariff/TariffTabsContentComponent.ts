@@ -23,6 +23,8 @@ export class TariffTabsContentComponent implements OnDestroy {
     }
 
     private CurrentSessionSelectedEvent: any = null;
+    private CurrentSessionSaveEvent: any = null;
+
     Listen() {
         this.CurrentSessionSelectedEvent = this.entityArgs.EditComponent.CurrentSession.SessionSeleced.subscribe((isSessionSeleced: boolean) => {
             if (isSessionSeleced) {
@@ -38,10 +40,58 @@ export class TariffTabsContentComponent implements OnDestroy {
                 }
             }
         });
+
+
+        this.CurrentSessionSaveEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe(result => {
+            this.ComputeDraftHeader();
+
+        });
+    }
+    ComputeDraftHeader(): any {
+
+        var datePipe: DatePipe = new DatePipe("en-US");
+        var from: string = "";
+        var to: string = "";
+        var header: string = "";
+
+        var draftVersion: TariffVersionPM = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
+        if (draftVersion != null) {
+            if (this.EntityPM.TypeCode == "ASC") {
+                header = "Version " + draftVersion.Version;
+            }
+
+            else {
+                from = datePipe.transform(draftVersion.StartDate, 'dd/MMM/yy');
+                to = datePipe.transform(draftVersion.ExpirationDate == null ? draftVersion.InitialEnddate : draftVersion.ExpirationDate, 'dd/MMM/yy');
+
+                if (!from) {
+                    from = "";
+                }
+
+                if (!to) {
+                    to = "";
+                }
+
+                if (!AppTool.IsNullOrEmpty(from) && !AppTool.IsNullOrEmpty(to)) {
+                    header = from + " - " + to;
+                }
+
+                else {
+                    header = from + to;
+                }
+
+                var draftTab: TariffDetailsTab = this.Tabs.filter(d => d.IsDraft)[0];
+                if (draftTab != null) {
+                    draftTab.Header = header;
+                }
+            }
+
+        }
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.CurrentSessionSelectedEvent);
+        AppTool.KillEventEmitter(this.CurrentSessionSaveEvent);        
     }
 
     Run(args: any) {
@@ -74,8 +124,23 @@ export class TariffTabsContentComponent implements OnDestroy {
 
             else {
                 from = datePipe.transform(draftVersion.StartDate, 'dd/MMM/yy');
-                to = datePipe.transform(draftVersion.ExpirationDate, 'dd/MMM/yy');
-                header = from + " - " + to;
+                to = datePipe.transform(draftVersion.ExpirationDate == null ? draftVersion.InitialEnddate : draftVersion.ExpirationDate, 'dd/MMM/yy');
+
+                if (!from) {
+                    from = "";
+                }
+
+                if (!to) {
+                    to = "";
+                }
+
+                if (!AppTool.IsNullOrEmpty(from) && !AppTool.IsNullOrEmpty(to)) {
+                    header = from + " - " + to;
+                }
+
+                else {
+                    header = from + to;
+                }
             }
 
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, draftVersion));
@@ -90,7 +155,22 @@ export class TariffTabsContentComponent implements OnDestroy {
             else {
                 from = datePipe.transform(item.StartDate, 'dd/MMM/yy');
                 to = datePipe.transform(item.ExpirationDate, 'dd/MMM/yy');
-                header = from + " - " + to;
+
+                if (!from) {
+                    from = "";
+                }
+
+                if (!to) {
+                    to = "";
+                }
+
+                if (!AppTool.IsNullOrEmpty(from) && !AppTool.IsNullOrEmpty(to)) {
+                    header = from + " - " + to;
+                }
+
+                else {
+                    header = from + to;
+                }
             }
 
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, item));

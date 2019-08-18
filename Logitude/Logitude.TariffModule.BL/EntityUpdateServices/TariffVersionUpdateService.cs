@@ -17,7 +17,10 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-                entityPM.InitialEnddate = entityParentPM.ExpirationDate;
+                if (entityParentPM.TypeCode == "AFC")
+                {
+                    entityPM.InitialEnddate = entityPM.ExpirationDate;
+                }
                 entityPM.ExpirationDate = null;
                 if (entityParentPM != null)
                 {

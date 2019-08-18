@@ -148,12 +148,13 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
                     this.warehouseReleasePM.TransportModeId = this.ShipmentPM.TransportModeId;
                     this.warehouseReleasePM.ShipmentTypeId = this.ShipmentPM.ShipmentTypeId;
                     this.warehouseReleasePM.DirectionId = this.ShipmentPM.DirectionId;
-
+                this.warehouseReleasePM.ConnectedTo = args.ConnectedTo;
             }
 
 
         this.TransportModeId = this.warehouseReleasePM.TransportModeId;
-        this.DirectionId = this.warehouseReleasePM.DirectionId;
+            this.DirectionId = this.warehouseReleasePM.DirectionId;
+            this.ConnectedTo = this.warehouseReleasePM.ConnectedTo;
     
         this.FromPortId = this.ShipmentPM ? this.ShipmentPM.MainCarriageFromPortId ? this.ShipmentPM.MainCarriageFromPortId : this.ShipmentPM.FromPortId :"";
 
@@ -437,6 +438,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     CustomerId: string;
     FromPortId: string;
     ToPortId: string;
+    ConnectedTo: string;
     OpenChoosePackage(packageType: string) {
 
         this.WarehouseId = this.warehouseReleasePM.WarehouseId;

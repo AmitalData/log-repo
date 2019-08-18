@@ -117,6 +117,8 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public int TotalQuantity { get; set; }
         [Column("ChargeableWeightUnitCode")]
 	    public string ChargeableWeightUnitCode { get; set; }
+        [Column("ConnectedTo")]
+	    public string ConnectedTo { get; set; }
     }
 }
 	 

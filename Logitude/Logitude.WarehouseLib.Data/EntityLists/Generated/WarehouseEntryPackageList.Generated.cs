@@ -94,6 +94,8 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string RegistrationNumber  { get; set; }
        [DataMember]
        public string CountryId  { get; set; }
+       [DataMember]
+       public string ReleasesNumber  { get; set; }
    }
 
 }
