@@ -44,15 +44,15 @@ export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descr
 
 @Component({
     moduleId: module.id,
-    selector: 'LogTextBox',
-    templateUrl: "./LogTextBoxComponent.html",
+    selector: 'LogTextBoxV3',
+    templateUrl: "./LogTextBoxComponentV3.html",
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext',
         "IsMultiline", "InputType", "HideColumns", "HideLastColumn",
         "DigitsAfterPoint", "FocusOnMe", "IsFreeText", "IsAccumulative",
         "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox'],
 })
 
-export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewInit, OnDestroy {
+export class LogTextBoxComponentV3 implements BeforeOnDestroy, OnInit, AfterViewInit, OnDestroy {
     public AllowPercentage: boolean;
     public IsAccumulative: boolean;
     public ShowHelp: boolean = false;
