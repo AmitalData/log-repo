@@ -17192,6 +17192,15 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             pendingErrorPlaceRepository.SubmitChanges();
         }
 
+        public void FillCourierPendingReasonTable()
+        {
+            //CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(0);
+            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "900", EnglishName = "Payment", LocalName = "תשלום" }, courierPendingReasonRepository);
+            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "901", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
+            //AddClosedTables.AddCourierPendingReason(new CourierPendingReason() { Code = "902", EnglishName = "Distribution", LocalName = "הפצה" }, courierPendingReasonRepository);
+            //courierPendingReasonRepository.SubmitChanges();
+        }
+
         public void FillMamanSpecialActionTable()
         {
             MamanSpecialActionRepository mamanSpecialActionRepository = new MamanSpecialActionRepository(0);
