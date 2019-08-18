@@ -241,6 +241,15 @@ export class NewTransferComponent extends BaseComponent {
     ExportButtonClicked() {
         var errors: string[] = [];
         
+        this.SelectedCount = this.ItemsSource.filter(f => f.IsChecked == true).length;
+
+        if (this.SelectedCount == 0) {
+            errors.push("You must select 1 line at least");
+        }
+
+        else if (this.SelectedCount > 100) {
+            errors.push("You must select 100 line max");
+        }
 
         this.ValidationErrorsList = errors;
 
