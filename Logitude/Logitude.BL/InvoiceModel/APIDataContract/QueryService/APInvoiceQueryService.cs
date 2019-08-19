@@ -98,7 +98,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 DateTime dueDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day + daysDifference, 0, 0, 0);
 
-                apinvoice.DueDate = dueDate;
+                apinvoicePM.DueDate = dueDate;
             }
             else
             {
