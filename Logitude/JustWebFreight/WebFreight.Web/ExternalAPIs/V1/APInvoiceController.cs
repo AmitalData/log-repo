@@ -95,6 +95,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         //
                         APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
 
+                        // amountDue
+                        if (apinvoice.AmountDueInLocalCurrency == null)
+                            apinvoice.AmountDueInLocalCurrency = apinvoicePM.AmountInLocalCurrency == null ? 0 : apinvoicePM.AmountInLocalCurrency;
+                        if (apinvoice.AmountDueInProfitCurrency == null)
+                            apinvoice.AmountDueInProfitCurrency = apinvoicePM.AmountInProfitCurrency == null ? 0 : apinvoicePM.AmountInProfitCurrency;
+
+
                         apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
 
                         // VendorGLAccountId
