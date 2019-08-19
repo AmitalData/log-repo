@@ -335,19 +335,31 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
-        public CardList GetSingleByGLAccount(string glAccountId, int tenant)
+        public CardList GetSingleByGLAccount(string glAccountId, int tenant, bool fromCache)
         {
-            CardList cardList = (from a in repository.context.Cards
-                                        where a.GLAccountId == glAccountId && a.Tenant == tenant
-                                        select new CardList()
-                                        {
-                                            Id = a.Id,
-                                            Tenant = a.Tenant,
-                                            EnglishName = a.EnglishName,
-
-                                        }).FirstOrDefault();
+             
+            string entityKeyString= $"GetSingleByGLAccount({glAccountId},{tenant})";
+            CardList cardList = CacheManager.GetOrInsertNewObject<CardList>(entityKeyString,
+                ()=>
+                {
+                    return JustGetSingleByGLAccount(glAccountId, tenant);
+                }, supressForceInsert:fromCache);
             return cardList;
         }
+
+        private CardList JustGetSingleByGLAccount(string glAccountId, int tenant)
+        {
+            return (from a in repository.context.Cards
+                    where a.GLAccountId == glAccountId && a.Tenant == tenant
+                    select new CardList()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        EnglishName = a.EnglishName,
+
+                    }).FirstOrDefault();
+        }
+
         public IQueryable<CardList> GetCardPMsByTenant(int tenant)
         {
             AddressRepository addressRepository = new AddressRepository(tenant);

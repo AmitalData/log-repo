@@ -266,8 +266,8 @@
                                                                         <tr>
                                                                             <td>{{item.Instock}}</td>
                                                                            <td style="width:5px"><div style="width:5px"></div></td>
-                                                                            <td *ngIf="item.ReleasesNumber" style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
-                                                                                <CellTooltip [IconWidth]="20" [IconHeight]="15" [IconPath]="'./Images/Help.png'" [Head]="'Instock'">
+                                                                            <td  style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
+                                                                                <CellTooltip *ngIf="item.ReleasesNumber" [IconWidth]="20" [IconHeight]="15" [IconPath]="'./Images/Help.png'" [Head]="'Instock'">
                                                                                     <table>
 
                                                                                         <tr style="height:20px"><td style="width:2px;"><div></div></td><td><div class="Label">Related Releases:</div></td><td style="width:2px;"><div></div></td></tr>

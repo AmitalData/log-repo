@@ -15,7 +15,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
     {
 
         [TestMethod]
-        public void CreateAutoReconcileWhileStreaming100_GoodPartialExample_CheckSuccess()
+        public void CreateAutoReconcileWhileStreaming100_GoodPARTIALExample_CheckSuccess()
         {
 
 
@@ -54,7 +54,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         GetNextJournalReconcile(myOrginalJournalTransaction, ref lineJournalReconcile),
                     }
             };
-            newJournal.JournalReconciles[1].ReconciliationAmount -= 1;
+
+            MakePartialReconcile(newJournal);
             myCreateAutoReconcileWhileStreamingService
                 .MustInit(fakeIAccountingContext,
                newJournal,
@@ -105,6 +106,72 @@ namespace Logitude.UnitTest.Accounting.UniTests
             //not4Insert
         }
 
+
+
+        [TestMethod]
+        public void CreateAutoReconcileWhileStreaming101_PARTIAL2LineExample_Exception()
+        {
+
+
+            IAccountingContext fakeIAccountingContext;
+            fakeIAccountingContext = A.Fake<IAccountingContext>();
+
+            var myCreateAutoReconcileWhileStreamingService = A.Fake<CreateAutoReconcileWhileStreamingService>(option => option.CallsBaseMethods());
+
+
+
+            List<LedgerTransactionPM> myOrginalJournalTransaction, myNewLedgerTransactionPM_storno;
+            JournalStornoReconcileServiceUnitTest.GetExampleReconcile(out myOrginalJournalTransaction, out myNewLedgerTransactionPM_storno);
+
+
+
+            var myOrginalIds = myOrginalJournalTransaction.Select(r => r.Id).ToList();
+            A.CallTo(() =>
+                    myCreateAutoReconcileWhileStreamingService
+                    .GetLedgerTransactionToReconcile(A<List<string>>.Ignored))
+            .Returns(myOrginalJournalTransaction);
+
+            A.CallTo(() =>
+                    myCreateAutoReconcileWhileStreamingService.ValidateReconcile(A<ReconciliationPM>.Ignored))
+                    .Returns(null);
+
+
+
+            int lineJournalReconcile = 0;
+            myOrginalJournalTransaction.ForEach(r => r.InReconcileProgress = true);
+            var newJournal = new JournalPM()
+            {
+                UpdatedByUserId = "itzik",
+                JournalReconciles = new List<JournalReconcilePM>() {
+                        GetNextJournalReconcile(myOrginalJournalTransaction, ref lineJournalReconcile),
+                        GetNextJournalReconcile(myOrginalJournalTransaction, ref lineJournalReconcile),
+                        GetNextJournalReconcile(myOrginalJournalTransaction, ref lineJournalReconcile),
+                    }
+            };
+
+            MakePartialReconcile2(newJournal);
+            myCreateAutoReconcileWhileStreamingService
+                .MustInit(fakeIAccountingContext,
+               newJournal,
+                myNewLedgerTransactionPM_storno);
+            
+
+            TestsUtil.AssertThrows<Exception>(() =>
+            {
+                myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming();
+            }, "eyal said only 1 oldTRans Against 1 newTrans");
+
+        }
+
+        private static void MakePartialReconcile2(JournalPM newJournal)
+        {
+            newJournal.JournalReconciles[0].ReconciliationAmount -= 1;
+            newJournal.JournalReconciles[2].ReconciliationAmount -= 1;
+        }
+        private static void MakePartialReconcile(JournalPM newJournal)
+        {
+            newJournal.JournalReconciles[1].ReconciliationAmount -= 1;
+        }
 
 
         [TestMethod]

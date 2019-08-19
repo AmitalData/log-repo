@@ -432,7 +432,9 @@ export class VersionHistoryTabComponent implements OnDestroy {
         copiedVersion.Version = this.EntityPM.LastVersion;
         copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
         copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
-        copiedVersion.ExpirationDate = this.VersionPM.ExpirationDate;
+        copiedVersion.ExpirationDate = this.VersionPM.ExpirationDate != null ? this.VersionPM.ExpirationDate : this.VersionPM.InitialEnddate;
+
+
         copiedVersion.IsDraft = true;
         copiedVersion.StartDate = this.VersionPM.StartDate;
         copiedVersion.Tenant = SessionInfo.LoggedUserTenant;

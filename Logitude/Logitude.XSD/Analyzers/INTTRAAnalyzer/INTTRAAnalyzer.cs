@@ -797,7 +797,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     case "declined":
                         {
                             iNTTRABookingStatusCode = "DC";
-                            iNTTRABookingTransStatusCode = "CRR";
+                            iNTTRABookingTransStatusCode = "BRR";
                             break;
                         }
                     case "error":

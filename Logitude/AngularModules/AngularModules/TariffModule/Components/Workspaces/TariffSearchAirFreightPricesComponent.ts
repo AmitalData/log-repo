@@ -76,6 +76,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.volume = args['Volume'];
             this.volumeUnitCode = args['VolumeUnit'];
             this.SetUIProperties();
+            this.SearchButtonClicked();
         }
     }
 
