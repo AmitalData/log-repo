@@ -70,12 +70,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             if (apinvoice.AccountingDate == null)
                 apinvoice.AccountingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-            if(apinvoice.AmountDueInLocalCurrency != null)
-                apinvoice.AmountDueInLocalCurrency = apinvoice.AmountInLocalCurrency == null ? 0 : apinvoice.AmountInLocalCurrency;
-
-            if(apinvoice.AmountDueInProfitCurrency != null)
-                apinvoice.AmountDueInProfitCurrency = apinvoice.AmountInProfitCurrency == null ? 0 : apinvoice.AmountInProfitCurrency;
-
+ 
         }
 
         public void PaymentTermMapAndValidate(APInvoice apinvoice, APInvoicePM apinvoicePM, int tenant)
