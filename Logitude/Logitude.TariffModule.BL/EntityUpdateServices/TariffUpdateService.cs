@@ -376,36 +376,40 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                 else
                 {
-                    iDraftVersion.ExpirationDate = iDraftVersion.InitialEnddate;
-                    TariffVersionRepository tariffVersionRepository = new TariffVersionRepository(iDraftVersion.Tenant);
+                    this.ComputeTariffLinesExpirationDates(iDraftVersion, entityPM);
 
-                    TariffVersion iPreviousVersion = tariffVersionRepository.GetAllVersions(entityPM.Id, entityPM.Tenant).Where(o => o.Version != iDraftVersion.Version).OrderByDescending(o => o.CreateDate).FirstOrDefault();
-                    if (iPreviousVersion != null)
-                    {
-                        if (iPreviousVersion.Version != iDraftVersion.Version)
-                        {
-                            List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
-                            iPreviousVersion.ExpirationDate = iDraftVersion.StartDate.Value.AddDays(-1);
-                            tariffVersionRepository.Update(iPreviousVersion);
-
-                            foreach (TariffLine line in iPreviousVersionLines)
-                            {
-                                line.ExpirationDate = iPreviousVersion.ExpirationDate;
-                                iTariffLineRepository.Update(line);
-                            }
-
-                            foreach (TariffLinePM line in iDraftVersion.TariffLines.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete).ToList())
-                            {
-                                line.ExpirationDate = iDraftVersion.ExpirationDate;
-                            }
-
-                            iTariffLineRepository.SubmitChanges();
-                            tariffVersionRepository.SubmitChanges();
-                        }
-                    }
+               
                 }
             }
         }
+
+        private void ComputeTariffLinesExpirationDates(TariffVersionPM iDraftVersion, TariffPM entityPM)
+        {
+            iDraftVersion.ExpirationDate = iDraftVersion.InitialEnddate;
+            TariffVersionRepository tariffVersionRepository = new TariffVersionRepository(iDraftVersion.Tenant);
+            TariffVersion iPreviousVersion = tariffVersionRepository.GetAllVersions(entityPM.Id, entityPM.Tenant).Where(o => o.Version != iDraftVersion.Version).OrderByDescending(o => o.CreateDate).FirstOrDefault();
+            if (iPreviousVersion != null)
+            {
+                if (iPreviousVersion.Version != iDraftVersion.Version)
+                {
+                    List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
+                    iPreviousVersion.ExpirationDate = iDraftVersion.StartDate.Value.AddDays(-1);
+                    tariffVersionRepository.Update(iPreviousVersion);
+                    foreach (TariffLine line in iPreviousVersionLines)
+                    {
+                        line.ExpirationDate = iPreviousVersion.ExpirationDate;
+                        iTariffLineRepository.Update(line);
+                    }
+                    foreach (TariffLinePM line in iDraftVersion.TariffLines.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete).ToList())
+                    {
+                        line.ExpirationDate = iDraftVersion.ExpirationDate;
+                    }
+                    iTariffLineRepository.SubmitChanges();
+                    tariffVersionRepository.SubmitChanges();
+                }
+            }
+        }
+
         private void UpdateVersionPreviousLineExpirationDate(TariffLineExpirationDatePM tariffLineExpirationDateItem, TariffLine previousLine, TariffLinePM tariffLinePM)
         {
             bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "expiration", TariffLinePM = tariffLinePM, TariffLineExpirationDateItem = tariffLineExpirationDateItem, PreviousLine = previousLine });
