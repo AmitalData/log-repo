@@ -1,7 +1,7 @@
 import { browser, by, element } from 'protractor';
 import { CompanyAddressSetting } from './CompanyAddressSetting';
 import { CompanyAddressSettingScenario } from './CompanyAddressSettingScenario';
-import { LoginComp } from "../login/Login.po";
+import { LoginComp } from "../../login/Login.po";
 
 
 
