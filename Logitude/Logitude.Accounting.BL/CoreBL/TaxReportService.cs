@@ -356,6 +356,8 @@ namespace Logitude.Accounting.BL.CoreBL
         static string referenceGroup = null;
         private static void SetReferenceFields(string Reference)
         {
+            reference = null;
+            referenceGroup = null;
             if (Reference != null)
             {
                 if (Reference.Contains("-"))
