@@ -50,7 +50,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public PaymentTerm GetSingleByDaysDifference(int daysDifference, int tenant)
         {
             PaymentTerm query = (from a in context.PaymentTerms
-                         where a.Days == daysDifference && a.Tenant == tenant
+                         where a.Days == daysDifference && a.Tenant == tenant && a.ExternalId != "MS"
                          select a).FirstOrDefault();
 
 
