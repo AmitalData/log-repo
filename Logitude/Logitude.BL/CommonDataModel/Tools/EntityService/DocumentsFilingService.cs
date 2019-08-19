@@ -35,6 +35,7 @@ using Logitude.BL.Helpers;
 using Logitude.SystemLogs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Configuration;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -344,6 +345,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
             ///move after adding (was Devart.Data.Oracle.OracleException: ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_N1103284768) הופר - מפתח אב לא נמצא )
+            TryBuildUD2LT(Poco);
             if (!tenantPM.IsDocumentsArchive && LogitudeSettings.DeploymentStage != "Simplog")
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
@@ -371,6 +373,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
 
+        }
+
+        private void TryBuildUD2LT(DocumentsFiling poco)
+        {
+            ///ContainerAccessor.Container.RegisterType<ICreateUD2LTService, CreateUD2LTService>("CreateUD2LTService", new InjectionFactory(c => new CreateUD2LTService()));
+
+            ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
+            myICreateUD2LTService.JustDoIt(poco.Id, poco.Tenant);
         }
 
         private void AddDocumentBackupLog()
@@ -788,6 +798,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            TryBuildUD2LT(Poco);
             if (!tenantPM.IsDocumentsArchive && !entityPM.DontAddToQueue)
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, null);
