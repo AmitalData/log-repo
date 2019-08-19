@@ -127,6 +127,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             else
                 entityPM = query.Where(d => d.Id == id && d.Tenant == tenant).FirstOrDefault();
 
+            id = entityPM.Id;
 
             APInvoiceLineRepository invoiceLineRepository = new APInvoiceLineRepository(repository.context);
             APInvoiceEntityRepository invoiceEntityRepository = new APInvoiceEntityRepository(repository.context);
@@ -364,7 +365,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             else
             {
                 APInvoiceLineQuery apInvoiceLineQuery = new APInvoiceLineQuery(invoiceLineRepository);
-                allInvoiceLinesPM = apInvoiceLineQuery.GetInvoiceLinesByInvoiceId(id, tenant);
+                allInvoiceLinesPM = apInvoiceLineQuery.GetInvoiceLinesByInvoiceId(entityPM.Id, tenant);
                 entityPM.InvoiceLines = allInvoiceLinesPM;
 
                 if (!string.IsNullOrEmpty(entityPM.MainEntityId))
