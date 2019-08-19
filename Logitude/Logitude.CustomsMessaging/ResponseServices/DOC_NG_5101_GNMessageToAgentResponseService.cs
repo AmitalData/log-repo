@@ -134,7 +134,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         if (!string.IsNullOrWhiteSpace(customsVendorId))
                         {
-                            SendImporterDeclarationRequest(requestParams, importerVAT, customsVendorCode);
+                            SendImporterDeclarationRequest(requestParams, importerVAT, customsVendorId);
                         }
                     }
                     else
@@ -683,8 +683,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LogMessagingUtil.Instance.AppendLine("Request 3650-VendorSearchByCustomsAgent Failed " + responseData.CustomsRequestsSheetId + ", Message: " + responseData.UserMessage);
                 return;
             }
+            string vendorId = responseData.VendorResults != null ? responseData.VendorResults.FirstOrDefault().Id : vendorCode;
             LogMessagingUtil.Instance.AppendLine("3650 - VendorSearchByCustomsAgent Request Succeeded");
-            SendImporterDeclarationRequest(requestParams, importerNumber, vendorCode);
+            SendImporterDeclarationRequest(requestParams, importerNumber, vendorId);
 
         }
     }
