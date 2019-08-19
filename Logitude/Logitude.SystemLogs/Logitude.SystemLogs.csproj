@@ -159,6 +159,10 @@
     <Compile Include="Migrations\201810181130250_AbedAddFieldReasonToFailedLoginLog.Designer.cs">
       <DependentUpon>201810181130250_AbedAddFieldReasonToFailedLoginLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908070726506_Nawras_WaitingItems_FaildItems_BatchServicesLogs.cs" />
+    <Compile Include="Migrations\201908070726506_Nawras_WaitingItems_FaildItems_BatchServicesLogs.Designer.cs">
+      <DependentUpon>201908070726506_Nawras_WaitingItems_FaildItems_BatchServicesLogs.cs</DependentUpon>
+    </Compile>
     <Compile Include="POCOs\FailedLoginLog.cs" />
     <Compile Include="Migrations\201310221554351_InitialMigrations.cs" />
     <Compile Include="Migrations\201310221554351_InitialMigrations.Designer.cs">
@@ -234,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810181130250_AbedAddFieldReasonToFailedLoginLog.resx">
       <DependentUpon>201810181130250_AbedAddFieldReasonToFailedLoginLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908070726506_Nawras_WaitingItems_FaildItems_BatchServicesLogs.resx">
+      <DependentUpon>201908070726506_Nawras_WaitingItems_FaildItems_BatchServicesLogs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

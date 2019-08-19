@@ -142,6 +142,8 @@
     <Content Include="Common\Components\AccountingTab\Advanced\ChargesExternalByProductsComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\CustomerActivation\ReadyForActivationComponent.html" />
     <Content Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.html" />
+    <Content Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.html" />
+    <Content Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.html" />
     <Content Include="Controls\All\SplitButtonComponent.html" />
     <Content Include="CRMModules\CRMEmployeeGroup\Components\NewEntity\NewEmployeeComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.html" />
@@ -342,7 +344,6 @@
     <Content Include="Common\Components\Maintenance\CustomerActivationSettingsComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomerFieldsUpdateSetting\AddEditCustomerFieldsUpdateSettingComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\ArtemusSettingsComponent.html" />
-    <Content Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceCredintialsComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceSettingsComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\FTPDetailComponent.html" />
     <Content Include="Common\Components\Maintenance\DocumentFilingEmailSettings\DocumentFilingEmailSettingsComponent.html" />
@@ -437,6 +438,8 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.ts" />
     <TypeScriptCompile Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.ts" />
     <TypeScriptCompile Include="Common\Components\MenuButtons\ContactMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
@@ -981,6 +984,8 @@
     <Content Include="SharedLogistics\Components\TenantAccessSettingsComponent.html" />
     <Content Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.html" />
     <Content Include="SharedLogistics\Components\Workspaces\SharedShipmentsWorkspaceComponent.html" />
+    <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.html" />
+    <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.html" />
@@ -2066,6 +2071,7 @@
     <Content Include="Shipment\Components\SplitShipment\SplitShipmentComponent.html" />
     <Content Include="Shipment\Components\Spotlight\ShipmentSpotlightComponent.html" />
     <Content Include="Shipment\Components\Spotlight\SpotLightDateComponent.html" />
+    <Content Include="Shipment\Components\Workspaces\AMANACComponent.html" />
     <Content Include="Shipment\Components\Workspaces\ContainersFUsComponent.html" />
     <Content Include="Social\Components\AddSocialMessageParticipantsComponent.html" />
     <Content Include="Social\Components\ConversationMessageComponent.html" />
@@ -3380,7 +3386,6 @@
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomerActivationSettingsComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomerFieldsUpdateSetting\AddEditCustomerFieldsUpdateSettingComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\ArtemusSettingsComponent.ts" />
-    <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceCredintialsComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceSettingsComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\FTPDetailComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\DocumentFilingEmailSettings\DocumentFilingEmailSettingsComponent.ts" />
@@ -3431,6 +3436,10 @@
     <TypeScriptCompile Include="SharedLogistics\Components\TenantAccessSettingsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedShipmentsWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleShipmentAMANAC.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.ts" />
@@ -6351,6 +6360,7 @@
     <TypeScriptCompile Include="Shipment\Components\SplitShipment\SplitPartialPackageComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\SplitShipment\SplitShipmentComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Spotlight\SpotLightDateComponent.ts" />
+    <TypeScriptCompile Include="Shipment\Components\Workspaces\AMANACComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainersFUsComponent.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerFollowUpList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransmissionsStatusList.ts" />

@@ -91,10 +91,16 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                               Id = a.Id,
                                                               Tenant = a.Tenant,
                                                               ActualReleaseDate = a.WarehouseRelease!=null? a.WarehouseRelease.ActualReleaseDate:null,
+                                                              ReleaseNumber = a.WarehouseRelease != null ? a.WarehouseRelease.ReleaseNumber : null,
+                                                              WarehouseReleaseId = a.WarehouseReleaseId,
                                                           }).ToList();
 
             return myResult;
         }
+
+
+
+        
 
 
     }

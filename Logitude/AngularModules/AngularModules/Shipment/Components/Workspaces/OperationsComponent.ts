@@ -3,6 +3,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     moduleId: module.id,
@@ -43,7 +44,7 @@ export class OperationsComponent implements OnInit {
                     this.IsMenuVisible = true;
                 }
 
-                this.IsAMANACItemVisible = true;
+                this.IsAMANACItemVisible = ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC"? true: false;
 
                 this.RunComponent();
             });

@@ -43,5 +43,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public string ArtemusOutSettingsHost { get; set; }
         public string ArtemusInSettingsHost { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? AMCAirStartDate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? AMCOceanStartDate { get; set; }
     }
 }

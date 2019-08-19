@@ -2478,7 +2478,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         isHaveAutomation = entityChangeHelper.CheckIfEntityHaveAutomation("Shipment", "OnUpdate", entityPM.Tenant);
                         if (isHaveAutomation)
                         {
-                            string fields = "MainCarriageCarrierId,MainCarriageETD,MainCarriageATD,MainCarriageETA,MainCarriageATA,FinalDistenationPortId";
+                            string fields = "MainCarriageCarrierId,MainCarriageETD,MainCarriageATD,MainCarriageETA,MainCarriageATA,FinalDistenationPortId,StatusId";
                             List<NotifyPropertyChangeValues> changedProperties = notifyPropertyChangeValuesLists.Where(d => fields.Split(',').Contains(d.PropertyName)).ToList();
                             if (changedProperties.Count > 0)
                             {

@@ -7,6 +7,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {WarehouseEntryPMExtendedService} from '../../../Services/ExtendedPMs/WarehouseEntryPMExtendedService';
+import { WarehouseReleasePMExtendedService } from '../../../Services/ExtendedPMs/WarehouseReleasePMExtendedService';
 
 @Component({
     selector: 'WarehouseConnectionsTabComponent',
@@ -18,12 +19,17 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
     public EntityPM: any;
     public ObjectTableName: string;
     private warehouseEntryPMExtendedService: WarehouseEntryPMExtendedService;
+    private warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
     public ItemsSource: any[] = [];
+    public ReleaseItemsSource: any[] = [];
+ 
+    connectedTo: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.warehouseEntryPMExtendedService = new WarehouseEntryPMExtendedService();
+        this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ShipmentId)) {
 
             this.LoadData();
@@ -39,17 +45,49 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
     LoadData() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.ItemsSource = [];
+        this.ReleaseItemsSource = [];
+       
+       
         this.warehouseEntryPMExtendedService.GetWarehouseConnectedEntitiesByEntityId(this.EntityPM.ShipmentId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.ItemsSource = myResponse.Result;
+                   
                     if (!this.ItemsSource || this.ItemsSource.length == 0) {
+                        
                         this.IsShowMessageNoConnectedEntity = true;
-                    } else this.IsShowMessageNoConnectedEntity = false;
+                    } else {
+                        if (this.EntityPM.ConnectedTo != null) {
+                            this.connectedTo =  this.EntityPM.ConnectedTo;
+                        }
+                        this.IsShowMessageNoConnectedEntity = false;
+                    }
                 }
             }
             this.CurrentSession.StopBusyIndicator();
         });
+
+
+        //////////////////
+        this.warehouseReleasePMExtendedService.GetWarehouseConnectedReleaseByEntityId(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    this.ReleaseItemsSource = myResponse.Result;
+
+                    if (!this.ReleaseItemsSource || this.ReleaseItemsSource.length == 0) {
+
+                        this.IsShowMessageNoConnectedEntity = true;
+                    } else {
+                      
+                        this.IsShowMessageNoConnectedEntity = false;
+                       
+                    }
+                }
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
+
+
     }
 
     ViewEntitytClicked() {
@@ -75,6 +113,22 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
                     });
                 });
         
+    }
+
+
+
+    ViewReleaseClicked(item: any) {
+
+        var myBackButtonLabel = "Cross Docks";
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: item.Id, ObjectTableName: "WarehouseRelease", BackButtonLabel: myBackButtonLabel });
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    this.LoadData();
+                });
+            });
     }
 
 }

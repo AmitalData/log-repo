@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools.Counters;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
@@ -41,6 +42,8 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         private MemoryStream myMemoryStream;
         private INTTRA.Message iMessage;
         private INTTRA_Status.MessageType iMessage_Status;
+        XmlDocument xmlDocument;
+
         public INTTRAAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)
@@ -112,11 +115,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 }
 
                 this.myMemoryStream = new MemoryStream(myAnalyzeQueue.MessageBody);
-                XmlDocument xmlDocument = new XmlDocument();
+                xmlDocument = new XmlDocument();
                 xmlDocument.Load(myMemoryStream);
                 myMemoryStream.Position = 0;
 
-                this.GetXmlSubject(xmlDocument);
+                this.GetXmlSubject();
             }
 
             catch (Exception ex)
@@ -129,30 +132,47 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 return;
             }
         }
-        private void GetXmlSubject(XmlDocument xmlDocument)
+        private void GetXmlSubject()
         {
-            XmlNodeList xnList = xmlDocument.GetElementsByTagName("MessageType");
-
-            foreach (XmlNode node in xnList)
+            XmlNodeList xnList = xmlDocument.GetElementsByTagName("Header");
+            foreach (XmlNode xn in xnList)
             {
-                this.Subject = node.InnerText;
+                this.Subject = xn["TransactionType"].InnerText;
                 break;
             }
+            if (string.IsNullOrEmpty(this.Subject))
+            {
+                xnList = xmlDocument.GetElementsByTagName("MessageType");
 
-            myAnalyzeQueue.Subject = this.Subject;
+                foreach (XmlNode node in xnList)
+                {
+                    this.Subject = node.InnerText;
+                    break;
+                }
+                myAnalyzeQueue.Subject = this.Subject;
+            }
+            else
+            {
+                myAnalyzeQueue.Subject = "Booking Response";
+            }
 
+            GetXmlAcknowledgmentFromSubject();
+        }
+
+        private void GetXmlAcknowledgmentFromSubject()
+        {
             switch (this.Subject)
             {
                 case "CONTRL":
                 case "ApplicationAcknowledgment":
                     {
-                        this.GetXmlAcknowledgment(xmlDocument);
+                        this.GetXmlAcknowledgment();
                         break;
                     }
             }
         }
 
-        private void GetXmlAcknowledgment(XmlDocument xmlDocument)
+        private void GetXmlAcknowledgment()
         {
             XmlNodeList xnList = xmlDocument.GetElementsByTagName("ShipmentIdentifier");
 
@@ -232,7 +252,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                                         break;
                                     }
-
                                 case "Status":
                                     {
                                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(INTTRA_Status.MessageType));
@@ -281,7 +300,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                         break;
                     }
-
+                case "Booking":
+                    {
+                        this.AnalyzeINTTRABooking();
+                        break;
+                    }
                 default:
                     {
                         if (Subject == null)
@@ -298,6 +321,25 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     }
             }          
         }
+
+        private void AnalyzeINTTRABooking()
+        {
+            try
+            {
+                XmlNodeList xnList = this.xmlDocument.GetElementsByTagName("MessageProperties");
+                foreach (XmlNode xn in xnList)
+                {
+                    this.ShipmentNumber = xn["ShipmentID"].InnerText;
+                    break;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.OnCatchAnalyzingError(ex);
+            }
+            this.ConnectAnalyzeQueue();
+        }
+
         private void ConnectAnalyzeQueue()
         {
             this.InitializeComponent();
@@ -538,6 +580,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                         break;
                     }
 
+                case "Booking":
+                    {
+                        iMessageTenant = this.ConnectINTTRABookingQueueToTenant();
+                        break;
+                    }
                 default:
                     {
                         if (!string.IsNullOrEmpty(this.Recipient))
@@ -581,6 +628,33 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 throw new Exception(iMessageTenantError);
             }
         }
+
+        private int? ConnectINTTRABookingQueueToTenant()
+        {
+            int? tenant = null;
+            XmlNodeList xnList = this.xmlDocument.GetElementsByTagName("Party");
+            var role = "";
+            var identifier = "";
+            foreach (XmlNode xn in xnList)
+            {
+                role = xn["Role"].InnerText;
+                if(role == "Forwarder")
+                {
+                    identifier = xn["Identifier"].InnerText;
+                    break;
+                }
+            }
+            if (!string.IsNullOrEmpty(identifier))
+            {
+                Branch iBranch = this.myCommonContext.Branches.Where(d => d.INTTRAAlias == identifier).FirstOrDefault();
+                if (iBranch != null)
+                {
+                    tenant = iBranch.Tenant;
+                }
+            }
+            return tenant;
+        }
+
         private void ConnectQueueToEntity()
         {
             if (!string.IsNullOrEmpty(this.ShipmentNumber))
@@ -661,6 +735,12 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     Analyze_Acknowledgment();
                                     break;
                                 }
+
+                            case "Booking":
+                                {
+                                    Analyze_Booking();
+                                    break;
+                                }
                         }
 
                         commlog.CommunicationStatusTypeCode = "D";
@@ -672,6 +752,89 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                         myCommunicationLogRepository.SubmitChanges();
                     }
                 }
+            }
+        }
+
+        private void Analyze_Booking()
+        {
+            this.shipmentPM.IsUpdatedByINTTRAAnalyzer = true;
+            string systemEmail = "system@tenant" + this.Tenant + ".com";
+            SetINTTRABookingStatusCodeAndTransStatusCode();
+            shipmentPM.INTTRASIStatusDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
+            ShipmentService service = new ShipmentService(myShipmentContext, shipmentPM, systemEmail);
+            service.Update();
+        }
+
+        private void SetINTTRABookingStatusCodeAndTransStatusCode()
+        {
+            XmlNodeList xnList = this.xmlDocument.GetElementsByTagName("Header");
+            var status = ""; 
+            foreach (XmlNode xn in xnList)
+            {
+                status = xn["TransactionStatus"].InnerText;
+                break;
+            }
+
+            var iNTTRABookingStatusCode = "";
+            var iNTTRABookingTransStatusCode = "";
+
+            if (!string.IsNullOrEmpty(status))
+            {
+                switch (status.ToLower())
+                {
+                    case "cancelled":
+                        {
+                            iNTTRABookingStatusCode = "CA";
+                            iNTTRABookingTransStatusCode = "CCD";
+                            break;
+                        }
+                    case "confirmed":
+                        {
+                            iNTTRABookingStatusCode = "CD";
+                            iNTTRABookingTransStatusCode = "BCD";
+                            break;
+                        }
+                    case "declined":
+                        {
+                            iNTTRABookingStatusCode = "DC";
+                            iNTTRABookingTransStatusCode = "BRR";
+                            break;
+                        }
+                    case "error":
+                        {
+                            iNTTRABookingStatusCode = "ER";
+                            break;
+                        }
+                    case "not sent":
+                        {
+                            iNTTRABookingStatusCode = "NS";
+                            iNTTRABookingTransStatusCode = "NST";
+                            break;
+                        }
+                    case "pending":
+                        {
+                            iNTTRABookingStatusCode = "PG";
+                            break;
+                        }
+                    case "replaced":
+                        {
+                            iNTTRABookingStatusCode = "RD";
+                            break;
+                        }
+                    case "sent":
+                        {
+                            iNTTRABookingStatusCode = "ST";
+                            iNTTRABookingTransStatusCode = "BRS";
+                            break;
+                        }
+                }
+
+                shipmentPM.INTTRABookingStatusCode = iNTTRABookingStatusCode;
+                shipmentPM.INTTRABookingTransStatusCode = iNTTRABookingTransStatusCode;
+            }
+            else
+            {
+                throw new ApplicationException("Transaction Status is not sent");
             }
         }
 

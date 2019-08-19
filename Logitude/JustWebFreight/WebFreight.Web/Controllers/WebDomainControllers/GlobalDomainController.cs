@@ -371,6 +371,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int DoneItemsInOneHour = 0;
                     int DoneItemsInOneMinute = 0;
                     int NumberOfDoneItems = 0;
+                    int WaitingItems = 0;
+                    int FailedItems = 0;
                     DateTime? LActivity = null;
 
                     foreach (BatchServicesLog Log in Logs)
@@ -379,6 +381,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DoneItemsInFiveMinutes += Log.DoneItemsInFiveMinutes;
                         DoneItemsInOneHour += Log.DoneItemsInOneHour;
                         DoneItemsInOneMinute += Log.DoneItemsInOneMinute;
+                        WaitingItems += Log.WaitingItems;
+                        FailedItems += Log.FailedItems;
                         NumberOfDoneItems += Log.NumberOfDoneItems != null ? (int)Log.NumberOfDoneItems : 0;
 
                         if (Log.LastActivity > LActivity && LActivity != null)
@@ -395,6 +399,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     item.DoneItemsInOneHour = DoneItemsInOneHour;
                     item.DoneItemsInOneMinute = DoneItemsInOneMinute;
                     item.NumberOfDoneItems = NumberOfDoneItems;
+                    item.WaitingItems = WaitingItems;
+                    item.FailedItems = FailedItems;
                     item.LastActivity = LActivity;
                     TempList.Add(item);
                 }

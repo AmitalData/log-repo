@@ -74,8 +74,7 @@ using Simplog.Data.InvoiceModel;
 					   				   }
 				   
 				   temp.VATNumber = MyEntityPM.VATNumber;
-				   temp.InvoiceNumber = MyEntityPM.InvoiceNumber;
-				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;			  
+				   temp.InvoiceNumber = MyEntityPM.InvoiceNumber;			  
 				   if(MyEntityPM.InvoiceCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService1 = new CurrencyQueryService(Tenant);
@@ -172,7 +171,9 @@ using Simplog.Data.InvoiceModel;
 					 temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMapping(MyEntityPM.InvoiceLines,Tenant);
 				}
 
-							 					
+							 
+				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;
+				   temp.InvoiceExpectedAmount = MyEntityPM.InvoiceExpectedAmount;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -212,8 +213,6 @@ using Simplog.Data.InvoiceModel;
 					
 					temp.VATNumber = MyEntity.VATNumber;
 					temp.InvoiceNumber = MyEntity.InvoiceNumber;
-					temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
-					temp.InvoiceExpectedAmount = MyEntity.AmountInInvoiceCurrency;
 					CurrencyQueryService InvoiceCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.InvoiceCurrency != null)
 					{
@@ -359,7 +358,9 @@ using Simplog.Data.InvoiceModel;
 						temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMappingAndValidatin(MyEntity.InvoiceLines,Tenant,ComputingPartnerName);
 					}
 
-								 					   
+								 
+					temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
+					temp.InvoiceExpectedAmount = MyEntity.InvoiceExpectedAmount;					   
 					   return temp;
 		    }
             catch (Exception ex)

@@ -127,6 +127,22 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
         }
     }
 
+
+
+
+    get ShowIncludedChargesPerContainers() {
+        var showIncludedChargesPerContainers: boolean = false;
+        if (this.QuoteTemplateSettingPM) {
+            showIncludedChargesPerContainers = this.QuoteTemplateSettingPM.ShowIncludedChargesPerContainers;
+        }
+        return showIncludedChargesPerContainers;
+    }
+    set ShowIncludedChargesPerContainers(value: boolean) {
+        if (this.QuoteTemplateSettingPM != null) {
+            this.QuoteTemplateSettingPM.ShowIncludedChargesPerContainers = value;
+        }
+    }
+
     BuildItemsSource() {
         var itemsCollection: TextCodeData[] = [];
 
