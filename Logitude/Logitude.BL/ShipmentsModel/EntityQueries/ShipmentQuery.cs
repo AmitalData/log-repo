@@ -12406,6 +12406,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
 
+        public List<ShipmentList> GetShipmentsForCrossDock(List<string> shipmentIds , int tenant)
+        {
+            IQueryable<Shipment> shipments = repository.GetShipmentsForCrossDock(shipmentIds, tenant);
+            List<ShipmentList> shipmentShipmentLists = (from a in shipments
+                                            select new ShipmentList()
+                                            {
+                                                 Id = a.Id,
+                                                 TransportModeId = a.TransportModeId,
+                                                 DirectionId = a.DirectionId,
+                                                 Routing  = a.Routing,
+                                                 DirectionName = a.Direction!=null ? a.Direction.Name:null,
+                                                 TransportModeName = a.TransportMode!=null? a.TransportMode.Name:null,
+                                            }).ToList();
+            return shipmentShipmentLists;
+        }
+
 
     }
 
