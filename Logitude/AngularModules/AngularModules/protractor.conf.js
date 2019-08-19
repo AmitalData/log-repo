@@ -158,13 +158,16 @@ exports.config = {
 
 
         //*************Report********************
-       Reports: 'e2e/Report/**/Report-spec.ts'
+      // Reports: 'e2e/Report/**/Report-spec.ts',
 
          //*************ShipmentView********************
-       // ShipmentView: 'e2e/**/ShipmentView-spec.ts'
+      // ShipmentView: 'e2e/**/ShipmentView-spec.ts',
+
+       //*************CompanyAddressSetting********************
+     CompanyAddressSetting:'e2e/Maintenance/**/CompanyAddressSetting-spec.ts',
 
         //*************DocOutTab***************
-     // DocOut: 'e2e/**/DocsOut.e2e-spec.ts'
+      //DocOut: 'e2e/**/DocsOut.e2e-spec.ts'
 
 
     },
