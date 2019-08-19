@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor';
 import { CompanyAddressSetting } from './CompanyAddressSetting';
-//import { SenarioTest } from './CompanyAddressSettingScenario';
+import { CompanyAddressSettingScenario } from './CompanyAddressSettingScenario';
 import { LoginComp } from "../login/Login.po";
 
 
@@ -9,6 +9,7 @@ import { LoginComp } from "../login/Login.po";
 describe('CompanyAddressSetting', () => {
 
     let CompanyAddress: CompanyAddressSetting = new CompanyAddressSetting();
+    let CompanyAddressScenario: CompanyAddressSettingScenario = new CompanyAddressSettingScenario();
 
     beforeEach(() => {
 
@@ -17,19 +18,25 @@ describe('CompanyAddressSetting', () => {
     browser.ignoreSynchronization = true;
 
 
-    it('Quicksearch',function(){
+    it('Quicksearch', function () {
 
-      CompanyAddress.QuickSearch();
+        CompanyAddress.QuickSearch();
+        //  CompanyAddressScenario.Quicksearch();
     });
 
-    it('SearchCompanyAddressEtting',function(){
 
-    CompanyAddress.SearchCompanyAddressEtting();
+    it('SearchCompanyAddressSetting', function () {
+
+        CompanyAddress.SearchCompanyAddressSetting();
+        //CompanyAddressScenario.SearchCompanyAddressSetting();
     });
 
-    it('EditCompanyAddressSitting',function(){
+
+    it('EditCompanyAddressSitting', function () {
 
         CompanyAddress.EditCompanyAddressSitting();
-        });
+        // CompanyAddressScenario.EditCompanyAddressSitting();
 
- });
+    });
+
+});

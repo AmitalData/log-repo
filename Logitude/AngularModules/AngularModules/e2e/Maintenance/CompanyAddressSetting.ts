@@ -19,7 +19,7 @@ export class CompanyAddressSetting{
     }
 
 
-    SearchCompanyAddressEtting() {
+    SearchCompanyAddressSetting() {
 
         this.helper.WaitByIdAndFill('null_Search', "company address setting");
         this.helper.WaitByIdAndClick('MaintenanceItemCOAD');
@@ -30,7 +30,7 @@ export class CompanyAddressSetting{
 
    this.helper.WaitByIdAndFill('textboxdiv_Address_Address2',"Ramallah");
    this.helper.WaitByIdAndFill('Address_ZipCode',"99988");
-
+   this.helper.WaitByIdAndClick('OkButton');
 
 
     }
