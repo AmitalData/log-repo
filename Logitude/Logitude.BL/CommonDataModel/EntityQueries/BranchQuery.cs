@@ -237,10 +237,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 								  CounterCode = a.CounterCode,
 							  }).FirstOrDefault();
                 }
-                BranchPM securedPm = new BranchPM();
-                SecuredMapping.GetMappedPM(entity, securedPm, "Branch", tenant);
 
-                return securedPm;
+                if (entity != null)
+                {
+                    BranchPM securedPm = new BranchPM();
+                    SecuredMapping.GetMappedPM(entity, securedPm, "Branch", tenant);
+                    return securedPm;
+                }
+                else
+                {
+                    return null;
+                }
             }
             return null;
         }       
