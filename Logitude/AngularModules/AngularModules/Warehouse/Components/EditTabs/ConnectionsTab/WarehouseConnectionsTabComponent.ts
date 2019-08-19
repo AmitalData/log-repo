@@ -41,7 +41,7 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
     }
 
     IsShowMessageNoConnectedEntity: boolean = false;
-
+    IsShowMessageNoConnectedReleaseEntity: boolean = false;
     LoadData() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.ItemsSource = [];
@@ -76,10 +76,10 @@ export class WarehouseConnectionsTabComponent implements OnInit  {
 
                     if (!this.ReleaseItemsSource || this.ReleaseItemsSource.length == 0) {
 
-                        this.IsShowMessageNoConnectedEntity = true;
+                        this.IsShowMessageNoConnectedReleaseEntity = true;
                     } else {
                       
-                        this.IsShowMessageNoConnectedEntity = false;
+                        this.IsShowMessageNoConnectedReleaseEntity = false;
                        
                     }
                 }

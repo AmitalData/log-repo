@@ -165,11 +165,11 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                     cardLists = cardQuery.GetCardListsByListIds(cardIds, tenant);
                 }
 
-                List<ShipmentDataView> shipmentDataViews = new List<ShipmentDataView>();
+                List<ShipmentList> shipmentLists = new List<ShipmentList>();
                 if (shipmentIds.Count > 0)
                 {
-                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                    shipmentDataViews = shipmentRepository.GetShipmentsFromIdList(shipmentIds, tenant);
+                    ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                    shipmentLists = shipmentQuery.GetShipmentsForCrossDock(shipmentIds, tenant);
                 }
 
                 foreach (EntityLastActivity activity in lastActivities)
@@ -177,8 +177,8 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                     WarehouseRelease warehouseRelease = warehouseReleases.Where(d => d.Id == activity.EntityId).FirstOrDefault();
                     if (warehouseRelease != null)
                     {
-                        ShipmentDataView shipmentDataView = shipmentDataViews.Where(d => d.Id == warehouseRelease.ShipmentId).FirstOrDefault();
-                        var isInlandDomestic = shipmentDataView != null && shipmentDataView.TransportModeId == "I" && shipmentDataView.DirectionId == "D" ? true : false;
+                        ShipmentList shipmentList = shipmentLists.Where(d => d.Id == warehouseRelease.ShipmentId).FirstOrDefault();
+                        var isInlandDomestic = shipmentList != null && shipmentList.TransportModeId == "I" && shipmentList.DirectionId == "D" ? true : false;
          
                         var warehouseReleaseList = new WarehouseReleaseList()
                         {
@@ -186,7 +186,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                             Tenant = warehouseRelease.Tenant,
                             ReleaseNumber = warehouseRelease.ReleaseNumber,
                             TransportModeId = warehouseRelease.TransportModeId,
-                            DirectionId = shipmentDataView.DirectionId,
+                            DirectionId = shipmentList.DirectionId,
                             StatusName = warehouseRelease.WarehouseReleaseStatus != null ? warehouseRelease.WarehouseReleaseStatus.Name : "",
                             WarehouseId = warehouseRelease.WarehouseId,
                             CustomerId = warehouseRelease.CustomerId,
@@ -194,9 +194,9 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                             ActivityDate = activity.ActivityDate,
                             ActivityTypeName = activity.ActivityType != null ? activity.ActivityType.Name : "",
                             ActivityByUserName = activity.User != null ? activity.User.Contact.EnglishName : "",
-                            DirectionName = shipmentDataView != null ? shipmentDataView.DirectionName : "",
-                            TransportModeName = shipmentDataView != null ? shipmentDataView.TransportModeName : "",
-                            Routing = shipmentDataView != null ? shipmentDataView.Routing : "",
+                            DirectionName = shipmentList != null ? shipmentList.DirectionName : "",
+                            TransportModeName = shipmentList != null ? shipmentList.TransportModeName : "",
+                            Routing = shipmentList != null ? shipmentList.Routing : "",
                         };
 
                         #region Full Other Prop
@@ -229,35 +229,36 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
 
         public List<WarehouseReleaseList> GetWarehouseReleasesByEntryId(string entityId, int tenant)
         {
-         
+            List<WarehouseReleaseList> warehouseReleaseLists = null;
             List<string> warehouseEntryPackagesIds = (from a in context.WarehouseEntryPackages where a.Tenant == tenant && a.WarehouseEntryId == entityId select a.Id).ToList();
-            List<string> warehouseReleasePackagesIds = (from a in context.WarehouseEntryPackagesReleases where a.Tenant == tenant && warehouseEntryPackagesIds.Contains(a.EntryPackageId) select a.ReleasePackageId).ToList();
-            List<string> warehouseReleaseIds = (from a in context.WarehouseReleasePackages where a.Tenant == tenant && warehouseEntryPackagesIds.Contains(a.Id) select a.WarehouseReleaseId).ToList();
-            List<string> ReleaseStatus = (from b in context.WarehouseReleaseStatuses  select b.Name).ToList();
-            List<WarehouseReleaseList> SDDS = (from a in context.WarehouseReleases
-                                               where a.Tenant == tenant && warehouseReleaseIds.Contains(a.Id)
-                                               select new WarehouseReleaseList()
-                                               {
-                                                   ActualReleaseDate = a.ActualReleaseDate,
-                                                   ExpectedReleaseDate = a.ExpectedReleaseDate,
-                                                   ReleaseNumber = a.ReleaseNumber,
-                                                   Id = a.Id,
-                                                   ReleaseDate = a.ActualReleaseDate == null ? a.ExpectedReleaseDate : a.ActualReleaseDate,
-                                                  
-                                                   ShipmentNumber = a.ShipmentNumber,
-                                                   StatusName = ReleaseStatus.FirstOrDefault(d => d.Contains(a.StatusCode)),
-                                                   ConnectedTo = a.ConnectedTo,
-                                                 
-                                           }
+            if (warehouseEntryPackagesIds.Count > 0)
+            {
+                List<string> warehouseReleasePackagesIds = (from a in context.WarehouseEntryPackagesReleases where a.Tenant == tenant && warehouseEntryPackagesIds.Contains(a.EntryPackageId) select a.ReleasePackageId).ToList();
+                if (warehouseReleasePackagesIds.Count > 0)
+                {
+                    List<string> warehouseReleaseIds = (from a in context.WarehouseReleasePackages where a.Tenant == tenant && warehouseReleasePackagesIds.Contains(a.Id) select a.WarehouseReleaseId).ToList();
+                    warehouseReleaseLists = (from a in context.WarehouseReleases.Include("WarehouseReleaseStatus")
+                                             where a.Tenant == tenant && warehouseReleaseIds.Contains(a.Id)
+                                             select new WarehouseReleaseList()
+                                             {
+                                                 ActualReleaseDate = a.ActualReleaseDate,
+                                                 ExpectedReleaseDate = a.ExpectedReleaseDate,
+                                                 ReleaseNumber = a.ReleaseNumber,
+                                                 Id = a.Id,
+                                                 ReleaseDate = a.ActualReleaseDate == null ? a.ExpectedReleaseDate : a.ActualReleaseDate,
+                                                 ShipmentNumber = a.ShipmentNumber,
+                                                 StatusName = a.WarehouseReleaseStatus != null ? a.WarehouseReleaseStatus.Name : null,
+                                                 ConnectedTo = a.ConnectedTo,
 
-                                          ).ToList();
+                                             }).ToList();
 
-            //List<WarehouseRelease> myResult = (from a in context.WarehouseReleases where a.Tenant == tenant && a.Id ==
-            //                                   (from b in context.WarehouseReleasePackages
-            //                                    where  b.Id.Contains(from c in context.WarehouseEntryPackagesReleases
-            //                                   where c.EntryPackageId.Contains('1') select c.ReleasePackageId)
-            //                                   select a).ToList();
-            return SDDS;
+
+                }
+            }
+
+
+    
+            return warehouseReleaseLists;
         }
 
 
