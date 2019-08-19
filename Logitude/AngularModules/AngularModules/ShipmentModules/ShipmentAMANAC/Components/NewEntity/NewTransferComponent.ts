@@ -32,7 +32,6 @@ export class NewTransferComponent extends BaseComponent {
         this.EntityPM.UserId = SessionLocator.LoggedUserId;
         this.EntityPM.TransferDate = DateTool.GetCurrentDateTimeAsUtc();
         this.BuildShipmentDatesList();
-        this.LoadData();
         this.Listen();
     }
 
@@ -46,7 +45,7 @@ export class NewTransferComponent extends BaseComponent {
     SetWindowArgs(transferTypeCode: string) {
         this.TransferTypeCode = transferTypeCode;
         this.EntityPM.AccountingTransferTypeCode = transferTypeCode;
-
+        this.LoadData();
     }
 
     private isAllChecked: boolean = true;
