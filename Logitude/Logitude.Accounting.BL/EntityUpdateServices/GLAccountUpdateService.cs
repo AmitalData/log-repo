@@ -1508,50 +1508,52 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                
                
 
-                if (EntityPOCO.RevaluationEnabled == true)
-                {
-                    oldValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
-                }
-                else if(EntityPOCO.RevaluationEnabled == false || EntityPOCO.RevaluationEnabled== null)
-                {
-                    oldValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
-                }
+                //if (EntityPOCO.RevaluationEnabled == true)
+                //{
+                //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+                //}
+                //else if(EntityPOCO.RevaluationEnabled == false || EntityPOCO.RevaluationEnabled== null)
+                //{
+                //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+                //}
                
-                if(EntityPM.RevaluationEnabled == true)
-                {
-                    newValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
-                }
-                else
-                {
-                    newValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
-                }
+                //if(EntityPM.RevaluationEnabled == true)
+                //{
+                //    newValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+                //}
+                //else
+                //{
+                //    newValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+                //}
                 CreateUpdateTraceEvent(oldValue, newValue, eventCode);
 
             }
             if (EntityPOCO.IsMultiCurrency != EntityPM.IsMultiCurrency)
             {
                 eventCode = "MLUP";
-                string oldValue = null;
-                string newValue = null;
+              
+                string oldValue = GetBooleanText(EntityPOCO.IsMultiCurrency);
+                string newValue = GetBooleanText(EntityPM.IsMultiCurrency);
 
 
-                if (EntityPOCO.IsMultiCurrency == true)
-                {
-                    oldValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
-                }
-                else if (EntityPOCO.IsMultiCurrency == false || EntityPOCO.IsMultiCurrency == null)
-                {
-                    oldValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
-                }
 
-                if (EntityPM.IsMultiCurrency == true)
-                {
-                    newValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
-                }
-                else
-                {
-                    newValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
-                }
+                //if (EntityPOCO.IsMultiCurrency == true)
+                //{
+                //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+                //}
+                //else if (EntityPOCO.IsMultiCurrency == false || EntityPOCO.IsMultiCurrency == null)
+                //{
+                //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+                //}
+
+                //if (EntityPM.IsMultiCurrency == true)
+                //{
+                //    newValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+                //}
+                //else
+                //{
+                //    newValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+                //}
                 CreateUpdateTraceEvent(oldValue, newValue, eventCode);
 
             }
@@ -1598,32 +1600,34 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 eventCode = "ARCP";
                 string oldValue = null;
                 string newValue = null;
-                AutomaticReconcileQueryService automaticReconcileQueryService = new AutomaticReconcileQueryService(EntityPM.Tenant);
-                AutomaticReconcilePM automaticReconcile = automaticReconcileQueryService.GetSinglePM(EntityPOCO.AutomaticReconcileId, EntityPOCO.Tenant);
-                if (automaticReconcile != null)
+                IAccountingContext accountingContext = AccountingContext.GetContext(EntityPOCO.Tenant);
+
+                AutomaticReconcileMethodListQueryService automaticReconcileMethodListQueryService = new AutomaticReconcileMethodListQueryService(accountingContext);
+                AutomaticReconcileMethodList automaticReconcileMethod = automaticReconcileMethodListQueryService.GetById(EntityPOCO.AutomaticReconcileId, EntityPOCO.Tenant);
+                if (automaticReconcileMethod != null)
                 {
                     if (showLocals)
                     {
-                        oldValue = automaticReconcile.LocalName;
+                        oldValue = automaticReconcileMethod.LocalName;
 
                     }
                     else
                     {
-                        oldValue = automaticReconcile.EnglishName;
+                        oldValue = automaticReconcileMethod.Name;
 
                     }
                 }
-               automaticReconcile = automaticReconcileQueryService.GetSinglePM(EntityPM.AutomaticReconcileId, EntityPM.Tenant);
-                if (automaticReconcile != null)
+                automaticReconcileMethod = automaticReconcileMethodListQueryService.GetById(EntityPM.AutomaticReconcileId, EntityPM.Tenant);
+                if (automaticReconcileMethod != null)
                 {
                     if (showLocals)
                     {
-                        newValue = automaticReconcile.LocalName;
+                        newValue = automaticReconcileMethod.LocalName;
 
                     }
                     else
                     {
-                        newValue = automaticReconcile.EnglishName;
+                        newValue = automaticReconcileMethod.Name;
 
                     }
                 }
