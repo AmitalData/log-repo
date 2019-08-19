@@ -984,6 +984,7 @@
     <Content Include="SharedLogistics\Components\TenantAccessSettingsComponent.html" />
     <Content Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.html" />
     <Content Include="SharedLogistics\Components\Workspaces\SharedShipmentsWorkspaceComponent.html" />
+    <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.html" />
@@ -3435,6 +3436,7 @@
     <TypeScriptCompile Include="SharedLogistics\Components\TenantAccessSettingsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedShipmentsWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleShipmentAMANAC.ts" />
