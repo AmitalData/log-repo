@@ -1247,6 +1247,7 @@ namespace Logitude.Update
                     Name = logitudeChargesGroup.Name,
                     LocalName = logitudeChargesGroup.LocalName,
                     SearchFields = logitudeChargesGroup.SearchFields,
+                    ViewOrder = logitudeChargesGroup.ViewOrder,
                 };
 
                 AmitalChargesGroupRepository.Add(amitalChargesGroup);
