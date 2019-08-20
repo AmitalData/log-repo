@@ -18,12 +18,14 @@ export class DeficitDecisionComponent extends BaseComponent {
     public ObjectTableName = "Customs.DeficitDecision";
     public DataContext: DeficitDecisionComponent = this;
     IsControlEnabled: any; // html component requires this property. AOT
+    IsLoaded: boolean = false;
 
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
         if (!AppTool.IsNullOrEmpty(entityArgs)) {
             this.EntityResourceService.getEntityResourceByTableName("Customs.DeficitDecision").subscribe((response: any) => {
+                this.IsLoaded = true;
             });
         }
     }
