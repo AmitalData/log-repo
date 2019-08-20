@@ -35,13 +35,14 @@ export class ShipmentView {
         this.helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
         this.helper.WaitByIdAndClick("NewButton.View.Add");
        // this.helper.WaitByIdAndClick("NewButton.View.Create");
-       this.helper.WaitByIdAndClick("NewButton.View.Create");
-       this.helper.WaitWindowClosed();
-       browser.driver.sleep(2000);
+     ;
 
 
         //to fill filters 
-     //   this.helper.WaitByIdAndClick("NewTab.View.Filters");
+       this.helper.WaitByIdAndClick("NewTab.View.Filters");
+       this.helper.WaitByIdAndClick("NewButton.View.Create");
+       this.helper.WaitWindowClosed();
+       browser.driver.sleep(2000);
        // this.helper.WaitByIdAndFill("NewViewFiltersSearchFieldsId_0_0", 'Agent');
        // this.helper.WaitByIdAndClick("CheckBox_0_631_LBL");
       //  this.helper.WaitByIdAndFill("Shipment_TextValue", 'Raghad');
