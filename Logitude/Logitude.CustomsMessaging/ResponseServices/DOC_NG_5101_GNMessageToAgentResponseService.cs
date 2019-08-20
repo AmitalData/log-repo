@@ -602,6 +602,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         void SendImporterDeclarationRequest(GenericRequestParams requestParams, string importerNumber, string vendorCode)
         {
+            LogMessagingUtil.Instance.AppendLine("8326 - Send VE_8326_ImporterDeclarationMessagingService : vendorCode- " + vendorCode + " importerNumber- " + importerNumber);
             DateTime today = DateTime.Today;
             string loggingUserId = AuthenticationUtil.ResolveUserId(requestParams.Tenant);
             var newImporterDeclarationRequestParams = new ImporterDeclarationRequestParams()
@@ -683,9 +684,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LogMessagingUtil.Instance.AppendLine("Request 3650-VendorSearchByCustomsAgent Failed " + responseData.CustomsRequestsSheetId + ", Message: " + responseData.UserMessage);
                 return;
             }
-            string vendorId = responseData.VendorResults != null ? responseData.VendorResults.FirstOrDefault().Id : vendorCode;
             LogMessagingUtil.Instance.AppendLine("3650 - VendorSearchByCustomsAgent Request Succeeded");
-            SendImporterDeclarationRequest(requestParams, importerNumber, vendorId);
+            SendImporterDeclarationRequest(requestParams, importerNumber, vendorCode);
 
         }
     }
