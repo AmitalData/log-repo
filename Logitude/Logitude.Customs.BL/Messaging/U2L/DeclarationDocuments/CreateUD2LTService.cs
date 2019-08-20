@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
@@ -15,24 +16,29 @@ using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
 {
-    public class CreateUD2LTService : ICreateUD2LTService
+    class CreateUD2LTService ///: ICreateUD2LTService 
     {
         private DocumentsFilingPM _DocumentsFilingPM;
 
-        public void JustDoIt(string DocumentsFilingId, int tenant)
+         void //JustDoIt(string DocumentsFilingId, int tenant)
+            JustDoIt1(object documentsFilingPM)
         {
+            DeclarationPM declarationPM;
             Debug.WriteLine("CreateUD2LTService");
             try
             {
-                var mappingService = new DocumentsFilingQueryService(tenant);
-                var entity  = mappingService.GetDocumentsFilingById(DocumentsFilingId, tenant);
-                _DocumentsFilingPM = mappingService.DocumentsFilingCustomDataMappingAndValidating(entity, tenant, false);
+                //var mappingService = new DocumentsFilingQueryService(tenant);
+                //var entity = mappingService.GetDocumentsFilingById(DocumentsFilingId, tenant);
+                //_DocumentsFilingPM = mappingService.DocumentsFilingCustomDataMappingAndValidating(entity, tenant, false);
 
+                _DocumentsFilingPM = documentsFilingPM as DocumentsFilingPM;
                 if (_DocumentsFilingPM == null)
                 {
                     Debug.WriteLine("_DocumentsFilingPM == null");
                     return;
                 }
+                string DocumentsFilingId = _DocumentsFilingPM.Id;
+                int tenant = _DocumentsFilingPM.Tenant;
                 if (!IsConnected2Declaration())
                 {
                     Debug.WriteLine("!IsConnected2Decalaration()");
@@ -42,6 +48,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                 bool shouldCreateDCAComm = false;
                 if (CourierENV() )
                 {
+                    Debug.WriteLine("CourierENV");
                     shouldCreateDCAComm = true;
                 }
                 else
@@ -55,17 +62,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     {
                         var listStorageDefault = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
                         var decQS = new DeclarationQueryService(tenant);
-                        var declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
+                        declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
 
                         if (def.DEFDATA.Contains(declarationPM.CustomerId)) // Maman
                         {
+                            Debug.WriteLine("def.DEFDATA.Contains(declarationPM.CustomerId)");
                             shouldCreateDCAComm = true;
                         }
                     }
 
                 }
+                if (!shouldCreateDCAComm)
+                {
+                    Debug.WriteLine("!shouldCreateDCAComm");
+                    return;
+                }
 
-
+                Debug.WriteLine("CreateCRS");
+                //var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
 
             }
             catch (Exception)
@@ -80,7 +94,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
 
         }
 
-        
+       
 
         private bool CourierENV()
         {

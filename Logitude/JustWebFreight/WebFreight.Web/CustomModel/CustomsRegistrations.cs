@@ -24,7 +24,7 @@ namespace WebFreight.Web.CustomModel
 
 
 
-            ContainerAccessor.Container.RegisterType<ICreateUD2LTService, CreateUD2LTService>("CreateUD2LTService", new InjectionFactory(c => new CreateUD2LTService()));
+            ContainerAccessor.Container.RegisterType<ICreateUD2LTService, Logitude.CustomsMessaging.MessagingServices.CreateUD2LTService>("CreateUD2LTService", new InjectionFactory(c => new Logitude.CustomsMessaging.MessagingServices.CreateUD2LTService()));
 
 
         }

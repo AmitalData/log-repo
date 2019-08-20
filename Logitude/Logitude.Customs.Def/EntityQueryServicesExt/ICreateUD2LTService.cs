@@ -9,7 +9,8 @@ namespace Logitude.Customs.Def.EntityQueryServicesExt
 {
     public interface ICreateUD2LTService
     {
-        void JustDoIt(string DocumentsFilingId,int tenant);
+        void JustDoIt(object documentsFilingPM);
+        //void JustDoIt(string DocumentsFilingId,int tenant);
         //void MustInit(DocumentsFiling pocoDocumentsFiling);
     }
 }
