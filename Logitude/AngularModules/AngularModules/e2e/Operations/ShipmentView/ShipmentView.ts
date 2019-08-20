@@ -35,8 +35,7 @@ export class ShipmentView {
         this.helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
         this.helper.WaitByIdAndClick("NewButton.View.Add");
        // this.helper.WaitByIdAndClick("NewButton.View.Create");
-     ;
-
+   
 
         //to fill filters 
        this.helper.WaitByIdAndClick("NewTab.View.Filters");
