@@ -20,22 +20,22 @@ describe('CompanyAddressSetting', () => {
 
     it('Quicksearch', function () {
 
-        CompanyAddress.QuickSearch();
-        //  CompanyAddressScenario.Quicksearch();
+        //  CompanyAddress.QuickSearch();
+        CompanyAddressScenario.Quicksearch();
     });
 
 
     it('SearchCompanyAddressSetting', function () {
 
-        CompanyAddress.SearchCompanyAddressSetting();
-        //CompanyAddressScenario.SearchCompanyAddressSetting();
+        //   CompanyAddress.SearchCompanyAddressSetting();
+        CompanyAddressScenario.SearchCompanyAddressSetting();
     });
 
 
     it('EditCompanyAddressSitting', function () {
 
-        CompanyAddress.EditCompanyAddressSitting();
-        // CompanyAddressScenario.EditCompanyAddressSitting();
+        //  CompanyAddress.EditCompanyAddressSitting();
+        CompanyAddressScenario.EditCompanyAddressSitting();
 
     });
 
