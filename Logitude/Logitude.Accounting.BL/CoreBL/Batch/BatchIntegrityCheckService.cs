@@ -120,7 +120,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                         break;
                     }
                 }
-              //  entityPM.HasException = res.HasException;
+                entityPM.ShouldFix = res.ShouldFix;
                 // serialize resultXML
                 string stringXML = LogitudeXmlSerializer.SerializeObjectToXmlString<AccountingIntegrityResult>(res);
 

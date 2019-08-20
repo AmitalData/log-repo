@@ -90,11 +90,11 @@
                                     </td>
                                 </tr>
 
-                                <tr class="TabTitleRow">
+                                <tr *ngIf="ObjectTableName == 'WarehouseEntry'" class="TabTitleRow">
                                     <td>Cross Docks Releases</td>
                                 </tr>
                                 <!--Releases-->
-                                <tr style="max-height:250px;">
+                                <tr *ngIf="ObjectTableName == 'WarehouseEntry'"  style="max-height:250px;">
                                     <td>
                                         <table>
 
@@ -118,10 +118,10 @@
                                                                     </tr>
                                                                 </table>
                                                             </div>
-                                                            <div class="SimpleGridViewBody" *ngIf="IsShowMessageNoConnectedEntity">
-                                                               
+                                                            <div class="SimpleGridViewBody" *ngIf="IsShowMessageNoConnectedReleaseEntity">
+                                                                <span class="NoDataText" style="top:20px">No Connected Release</span>
                                                             </div>
-                                                            <div *ngIf="!IsShowMessageNoConnectedEntity" class="SimpleGridViewBody">
+                                                            <div *ngIf="!IsShowMessageNoConnectedReleaseEntity" class="SimpleGridViewBody">
                                                                 <table>
                                                                     <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ReleaseItemsSource">
 

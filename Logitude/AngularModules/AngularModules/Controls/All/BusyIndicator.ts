@@ -1,10 +1,11 @@
 /// <reference path="../../infrastructure/utilities/amitalgatewayutil.ts" />
-import {Component, ChangeDetectionStrategy} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {AmitalGatewayUtil} from '../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     selector: 'BusyIndicator',
-    inputs: ['Text', 'IsBusy', 'Width', 'Height', 'ImageWidth', 'ImageHeight'],
+    inputs: ['Text', 'IsBusy', 'Width', 'Height', 'ImageWidth', 'ImageHeight', 'IdPrefix'],
     ///changeDetection: ChangeDetectionStrategy.OnPush,
 
     //border: 0;height: 10px;border-radius: 5px;
@@ -12,7 +13,7 @@ import {AmitalGatewayUtil} from '../../Infrastructure/Utilities/AmitalGatewayUti
     template:
     `
     <div [hidden]="!IsBusy" class="BusyIndicatorControlLayout" tabindex="-1" contenteditable="false"></div>
-    <div [hidden]="!IsBusy" class="BusyIndicatorControl" Id="BusyIndecator">
+    <div [hidden]="!IsBusy" class="BusyIndicatorControl" [attr.Id]="BusyIndicatorId">
         <div class="BusyIndicatorControlOuter" [style.width.px]="Width" [style.height.px]="Height">
             <div class="BusyIndicatorControlInner" [style.width.px]="Width" [style.height.px]="Height">
                 <div style="margin: auto; margin-top: 20px;" [style.width.px]="ImageWidth" [style.height.px]="ImageHeight">
@@ -83,18 +84,37 @@ import {AmitalGatewayUtil} from '../../Infrastructure/Utilities/AmitalGatewayUti
     `],
 })
 
-export class BusyIndicator {
+export class BusyIndicator implements OnInit {
     public Text: string;
     public Width: number = 200;
     public Height: number = 120;
     public ImageWidth: number = 50;
     public ImageHeight: number = 50;
+    public BusyIndicatorId: string = null;
+    public IdPrefix: string = null;
+    private CurrentSession = SessionLocator.SelectedSession;
 
-    
     IsAmitalVer: boolean = false;
     constructor() {
         this.IsAmitalVer = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
         //this.IsAmitalVer = false;
+
+
+        
+    }
+
+    ngOnInit() {
+        if (this.IdPrefix) {
+            this.BusyIndicatorId = this.IdPrefix + "BusyIndicator";
+        }
+
+        else {
+            this.BusyIndicatorId = "BusyIndicator";
+        }
+
+        if (this.CurrentSession) {
+            this.BusyIndicatorId += '_' + this.CurrentSession.SessionIndex;
+        }
     }
 
     private isBusy: boolean = false;
