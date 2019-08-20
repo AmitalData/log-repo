@@ -342,6 +342,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\AirlineAreasPortMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AirlineAreaMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactProductMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\NumberOfUsersService.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\VATValidating.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\SchedulerProcedureDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\SchedulerProcedureStruct.Generated.cs" />

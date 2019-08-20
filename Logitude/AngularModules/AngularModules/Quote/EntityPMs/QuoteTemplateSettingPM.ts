@@ -877,6 +877,24 @@ export class QuoteTemplateSettingPM {
     public get QuoteTemplatePDFMarginBottom() { return this.quoteTemplatePDFMarginBottom; }
     public set QuoteTemplatePDFMarginBottom(newValue: number) { if (this.quoteTemplatePDFMarginBottom != newValue) { this.quoteTemplatePDFMarginBottom = newValue; this.MarkAsDirty("QuoteTemplatePDFMarginBottom"); } }
 
+
+    
+    private showIncludedChargesPerContainers: boolean;
+    public get ShowIncludedChargesPerContainers() { return this.showIncludedChargesPerContainers; }
+    public set ShowIncludedChargesPerContainers(newValue: boolean) { if (this.showIncludedChargesPerContainers != newValue) { this.showIncludedChargesPerContainers = newValue; this.MarkAsDirty("ShowIncludedChargesPerContainers"); } }
+
+    private showIncludedChargesPackages: boolean;
+    public get ShowIncludedChargesPackages() { return this.showIncludedChargesPackages; }
+    public set ShowIncludedChargesPackages(newValue: boolean) { if (this.showIncludedChargesPackages != newValue) { this.showIncludedChargesPackages = newValue; this.MarkAsDirty("ShowIncludedChargesPackages"); } }
+
+    private showIncludedChargesContainers: boolean;
+    public get ShowIncludedChargesContainers() { return this.showIncludedChargesContainers; }
+    public set ShowIncludedChargesContainers(newValue: boolean) { if (this.showIncludedChargesContainers != newValue) { this.showIncludedChargesContainers = newValue; this.MarkAsDirty("ShowIncludedChargesContainers"); } }
+
+
+
+
+
     public OldEntityPM: QuoteTemplateSettingPM;
 		
     public IsDirty: boolean;

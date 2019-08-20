@@ -3165,7 +3165,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
             shipmentPM.TransportModeId = shipment.TransportModeId;
             shipmentPM.IncotermId = shipment.IncotermId;
-
+            shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;
@@ -4064,6 +4064,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.IncotermId = shipment.IncotermId;
                     shipmentPM.CustomerContactId = shipment.CustomerContactId;
                     shipmentPM.AgentContactId = shipment.AgentContactId;
+                    shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
 
                     if (m != null)
                     {
@@ -12404,6 +12405,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
 
+
+        public List<ShipmentList> GetShipmentsForCrossDock(List<string> shipmentIds , int tenant)
+        {
+            IQueryable<Shipment> shipments = repository.GetShipmentsForCrossDock(shipmentIds, tenant);
+            List<ShipmentList> shipmentShipmentLists = (from a in shipments
+                                            select new ShipmentList()
+                                            {
+                                                 Id = a.Id,
+                                                 TransportModeId = a.TransportModeId,
+                                                 DirectionId = a.DirectionId,
+                                                 Routing  = a.Routing,
+                                                 DirectionName = a.Direction!=null ? a.Direction.Name:null,
+                                                 TransportModeName = a.TransportMode!=null? a.TransportMode.Name:null,
+                                            }).ToList();
+            return shipmentShipmentLists;
+        }
 
 
     }

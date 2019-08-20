@@ -76,5 +76,12 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string ContainerType3MarkUpText { get; set; }
         public string ContainerType4MarkUpText { get; set; }
         public string ContainerType5MarkUpText { get; set; }
+
+
+        public int ChargesGroupViewOrder { get; set; }
+        public int ChargesTypeViewOrder { get; set; }
+        public string ChargesGroupName { get; set; }
+
+        
     }
 }

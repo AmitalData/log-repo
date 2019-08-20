@@ -125,7 +125,7 @@
                                                             <td>
                                                                 <div class="MediaFill">
                                                                     <div class="LeftCenter">
-                                                                        <input [attr.id]="'ShipmentTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentTypeId == item.Code" (click)="ShipmentTypeId = item.Code" [disabled]="!IsShipmentTypesListEnabled"/>
+                                                                        <input [attr.id]="'ShipmentTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentTypeId == item.Code" (click)="ShipmentTypeId = item.Code" [disabled]="!IsMasterTypesListEnabled"/>
                                                                         <label [attr.for]="'ShipmentTypeRadio_' + SessionIndex + item.Code" style="text-indent: 45px; font-size: 12px" [ngStyle]="{color: ShipmentTypeId == item.Code ? '#287828':'#282E30'}">
                                                                             <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="item.SRC" />
                                                                             {{item.Name}}

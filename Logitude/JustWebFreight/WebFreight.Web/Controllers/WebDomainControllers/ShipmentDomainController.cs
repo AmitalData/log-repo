@@ -2323,6 +2323,219 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetSendToAMANAC(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
+                ShipmentPM shipment = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, authToken.Tenant);
+
+                string fileName = "";
+                byte[] data = null;
+                if (shipment != null)
+                {
+                    data = this.ExportAMANACShipmentToExcel(shipment);
+                    fileName = "Shipment-" + shipment.ShipmentNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(authToken.Tenant));
+                }
+
+                BlobFileInfo fileInfo = this.CreateAMANACBlobFile(data, fileName, authToken.Tenant);
+                this.WriteBlobFileToStorage(data, fileInfo);
+                return Request.CreateResponse(HttpStatusCode.OK, fileName);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }        
+        private byte[] ExportAMANACShipmentToExcel(ShipmentPM shipment)
+        {
+            byte[] data = null;
+
+            if (shipment.TransportModeId == "O")
+            {
+                data = this.ExportOceanAMANACShipmentToExcel(shipment);
+            }
+
+            else if (shipment.TransportModeId == "A")
+            {
+                data = this.ExportAirAMANACShipmentToExcel(shipment);
+            }
+
+            return data;            
+        }
+        public byte[] ExportOceanAMANACShipmentToExcel(ShipmentPM shipment)
+        {
+            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
+
+            IWorksheet sheet1 = workbook.Worksheets[0];
+            sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
+            sheet1.Range["A1:I1"].CellStyle.Font.Size = 10;
+            sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
+            sheet1.Range["A1:I1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range["A1:I1"].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range["A1:I1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+            sheet1.Range["A1:G1"].ColumnWidth = 15;
+            sheet1.Range["H1:I1"].ColumnWidth = 17;
+
+            DataTable dataTable1 = new DataTable();
+            dataTable1.Columns.Add("Consecutive");
+
+            sheet1.ImportDataTable(dataTable1, true, 1, 1);
+            workbook.SaveAs(memory);
+            return memory.ToArray();
+        }
+        public byte[] ExportAirAMANACShipmentToExcel(ShipmentPM shipment)
+        {
+            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
+
+            IWorksheet sheet1 = workbook.Worksheets[0];
+            sheet1.Range["A1:AA1"].CellStyle.Font.Bold = true;
+            sheet1.Range["A1:AA1"].CellStyle.Font.Size = 10;
+            sheet1.Range["A1:AA1"].CellStyle.Font.FontName = "Calibri";
+            sheet1.Range["A1:AA1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range["A1:AA1"].CellStyle.Color = System.Drawing.Color.Orange;
+            sheet1.Range["A1:AA1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+            
+            DataTable dataTable1 = new DataTable();
+            dataTable1.Columns.Add("Master B/L");
+            dataTable1.Columns.Add("ORIGIN_AIRPORT_CODE");
+            dataTable1.Columns.Add("ORIGIN_AIRPORT");
+            dataTable1.Columns.Add("DESTINATION_AIRPORT_CODE");
+            dataTable1.Columns.Add("DESTINATION_AIRPORT");
+            dataTable1.Columns.Add("House B/L");
+            dataTable1.Columns.Add("CURRENCY");
+            dataTable1.Columns.Add("Code IATA Carrier");
+            dataTable1.Columns.Add("CARRIER (AEROLINEA)");
+            dataTable1.Columns.Add("PIECES");
+            dataTable1.Columns.Add("GROSS_WEIGHT");
+            dataTable1.Columns.Add("SHIPPER_NAME");
+            dataTable1.Columns.Add("SHIPPER_STREET");
+            dataTable1.Columns.Add("SHIPPER_COUNTRY_Code");
+            dataTable1.Columns.Add("SHIPPER_COUNTRY");
+            dataTable1.Columns.Add("SHIPPER_CITY_Code");
+            dataTable1.Columns.Add("SHIPPER_CITY");
+            dataTable1.Columns.Add("CONSIGNEE_NAME");
+            dataTable1.Columns.Add("CONSIGNEE_STREET");
+            dataTable1.Columns.Add("CONSIGNEE_COUNTRY_code");
+            dataTable1.Columns.Add("CONSIGNEE_COUNTRY");
+            dataTable1.Columns.Add("CONSIGNEE_CITY_code");
+            dataTable1.Columns.Add("CONSIGNEE_CITY");
+            dataTable1.Columns.Add("GOOD_DESCRIPTION");
+            dataTable1.Columns.Add("Number_of_United_Nations");
+            dataTable1.Columns.Add("Number_of_United_Nations_Code");
+            dataTable1.Columns.Add("Additional_information_of_Goods");
+
+            DataRow row = dataTable1.NewRow();
+            row[0] = shipment.LongMaster;
+            row[1] = shipment.MainCarriageFromPortCode;
+            row[2] = shipment.MainCarriageFromPortName;
+            row[3] = shipment.MainCarriageFinalDestinationPortCode;
+            row[4] = shipment.MainCarriageFinalDestinationPortName;
+            row[5] = shipment.House;
+            row[6] = shipment.AWBCurrencyCode;
+            row[7] = shipment.MainCarriageCarrierCode;
+            row[8] = shipment.MainCarriageCarrierName;
+            row[9] = shipment.NumberOfPackages;
+            row[10] = shipment.GrossWeight;
+            row[11] = shipment.ShipperName;
+            row[12] = this.ComputeAddress(shipment.ShipperAddress1, shipment.ShipperAddress2);
+
+            if(!string.IsNullOrEmpty(shipment.ShipperCountryId))
+            {
+                Country shipperCountry = CountryRepository.GetSingleCountry(shipment.ShipperCountryId, shipment.Tenant, true);
+                if (shipperCountry != null)
+                {
+                    row[13] = shipperCountry.Code;
+                    row[14] = shipperCountry.EnglishName;
+                }
+            }
+            
+            //row[15] = shipment.ShipperCityCode;
+            row[16] = shipment.ShipperCity;
+            row[17] = shipment.ConsigneeName;
+            row[18] = this.ComputeAddress(shipment.ConsigneeAddress1, shipment.ConsigneeAddress2);
+
+            if (!string.IsNullOrEmpty(shipment.ConsigneeCountryId))
+            {
+                Country consigneeCountry = CountryRepository.GetSingleCountry(shipment.ConsigneeCountryId, shipment.Tenant, true);
+                if (consigneeCountry != null)
+                {
+                    row[19] = consigneeCountry.Code;
+                    row[20] = consigneeCountry.EnglishName;
+                }
+            }
+            
+            //row[21] = shipment.ConsigneeCityCode;
+            row[22] = shipment.ConsigneeCity;
+            row[23] = shipment.DescriptionOfGoods;
+            //row[24] =;
+            //row[25] =;
+            row[26] = shipment.DescriptionOfGoods;
+            dataTable1.Rows.Add(row);
+
+            sheet1.ImportDataTable(dataTable1, true, 1, 1);
+            workbook.SaveAs(memory);
+            return memory.ToArray();
+        }
+        private string ComputeAddress(string address1, string address2)
+        {
+            string fullAddress = "";
+
+            if(!string.IsNullOrEmpty(address1))
+            {
+                fullAddress = address1;
+            }
+
+            if (!string.IsNullOrEmpty(address2))
+            {
+                if(string.IsNullOrEmpty(fullAddress))
+                {
+                    fullAddress = address2;
+                }
+
+                else
+                {
+                    fullAddress = fullAddress + "," + address2;
+                }
+            }
+
+            return fullAddress;
+        }
+        private BlobFileInfo CreateAMANACBlobFile(byte[] data, string fileName, int tenant)
+        {
+            BlobFileInfo fileInfo = new BlobFileInfo();
+
+            if (data != null)
+            {
+                fileInfo = new BlobFileInfo()
+                {
+                    FileName = fileName,
+                    FolderName = "others",
+                    Extension = "xls",
+                    Tenant = tenant,
+                    FileSize = data.Length,
+                };
+            }
+
+            return fileInfo;
+        }
+        private void WriteBlobFileToStorage(byte[] data, BlobFileInfo fileInfo)
+        {
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            storageservice.Write(data, fileInfo);
+        }
     }
 }
 
@@ -2342,14 +2555,12 @@ public class ExcelPackage
     public bool IsRefrigerated { get; set; }
     public bool HasErrors { get; set; }
 }
-
 public class ExcelPackageFilter
 {
     public int Tenant { get; set; }
     public string FileData{ get; set; }
     public string ShipmentId{ get; set; }
 }
-
 public class ExcelPackageType
 {
     public string Code { get; set; }

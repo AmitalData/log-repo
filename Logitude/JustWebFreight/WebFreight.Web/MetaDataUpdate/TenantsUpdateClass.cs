@@ -789,7 +789,8 @@ namespace WebFreight.Web.MetaDataUpdate
                             Name = chargesGroup.Name,
                             LocalName = chargesGroup.LocalName,
                             SearchFields = chargesGroup.SearchFields,
-                          
+                            ViewOrder = chargesGroup.ViewOrder,
+
                         };
 
                         chargesGroupRepository.Add(newchargesGroup);

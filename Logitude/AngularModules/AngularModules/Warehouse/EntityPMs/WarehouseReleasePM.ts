@@ -259,6 +259,11 @@ export class WarehouseReleasePM {
     public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
        
 	 
+    private connectedTo: string;
+    public get ConnectedTo() { return this.connectedTo; }
+    public set ConnectedTo(newValue: string) { if (this.connectedTo != newValue) { this.connectedTo = newValue; this.MarkAsDirty("ConnectedTo"); } }
+       
+	 
 
     public OldEntityPM: WarehouseReleasePM;
 		
