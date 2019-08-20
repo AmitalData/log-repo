@@ -1,31 +1,32 @@
 declare @Tenant as int
 declare @ShipmentId as varchar(15)
-declare @FirstPickupId varchar(15)
-declare @LastDeliveryId varchar(15)
-declare @FirstpickUpATA as datetime
-declare @FirstpickUpATD as datetime
-declare @LastDeliveryATA as datetime
-declare @LastDeliveryATD as datetime
-declare @LastDeliveryETA as datetime
-declare @LastDeliveryETD as datetime
-declare @ContainerNumber varchar(4000)
 declare @ContainerNumberSum varchar(4000)
 
-
+ 
 DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
-	SELECT shipment.Id, shipment.Tenant,ContainerNumber
-	FROM Shipments	shipment inner join ShipmentPackages shipmentpackage  on shipment.Id = shipmentpackage.ShipmentId where shipment.Tenant=1 and shipmentpackage.ContainerNumber is not null order by shipment.Id
-	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @ShipmentId, @Tenant ,@ContainerNumber
+	SELECT  (STUFF((SELECT CAST(',' + ContainerNumber AS VARCHAR(4000)) 
+         FROM ShipmentPackages
+         WHERE (Shipments.Id = ShipmentPackages.ShipmentId  and ShipmentPackages.ContainerNumber is not null) 
+         FOR XML PATH ('')), 1, 1, '')) AS ContainerNumbers, Id, Tenant
+	FROM Shipments	  group by Id,Tenant
+	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @ContainerNumberSum, @ShipmentId, @Tenant 
 	WHILE @@FETCH_STATUS = 0
 		BEGIN	
-		if(@ContainerNumber is not null)
-		print(@ContainerNumber+' - '+@ShipmentId);
-		FETCH NEXT FROM ShipmentsCursor INTO @ShipmentId, @Tenant,@ContainerNumber
+		if(@ContainerNumberSum is not null)
+		BEGIN
+		update ShipmentComputedFields set ContainersNumbers=@ContainerNumberSum where Id=@ShipmentId and Tenant=@Tenant
+		END
+		FETCH NEXT FROM ShipmentsCursor INTO @ContainerNumberSum,@ShipmentId, @Tenant
 		END
 	CLOSE ShipmentsCursor
 	DEALLOCATE ShipmentsCursor
 	
-
+	
+	
+	
+	
+	
+	
 	
 	
