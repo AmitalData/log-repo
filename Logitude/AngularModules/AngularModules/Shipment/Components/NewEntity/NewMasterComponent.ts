@@ -58,6 +58,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
         this.BuildAdditionalFields();
     }
+    public ScreenIsReady: boolean = false;
 
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
@@ -72,7 +73,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                 }
 
                 this.LoadAllowedAirline();
-                //this.ScreenIsReady = true;
+                this.ScreenIsReady = true;
             });
         });
 
