@@ -105,7 +105,7 @@ namespace WebFreight.Web.App_Code
                     };
                 }
                 #endregion
-                LogPM.Subject = "Cancle Shipment in Importer Tenant";
+                LogPM.Subject = "Cancel Shipment in Importer Tenant";
                 if (IsNewLog)
                 {
                     apiLogsService.Create(LogPM);
@@ -127,6 +127,8 @@ namespace WebFreight.Web.App_Code
                         shipmentService.Update();
                         HandelCancelledShipmentDocuments(ImporterShipment.Id, ImporterShipment.Tenant);
                     }
+                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(ImporterShipment), null, null, "");
+
                     return Request.CreateResponse(HttpStatusCode.OK, "Ok");
                 }
                 catch (Exception ex)
@@ -146,7 +148,7 @@ namespace WebFreight.Web.App_Code
                     }
 
                     errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
-                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, "Cancle Shipment At Importer Tenant Faild " + DateTime.Now, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249) : errorMessage));
+                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "F", 1, DateTime.Now, DateTime.UtcNow, "Cancel Shipment At Importer Tenant Faild " + DateTime.Now, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249) : errorMessage));
 
                     return Request.CreateResponse(HttpStatusCode.BadRequest, apiException);
                 }

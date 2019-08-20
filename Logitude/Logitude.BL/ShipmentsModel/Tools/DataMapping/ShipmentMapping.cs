@@ -2541,25 +2541,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "FinalDistenationPortId", changeTrackingPM.FinalDistenationPortId, pm.FinalDistenationPortId, "string", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "SalesmanUserId", changeTrackingPM.SalesmanUserId, pm.SalesmanUserId, "string", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "StatusId", changeTrackingPM.StatusId, pm.StatusId, "string", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "ShipmentTypeId", changeTrackingPM.ShipmentTypeId, pm.ShipmentTypeId, "string", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IncotermId", changeTrackingPM.IncotermId, pm.IncotermId, "string", notifyPropertyChangeValuesList);
-
             AddFieldChangedProperties(changeTrackingPM, "IsOperationalClosed", changeTrackingPM.IsOperationalClosed, pm.IsOperationalClosed, "bool", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IsAccountingClosed", changeTrackingPM.IsAccountingClosed, pm.IsAccountingClosed, "bool", notifyPropertyChangeValuesList);
-
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageETD", changeTrackingPM.MainCarriageETD, pm.MainCarriageETD, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageATD", changeTrackingPM.MainCarriageATD, pm.MainCarriageATD, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageETA", changeTrackingPM.MainCarriageETA, pm.MainCarriageETA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageATA", changeTrackingPM.MainCarriageATA, pm.MainCarriageATA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationETA", changeTrackingPM.MainCarriageFinalDestinationETA, pm.MainCarriageFinalDestinationETA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationATA", changeTrackingPM.MainCarriageFinalDestinationATA, pm.MainCarriageFinalDestinationATA, "DateTime?", notifyPropertyChangeValuesList);
-
-
-
-
-
-
-
-
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field3, pm.Field3, "Field3", notifyPropertyChangeValuesList);
@@ -2666,6 +2657,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.IsDepositionRequired = houseShipment.IsDepositionRequired;
             shipmentPM.IsDigitalSignRequired = houseShipment.IsDigitalSignRequired;
             shipmentPM.IsRequestedDocuments = houseShipment.IsRequestedDocuments;
+            shipmentPM.ShipmentTypeId = houseShipment.ShipmentTypeId;
 
 
             shipmentPM.Field1 = houseShipment.Field1;
