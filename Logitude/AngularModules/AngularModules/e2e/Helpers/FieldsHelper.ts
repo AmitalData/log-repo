@@ -64,20 +64,20 @@ export class FieldsHelper {
 
     WaitBusyIndicator() {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.invisibilityOf(element(by.id("BusyIndecator"))),100000).then(a => { });
+        browser.wait(EC.invisibilityOf(element(by.id("BusyIndicator_0"))),100000).then(a => { });
     }
-
-
+    WaitEditComponentBusyIndicator() {
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.invisibilityOf(element(by.id("EditComponentBusyIndicator_0"))),100000).then(a => { });
+    }
     WaitBusyIndicatorToShow() {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.id("BusyIndecator"))), 100000).then(a => { });
+        browser.wait(EC.visibilityOf(element(by.id("BusyIndicator_0"))), 100000).then(a => { });
     }
 
     WaitWindowClosed() {
         var EC = protractor.ExpectedConditions;
-        browser.wait(
-            EC.invisibilityOf(element(by.css(".LogitudeWindow"))), 100000)
-            .then(a => { });
+        browser.wait(EC.invisibilityOf(element(by.css(".LogitudeWindow"))), 100000).then(a => { });
     }
     waitByCss(className: string) {
       var EC = protractor.ExpectedConditions;
@@ -194,7 +194,7 @@ export class FieldsHelper {
     WaitByIdAndFill(Id: string, Value: string) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.elementToBeClickable(element(by.id(Id))),100000).then(a => {
-            console.log("this is inside the wait for" + Id);
+            console.log("this is inside the wait for " + Id);
             var input = element(by.id(Id));
             input.clear().then(() => {
 

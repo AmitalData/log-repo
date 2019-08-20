@@ -67,7 +67,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             
             IQueryable<AutomaticReconcileMethod> automaticReconcileMethodQuery = (from a in context.AutomaticReconcileMethods
-                                                                      where a.Tenant == 1 && a.Id == id
+                                                                      where a.Tenant == tenant && a.Id == id
                                                                       select a);
 
             IQueryable<AutomaticReconcileMethodList> automaticReconcileMethodListQuery = GetIqueryableList(automaticReconcileMethodQuery);
