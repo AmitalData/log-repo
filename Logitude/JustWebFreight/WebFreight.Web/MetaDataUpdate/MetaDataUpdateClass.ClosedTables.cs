@@ -406,7 +406,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Tax", Code = "TAX", Name = "Tax", ViewOrder = 100 }, chargesRep);
             AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "None", Code = "NONE", Name = "None", ViewOrder = 100 }, chargesRep);
             AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Disbursement", Code = "DIS", Name = "Disbursement", ViewOrder = 20 }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Commission", Code = "COMM", Name = "Commission", ViewOrder = 30 }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Commission", Code = "COMM", Name = "Commission", ViewOrder = 80 }, chargesRep);
 
             //============= Just For Testing ============= 
             if (Testing.General.IsTesting)
