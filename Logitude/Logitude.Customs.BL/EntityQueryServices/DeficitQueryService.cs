@@ -52,11 +52,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         ValidityDateTo = deficit.ValidityDateTo,
                         PaymentOrderNumber = deficit.PaymentOrderNumber,
                         TapagId = deficit.TapagId,
-                    
-
                     };
-                }
-             
+                    DeficitDecisionQueryService deficitDecisionQueryService = new DeficitDecisionQueryService(tenant);
+                    if (deficitPM != null)
+                    {
+                        deficitPM.DeficitDecisions = deficitDecisionQueryService.GetMulti(new DeficitKeys() { Id = deficitPM.Id }, false);
+                    }
+                }             
             }
             return deficitPM;
         }
