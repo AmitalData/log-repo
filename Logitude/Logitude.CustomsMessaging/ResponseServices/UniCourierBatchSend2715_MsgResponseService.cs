@@ -107,7 +107,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             foreach (var itemPoco in listPoco)
             {
                 var customsDocumentQueryService = new CustomsDocumentQueryService(context);
-                var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = itemPoco.DeclarationId, ParentEntityCode = "Declaration" }, itemPoco.Tenant);
+                //var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = itemPoco.DeclarationId, ParentEntityCode = "Declaration" }, itemPoco.Tenant);
+                var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDocParentOnly(new GetTicketsParams() { ParentEntityId = itemPoco.DeclarationId, ParentEntityCode = "Declaration" }, itemPoco.Tenant);
 
                 foreach (var customsDocumentPMItem in customsDocumentPMList)
                 {

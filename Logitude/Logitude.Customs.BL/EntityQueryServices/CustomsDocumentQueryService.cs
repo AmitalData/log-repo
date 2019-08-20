@@ -198,6 +198,27 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return customsDocumentListPMs;
         }
 
+        public List<CustomsDocumentPM> GetCustomsDocumentPMListWithoutRequestedDocParentOnly(GetTicketsParams parameters, int tenant)
+        {
+            ICustomContext context = MainContext as CustomContext;
+            var customsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(context);
+            var customsDocumentsTicketRepository = new CustomsDocumentsTicketRepository(context);
+            var q = (from cdp in customsDocumentPointerQueryService.GetCustomsDocumentPointerListParentOnly(parameters, tenant)
+                     join cdt in customsDocumentsTicketRepository.GetAll(tenant) on cdp.CustomsDocumentsTicketId equals cdt.Id
+                     select cdt
+                        );
+            var q2 = (from cdt in q
+                      where cdt.RequestedCustomsDocId == null
+                      join cd in repository.GetAll(tenant) on cdt.DocumentsFilingId equals cd.DocumentsFilingId
+                      select cd
+                         );
+
+            q2 = q2.Distinct();
+            var customsDocumentListPocos = q2.ToList();
+            var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
+            return customsDocumentListPMs;
+        }
+
         public string GetDocumentDeclarationId(string declarationId, int tenant, out string DeclarationVersion)
         {
             string DocumentDeclarationId = "";
