@@ -395,18 +395,18 @@ namespace WebFreight.Web.MetaDataUpdate
 
             //-------------Charges Group---------------
             ChargesGroupRepository chargesRep = new ChargesGroupRepository(tempContext);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Freight", Code = "FRT", Name = "Freight" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Surcharges", Code = "SCH", Name = "Surcharges" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Other Charges", Code = "OCH", Name = "Other Charges" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Documentation Charges", Code = "DCCH", Name = "Documentation Charges" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Documentation Charges Ex", Code = "DCCHX", Name = "Documentation Charges Ex" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Handling Charges", Code = "HNDCH", Name = "Handling Charges" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Custom Charges", Code = "CUSCH", Name = "Custom Charges" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Valuation", Code = "VAL", Name = "Valuation" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Tax", Code = "TAX", Name = "Tax" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "None", Code = "NONE", Name = "None" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Disbursement", Code = "DIS", Name = "Disbursement" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Commission", Code = "COMM", Name = "Commission" }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Freight", Code = "FRT", Name = "Freight" , ViewOrder = 10}, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Surcharges", Code = "SCH", Name = "Surcharges" ,ViewOrder =30, }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Other Charges", Code = "OCH", Name = "Other Charges", ViewOrder = 100 }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Documentation Charges", Code = "DCCH", Name = "Documentation Charges", ViewOrder = 40 }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Documentation Charges Ex", Code = "DCCHX", Name = "Documentation Charges Ex", ViewOrder = 50 }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Handling Charges", Code = "HNDCH", Name = "Handling Charges", ViewOrder = 70 }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Custom Charges", Code = "CUSCH", Name = "Custom Charges", ViewOrder = 90 }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Valuation", Code = "VAL", Name = "Valuation", ViewOrder = 99 }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Tax", Code = "TAX", Name = "Tax", ViewOrder = 100 }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "None", Code = "NONE", Name = "None", ViewOrder = 100 }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Disbursement", Code = "DIS", Name = "Disbursement", ViewOrder = 20 }, chargesRep);
+            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Commission", Code = "COMM", Name = "Commission", ViewOrder = 30 }, chargesRep);
 
             //============= Just For Testing ============= 
             if (Testing.General.IsTesting)
