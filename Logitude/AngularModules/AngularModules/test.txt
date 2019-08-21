@@ -1,2 +1,2 @@
-0
-0
+Errors in :     Run Report 
+Total Errors :1 
