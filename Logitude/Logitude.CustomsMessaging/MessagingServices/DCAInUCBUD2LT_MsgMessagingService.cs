@@ -255,7 +255,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
 
                 bool shouldCreateDCAComm = false;
-                if (CourierENV())
+                var decQS = new DeclarationQueryService(tenant);
+                declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
+
+                if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
                 {
                     Debug.WriteLine("CourierENV");
                     shouldCreateDCAComm = true;
@@ -270,8 +273,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     if (!String.IsNullOrWhiteSpace(def.DEFDATA))
                     {
                         var listStorageDefault = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
-                        var decQS = new DeclarationQueryService(tenant);
-                        declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
                         
                         if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) &&def.DEFDATA.Contains(declarationPM.CustomerCode)) // Maman
                         {
