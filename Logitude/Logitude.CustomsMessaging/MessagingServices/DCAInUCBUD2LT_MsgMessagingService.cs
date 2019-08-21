@@ -64,7 +64,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 
 
                 LoggingUserId = customsResponse.LoggingUserId,
-                RequestName = $" שידור UD2LT  ברקע   " + customsResponse.DeclarationId + " "
+                RequestName = $" UD2LT   קישור מסמך לטיקט" + customsResponse.DocumentsFilingCode + " "
             };
             
             return genericRequestParams;
@@ -110,6 +110,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 DeclarationId = documentsFilingPM.EntityId,
                 DocumentsFilingId = documentsFilingPM.Id,
+                DocumentsFilingCode = documentsFilingPM.Code,
                 LoggingUserId = LoggingUserId,
                 //DocumentTypeId=documentsFilingPM.DocumentTypeId,
                 DocumentTypeCode = documentsFilingPM.DocumentTypeCode,
@@ -211,7 +212,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public LOGIDOCS MyLOGIDOCS { get; set; }
 
         public string MyMoreParams { get; set; }
-        
+        public string DocumentsFilingCode { get; set; }
         public string DocumentsFilingId { get; set; }
         public string DOCUMENTTYPEID { get; set; }
         public string DocumentTypeCode { get; set; }
