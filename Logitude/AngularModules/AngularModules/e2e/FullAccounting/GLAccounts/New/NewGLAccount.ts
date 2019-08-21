@@ -24,7 +24,7 @@ export class NewGLAccount {
     this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'Rev');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0); 
    // this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
-      this.Helper.WaitByIdAndFill('GLAccount_LocalName', LocalName);
+     // this.Helper.WaitByIdAndFill('GLAccount_LocalName', LocalName);
       this.Helper.WaitBusyIndicator();
     
     this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
