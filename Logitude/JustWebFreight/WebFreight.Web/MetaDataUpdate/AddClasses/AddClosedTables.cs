@@ -333,13 +333,13 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 ChargesGroup chargesGroup = chargesGroupRepository.GetSingleChargesGroupByCode(chargesGroupDetails.Code, 0);
                 chargesGroup.Name = chargesGroupDetails.Name;
-              
+                chargesGroup.ViewOrder = chargesGroupDetails.ViewOrder;
                 chargesGroup.SearchFields = (chargesGroupDetails.Code + "," + chargesGroupDetails.Name).ToLower();
                 chargesGroupRepository.Update(chargesGroup);
             }
             else
             {
-                ChargesGroup newChargesGroup = new ChargesGroup() { Code = chargesGroupDetails.Code, Name = chargesGroupDetails.Name, SearchFields = (chargesGroupDetails.Code + "," + chargesGroupDetails.Name).ToLower() };
+                ChargesGroup newChargesGroup = new ChargesGroup() { Code = chargesGroupDetails.Code, Name = chargesGroupDetails.Name,ViewOrder = chargesGroupDetails.ViewOrder, SearchFields = (chargesGroupDetails.Code + "," + chargesGroupDetails.Name).ToLower() };
                 newChargesGroup.Id = IdCounter.GetNumber("ChargesGroup", 0);
                 newChargesGroup.Tenant = 0;
                 chargesGroupRepository.Add(newChargesGroup);

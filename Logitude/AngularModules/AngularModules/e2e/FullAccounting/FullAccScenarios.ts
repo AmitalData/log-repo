@@ -41,7 +41,7 @@ export class FullAccountingScenarios {
             this.Helper.WaitByIdAndClick('ACC');
             this.Helper.WaitByIdAndClick('MaintenanceItemMTCA');
             this.newChart.CreateNewChartOFAccount(chartOfAccountNo, 'Customer');
-            this.editChart.EditChartOfAccount(chartOfAccountNo);
+           // this.editChart.EditChartOfAccount(chartOfAccountNo);
 
 
             
