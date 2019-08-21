@@ -262,10 +262,10 @@ export class AddEditTaskSchedulerComponent  {
             if (AppTool.IsNullOrEmpty(this.DataContext.From)) errors.push(msg.replace("%FieldName", "From"));
 
             if (AppTool.IsNullOrEmpty(this.DataContext.Host)) errors.push(msg.replace("%FieldName", "Host"));
-            else {
-                var isValid = this.ValidateHost();
-                if (!isValid) errors.push("Invalid Host");
-            }
+           // else {
+               // var isValid = this.ValidateHost();
+               // if (!isValid) errors.push("Invalid Host");
+            //}
 
         }
 
@@ -275,9 +275,10 @@ export class AddEditTaskSchedulerComponent  {
         if (AppTool.IsNullOrEmpty(this.DataContext.Name)) {
             errors.push(msg.replace("%FieldName", "Name"));
         }
-
-        if (this.DataContext.RepeatInMinutes < 5) {
-            errors.push("The lowest value you can add in Repeat in Minutes field is 5");
+        if (this.DataContext.RepeatInMinutes != null) {
+            if (this.DataContext.RepeatInMinutes < 5) {
+                errors.push("The lowest value you can add in Repeat in Minutes field is 5");
+            }
         }
         //if (AppTool.IsNullOrEmpty(this.DataContext.Description)) {
         //    errors.push(msg.replace("%FieldName", "Description"));

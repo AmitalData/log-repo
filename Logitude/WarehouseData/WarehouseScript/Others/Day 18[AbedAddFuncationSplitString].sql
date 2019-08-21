@@ -1,15 +1,15 @@
+
 -- Shared DB
 
-
 IF object_id(N'SplitString', N'FN') IS NOT NULL
-BEGIN DROP FUNCTION dbo.SplitString   end
+  BEGIN DROP FUNCTION SplitString   end
 
+IF object_id('SplitString') IS  NULL
+BEGIN
+ declare @functionring as varchar(3000)
 
-IF object_id(N'dbo.SplitString', N'FN') IS  NULL
-begin 
-declare @functionsDataString as varchar(8000)
-set @functionsDataString = 'CREATE FUNCTION dbo.SplitString (@string NVARCHAR(MAX) ,  @delimiter varchar(10) , @index int)  
-RETURNS varchar(20)
+ set @functionring = 'CREATE FUNCTION [dbo].[SplitString] (@string NVARCHAR(MAX) ,  @delimiter varchar(10) , @index int)  
+RETURNS varchar(200)
 AS  
 BEGIN 
 
@@ -37,8 +37,7 @@ BEGIN
 
 END;';
 
- EXEC(@functionsDataString)
-end 
+ EXEC(@functionring)
+			
+END
 
-
- 

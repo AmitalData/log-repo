@@ -73,11 +73,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         {
             UnicargoExportDataProvider myDataProvider = new UnicargoExportDataProvider()
             {
-             Shipments   = new List<UnicargoExport>()
+                Shipments = new List<UnicargoExport>()
             };
 
-            List<Shipment> shipments = shipmentsContext.Shipments.Where(p => p.Tenant == tenant && p.IsOperationalClosed == false).Include("CreatedByUser").Include("CreatedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").ToList();
-            Dictionary<string,string> incoterms= commonDataContext.Incoterms.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
+            List<Shipment> shipments = shipmentsContext.Shipments.Where(p => p.Tenant == tenant && p.IsOperationalClosed == false && p.IsAccountingClosed == false && p.IsCancelled == false).ToList();
+            Dictionary<string, string> incoterms = commonDataContext.Incoterms.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
             List<string> shipmentdelevriesIds = shipments.Select(d => d.Id).ToList();
             List<ShipmentMasterData> shipmentMasterDatas = shipmentsContext.ShipmentMasterDatas.Where(p => p.Tenant == tenant && shipmentdelevriesIds.Contains(p.Id)).ToList();
 
@@ -90,7 +90,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             Dictionary<string, string> departments = commonDataContext.Departments.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
             Dictionary<string, string> branches = commonDataContext.Branches.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
             Dictionary<string, string> SpeicalServices = shipmentsContext.SpecialServicesTypes.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
-            Dictionary<string, string> ShipmentPackagesTypes = commonDataContext. PackageTypes.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
+            Dictionary<string, string> ShipmentPackagesTypes = commonDataContext.PackageTypes.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
             List<ShipmentPickUpDelivery> shipmentPickUpDeliveriesLists = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d).ToList();
             List<ShipmentPackage> shipmentPackages = (from d in shipmentsContext.ShipmentPackages where shipmentdelevriesIds.Contains(d.ShipmentId) select d).ToList();
             List<string> FromPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromPartnerCardId).ToList();
@@ -100,7 +100,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
             List<string> FromAddressCountryIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromAddressCountryId).ToList();
             List<string> ToPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.ToPartnerCardId).ToList();
-            Dictionary<string, string> Vessels = commonDataContext.Vessels.Where(p => p.Tenant == tenant ).ToDictionary(a => a.Id, b => b.EnglishName);
+            Dictionary<string, string> Vessels = commonDataContext.Vessels.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
 
 
 
@@ -110,9 +110,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
 
 
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
-            List<ShipmentDataView> shipmentsView = shipmentRepository.GetShipmentViewsByTenant(tenant).ToList();
-            shipmentsView.ForEach(item =>
+            shipments.ForEach(item =>
             {
                 UnicargoExport Shipment = new UnicargoExport();
 
@@ -121,13 +119,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 Shipment.FileNumber = item.ShipmentNumber;
                 if (!string.IsNullOrEmpty(item.IncotermId))
                 {
-                    Shipment.Incoterms = incoterms.ContainsKey(item.IncotermId)?incoterms[item.IncotermId]!=null? incoterms[item.IncotermId]:null:null;
+                    Shipment.Incoterms = incoterms.ContainsKey(item.IncotermId) ? incoterms[item.IncotermId] != null ? incoterms[item.IncotermId] : null : null;
                 }
 
                 Shipment.MainHarmonize = item.MainHarmonize;
                 if (!string.IsNullOrEmpty(item.ShipmentTypeId))
                 {
-                    Shipment.Type = ShipmentTypes.ContainsKey(item.ShipmentTypeId) ? ShipmentTypes[item.ShipmentTypeId] != null ? ShipmentTypes[item.ShipmentTypeId] : null:null;
+                    Shipment.Type = ShipmentTypes.ContainsKey(item.ShipmentTypeId) ? ShipmentTypes[item.ShipmentTypeId] != null ? ShipmentTypes[item.ShipmentTypeId] : null : null;
                 }
                 else
                 {
@@ -136,7 +134,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.StatusId))
                 {
-                    EntityStatus status= entityStatusRepository.GetSingleEntityStatus(item.StatusId, tenant);
+                    EntityStatus status = entityStatusRepository.GetSingleEntityStatus(item.StatusId, tenant);
                     if (status != null)
                     {
                         Shipment.Status = status.Name;
@@ -146,23 +144,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.TransportModeId))
                 {
-                    Shipment.TransportMode = Shipmenttransportmodes.ContainsKey(item.TransportModeId) ? Shipmenttransportmodes[item.TransportModeId] != null ? Shipmenttransportmodes[item.TransportModeId] : null:null;
+                    Shipment.TransportMode = Shipmenttransportmodes.ContainsKey(item.TransportModeId) ? Shipmenttransportmodes[item.TransportModeId] != null ? Shipmenttransportmodes[item.TransportModeId] : null : null;
                 }
 
                 if (!string.IsNullOrEmpty(item.DirectionId))
                 {
-                    Shipment.Direction = Directions.ContainsKey(item.DirectionId) ?Directions[item.DirectionId] != null ? Directions[item.DirectionId] : null:null;
+                    Shipment.Direction = Directions.ContainsKey(item.DirectionId) ? Directions[item.DirectionId] != null ? Directions[item.DirectionId] : null : null;
                 }
 
 
                 if (!string.IsNullOrEmpty(item.ShipmentLevelCode))
                 {
-                    Shipment.ShipmentLevel = ShipmentLevels.ContainsKey(item.ShipmentLevelCode) ?ShipmentLevels[item.ShipmentLevelCode] != null ? ShipmentLevels[item.ShipmentLevelCode] : null:null;
+                    Shipment.ShipmentLevel = ShipmentLevels.ContainsKey(item.ShipmentLevelCode) ? ShipmentLevels[item.ShipmentLevelCode] != null ? ShipmentLevels[item.ShipmentLevelCode] : null : null;
                 }
 
-                if(!string.IsNullOrEmpty(item.CreatedByUserId))
+                if (!string.IsNullOrEmpty(item.CreatedByUserId))
                 {
-                    Contact contact=ContactRepository.GetSingleContactByIdAndTenant(item.CreatedByUserId, tenant, true);
+                    Contact contact = ContactRepository.GetSingleContactByIdAndTenant(item.CreatedByUserId, tenant, true);
                     if (contact != null)
                     {
                         Shipment.Openedby = contact.EnglishName;
@@ -181,12 +179,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.DepartmentId))
                 {
-                    Shipment.Department = departments.ContainsKey(item.DepartmentId) ?departments[item.DepartmentId] != null ? departments[item.DepartmentId] : null:null;
+                    Shipment.Department = departments.ContainsKey(item.DepartmentId) ? departments[item.DepartmentId] != null ? departments[item.DepartmentId] : null : null;
                 }
 
                 if (!string.IsNullOrEmpty(item.BranchId))
                 {
-                    Shipment.Branch = branches.ContainsKey(item.BranchId) ?branches[item.BranchId] != null ? branches[item.BranchId] : null:null;
+                    Shipment.Branch = branches.ContainsKey(item.BranchId) ? branches[item.BranchId] != null ? branches[item.BranchId] : null : null;
                 }
 
 
@@ -201,11 +199,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.SpecialServicesTypeId))
                 {
-                    Shipment.SpecialServiceType = SpeicalServices.ContainsKey(item.SpecialServicesTypeId) ?SpeicalServices[item.SpecialServicesTypeId] != null ? SpeicalServices[item.SpecialServicesTypeId] : null:null;
+                    Shipment.SpecialServiceType = SpeicalServices.ContainsKey(item.SpecialServicesTypeId) ? SpeicalServices[item.SpecialServicesTypeId] != null ? SpeicalServices[item.SpecialServicesTypeId] : null : null;
                 }
                 Shipment.CreateDate = item.CreateDateTime;
                 Shipment.ValueofGoods = item.ValueOfGoods;
-                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, item, Shipment);
+               // customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, item, Shipment);
 
 
                 #endregion
@@ -223,7 +221,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         Shipment.ConsigneePhone = ConsigneeAddress.PhoneNumber;
 
                     }
-               
+
 
 
                 }
@@ -322,7 +320,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 string shipperSeal = "";
                 string containerNumber = "";
 
-                shipmentPackages.Where(p=>p.ShipmentId==item.Id).ToList().ForEach(package =>
+                shipmentPackages.Where(p => p.ShipmentId == item.Id).ToList().ForEach(package =>
                 {
 
                     if (!string.IsNullOrEmpty(package.PackageTypeId))
@@ -330,7 +328,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         string type = ShipmentPackagesTypes.ContainsKey(package.PackageTypeId) ? ShipmentPackagesTypes[package.PackageTypeId] != null ? ShipmentPackagesTypes[package.PackageTypeId] : null : null;
                         if (!string.IsNullOrEmpty(type))
                         {
-                            packageType += type+",";
+                            packageType += type + ",";
                         }
                     }
 
@@ -358,8 +356,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 if (containerNumber.EndsWith(","))
                     containerNumber = containerNumber.Substring(0, containerNumber.Length - 1);
 
-                Shipment.PackageType = packageType; 
-                Shipment.ShipperSeal = shipperSeal; 
+                Shipment.PackageType = packageType;
+                Shipment.ShipperSeal = shipperSeal;
                 Shipment.ContinerNumber = containerNumber;
 
                 int numberofpackages = item.NumberOfPackages != null ? item.NumberOfPackages.Value : 0;
@@ -380,70 +378,78 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == item.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                 ShipmentPickUpDelivery myFirstPickup = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == item.Id && d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
-                if (myFirstPickup != null) {
-
-                        if(myFirstPickup.PickUpDeliveryFromTypeCode== "PART")
-                        {
-                                    if (!string.IsNullOrEmpty(myFirstPickup.FromPartnerCardId))
-                                    {
-                                        Address myPartnerAddress = FromPartnerAddressLists.Where(d => d.CardId == myFirstPickup.FromPartnerCardId).FirstOrDefault();
-                                        if (myPartnerAddress != null)
-                                        {
-                                Shipment.PickupFromPartnerAddress = DataProviders.General.GetAddress(myPartnerAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
-                                        }
-
-                                Card card = cardRepository.GetSingleCardByIdAndTenant(myFirstPickup.FromPartnerCardId, tenant, true);
-
-                                if (card != null)
-                                {
-                                    Shipment.PickupFromPartner = card.EnglishName;
-                                }
-                            }
-                        }
-
-                        if (myFirstPickup.PickUpDeliveryToTypeCode == "PART")
-                        {
-                            if (!string.IsNullOrEmpty(myFirstPickup.ToPartnerCardId))
-                            {
-                                Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.CardId == myFirstPickup.ToPartnerCardId).FirstOrDefault();
-                                if (myPartnerAddress != null)
-                                {
-                                Shipment.PickupToPartnerAddress = DataProviders.General.GetAddress(myPartnerAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
-                                }
-
-                                Card card = cardRepository.GetSingleCardByIdAndTenant(myFirstPickup.ToPartnerCardId, tenant, true);
-
-                                if (card != null)
-                                {
-                                    Shipment.PickupToPartner = card.EnglishName;
-                                }
-                            }
-                        }
-
-                        if (myFirstPickup.PickUpDeliveryToTypeCode == "PORT")
-                        {
-                            if (!string.IsNullOrEmpty(myFirstPickup.ToPortId))
-                            {
-                                PortPM myPort = PortQuery.GetSinglePort(tenant, myFirstPickup.ToPortId, true);
-                                if (myPort != null)
-                                {
-                                Shipment.PickupToPort = myPort.Code + " " + myPort.EnglishName;// myPort.StateName+" , "+ myPort.CountryName;
-                                }
-                            }
-                        }
-
-                        Shipment.PickupExpectedDeparture = myFirstPickup.ETD;
-                        Shipment.PickupExpectedArrival = myFirstPickup.ETA;
-                        Shipment.PickupActualDeparture = myFirstPickup.ATD;
-                        Shipment.PickupActualArrival = myFirstPickup.ATA;
-
-                    }
-
-                ShipmentMasterData MasterData = shipmentMasterDatas.Where(p => p.Id == item.Id).FirstOrDefault();
-                if (MasterData != null)
+                if (myFirstPickup != null)
                 {
 
+                    if (myFirstPickup.PickUpDeliveryFromTypeCode == "PART")
+                    {
+                        if (!string.IsNullOrEmpty(myFirstPickup.FromPartnerCardId))
+                        {
+                            Address myPartnerAddress = FromPartnerAddressLists.Where(d => d.CardId == myFirstPickup.FromPartnerCardId).FirstOrDefault();
+                            if (myPartnerAddress != null)
+                            {
+                                Shipment.PickupFromPartnerAddress = DataProviders.General.GetAddress(myPartnerAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                            }
 
+                            Card card = cardRepository.GetSingleCardByIdAndTenant(myFirstPickup.FromPartnerCardId, tenant, true);
+
+                            if (card != null)
+                            {
+                                Shipment.PickupFromPartner = card.EnglishName;
+                            }
+                        }
+                    }
+
+                    if (myFirstPickup.PickUpDeliveryToTypeCode == "PART")
+                    {
+                        if (!string.IsNullOrEmpty(myFirstPickup.ToPartnerCardId))
+                        {
+                            Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.CardId == myFirstPickup.ToPartnerCardId).FirstOrDefault();
+                            if (myPartnerAddress != null)
+                            {
+                                Shipment.PickupToPartnerAddress = DataProviders.General.GetAddress(myPartnerAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                            }
+
+                            Card card = cardRepository.GetSingleCardByIdAndTenant(myFirstPickup.ToPartnerCardId, tenant, true);
+
+                            if (card != null)
+                            {
+                                Shipment.PickupToPartner = card.EnglishName;
+                            }
+                        }
+                    }
+
+                    if (myFirstPickup.PickUpDeliveryToTypeCode == "PORT")
+                    {
+                        if (!string.IsNullOrEmpty(myFirstPickup.ToPortId))
+                        {
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, myFirstPickup.ToPortId, true);
+                            if (myPort != null)
+                            {
+                                Shipment.PickupToPort = myPort.Code + " " + myPort.EnglishName;// myPort.StateName+" , "+ myPort.CountryName;
+                            }
+                        }
+                    }
+
+                    Shipment.PickupExpectedDeparture = myFirstPickup.ETD;
+                    Shipment.PickupExpectedArrival = myFirstPickup.ETA;
+                    Shipment.PickupActualDeparture = myFirstPickup.ATD;
+                    Shipment.PickupActualArrival = myFirstPickup.ATA;
+
+                }
+
+                ShipmentMasterData MasterData = shipmentMasterDatas.Where(p => p.Id == item.Id).FirstOrDefault();
+
+                ShipmentMasterData MasterShipment = null;
+                if (item.MasterShipmentDataId != null)
+                {
+                    MasterShipment = shipmentMasterDatas.Where(p => p.Id == item.MasterShipmentDataId).FirstOrDefault();
+
+                }
+
+                if (MasterData != null)
+                {
+                    
                     if (!string.IsNullOrEmpty(MasterData.MainCarriageFromPortId))
                     {
 
@@ -556,25 +562,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     }
 
 
-                    if (MasterData.MainCarriageETD != null)
-                    {
-                        Shipment.MainCarriageLeg1ETD = MasterData.MainCarriageETD;
-                    }
+                        Shipment.MainCarriageLeg1ETD=MasterData.MainCarriageETD != null ? MasterData.MainCarriageETD : (MasterShipment != null ? MasterShipment.MainCarriageETD : null);
 
-                    if (MasterData.MainCarriageETA != null)
-                    {
-                        Shipment.MainCarriageLeg1ETA = MasterData.MainCarriageETA;
-                    }
+                        Shipment.MainCarriageLeg1ETA = MasterData.MainCarriageETA != null ? MasterData.MainCarriageETA : (MasterShipment != null ? MasterShipment.MainCarriageETA : null);
 
-                    if (MasterData.MainCarriageATD != null)
-                    {
-                        Shipment.MainCarriageLeg1ATD = MasterData.MainCarriageATD;
-                    }
+                        Shipment.MainCarriageLeg1ATD = MasterData.MainCarriageATD != null ? MasterData.MainCarriageATD : (MasterShipment != null ? MasterShipment.MainCarriageATD : null);
 
-                    if (MasterData.MainCarriageATA != null)
-                    {
-                        Shipment.MainCarriageLeg1ATA = MasterData.MainCarriageATA;
-                    }
+                        Shipment.MainCarriageLeg1ATA = MasterData.MainCarriageATA != null ? MasterData.MainCarriageATA : (MasterShipment != null ? MasterShipment.MainCarriageATA : null);
+
+
+
+           
+                    
+                  
+                    
 
                     if (!string.IsNullOrEmpty(MasterData.Transshipment1CarrierId))
                     {
@@ -603,25 +604,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         Shipment.Transshipment1Vessel = vessel;
                     }
 
-                    if (MasterData.Transshipment1ETD != null)
-                    {
-                        Shipment.Transshipment1ETD = MasterData.Transshipment1ETD;
-                    }
+                    Shipment.Transshipment1ETD = MasterData.Transshipment1ETD != null ? MasterData.Transshipment1ETD : (MasterShipment != null ? MasterShipment.Transshipment1ETD : null);
+                    Shipment.Transshipment1ETA = MasterData.Transshipment1ETA != null ? MasterData.Transshipment1ETA : (MasterShipment != null ? MasterShipment.Transshipment1ETA : null);
+                    Shipment.Transshipment1ATD = MasterData.Transshipment1ATD != null ? MasterData.Transshipment1ATD : (MasterShipment != null ? MasterShipment.Transshipment1ATD : null);
+                    Shipment.Transshipment1ATA = MasterData.Transshipment1ATA != null ? MasterData.Transshipment1ATA : (MasterShipment != null ? MasterShipment.Transshipment1ATA : null);
 
-                    if (MasterData.Transshipment1ETA != null)
-                    {
-                        Shipment.Transshipment1ETA = MasterData.Transshipment1ETA;
-                    }
-
-                    if (MasterData.Transshipment1ATD != null)
-                    {
-                        Shipment.Transshipment1ATD = MasterData.Transshipment1ATD;
-                    }
-
-                    if (MasterData.Transshipment1ATA != null)
-                    {
-                        Shipment.Transshipment1ATA = MasterData.Transshipment1ATA;
-                    }
 
                     if (myLastDelivery != null)
                     {
@@ -675,9 +662,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             }
                         }
 
-                    
 
-                
+
+
 
 
 
@@ -713,11 +700,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             Shipment.DeliveryActualDeparture = myLastDelivery.ATD;
                         }
                     }
-                    
+
+
+                }
+                else
+                {
+                    Shipment.Transshipment1ETD = MasterData.Transshipment1ETD != null ? MasterData.Transshipment1ETD : (MasterShipment != null ? MasterShipment.Transshipment1ETD : null);
+                    Shipment.Transshipment1ETA = MasterData.Transshipment1ETA != null ? MasterData.Transshipment1ETA : (MasterShipment != null ? MasterShipment.Transshipment1ETA : null);
+                    Shipment.Transshipment1ATD = MasterData.Transshipment1ATD != null ? MasterData.Transshipment1ATD : (MasterShipment != null ? MasterShipment.Transshipment1ATD : null);
+                    Shipment.Transshipment1ATA = MasterData.Transshipment1ATA != null ? MasterData.Transshipment1ATA : (MasterShipment != null ? MasterShipment.Transshipment1ATA : null);
+
+                    Shipment.MainCarriageLeg1ETD = MasterData.MainCarriageETD != null ? MasterData.MainCarriageETD : (MasterShipment != null ? MasterShipment.MainCarriageETD : null);
+
+                    Shipment.MainCarriageLeg1ETA = MasterData.MainCarriageETA != null ? MasterData.MainCarriageETA : (MasterShipment != null ? MasterShipment.MainCarriageETA : null);
+
+                    Shipment.MainCarriageLeg1ATD = MasterData.MainCarriageATD != null ? MasterData.MainCarriageATD : (MasterShipment != null ? MasterShipment.MainCarriageATD : null);
+
+                    Shipment.MainCarriageLeg1ATA = MasterData.MainCarriageATA != null ? MasterData.MainCarriageATA : (MasterShipment != null ? MasterShipment.MainCarriageATA : null);
+
+
 
                 }
 
-               
+
                 myDataProvider.Shipments.Add(Shipment);
                 #endregion
 

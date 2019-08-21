@@ -120,6 +120,7 @@ export class TaskSchedulerComponent implements OnInit  {
     }
 
     public IsHistoryGridVsisible = false;
+    public ShowArrow = false;
     public SelectedRow: TaskSchedulerItemClass;
     Selecting(item: TaskSchedulerItemClass) {
         this.SelectedRow = item;
@@ -129,7 +130,7 @@ export class TaskSchedulerComponent implements OnInit  {
         }
 
         else {
-            //this.LoadHistoryList();
+           // this.LoadHistoryList();
             this.LoadTaskHistories();
         }
     }
@@ -260,7 +261,7 @@ export class TaskSchedulerComponent implements OnInit  {
             FieldName: "Duration",
             DataTypeCode: 'String',
             Display: 'Duration',
-            Styles: { width: '200px' },
+            Styles: { width: '100px' },
             HtmlListComponentName: 'SchedulerDateListTemplate',
             HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
             IsCustomTemplate: true,
@@ -308,10 +309,11 @@ export class TaskSchedulerComponent implements OnInit  {
         sortingCol = "StartDateTimeUTC";
         sortingDir = "descending"; 
         if (!this.SelectedRow) {
-            if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
-                filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
-            }
-            filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
+            //if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
+            //    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+            //}
+           filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
+          
         }
         else {
             if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
@@ -320,6 +322,7 @@ export class TaskSchedulerComponent implements OnInit  {
                 }
                 filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
             }
+            //return
         }
 
         filters.GetCount = getCount;
@@ -445,7 +448,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     get Status() { return this.EntityPM.Status; }
     get UpdatedBy() { return this.EntityPM.UpdatedBy; }
     get CreatedBy() { return this.EntityPM.CreatedBy; }
-    get Duration() { return this.EntityPM.Duration; }
+    get Duration() { return Math.abs(this.EntityPM.Duration); }
     get LastRunEndTime() { return this.EntityPM.LastRunEndTime; }
     get LastRunEndTimeUTC() { return this.EntityPM.LastRunEndTimeUTC; }
 

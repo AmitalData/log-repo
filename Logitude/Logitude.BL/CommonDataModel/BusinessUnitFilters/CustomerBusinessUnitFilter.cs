@@ -17,11 +17,17 @@ namespace Logitude.BL.CommonDataModel.BusinessUnitFilters
         private int myCurrentTenant;
         private string loggedUserEmail;
         private User loggedUser;
-        public CustomerBusinessUnitFilter(int tenant)
+        public CustomerBusinessUnitFilter(int tenant,bool isreport=false)
         {
             this.myCurrentTenant = tenant;
-            this.loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
-
+            if (isreport)
+            {
+                this.loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser(tenant);
+            }
+            else
+            {
+                this.loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+            }
             UserRepository userRepository = new UserRepository(myCurrentTenant);
             this.loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, myCurrentTenant, true);
         }

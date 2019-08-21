@@ -57,6 +57,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             IQueryable<DistributorList> result = from entity in iQueryable
                                              select new DistributorList()
                                              {
+                                                 Id = entity.Code,
                                                  EnglishName = entity.EnglishName,
                                                  Code = entity.Code,
                                                  LocalName=entity.LocalName,

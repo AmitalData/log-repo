@@ -116,6 +116,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
         //this.ClearData();
         //this._DWQueryBuilderHelper.FillAllFactFields("Fact_Shipments");
+        this.ObsList = [];
         this._DWObjectTableListService.getAll().subscribe(myResult => {
             this.AllTables = myResult.Result;
             this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
@@ -194,19 +195,19 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     });
                     //this.StartFiltersBusyIndicator("Restoring filters ..");
                     //this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe(Result => {
-                    this.ObsList = [];
+                    var TempObsList = [];
                     if (window.DWObjectFields) {
                         window.DWObjectFields.forEach((field) => {
                             if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
                                 var view = new DWObjectFieldsDetails(field, this);
                                 view.ParentDataTypeCode = field.DataTypeCode;
                                 this.AllFieldsObsList.push(field);
-                                this.ObsList.push(view);
-                                this.ObsListAll.push(view);
+                                TempObsList.push(view);
+                                //this.ObsListAll.push(view);
                             }
-                        });
+                        }); 
                         //this.DataSource = this.ObsList;
-                        this.AllFieldsWithChildrenDataSource = this.ObsList;
+                        this.AllFieldsWithChildrenDataSource = TempObsList;//.sort((a, b) => { return (a.DisplayName.toLowerCase().trim() === b.DisplayName.toLowerCase().trim()) ? 0 : (a.DisplayName.toLowerCase().trim() < b.DisplayName.toLowerCase().trim()) ? -1 : 1 });
                         //this.StopFiltersBusyIndicator();
                     }
 
@@ -431,6 +432,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
     //ShowArrows: boolean = false;
     ShowOrderArrows(item) {
         this.FieldSelectedItem = item;
+    }
+    HideOrderArrows(item) {
+        this.FieldSelectedItem = null;
     }
     
     //ShowOrderArrows(item) {
