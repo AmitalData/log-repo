@@ -215,6 +215,8 @@ namespace Simplog.Server.Infrastructure
             {
                 return;
             }
+            
+
             if (DbContextBaseUtil.ToLog == null)
             {
                 DbContextBaseUtil.ToLog = false;
@@ -226,6 +228,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
             Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog = Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog;
             if (DbContextBaseUtil.ToLog.GetValueOrDefault())
             {
+                Simplog.Server.Infrastructure.Helpers.TransactionFactory.RegisterTransactionCompleted();
                 this.Database.Log += EnqueueLog;
             }
 
