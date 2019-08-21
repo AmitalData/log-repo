@@ -368,6 +368,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountPM glaccountPM2 = glaQuery.GetSingle(cashbookPM.AccountId, false, false);
             journalLineDebit.DebitControlAccountId = glaccountPM2.ControlAccountId;
 
+            // opposit account
+            journalLineDebit.CreditAccountId = journalLineCredit.CreditAccountId;
+
             journalPM.JournalLines.Add(journalLineDebit);
 
 
