@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -48,11 +49,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.explanation = myClaimsRelatedEntityPM.Explanation;
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.TPGIdentifier = new TPGIdentifier();
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.TPGIdentifier.fileNumber = myClaimsRelatedEntityPM.TapagNumber;
-                if(myClaimsRelatedEntityPM.Numeral != null)
+                if (myClaimsRelatedEntityPM.Numeral != null)
                 {
                     myCLAIM_MSG9_ContinuousRequestOnClaimFile.ContinuousRequestOnClaimFile.TPGIdentifier.numeral = (int)myClaimsRelatedEntityPM.Numeral;
                 }
-                
+
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.RequestSubmiter = new CLAIM_MSG9_ContinuousRequestOnClaimFileRequestSubmiter();
                 if (!string.IsNullOrWhiteSpace(_ClaimPM.ClaimSubmiterNumber))
                 {
@@ -61,9 +62,37 @@ namespace Logitude.CustomsMessaging.RequestServices
                     myCLAIM_MSG9_ContinuousRequestOnClaimFile.RequestSubmiter.submiterID = claimSubmiterID;
                 }
                 myCLAIM_MSG9_ContinuousRequestOnClaimFile.RequestSubmiter.submiterTypeCode = 3;
+
+                myCLAIM_MSG9_ContinuousRequestOnClaimFile.Attachment = GetClaimAttachment(myClaimsRelatedEntityPM.EntityCounterKey);
             }
 
             return myCLAIM_MSG9_ContinuousRequestOnClaimFile;
+        }
+
+        private Attachment[] GetClaimAttachment(int entityCounterKey)
+        {
+            var claimAttachmentList = new List<Attachment>();
+            var customsDocumentQueryService = new CustomsDocumentQueryService(_DbContext);
+
+            //Get Claims Attachments
+            var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = this._ClaimPM.Id, ParentEntityCode = "Claim", Child1EntityCode = "ClaimRelatedEntityCancelOrObjection", Child1EntityId = entityCounterKey.ToString() }, this._ClaimPM.Tenant);
+            foreach (CustomsDocumentPM customsDocumentPM in customsDocumentPMList)
+            {
+                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
+                {
+                    var claimAttachment = new Attachment();
+                    claimAttachment.documentType = customsDocumentPM.DocumentTypeCode;
+                    claimAttachment.fileName = customsDocumentPM.Name;
+                    claimAttachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
+                    claimAttachment.IsAttachment = false.ToString();
+                    //claimAttachment.Remark = customsDocumentPM.DocumentRemarks;
+                    //claimAttachment.content = customsDocumentPM.
+
+                    claimAttachmentList.Add(claimAttachment);
+                }
+            }
+
+            return claimAttachmentList.ToArray();
         }
     }
 }
