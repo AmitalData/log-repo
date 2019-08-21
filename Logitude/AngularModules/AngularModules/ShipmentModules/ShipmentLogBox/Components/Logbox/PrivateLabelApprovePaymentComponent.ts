@@ -77,79 +77,82 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         if (args.EntityPm) {
             this.EntityPm = args.EntityPm;
             this.AdditionalData = args.AdditionalData;
-            if (!AppTool.IsNullOrEmpty(this.AdditionalData.DenyReason)) {
-                this.DimDenyButton = true;
-            }
-            if (!AppTool.IsNullOrEmpty(this.AdditionalData.ApprovedByUserName) && !AppTool.IsNullOrEmpty(this.AdditionalData.VersionApproved) && (this.AdditionalData.VersionApproved == this.AdditionalData.VersionId)) {
-                var today = new Date(this.AdditionalData.ApproveDateTime);
-                var d = today.getDate();
-                var m = today.getMonth() + 1; //January is 0!
-                var dd = "";
-                var mm = "";
-                var yyyy = today.getFullYear().toString();
-                if (d < 10) {
-                    dd = '0' + d;
+            
+                if (!AppTool.IsNullOrEmpty(this.AdditionalData.DenyReason)) {
+                    this.DimDenyButton = true;
                 }
-                else {
-                    dd = d.toString();
-                }
-                if (m < 10) {
-                    mm = '0' + m;
-                }
-                else {
-                    mm = m.toString();
-                }
-                var to = dd + '/' + mm + '/' + yyyy;
-                this.ValidationWarningsList = "גרסת הצהרה זו כבר אושרה על ידי " + this.AdditionalData.ApprovedByUserName + " בתאריך " + to + "";
-
-                this.DimApproveButton = true;
-            }
-            var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
-            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-            this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
-                var Result = [];//DocumentTypeMetaDataExtendedService
-
-                Result = res.Result.filter(a => a.IsDeleted == false);
-
-
-                this.externalDocs = [];
-
-                var SupplierInvoice = Result.filter(a => a.DocumentTypeCode == "380" || a.DocumentTypeCode == "721");
-                var Others = Result.filter(a => a.DocumentTypeCode != "721" && a.DocumentTypeCode != "380");
-                var tempSupplierInvoice = [];
-                var tempOthers = [];
-                var DRELID = "";
-                this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe(myResult => {
-                    if (myResult.Result) {
-                        DRELID = myResult.Result.Id;
-                        if (!AppTool.IsNullOrEmpty(DRELID)) {
-                            SupplierInvoice.forEach((mydoc) => {
-                                var DRELTypes = mydoc.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
-                                if (DRELTypes != null && DRELTypes.length > 0) {
-                                    tempSupplierInvoice.push(mydoc);
-                                }
-                            });
-                            Others.forEach((docin) => {
-                                var DRELTypes = docin.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
-                                if (DRELTypes != null && DRELTypes.length > 0) {
-                                    tempOthers.push(docin);
-                                }
-                            });
-                        }
+                if (!AppTool.IsNullOrEmpty(this.AdditionalData.ApprovedByUserName) && !AppTool.IsNullOrEmpty(this.AdditionalData.VersionApproved) && (this.AdditionalData.VersionApproved == this.AdditionalData.VersionId)) {
+                    var today = new Date(this.AdditionalData.ApproveDateTime);
+                    var d = today.getDate();
+                    var m = today.getMonth() + 1; //January is 0!
+                    var dd = "";
+                    var mm = "";
+                    var yyyy = today.getFullYear().toString();
+                    if (d < 10) {
+                        dd = '0' + d;
                     }
-                });
-               
-                //else {
-                //    tempSupplierInvoice = SupplierInvoice;
-                //    tempOthers = Others;
-                //}
-                this.externalDocs.push({ key: "חשבונות ספק ורשימות אריזה", value: tempSupplierInvoice });
-                this.externalDocs.push({ key: "מסמכים נוספים", value: tempOthers });
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    else {
+                        dd = d.toString();
+                    }
+                    if (m < 10) {
+                        mm = '0' + m;
+                    }
+                    else {
+                        mm = m.toString();
+                    }
+                    var to = dd + '/' + mm + '/' + yyyy;
+                    this.ValidationWarningsList = "גרסת הצהרה זו כבר אושרה על ידי " + this.AdditionalData.ApprovedByUserName + " בתאריך " + to + "";
 
-            }, error => {
-                var dd: Response = error;
-            });
+                    this.DimApproveButton = true;
+                }
+                var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+                this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
+                    var Result = [];//DocumentTypeMetaDataExtendedService
+
+                    Result = res.Result.filter(a => a.IsDeleted == false);
+
+
+                    this.externalDocs = [];
+
+                    var SupplierInvoice = Result.filter(a => a.DocumentTypeCode == "380" || a.DocumentTypeCode == "721");
+                    var Others = Result.filter(a => a.DocumentTypeCode != "721" && a.DocumentTypeCode != "380");
+                    var tempSupplierInvoice = [];
+                    var tempOthers = [];
+                    var DRELID = "";
+                    this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe(myResult => {
+                        if (myResult.Result) {
+                            DRELID = myResult.Result.Id;
+                            if (!AppTool.IsNullOrEmpty(DRELID)) {
+                                SupplierInvoice.forEach((mydoc) => {
+                                    var DRELTypes = mydoc.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
+                                    if (DRELTypes != null && DRELTypes.length > 0) {
+                                        tempSupplierInvoice.push(mydoc);
+                                    }
+                                });
+                                Others.forEach((docin) => {
+                                    var DRELTypes = docin.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
+                                    if (DRELTypes != null && DRELTypes.length > 0) {
+                                        tempOthers.push(docin);
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                    //else {
+                    //    tempSupplierInvoice = SupplierInvoice;
+                    //    tempOthers = Others;
+                    //}
+                    this.externalDocs.push({ key: "חשבונות ספק ורשימות אריזה", value: tempSupplierInvoice });
+                    this.externalDocs.push({ key: "מסמכים נוספים", value: tempOthers });
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+
+                }, error => {
+                    var dd: Response = error;
+                });
+           
+          
         }
     }
     public ValidationWarningsList: string = null;
