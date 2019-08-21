@@ -34,13 +34,8 @@ export class NewAgent {
         this.helper.WaitByIdAndFill('Address_CountryId', "Poland");
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.helper.WaitBusyIndicator();
-        this.helper.WaitByIdAndFill('Address_City', "Poznań");
-        //Ok Button 
-        this.helper.WaitByIdAndClick('');
-
-
-
-
+        this.helper.WaitByIdAndFill('Address_City', "Poznan");
+        this.helper.WaitByIdAndClick('OkButtonId');
     }
 
 
