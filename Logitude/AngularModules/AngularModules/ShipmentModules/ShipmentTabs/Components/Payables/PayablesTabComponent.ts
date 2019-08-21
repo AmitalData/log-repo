@@ -224,7 +224,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
     
 
-            var WindowArgs: any = { BetweenDate: betweenDate, FromPort: this.EntityPM.MainCarriageFromPortId, ToPort: this.EntityPM.MainCarriageToPortId, GrossWeight: this.EntityPM.GrossWeight, ChargeableWeight: this.EntityPM.ChargeableWeight, Volume: this.EntityPM.Volume, ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode, GrossWeightUnit: this.EntityPM.GrossWeightUnitCode, VolumeUnit: this.EntityPM.VolumeUnitCode };
+            var WindowArgs: any = { BetweenDate: betweenDate, FromPort: this.EntityPM.MainCarriageFromPortId, ToPort: this.EntityPM.ToPortId, GrossWeight: this.EntityPM.GrossWeight, ChargeableWeight: this.EntityPM.ChargeableWeight, Volume: this.EntityPM.Volume, ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode, GrossWeightUnit: this.EntityPM.GrossWeightUnitCode, VolumeUnit: this.EntityPM.VolumeUnitCode };
             var logWindow = new LogitudeWindow();
             logWindow.IsFillScreenHeight = true;
             logWindow.Width = 1200;
@@ -1154,15 +1154,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     DeleteAllClicked() {
         if (this.IsEditingEnabled) {
 
-            var isDeletingAllowed: boolean = true;
-
             if (this.EntityPM.ShipmentPayables.filter(f => f.ShipmentPayableLineStatusCode == 'PACC' || f.ShipmentPayableLineStatusCode == 'ACCT').length > 0) {
-                isDeletingAllowed = false;
-            }
-
-            if (!isDeletingAllowed) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show("Can't delete all, some lines are connected to invoices");
+            }
+
+            else if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.ShipmentPayables.filter(f => f.ShipmentPayableParentId != null).length > 0) {
+                var messageWindow = new MessageWindow();
+                messageWindow.Show("Can't delete all, some lines are connected to master");
             }
 
             else {

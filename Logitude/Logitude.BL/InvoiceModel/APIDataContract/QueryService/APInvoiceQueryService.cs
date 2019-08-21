@@ -70,12 +70,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             if (apinvoice.AccountingDate == null)
                 apinvoice.AccountingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-            if(apinvoice.AmountDueInLocalCurrency != null)
-                apinvoice.AmountDueInLocalCurrency = apinvoice.AmountInLocalCurrency == null ? 0 : apinvoice.AmountInLocalCurrency;
-
-            if(apinvoice.AmountDueInProfitCurrency != null)
-                apinvoice.AmountDueInProfitCurrency = apinvoice.AmountInProfitCurrency == null ? 0 : apinvoice.AmountInProfitCurrency;
-
+ 
         }
 
         public void PaymentTermMapAndValidate(APInvoice apinvoice, APInvoicePM apinvoicePM, int tenant)
@@ -103,14 +98,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 DateTime dueDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day + daysDifference, 0, 0, 0);
 
-                apinvoice.DueDate = dueDate;
+                apinvoicePM.DueDate = dueDate;
             }
             else
             {
                 throw new ApplicationException("Neither Due Date nor Payment Term is provided!");
             }
 
-            apinvoicePM.PaymentTermId = apinvoice.PaymentTerm?.Id;
+            if(apinvoicePM.PaymentTermId == null)
+                apinvoicePM.PaymentTermId = apinvoice.PaymentTerm?.Id;
         }
 
         private static PaymentTerm GetManuallySetPaymentTerm(int tenant)
@@ -129,10 +125,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             return manuallySetPaymentTerm;
         }
 
-        private static double GetDaysDiffernceForDate(DateTime? date, int tenant)
+        private static double GetDaysDiffernceForDate(DateTime? dueDateTime, int tenant)
         {
-            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            double daysDifference = (date.Value - todayDate).TotalDays;
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+            DateTime todayDate = new DateTime(todayDateTime.Year, todayDateTime.Month, todayDateTime.Day, 0, 0, 0);
+            DateTime dueDate = new DateTime(dueDateTime.Value.Year, dueDateTime.Value.Month, dueDateTime.Value.Day, 0, 0, 0);
+            double daysDifference = (dueDate - todayDate).TotalDays;
             return daysDifference;
         }
 
@@ -180,8 +178,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw new ApplicationException("InvoiceCurrency is not provided");
 
 
-            if (apinvoice.DueDate == null)
-                throw new ApplicationException("DueDate is not provided");
+            //if (apinvoice.DueDate == null)
+            //    throw new ApplicationException("DueDate is not provided");
 
             if (apinvoice.Branch == null)
                 throw new ApplicationException("Branch is not provided");

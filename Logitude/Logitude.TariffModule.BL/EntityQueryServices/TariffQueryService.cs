@@ -137,7 +137,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                         if (initialPropIndex == -1)
                         {
-                            initialPropIndex = Steps.Count;
+                            initialPropIndex = initialSteps.Count;
                         }
                     }
                     else
@@ -413,7 +413,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                     }
                     //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
-                    tariffsSummary.price = Math.Round((double)CalculateLocalAmount(item.price.Value, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
+                    tariffsSummary.price = Math.Round((double)CalculateLocalAmount(item.price!=null?item.price.Value:0, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
                     List<TariffVersionAllInCharge> allinList = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).ToList();
                     if (allinList != null && allinList.Count > 0)
                     {

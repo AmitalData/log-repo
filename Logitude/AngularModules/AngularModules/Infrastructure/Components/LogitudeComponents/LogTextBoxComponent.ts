@@ -1189,28 +1189,28 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 var accString: string[] = this.TextValue.split('+');
                                 var accumulativeAmount: number = 0;
                                 accString.forEach((accitem) => {
-                                    var v = Number(accitem);
+                                    var v = this.GetNumber(accitem);
                                     accumulativeAmount = accumulativeAmount + v;
                                 });
                                 val = accumulativeAmount;
                             }
                             else if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1) {
                                 var txt = this.TextValue.replace('%', '');
-                                val = Number(txt) / 100;
+                                val = this.GetNumber(txt) / 100;
                                 //val = val / 100;
 
                             }
                             else {
-                                if ((this.TextValue + "").indexOf(this.thousandsSeparator) == -1) {
-                                    var txtwithDot=this.ReplaceDecimalSeparatorWithADot(this.TextValue);
-                                    val = Number(txtwithDot);
-                                }
+                                // if ((this.TextValue + "").indexOf(this.thousandsSeparator) == -1) {
+                                //     var txtwithDot=this.ReplaceDecimalSeparatorWithADot(this.TextValue);
+                                    val = this.GetNumber(this.TextValue);
+                                // }
                                 if (this.AddCommasToNumbers) {
-                                    if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
-                                        //var txtval = this.TextValue.replace(/,/g, "");
-                                        var txtval = this.TextValue.split(this.thousandsSeparator).join('');//.replace(new RegExp(this.thousandsSeparator, 'g'), '');
-                                        val = Number(txtval);
-                                    }
+                                    // if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
+                                    //     //var txtval = this.TextValue.replace(/,/g, "");
+                                    //     var txtval = this.TextValue.split(this.thousandsSeparator).join('');//.replace(new RegExp(this.thousandsSeparator, 'g'), '');
+                                        val = this.GetNumber(this.TextValue);
+                                    // }
                                 }
 
                             }
@@ -1235,14 +1235,14 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                             if (this.AddCommasToNumbers) {
                                 var txtNum: number;
 
-                                if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
-                                    //var txtval = this.TextValue.replace(/,/g, "");
-                                    var txtval = this.TextValue.split(this.thousandsSeparator).join('');//replace(new RegExp(this.thousandsSeparator, 'g'), '');
-                                    txtNum = Number(txtval);
-                                }
-                                else {
-                                    txtNum = Number(this.TextValue);
-                                }
+                                // if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
+                                //     //var txtval = this.TextValue.replace(/,/g, "");
+                                //     var txtval = this.TextValue.split(this.thousandsSeparator).join('');//replace(new RegExp(this.thousandsSeparator, 'g'), '');
+                                //     txtNum = this.GetNumber(txtval);
+                                // }
+                                // else {
+                                    txtNum = this.GetNumber(this.TextValue);
+                                // }
 
                                 if (this.DataContext[this.ObjectFieldName] != txtNum) {
                                     this.TextValueChanges(this.TextValue);
@@ -1277,7 +1277,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                             }
 
                             var val: number;
-                            val = Number(this.TextValue);
+                            val = this.GetNumber(this.TextValue);
 
 
 
@@ -1291,7 +1291,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                             break;
                         }
                     case "integertext": {
-                        if (isNaN(Number(this.TextValue))) {
+                        if (isNaN(this.GetNumber(this.TextValue))) {
                             this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         }
 
@@ -1326,18 +1326,18 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 var accString: string[] = this.TextValue.split('+');
                                 var accumulativeAmount: number = 0;
                                 accString.forEach((accitem) => {
-                                    var v = Number(accitem);
+                                    var v = this.GetNumber(accitem);
                                     accumulativeAmount = accumulativeAmount + v;
                                 });
                                 value = accumulativeAmount;
                             }
                             else if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1) {
                                 var txt = this.TextValue.replace('%', '');
-                                value = Number(txt) / 100;
+                                value = this.GetNumber(txt) / 100;
                             }
                             else {
-                                var txtval= this.ReplaceDecimalSeparatorWithADot(this.TextValue);
-                                value = Number(txtval);
+                               
+                                value = this.GetNumber(this.TextValue);
                             }
 
 
@@ -1374,7 +1374,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                         }
                     case "integertext": {
 
-                        if (!isNaN(Number(this.TextValue))) {
+                        if (!isNaN(this.GetNumber(this.TextValue))) {
                             if (this.ObjectField && this.ObjectField.IsCustom) {
                                 var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
                                 if (customFieldClass != null && customFieldClass != undefined) {
@@ -1417,11 +1417,11 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
                 // validate min max value
                 if (this.Max) {
-                    if (Number(this.TextValue) > this.Max)
+                    if (this.GetNumber(this.TextValue) > this.Max)
                         this.TextValue = this.Max + "";
                 }
                 if (this.Min) {
-                    if (Number(this.TextValue) < this.Min)
+                    if (this.GetNumber(this.TextValue) < this.Min)
                         this.TextValue = this.Min + "";
                 }
 
@@ -1568,22 +1568,21 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                 default: {
                     var val: number;
 
-                    if ((this.TextValue + "").indexOf(this.thousandsSeparator) == -1) {
-                        var withoutLocalSeperatorsTxt = this.ReplaceDecimalSeparatorWithADot(this.textValue);
-                        val = Number(withoutLocalSeperatorsTxt);
-                    }
-                    if (this.AddCommasToNumbers) {
-                        if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
-                            //var txtval = this.TextValue.replace(/,/g, "");
-                            var txtval = this.TextValue.split(this.thousandsSeparator).join('');//replace(new RegExp(this.thousandsSeparator, 'g'), '');
-                            txtval = this.ReplaceDecimalSeparatorWithADot(txtval);
-                            val = Number(txtval);
-                        }
-                    }
+                    // if ((this.TextValue + "").indexOf(this.thousandsSeparator) == -1) {
+                        val = this.GetNumber(this.TextValue);
+                    // }
+                    // if (this.AddCommasToNumbers) {
+                    //     if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
+                    //         //var txtval = this.TextValue.replace(/,/g, "");
+                    //         var txtval = this.TextValue.split(this.thousandsSeparator).join('');//replace(new RegExp(this.thousandsSeparator, 'g'), '');
+                    //         txtval = this.ReplaceDecimalSeparatorWithADot(txtval);
+                    //         val = this.GetNumber(txtval);
+                    //     }
+                    // }
 
                     if (this.InputType.toLowerCase() == 'sigdouble' && ((this.TextValue + "") == '-')) {
                         // skip for minus only
-                    } else if (isNaN(Number(val))) {
+                    } else if (isNaN(val)) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         suppressValidation = true;
                     }
@@ -1756,6 +1755,21 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             value = value.split(this.decimalSeparator).join('.');
         }
         return value;
+    }
+
+    RemoveThousandsSeparator(value: string) {
+        if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
+            value = value.split(this.thousandsSeparator).join('');
+        }
+         return value;
+    }
+
+    GetNumber(numberText:string){
+        var numberValue=0;
+        numberText = this.RemoveThousandsSeparator(numberText);
+        numberText=this.ReplaceDecimalSeparatorWithADot(numberText);
+        numberValue = Number(numberText);
+        return numberValue;
     }
 
 }

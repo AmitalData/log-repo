@@ -958,7 +958,6 @@ export class ShipmentTool {
                 }
 
             case "R":
-            case "S":
             case "X":
             case "Y":
                 {
@@ -973,6 +972,7 @@ export class ShipmentTool {
             case "P":
             case "Q":
             case "U":
+            case "S":
                 {
                     code = "R";
                     break;
