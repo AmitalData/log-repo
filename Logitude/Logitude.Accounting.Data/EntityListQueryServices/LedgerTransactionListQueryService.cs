@@ -849,7 +849,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public int PageSize { get; set; }
         public int PageStartAtRecordIndex { get; set; }
 
-        public bool IsReconciled { get; set; }
+        public bool? IsReconciled { get; set; }
 
         public bool IncludeChildAccounts { get; set; }
         public string Category1Id { get; set; }

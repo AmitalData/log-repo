@@ -10939,7 +10939,7 @@ namespace WebFreight.Web.ReportsWebServices
             string accountTypeCode = GetQueryFilterItemValue<string>(filterItem_AccountTypeCode);
             string chartOfAccountsId = GetQueryFilterItemValue<string>(filterItem_ChartOfAccountsId);
             string currencyId = GetQueryFilterItemValue<string>(filterItem_CurrencyId);
-            bool isReconciled = GetQueryFilterItemValue<bool>(filterItem_IsReconciled);
+            bool? isReconciled = (bool?)filterItem_IsReconciled.FieldValue == null? null : (bool?)filterItem_IsReconciled.FieldValue;
             bool includeChildAccounts = GetQueryFilterItemValue<bool>(filterItem_IncludeChildAccounts);
             string searchFields = GetQueryFilterItemValue<string>(filterItem_SearchFields);
             string _dateTypeCode = GetQueryFilterItemValue<string>(filterItem_DateTypeCode);
