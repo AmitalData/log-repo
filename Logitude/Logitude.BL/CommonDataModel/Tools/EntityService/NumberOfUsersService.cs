@@ -131,7 +131,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             else
             {
-                throw new Exception("Sorry You reached the maximum number of users !");
+                throw new Exception("Sorry You reached the maximum number of users!");
             }
         }
         private bool ValidateTenantManagementPackagesMode(NumberOfUsersArgs numberOfUsersArgs, bool mainAdditionalPackageApplied)
@@ -168,7 +168,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 else
                 {
-                    throw new Exception("You reached maximum number of users, mark the user as AdditionalPackagesOnly");
+                    throw new Exception("You reached maximum number of users, mark the user as AdditionalPackagesOnly!");
                 }
             }
 
@@ -245,13 +245,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             UserId = this.loggedContactId,
                             EntityId = tenant.ToString(),
                             ObjectTableName = "TenantManagement",
-                            Notes = "The user " + numberOfUsersArgs.UserEnglishName + " is Licenced !!",
+                            Notes = "The user " + numberOfUsersArgs.UserEnglishName + " is Licenced!",
                         });
                     }
 
                     else
                     {
-                        throw new ApplicationException("Sorry You can't Licence this user since you reached the maximum number of users !!");
+                        throw new ApplicationException("Sorry You can't Licence this user since you reached the maximum number of users!");
                     }
                 }
             }
@@ -267,7 +267,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         if (numberOfUsersArgs.UserPMAdditionalPackagesOnly)
                         {
                             isUsersCountAllowed = true;
-                            eventNotes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated !!";
+                            eventNotes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated";
                         }
 
                         else
@@ -275,12 +275,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             if (userLicensesCount < totalTenantManagementUsers)
                             {
                                 isUsersCountAllowed = true;
-                                eventNotes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated !!";
+                                eventNotes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated";
                             }
 
                             else
                             {
-                                throw new Exception("Sorry You can't activate this user since you reached the maximum number of licenses !!");
+                                throw new Exception("Sorry You can't activate this user since you reached the maximum number of licenses!");
                             }
                         }
                     }
@@ -295,7 +295,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         else
                         {
-                            throw new Exception("Sorry You can't update this user since you reached the maximum number of licenses !!");
+                            throw new Exception("Sorry You can't update this user since you reached the maximum number of licenses!");
                         }
                     }
 
@@ -363,13 +363,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 UserId = this.loggedContactId,
                                 EntityId = tenant.ToString(),
                                 ObjectTableName = "TenantManagement",
-                                Notes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated !!",
+                                Notes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated",
                             });
                         }
 
                         else
                         {
-                            throw new Exception("Sorry You can't activate this user since you reached the maximum number of users !!");
+                            throw new Exception("Sorry You can't activate this user since you reached the maximum number of users!");
                         }
                     }
                 }

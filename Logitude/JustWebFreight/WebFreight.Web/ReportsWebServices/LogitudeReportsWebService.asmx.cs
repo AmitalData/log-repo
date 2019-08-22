@@ -10784,8 +10784,8 @@ namespace WebFreight.Web.ReportsWebServices
                 AgingPeriod record = new AgingPeriod();
 
                 record.PeriodName = item.PeriodName;
-                record.AccountEnglishName = item.AccountEnglishName;
-                record.AccountLocalName = item.AccountLocalName;
+                record.AccountName = item.AccountLocalName != null ? item.AccountLocalName : item.AccountEnglishName;
+           
                 record.Total = item.Total;
 
                 totalData.AgingPeriods.Add(record);
@@ -10810,8 +10810,8 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance",
                     Total = sumValue.Value,
-                    AccountEnglishName = sumValue.Key.AccountEnglishName,
-                    AccountLocalName = sumValue.Key.AccountLocalName,
+                    AccountName = sumValue.Key.AccountLocalName != null? sumValue.Key.AccountLocalName  : sumValue.Key.AccountEnglishName,
+                  
                 });
             }
 
@@ -10939,7 +10939,7 @@ namespace WebFreight.Web.ReportsWebServices
             string accountTypeCode = GetQueryFilterItemValue<string>(filterItem_AccountTypeCode);
             string chartOfAccountsId = GetQueryFilterItemValue<string>(filterItem_ChartOfAccountsId);
             string currencyId = GetQueryFilterItemValue<string>(filterItem_CurrencyId);
-            bool isReconciled = GetQueryFilterItemValue<bool>(filterItem_IsReconciled);
+            bool? isReconciled = (bool?)filterItem_IsReconciled.FieldValue == null? null : (bool?)filterItem_IsReconciled.FieldValue;
             bool includeChildAccounts = GetQueryFilterItemValue<bool>(filterItem_IncludeChildAccounts);
             string searchFields = GetQueryFilterItemValue<string>(filterItem_SearchFields);
             string _dateTypeCode = GetQueryFilterItemValue<string>(filterItem_DateTypeCode);
