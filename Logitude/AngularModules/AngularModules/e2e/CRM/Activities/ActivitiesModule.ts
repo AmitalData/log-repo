@@ -60,8 +60,8 @@ export class ActivitiesModule {
  
 }
 
-this.addPhoneCall.CreateNewTask('task#'+activityNo);
-this.QuickSearchBox('activity','task#'+activityNo);
-this.editPhoneCall.EditPhoneCall("")
+// this.addPhoneCall.CreateNewTask('task#'+activityNo);
+// this.QuickSearchBox('activity','task#'+activityNo);
+// this.editPhoneCall.EditPhoneCall("")
 
 

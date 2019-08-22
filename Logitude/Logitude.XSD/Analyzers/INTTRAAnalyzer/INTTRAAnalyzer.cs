@@ -137,8 +137,12 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             XmlNodeList xnList = xmlDocument.GetElementsByTagName("Header");
             foreach (XmlNode xn in xnList)
             {
-                this.Subject = xn["TransactionType"].InnerText;
-                break;
+                if (xn["TransactionType"] != null)
+                {
+                    this.Subject = xn["TransactionType"].InnerText;
+                    myAnalyzeQueue.Subject = "Booking Response";
+                    break;
+                }
             }
             if (string.IsNullOrEmpty(this.Subject))
             {
@@ -150,10 +154,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     break;
                 }
                 myAnalyzeQueue.Subject = this.Subject;
-            }
-            else
-            {
-                myAnalyzeQueue.Subject = "Booking Response";
             }
 
             GetXmlAcknowledgmentFromSubject();
@@ -775,8 +775,8 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 break;
             }
 
-            var iNTTRABookingStatusCode = "";
-            var iNTTRABookingTransStatusCode = "";
+            var iNTTRABookingStatusCode = shipmentPM.INTTRABookingStatusCode;
+            var iNTTRABookingTransStatusCode = shipmentPM.INTTRABookingTransStatusCode;
 
             if (!string.IsNullOrEmpty(status))
             {
