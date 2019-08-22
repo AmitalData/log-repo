@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .emptyticket {
         border: 1px solid #8C8C8C;
@@ -197,15 +197,15 @@
                 <div class="SimpleGridViewHeader">
                     <table>
                         <tr class="SimpleGridHeaderRow">
-                            <td style="width: 90px; max-width: 90px;padding-right: 4px;">סעיף מס לתשלום</td>
-                            <td style="width: 110px; max-width: 110px;padding-right: 4px;">בסיס לחישוב מס בש"ח</td>
-                            <td style="width: 90px; max-width: 90px;padding-right: 4px;">מס לשלם</td>
-                            <td style="width: 110px; max-width: 110px;padding-right: 4px;">סכום לתשלום בש"ח</td>
-                            <td style="width: 90px; max-width: 90px;padding-right: 4px;">מס נדחה</td>
+                            <td style="width: 90px; max-width: 90px;padding-right: 4px;">{{'Shipment.O.PLPayableTax' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 110px; max-width: 110px;padding-right: 4px;">{{'Shipment.O.PLBasisCalculateTax' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 90px; max-width: 90px;padding-right: 4px;">{{'Shipment.O.PLTaxToPay' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 110px; max-width: 110px;padding-right: 4px;">{{'Shipment.O.PLTotalAmountToPay' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 90px; max-width: 90px;padding-right: 4px;">{{'Shipment.O.PLRejectedTax' | TextCodeTranslationPipe}}</td>
                             <td></td>
                             <!--<td class="LastChild">
-                        <div></div>
-                    </td>-->
+        <div></div>
+    </td>-->
                         </tr>
                     </table>
                 </div>

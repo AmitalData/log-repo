@@ -352,7 +352,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         newWindow.Width = 722;
         newWindow.Height = 230;
         newWindow.RTL = true;
-        newWindow.Title = "פרטי חשבון ספק";
+        newWindow.Title = TextCodeTranslator.Translate("Shipment.O.ProviderAccountInformation");//"פרטי חשבון ספק";
         var windowArgs: any = {};
         //windowArgs.IsNew = false;
 
@@ -368,7 +368,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         newWindow.Width = 550;
         newWindow.Height = 230;
         newWindow.RTL = true;
-        newWindow.Title = "פרטי מס";
+        newWindow.Title = TextCodeTranslator.Translate("Shipment.O.TaxInformation");//"פרטי מס";
         var windowArgs: any = {};
         //windowArgs.IsNew = false;
 

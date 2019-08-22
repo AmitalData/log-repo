@@ -9,6 +9,7 @@ import {DocumentsFilingExtendedPMService} from '../../../Common/Services/Extende
 import {ShipmentAdditionalCloudDataService} from '../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
 import {AppTool} from '../../../Infrastructure/Tools';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
 
@@ -95,7 +96,7 @@ export class ApprovePaymentButtonListTemplate {
                         newWindow.Height = 700;
                         newWindow.RTL = true;
                         //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
-                        newWindow.Title = "אישור היבואן להגשת הצהרת יבוא למכס";
+                        newWindow.Title = TextCodeTranslator.Translate("Shipment.O.PLApprovalWindowTitle");//"אישור היבואן להגשת הצהרת יבוא למכס";
                         var windowArgs: any = {};
                         //windowArgs.IsNew = false;
                         windowArgs.EntityPm = myResult.Result
