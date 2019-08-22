@@ -569,6 +569,8 @@ export class NewAPInvoiceComponent extends BaseComponent {
             }
         }
     }
+    
+     
 
     // Commands    
     FillWarnings(warnings: string[]) {
