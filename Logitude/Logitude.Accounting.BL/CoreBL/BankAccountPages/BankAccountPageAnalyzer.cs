@@ -471,7 +471,14 @@ s             b                   a
 
         private void AddBadInputPage(string mess)
         {
-            this.MyResultLoadBankPage.ExceptionPageList.Add(mess);
+            this.MyResultLoadBankPage.DBExceptionPageList
+                .Add(new MyDTO()
+                {
+
+                    Message = mess,
+                    Verbose = "",
+                    RawLine = ""
+                });
         }
         private void AddExceptionInsertBankPage(ReconcileExternalPagePM entityPM, BankPageDTO newPageOfBankAccount, Exception ex)
         {
