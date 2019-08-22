@@ -193,7 +193,7 @@ export class FieldsHelper {
 
     WaitByIdAndFill(Id: string, Value: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.id(Id))),100000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.id(Id))),10000).then(a => {
             console.log("this is inside the wait for " + Id);
             var input = element(by.id(Id));
             input.clear().then(() => {
