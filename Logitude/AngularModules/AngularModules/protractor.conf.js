@@ -135,7 +135,7 @@ exports.config = {
         // ********************* Login **********************************
         login: 'e2e/Login/**/Login.e2e-spec.ts',
         NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
-
+       // CustomerGLA: 'e2e/FullAccounting/'
         FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
         ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
         CRM: 'e2e/CRM/**/CRMModule-spec.ts',
@@ -149,9 +149,9 @@ exports.config = {
 
         // ********************* FullAccounting **********************************
         NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
-        vendorgla: 'FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
+        vendorgla: 'e2e/FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
         APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
-        GLAccount: 'FullAccounting/**/GLAccounts/GlAccount-spec.ts',
+        RevGLAccount: 'e2e/FullAccounting/**/GlAccount-spec.ts',
 
         //*************Report********************
         Reports: 'e2e/Report/**/Report-spec.ts',

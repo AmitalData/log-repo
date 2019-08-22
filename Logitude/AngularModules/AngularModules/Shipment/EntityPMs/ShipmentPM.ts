@@ -4260,6 +4260,11 @@ export class ShipmentPM {
     public get PackagesDeleted() { return this.packagesDeleted; }
     public set PackagesDeleted(newValue: boolean) { if (this.packagesDeleted != newValue) { this.packagesDeleted = newValue; this.MarkAsDirty("PackagesDeleted"); } }
 
+    private isDeletingAllPayables: boolean;
+    public get IsDeletingAllPayables() { return this.isDeletingAllPayables; }
+    public set IsDeletingAllPayables(newValue: boolean) { if (this.isDeletingAllPayables != newValue) { this.isDeletingAllPayables = newValue; this.MarkAsDirty("IsDeletingAllPayables"); } }
+
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
