@@ -7,48 +7,62 @@ export class QuoteActions {
     constructor() {
         this.Helper = new FieldsHelper();
     }
-
+    QuoteMenubuttonActions(ActionName: string) {
+        if (ActionName == 'copy') {
+            this.CopyQuote();
+        }
+        else if (ActionName == 'accept') {
+            this.QuoteAccepted();
+        }
+        else if (ActionName == 'decline') {
+            this.QuoteDeclined();
+        }
+        else if (ActionName == 'build') {
+            this.BuildShipmentFromQuote();
+        }
+        else if (ActionName == 'copybuild') {
+            this.CopyQuote();
+            this.QuoteAccepted();
+            this.BuildShipmentFromQuote();
+        }
+    }
     CopyQuote() {
-
         this.Helper.WaitByIdAndClick('MenuButtons');
         this.Helper.WaitByIdAndClick('Quote.B.CopyQuote');
-        this.Helper.WaitByIdAndClick('Quote_IncludePickUp');
-        this.Helper.WaitByIdAndClick('IncludeDelivery');
-// browser.driver.sleep(6000);
-        // this.Helper.ItemsVisibility('LogitudeWindow_0_1');
-        // var EC = protractor.ExpectedConditions;
 
-        //     browser.wait(EC.visibilityOf(element(by.id("EditBusyInicator"))), 100000).then(a => { });
-        // browser.wait(EC.visibilityOf(element(by.id("SessionBusyComponent"))), 100000).then(a => { });
-        // browser.driver.sleep(5000)
-        // this.Helper.WaitByIdAndFill('textboxdiv_Quote_DescriptionOfGoods', 'Created by protractor .. Copy Quote ');
-        
-        this.Helper.WaitByIdAndFill('Quote_FromAddressCity','Ramallah');
-        this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId', 'State Of Palestine');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitEditComponentBusyIndicator();
+        var includePickup = element(by.id('CheckBox_0_13'));
+        browser.executeScript("arguments[0].click();", includePickup.getWebElement());
 
-    this.Helper.WaitByIdAndFill('Quote_ToAddressCity','Ramallah');
-    this.Helper.WaitByIdAndFill('Quote_ToAddressCountryId', 'State Of Palestine');
-this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        var includeDelivery = element(by.id('CheckBox_0_14'));
+        browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
+
+        // this.Helper.WaitByIdAndFill('Quote_FromAddressCity_1', 'Ramallah');
+        // this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId_1', 'State Of Palestine');
+        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+        // this.Helper.WaitByIdAndFill('Quote_ToAddressCity_1', 'Ramallah');
+        // this.Helper.WaitByIdAndFill('Quote_ToAddressCountryId_1', 'State Of Palestine');
+        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndClick('CreateQuote');
     }
 
     BuildShipmentFromQuote() {
-        this.Helper.WaitByIdAndClick('Quote.B.BuildShipment');
-        // this.Helper.WaitByIdAndClick('ShipmentLevelRadio_0D');
+        this.Helper.WaitByIdAndClick('Quote.B.BuildShipment_1');
+
+        this.Helper.ItemsVisibility('LogLov_Shipment_ShipperId');
+        this.Helper.ItemsPresent('LogLov_Shipment_ShipperId');
+
         var shipmentTypeBtn = element(by.id('ShipmentLevelRadio_0D'));
         browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
         this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
-        browser.driver.sleep(5000);
     }
     QuoteAccepted() {
-        this.Helper.WaitByIdAndClick('Quote.B.Accept');
+        this.Helper.WaitByIdAndClick('Quote.B.Accept_1');
         this.Helper.WaitByIdAndFill('Quote_EventNote', 'Quote Accepted by protractor ... ');
         this.Helper.WaitByIdAndClick('ConfrimApproved');
-        // this.Helper.WaitWindowClosed();
         this.Helper.WaitEditComponentBusyIndicator();
-
     }
     QuoteDeclined() {
         this.Helper.WaitByIdAndClick('Quote.B.Decline');
