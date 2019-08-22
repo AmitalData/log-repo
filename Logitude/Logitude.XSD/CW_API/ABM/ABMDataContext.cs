@@ -1,5 +1,11 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -63,10 +69,14 @@ namespace Logitude.XSD.CW_API.ABM
 
         public List<ShipmentPackagePM> Containers = new List<ShipmentPackagePM>();
 
+        private ComputingPartnerTranslationHelper computingPartnerHelper;
+
         public ABMDataContext(string shipmentId, int tenant)
         {
             this.Tenant = tenant;
             this.ShipmentId = shipmentId;
+
+            this.computingPartnerHelper = new ComputingPartnerTranslationHelper(Tenant);
 
             this.GetCredentialsData();
             this.GetShipmentObject();
@@ -101,7 +111,7 @@ namespace Logitude.XSD.CW_API.ABM
             ShipmentQuery query = new ShipmentQuery(this.Tenant);
             Shipment = query.GetSinglePMWithoutComposition(ShipmentId, Tenant);
         }
-
+        
         private void BuildGeneralData()
         {
             this.ShipmentNumber = this.Shipment.ShipmentNumber;
@@ -114,10 +124,48 @@ namespace Logitude.XSD.CW_API.ABM
 
         private void BuildPortsData()
         {
-            this.MainCarriageFromPortCountryCode = Shipment.MainCarriageFromPortCountryCode;
-            this.FinalDestinationPortCountryCode = Shipment.MainCarriageFinalDestinationPortCountryCode;
-            this.FromPortCode = Shipment.MainCarriageFromPortCode;
-            this.FinalDestinationPortCode = Shipment.MainCarriageFinalDestinationPortCode;
+            string mainCarriageFromPortTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(Shipment.MainCarriageFromPortCountryCode, "G-ABM", "Country");
+            string finalDestinationPortCountryTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(Shipment.MainCarriageFinalDestinationPortCountryCode, "G-ABM", "Country");
+            string fromPortTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(Shipment.MainCarriageFromPortCode, "G-ABM", "Port");
+            string finalDestinationPortTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(Shipment.MainCarriageFinalDestinationPortCode, "G-ABM", "Port");
+
+            if (!string.IsNullOrEmpty(mainCarriageFromPortTranslatedCode))
+            {
+                this.MainCarriageFromPortCountryCode = mainCarriageFromPortTranslatedCode;
+            }
+            else
+            {
+                this.MainCarriageFromPortCountryCode = Shipment.MainCarriageFromPortCountryCode;
+            }
+
+            ////////
+            if (!string.IsNullOrEmpty(finalDestinationPortCountryTranslatedCode))
+            {
+                this.FinalDestinationPortCountryCode = finalDestinationPortCountryTranslatedCode;
+            }
+            else
+            {
+                this.FinalDestinationPortCountryCode = Shipment.MainCarriageFinalDestinationPortCountryCode;
+            }
+
+            ///////
+            if (!string.IsNullOrEmpty(fromPortTranslatedCode))
+            {
+                this.FromPortCode = fromPortTranslatedCode;
+            }
+            else
+            {
+                this.FromPortCode = Shipment.MainCarriageFromPortCode;
+            }
+
+            if (!string.IsNullOrEmpty(finalDestinationPortTranslatedCode))
+            {
+                this.FinalDestinationPortCode = finalDestinationPortTranslatedCode;
+            }
+            else
+            {
+                this.FinalDestinationPortCode = Shipment.MainCarriageFinalDestinationPortCode;
+            }
         }
 
         private void BuildPartnersData()
@@ -132,14 +180,27 @@ namespace Logitude.XSD.CW_API.ABM
             this.ShipperReference1 = Shipment.ShipperReference1;
             this.ShipperReference2 = Shipment.ShipperReference2;
 
+
+            string shipperCountryCode = null;            
             if (!string.IsNullOrEmpty(Shipment.ShipperCountryId))
             {
                 Country country = rep.GetSingleCountry(Shipment.ShipperCountryId, Tenant);
                 if(country != null)
                 {
-                    this.ShipperCountryCode = country.Code;
+                    shipperCountryCode = country.Code;
                 }
-            }           
+            }
+
+            string shipperCountryTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(shipperCountryCode, "G-ABM", "Country");
+            if (!string.IsNullOrEmpty(shipperCountryTranslatedCode))
+            {
+                this.ShipperCountryCode = shipperCountryTranslatedCode;
+            }
+
+            else
+            {
+                this.ShipperCountryCode = shipperCountryCode;
+            }
 
             this.ConsigneeName = Shipment.ConsigneeName;
             this.ConsigneeAddress1 = Shipment.ConsigneeAddress1;
@@ -149,13 +210,25 @@ namespace Logitude.XSD.CW_API.ABM
             this.ConsigneeReference1 = Shipment.ConsigneeReference1;
             this.ConsigneeReference2 = Shipment.ConsigneeReference2;
 
+            string consigneeCountryCode = null;
             if (!string.IsNullOrEmpty(Shipment.ConsigneeCountryId))
             {
                 Country country = rep.GetSingleCountry(Shipment.ConsigneeCountryId, Tenant);
                 if (country != null)
                 {
-                    this.ConsigneeCountryCode = country.Code;
+                    consigneeCountryCode = country.Code;
                 }
+            }
+
+            string consigneeCountryTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(consigneeCountryCode, "G-ABM", "Country");
+            if (!string.IsNullOrEmpty(consigneeCountryTranslatedCode))
+            {
+                this.ConsigneeCountryCode = consigneeCountryTranslatedCode;
+            }
+
+            else
+            {
+                this.ConsigneeCountryCode = consigneeCountryCode;
             }
         }
 
