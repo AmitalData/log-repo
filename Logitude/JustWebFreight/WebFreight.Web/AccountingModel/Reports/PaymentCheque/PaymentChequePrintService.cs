@@ -113,7 +113,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSinglePM(tenantPM.AddressId, tenant);
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
-            PaymentChequeDP.APPaymentNumber = GetPaymentNumber(paymentChequePM);
+        //    PaymentChequeDP.APPaymentNumber = GetPaymentNumber(paymentChequePM);
             if (paymentChequePM.CurrencyCode == "NIS" || paymentChequePM.CurrencyCode == "ILS")
             {
                 string curr_name = "ש\"ח";
