@@ -263,7 +263,7 @@
 					"script": {
 						"id": "3fe94742-db45-4727-8f52-8c74c8264208",
 						"exec": [
-							"pm.test(\"GetNotMyShipmentIdFromMyTenant\", function () {",
+							"pm.test(\"GetNotMyShipmentIdFromMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(200);",
 							"     ",
 							"      var idvalue = pm.response.json();",
@@ -323,7 +323,7 @@
 					"script": {
 						"id": "b7402e55-677a-4006-abe0-5805e0872aa4",
 						"exec": [
-							"pm.test(\"UpdateNotMyShipmentFromMyTenant\", function () {",
+							"pm.test(\"UpdateNotMyShipmentFromMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(400);",
 							"     ",
 							"      //var idvalue1 = (pm.response.json().ErrorMessage);",
@@ -829,7 +829,7 @@
 					"script": {
 						"id": "169c934b-6c52-4a37-8e99-c521f97890d5",
 						"exec": [
-							"pm.test(\"GetARInvoiceIdFromMyTenant\", function () {",
+							"pm.test(\"GetARInvoiceIdFromMyTenant Fail\", function () {",
 							"   pm.response.to.have.status(200);",
 							"   ",
 							"   pm.expect(pm.response.text()).to.eql(\"null\");",

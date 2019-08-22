@@ -92,7 +92,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         this.CreateTraceEvent("PADL", entityPM.EventNote);
                     }
 
-                    if(entityPM.ShipmentDirectionConverted)
+                    if (entityPM.IsDeletingAllPayables)
+                    {
+                        this.CreateTraceEvent("DLAP", entityPM.EventNote);
+                        entityPM.IsDeletingAllPayables = false;
+                    }
+
+                    if (entityPM.ShipmentDirectionConverted)
                     {
                         this.CreateTraceEvent("SDCV", entityPM.EventNote);
                     }

@@ -170,7 +170,13 @@
                                     <td style="width: 120px; min-width: 120px;max-width: 120px;">Package Type</td>
                                     <td *ngIf="!IsLCLEntity" style="width: 110px; min-width: 110px;max-width: 110px;">Container Number</td>
                                     <td style="width: 65px; min-width: 65px;max-width: 65px;">Quantity</td>
-                                    <td style="width: 115px; min-width: 115px;max-width: 115px;">{{DimensionsLabel}}</td>
+                                    <!--<td style="width: 115px; min-width: 115px;max-width: 115px;">{{DimensionsLabel}}</td>-->
+
+                                    <td  style="width: 75px; min-width: 75px;max-width: 75px;">Length ({{warehouseEntryPM.DimensionsUnitCode}})</td>
+                                    <td  style="width: 75px; min-width: 75px;max-width: 75px;">Width ({{warehouseEntryPM.DimensionsUnitCode}})</td>
+                                    <td  style="width: 75px; min-width: 75px;max-width: 75px;">Height ({{warehouseEntryPM.DimensionsUnitCode}})</td>
+
+
                                     <td style="width: 90px; min-width: 90px;max-width: 90px;">{{VolumeLabel}}</td>
                                     <td *ngIf="IsEditMode" style="width: 135px;min-width: 135px;max-width: 135px;">{{VolumetricWeightLabel}}</td>
                                     <td style="width: 110px;min-width: 110px;max-width: 110px;">{{GrossWeightLabel}}</td>
@@ -224,10 +230,24 @@
                                                                 {{item.Quantity}}
                                                             </td>
 
-                                                            <td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px;text-align:right">
+                                                            <!--<td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px;text-align:right">
                                                                 {{item.Dimensions}}
+                                                            </td>-->
+
+                                                            <td class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
+                                                                {{item.Length}}
+
                                                             </td>
 
+                                                            <td class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
+                                                                {{item.Width}}
+
+                                                            </td>
+
+                                                            <td class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
+                                                                {{item.Height}}
+
+                                                            </td>
                                                             <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;text-align:right">
                                                                 {{item.Volume | NumbersPipe:'N3'}}
                                                             </td>
@@ -317,7 +337,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="10"></td>
+                                                            <td colspan="15"></td>
                                                         </tr>
                                                     </table>
 

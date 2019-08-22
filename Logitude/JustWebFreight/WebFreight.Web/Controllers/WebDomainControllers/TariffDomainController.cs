@@ -860,7 +860,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 var StepLength = rowData.Length;
                 if (!string.IsNullOrEmpty(filter.PriceSteps))
                 {
-                    StepLength = filter.PriceSteps.Split(',').Length + 4;
+                    StepLength = filter.PriceSteps.Split(',').Length + 3;
                 }
 
                 String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();

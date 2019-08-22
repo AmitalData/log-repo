@@ -1257,7 +1257,7 @@ namespace Logitude.BL.Helpers
                 {
                     item.ChargesGroupViewOrder = item.ChargesTypeViewOrder = group.ViewOrder;
                     item.ChargesGroupName = group.Name;
-                    var chargesTypeList = chargesTypeLists.Where(d => d.ChargesGroupId == item.Id).FirstOrDefault();
+                    var chargesTypeList = chargesTypeLists.Where(d => d.Id == item.ChargesTypeId).FirstOrDefault();
                     if (chargesTypeList != null) item.ChargesTypeViewOrder = chargesTypeList.ViewOrder;
                 }
             }

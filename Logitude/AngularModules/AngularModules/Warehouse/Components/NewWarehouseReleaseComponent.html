@@ -282,7 +282,11 @@
                                                         <td style="width: 30px; min-width: 30px;max-width: 30px;"></td>
                                                         <td style="width: 120px; min-width: 120px;max-width: 120px;">Package Type</td>
                                                         <td *ngIf="!IsLCLEntity" style="width: 110px; min-width: 110px;max-width: 110px;">Container Number</td>
-                                                        <td style="width: 125px; min-width: 125px;max-width: 125px;">{{DimensionsLabel}}</td>
+                                                        <!--<td style="width: 125px; min-width: 125px;max-width: 125px;">{{DimensionsLabel}}</td>-->
+                                                        <td style="width: 75px; min-width: 75px;max-width: 75px;">Length ({{warehouseReleasePM.DimensionsUnitCode}})</td>
+                                                        <td style="width: 75px; min-width: 75px;max-width: 75px;">Width ({{warehouseReleasePM.DimensionsUnitCode}})</td>
+                                                        <td style="width: 75px; min-width: 75px;max-width: 75px;">Height ({{warehouseReleasePM.DimensionsUnitCode}})</td>
+
                                                         <td style="width: 65px; min-width: 65px;max-width: 65px;">Quantity</td>
                                                         <td style="width: 90px; min-width: 90px;max-width: 90px;">{{VolumeLabel}}</td>
                                                         <td style="width: 110px;min-width: 110px;max-width: 110px;">{{GrossWeightLabel}}</td>
@@ -340,11 +344,22 @@
 
 
 
-                                                                                <td class="GridViewCell" style="width: 125px; min-width: 125px; max-width: 125px;text-align:right">
+                                                                                <!--<td class="GridViewCell" style="width: 125px; min-width: 125px; max-width: 125px;text-align:right">
 
                                                                                     {{item.Dimensions}}
 
+                                                                                </td>-->
+                                                                                <td class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
+                                                                                    {{item.Length}}
                                                                                 </td>
+
+                                                                                <td class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
+                                                                                    {{item.Width}}
+                                                                                </td>
+                                                                                <td class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
+                                                                                    {{item.Height}}
+                                                                                </td>
+
                                                                                 <td class="GridViewCell" style="width: 65px; min-width: 65px; max-width: 65px;text-align:right">
 
                                                                                     {{item.Quantity}}
@@ -367,18 +382,13 @@
 
 
                                                                                 <td class="GridViewCell" style="width:100%; min-width: 100%; max-width: 100%; position: relative;">
-                                                                                    <div *ngIf="!IsLCLEntity" style="width:150px;max-width:150px">{{item.Description}}</div>
+                                                                                    <div *ngIf="!IsLCLEntity" style="width:135px;max-width:135px">{{item.Description}}</div>
                                                                                     <div *ngIf="IsLCLEntity" style="width:240px;max-width:240px">{{item.Description}}</div>
-
                                                                                 </td>
 
                                                                                 <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;vertical-align:central">
                                                                                     <table>
                                                                                         <tr>
-                                                                                            <!--<td style="width: 23px; padding-left: 5px;">
-                                                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left;" (click)="EditPackage(item)"></IconButton>
-                                                                                            </td>-->
-
                                                                                             <td style="width: 20px; padding-left: 2px;">
                                                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left;" (click)="DeletePackage(item)"></IconButton>
                                                                                             </td>

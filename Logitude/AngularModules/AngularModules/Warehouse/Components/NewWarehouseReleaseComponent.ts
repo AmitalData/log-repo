@@ -65,7 +65,6 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     GrossWeightLabel: string;
     DimensionsLabel: string;
     ChargeableWeightLabel: string;
-
     DataContext: any = this;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService, private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
