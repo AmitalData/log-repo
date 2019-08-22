@@ -48,9 +48,9 @@ namespace Logitude.Accounting.BL.CoreBL
             _AllVendorGLAccountCards = GetQAllVendorGLAccountCards(accountingContext, tenant);
 
             var listOfAccounts = _AllVendorGLAccountCards.ToList();
-            if (listOfAccounts.Count == 0)
+            if (listOfAccounts == null || listOfAccounts.Count == 0)
             {
-                return null;
+                throw new Exception("No Vendors found with Vat Number and Deduction File Number");
             }
             int chunkSize = 1000;
             var listOf1000 = listOfAccounts.Select((x, i) => new { Index = i, Value = x })
