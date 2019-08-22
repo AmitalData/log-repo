@@ -10784,8 +10784,8 @@ namespace WebFreight.Web.ReportsWebServices
                 AgingPeriod record = new AgingPeriod();
 
                 record.PeriodName = item.PeriodName;
-                record.AccountEnglishName = item.AccountEnglishName;
-                record.AccountLocalName = item.AccountLocalName;
+                record.AccountName = item.AccountLocalName != null ? item.AccountLocalName : item.AccountEnglishName;
+           
                 record.Total = item.Total;
 
                 totalData.AgingPeriods.Add(record);
@@ -10810,8 +10810,8 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance",
                     Total = sumValue.Value,
-                    AccountEnglishName = sumValue.Key.AccountEnglishName,
-                    AccountLocalName = sumValue.Key.AccountLocalName,
+                    AccountName = sumValue.Key.AccountLocalName != null? sumValue.Key.AccountLocalName  : sumValue.Key.AccountEnglishName,
+                  
                 });
             }
 

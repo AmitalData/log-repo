@@ -120,6 +120,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                     PaymentChequeDP.VatNumber = tenantPM.VatNumber;
 
                     PaymentChequeDP.Signature = tenantPM.Signature;
+                  
                 }
 
                 if (address != null)
@@ -128,6 +129,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                     PaymentChequeDP.Address2 = address.Address2;
                     PaymentChequeDP.FAX = address.FaxNumber;
                     PaymentChequeDP.AddressName = address.Name;
+                    PaymentChequeDP.Telephone = address.PhoneNumber;
                 }
                 // map lines
                 List<PaymentChequeLine> lines = paymentChequePM.PaymentChequeLines.Select(d => new PaymentChequeLine()
