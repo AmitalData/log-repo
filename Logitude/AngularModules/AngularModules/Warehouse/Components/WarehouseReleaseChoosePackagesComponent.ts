@@ -430,6 +430,11 @@ export class WarehouseEntryPackageClass extends BaseComponent
             this.ReleaseQTY = value;
         
     }
+
+    Height: number;
+    Width: number;
+    Length: number;
+
     constructor(entityPM: WarehouseEntryPackagePM) {
         super();
 
@@ -441,7 +446,9 @@ export class WarehouseEntryPackageClass extends BaseComponent
         this.Volume = entityPM.Volume;
         this.Weight = entityPM.Weight;
         this.VolumetricWeight = entityPM.VolumetricWeight;
-
+        this.Height = entityPM.Height;
+        this.Width = entityPM.Width;
+        this.Length = entityPM.Length;
 
         this.Description = entityPM.Description;
         this.Instock = entityPM.Instock;

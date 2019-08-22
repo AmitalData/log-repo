@@ -12,7 +12,7 @@ export class NewGLAccount {
 
   }
 
-  CreateNewGLAccount(LocalName: string, DisplayNumber: string) {
+  CreateNewGLAccount(LocalName: string) {
     browser.ignoreSynchronization = true;
 
     
@@ -22,10 +22,11 @@ export class NewGLAccount {
     this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsTypeCode', 'Revenues');
     this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
     this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'Rev');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0); 
-   // this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
-     // this.Helper.WaitByIdAndFill('GLAccount_LocalName', LocalName);
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitBusyIndicator();
+      this.Helper.WaitByIdAndFill('GLAccount_LocalName', LocalName);
+    //this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
+
     
     this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
     this.Helper.WaitBusyIndicator();
