@@ -46,6 +46,13 @@ namespace Logitude.Accounting.BL.CoreBL
             _sb.AppendLine($"GetDeductionFileNumberFromAccSetting({tenant})");
             _FullAccountingSettingPM = GetDeductionFileNumberFromAccSetting(accountingContext, tenant);
             _AllVendorGLAccountCards = GetQAllVendorGLAccountCards(accountingContext, tenant);
+            if (_AllVendorGLAccountCards == null)
+            {
+                bool useLocal = true;
+                string text = TranslateTextsClassTranslate("System1000.O.NoVendors", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "No Vendors found  with Vat Number and Deduction File Number";
+                throw new Exception(text);
+            }
 
             if (_AllVendorGLAccountCards == null)
             {
