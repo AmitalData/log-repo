@@ -31,10 +31,10 @@ export class QuoteActions {
         this.Helper.WaitByIdAndClick('Quote.B.CopyQuote');
 
         this.Helper.WaitEditComponentBusyIndicator();
-        var includePickup = element(by.id('CheckBox_0_13'));
+        var includePickup = element(by.id('CheckBox_0_10'));
         browser.executeScript("arguments[0].click();", includePickup.getWebElement());
 
-        var includeDelivery = element(by.id('CheckBox_0_14'));
+        var includeDelivery = element(by.id('CheckBox_0_11'));
         browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
 
         // this.Helper.WaitByIdAndFill('Quote_FromAddressCity_1', 'Ramallah');
