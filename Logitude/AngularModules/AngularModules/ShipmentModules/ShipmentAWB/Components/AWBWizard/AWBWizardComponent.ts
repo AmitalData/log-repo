@@ -1013,15 +1013,10 @@ export class AWBWizardComponent {
     public AirlineRulesList: AirlineMessagingRuleList[] = [];
     public LoadAirlineRules(myAirlineCode: string) {
 
-        var iRecord = new AirlineMessagingRuleList();
-        iRecord.RuleFieldName = "ReferenceNumber";
-        iRecord.IsMandatoryForSending = true;
-
         if (AppTool.IsNullOrEmpty(myAirlineCode)) {
             this.AirlineRulesList = [];
             this.ValidateAllTabs();
             this.RefreshTab(this.SelectedTabCode);
-            this.AirlineRulesList.push(iRecord);
             this.ValidateAllTabs();
         }
 
@@ -1033,7 +1028,6 @@ export class AWBWizardComponent {
                     this.AirlineRulesList = [];
                     this.ValidateAllTabs();
                     this.RefreshTab(this.SelectedTabCode);
-                    this.AirlineRulesList.push(iRecord);
                 }
 
                 else {                    
@@ -1045,7 +1039,6 @@ export class AWBWizardComponent {
                         this.AirlineRulesList = myResponse.Result;
                         this.ValidateAllTabs();
                         this.RefreshTab(this.SelectedTabCode);
-                        this.AirlineRulesList.push(iRecord);
                     }
                 }
 
