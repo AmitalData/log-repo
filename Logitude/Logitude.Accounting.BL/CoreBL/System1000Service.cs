@@ -47,11 +47,23 @@ namespace Logitude.Accounting.BL.CoreBL
             _FullAccountingSettingPM = GetDeductionFileNumberFromAccSetting(accountingContext, tenant);
             _AllVendorGLAccountCards = GetQAllVendorGLAccountCards(accountingContext, tenant);
 
+            if (_AllVendorGLAccountCards == null)
+            {
+                bool useLocal = true;
+                string text = TranslateTextsClassTranslate("System1000.O.NoVendors", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "No Vendors found  with Vat Number and Deduction File Number";
+                throw new Exception(text);
+            }
+
             var listOfAccounts = _AllVendorGLAccountCards.ToList();
             if (listOfAccounts == null || listOfAccounts.Count == 0)
             {
-                throw new Exception("No Vendors found with Vat Number and Deduction File Number");
+                bool useLocal = true;
+                string text = TranslateTextsClassTranslate("System1000.O.NoVendors", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "No Vendors found with Vat Number and Deduction File Number";
+                throw new Exception(text);
             }
+
             int chunkSize = 1000;
             var listOf1000 = listOfAccounts.Select((x, i) => new { Index = i, Value = x })
             .GroupBy(x => x.Index / chunkSize)
