@@ -339,7 +339,8 @@ import { PhysicalCheckMenuButtonsHandler } from './Components/MenuButtons/Physic
 import { DeclarationEditComponentController } from './Controller/DeclarationEditComponentController'
 import { VehicleEditComponentController } from './Controller/VehicleEditComponentController'
 import { VendorCommissionService } from './Services/WebServices/VendorCommissionService'
-
+import { ApprovedProfessionListService } from './Services/StandardLists/ApprovedProfessionListService'
+import { RequestTypeListService } from './Services/StandardLists/RequestTypeListService'
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -564,7 +565,8 @@ export class ModuleProviders {
             case "UpdateCodeListService": { myResult = new UpdateCodeListService(); break; }
             case "GatepassReturnCodeListService": { myResult = new GatepassReturnCodeListService(); break; }
             case "PendingByKeywordListService": { myResult = new PendingByKeywordListService(); break; }
-                
+            case "ApprovedProfessionListService": { myResult = new ApprovedProfessionListService(); break; }
+            case "RequestTypeListService": { myResult = new RequestTypeListService(); break; } 
             case "CourierCustomStatusListService": { myResult = new CourierCustomStatusListService(); break; }
             //#endregion                
 

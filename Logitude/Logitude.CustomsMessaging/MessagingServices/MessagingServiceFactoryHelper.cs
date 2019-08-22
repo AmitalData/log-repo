@@ -440,6 +440,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DCAInUCBCTML_MsgMessagingService>
                 ((new DCAInUCBCTML_MsgMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInDE_NG_5108_DecisionMessageMessagingService>
+                ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
+
         }
         public static void InitContainer()
         {
