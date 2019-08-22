@@ -144,8 +144,8 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                     //    tempSupplierInvoice = SupplierInvoice;
                     //    tempOthers = Others;
                     //}
-                    this.externalDocs.push({ key: "חשבונות ספק ורשימות אריזה", value: tempSupplierInvoice });
-                    this.externalDocs.push({ key: "מסמכים נוספים", value: tempOthers });
+                    this.externalDocs.push({ key: TextCodeTranslator.Translate("Shipment.O.SupplierInvoiceAndPackingList"), value: tempSupplierInvoice });// "חשבונות ספק ורשימות אריזה"
+                    this.externalDocs.push({ key: TextCodeTranslator.Translate("Shipment.O.AdditionalDocuments"), value: tempOthers });//"מסמכים נוספים"
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                 }, error => {

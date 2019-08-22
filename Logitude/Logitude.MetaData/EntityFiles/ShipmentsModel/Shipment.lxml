@@ -2323,12 +2323,14 @@
     <TextCode Code="&quot;Shipment.O.PLAccountCountry&quot;" DefaultText="&quot;ארץ חשבון&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.PLSupplier&quot;" DefaultText="&quot;ספק&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.PLFreightDetails&quot;" DefaultText="&quot;נתוני הובלה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;ShipmePLPayableTaxnt.O.&quot;" DefaultText="&quot;סעיף מס לתשלום&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLPayableTax&quot;" DefaultText="&quot;סעיף מס לתשלום&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.PLBasisCalculateTax&quot;" DefaultText="&quot;בסיס לחישוב מס בש&quot;ח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.PLTaxToPay&quot;" DefaultText="&quot;מס לשלם&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.PLTotalAmountToPay&quot;" DefaultText="&quot;סכום לתשלום בש&quot;ח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.PLRejectedTax&quot;" DefaultText="&quot;מס נדחה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.PLTotalTax &quot;" DefaultText="&quot;סה&quot;כ מיסים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.SupplierInvoiceAndPackingList&quot;" DefaultText="&quot;חשבונות ספק ורשימות אריזה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.AdditionalDocuments&quot;" DefaultText="&quot;מסמכים נוספים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;CSPV&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.CSPV&quot;" FeatureDefaultText="&quot;Allow user to control the spotlight per view&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
