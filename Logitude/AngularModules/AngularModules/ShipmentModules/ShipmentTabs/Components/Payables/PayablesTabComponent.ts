@@ -1154,15 +1154,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     DeleteAllClicked() {
         if (this.IsEditingEnabled) {
 
-            var isDeletingAllowed: boolean = true;
-
             if (this.EntityPM.ShipmentPayables.filter(f => f.ShipmentPayableLineStatusCode == 'PACC' || f.ShipmentPayableLineStatusCode == 'ACCT').length > 0) {
-                isDeletingAllowed = false;
-            }
-
-            if (!isDeletingAllowed) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show("Can't delete all, some lines are connected to invoices");
+            }
+
+            else if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.ShipmentPayables.filter(f => f.ShipmentPayableParentId != null).length > 0) {
+                var messageWindow = new MessageWindow();
+                messageWindow.Show("Can't delete all, some lines are connected to master");
             }
 
             else {
@@ -1171,6 +1170,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
                         this.EntityPM.ShipmentPayables = [];
+                        this.EntityPM.IsDeletingAllPayables = true;
                         this.EntityPM.IsDirty = true;
                         this.BuildItemsSource();
                         this.ComputeShipmentFields();

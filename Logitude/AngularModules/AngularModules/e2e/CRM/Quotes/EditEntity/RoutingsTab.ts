@@ -20,10 +20,5 @@ export class RoutingsTabComponent {
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     }
-    
-    
-
   }
-
-
 }

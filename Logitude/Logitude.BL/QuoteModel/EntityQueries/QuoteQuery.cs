@@ -2162,6 +2162,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         ContainerType3MarkUpText = this.GetMarkUpText(item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode),
                         ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
                         ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
+                        IsChargeBySteps = item.IsChargeBySteps,
                     };
                     if (item.IsChargeBySteps)
                     {
@@ -2200,6 +2201,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                     myPriceBreaks += "\r";//Environment.NewLine;
                                     myPriceBreaks += "+" + itemStep.Step + " kg: " + formattedValue;
                                 }
+                               
                             }
 
                             saleChargePM.PriceBreaks = myPriceBreaks;

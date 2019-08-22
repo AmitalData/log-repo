@@ -81,7 +81,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public int ChargesGroupViewOrder { get; set; }
         public int ChargesTypeViewOrder { get; set; }
         public string ChargesGroupName { get; set; }
-
+        public bool IsChargeBySteps { get; set; }
         
+
+
     }
 }

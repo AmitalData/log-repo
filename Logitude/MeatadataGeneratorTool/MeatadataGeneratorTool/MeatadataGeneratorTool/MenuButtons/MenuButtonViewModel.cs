@@ -221,6 +221,9 @@ namespace MeatadataGeneratorTool.MenuButtons
                     {
                         viewModel.SelectedMenuButton.MenuButtonItems = new ObservableCollection<MenuButtonViewModel>();
                     }
+
+                    if (viewModel.SelectedMenuButton.MenuButtonItems.Count > 0)
+                        this.IndexOrder = viewModel.SelectedMenuButton.MenuButtonItems.OrderByDescending(f => f.IndexOrder).FirstOrDefault().IndexOrder + 1;
                     viewModel.SelectedMenuButton.MenuButtonItems.Add(this); 
                 }
                 else
