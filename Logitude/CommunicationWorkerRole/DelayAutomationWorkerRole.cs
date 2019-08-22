@@ -152,16 +152,19 @@ namespace CommunicationWorkerRole
                                     automationList = automationRepository.GetAutomationsByObjectTableId(objectTableId, Tenant, automationConditionFields.LastUpdateDate.ToString()).Where(d => d.Type == type).ToList();
                                 }
 
-                                if (automationConditionFields.IsRunMasterHouseAutomation)
+                                if (automationConditionFields.IsRunMasterHouseAutomation && !string.IsNullOrEmpty(automationConditionFields.OtherObjectTableIdWithLastUpdate))
                                 {
-                                    otherObjectTableId = automationConditionFields.OtherObjectTableIdWithLastUpdate.Split('@')[0];
-                                    otherObjectTableLastUpdateDate = automationConditionFields.OtherObjectTableIdWithLastUpdate.Split('@')[1];
+                                    var otherObjectTableDetails = automationConditionFields.OtherObjectTableIdWithLastUpdate.Split('@');
+                                    otherObjectTableId = otherObjectTableDetails[0];
+                                    if (otherObjectTableDetails.Length > 1) otherObjectTableLastUpdateDate = otherObjectTableDetails[1];
 
-                                    List<Automation> otherAutomations = automationRepository.GetAutomationsByObjectTableId(otherObjectTableId, Tenant, otherObjectTableLastUpdateDate).Where(d => d.Type == type).ToList();
-
-                                    foreach (Automation item in otherAutomations)
+                                    if (!string.IsNullOrEmpty(otherObjectTableId) && !string.IsNullOrEmpty(otherObjectTableLastUpdateDate))
                                     {
-                                        automationList.Add(item);
+                                        List<Automation> otherAutomations = automationRepository.GetAutomationsByObjectTableId(otherObjectTableId, Tenant, otherObjectTableLastUpdateDate).Where(d => d.Type == type).ToList();
+                                        foreach (Automation item in otherAutomations)
+                                        {
+                                            automationList.Add(item);
+                                        }
                                     }
                                 }
 
