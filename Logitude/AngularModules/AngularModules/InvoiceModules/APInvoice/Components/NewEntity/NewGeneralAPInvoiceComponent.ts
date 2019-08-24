@@ -229,7 +229,13 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
 
     // Vendor Properties
     get VendorDependencyProperty1() { return InvoiceTool.GetVendorPartnerTypes(); }
+    get InternalNotes() { return this.EntityPM.InternalNotes; }
+    set InternalNotes(value: string) {
+        if (this.EntityPM.InternalNotes != value) {
+            this.EntityPM.InternalNotes = value;
 
+        }
+    }
     get VendorId() { return this.EntityPM.VendorId; }
     set VendorId(value: string) {
         if (this.EntityPM.VendorId != value) {

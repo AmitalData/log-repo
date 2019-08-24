@@ -141,34 +141,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 			tenantMenuButtonGroups = menuButtonGroupRepository.GetMenuButtonGroupsByTenant(0).ToDictionary(d => d.Name, a => a);
 			AllEntityStatuses = EntityStatusRepository.GetEntityStatusByTenant(0).ToList();
 
-			CreateAllObjectTables();
-		    this.ObjectContext.SaveChanges();
+			//CreateAllObjectTables();
+		 //   this.ObjectContext.SaveChanges();
 			
-			CreateAllObjectFields();
-		    this.ObjectContext.SaveChanges();
+			//CreateAllObjectFields();
+		 //   this.ObjectContext.SaveChanges();
 
-			CreateAllQueries();
-		    this.ObjectContext.SaveChanges();
+			//CreateAllQueries();
+		 //   this.ObjectContext.SaveChanges();
 
-			CreateAllScreens();
-		    this.ObjectContext.SaveChanges();
+			//CreateAllScreens();
+		 //   this.ObjectContext.SaveChanges();
 
-			CreateAllTabs();
-		    this.ObjectContext.SaveChanges();
+			//CreateAllTabs();
+		 //   this.ObjectContext.SaveChanges();
 
-			CreateAllEventTypes();
-		    this.ObjectContext.SaveChanges();
+			//CreateAllEventTypes();
+		 //   this.ObjectContext.SaveChanges();
 
-			CreateAllClosedTables();
-		    this.ObjectContext.SaveChanges();
+			//CreateAllClosedTables();
+		 //   this.ObjectContext.SaveChanges();
 
-			CreateAllFeatures();
+			//CreateAllFeatures();
 			CreateAdditionalTextCodes();
 		    this.ObjectContext.SaveChanges();
 		    this.CommonContext.SaveChanges();
 
-			CreateAllMenuButtons();
-		    this.ObjectContext.SaveChanges();
+			//CreateAllMenuButtons();
+		 //   this.ObjectContext.SaveChanges();
 
         }
 
