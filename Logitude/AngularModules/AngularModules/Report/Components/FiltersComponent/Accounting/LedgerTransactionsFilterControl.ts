@@ -272,7 +272,15 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate ? this.ToDate : null));
             myFilterItems.push(new QueryFilterItem("GLAccountId", this.GLAccountId ? this.GLAccountId : null));
             myFilterItems.push(new QueryFilterItem("CurrencyId", this.CurrencyId ? this.CurrencyId : null));
-            myFilterItems.push(new QueryFilterItem("IsReconciled", this.IsReconciled ? this.IsReconciled : null));
+            if (!this.AttachedGLAccountCheckBox) {
+                this.IsReconciled = false;
+            
+            }
+            else {
+                this.IsReconciled = null;
+            }
+           
+            myFilterItems.push(new QueryFilterItem("IsReconciled", this.IsReconciled));
             myFilterItems.push(new QueryFilterItem("IncludeChildAccounts", this.IncludeChildAccounts ? this.IncludeChildAccounts : null));
             myFilterItems.push(new QueryFilterItem("SearchFields", this.SearchFields ? this.SearchFields : null));
             myFilterItems.push(new QueryFilterItem("DateTypeCode", this._dateTypeCode ? this._dateTypeCode : null));

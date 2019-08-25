@@ -50,4 +50,17 @@ export class GLAccountShortTitleComponent {
             });
         }
     }
+
+    OpenCardScreen() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.CardId)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: this.EntityPM.CardId, ObjectTableName: 'Vendor' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
+
 }

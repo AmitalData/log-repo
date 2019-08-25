@@ -876,6 +876,24 @@ export class ShipmentDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    MarkShipmentAsBlocked(shipmentId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetMarkShipmentAsBlocked?shipmentId=' + shipmentId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
+
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 
 export class ShipmentsSummary {

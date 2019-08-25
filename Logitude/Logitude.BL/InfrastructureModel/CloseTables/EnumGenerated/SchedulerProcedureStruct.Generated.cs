@@ -26,6 +26,7 @@ namespace Logitude.BL.InfrastructureModel.CloseTables
        public const string TestLoggingWarningTask = "TestLoggingWarningTask";  
        public const string TestUnexpectedShutDownHandling = "TestUnexpectedShutDownHandling";  
        public const string UpdateTimeManagementDurations = "UpdateTimeManagementDurations";  
+       public const string TestLogToFileTask = "TestLogToFileTask";  
     }
 }
 
