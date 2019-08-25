@@ -2172,7 +2172,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (ids.Count > 0)
                     {
                         ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                        List<Shipment> shipments = this.GetFilteredShipments(new { IdsString = ids, TransportMode = entityCode, Tenant = tenant, ShipmentRepository = shipmentRepository });
+                        List<Shipment> shipments = this.GetFilteredShipments(ids, entityCode, tenant, shipmentRepository);
                         this.BlockShipmentsForTransfer(shipments, shipmentRepository);                        
                     }
                 }
@@ -2185,17 +2185,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private List<Shipment> GetFilteredShipments(dynamic blockShipmentArgs)
+        private List<Shipment> GetFilteredShipments(List<string> ids, string entityCode, int tenant, ShipmentRepository shipmentRepository)
         {
             List<Shipment> shipments = new List<Shipment>();            
-            shipments = blockShipmentArgs.ShipmentRepository.GetShipmentsListFromIdList(blockShipmentArgs.IdsString, blockShipmentArgs.Tenant);
+            shipments = shipmentRepository.GetShipmentsListFromIdList(ids, tenant);
 
-            if (blockShipmentArgs.TransportMode == "Air")
+            if (entityCode == "Air")
             {
                 shipments = shipments.Where(d => d.TransportModeId == "A").ToList();
             }
 
-            else if (blockShipmentArgs.TransportMode == "Ocean")
+            else if (entityCode == "Ocean")
             {
                 shipments = shipments.Where(d => d.TransportModeId == "O").ToList();
             }
@@ -2236,7 +2236,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
 
                         DateTime? myStartDate = DateHelper.GetDate(myStartDateString);
-                        this.UpdateAMANACStartDates(new { CustomsInterfaceSetting = customsInterfaceSetting, StartDate = myStartDate, Code = entityCode, CustomsInterfaceSettingRepository = customsInterfaceSettingRepository });
+                        this.UpdateAMANACStartDates(customsInterfaceSetting, myStartDate, entityCode, customsInterfaceSettingRepository);
                         
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, true);
@@ -2254,25 +2254,25 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
-        private void UpdateAMANACStartDates(dynamic updateDateArgs)
+        private void UpdateAMANACStartDates(CustomsInterfaceSetting customsInterfaceSetting, DateTime? startDate, string entityCode, CustomsInterfaceSettingRepository customsInterfaceSettingRepository)
         {
-            switch (updateDateArgs.Code)
+            switch (entityCode)
             {
                 case "Air":
                     {
-                        updateDateArgs.CustomsInterfaceSetting.AMCAirStartDate = updateDateArgs.StartDate;                        
+                        customsInterfaceSetting.AMCAirStartDate = startDate;
                         break;
                     }
 
                 case "Ocean":
                     {
-                        updateDateArgs.CustomsInterfaceSetting.AMCOceanStartDate = updateDateArgs.StartDate;
+                        customsInterfaceSetting.AMCOceanStartDate = startDate;
                         break;
                     }
             }
 
-            updateDateArgs.CustomsInterfaceSettingRepository.Update(updateDateArgs.CustomsInterfaceSetting);
-            updateDateArgs.CustomsInterfaceSettingRepository.SubmitChanges();
+            customsInterfaceSettingRepository.Update(customsInterfaceSetting);
+            customsInterfaceSettingRepository.SubmitChanges();
         }
 
         public HttpResponseMessage GetOnStartDateEntitiesIds(string entityCode, string myStartDateString)
