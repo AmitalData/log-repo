@@ -132,6 +132,14 @@ namespace Logitude.BL.InfrastructureModel
                 Name = "UpdateTimeManagementDurations", 
                 SearchFields = "UpdateTimeManagementDurations,UpdateTimeManagementDurations", 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "TestLogToFileTask", 
+                Name = "TestLogToFileTask", 
+                SearchFields = "TestLogToFileTask", 
+                Description = "TestLogToFileTask", 
+			});
 			
             return all;
        }
