@@ -293,6 +293,7 @@ export class TariffSearchSummary {
     Remarks: string;
     ImageId: string;
     Name: string;
+    CurrencyCode: string;
     CurrencyId: string;
     VersionId: string;
     TotalSurcharge: string;

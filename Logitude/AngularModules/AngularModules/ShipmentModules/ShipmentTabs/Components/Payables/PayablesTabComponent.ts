@@ -125,14 +125,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     this.CheckUpdateQuantities();
                 }
             });
-
-
-            this.CurrentSession.SessionEvent.subscribe((res) => {
-                if (res == "GeneratePayablesFromTariffEvent") {
-                    this.GeneratePayablesFromTariff();
-                }
-            })
-
         }
     }
     ngOnDestroy() {
@@ -263,12 +255,6 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
            
         });      
-    }
-
-    GeneratePayablesFromTariff() {
-        var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
-        Generator.GeneratePayablesAutoDisplay();
-        this.OnEntityDataGenerated();
     }
 
     // Set Labels

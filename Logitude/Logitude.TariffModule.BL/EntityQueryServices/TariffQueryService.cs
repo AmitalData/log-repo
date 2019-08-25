@@ -545,7 +545,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                     if (!string.IsNullOrEmpty(currencyId))
                     {
-                        tariffsSummary.CurrencyId = Currencies.Keys.Contains(currencyId) ? Currencies[currencyId] : null;
+                        tariffsSummary.CurrencyCode = Currencies.Keys.Contains(currencyId) ? Currencies[currencyId] : null;
+                        tariffsSummary.CurrencyId = result.CurrencyId;
                     }
 
                     tariffSearchSummaries.Add(tariffsSummary);

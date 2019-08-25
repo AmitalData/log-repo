@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppTool,DateTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool, ArrayTool } from '../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -493,13 +493,14 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 this.Generator.GetCurrencyCode(shipmentPayable);
                 shipmentPayable.Rate = this.Generator.GetCurrencyRate(shipmentPayable.CurrencyId);
                 shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
- 
+                shipmentPayable.MeasurementId = chargesType.MeasurementId;
+                shipmentPayable.MeasurementCode = chargesType.MeasurementCode;
                 var nweQuantity = this.GetQuantity(chargesType);
-                var expectedAmount = payable.Price;//itemPM.UnitPrice * nweQuantity;
+                var expectedAmount = payable.Price;
                 var expectedAmountLocal = expectedAmount * payable.Rate;
                 var expectedAmountProfit = expectedAmountLocal / payable.ProfitCurrencyExchangeRate;
 
-                shipmentPayable.UnitPrice = AppTool.Round(payable.Price / nweQuantity, 3);
+                shipmentPayable.UnitPrice = payable.Price != null ? AppTool.Round(payable.Price / nweQuantity, 3): null;
                 shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
                 shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
                 shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
@@ -544,6 +545,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             case "BTEU": { myQuantity = this.ShipmentPM.TEU; break; }
             case "FIXD": { myQuantity = 1; break; }
             case "PRVL": { myQuantity = this.ShipmentPM.ValueOfGoods; break; }
+            case "PRFR": { myQuantity = ArrayTool.Sum(this.TariffPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
             case "GWTN": { myQuantity = this.GrossWeightPerTon; break; }
             case "CWKG": { myQuantity = this.ChargeableWeightInKG; break; }
             case "GWKG": { myQuantity = this.GrossWeightInKG; break; }
