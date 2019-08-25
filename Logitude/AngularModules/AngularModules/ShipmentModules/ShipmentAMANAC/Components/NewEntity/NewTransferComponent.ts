@@ -64,13 +64,13 @@ export class NewTransferComponent extends BaseComponent {
         }
     }
 
-    get Notes() { return ""; }
-    //get Notes() { return this.EntityPM.Notes; }
-    //set Notes(value: string) {
-    //    if (this.EntityPM.Notes != value) {
-    //        this.EntityPM.Notes = value;
-    //    }
-    //}
+    private notes: string = "";
+    get Notes() { return this.notes; }    
+    set Notes(value: string) {
+        if (this.notes != value) {
+            this.notes = value;
+        }
+    }
 
     private fromDate: Date;
     get FromDate() { return this.fromDate; }
