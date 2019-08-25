@@ -157,7 +157,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                               } into g
                                               select new TariffResult()
                                               {
-                                                  price = g.Min(p => g.Key.MinPrice),
+                                                  Price = g.Min(p => g.Key.MinPrice),
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 0,
@@ -177,7 +177,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                               } into g
                                               select new TariffResult()
                                               {
-                                                  price = g.Min(p => g.Key.Step1Price),
+                                                  Price = g.Min(p => g.Key.Step1Price),
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 1,
@@ -196,7 +196,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                               } into g
                                               select new TariffResult()
                                               {
-                                                  price = g.Min(p => g.Key.Step2Price),
+                                                  Price = g.Min(p => g.Key.Step2Price),
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 2,
@@ -215,7 +215,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                               } into g
                                               select new TariffResult()
                                               {
-                                                  price = g.Min(p => g.Key.Step3Price),
+                                                  Price = g.Min(p => g.Key.Step3Price),
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 3,
@@ -234,7 +234,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                               } into g
                                               select new TariffResult()
                                               {
-                                                  price = g.Min(p => g.Key.Step4Price),
+                                                  Price = g.Min(p => g.Key.Step4Price),
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 4,
@@ -253,7 +253,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                               } into g
                                               select new TariffResult()
                                               {
-                                                  price = g.Min(p => g.Key.Step5Price),
+                                                  Price = g.Min(p => g.Key.Step5Price),
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 5,
@@ -272,7 +272,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                               } into g
                                               select new TariffResult()
                                               {
-                                                  price = g.Min(p => g.Key.Step6Price),
+                                                  Price = g.Min(p => g.Key.Step6Price),
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 6,
@@ -291,7 +291,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                               } into g
                                               select new TariffResult()
                                               {
-                                                  price = g.Min(p => g.Key.Step7Price),
+                                                  Price = g.Min(p => g.Key.Step7Price),
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 7,
@@ -310,7 +310,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                               } into g
                                               select new TariffResult()
                                               {
-                                                  price = g.Min(p => g.Key.Step8Price),
+                                                  Price = g.Min(p => g.Key.Step8Price),
                                                   tariffid = g.Key.TariffId,
                                                   TariffVersion = g.Key.Version,
                                                   PriceIndex = 8,
@@ -368,7 +368,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             foreach (Tariff result in TariffList)
             {
                 List<TariffResult> resultItems = items.Where(x => x.tariffid == result.Id && TariffVersionList.Where(a => a.Version == x.TariffVersion && a.TariffId == result.Id).FirstOrDefault() != null).ToList();
-                TariffResult item = resultItems.Where(x => x.price == resultItems.Min(y => y.price)).FirstOrDefault();
+                TariffResult item = resultItems.Where(x => x.Price == resultItems.Min(y => y.Price)).FirstOrDefault();
                 if (item != null)
                 {
 
@@ -384,11 +384,11 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                         List<TariffLine> Temp = TariffLines[result.Id].Where(p => p.Version == item.TariffVersion).ToList();// && (decimal?)(p.GetType().GetProperty("Step"+item.PriceIndex+"Price").GetValue(p))==item.price).FirstOrDefault();
                         if (item.PriceIndex != 0)
                         {
-                            SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("Step" + (item.PriceIndex) + "Price").GetValue(p)) == item.price).FirstOrDefault();
+                            SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("Step" + (item.PriceIndex) + "Price").GetValue(p)) == item.Price).FirstOrDefault();
                         }
                         else
                         {
-                            SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("MinPrice").GetValue(p)) == item.price).FirstOrDefault();
+                            SelectedLine = Temp.Where(p => (decimal?)(p.GetType().GetProperty("MinPrice").GetValue(p)) == item.Price).FirstOrDefault();
                         }
                     }
                     if (SelectedLine != null)
@@ -397,23 +397,23 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     }
                     if (item.PriceIndex != 0)
                     {
-                        if ((item.price * (decimal)weight) < minprice)
+                        if ((item.Price * (decimal)weight) < minprice)
                         {
-                            item.price = minprice;
+                            item.Price = minprice;
 
                         }
                         else
                         {
-                            item.price = item.price * (decimal)weight;
+                            item.Price = item.Price * (decimal)weight;
                         }
                     }
                     else
                     {
-                        item.price = minprice != null ? minprice : 0;
+                        item.Price = minprice != null ? minprice : 0;
 
                     }
                     //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
-                    tariffsSummary.price = Math.Round((double)CalculateLocalAmount(item.price!=null?item.price.Value:0, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
+                    tariffsSummary.price = Math.Round((double)CalculateLocalAmount(item.Price!=null?item.Price.Value:0, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
                     List<TariffVersionAllInCharge> allinList = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).ToList();
                     if (allinList != null && allinList.Count > 0)
                     {
@@ -451,11 +451,12 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                                                 string surchargeName = "";
                                                 string surchargeCode = "";
+                                                string surchargeChargeTypeId = "";
                                                 if (CurrentCharge != null)
                                                 {
                                                     surchargeName = CurrentCharge.EnglishName;// (string)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
                                                     surchargeCode = CurrentCharge.Code;// (string)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
-
+                                                    surchargeChargeTypeId = CurrentCharge.Id;
                                                 }
                                                 //   TariffLine surchargeLine= SurchargeTariffLines.Min(p=>p.)
                                                 if (valueofSurcharge != null)
@@ -465,6 +466,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     SurchargeSummary SurchargeItem = new SurchargeSummary();
                                                     SurchargeItem.Code = surchargeCode;
                                                     SurchargeItem.Name = surchargeName;
+                                                    SurchargeItem.ChargeTypeId = surchargeChargeTypeId;
+
                                                     switch (UsedMesurment.Code)
                                                     {
                                                         case "GRWT": { myQuantity = (decimal?)GrossWeight; break; }
@@ -486,7 +489,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                                                     if (UsedMesurment.Code == "PRVL" || UsedMesurment.Code == "PRFR")
                                                     {
-                                                        CurrentSurchargePriceCalculation = ((valueofSurcharge * myQuantity * item.price) / 100);
+                                                        CurrentSurchargePriceCalculation = ((valueofSurcharge * myQuantity * item.Price) / 100);
                                                     }
                                                     else
                                                     {
@@ -495,6 +498,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                                                     SurchargeItem.Price = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrentSurcharge.CurrencyId, tenant);
                                                     Sum += SurchargeItem.Price;
+                                                    SurchargeItem.TariffId =  CurrentSurcharge.Id;
+                                                    SurchargeItem.CurrencyId = CurrentSurcharge.CurrencyId;
+                                                    SurchargeItem.TariffNumber = CurrentSurcharge.TariffNumber;
                                                     tariffsSummary.Surcharges.Add(SurchargeItem);
                                                 }
 
@@ -520,11 +526,13 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.Name = airline.Card != null ? airline.Card.EnglishName : "";
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
                     tariffsSummary.Remarks = result.Description;
-                    tariffsSummary.decimalprice = (decimal?)Sum + CalculateLocalAmount((item.price).Value, currencyId, result.CurrencyId, tenant);
+                    tariffsSummary.decimalprice = (decimal?)Sum + CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId, tenant);
                     tariffsSummary.VersionId = item.TariffVersion + "";
                     tariffsSummary.Id = item.tariffid;
+                    tariffsSummary.TariffNumber = result.TariffNumber;
+                    tariffsSummary.ChargeTypeId = chargesTypes.Where(p => p.Code == "AFT").Select(p => p.Id).FirstOrDefault();
                     tariffsSummary.TotalSurcharge = Sum + "";
-                    tariffsSummary.WholePrice = (decimal?)Sum + CalculateLocalAmount((item.price).Value, currencyId, result.CurrencyId, tenant) + "";
+                    tariffsSummary.WholePrice = (decimal?)Sum + CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId, tenant) + "";
 
                     byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
                     string resultImage = "";
@@ -757,8 +765,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
     public class TariffResult
     {
         public string tariffid { get; set; }
+        public string TariffNumber { get; set; }
         public int TariffVersion { get; set; }
-        public decimal? price { get; set; }
+        public decimal? Price { get; set; }
         public int PriceIndex { get; set; }
 
     }

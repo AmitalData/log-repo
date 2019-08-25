@@ -381,6 +381,16 @@ export class ShipmentPayablePM {
     public set ReceivableId(newValue: string) { if (this.receivableId != newValue) { this.receivableId = newValue; this.MarkAsDirty("ReceivableId"); } }
        
 	 
+    private tariffId: string;
+    public get TariffId() { return this.tariffId; }
+    public set TariffId(newValue: string) { if (this.tariffId != newValue) { this.tariffId = newValue; this.MarkAsDirty("TariffId"); } }
+       
+	 
+    private tariffNumber: string;
+    public get TariffNumber() { return this.tariffNumber; }
+    public set TariffNumber(newValue: string) { if (this.tariffNumber != newValue) { this.tariffNumber = newValue; this.MarkAsDirty("TariffNumber"); } }
+       
+	 
 
     public OldEntityPM: ShipmentPayablePM;
 	    
