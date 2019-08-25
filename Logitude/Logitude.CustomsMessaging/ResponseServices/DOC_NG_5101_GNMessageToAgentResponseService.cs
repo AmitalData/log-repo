@@ -219,7 +219,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     notificationDescription = "ממתין לבטחון, יסמ ולבקרת מסמכים " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     notificationStatusCode = "VCT";
                     break;
-                
+                case 28:
+                    notificationDefinitionCode = "5101F";
+                    assigneToNotificationTypeCode = "I";
+                    notificationDescription = "עמידה/אי עמידה בדרישה לבטוחה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                    notificationStatusCode = "COL";
+                    break;
                 default:
                     notificationDefinitionCode = "5101N";
                     assigneToNotificationTypeCode = "I";
@@ -454,6 +459,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 this.MyRequestSheetParam.EntityId1 = requestParams.AppicationId;
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral");
+                if(customResponse.MessageToAgent.msgCode == 28)
+                {
+                    CustomsCollateralPM customsCollateralPM = customsCollateralQueryService.GetSingle(requestParams.AppicationId,false,true);
+                    if(customsCollateralPM != null)
+                    {
+                        this.MyRequestSheetParam.EntityId1 = customsCollateralPM.DeclarationId;
+                        this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                        this.MyRequestSheetParam.EntityId2 = requestParams.AppicationId;
+                        this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral");
+
+                        this._MyDeclarationPM = myQueryService.GetSingle(customsCollateralPM.DeclarationId, false, false);
+                        if (this._MyDeclarationPM == null)
+                        {
+                            LogMessagingUtil.Instance.AppendLine("Can not found declaration" + customsCollateralPM.DeclarationId);
+                            MyResponseData = new INF_MSG_GenericResponseData() { Succeeded = false, HasException = false, UserMessage = "Can not found declaration" + requestParams.AppicationId };
+                            return;
+                        }
+                    }
+                }
             }
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
