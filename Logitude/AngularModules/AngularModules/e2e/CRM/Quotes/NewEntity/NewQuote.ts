@@ -47,16 +47,9 @@ export class NewQuote {
 
     this.Quotes.UseSearchBox('Quote_Search', QuoteNumber, 'LogitudeQuickSearchItem');
     this.EditQuoteTabs.EditTabs(QuoteNumber, ShipmentType, Direction, TransportMode, QuoteType);
-
-
-    this.Helper.WaitByIdAndClick('Quote-Save');
-    this.Helper.WaitEditComponentBusyIndicator();
-    this.QuoteActions.CopyQuote();
-    // this.QuoteActions.QuoteAccepted();
-
-    // this.QuoteActions.BuildShipmentFromQuote();
-
-    // browser.driver.sleep(5000)
+    // this.Helper.WaitByIdAndClick('Quote-Save');
+    // this.Helper.WaitEditComponentBusyIndicator();
+    this.QuoteActions.QuoteMenubuttonActions('copybuild');
     /* }
      else if ((TransportMode == 'O' || TransportMode == 'I') && QuoteType != '') {
        var QuoteNumber = this.Quotes.RandomNum();

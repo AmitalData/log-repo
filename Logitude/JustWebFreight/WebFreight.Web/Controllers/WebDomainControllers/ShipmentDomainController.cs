@@ -2536,6 +2536,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             storageservice.Write(data, fileInfo);
         }
+
+        public HttpResponseMessage GetMarkShipmentAsBlocked(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                Shipment shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+
+                if (shipment != null)
+                {
+                    shipment.LocalCustomsTransmissionsStatusCode = "BLOK";
+                    shipmentRepository.Update(shipment);
+                    shipmentRepository.SubmitChanges();
+                }                
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 

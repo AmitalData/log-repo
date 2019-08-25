@@ -525,9 +525,32 @@ export class AWBPackagesTabComponent extends BaseComponent {
         if (this.EntityPM.ChargeableWeight != newValue) {
             this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
             this.Validate();
+            this.ChargeableWeight_Kg();
             this.FireWizardEvent();
             this.ComputeAWBChargeAmount();
         }
+    }
+
+    ChargeableWeight_Kg() {
+        var weigh_Kg: number = null;
+ 
+        if (this.ChargeableWeight != null) {
+            var factorOfConvert: number = 1;
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.ChargeableWeightUnitCode)) {
+                switch (this.EntityPM.ChargeableWeightUnitCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.ChargeableWeight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+        }
+        this.EntityPM.ChargeableWeightInKG = weigh_Kg;
     }
 
     get AWBChargeAmount() { return this.EntityPM.AWBChargeAmount; }
@@ -728,7 +751,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
         }
 
         if (!this.EntityPM.ChargeableWeightEdited) {
-            this.EntityPM.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
         }
 
         this.SetUIProperties();
