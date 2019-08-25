@@ -413,7 +413,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                     }
                     //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
-                    tariffsSummary.price = Math.Round((double)CalculateLocalAmount(item.price!=null?item.price.Value:0, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
+                    tariffsSummary.price = Math.Round((double)CalculateLocalAmount(item.price != null ? item.price.Value : 0, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
                     List<TariffVersionAllInCharge> allinList = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).ToList();
                     if (allinList != null && allinList.Count > 0)
                     {
@@ -634,7 +634,54 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             }
             return weigh_Kg;
         }
+        private bool ValidatePreviousLineDates(dynamic previousLineDatesArgs)
+        {
+            bool isExpirationDateValid = true;
 
+            if (previousLineDatesArgs.DateField == "expiration")
+            {
+                if (previousLineDatesArgs.TariffLineExpirationDateItem.ExpirationDate < previousLineDatesArgs.PreviousLine.StartDate)
+                {
+
+                    isExpirationDateValid = false;
+                }
+            }
+
+            else if (previousLineDatesArgs.DateField == "start")
+            {
+                if (previousLineDatesArgs.TariffLinePM.StartDate < previousLineDatesArgs.PreviousLine.StartDate)
+                {
+                    isExpirationDateValid = false;
+                }
+            }
+
+            return isExpirationDateValid;
+        }
+
+        public bool CheckDatesValidity(string FromPort, string ToPort, DateTime? ToDate, string TariffId)
+        {
+           TariffPM entityPM = this.GetSingle(TariffId, true, false);
+            TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
+            if (entityPM.TypeCode == "ASC")
+            {
+                TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
+                if (iPreviousVersion != null)
+                {
+                    List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);                  
+                    TariffLine previousLine = iPreviousVersionLines.Where(d => d.OriginPortId == FromPort && d.DestinationPortId == ToPort).FirstOrDefault();
+                    if (previousLine != null)
+                    {
+                        if (previousLine.StartDate >= ToDate)
+                        {
+                            throw new ApplicationException("Expiration date can't be less than start date in the previous version line");
+                        }
+
+                    }                    
+                }
+            }
+
+            return true;
+        }
 
 
         private double? ComputeVolumeInCBM(double? Volume, string VolumeCode)
