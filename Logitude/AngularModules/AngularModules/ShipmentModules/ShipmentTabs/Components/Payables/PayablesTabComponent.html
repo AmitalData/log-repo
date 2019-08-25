@@ -536,7 +536,7 @@
 
                                                         <td *ngIf="item.TariffNumber != null">
                                                             <div class="MediaFill">
-                                                                <Hyperlink class="CenterCenter" (click)="EditTariffClicked(item.TariffId)">{{ item.TariffNumber}}</Hyperlink>
+                                                                <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditTariffClicked(item.TariffId)">{{ item.TariffNumber}}</Hyperlink>
                                                             </div>
                                                         </td>
                                                     </tr>

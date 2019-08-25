@@ -373,7 +373,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 {
 
                     decimal? Sum = 0;
-                    TariffSearchSummary tariffsSummary = new TariffSearchSummary() { Id = result.Id };
+                    TariffSearchSummary tariffsSummary = new TariffSearchSummary() { TariffId = result.Id };
                     tariffsSummary.Surcharges = new List<SurchargeSummary>();
                     //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
                     decimal? minprice = 1;
@@ -528,7 +528,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.Remarks = result.Description;
                     tariffsSummary.decimalprice = (decimal?)Sum + CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId, tenant);
                     tariffsSummary.VersionId = item.TariffVersion + "";
-                    tariffsSummary.Id = item.tariffid;
+                    tariffsSummary.TariffId = item.tariffid;
                     tariffsSummary.TariffNumber = result.TariffNumber;
                     tariffsSummary.ChargeTypeId = chargesTypes.Where(p => p.Code == "AFT").Select(p => p.Id).FirstOrDefault();
                     tariffsSummary.TotalSurcharge = Sum + "";

@@ -285,7 +285,7 @@ export class TariffFilterParameter {
 }
 
 export class TariffSearchSummary {
-    Id: string;
+    TariffId: string;
     TariffNumber: string;
     ChargeTypeId: string;
     Price: string;

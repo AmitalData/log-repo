@@ -398,7 +398,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             editWindow.Title = "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-            editWindow.ShowEditComponent(item.Id, "Tariff", item.VersionId);
+            editWindow.ShowEditComponent(item.TariffId, "Tariff", item.VersionId);
         }
     }
 

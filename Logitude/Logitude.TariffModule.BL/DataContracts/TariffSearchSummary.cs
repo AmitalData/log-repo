@@ -10,7 +10,7 @@ namespace Logitude.TariffModule.BL.DataContracts
    public class TariffSearchSummary
     {
         [Key]
-        public string Id { get; set; }
+        public string TariffId { get; set; }
         public string TariffNumber { get; set; }
         public string ChargeTypeId { get; set; }
         public string Price { get; set; }
