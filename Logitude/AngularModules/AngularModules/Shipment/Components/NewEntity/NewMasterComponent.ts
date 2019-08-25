@@ -65,6 +65,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe(resp => {
+                this.ScreenIsReady = true;
 
                 this.BuildFiltersLists();
 
@@ -73,7 +74,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                 }
 
                 this.LoadAllowedAirline();
-                this.ScreenIsReady = true;
             });
         });
 

@@ -31,9 +31,11 @@ exports.config = {
         },
         FullAccount: {
             FullAccountingType: null,
+        },
+        CRM:{
+            CRMType:null,
+            ActivityType:null,
         }
-
-
     },
     capabilities: {
         'browserName': 'chrome',
