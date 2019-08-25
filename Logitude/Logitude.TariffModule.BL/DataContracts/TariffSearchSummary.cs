@@ -11,6 +11,8 @@ namespace Logitude.TariffModule.BL.DataContracts
     {
         [Key]
         public string Id { get; set; }
+        public string TariffNumber { get; set; }
+        public string ChargeTypeId { get; set; }
         public string price { get; set; }
         public DateTime? EffictiveDate { get; set; }
         public string Remarks { get; set; }

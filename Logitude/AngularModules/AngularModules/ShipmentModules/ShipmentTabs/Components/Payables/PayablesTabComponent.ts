@@ -125,6 +125,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                     this.CheckUpdateQuantities();
                 }
             });
+
+
+            this.CurrentSession.SessionEvent.subscribe((res) => {
+                if (res == "GeneratePayablesFromTariffEvent") {
+                    this.GeneratePayablesFromTariff();
+                }
+            })
+
         }
     }
     ngOnDestroy() {
@@ -224,7 +232,20 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
     
 
-            var WindowArgs: any = { BetweenDate: betweenDate, FromPort: this.EntityPM.MainCarriageFromPortId, ToPort: this.EntityPM.ToPortId, GrossWeight: this.EntityPM.GrossWeight, ChargeableWeight: this.EntityPM.ChargeableWeight, Volume: this.EntityPM.Volume, ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode, GrossWeightUnit: this.EntityPM.GrossWeightUnitCode, VolumeUnit: this.EntityPM.VolumeUnitCode };
+            var WindowArgs: any =
+            {
+                BetweenDate: betweenDate,
+                FromPort: this.EntityPM.MainCarriageFromPortId,
+                ToPort: this.EntityPM.ToPortId,
+                GrossWeight: this.EntityPM.GrossWeight,
+                ChargeableWeight: this.EntityPM.ChargeableWeight,
+                Volume: this.EntityPM.Volume,
+                ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode,
+                GrossWeightUnit: this.EntityPM.GrossWeightUnitCode,
+                VolumeUnit: this.EntityPM.VolumeUnitCode,
+                ShipmentPM: this.EntityPM,
+                FatherComponent: this
+            };
             var logWindow = new LogitudeWindow();
             logWindow.IsFillScreenHeight = true;
             logWindow.Width = 1200;
@@ -242,6 +263,12 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
            
         });      
+    }
+
+    GeneratePayablesFromTariff() {
+        var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
+        Generator.GeneratePayablesAutoDisplay();
+        this.OnEntityDataGenerated();
     }
 
     // Set Labels
@@ -966,6 +993,17 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         logWindow.WindowArgs = this;
         logWindow.Show('./ShipmentModules/ShipmentTabs/Components/Windows/Tariffs/TariffsComponent');
     }
+    EditTariffClicked(tariffId: string) {
+        if (tariffId != null) {
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.ShowEditComponent(tariffId, "Tariff");
+        }
+    }
+
     ComputeShipmentFields() {
         if (this.EntityPM != null) {
             ShipmentTool.ComputeTotals(this.EntityPM);

@@ -28,8 +28,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string VendorId { get; set; }
         public bool NotExpected { get; set; }
         public bool OpenAmountEditedByUser { get; set; }
+        public string TariffId { get; set; }
+        public string TariffNumber { get; set; }
 
-      
-        
+
     }
 }

@@ -286,7 +286,9 @@ export class TariffFilterParameter {
 
 export class TariffSearchSummary {
     Id: string;
-    price: string;
+    TariffNumber: string;
+    ChargeTypeId: string;
+    Price: string;
     EffictiveDate: Date;
     Remarks: string;
     ImageId: string;
@@ -304,7 +306,11 @@ export class TariffSearchSummary {
 export class SurchargeSummary {
     Code: string;
     Name: string;
-    Price: number;  
+    Price: number;
+    ChargeTypeId: string;
+    TariffId: string;
+    TariffNumber: string;
+    CurrencyId: string;
 }
 
 export class ExcelTariffLines {
