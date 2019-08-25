@@ -125,6 +125,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     ReceivableId = a.ReceivableId,
                                                     QuoteCostMinAmount = a.QuoteCostMinAmount,
                                                     QuoteCostMaxAmount = a.QuoteCostMaxAmount,
+                                                    TariffId = a.TariffId, 
+                                                    TariffNumber = a.TariffNumber,
                                                 }).ToList();
 
             return myResult;
@@ -198,6 +200,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ReceivableId = a.ReceivableId,
                        QuoteCostMinAmount = a.QuoteCostMinAmount,
                        QuoteCostMaxAmount = a.QuoteCostMaxAmount,
+                       TariffId = a.TariffId,
+                       TariffNumber = a.TariffNumber,
                    }).FirstOrDefault();
 
             return myResult;

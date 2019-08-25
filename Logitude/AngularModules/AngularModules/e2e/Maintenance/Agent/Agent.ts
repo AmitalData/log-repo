@@ -6,11 +6,11 @@ export class NewAgent {
 
     private helper: FieldsHelper;
     private logitudeTab: GeneralFunctions;
+    private agentName: string;
 
     constructor() {
         this.helper = new FieldsHelper();
-
-
+        this.agentName = 'Raghad Company-' + Math.random();
     }
 
 
@@ -30,7 +30,7 @@ export class NewAgent {
 
     CreateNewAgent() {
         this.helper.WaitByIdAndClick('NewButton_Agent');
-        this.helper.WaitByIdAndFill('Address_Name', "Raghad Company");
+        this.helper.WaitByIdAndFill('Address_Name', this.agentName);
         this.helper.WaitByIdAndFill('Address_CountryId', "Poland");
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.helper.WaitBusyIndicator();
@@ -40,9 +40,10 @@ export class NewAgent {
 
 
     SearchAgent() {
-
-        this.helper.WaitByIdAndFill('SearchFieldsId_0_1', "Raghad Company")
+        this.helper.WaitBusyIndicator();
+        this.helper.WaitByIdAndFill('SearchFieldsId_0_0', this.agentName);
         //click on row 
+        this.helper.WaitByIdAndClick('LogGrid_0_0row0');
         //edit 
         this.helper.WaitByIdAndFill('Agent_Notes', "This Is Test For Protractor")
         this.helper.WaitByIdAndClick('Agent-Save');

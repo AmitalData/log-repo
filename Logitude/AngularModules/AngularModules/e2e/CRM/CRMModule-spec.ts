@@ -13,12 +13,20 @@ describe('CRM Module', () => {
 
   it('Operations Success', function () {
     browser.ignoreSynchronization = true;
-    // CRMPage.DoCRM('Overview');
-    //CRMPage.DoCRM('Customers');
-    // CRMPage.DoCRM('Quotes');
-    // CRMPage.DoCRM('Activities');
-    CRMPage.DoCRM('Opportunities');
-   
+    if(browser.params.CRM.CRMType=='overview'){
+      CRMPage.DoCRM('Overview');
+    }
+    else if(browser.params.CRM.CRMType=='customer'){
+      CRMPage.DoCRM('Customers');
+    }
+    else if(browser.params.CRM.CRMType=='quote'){
+      CRMPage.DoCRM('Quotes');
+    }
+    else if(browser.params.CRM.CRMType=='activity'){
+      CRMPage.DoCRM('Activities');
+    }
+    else if(browser.params.CRM.CRMType=='opportunity'){
+      CRMPage.DoCRM('Opportunities');
+    }
   });
-
 });

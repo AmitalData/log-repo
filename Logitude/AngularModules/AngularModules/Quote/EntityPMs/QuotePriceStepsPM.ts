@@ -73,6 +73,11 @@ export class QuotePriceStepsPM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
+    private measurementUnit: string;
+    public get MeasurementUnit() { return this.measurementUnit; }
+    public set MeasurementUnit(newValue: string) { if (this.measurementUnit != newValue) { this.measurementUnit = newValue; this.MarkAsDirty("MeasurementUnit"); } }
+       
+	 
 
     public OldEntityPM: QuotePriceStepsPM;
 	    
