@@ -419,7 +419,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         var isValid = this.ValidateGeneratingPayables();
         if (isValid) {
             this.TariffPayables = [];
-           
+
             this.Generator = new ShipmentGenerator(this.FatherComponent.EntityPM, this.FatherComponent.AllRates);
             // Generate Air Frieght
             var notes = item.AllIn;
@@ -493,8 +493,24 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 this.Generator.GetCurrencyCode(shipmentPayable);
                 shipmentPayable.Rate = this.Generator.GetCurrencyRate(shipmentPayable.CurrencyId);
                 shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
-                shipmentPayable.Quantity = this.GetQuantity(chargesType);
-                shipmentPayable.UnitPrice = payable.Price / shipmentPayable.Quantity;
+ 
+                var nweQuantity = this.GetQuantity(chargesType);
+                var expectedAmount = payable.Price;//itemPM.UnitPrice * nweQuantity;
+                var expectedAmountLocal = expectedAmount * payable.Rate;
+                var expectedAmountProfit = expectedAmountLocal / payable.ProfitCurrencyExchangeRate;
+
+                shipmentPayable.UnitPrice = AppTool.Round(payable.Price / nweQuantity, 3);
+                shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
+                shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
+                shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
+                shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(expectedAmountProfit, 2);
+                shipmentPayable.OpenAmount = shipmentPayable.ExpectedAmount;
+                shipmentPayable.OpenAmountInLocalCurrency = shipmentPayable.ExpectedAmountLocal;
+                shipmentPayable.OpenAmountInProfitCurrency = shipmentPayable.ExpectedAmountInProfitCurrency;
+                shipmentPayable.AccountedAmount = 0;
+                shipmentPayable.AccountedAmountInLocalCurrency = 0;
+                shipmentPayable.AccountedAmountInProfitCurrency = 0;
+                shipmentPayable.ShipmentPayableLineStatusCode = (shipmentPayable.Quantity != null && shipmentPayable.UnitPrice != null) ? "OAMT" : "EMPT";
                 shipmentPayable.Notes = notes;
                 this.TariffPayables.push(shipmentPayable);
             }
@@ -508,7 +524,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
         if (existsPayable || closedPayablesLine) {
             var messageWindow = new MessageWindow();
-            isValid = false; 
+            isValid = false;
             if (existsPayable) {
                 messageWindow.Show("Can't have more than one tariff connected to the same line.");
             }
@@ -526,7 +542,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             case "CHWT": { myQuantity = this.ChargeableWeight; break; }
             case "VOLU": { myQuantity = this.Volume; break; }
             case "BTEU": { myQuantity = this.ShipmentPM.TEU; break; }
-            case "FIXD": { myQuantity= 1; break; }
+            case "FIXD": { myQuantity = 1; break; }
             case "PRVL": { myQuantity = this.ShipmentPM.ValueOfGoods; break; }
             case "GWTN": { myQuantity = this.GrossWeightPerTon; break; }
             case "CWKG": { myQuantity = this.ChargeableWeightInKG; break; }
@@ -535,9 +551,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             case "VCBM": { myQuantity = this.VolumeInCBM; break; }
             default: { break; }
         }
-        return myQuantity; 
+        return myQuantity;
     }
-}ed
+
+}
 
 
 
