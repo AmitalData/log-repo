@@ -168,6 +168,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.<#= DCVersion #>;
 using Logitude.BL.ShipmentsModel.APIDataContract.<#= DCVersion #>;
+
 using Logitude.BL.Helpers;
 using <#=pmspacestring#>
 using <#=servicespacestring#>
@@ -545,6 +546,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.<#=DCVersion#>;
 using Logitude.BL.ShipmentsModel.APIDataContract.<#= DCVersion #>;
 using System.Xml.Serialization;
+using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace <#= NSString #>.<#=DCVersion#>
 {

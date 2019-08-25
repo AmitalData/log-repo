@@ -293,12 +293,12 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "SendToAMANAC") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.IsCancelled) {
+                            if (this.EntityPM.IsCancelled || this.EntityPM.IsOperationalClosed || this.EntityPM.IsAccountingClosed) {
                                 button.IsDisabled = true;
                             }
 
                             else {
-                                if (this.EntityPM.ShipmentLevelCode == "C" || (this.EntityPM.ShipmentLevelCode == "H" && AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId))) {
+                                if (this.EntityPM.TransportModeId == 'I' || this.EntityPM.ShipmentLevelCode == "C" || (this.EntityPM.ShipmentLevelCode == "H" && AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId))) {
                                     button.IsHidden = true;
                                 }
                             }                            

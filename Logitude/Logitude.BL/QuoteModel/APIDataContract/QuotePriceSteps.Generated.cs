@@ -14,31 +14,23 @@ using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 
-namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
+namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
 {
    
-    public class Receivable
+    public class QuotePriceSteps
     {
 
 	    
 	[XmlAttribute]
     public string Id { get; set; }
     
-    public ChargesType ChargesType { get; set; }
+    public double? PriceBreakStep { get; set; }
     
-    public Measurement Measurement { get; set; }
+    public double? CostUnitPrice { get; set; }
     
-    public double? Quantity { get; set; }
+    public double? SaleUnitPrice { get; set; }
     
-    public double? UnitPrice { get; set; }
-    
-    public double? Amount { get; set; }
-    
-    public Currency Currency { get; set; }
-    
-    public double? Rate { get; set; }
-    
-    public PrepaidCollect PrepaidCollect { get; set; }
+    public string MeasurementUnit { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

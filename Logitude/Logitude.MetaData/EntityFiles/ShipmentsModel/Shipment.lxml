@@ -2300,6 +2300,39 @@
     <TextCode Code="&quot;Shipment.B.Master.NewMaster&quot;" DefaultText="&quot;New Master&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.Overview.ConnectedHouses&quot;" DefaultText="&quot;Connected Houses&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.M.AWB.ValidateFNA&quot;" DefaultText="&quot;SSR/NFY/OSI/COR can't be more than 216 characters, please edit the comments / handling info to enable sending&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.CustomsFileNo&quot;" DefaultText="&quot;מספר תיק עמילות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.DeclarationNo&quot;" DefaultText="&quot;מספר הצהרה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.MishgorDescOfGoods&quot;" DefaultText="&quot;תאור טובין&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.GoodsValue&quot;" DefaultText="&quot;ערך סחורה בש&quot;ח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.CifValue&quot;" DefaultText="&quot;ערך סחורה בסיף&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.TotalTax&quot;" DefaultText="&quot;סה&quot;כ מיסים לתשלום&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.CustomerReference1&quot;" DefaultText="&quot;מספרכם&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.MainCarriageFromPort&quot;" DefaultText="&quot;נמל מוצא&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.MishgorPackageQuantity&quot;" DefaultText="&quot;כמות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.MishgorPackageWeight&quot;" DefaultText="&quot;משקל&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.DenyDeclaration&quot;" DefaultText="&quot;דחה הצהרה&quot;" LocalDefaultText="&quot;Deny Declaration&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.ApproveDeclaration&quot;" DefaultText="&quot;אשר הצהרה&quot;" LocalDefaultText="&quot;Approve Declaration&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.Close&quot;" DefaultText="&quot;סגור&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.Agreement1&quot;" DefaultText="&quot;אני הח&quot;מ מצהיר/ה בזה כי אני מיודע/ת לגבי הטובין וכן לגבי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.Agreement2&quot;" DefaultText="&quot;הצרופות המוגשות למכס&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLApprovalWindowTitle&quot;" DefaultText="&quot;אישור היבואן להגשת הצהרת יבוא למכס&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.ProviderAccountInformation&quot;" DefaultText="&quot;פרטי חשבון ספק&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.TaxInformation&quot;" DefaultText="&quot;פרטי מס&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.InvoiceNumber&quot;" DefaultText="&quot;מס' חשבון ספק&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLIncoterms&quot;" DefaultText="&quot;תנאי מכר&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.AccountAmount&quot;" DefaultText="&quot;סכום חשבון&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLCurrency&quot;" DefaultText="&quot;מטבע&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLAccountCountry&quot;" DefaultText="&quot;ארץ חשבון&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLSupplier&quot;" DefaultText="&quot;ספק&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLFreightDetails&quot;" DefaultText="&quot;נתוני הובלה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLPayableTax&quot;" DefaultText="&quot;סעיף מס לתשלום&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLBasisCalculateTax&quot;" DefaultText="&quot;בסיס לחישוב מס בש&quot;ח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLTaxToPay&quot;" DefaultText="&quot;מס לשלם&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLTotalAmountToPay&quot;" DefaultText="&quot;סכום לתשלום בש&quot;ח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLRejectedTax&quot;" DefaultText="&quot;מס נדחה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.PLTotalTax &quot;" DefaultText="&quot;סה&quot;כ מיסים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.SupplierInvoiceAndPackingList&quot;" DefaultText="&quot;חשבונות ספק ורשימות אריזה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.AdditionalDocuments&quot;" DefaultText="&quot;מסמכים נוספים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;CSPV&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.CSPV&quot;" FeatureDefaultText="&quot;Allow user to control the spotlight per view&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />

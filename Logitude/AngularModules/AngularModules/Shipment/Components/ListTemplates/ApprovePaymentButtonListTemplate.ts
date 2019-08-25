@@ -8,6 +8,8 @@ import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {DocumentsFilingExtendedPMService} from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import {ShipmentAdditionalCloudDataService} from '../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
 import {AppTool} from '../../../Infrastructure/Tools';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
 
@@ -46,6 +48,7 @@ export class ApprovePaymentButtonListTemplate {
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public ShowRenewButtons: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
@@ -87,24 +90,26 @@ export class ApprovePaymentButtonListTemplate {
             if (!myResult.HasError) {
                 this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe(AdditionalResult => {
                     //this.CurrentSession.StopBusyIndicator();
-                    var newWindow = new LogitudeWindow();
-                    newWindow.Width = 665;
-                    newWindow.Height = 700;
-                    newWindow.RTL = true;
-                    //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
-                    newWindow.Title = "אישור היבואן להגשת הצהרת יבוא למכס";
-                    var windowArgs: any = {};
-                    //windowArgs.IsNew = false;
-                    windowArgs.EntityPm = myResult.Result
-                    windowArgs.AdditionalData = AdditionalResult.Result
-                    newWindow.WindowArgs = windowArgs;
-                    //newWindow.Add(control); 
-                    newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
-                    newWindow.WindowClosed.subscribe(($event: any) => {
-                        this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
-                        //if ($event == "MyShipmentAdded") {
-                        //    this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
-                        //}
+                    this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response1 => {
+                        var newWindow = new LogitudeWindow();
+                        newWindow.Width = 665;
+                        newWindow.Height = 700;
+                        newWindow.RTL = true;
+                        //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
+                        newWindow.Title = TextCodeTranslator.Translate("Shipment.O.PLApprovalWindowTitle");//"אישור היבואן להגשת הצהרת יבוא למכס";
+                        var windowArgs: any = {};
+                        //windowArgs.IsNew = false;
+                        windowArgs.EntityPm = myResult.Result
+                        windowArgs.AdditionalData = AdditionalResult.Result
+                        newWindow.WindowArgs = windowArgs;
+                        //newWindow.Add(control); 
+                        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
+                        newWindow.WindowClosed.subscribe(($event: any) => {
+                            this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                            //if ($event == "MyShipmentAdded") {
+                            //    this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
+                            //}
+                        });
                     });
                 });
                 
