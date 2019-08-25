@@ -126,8 +126,8 @@ namespace Logitude.XSD.CW_API.ABM
         {
             string mainCarriageFromPortTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(Shipment.MainCarriageFromPortCountryCode, "G-ABM", "Country");
             string finalDestinationPortCountryTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(Shipment.MainCarriageFinalDestinationPortCountryCode, "G-ABM", "Country");
-            string fromPortTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(Shipment.MainCarriageFromPortCode, "G-ABM", "Port");
-            string finalDestinationPortTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(Shipment.MainCarriageFinalDestinationPortCode, "G-ABM", "Port");
+            string fromPortTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(Shipment.MainCarriageFromPortCountryCode + Shipment.MainCarriageFromPortCode, "G-ABM", "Port");
+            string finalDestinationPortTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(Shipment.MainCarriageFinalDestinationPortCountryCode + Shipment.MainCarriageFinalDestinationPortCode, "G-ABM", "Port");
 
             if (!string.IsNullOrEmpty(mainCarriageFromPortTranslatedCode))
             {
