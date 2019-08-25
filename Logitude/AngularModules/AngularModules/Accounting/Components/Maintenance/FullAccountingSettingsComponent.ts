@@ -61,12 +61,18 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.CurrentSession.StopBusyIndicator();
 
             this.EntityPM = myResult.Result;
-            this.ImageId = this.EntityPM.PaymentChequesLogoId;
-            this.EntityId = this.EntityPM.Id;
+            //this.ImageId = this.EntityPM.PaymentChequesLogoId;
+            //this.EntityId = this.EntityPM.Id;
 
             if (this.EntityPM == null || this.EntityPM == undefined) {
-                console.log("There is no F. Accounting setting found for tenant: " + SessionLocator.Tenant);
+                this.InsertIfNotExist();
             } else {
+
+
+                this.ImageId = this.EntityPM.PaymentChequesLogoId;
+                this.EntityId = this.EntityPM.Id;
+
+
                 this.AccountingActivationDate = this.EntityPM.AccountingActivationDate;
                 this.SetUIProperties();
             }
@@ -76,7 +82,38 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("AccountingActivationDate", "Tenant", false);
 
     }
+    InsertIfNotExist() {
+        console.log("There is no F. Accounting setting found for tenant: " + SessionLocator.Tenant);
+        this.EntityPM = new FullAccountingSettingPM();
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.Id = SessionLocator.Tenant.toString();
+        this.fullAccountingSettingPMService.insert(this.EntityPM).subscribe(myResult => {
 
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) { // Success
+                this.EntityPM = mm.Result;
+                this.ImageId = this.EntityPM.PaymentChequesLogoId;
+                this.EntityId = this.EntityPM.Id;
+
+
+                this.AccountingActivationDate = this.EntityPM.AccountingActivationDate;
+                this.SetUIProperties();
+
+            }
+
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+        }, error => {
+            this.CurrentSession.StopBusyIndicator();
+            var dd: Response = error;
+            console.log(dd.text);
+            this.ValidationErrorsList = [];
+            this.ValidationErrorsList.push('Server Error!');
+        });
+
+    }
     ngOnInit() {
         this.BuildTabs();
     }
