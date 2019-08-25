@@ -26,21 +26,17 @@ export class NewTask {
 
   FillTaskFields(taskNo: string) {
     this.Helper.WaitByIdAndFill('Activity_Subject', taskNo);
-
     this.Helper.WaitByIdAndFill('Activity_Description', 'Task Description - Protractor ');// test random number randomWholeNum
 
-
-    this.Helper.WaitByIdAndFill('Activity_OwnerId', 'ra');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
+    this.Helper.WaitByIdAndFill('Activity_OwnerId', 'A');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('date_Activity_StartDateTime', '2');
     this.Helper.WaitByIdAndFill('time_Activity_StartDateTime', '15');
 
     this.Helper.WaitByIdAndFill('date_Activity_DueDate', '3');
     this.Helper.WaitByIdAndFill('time_Activity_DueDate', '17');
-
   }
-  
 }
 
 
