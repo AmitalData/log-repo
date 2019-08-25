@@ -26,6 +26,7 @@ namespace WebFreight.Web.DataProviders
 
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
+        public string AccountName { get; set; }
 
     }
 

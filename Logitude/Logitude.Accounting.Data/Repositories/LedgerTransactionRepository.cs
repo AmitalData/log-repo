@@ -446,9 +446,9 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             {
                 q = q.Where(rec => rec.CurrencyId == currencyId);
             }
-            if (isReconciled.HasValue && isReconciled.Value == true)
+            if (isReconciled.HasValue )
             {
-                q = q.Where(rec => rec.IsReconciled == true);
+                q = q.Where(rec => rec.IsReconciled == isReconciled.Value);
             }
 
             if (!string.IsNullOrWhiteSpace(searchByFilter))

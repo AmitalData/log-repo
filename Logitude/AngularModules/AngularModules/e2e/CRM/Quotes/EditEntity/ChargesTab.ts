@@ -17,8 +17,10 @@ export class ChargesTabComponent {
     this.Helper.WaitByIdAndFill('QuoteCharge_ChargesTypeId','coc');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     this.Helper.WaitByIdAndClick('CostPrice');
-    
     this.Helper.WaitByIdAndFill('QuoteCharge_CostUnitPrice','10');
+    
+    this.Helper.WaitByIdAndFill('QuoteCharge_CostCurrencyId','NIS');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     this.Helper.WaitByIdAndFill('QuoteCharge_Notes','Test Note');
     this.Helper.WaitByIdAndClick('OKAddCharges');
   }

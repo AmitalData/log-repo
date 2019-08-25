@@ -2,14 +2,12 @@ import { Component } from '@angular/core';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { AccountingTransferHeaderPM } from '../../../../Invoice/EntityPMs/AccountingTransferHeaderPM';
-import { AccountingTransferLinePM } from '../../../../Invoice/EntityPMs/AccountingTransferLinePM';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ShipmentList } from '../../../../Shipment/EntityLists/ShipmentList';
 import { ShipmentListService } from '../../../../Shipment/Services/StandardLists/ShipmentListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
 
 @Component({
     moduleId: module.id,
@@ -17,7 +15,7 @@ import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeName
 })
 
 export class NewTransferComponent extends BaseComponent {
-    public EntityPM: AccountingTransferHeaderPM = null;
+    //public EntityPM: AccountingTransferHeaderPM = null;
     public ObjectTableName: string = "AccountingTransferHeader";
     public DataContext = this;
     public TransferTypeCode: string = null;
@@ -25,12 +23,16 @@ export class NewTransferComponent extends BaseComponent {
     public ItemsSource: NewTransferLine[] = [];
     public SelectedItem: NewTransferLine = null;
     private CurrentSession = SessionLocator.SelectedSession;
+    private shipmentDomainService: ShipmentDomainService;
     constructor() {
         super();
-        this.EntityPM = new AccountingTransferHeaderPM();
-        this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.EntityPM.UserId = SessionLocator.LoggedUserId;
-        this.EntityPM.TransferDate = DateTool.GetCurrentDateTimeAsUtc();
+        //this.EntityPM = new AccountingTransferHeaderPM();
+        //this.EntityPM.Tenant = SessionLocator.Tenant;
+        //this.EntityPM.UserId = SessionLocator.LoggedUserId;
+        //this.EntityPM.TransferDate = DateTool.GetCurrentDateTimeAsUtc();
+
+        this.shipmentDomainService = new ShipmentDomainService();
+
         this.BuildShipmentDatesList();
         this.Listen();
     }
@@ -44,7 +46,7 @@ export class NewTransferComponent extends BaseComponent {
 
     SetWindowArgs(transferTypeCode: string) {
         this.TransferTypeCode = transferTypeCode;
-        this.EntityPM.AccountingTransferTypeCode = transferTypeCode;
+        //this.EntityPM.AccountingTransferTypeCode = transferTypeCode;
         this.LoadData();
     }
 
@@ -62,12 +64,13 @@ export class NewTransferComponent extends BaseComponent {
         }
     }
 
-    get Notes() { return this.EntityPM.Notes; }
-    set Notes(value: string) {
-        if (this.EntityPM.Notes != value) {
-            this.EntityPM.Notes = value;
-        }
-    }
+    get Notes() { return ""; }
+    //get Notes() { return this.EntityPM.Notes; }
+    //set Notes(value: string) {
+    //    if (this.EntityPM.Notes != value) {
+    //        this.EntityPM.Notes = value;
+    //    }
+    //}
 
     private fromDate: Date;
     get FromDate() { return this.fromDate; }
@@ -227,8 +230,7 @@ export class NewTransferComponent extends BaseComponent {
         this.IsFirstTimeLoading = false;
         this.OnLinesSelected();
     }
-
-
+    
     public SelectedCount: number = 0;
     public ExportButtonIsEnabled: boolean = false;
     public IsFirstTimeLoading: boolean = true;
@@ -259,6 +261,18 @@ export class NewTransferComponent extends BaseComponent {
 
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    MarkAsBlockedClicked(itemId: string) {
+        this.CurrentSession.StartBusyIndicatorSaving();
+
+        this.shipmentDomainService.MarkShipmentAsBlocked(itemId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.LoadData();
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 }
 
