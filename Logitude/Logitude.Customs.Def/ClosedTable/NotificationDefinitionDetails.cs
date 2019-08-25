@@ -222,6 +222,14 @@ namespace Logitude.Customs.Def.ClosedTable
                 AssigneeNotificationTypeCode = "I",
             });
 
+            all.Add(new NotificationDefinitionDetails() // mirit 25.8.19 - Task 55928 
+            {
+                Code = "5101F",
+                EnglishName = "Collateral Demand",
+                LocalName = "עמידה/אי עמידה בדרישה לבטוחה",
+                AssigneeNotificationTypeCode = "I",
+            });
+
             //all.Add(new NotificationDefinitionDetails() // Mirit 22.04.15 - Task 12713 //delete Task 20106
             //{
             //    Code = "5101I",
