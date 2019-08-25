@@ -20,11 +20,12 @@ describe('CRM Module',function (){
     z.GoToMainMenu('General.MH.Maintenance');
      y.WaitByIdAndClick('ACC');
      y.WaitByIdAndClick('MaintenanceItemMTCA')
-     y.WaitByIdAndClick('NewButton_ChartOfAccount')
+   //  y.WaitByIdAndClick('NewButton_ChartOfAccount')
       // chartofaccount.CreateAndEditChartOfAccount();
-      var chartOfAccountNo = this.GeneralFun.RandomNumAcc();
+     var chartOfAccountNo = this.GeneralFun.RandomNumAcc();
       c.CreateNewChartOFAccount(chartOfAccountNo, 'Customer');
-      E.EditChartOfAccount(chartOfAccountNo+'C');
+     // E.EditChartOfAccount(chartOfAccountNo+'C');
+    browser.sleep(5000);
 
 
 
