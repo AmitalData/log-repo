@@ -79,7 +79,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe(resp => {
-                this.ScreenIsReady = true;
                 this.BuildFiltersLists();
 
                 if (this.IsCopyFromShipment == false && this.IsBuildFromQuote == false) {
@@ -88,6 +87,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
 
                 this.BuildAdditionalFields();
                 this.LoadAllowedAirline();
+                this.ScreenIsReady = true;
 
             });
         });
