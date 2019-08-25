@@ -133,6 +133,21 @@ namespace CommunicationWorkerRole
                                 {
                                     if (cl != null)
                                     {
+                                        if (cl.Subject != null && cl.Subject.ToLower() == "kill my thread" && cl.Retries < 4)
+                                        {
+                                            
+                                            cl.Retries++;
+                                            cl.ExceptionMessage = "Thread was killed";
+                                            SetNextTryDateTime(cl);
+                                            if (context != null)
+                                            {
+                                                communicationLogRep.Update(cl);
+                                                communicationLogRep.SubmitChanges();
+                                            }
+
+                                            return;
+
+                                        }
 
                                         if (cl.CommunicationStatusTypeCode == "D")
                                         {

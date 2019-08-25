@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.Tools.EntityService;
@@ -397,7 +398,8 @@ using Simplog.Data.QuoteModel;
 
 							 
 				   temp.StageDate = MyEntityPM.LastStageDate;
-				   temp.SameOrFixed = MyEntityPM.SameOrFixed;					
+				   temp.SameOrFixed = MyEntityPM.SameOrFixed;
+				   temp.StartDate = MyEntityPM.StartDate;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -924,7 +926,8 @@ using Simplog.Data.QuoteModel;
 
 								 
 					temp.LastStageDate = MyEntity.StageDate;
-					temp.SameOrFixed = MyEntity.SameOrFixed;					   
+					temp.SameOrFixed = MyEntity.SameOrFixed;
+					temp.StartDate = MyEntity.StartDate;					   
 					   return temp;
 		    }
             catch (Exception ex)

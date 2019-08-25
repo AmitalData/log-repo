@@ -10,7 +10,10 @@ namespace Logitude.TariffModule.BL.DataContracts
     {
         public string Code { get; set; }
         public string Name { get; set; }
+        public string ChargeTypeId { get; set; }
+        public string TariffId { get; set; }
+        public string CurrencyId { get; set; }
+        public string TariffNumber { get; set; }
         public decimal? Price { get; set; }
-
     }
 }

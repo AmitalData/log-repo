@@ -2073,6 +2073,38 @@ export class ShipmentGenerator {
             }
         });
     }
+
+    public GeneratePayablesFromTariff(myChargeType: ChargesTypeList) {
+        var newRecord: ShipmentPayablePM = new ShipmentPayablePM(this.EntityPM);
+        newRecord.Tenant = SessionLocator.Tenant;
+        newRecord.ShipmentId = this.EntityPM.Id;
+        newRecord.ShipmentNumber = this.EntityPM.ShipmentNumber;
+        newRecord.ShipmentPayableLineStatusCode = "EMPT";
+        newRecord.ShipmentPayableAmountTypeCode = "ACCU";
+        newRecord.ShipmentPayableAmountTypeName = "Accrual";
+        newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
+        newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
+        newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
+        newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
+        newRecord.ChargesTypeId = myChargeType.Id;
+        newRecord.ChargesTypeCode = myChargeType.Code;
+        newRecord.ChargesTypeName = myChargeType.EnglishName;
+        newRecord.VatTypeId = myChargeType.VatTypeId;
+        newRecord.ChargesGroupCode = myChargeType.ChargesGroupCode;
+        newRecord.DueTypeCode = myChargeType.DueTypeCode;
+        newRecord.DueTypeName = myChargeType.DueTypeName;
+        newRecord.IATACodeId = myChargeType.IATACodeId;
+        newRecord.ViewOrder = myChargeType.ViewOrder;
+        newRecord.PrepaidCollectId = myChargeType.ChargesGroupCode == "FRT" ? this.EntityPM.FreightPrepaidCollectId : this.EntityPM.OtherPrepaidCollectId;
+        newRecord.MeasurementId = myChargeType.MeasurementId;
+        newRecord.MeasurementCode = myChargeType.MeasurementCode;
+        newRecord.MeasurementShortName = myChargeType.MeasurementShortName;
+        newRecord.IsBackToBack = myChargeType.IsBackToBack;
+       
+
+        return newRecord;
+    }
+
     public GeneratePayablesFromQuote(baseQuote: QuotePM) {
         this.BaseQuote = baseQuote;
 
@@ -3257,7 +3289,7 @@ export class ShipmentGenerator {
             this.EntityPM.AddReceivable(myRecordPM);
         }
     }
-    private GetCurrencyRate(CurrencyId: string) {
+    public GetCurrencyRate(CurrencyId: string) {
         var myResult: number = null;
 
         if (CurrencyId == SessionLocator.LocalCurrencyId) {
@@ -3273,7 +3305,7 @@ export class ShipmentGenerator {
 
         return myResult;
     }
-    private GetCurrencyCode(entity: any) {
+    public GetCurrencyCode(entity: any) {
         if (entity) {
             this.myCurrencyListService.getSingleFromCache(entity.CurrencyId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {

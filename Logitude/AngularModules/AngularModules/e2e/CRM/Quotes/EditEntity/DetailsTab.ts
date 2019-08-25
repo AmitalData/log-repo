@@ -16,7 +16,7 @@ export class DetailsTabComponent {
     this.Helper.WaitByIdAndFill('Quote_TransitTime','11:30');
     this.Helper.WaitByIdAndFill('date_Quote_StartDate','10');
     this.Helper.WaitByIdAndFill('Quote_ExpirationDays','10');
-  //  this.Helper.WaitByIdAndClick('Quote-Save');
+ 
   }
 
 

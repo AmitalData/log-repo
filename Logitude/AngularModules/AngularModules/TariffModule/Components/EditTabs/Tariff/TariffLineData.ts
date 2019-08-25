@@ -243,11 +243,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Min price format is invalid";
+                    errorText = "Min Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Min price format is invalid"
+                    errorText = errorText + ", Min Price format is invalid"
                 }
             }
 
@@ -255,11 +255,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 1 price format is invalid";
+                    errorText = "Step 1 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 1 price format is invalid"
+                    errorText = errorText + ", Step 1 Price format is invalid"
                 }
             }
 
@@ -267,11 +267,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 2 price format is invalid";
+                    errorText = "Step 2 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 2 price format is invalid"
+                    errorText = errorText + ", Step 2 Price format is invalid"
                 }
             }
 
@@ -279,11 +279,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 3 price format is invalid";
+                    errorText = "Step 3 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 3 price format is invalid"
+                    errorText = errorText + ", Step 3 Price format is invalid"
                 }
             }
 
@@ -291,11 +291,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 4 price format is invalid";
+                    errorText = "Step 4 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 4 price format is invalid"
+                    errorText = errorText + ", Step 4 Price format is invalid"
                 }
             }
 
@@ -303,11 +303,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 5 price format is invalid";
+                    errorText = "Step 5 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 5 price format is invalid"
+                    errorText = errorText + ", Step 5 Price format is invalid"
                 }
             }
 
@@ -315,11 +315,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 6 price format is invalid";
+                    errorText = "Step 6 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 6 price format is invalid"
+                    errorText = errorText + ", Step 6 Price format is invalid"
                 }
             }
 
@@ -327,11 +327,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 7 price format is invalid";
+                    errorText = "Step 7 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 7 price format is invalid"
+                    errorText = errorText + ", Step 7 Price format is invalid"
                 }
             }
 
@@ -339,11 +339,11 @@ export class AirCostTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Step 8 price format is invalid";
+                    errorText = "Step 8 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Step 8 price format is invalid"
+                    errorText = errorText + ", Step 8 Price format is invalid"
                 }
             }
 
@@ -839,11 +839,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 1 price format is invalid";
+                    errorText = "Surcharge 1 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 1 price format is invalid"
+                    errorText = errorText + ", Surcharge 1 Price format is invalid"
                 }
             }
 
@@ -851,11 +851,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 2 price format is invalid";
+                    errorText = "Surcharge 2 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 2 price format is invalid"
+                    errorText = errorText + ", Surcharge 2 Price format is invalid"
                 }
             }
 
@@ -863,11 +863,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 3 price format is invalid";
+                    errorText = "Surcharge 3 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 3 price format is invalid"
+                    errorText = errorText + ", Surcharge 3 Price format is invalid"
                 }
             }
 
@@ -875,11 +875,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 4 price format is invalid";
+                    errorText = "Surcharge 4 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 4 price format is invalid"
+                    errorText = errorText + ", Surcharge 4 Price format is invalid"
                 }
             }
 
@@ -887,11 +887,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 5 price format is invalid";
+                    errorText = "Surcharge 5 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 5 price format is invalid"
+                    errorText = errorText + ", Surcharge 5 Price format is invalid"
                 }
             }
 
@@ -899,11 +899,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 6 price format is invalid";
+                    errorText = "Surcharge 6 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 6 price format is invalid"
+                    errorText = errorText + ", Surcharge 6 Price format is invalid"
                 }
             }
 
@@ -911,11 +911,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 7 price format is invalid";
+                    errorText = "Surcharge 7 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 7 price format is invalid"
+                    errorText = errorText + ", Surcharge 7 Price format is invalid"
                 }
             }
 
@@ -923,11 +923,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 8 price format is invalid";
+                    errorText = "Surcharge 8 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 8 price format is invalid"
+                    errorText = errorText + ", Surcharge 8 Price format is invalid"
                 }
             }
 
@@ -935,11 +935,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 9 price format is invalid";
+                    errorText = "Surcharge 9 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 9 price format is invalid"
+                    errorText = errorText + ", Surcharge 9 Price format is invalid"
                 }
             }
 
@@ -947,11 +947,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Surcharge 10 price format is invalid";
+                    errorText = "Surcharge 10 Price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Surcharge 10 price format is invalid"
+                    errorText = errorText + ", Surcharge 10 Price format is invalid"
                 }
             }
 

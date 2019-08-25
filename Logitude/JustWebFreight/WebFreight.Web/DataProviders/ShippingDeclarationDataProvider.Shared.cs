@@ -64,6 +64,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? ETA_DateTime { get; set; }
         public string CuttOffDateTime { get; set; }
         public string CuttOffTime { get; set; }
+        public DateTime? CuttOffDateTime_Date { get; set; }
         public string ETD { get; set; }
         public string DeliveryAddress { get; set; }
         public string PickUpAddress { get; set; }
