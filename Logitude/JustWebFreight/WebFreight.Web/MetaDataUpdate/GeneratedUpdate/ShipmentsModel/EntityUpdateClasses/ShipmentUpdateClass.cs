@@ -43026,6 +43026,72 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentMAWBValidateFNA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AWB.ValidateFNA", DefaultText = "SSR/NFY/OSI/COR can't be more than 216 characters, please edit the comments / handling info to enable sending",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode ShipmentTextCode_ShipmentOCustomsFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.CustomsFileNo", DefaultText = "מספר תיק עמילות",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentODeclarationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.DeclarationNo", DefaultText = "מספר הצהרה",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOMishgorDescOfGoods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.MishgorDescOfGoods", DefaultText = "תאור טובין",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOGoodsValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.GoodsValue", DefaultText = "ערך סחורה בש''ח",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOCifValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.CifValue", DefaultText = "ערך סחורה בסיף",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOTotalTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.TotalTax", DefaultText = "סה''כ מיסים לתשלום",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOCustomerReference1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.CustomerReference1", DefaultText = "מספרכם",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOMainCarriageFromPort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.MainCarriageFromPort", DefaultText = "נמל מוצא",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOMishgorPackageQuantity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.MishgorPackageQuantity", DefaultText = "כמות",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOMishgorPackageWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.MishgorPackageWeight", DefaultText = "משקל",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentODenyDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.DenyDeclaration", DefaultText = "דחה הצהרה",LocalDefaultText = @"Deny Declaration", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOApproveDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ApproveDeclaration", DefaultText = "אשר הצהרה",LocalDefaultText = @"Approve Declaration", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOClose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Close", DefaultText = "סגור",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOAgreement1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Agreement1", DefaultText = "אני הח''מ מצהיר/ה בזה כי אני מיודע/ת לגבי הטובין וכן לגבי",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOAgreement2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Agreement2", DefaultText = "הצרופות המוגשות למכס",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPLApprovalWindowTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLApprovalWindowTitle", DefaultText = "אישור היבואן להגשת הצהרת יבוא למכס",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOProviderAccountInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.ProviderAccountInformation", DefaultText = "פרטי חשבון ספק",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOTaxInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.TaxInformation", DefaultText = "פרטי מס",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.InvoiceNumber", DefaultText = "מס' חשבון ספק",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPLIncoterms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLIncoterms", DefaultText = "תנאי מכר",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOAccountAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.AccountAmount", DefaultText = "סכום חשבון",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPLCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLCurrency", DefaultText = "מטבע",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPLAccountCountry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLAccountCountry", DefaultText = "ארץ חשבון",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPLSupplier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLSupplier", DefaultText = "ספק",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPLFreightDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLFreightDetails", DefaultText = "נתוני הובלה",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmePLPayableTaxntO = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmePLPayableTaxnt.O.", DefaultText = "סעיף מס לתשלום",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPLBasisCalculateTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLBasisCalculateTax", DefaultText = "בסיס לחישוב מס בש''ח",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPLTaxToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLTaxToPay", DefaultText = "מס לשלם",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPLTotalAmountToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLTotalAmountToPay", DefaultText = "סכום לתשלום בש''ח",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPLRejectedTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLRejectedTax", DefaultText = "מס נדחה",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPLTotalTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLTotalTax ", DefaultText = "סה''כ מיסים",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOSupplierInvoiceAndPackingList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.SupplierInvoiceAndPackingList", DefaultText = "חשבונות ספק ורשימות אריזה",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOAdditionalDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.AdditionalDocuments", DefaultText = "מסמכים נוספים",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }
