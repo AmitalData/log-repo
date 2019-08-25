@@ -398,7 +398,8 @@ using Simplog.Data.QuoteModel;
 
 							 
 				   temp.StageDate = MyEntityPM.LastStageDate;
-				   temp.SameOrFixed = MyEntityPM.SameOrFixed;					
+				   temp.SameOrFixed = MyEntityPM.SameOrFixed;
+				   temp.StartDate = MyEntityPM.StartDate;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -925,7 +926,8 @@ using Simplog.Data.QuoteModel;
 
 								 
 					temp.LastStageDate = MyEntity.StageDate;
-					temp.SameOrFixed = MyEntity.SameOrFixed;					   
+					temp.SameOrFixed = MyEntity.SameOrFixed;
+					temp.StartDate = MyEntity.StartDate;					   
 					   return temp;
 		    }
             catch (Exception ex)

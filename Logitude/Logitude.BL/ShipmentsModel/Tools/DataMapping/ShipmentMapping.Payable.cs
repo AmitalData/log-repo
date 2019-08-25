@@ -89,6 +89,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.VatTypeId = itemPM.VatTypeId;
             itemPoco.IsBackToBack = itemPM.IsBackToBack;
             itemPoco.ReceivableId = itemPM.ReceivableId;
+            itemPoco.TariffId = itemPM.TariffId;
+            itemPoco.TariffNumber = itemPM.TariffNumber;
         }
     }
 }

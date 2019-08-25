@@ -11,8 +11,8 @@
         background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
     }
 
-    .hyperlink:hover{
-        cursor:pointer;
+    .hyperlink:hover {
+        cursor: pointer;
     }
 </style>
 
@@ -386,10 +386,14 @@
                                                                                         <table>
                                                                                             <tr>
 
-                                                                                                <td></td>
+                                                                                                <td  style="width: 57px;">
+                                                                                                    <div *ngIf="IsGeneratePayablesVisible">
+                                                                                                        <button class="Button" (click)="GeneratePayablesClicked(item)">Generate Payables</button>
+                                                                                                    </div>
+                                                                                                </td>
                                                                                                 <td style="width:100px;max-width:165px;font-size:x-large;font-weight:bold">
                                                                                                     <span style="font-size:x-large;font-weight:bold;color:#0e276d;float:right">
-                                                                                                        {{item.WholePrice | NumbersPipe:'N2'}}                                                                                                     {{item.Currency}}
+                                                                                                        {{item.WholePrice | NumbersPipe:'N2'}} {{item.Currency}}
                                                                                                     </span>
                                                                                                 </td>
                                                                                             </tr>
@@ -410,7 +414,7 @@
 
                                                                                                             </td>
                                                                                                         </tr>
-                                                                                                    </table>                                                                                                 
+                                                                                                    </table>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>
@@ -455,8 +459,12 @@
                                                                                                     </table>
 
                                                                                                 </td>
-                                                                                                <td><div></div></td>
-                                                                                                <td style="float:right;width:200px;height:100%"  (click)="PriceClick(item)"><p style="float:right;padding-top:12px;font-size:small" class="hyperlink" >{{item.price  | NumbersPipe:'N2'}} {{item.Currency}}</p></td>
+                                                                                                <td>
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td style="float:right;width:200px;height:100%" (click)="PriceClick(item)">
+                                                                                                    <p style="float:right;padding-top:12px;" class="hyperlink">{{item.price  | NumbersPipe:'N2'}} {{item.Currency}}</p>
+                                                                                                </td>
                                                                                                 <td style="width:10px">
                                                                                                     <div></div>
                                                                                                 </td>
@@ -466,13 +474,17 @@
 
                                                                                 </tr>
                                                                                 <tr style="height:1px;background-color:#D1D1D1">
-                                                                                    <td><div></div></td>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
                                                                                 </tr>
                                                                                 <tr style="height:20px">
                                                                                     <td style="font-size:larger">(All-In: {{item.AllIn}})</td>
                                                                                 </tr>
                                                                                 <tr style="height:40px">
-                                                                                    <td><div></div></td>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
                                                                                 </tr>
                                                                                 <tr style="height:40px">
                                                                                     <td>
@@ -480,7 +492,9 @@
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr style="height:1px;background-color:#D1D1D1">
-                                                                                    <td><div></div></td>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
                                                                                 </tr>
                                                                                 <tr *ngFor="let surcharge of item.Surcharges" style="height:10px;border-bottom:2px;border-color:#D1D1D1">
                                                                                     <td>
@@ -507,7 +521,9 @@
                                                                                 </tr>
 
                                                                                 <tr style="height:20px">
-                                                                                    <td><div></div></td>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
                                                                                 </tr>
 
                                                                                 <tr style="height:10px;border-bottom:2px;border-color:#D1D1D1">
@@ -517,20 +533,28 @@
                                                                                                 <td>
                                                                                                     <p style="font-weight:bold;font-size:large">Total</p>
                                                                                                 </td>
-                                                                                                <td style="width:200px;float:right;height:100%;padding-top:12px"><div style="float:right;margin-right:10px;font-size:small">{{item.WholePrice | NumbersPipe:'N2'}} {{item.Currency}}</div></td>
+                                                                                                <td style="width:200px;float:right;height:100%;padding-top:12px">
+                                                                                                    <div style="float:right;margin-right:10px">{{item.WholePrice | NumbersPipe:'N2'}} {{item.Currency}}</div>
+                                                                                                </td>
                                                                                             </tr>
                                                                                         </table>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr style="height:1px;background-color:#D1D1D1">
-                                                                                    <td><div></div></td>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
                                                                                 </tr>
                                                                                 <tr style="height:10px">
-                                                                                    <td><div></div></td>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
-                                                                        <td style="width:10px"><div></div></td>
+                                                                        <td style="width:10px">
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
                                                             </td>
@@ -562,9 +586,12 @@
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe
-    }}</button>
-</td>
+                        <button class="Button" (click)="CloseButtonClicked()">
+                            {{
+'General.B.Close' | TextCodeTranslationPipe
+                            }}
+                        </button>
+                    </td>
                     <td style="width: 5px;">
                         <div></div>
                     </td>
