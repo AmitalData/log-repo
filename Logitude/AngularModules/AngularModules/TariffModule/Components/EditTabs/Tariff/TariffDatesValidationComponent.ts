@@ -31,7 +31,6 @@ export class TariffDatesValidationComponent extends BaseComponent {
         this.EntityVersionPM = args['CurrentVersion'];
         this.EntityLinePM = args['CurrentLine'];
         this.TariffType = args['TariffType'];
-
         this.Clone();
     }
 
@@ -74,7 +73,7 @@ export class TariffDatesValidationComponent extends BaseComponent {
         if (this.TariffType == "AFC") {
             if (this.StartDate == null) {
                 this.ValidationErrorsList.push("Start date must be less than start date");
-            }           
+            }
 
             if (this.InitialEnddate != null && DateTool.GetDateParts(this.InitialEnddate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
                 this.ValidationErrorsList.push("Can't set Expiration date Field to past date");
@@ -87,18 +86,26 @@ export class TariffDatesValidationComponent extends BaseComponent {
             }
 
             else {
-                var service: TariffDomainService = new TariffDomainService();
-                service.GetCheckDatesValidty(this.EntityLinePM.OriginPortId, this.EntityLinePM.DestinationPortId, this.LineExpirationDate, this.EntityLinePM.TariffId).subscribe(result => {
-                    if (result.HasError) {
-                        this.ValidationErrorsList = this.ValidationErrorsList.concat(result.ErrorsArray);
-                    }
+                if (this.TariffType == "ASC") {
+                    var service: TariffDomainService = new TariffDomainService();
+                    service.GetCheckDatesValidty(this.EntityLinePM.OriginPortId, this.EntityLinePM.DestinationPortId, this.LineExpirationDate, this.EntityLinePM.TariffId).subscribe(result => {
+                        if (result.HasError) {
+                            this.ValidationErrorsList = this.ValidationErrorsList.concat(result.ErrorsArray);
+                        }
 
-                    if (this.ValidationErrorsList.length == 0) {
-                        this.CurrentSession.CloseCurrentWindowEmit("ok");
-                    }
-                });
+                        if (this.ValidationErrorsList.length == 0) {
+                            this.CurrentSession.CloseCurrentWindowEmit("ok");
+                        }
+                    });
+                }
+         
             }
         }
+
+        if (this.ValidationErrorsList.length == 0 && this.TariffType != "ASC") {
+            this.CurrentSession.CloseCurrentWindowEmit("ok");
+        }
+
 
       
     }
