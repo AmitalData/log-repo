@@ -69,12 +69,12 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
-             res.subscribe(resp => {
+            res.subscribe(resp => {
+                this.ScreenIsReady = true;
         this.BuildFiltersLists();
         this.OnFiltersChanged();
         this.BuildAdditionalFields();
         this.LoadAllowedAirline();
-        this.ScreenIsReady = true;
 
             });
         });
