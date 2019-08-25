@@ -1771,65 +1771,79 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         return;
                         //////////////////////////////////////////////////////////////////////////
                     }
-                    let myShowProgressBarParams = new ShowProgressBarParams();
-                    myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
-                        (response: any) => {
+                    
+                    
+                    if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.DeclarationPM.CustomFileNo, this.DeclarationPM.IsConvertedDeclaration, this.DeclarationPM.IsConnectedToUnifreight)) {
+                        SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.UnifreightInstSentMehes"));
 
-                            let myPaymentResponseData: CustomFileCreditResponseData = response;
-                            if (myPaymentResponseData) {
-                                if (myPaymentResponseData.HasException || !myPaymentResponseData.Succeeded) {
-                                    //do not close Win !!
-
-                                } else {
-
-                                    //if OK then  close Win !!
-                                    if (SessionLocator.SelectedSession.CurrentWindow != null) SessionLocator.SelectedSession.CloseCurrentWindow()
+                        var myStoreViewUnifreightInstructionController = new UnifreightController(
+                            this.DeclarationPM,
+                            "Logitude.Customs.ViewModels.DeclarationPayment.DeclarationPaymentTabViewModel.MyStoreViewUnifreightInstructionController");
+                        myStoreViewUnifreightInstructionController.GetPromise()
+                            //myStoreViewUnifreightInstructionController.UnifreightCallbackCompleted += (sender, e) => {
+                            .then((e) => {
+                                if (e.UnifreightResponseStatus) {
+                                    this.Send2755(params);
                                 }
-                            }
+                                else {
+                                    SessionLocator.SelectedSession.StopBusyIndicator();
 
-                        };
-                    CustomMessageProgressComponent.ShowProgressBar
-                        //(PBId: string, Title: string, OnSuccessCloseWin: boolean
-                        //    , OnSuccessCloseWinMethod?: (response: any) => boolean)
-
-                        (params.PBId, "תחילת שליחה למכס- הגשת תשלום", false,
-                        myShowProgressBarParams
-                        ).then(res => {
-                            var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
-                            if (ResponseData && ResponseData.ContinueProcessInBackground) {
-                                SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
-                            }
-                            else if (this.Option == 'WB' || this.Option == 'D') { // work around itzik shall fix the undefined problem.
-                                SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
-                            }
-                            SessionLocator.SelectedSession.StopBusyIndicator();//// let it be ...
-                            let myPaymentResponseData: CustomFileCreditResponseData = res;
-
-                            this.RefreshDeclaration();
-                            SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
-
-                        })
-                        .catch(err => {
-                            err = err || "PostSendPaymentOnly return Error (Without message????!!?!)";
-                            let messWindow = new MessageWindow();
-                            messWindow.Show(err);
-                            messWindow.WindowClosed.subscribe(() => {
-                                SessionLocator.SelectedSession.CloseCurrentWindow();
+                                }
                             });
-
-                        });
-
-
-                    this.declarationMessagesService.PostSendPaymentOnly(params)
-                        .subscribe(res1 => {
-                        });
+                        SessionLocator.SelectedSession.StartBusyIndicator("");
+                        myStoreViewUnifreightInstructionController.SendRequestInstructionToUnifreightAsync("PAYHAND_SEND");
 
 
+                    } else {
+                        this.Send2755(params);
+                    }
 
                 }
             });
 
     }
+    private Send2755(params: CustomFileCreditRequestParams) {
+        let myShowProgressBarParams = new ShowProgressBarParams();
+        myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
+            (response: any) => {
+                let myPaymentResponseData: CustomFileCreditResponseData = response;
+                if (myPaymentResponseData) {
+                    if (myPaymentResponseData.HasException || !myPaymentResponseData.Succeeded) {
+                        //do not close Win !!
+                    }
+                    else {
+                        //if OK then  close Win !!
+                        if (SessionLocator.SelectedSession.CurrentWindow != null)
+                            SessionLocator.SelectedSession.CloseCurrentWindow();
+                    }
+                }
+            };
+        CustomMessageProgressComponent.ShowProgressBar(params.PBId, "תחילת שליחה למכס- הגשת תשלום", false, myShowProgressBarParams).then(res => {
+            var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
+            if (ResponseData && ResponseData.ContinueProcessInBackground) {
+                SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+            }
+            else if (this.Option == 'WB' || this.Option == 'D') { // work around itzik shall fix the undefined problem.
+                SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
+            }
+            SessionLocator.SelectedSession.StopBusyIndicator(); //// let it be ...
+            let myPaymentResponseData: CustomFileCreditResponseData = res;
+            this.RefreshDeclaration();
+            SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+        })
+            .catch(err => {
+                err = err || "PostSendPaymentOnly return Error (Without message????!!?!)";
+                let messWindow = new MessageWindow();
+                messWindow.Show(err);
+                messWindow.WindowClosed.subscribe(() => {
+                    SessionLocator.SelectedSession.CloseCurrentWindow();
+                });
+            });
+        this.declarationMessagesService.PostSendPaymentOnly(params)
+            .subscribe(res1 => {
+            });
+    }
+
     ActualSendToTransfer() {
 
         if (this.customSendOptions == null) {
