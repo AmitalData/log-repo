@@ -238,8 +238,8 @@ export class PaymentOrderDeficitComponent extends BaseComponent {
         }
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 750;
-        logWindow.Height = 700;
+        logWindow.Width = 700;
+        logWindow.Height = 400;
         logWindow.ShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;
         //logWindow.Title = TextCodeTranslator.Translate("Customs.PaymentOrder.TH.Deficits");
