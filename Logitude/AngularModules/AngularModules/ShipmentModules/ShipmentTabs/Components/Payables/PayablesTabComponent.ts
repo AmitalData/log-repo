@@ -993,6 +993,17 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         logWindow.WindowArgs = this;
         logWindow.Show('./ShipmentModules/ShipmentTabs/Components/Windows/Tariffs/TariffsComponent');
     }
+    EditTariffClicked(tariffId: string) {
+        if (tariffId != null) {
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.ShowEditComponent(tariffId, "Tariff");
+        }
+    }
+
     ComputeShipmentFields() {
         if (this.EntityPM != null) {
             ShipmentTool.ComputeTotals(this.EntityPM);

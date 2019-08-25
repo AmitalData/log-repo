@@ -414,15 +414,16 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
     private Generator: ShipmentGenerator;
+    private TariffPayables: ShipmentPayablePM[];
     GeneratePayablesClicked(item: TariffSearchSummary) {
         var isValid = this.ValidateGeneratingPayables();
         if (isValid) {
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.TariffPayables = [];
+           
             this.Generator = new ShipmentGenerator(this.FatherComponent.EntityPM, this.FatherComponent.AllRates);
             // Generate Air Frieght
             var notes = item.AllIn;
             this.AddNewTariffPayable(item, notes);
-
             // Generate Surcharges
             if (item != null && item.Surcharges != null) {
                 item.Surcharges.forEach(surcharge => {
@@ -430,17 +431,62 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 });
             }
 
-            this.FatherComponent.OnEntityDataGenerated();
-            this.CurrentSession.StopBusyIndicator();
-            //this.CurrentSession.CloseCurrentWindow();
-            //this.CurrentSession.SessionEvent.emit("GeneratePayablesFromTariffEvent");
+            var isDuplicate = this.CheckTariffPayablesDuplicate();
+            if (isDuplicate) {
+                // override
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Show("This generate will update on the existing lines.");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.CurrentSession.StartBusyIndicatorLoading();
+                        this.OverrideTariffPayablesOfShipment();
+                    }
+                    if (confirmWindow.No) {
+                        //nothing
+                    }
+                });
+            }
+            else {
+                this.CurrentSession.StartBusyIndicatorLoading();
+                this.AssignTariffPayablesToShipment();
+            }
         }
+    }
+    OverrideTariffPayablesOfShipment(): any {
+        this.TariffPayables.forEach(payable => {
+            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId)[0];
+            if (existsPayable != null) {
+                this.ShipmentPM.RemovePayable(existsPayable);
+            }
+        });
+        this.AssignTariffPayablesToShipment();
+    }
+    AssignTariffPayablesToShipment(): any {
+        this.TariffPayables.forEach(payable => {
+            this.ShipmentPM.AddPayable(payable);
+        });
+        this.ReloadTariffPayables();
+    }
+    ReloadTariffPayables() {
+        this.FatherComponent.OnEntityDataGenerated();
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.CloseCurrentWindow();
+    }
+    CheckTariffPayablesDuplicate(): any {
+        var isDuplicate = false;
+        this.TariffPayables.forEach(payable => {
+            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId)[0];
+            if (existsPayable != null) {
+                isDuplicate = true;
+            }
+        });
+        return isDuplicate;
     }
     AddNewTariffPayable(payable: any, notes = null) {
         this.myChargesTypeListService.getSingleFromCache(payable.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
-                var shipmentPayable = this.Generator.GeneratePayablesFromTariff(chargesType);
+                var shipmentPayable: ShipmentPayablePM = this.Generator.GeneratePayablesFromTariff(chargesType);
                 shipmentPayable.TariffId = payable.TariffId;
                 shipmentPayable.TariffNumber = payable.TariffNumber;
                 shipmentPayable.CurrencyId = payable.CurrencyId;
@@ -450,28 +496,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.Quantity = this.GetQuantity(chargesType);
                 shipmentPayable.UnitPrice = payable.Price / shipmentPayable.Quantity;
                 shipmentPayable.Notes = notes;
-                var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == shipmentPayable.ChargesTypeId && d.MeasurementId == shipmentPayable.MeasurementId)[0];
-                if (existsPayable == null) {
-                    this.ShipmentPM.AddPayable(shipmentPayable);
-                }
-                else {
-                    // override
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.Show("This generate will update on the existing lines.");
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            existsPayable.CurrencyId = payable.CurrencyId;
-                            this.Generator.GetCurrencyCode(existsPayable);
-                            existsPayable.Rate = this.Generator.GetCurrencyRate(existsPayable.CurrencyId);
-                            existsPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
-                            existsPayable.Quantity = this.GetQuantity(chargesType);
-                            existsPayable.UnitPrice = payable.Price / existsPayable.Quantity;
-                        }
-                        if (confirmWindow.No) {
-
-                        }
-                    });
-                }
+                this.TariffPayables.push(shipmentPayable);
             }
         });
     }
@@ -512,7 +537,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
         return myQuantity; 
     }
-}
+}ed
 
 
 
