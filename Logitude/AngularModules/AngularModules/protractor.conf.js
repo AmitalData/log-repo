@@ -162,7 +162,10 @@ exports.config = {
         ShipmentView: 'e2e/**/ShipmentView-spec.ts',
 
      //*************CompanyAddressSetting********************
-     CompanyAddressSetting:'e2e/Maintenance/**/CompanyAddressSetting-spec.ts',
+        CompanyAddressSetting: 'e2e/Maintenance/**/CompanyAddressSetting-spec.ts',
+
+        //*************Agent********************
+        NewAgent: 'e2e/Maintenance/**/Agent-spec.ts',
 
         //*************DocOutTab***************
         DocOut: 'e2e/**/DocsOut.e2e-spec.ts'
