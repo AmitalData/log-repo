@@ -5,7 +5,7 @@ import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
 import { TariffLinePM } from '../../../EntityPMs/TariffLinePM';
 import { DateTool } from '../../../../Infrastructure/Tools';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
-
+import { TariffDomainService } from '../../../Services/TariffDomainService';
 @Component({
     selector: 'TariffDatesValidationComponent',
     moduleId: module.id,
@@ -13,7 +13,7 @@ import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 })
 
 export class TariffDatesValidationComponent extends BaseComponent {
-
+    
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext = this;
     public ObjectTableName = "Tariff";
@@ -87,13 +87,20 @@ export class TariffDatesValidationComponent extends BaseComponent {
             }
 
             else {
-                
+                var service: TariffDomainService = new TariffDomainService();
+                service.GetCheckDatesValidty(this.EntityLinePM.OriginPortId, this.EntityLinePM.DestinationPortId, this.LineExpirationDate, this.EntityLinePM.TariffId).subscribe(result => {
+                    if (result.HasError) {
+                        this.ValidationErrorsList = this.ValidationErrorsList.concat(result.ErrorsArray);
+                    }
+
+                    if (this.ValidationErrorsList.length == 0) {
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    }
+                });
             }
         }
 
-        if (this.ValidationErrorsList.length == 0) {
-            this.CurrentSession.CloseCurrentWindowEmit("ok");
-        }
+      
     }
 
     private myCloner: Cloner;
