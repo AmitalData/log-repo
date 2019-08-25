@@ -147,6 +147,7 @@ exports.config = {
         Contact: 'e2e/Contacts/**/Contacts-spec.ts',
         EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
         ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
+        Opportunity :'e2e/CRM/**/CRMModule-spec.ts',
 
         // ********************* FullAccounting **********************************
         ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
@@ -165,7 +166,10 @@ exports.config = {
         ShipmentView: 'e2e/**/ShipmentView-spec.ts',
 
      //*************CompanyAddressSetting********************
-     CompanyAddressSetting:'e2e/Maintenance/**/CompanyAddressSetting-spec.ts',
+        CompanyAddressSetting: 'e2e/Maintenance/**/CompanyAddressSetting-spec.ts',
+
+        //*************Agent********************
+        NewAgent: 'e2e/Maintenance/**/Agent-spec.ts',
 
         //*************DocOutTab***************
         DocOut: 'e2e/**/DocsOut.e2e-spec.ts'
