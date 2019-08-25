@@ -17,7 +17,6 @@ export class EditTasks {
         this.Helper.WaitByIdAndClick('Activity-SaveClose');
         this.Helper.WaitBusyIndicator();
 
-
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.invisibilityOf(element(by.id('Activity.B.MarkAsComplete'))), 100000).then(a => {
         });
@@ -28,12 +27,10 @@ export class EditTasks {
 
     EditTaskGeneralTab(taskDesc: string) {
         this.Helper.WaitByIdAndFill('Activity_Subject', 'Edit Subject for ' + taskDesc);
-
         this.Helper.WaitByIdAndFill('Activity_Description', 'Edit Description for ' + taskDesc);// test random number randomWholeNum
 
-
         this.Helper.WaitByIdAndFill('Activity_OwnerId', 'r');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndFill('date_Activity_StartDateTime', '2');
         // this.Helper.WaitByIdAndFill('time_Activity_StartDateTime', '15');
