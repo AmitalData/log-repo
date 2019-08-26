@@ -83,6 +83,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     myClaimsRelatedEntityPM.ContinuousMessagesTypeCode = customResponse.SystemAnswer.FirstOrDefault().continuousMessagesTypecode.ToString();
                     myClaimsRelatedEntityPM.Note = customResponse.SystemAnswer.FirstOrDefault().note;
                     this.MyResponseData.UserMessage = "ניתוח מסר ביטול/ערר תביעה. מספר בקשה: " + customResponse.SystemAnswer.FirstOrDefault().requestNumber;
+
+                    if(customResponse.SystemAnswer.FirstOrDefault().Exceptions != null)
+                    {
+                        string exeptionDescriptions = "";
+                        foreach (var item in customResponse.SystemAnswer.FirstOrDefault().Exceptions)
+                        {
+                            exeptionDescriptions += string.Concat(item.ExeptionType, ": ", item.ExeptionDescription, "\n");
+                        }
+                        this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", exeptionDescriptions);
+                    }
                 }
             }
 
