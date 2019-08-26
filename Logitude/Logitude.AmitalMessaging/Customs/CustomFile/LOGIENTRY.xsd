@@ -25,6 +25,7 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="SupplierInvoice" />
         <xs:element minOccurs="0" maxOccurs="1" ref="agent_fee_currency" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CustomsDocuments" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TaxationDateTime" />
       </xs:sequence>
       <xs:attribute name="id" type="xs:string" use="required" />
     </xs:complexType>
@@ -86,6 +87,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="PreferenceDocumentTypeCode" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeSupplierAccount" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="EXPENSES" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackageTypeCode" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -113,6 +115,14 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="OriginCcountryId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="SupplierAccountLine" />
         <xs:element minOccurs="0" maxOccurs="1" ref="SupplierItemLine" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="MarksAndNumbers" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackageWeight" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PackageQuantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ItemPrice" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="WholeSaleItemPrice" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="WholeSaleItemPriceCurrencyCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AdditionalQuantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="AdditionalQuantityType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -127,6 +137,14 @@
   <xs:element name="OriginCcountryId" type="xs:string" />
   <xs:element name="SupplierAccountLine" type="xs:string" />
   <xs:element name="SupplierItemLine" type="xs:string" />
+  <xs:element name="MarksAndNumbers" type="xs:string" />
+  <xs:element name="PackageWeight" type="xs:string" />
+  <xs:element name="PackageQuantity" type="xs:string" />
+  <xs:element name="ItemPrice" type="xs:string" />
+  <xs:element name="WholeSaleItemPrice" type="xs:string" />
+  <xs:element name="WholeSaleItemPriceCurrencyCode" type="xs:string" />
+  <xs:element name="AdditionalQuantity" type="xs:string" />
+  <xs:element name="AdditionalQuantityType" type="xs:string" />
   <xs:element name="EXPENSES">
     <xs:complexType>
       <xs:sequence>
@@ -139,6 +157,7 @@
   <xs:element name="TypeCode" type="xs:string" />
   <xs:element name="Amount" type="xs:string" />
   <xs:element name="CurrencyTypeCode" type="xs:string" />
+  <xs:element name="PackageTypeCode" type="xs:string" />
   <xs:element name="agent_fee_currency" type="xs:string" />
   <xs:element name="CustomsDocuments">
     <xs:complexType>
@@ -160,4 +179,5 @@
   <xs:element name="FromDeclartion" type="xs:string" />
   <xs:element name="COM_ID" type="xs:string" />
   <xs:element name="SerialNum" type="xs:string" />
+  <xs:element name="TaxationDateTime" type="xs:string" />
 </xs:schema>
