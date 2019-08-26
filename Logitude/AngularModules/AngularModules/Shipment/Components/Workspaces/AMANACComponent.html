@@ -12,7 +12,10 @@
 
                                 <HyperlinkQuery>Not Ready Shipments</HyperlinkQuery>
 
-                                <HyperlinkQuery>Marked as blocked for transfer</HyperlinkQuery>
+                                <HyperlinkQuery (click)="ViewBlockedShipmentsClicked('Ocean')">
+                                    <span>Marked as blocked for transfer</span>
+                                    <span>({{BlockedOceanShipmentsCount}})</span>
+                                </HyperlinkQuery>
 
                                 <HyperlinkQuery>Transfer History </HyperlinkQuery>
                             </div>
@@ -44,7 +47,10 @@
 
                                 <HyperlinkQuery>Not Ready Shipments</HyperlinkQuery>
 
-                                <HyperlinkQuery>Marked as blocked for transfer</HyperlinkQuery>
+                                <HyperlinkQuery (click)="ViewBlockedShipmentsClicked('Air')">
+                                    <span>Marked as blocked for transfer</span>
+                                    <span>({{BlockedAirShipmentsCount}})</span>
+                                </HyperlinkQuery>
 
                                 <HyperlinkQuery>Transfer History </HyperlinkQuery>
                             </div>

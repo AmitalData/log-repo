@@ -43076,7 +43076,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentOPLFreightDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLFreightDetails", DefaultText = "נתוני הובלה",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmePLPayableTaxntO = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmePLPayableTaxnt.O.", DefaultText = "סעיף מס לתשלום",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentOPLPayableTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLPayableTax", DefaultText = "סעיף מס לתשלום",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentOPLBasisCalculateTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.PLBasisCalculateTax", DefaultText = "בסיס לחישוב מס בש''ח",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
