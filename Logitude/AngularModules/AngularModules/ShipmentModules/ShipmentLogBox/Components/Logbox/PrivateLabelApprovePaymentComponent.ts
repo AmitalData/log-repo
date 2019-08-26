@@ -43,6 +43,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     DataContext: PrivateLabelApprovePaymentComponent = this;
     private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
+    Language: string = 'HB';
     AdditionalData: any;
     externalDocs: any[];
     public DimApproveButton: boolean = false;
@@ -58,6 +59,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
         this._ImageLibraryService = new ImageLibraryService();
         this._DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
+        this.Language = SessionLocator.TenantPM.Language;
     }
 
     private isAccepted: boolean = false;

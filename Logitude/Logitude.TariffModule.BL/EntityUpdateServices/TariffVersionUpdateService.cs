@@ -21,7 +21,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 {
                     entityPM.InitialEnddate = entityPM.ExpirationDate;
                 }
-                entityPM.ExpirationDate = null;
+                //entityPM.ExpirationDate = null;
                 if (entityParentPM != null)
                 {
                     entityParentPM.LastVersion = entityPM.Version;
