@@ -416,39 +416,46 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     private Generator: ShipmentGenerator;
     private TariffPayables: ShipmentPayablePM[];
     GeneratePayablesClicked(item: TariffSearchSummary) {
-        var isValid = this.ValidateGeneratingPayables();
+        var isValid = this.ValidateExistConnectedTariff(item);
         if (isValid) {
-            this.TariffPayables = [];
+            isValid = this.ValidateTariffClosedLines();
+            if (isValid) {
+                this.TariffPayables = [];
+                this.Generator = new ShipmentGenerator(this.FatherComponent.EntityPM, this.FatherComponent.AllRates);
+                // Generate Air Frieght
+                var notes = null;
+                if (!AppTool.IsNullOrEmpty(item.AllIn)) {
 
-            this.Generator = new ShipmentGenerator(this.FatherComponent.EntityPM, this.FatherComponent.AllRates);
-            // Generate Air Frieght
-            var notes = item.AllIn;
-            this.AddNewTariffPayable(item, notes);
-            // Generate Surcharges
-            if (item != null && item.Surcharges != null) {
-                item.Surcharges.forEach(surcharge => {
-                    this.AddNewTariffPayable(surcharge);
-                });
-            }
+                    notes = "Includes the following charges as all-in: " + item.AllIn;
+                }
 
-            var isDuplicate = this.CheckTariffPayablesDuplicate();
-            if (isDuplicate) {
-                // override
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Show("This generate will update on the existing lines.");
-                confirmWindow.WindowClosed.subscribe((event: any) => {
-                    if (confirmWindow.Yes) {
-                        this.CurrentSession.StartBusyIndicatorLoading();
-                        this.OverrideTariffPayablesOfShipment();
-                    }
-                    if (confirmWindow.No) {
-                        //nothing
-                    }
-                });
-            }
-            else {
-                this.CurrentSession.StartBusyIndicatorLoading();
-                this.AssignTariffPayablesToShipment();
+                this.AddNewTariffPayable(item, notes);
+                // Generate Surcharges
+                if (item != null && item.Surcharges != null) {
+                    item.Surcharges.forEach(surcharge => {
+                        this.AddNewTariffPayable(surcharge);
+                    });
+                }
+
+                var isDuplicate = this.CheckTariffPayablesDuplicate();
+                if (isDuplicate) {
+                    // override
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Show("This generate will update on the existing lines.");
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
+                            this.CurrentSession.StartBusyIndicatorLoading();
+                            this.OverrideTariffPayablesOfShipment();
+                        }
+                        if (confirmWindow.No) {
+                            //nothing
+                        }
+                    });
+                }
+                else {
+                    this.CurrentSession.StartBusyIndicatorLoading();
+                    this.AssignTariffPayablesToShipment();
+                }
             }
         }
     }
@@ -482,25 +489,28 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         });
         return isDuplicate;
     }
-    AddNewTariffPayable(payable: any, notes = null) {
-        this.myChargesTypeListService.getSingleFromCache(payable.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
+    AddNewTariffPayable(newRecord: any, notes = null) {
+        this.myChargesTypeListService.getSingleFromCache(newRecord.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
                 var shipmentPayable: ShipmentPayablePM = this.Generator.GeneratePayablesFromTariff(chargesType);
-                shipmentPayable.TariffId = payable.TariffId;
-                shipmentPayable.TariffNumber = payable.TariffNumber;
-                shipmentPayable.CurrencyId = payable.CurrencyId;
+                shipmentPayable.TariffId = newRecord.TariffId;
+                shipmentPayable.TariffNumber = newRecord.TariffNumber;
+                shipmentPayable.CurrencyId = newRecord.CurrencyId;
                 this.Generator.GetCurrencyCode(shipmentPayable);
                 shipmentPayable.Rate = this.Generator.GetCurrencyRate(shipmentPayable.CurrencyId);
                 shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
-                shipmentPayable.MeasurementId = chargesType.MeasurementId;
-                shipmentPayable.MeasurementCode = chargesType.MeasurementCode;
+                shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
+                shipmentPayable.MeasurementCode = newRecord.UnitOfMesurmentCode;
                 var nweQuantity = this.GetQuantity(chargesType);
-                var expectedAmount = payable.Price;
-                var expectedAmountLocal = expectedAmount * payable.Rate;
-                var expectedAmountProfit = expectedAmountLocal / payable.ProfitCurrencyExchangeRate;
+                var expectedAmount = newRecord.Price;
+                var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
+                var expectedAmountLocal = expectedAmount * rate;
 
-                shipmentPayable.UnitPrice = payable.Price != null ? AppTool.Round(payable.Price / nweQuantity, 3): null;
+                var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
+                var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
+
+                shipmentPayable.UnitPrice = newRecord.Price != null ? AppTool.Round(newRecord.Price / nweQuantity, 3): null;
                 shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
                 shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
                 shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
@@ -518,20 +528,29 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         });
     }
 
-    ValidateGeneratingPayables() {
+    ValidateExistConnectedTariff(item: TariffSearchSummary) {
         var isValid = true;
-        var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null)[0];
-        var closedPayablesLine: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.AccountedAmount != null && d.AccountedAmount != 0)[0];
+        var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId == item.TariffId)[0];
+        var existsPayableOnSurcharges: ShipmentPayablePM [] = []; 
+        item.Surcharges.forEach(surcharge => {
+            existsPayableOnSurcharges.push(this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId == surcharge.TariffId)[0]);
+        });
 
-        if (existsPayable || closedPayablesLine) {
+        if (existsPayableOnAirFreight || (existsPayableOnSurcharges != null && existsPayableOnSurcharges.length > 0)) {
             var messageWindow = new MessageWindow();
             isValid = false;
-            if (existsPayable) {
-                messageWindow.Show("Can't have more than one tariff connected to the same line.");
-            }
-            if (closedPayablesLine) {
-                messageWindow.Show("Can't connect a tariff to this shipment due to closed lines.");
-            }
+            messageWindow.Show("Can't have more than one tariff connected to the same line.");
+        }
+        return isValid;
+    }
+
+    ValidateTariffClosedLines() {
+        var isValid = true;
+        var closedPayablesLine: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.AccountedAmount != null && d.AccountedAmount != 0)[0];
+        if (closedPayablesLine) {
+            var messageWindow = new MessageWindow();
+            isValid = false;
+            messageWindow.Show("Can't connect a tariff to this shipment due to closed lines.");
         }
         return isValid;
     }

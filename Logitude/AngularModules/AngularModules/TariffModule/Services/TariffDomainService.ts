@@ -306,6 +306,7 @@ export class TariffSearchSummary {
     TariffNumber: string;
     ChargeTypeId: string;
     Price: string;
+    ActualPrice: number;
     EffictiveDate: Date;
     Remarks: string;
     ImageId: string;
@@ -318,6 +319,8 @@ export class TariffSearchSummary {
     Surcharges: Array<SurchargeSummary>;
     AllIn: string;
     IsShown: boolean = false;
+    UnitOfMesurmentCode: string;
+    UnitOfMesurmentId: string;
 }
 
 
@@ -325,10 +328,13 @@ export class SurchargeSummary {
     Code: string;
     Name: string;
     Price: number;
+    ActualPrice: number;
     ChargeTypeId: string;
     TariffId: string;
     TariffNumber: string;
     CurrencyId: string;
+    UnitOfMesurmentCode: string;
+    UnitOfMesurmentId: string;
 }
 
 export class ExcelTariffLines {
