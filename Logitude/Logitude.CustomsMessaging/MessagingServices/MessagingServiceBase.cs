@@ -314,6 +314,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 var transactionScopeOption = TransactionScopeOption.Required;
                 if (this.MainInterfaceCode == "9000" || this.MainInterfaceCode == "8302" )
                 {
+                    LogMessagingUtil.Instance.AppendLine("GetTransaction(timeout)=TimeSpan.FromMinutes(5)");
                     timeout = TimeSpan.FromMinutes(5);
                     //transactionScopeOption = TransactionScopeOption.Suppress;
                 }
