@@ -119,6 +119,39 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetCheckDatesValidty(string FromPort, string ToPort, string ToDate, string TariffId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
+
+                DateTime? ToDateOBJ = DateHelper.GetDate(ToDate);
+                if (ToDateOBJ == null)
+                {
+                    ToDateOBJ = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                }
+
+
+
+                TariffQueryService tariffQueryService = new TariffQueryService(tenant);
+
+                bool myResult = tariffQueryService.CheckDatesValidity(FromPort, ToPort, ToDateOBJ,TariffId);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage GetTenantTariffSetting()
         {
@@ -858,7 +891,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
                 var StepLength = rowData.Length;
-                if (!string.IsNullOrEmpty(filter.PriceSteps))
+                if (filter != null && !string.IsNullOrEmpty(filter.PriceSteps))
                 {
                     StepLength = filter.PriceSteps.Split(',').Length + 3;
                 }

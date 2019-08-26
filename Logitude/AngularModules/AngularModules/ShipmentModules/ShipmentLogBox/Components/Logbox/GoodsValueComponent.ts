@@ -39,10 +39,10 @@ export class GoodsValueComponent implements OnInit, AfterViewInit {
     DataContext: GoodsValueComponent = this;
    
     AdditionalData: any;
-
+    Language: string = 'HB';
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-
+        this.Language = SessionLocator.TenantPM.Language;
 
     }
     ngOnInit() {

@@ -669,6 +669,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 where a.Tenant == tenant
                                                 select new ChargesTypeList()
                                                 {
+                                                  Id= a.Id,
                                                   Code = a.Code,
                                                   ViewOrder = a.ViewOrder, 
                                                   ChargesGroupId = a.ChargesGroupId,

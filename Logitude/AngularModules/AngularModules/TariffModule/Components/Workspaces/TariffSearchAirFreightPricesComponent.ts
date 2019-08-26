@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppTool,DateTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool, ArrayTool } from '../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,6 +11,13 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
+import { ShipmentPM } from '../../../Shipment/EntityPMs/ShipmentPM';
+import { ShipmentPayablePM } from '../../../Shipment/EntityPMs/ShipmentPayablePM';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import {  ShipmentGenerator } from '../../../Shipment/Tools';
+import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
+import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
 
 
 @Component({
@@ -25,13 +32,19 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     private myDomainService: TariffDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
-    public AvailableTariffs: Array<TariffSearchSummary>= [];
+    public AvailableTariffs: Array<TariffSearchSummary> = [];
+    public IsGeneratePayablesVisible: boolean = false;
+    private ShipmentPM: ShipmentPM;
+    private FatherComponent: any;
+    private myChargesTypeListService: ChargesTypeListService;
+
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myDomainService = new TariffDomainService();
+        this.myChargesTypeListService = new ChargesTypeListService();
         this.SetUIProperties();
         this.Date = DateTool.GetCurrentDateAsUtc();
-        this.CalculateDefaultCurrency(); 
+        this.CalculateDefaultCurrency();
     }
 
     private CalculateDefaultCurrency() {
@@ -65,6 +78,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         if (args != null) {
+            this.IsGeneratePayablesVisible = true;
+            this.ShipmentPM = args['ShipmentPM'];
+            this.FatherComponent = args['FatherComponent'];
             this.originPortId = args['FromPort'];
             this.destinationPortId = args['ToPort'];
             this.date = args['BetweenDate'];
@@ -80,7 +96,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
-
     private originPortId: string;
     get OriginPortId() {
         return this.originPortId;
@@ -91,7 +106,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.SetUIProperties();
         }
     }
-
 
     private destinationPortId: string;
     get DestinationPortId() {
@@ -114,21 +128,20 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.SetUIProperties();
         }
     }
-    
 
-    private weightCode: string="KG";
+    private weightCode: string = "KG";
     get WeightCode() {
         return this.weightCode;
     }
     set WeightCode(value: string) {
         if (this.weightCode != value) {
             this.weightCode = value;
-          //  this.ComputeChargeableWeight_Kg();
+            //  this.ComputeChargeableWeight_Kg();
             this.ComputeVolume();
             this.ComputeVolumetricWeight();
             this.SetUIProperties();
 
-       }
+        }
     }
 
     private grossWeightCode: string = "KG";
@@ -161,42 +174,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
-
-
-    private ComputeChargeableWeight_Kg() {
-        var weigh_Kg: number = null;
-        var weigh_Ton: number = null;
-
-        if (this.Weight != null) {
-            var factorOfConvert: number = 1;
-
-            if (!AppTool.IsNullOrEmpty(this.WeightCode)) {
-                switch (this.WeightCode.toUpperCase()) {
-                    case "KG": { factorOfConvert = 1; break; }
-                    case "LB": { factorOfConvert = 0.45359237; break; }
-                    case "MT": { factorOfConvert = 1000; break; }
-                }
-            }
-
-            weigh_Kg = this.Weight * factorOfConvert;
-        }
-
-        if (weigh_Kg != null) {
-            weigh_Kg = AppTool.Round(weigh_Kg, 3);
-        }
-        this.Weight = weigh_Kg;
-    }
-
-
-    private ComputeVolumetricWeight() {
-        //this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
-
-        this.weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
-    }
-
-
-    
-
     private chargeableWeight: number;
     get ChargeableWeight() {
         return this.chargeableWeight;
@@ -204,10 +181,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set ChargeableWeight(value: number) {
         if (this.chargeableWeight != value) {
             this.chargeableWeight = value;
+            this.ComputeChargeableWeight_Kg();
         }
     }
-
-
 
     private weight: number;
     get Weight() {
@@ -229,11 +205,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (this.volume != value) {
             this.volume = value;
             this.ComputeVolumetricWeight();
+            this.ComputeVolume_CBM();
             this.SetUIProperties();
-
         }
     }
-
 
     private grossWeight: number;
     get GrossWeight() {
@@ -243,12 +218,129 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (this.grossWeight != value) {
             this.grossWeight = value;
             this.ComputeVolumetricWeight();
+            this.ComputeGrossWeigh_Kg_Ton();
             this.SetUIProperties();
-
         }
     }
 
-    private ComputeVolume() {
+    private grossWeightPerTon: number;
+    get GrossWeightPerTon() {
+        return this.grossWeightPerTon;
+    }
+    set GrossWeightPerTon(value: number) {
+        if (this.grossWeightPerTon != value) {
+            this.grossWeightPerTon = value;
+        }
+    }
+
+    private grossWeightInKG: number;
+    get GrossWeightInKG() {
+        return this.grossWeightInKG;
+    }
+    set GrossWeightInKG(value: number) {
+        if (this.grossWeightInKG != value) {
+            this.grossWeightInKG = value;
+        }
+    }
+
+    private chargeableWeightInKG: number;
+    get ChargeableWeightInKG() {
+        return this.chargeableWeightInKG;
+    }
+    set ChargeableWeightInKG(value: number) {
+        if (this.chargeableWeightInKG != value) {
+            this.chargeableWeightInKG = value;
+        }
+    }
+
+    private volumeInCBM: number;
+    get VolumeInCBM() {
+        return this.volumeInCBM;
+    }
+    set VolumeInCBM(value: number) {
+        if (this.volumeInCBM != value) {
+            this.volumeInCBM = value;
+        }
+    }
+
+    ComputeGrossWeigh_Kg_Ton() {
+        var weigh_Kg: number = null;
+        var weigh_Ton: number = null;
+
+        if (this.GrossWeight != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.GrossWeightCode)) {
+                switch (this.GrossWeightCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.GrossWeight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+
+            weigh_Ton = weigh_Kg / 1000;
+        }
+
+        if (weigh_Ton != null) {
+            weigh_Ton = AppTool.Round(weigh_Ton, 3);
+        }
+
+        this.GrossWeightInKG = weigh_Kg;
+        this.GrossWeightPerTon = weigh_Ton;
+    }
+    ComputeChargeableWeight_Kg() {
+        var weigh_Kg: number = null;
+        if (this.ChargeableWeight != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.WeightCode)) {
+                switch (this.WeightCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.ChargeableWeight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+        }
+        this.ChargeableWeightInKG = weigh_Kg;
+    }
+    ComputeVolume_CBM() {
+        var volume_CBM: number = null;
+
+        if (this.Volume != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.VolumeUnitCode)) {
+                switch (this.VolumeUnitCode.toUpperCase()) {
+                    case "CBM": { factorOfConvert = 1; break; }
+                    case "CBI": { factorOfConvert = 61024; break; }      // 1m³ = 61024in³
+                    case "CBF": { factorOfConvert = 35.315; break; }     // 1m³ = 35.315ft³
+                }
+            }
+            volume_CBM = this.Volume / factorOfConvert;
+        }
+
+        if (volume_CBM != null) {
+            volume_CBM = AppTool.Round(volume_CBM, 3);
+        }
+        this.VolumeInCBM = volume_CBM;
+    }
+    ComputeVolumetricWeight() {
+        //this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
+        this.weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
+    }
+    ComputeVolume() {
         this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
     }
 
@@ -299,30 +391,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
-    private ComputeWeightInKG(weight: number) {
-        var weigh_Kg: number = null;
-        var weigh_Ton: number = null;
-
-        if (this.Weight != null) {
-            var factorOfConvert: number = 1;
-
-            if (!AppTool.IsNullOrEmpty(this.WeightCode)) {
-                switch (this.WeightCode.toUpperCase()) {
-                    case "KG": { factorOfConvert = 1; break; }
-                    case "LB": { factorOfConvert = 0.45359237; break; }
-                    case "MT": { factorOfConvert = 1000; break; }
-                }
-            }
-
-            weigh_Kg = this.Weight * factorOfConvert;
-        }
-
-        if (weigh_Kg != null) {
-            weigh_Kg = AppTool.Round(weigh_Kg, 3);
-        }
-        return weigh_Kg;    
-    }
-
     PriceClick(item: TariffSearchSummary) {
         if (item) {
             var editWindow = new LogitudeWindow();
@@ -330,24 +398,186 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             editWindow.Title = "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-            editWindow.ShowEditComponent(item.Id, "Tariff", item.VersionId);
+            editWindow.ShowEditComponent(item.TariffId, "Tariff", item.VersionId);
         }
-
     }
-
 
     private SetUIProperties() {
         this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
         this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
         this.UIProperties.SetRequired("Date", null, AppTool.IsNullOrEmpty(this.Date));
         this.UIProperties.SetRequired("Weight", null, AppTool.IsNullOrEmpty(this.Weight));
-
-
     }
 
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+
+    private Generator: ShipmentGenerator;
+    private TariffPayables: ShipmentPayablePM[];
+    GeneratePayablesClicked(item: TariffSearchSummary) {
+        var isValid = this.ValidateExistConnectedTariff(item);
+        if (isValid) {
+            isValid = this.ValidateTariffClosedLines();
+            if (isValid) {
+                this.TariffPayables = [];
+                this.Generator = new ShipmentGenerator(this.FatherComponent.EntityPM, this.FatherComponent.AllRates);
+                // Generate Air Frieght
+                var notes = null;
+                if (!AppTool.IsNullOrEmpty(item.AllIn)) {
+
+                    notes = "Includes the following charges as all-in: " + item.AllIn;
+                }
+
+                this.AddNewTariffPayable(item, notes);
+                // Generate Surcharges
+                if (item != null && item.Surcharges != null) {
+                    item.Surcharges.forEach(surcharge => {
+                        this.AddNewTariffPayable(surcharge);
+                    });
+                }
+
+                var isDuplicate = this.CheckTariffPayablesDuplicate();
+                if (isDuplicate) {
+                    // override
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Show("This generate will update on the existing lines.");
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
+                            this.CurrentSession.StartBusyIndicatorLoading();
+                            this.OverrideTariffPayablesOfShipment();
+                        }
+                        if (confirmWindow.No) {
+                            //nothing
+                        }
+                    });
+                }
+                else {
+                    this.CurrentSession.StartBusyIndicatorLoading();
+                    this.AssignTariffPayablesToShipment();
+                }
+            }
+        }
+    }
+    OverrideTariffPayablesOfShipment(): any {
+        this.TariffPayables.forEach(payable => {
+            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId)[0];
+            if (existsPayable != null) {
+                this.ShipmentPM.RemovePayable(existsPayable);
+            }
+        });
+        this.AssignTariffPayablesToShipment();
+    }
+    AssignTariffPayablesToShipment(): any {
+        this.TariffPayables.forEach(payable => {
+            this.ShipmentPM.AddPayable(payable);
+        });
+        this.ReloadTariffPayables();
+    }
+    ReloadTariffPayables() {
+        this.FatherComponent.OnEntityDataGenerated();
+        this.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.CloseCurrentWindow();
+    }
+    CheckTariffPayablesDuplicate(): any {
+        var isDuplicate = false;
+        this.TariffPayables.forEach(payable => {
+            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId)[0];
+            if (existsPayable != null) {
+                isDuplicate = true;
+            }
+        });
+        return isDuplicate;
+    }
+    AddNewTariffPayable(newRecord: any, notes = null) {
+        this.myChargesTypeListService.getSingleFromCache(newRecord.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var chargesType: ChargesTypeList = myResponse.Result;
+                var shipmentPayable: ShipmentPayablePM = this.Generator.GeneratePayablesFromTariff(chargesType);
+                shipmentPayable.TariffId = newRecord.TariffId;
+                shipmentPayable.TariffNumber = newRecord.TariffNumber;
+                shipmentPayable.CurrencyId = newRecord.CurrencyId;
+                this.Generator.GetCurrencyCode(shipmentPayable);
+                shipmentPayable.Rate = this.Generator.GetCurrencyRate(shipmentPayable.CurrencyId);
+                shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
+                shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
+                shipmentPayable.MeasurementCode = newRecord.UnitOfMesurmentCode;
+                var nweQuantity = this.GetQuantity(chargesType);
+                var expectedAmount = newRecord.ActualPrice;
+                var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
+                var expectedAmountLocal = expectedAmount * rate;
+
+                var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
+                var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
+
+                shipmentPayable.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3): null;
+                shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
+                shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
+                shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
+                shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(expectedAmountProfit, 2);
+                shipmentPayable.OpenAmount = shipmentPayable.ExpectedAmount;
+                shipmentPayable.OpenAmountInLocalCurrency = shipmentPayable.ExpectedAmountLocal;
+                shipmentPayable.OpenAmountInProfitCurrency = shipmentPayable.ExpectedAmountInProfitCurrency;
+                shipmentPayable.AccountedAmount = 0;
+                shipmentPayable.AccountedAmountInLocalCurrency = 0;
+                shipmentPayable.AccountedAmountInProfitCurrency = 0;
+                shipmentPayable.ShipmentPayableLineStatusCode = (shipmentPayable.Quantity != null && shipmentPayable.UnitPrice != null) ? "OAMT" : "EMPT";
+                shipmentPayable.Notes = notes;
+                this.TariffPayables.push(shipmentPayable);
+            }
+        });
+    }
+
+    ValidateExistConnectedTariff(item: TariffSearchSummary) {
+        var isValid = true;
+        var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId == item.TariffId)[0];
+        var existsPayableOnSurcharges: ShipmentPayablePM [] = []; 
+        item.Surcharges.forEach(surcharge => {
+            var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId == surcharge.TariffId)[0];
+            if (payable) {
+                existsPayableOnSurcharges.push(payable);
+            }
+        });
+
+        if (existsPayableOnAirFreight || (existsPayableOnSurcharges != null && existsPayableOnSurcharges.length > 0)) {
+            var messageWindow = new MessageWindow();
+            isValid = false;
+            messageWindow.Show("Can't have more than one tariff connected to the same line.");
+        }
+        return isValid;
+    }
+
+    ValidateTariffClosedLines() {
+        var isValid = true;
+        var closedPayablesLine: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.AccountedAmount != null && d.AccountedAmount != 0)[0];
+        if (closedPayablesLine) {
+            var messageWindow = new MessageWindow();
+            isValid = false;
+            messageWindow.Show("Can't connect a tariff to this shipment due to closed lines.");
+        }
+        return isValid;
+    }
+
+    GetQuantity(chargesType): any {
+        var myQuantity: number = null;
+        switch (chargesType.MeasurementCode) {
+            case "GRWT": { myQuantity = this.GrossWeight; break; }
+            case "CHWT": { myQuantity = this.ChargeableWeight; break; }
+            case "VOLU": { myQuantity = this.Volume; break; }
+            case "BTEU": { myQuantity = this.ShipmentPM.TEU; break; }
+            case "FIXD": { myQuantity = 1; break; }
+            case "PRVL": { myQuantity = this.ShipmentPM.ValueOfGoods; break; }
+            case "PRFR": { myQuantity = ArrayTool.Sum(this.TariffPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
+            case "GWTN": { myQuantity = this.GrossWeightPerTon; break; }
+            case "CWKG": { myQuantity = this.ChargeableWeightInKG; break; }
+            case "GWKG": { myQuantity = this.GrossWeightInKG; break; }
+            case "QTY": { myQuantity = this.ShipmentPM.NumberOfPackages; break; }
+            case "VCBM": { myQuantity = this.VolumeInCBM; break; }
+            default: { break; }
+        }
+        return myQuantity;
+    }
+
 }
 
 

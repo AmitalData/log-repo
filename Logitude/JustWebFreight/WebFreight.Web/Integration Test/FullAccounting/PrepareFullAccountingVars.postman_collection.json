@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a1e97e4e-7cc9-4a5d-be42-c3aeff7ec131",
+		"_postman_id": "6e9320f9-114e-41b7-ad41-17d6111ed6a7",
 		"name": "PrepareFullAccountingVars",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -13,28 +13,37 @@
 					"script": {
 						"id": "a918d90f-384d-49bc-8fb2-10ac0a489b87",
 						"exec": [
-							"pm.test(\"logged successfuly\", function () {",
+							"",
+							"pm.test(\"AuthSuccessfullOnTenant1\", function () {",
 							"    pm.response.to.have.status(200);",
+							"    ",
+							"   ",
 							"    var idvalue1 = (pm.response.json().Token);",
-							"    var idvalue2 = (pm.response.json().CurrentTenant);",
+							"    var idvalue2 = (pm.response.json().Tenant);",
 							"    var idvalue3 = (pm.response.json().UserId);",
+							"    var idvalue4 = (pm.response.json().DocumentDownloadToken);",
+							"    var idvalue5 = (pm.response.json().InvalidDocumentToken);",
+							"    ",
 							"    var id1exist = idvalue1 !== null;",
 							"    var id2exist = idvalue2 !== null;",
 							"    var id3exist = idvalue3 !== null;",
-							"",
+							"    var id4exist = idvalue4 !== null;",
+							"    var id5exist = idvalue5 !== null;",
 							"    pm.expect(id1exist);",
 							"    pm.expect(id2exist);",
 							"    pm.expect(id3exist);",
-							"    pm.environment.set(\"Token\",idvalue1);",
-							"    pm.environment.set(\"CurrentTenant\",idvalue2);",
-							"    pm.environment.set(\"LoggedUserId\",idvalue3);",
-							"   ",
-							"   pm.environment.set(\"RandomNum\", _.random(1,50));",
+							"    pm.expect(id4exist);",
+							"    pm.expect(id5exist);",
+							"    pm.globals.set(\"Token\",idvalue1);",
+							"    pm.globals.set(\"Tenant\",idvalue2);",
+							"    pm.globals.set(\"LoggedUserId\",idvalue3);",
+							"    pm.globals.set(\"DocumentDownloadToken\",idvalue4);",
+							"    pm.globals.set(\"InvalidDocumentToken\",idvalue5);",
+							"    ",
+							"    pm.environment.set(\"RandomNum\", _.random(1,50));",
+							"      ",
+							"      ",
 							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
-							"",
-							"    postman.setNextRequest(\"GetFullAccountingSettings\");",
-							"",
-							"",
 							"});"
 						],
 						"type": "text/javascript"
@@ -52,25 +61,21 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"khawla@logitudeworldglobal.com\",\"Password\":\"0597485181@kh\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1095}"
+					"raw": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\",\"GetInvalidDocumentToken\":true}\n"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1095",
-					"protocol": "http",
+					"raw": "{{URL}}/api/authentication?tenant={{Tenant}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"authentication"
 					],
 					"query": [
 						{
 							"key": "tenant",
-							"value": "1095"
+							"value": "{{Tenant}}"
 						}
 					]
 				}
@@ -135,7 +140,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/fullaccountingsettings/getsingle?id={{CurrentTenant}}&token={{Token}}",
+					"raw": "http://test.logitudeworld.com/test/api/fullaccountingsettings/getsingle?id={{Tenant}}",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -151,11 +156,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "{{CurrentTenant}}"
-						},
-						{
-							"key": "token",
-							"value": "{{Token}}"
+							"value": "{{Tenant}}"
 						}
 					]
 				}
@@ -220,7 +221,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/accountingsettings/getsingle?id={{CurrentTenant}}",
+					"raw": "https://test.logitudeworld.com/TEST/api/accountingsettings/getsingle?id={{Tenant}}",
 					"protocol": "https",
 					"host": [
 						"test",
@@ -236,7 +237,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "{{CurrentTenant}}"
+							"value": "{{Tenant}}"
 						}
 					]
 				}
@@ -387,7 +388,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/tenants/getsingle?id={{CurrentTenant}}",
+					"raw": "http://test.logitudeworld.com/test/api/tenants/getsingle?id={{Tenant}}",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -403,7 +404,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "{{CurrentTenant}}"
+							"value": "{{Tenant}}"
 						}
 					]
 				}
@@ -534,7 +535,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22\n\n",
+					"raw": "http://test.logitudeworld.com/test/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -612,7 +613,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=EPT&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n",
+					"raw": "https://test.logitudeworld.com/TEST/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=EPT&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]",
 					"protocol": "https",
 					"host": [
 						"test",
@@ -939,7 +940,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23\n",
+					"raw": "http://test.logitudeworld.com/test/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -1124,7 +1125,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n",
+					"raw": "http://test.logitudeworld.com/test/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -1488,7 +1489,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCHV&PageSize=23 ",
+					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCHV&PageSize=23",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -1654,7 +1655,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCust&GetCount=true&PageIndex=0&PageSize=22\n",
+					"raw": "http://test.logitudeworld.com/test/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCust&GetCount=true&PageIndex=0&PageSize=22",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -1817,7 +1818,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMVend&GetCount=true&PageIndex=0&PageSize=22\n",
+					"raw": "http://test.logitudeworld.com/test/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMVend&GetCount=true&PageIndex=0&PageSize=22",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -2100,7 +2101,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cust1&PageSize=23 ",
+					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cust1&PageSize=23",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -2312,14 +2313,18 @@
 							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].Id);",
 							"    var idvalue2 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].InternalNumber);",
 							"      var idvalue3 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].ControlAccountId);",
-							"  ",
+							"   var idvalue4 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].DisplayNumber);",
+							"    var idvalue5 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].ChartOfAccountsId);",
+							"     // var idvalue6 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].ControlAccountId);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
 							"    ",
 							" if (idexist)  {",
 							"     pm.environment.set(\"VendorGLAccountId\",idvalue);",
 							"      pm.environment.set(\"InternalNumber\",idvalue2);",
-							"      pm.environment.set(\"ControlAccountId\",idvalue3); ",
+							"      pm.environment.set(\"ControlAccountId\",idvalue3);",
+							"      pm.environment.set(\"DisplayNumber\",idvalue4);",
+							"      pm.environment.set(\"ChartOfAccountsId\",idvalue5);",
 							"     tests[\"GlAccountExists : \" + true] = (true);",
 							"      postman.setNextRequest(\"GetCustomerAddress\"); ",
 							"    }",
@@ -2392,6 +2397,10 @@
 							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
 							"    pm.response.to.have.status(200);",
 							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue2 =(pm.response.json().InternalNumber);",
+							"    var idvalue3 =(pm.response.json().ControlAccountId);",
+							"   var idvalue4 =(pm.response.json().DisplayNumber);",
+							"    var idvalue5 =(pm.response.json().ChartOfAccountsId);",
 							" ",
 							"    var id1exist = idvalue1 !== null;",
 							"   ",
@@ -2405,7 +2414,11 @@
 							"",
 							"if (id1exist)  {",
 							"   pm.environment.set(\"VendorGLAccountId\",idvalue1); ",
-							"   ",
+							"    //pm.environment.set(\"VendorGLAccountId\",idvalue);",
+							"      pm.environment.set(\"InternalNumber\",idvalue2);",
+							"      pm.environment.set(\"ControlAccountId\",idvalue3);",
+							"      pm.environment.set(\"DisplayNumber\",idvalue4);",
+							"      pm.environment.set(\"ChartOfAccountsId\",idvalue5);",
 							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
 							"      postman.setNextRequest(\"GetCustomerAddress\");",
 							"",
@@ -2493,7 +2506,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/cardviews/getsingle/?id={{CustomerId}}\n",
+					"raw": "http://test.logitudeworld.com/test/api/cardviews/getsingle/?id={{CustomerId}}",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -2559,7 +2572,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/cardviews/getsingle/?id={{VendorId}}\n",
+					"raw": "http://test.logitudeworld.com/test/api/cardviews/getsingle/?id={{VendorId}}",
 					"protocol": "http",
 					"host": [
 						"test",

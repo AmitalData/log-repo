@@ -527,6 +527,24 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- Tariff Link -->
+                                    <log-column [header]="'Tariff'" [width]="'80'" [Alignment]="'center'">
+                                        <log-cell-template template="let item" [TabIndex]="-1" [Alignment]="'center'">
+                                            <div style="width: 100%; height: 100%; position: relative;">
+                                                <table>
+                                                    <tr>
+
+                                                        <td *ngIf="item.TariffNumber != null">
+                                                            <div class="MediaFill">
+                                                                <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditTariffClicked(item.TariffId)">{{ item.TariffNumber}}</Hyperlink>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
                                     <!-- Buttons -->
                                     <log-column [width]="'100'">
                                         <log-cell-template template="let item" [TabIndex]="-1">
@@ -645,7 +663,9 @@
                                                         <div>
                                                             <table>
                                                                 <tr>
-                                                                    <td><div></div></td>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                     <td>
                                                                         <div class="Label" style="text-align: center;">{{'Shipment.O.Receivables.Invoices' | TextCodeTranslationPipe}}</div>
                                                                     </td>
@@ -780,7 +800,7 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                    </td>                                    
+                                    </td>
                                 </tr>
                             </table>
                         </td>

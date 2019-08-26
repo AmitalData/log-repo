@@ -1323,7 +1323,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             //isAllInInfoIconVisible = false;
         }
 
-        if (this.ChargesGroupCode == "FRT") {
+      else  if (this.ChargesGroupCode == "FRT") {
             isAllInCheckBoxVisible = false;
             isAllInInfoIconVisible = false;
         }

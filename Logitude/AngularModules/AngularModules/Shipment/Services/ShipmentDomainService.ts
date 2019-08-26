@@ -876,6 +876,61 @@ export class ShipmentDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    MarkShipmentAsBlocked(shipmentId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetMarkShipmentAsBlocked?shipmentId=' + shipmentId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
+
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    UnblockedShipment(shipmentId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetUnblockedShipment?shipmentId=' + shipmentId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
+
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetShipmentsTransferSummary() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetShipmentsTransferSummary', {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists = response.json();
+
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = allLists;
+                return myResponse;
+            });
+        });
+    }
 }
 
 export class ShipmentsSummary {
