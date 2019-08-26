@@ -355,12 +355,17 @@
             </div>
             <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:left;width:370px;margin-right: 5px;direction: rtl;">
                 <LogCheckBox [Checked]="IsAccepted" (ValueChanged)="IsAcceptedChanged($event)" [ObjectFieldName]="'IsAccepted'" [DataContext]="DataContext" style="float:right;margin-top:2px;"></LogCheckBox>
-                <label style="margin-right:-10px;">{{'Shipment.O.Agreement1' | TextCodeTranslationPipe}} </label><br />
-                <label style="margin-right:23px;"> {{'Shipment.O.Agreement2' | TextCodeTranslationPipe}}</label>
+                <label *ngIf="Language == 'HB'" style="margin-right:-10px;">אני הח"מ מצהיר בזה כי אני מודע לנתונים המפורטים בהצהרת היבוא, </label><br *ngIf="Language == 'HB'" />
+                <label *ngIf="Language == 'HB'" style="margin-right:23px;"> לתוכנם ונכונותם של הצרופות ומאשר הגשתם למכס</label>
+                <label *ngIf="Language != 'HB'" style="margin-right:-10px;">I, the undersigned, hereby declare that I am aware of the</label><br *ngIf="Language != 'HB'" />
+                <label *ngIf="Language != 'HB'" style="margin-right:23px;"> goods and of the attachments submitted to Customs in </label><br *ngIf="Language != 'HB'" />
+                <label *ngIf="Language != 'HB'" style="margin-right:23px;"> the attached declaration</label>
                 <!--<input type="checkbox" for="Cancel" [(ngModel)]="ShowDeleted" />
-                 <label style="margin-right:-10px;">אני הח"מ מצהיר בזה כי אני מודע לנתונים המפורטים בהצהרת היבוא,</label><br />
-                <label style="margin-right:23px;">לתוכנם ונכונותם של הצרופות ומאשר הגשתם למכס</label>-->
-                
+     <label style="margin-right:-10px;">אני הח"מ מצהיר בזה כי אני מודע לנתונים המפורטים בהצהרת היבוא,</label><br />
+    <label style="margin-right:23px;">לתוכנם ונכונותם של הצרופות ומאשר הגשתם למכס</label>-->
+                <!--<label *ngIf="SessionLocator.TenantPM.Language == 'HB'" style="margin-right:-10px;">{{'Shipment.O.Agreement1' | TextCodeTranslationPipe}} </label><br *ngIf="SessionLocator.TenantPM.Language == 'HB'" />
+                <label *ngIf="SessionLocator.TenantPM.Language == 'HB'" style="margin-right:23px;"> {{'Shipment.O.Agreement2' | TextCodeTranslationPipe}}</label>-->
+
             </div>
             <div style="float:right;width:25px;margin-right: 5px;direction: rtl;" class="tooltip">
                 <div class="tooltiptext">
