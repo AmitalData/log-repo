@@ -1,77 +1,41 @@
 import { Component } from '@angular/core';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ShipmentList } from '../../../../Shipment/EntityLists/ShipmentList';
-import { ShipmentListService } from '../../../../Shipment/Services/StandardLists/ShipmentListService';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ShipmentList } from '../../../Shipment/EntityLists/ShipmentList';
+import { ShipmentListService } from '../../../Shipment/Services/StandardLists/ShipmentListService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
+import { ShipmentDomainService } from '../../../Shipment/Services/ShipmentDomainService';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './NewTransferComponent.html',
+    templateUrl: './BlockedShipmentsComponent.html',
 })
 
-export class NewTransferComponent extends BaseComponent {
-    //public EntityPM: AccountingTransferHeaderPM = null;
-    public ObjectTableName: string = "AccountingTransferHeader";
-    public DataContext = this;
-    public TransferTypeCode: string = null;
-    public ValidationErrorsList: string[] = [];
-    public ItemsSource: NewTransferLine[] = [];
-    public SelectedItem: NewTransferLine = null;
+export class BlockedShipmentsComponent extends BaseComponent {
+    public DataContext: BlockedShipmentsComponent = this;    
+    public ItemsSource: BlockedShipmentItem[] = [];    
     private CurrentSession = SessionLocator.SelectedSession;
     private shipmentDomainService: ShipmentDomainService;
+    private entityListService: ShipmentListService;
+    public ObjectTableName: string = "Shipment";
+    public ValidationErrorsList: string[] = [];
     constructor() {
-        super();
-        //this.EntityPM = new AccountingTransferHeaderPM();
-        //this.EntityPM.Tenant = SessionLocator.Tenant;
-        //this.EntityPM.UserId = SessionLocator.LoggedUserId;
-        //this.EntityPM.TransferDate = DateTool.GetCurrentDateTimeAsUtc();
+        super();      
 
         this.shipmentDomainService = new ShipmentDomainService();
-
+        this.entityListService = new ShipmentListService();
         this.BuildShipmentDatesList();
-        this.Listen();
     }
 
-    private Listen() {
-        this.CurrentSession.SessionEvent.subscribe(s => {
-
-
-        });
-    }
-
-    SetWindowArgs(transferTypeCode: string) {
-        this.TransferTypeCode = transferTypeCode;
-        //this.EntityPM.AccountingTransferTypeCode = transferTypeCode;
+    public TransportModeCode: string = null;
+    SetWindowArgs(transportModeCode: string) {
+        this.TransportModeCode = transportModeCode;
         this.LoadData();
     }
-
-    private isAllChecked: boolean = true;
-    get IsAllChecked() { return this.isAllChecked; }
-    set IsAllChecked(value: boolean) {
-        if (this.isAllChecked != value) {
-            this.isAllChecked = value;
-
-            this.ItemsSource.forEach(item => {
-                item.IsChecked = value;
-            });
-
-            this.OnLinesSelected();
-        }
-    }
-
-    private notes: string = "";
-    get Notes() { return this.notes; }    
-    set Notes(value: string) {
-        if (this.notes != value) {
-            this.notes = value;
-        }
-    }
-
+    
     private fromDate: Date;
     get FromDate() { return this.fromDate; }
     set FromDate(value: Date) {
@@ -138,14 +102,13 @@ export class NewTransferComponent extends BaseComponent {
         this.selectedShipmentDateCode = item.Code;
         this.LoadData();
     }
-
-    private entityListService: any = null;
+    
     LoadData() {
         var filters = new ApiQueryFilters();
         filters.PageIndex = 0;
         filters.PageSize = 100;
 
-        filters.addAdditionalFilter("LocalCustomsTransmissionsStatusCode", "NSEN", null, null, "Equals", false, true, false, "string");
+        filters.addAdditionalFilter("LocalCustomsTransmissionsStatusCode", "BLOK", null, null, "Equals", false, true, false, "string");
 
         if (!AppTool.IsNullOrEmpty(this.CurrentDirectionId)) {
             if (this.CurrentDirectionId == "All") this.CurrentDirectionId = "";
@@ -166,17 +129,13 @@ export class NewTransferComponent extends BaseComponent {
             filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, true, false, "string");
         }
 
-        if (this.TransferTypeCode == "Air") {
+        if (this.TransportModeCode == "Air") {
             filters.addAdditionalFilter("TransportModeId", "A", null, null, "Equals", false, true, false, "string");
         }
         else {
             filters.addAdditionalFilter("TransportModeId", "O", null, null, "Equals", false, true, false, "string");
         }
-
-        if (this.entityListService == null) {
-            this.entityListService = new ShipmentListService();
-        }
-
+        
         this.entityListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             this.BuildItemsSource(myResponse);
         });
@@ -197,16 +156,15 @@ export class NewTransferComponent extends BaseComponent {
     }
 
     BuildItemsSource(myResponse: ServiceResponse) {
-        this.ItemsSource = [];
-        this.SelectedItem = null;
-        var myResultList: NewTransferLine[] = [];
+        this.ItemsSource = [];        
+        var myResultList: BlockedShipmentItem[] = [];
 
         if (!myResponse.HasError) {
             if (myResponse.Result.length > 0) {
 
 
                 myResponse.Result.forEach((item: ShipmentList) => {
-                    var myResultItem = new NewTransferLine(this);
+                    var myResultItem = new BlockedShipmentItem();
                     myResultItem.Id = item.Id;
 
                     if (item.MainCarriageATA != null) {
@@ -227,48 +185,22 @@ export class NewTransferComponent extends BaseComponent {
         }
 
         this.ItemsSource = myResultList.sort(function (a, b) { return a.DateTicks == b.DateTicks ? 0 : a.DateTicks < b.DateTicks ? -1 : 1; });
-        this.IsFirstTimeLoading = false;
-        this.OnLinesSelected();
     }
     
-    public SelectedCount: number = 0;
-    public ExportButtonIsEnabled: boolean = false;
-    public IsFirstTimeLoading: boolean = true;
-    OnLinesSelected() {
-        this.SelectedCount = this.ItemsSource.filter(f => f.IsChecked == true).length;
-        this.ExportButtonIsEnabled = this.SelectedCount > 0 ? true : false;
-    }
-
-    ExportButtonClicked() {
-        var errors: string[] = [];
-        
-        this.SelectedCount = this.ItemsSource.filter(f => f.IsChecked == true).length;
-
-        if (this.SelectedCount == 0) {
-            errors.push("You must select 1 line at least");
-        }
-
-        else if (this.SelectedCount > 100) {
-            errors.push("You must select 100 line max");
-        }
-
-        this.ValidationErrorsList = errors;
-
-        if (errors.length == 0) {
-           
-        }
-    }
-
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    MarkAsBlockedClicked(itemId: string) {
+    UnblockedClicked(itemId: string) {
         this.CurrentSession.StartBusyIndicatorSaving();
 
-        this.shipmentDomainService.MarkShipmentAsBlocked(itemId).subscribe((myResponse: ServiceResponse) => {
+        this.shipmentDomainService.UnblockedShipment(itemId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.LoadData();
+            }
+
+            else {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
             this.CurrentSession.StopBusyIndicator();
@@ -276,13 +208,7 @@ export class NewTransferComponent extends BaseComponent {
     }
 }
 
-export class NewTransferLine {
-    constructor(private fatherComponent: NewTransferComponent) {
-        if (fatherComponent.IsFirstTimeLoading) {
-            this.isChecked = true;
-        }
-    }
-
+export class BlockedShipmentItem {    
     public Id: string;
     public Date: Date;
     public DateTicks: number;
@@ -291,14 +217,5 @@ export class NewTransferLine {
     public Status: string;
     public Consignee: string;
     public TransferError: string;
-    public ReadyForTransfer: boolean;
-
-    private isChecked: boolean = false;
-    get IsChecked() { return this.isChecked; }
-    set IsChecked(value: boolean) {
-        if (this.isChecked != value) {
-            this.isChecked = value;
-            this.fatherComponent.OnLinesSelected();    
-        }
-    }
+    public ReadyForTransfer: boolean;   
 }

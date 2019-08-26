@@ -25,12 +25,12 @@ export class OpportunityModule {
     }
 
     public CreateOpportunity() {
-        var activityNo = this.Generator.RandomNum();
+        var OpportunityNo = this.Generator.RandomNum();
 
-        this.addOpportunity.CreateNewOpportunity('Opportunity # ' + activityNo);
-        this.QuickSearchBox('Opportunity_Search', 'Opportunity # ' + activityNo);
-        this.editMainTab.EditMainTab('Opportunity # ' + activityNo);
-        this.editGeneralTab.EditGeneralTab('Opportunity # ' + activityNo);
+        this.addOpportunity.CreateNewOpportunity('Opportunity # ' + OpportunityNo);
+        this.QuickSearchBox('Opportunity_Search', 'Opportunity # ' + OpportunityNo);
+        this.editMainTab.EditMainTab('Opportunity # ' + OpportunityNo);
+        this.editGeneralTab.EditGeneralTab('Opportunity # ' + OpportunityNo);
        
         // browser.driver.sleep(6000);
 

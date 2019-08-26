@@ -2388,18 +2388,84 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
 
             IWorksheet sheet1 = workbook.Worksheets[0];
-            sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
-            sheet1.Range["A1:I1"].CellStyle.Font.Size = 10;
-            sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
-            sheet1.Range["A1:I1"].CellStyle.Font.Color = ExcelKnownColors.White;
-            sheet1.Range["A1:I1"].CellStyle.Color = System.Drawing.Color.Gray;
-            sheet1.Range["A1:I1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-
-            sheet1.Range["A1:G1"].ColumnWidth = 15;
-            sheet1.Range["H1:I1"].ColumnWidth = 17;
+            sheet1.Range["A1:AC1"].CellStyle.Font.Bold = true;
+            sheet1.Range["A1:AC1"].CellStyle.Font.Size = 10;
+            sheet1.Range["A1:AC1"].CellStyle.Font.FontName = "Calibri";
+            sheet1.Range["A1:AC1"].CellStyle.Font.Color = ExcelKnownColors.Black;
+            sheet1.Range["A1:AC1"].CellStyle.Color = System.Drawing.Color.FromArgb(255, 242, 220, 219);
+            sheet1.Range["A1:AC1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
 
             DataTable dataTable1 = new DataTable();
             dataTable1.Columns.Add("Consecutive");
+            dataTable1.Columns.Add("Unique_Number_of_Manifest");
+            dataTable1.Columns.Add("Code_CAAT");
+            dataTable1.Columns.Add("Kind_of_Movement");
+            dataTable1.Columns.Add("Electronic_Acknowledgment_of_Recepction");
+            dataTable1.Columns.Add("Key_Carrier");
+            dataTable1.Columns.Add("Name_of_Vessel");
+            dataTable1.Columns.Add("Number_of_Trip");
+            dataTable1.Columns.Add("Type_of_Operation");
+            dataTable1.Columns.Add("Number_Of_BL");
+            dataTable1.Columns.Add("Port_of_Loading_Discharge");
+            dataTable1.Columns.Add("Country_of_Port_of_Loading_Discharge");
+            dataTable1.Columns.Add("Type_of_BL");
+            dataTable1.Columns.Add("Number_of_BL_Reference");
+            dataTable1.Columns.Add("Type_of_Port");
+            dataTable1.Columns.Add("Key_of_port");
+            dataTable1.Columns.Add("Country_of_Port");
+            dataTable1.Columns.Add("Type_Figure1");
+            dataTable1.Columns.Add("Name1");
+            dataTable1.Columns.Add("Identification_Key_Fiscal1");
+            dataTable1.Columns.Add("Place_of_Residence1");
+            dataTable1.Columns.Add("Type_Figure2");
+            dataTable1.Columns.Add("Name2");
+            dataTable1.Columns.Add("Identification_Key_Fiscal2");
+            dataTable1.Columns.Add("Place_of_residence2");
+            dataTable1.Columns.Add("Type_Figure3");
+            dataTable1.Columns.Add("Name3");
+            dataTable1.Columns.Add("Identification_Key_Fiscal3");
+            dataTable1.Columns.Add("Place_of_residence3");
+
+            ICommonDataContext commoContext = CommonDataContext.GetContext(shipment.Tenant);
+            ShippingLineRepository shippingLineRepository = new ShippingLineRepository(commoContext);
+            AddressRepository addressRepository = new AddressRepository(commoContext);
+
+            Tenant myTenant = TenantRepository.GetSingleTenant(shipment.Tenant, true);            
+            ShippingLine carrier = shippingLineRepository.GetSingleShippingLine(shipment.MainCarriageCarrierId, shipment.Tenant);
+            Address shipperAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, shipment.Tenant);
+            Address consigneeAddress = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, shipment.Tenant);
+
+            DataRow row = dataTable1.NewRow();
+            row[0] = "1";
+            //row[1] = ;
+            row[2] = myTenant == null ? "" : myTenant.CAAT;
+            row[3] = "8";
+            //row[4] = ;
+            row[5] = carrier == null ? "" : carrier.SCACCode;
+            row[6] = shipment.MainCarriageVesselName;
+            row[7] = shipment.MainCarriageCarrierNumber;
+            row[8] = shipment.DirectionId == "E" ? "2" : "1";
+            row[9] = shipment.House;
+            //row[10] = ;
+            //row[11] = ;
+            row[12] = "H";
+            row[13] = shipment.House;
+            row[14] = "2";
+            //row[15] = ;
+            //row[16] = ;
+            row[17] = "1";
+            row[18] = shipment.ShipperName;            
+            //row[19] = ;
+            row[20] = General.GetAddress(shipperAddress);
+            row[21] = "2";
+            row[22] = shipment.ConsigneeName;
+            //row[23] = ;
+            row[24] = General.GetAddress(consigneeAddress);
+            row[25] = "3";
+            row[26] = shipment.ConsigneeName;
+            //row[27] = ;
+            row[28] = General.GetAddress(consigneeAddress);
+            dataTable1.Rows.Add(row);
 
             sheet1.ImportDataTable(dataTable1, true, 1, 1);
             workbook.SaveAs(memory);
@@ -2407,12 +2473,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
         public byte[] ExportAirAMANACShipmentToExcel(ShipmentPM shipment)
         {
+
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
-
             IWorksheet sheet1 = workbook.Worksheets[0];
+
             sheet1.Range["A1:AA1"].CellStyle.Font.Bold = true;
             sheet1.Range["A1:AA1"].CellStyle.Font.Size = 10;
             sheet1.Range["A1:AA1"].CellStyle.Font.FontName = "Calibri";
@@ -2492,8 +2559,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             //row[21] = shipment.ConsigneeCityCode;
             row[22] = shipment.ConsigneeCity;
             row[23] = shipment.DescriptionOfGoods;
-            //row[24] =;
-            //row[25] =;
+            row[24] = shipment.IsDangerous ? "ED" : "";
+            row[25] = shipment.DangerousUnNumber;
             row[26] = shipment.DescriptionOfGoods;
             dataTable1.Rows.Add(row);
 
@@ -2577,6 +2644,68 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetUnblockedShipment(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                Shipment shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+
+                if (shipment != null)
+                {
+                    shipment.LocalCustomsTransmissionsStatusCode = "NSEN";
+                    shipmentRepository.Update(shipment);
+                    shipmentRepository.SubmitChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetShipmentsTransferSummary()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);               
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ShipmentTransferSummary myResult = new ShipmentTransferSummary();
+                
+                if (SecurityUtility.CheckTableContactFeature("Shipment", "READ", tenant))
+                {
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                    IQueryable<Shipment> shipments = shipmentRepository.GetShipments(tenant);
+
+                    shipments = shipments.Where(d => !d.IsCancelled && !d.IsAccountingClosed && !d.IsOperationalClosed && d.TransportModeId != "I");
+                    shipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<Shipment>(new QueryOperations(), shipments, tenant);
+
+                    myResult.BlockedOceanShipmentsCount = shipments.Where(d => d.LocalCustomsTransmissionsStatusCode == "BLOK" && d.TransportModeId == "O").Count();
+                    myResult.BlockedAirShipmentsCount = shipments.Where(d => d.LocalCustomsTransmissionsStatusCode == "BLOK" && d.TransportModeId == "A").Count();                    
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }
 
@@ -2619,4 +2748,10 @@ public class ShipmentConnectedEntity
     public DateTime? OpenDate { get; set; }
     public DateTime? AcceptedDate { get; set; }
     public string Salesman { get; set; }
+}
+
+public class ShipmentTransferSummary
+{
+    public int BlockedOceanShipmentsCount { get; set; }
+    public int BlockedAirShipmentsCount { get; set; }
 }

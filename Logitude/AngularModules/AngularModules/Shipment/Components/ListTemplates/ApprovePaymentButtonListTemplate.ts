@@ -49,9 +49,11 @@ export class ApprovePaymentButtonListTemplate {
     public ShowRenewButtons: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    Language: string = 'HB';
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
+        this.Language = SessionLocator.TenantPM.Language;
         //if (SessionLocator.PrivateLableSettings) {
         //    this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
         //    this.Width = 80;
@@ -94,7 +96,12 @@ export class ApprovePaymentButtonListTemplate {
                         var newWindow = new LogitudeWindow();
                         newWindow.Width = 665;
                         newWindow.Height = 700;
-                        newWindow.RTL = true;
+                        if (this.Language == 'HB') {
+                            newWindow.RTL = true;
+                        }
+                        else {
+                            newWindow.RTL = false;
+                        }
                         //newWindow.CustomTitleIcon = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.SmallLogo;
                         newWindow.Title = TextCodeTranslator.Translate("Shipment.O.PLApprovalWindowTitle");//"אישור היבואן להגשת הצהרת יבוא למכס";
                         var windowArgs: any = {};

@@ -18,16 +18,7 @@ describe('NewAgent', () => {
     browser.ignoreSynchronization = true;
 
 
-    it('Quicksearch', function () {
-
-        AgentScenario.Quicksearch();
-
-
-    });
-
-
     it('SearchAgentTab', function () {
-
 
         AgentScenario.SearchAgentTab();
     });

@@ -28,7 +28,7 @@ export class NewTask {
     this.Helper.WaitByIdAndFill('Activity_Subject', taskNo);
     this.Helper.WaitByIdAndFill('Activity_Description', 'Task Description - Protractor ');// test random number randomWholeNum
 
-    this.Helper.WaitByIdAndFill('Activity_OwnerId', 'A');
+    this.Helper.WaitByIdAndFill('Activity_OwnerId', 'Protractor user');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('date_Activity_StartDateTime', '2');
