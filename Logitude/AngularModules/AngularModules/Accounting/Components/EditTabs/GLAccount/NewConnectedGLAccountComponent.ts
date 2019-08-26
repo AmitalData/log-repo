@@ -121,7 +121,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                           if (response.Result) 
                               {
 
-                                  this.accountPM.AccountTypeCode = "2";
+                                  this.accountPM.AccountTypeCode = this.entityPM.AccountTypeCode;
                                   this.accountPM.DisplayNumber = this.entityPM.DisplayNumber + "\\" + this.CurrencyCode;
                                   this.accountPM.LocalName = this.entityPM.LocalName + "\\" + this.CurrencyCode;
                                   this.accountPM.EnglishName = this.entityPM.EnglishName + "\\" + this.CurrencyCode;
