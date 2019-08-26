@@ -46,6 +46,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<ExternalReconciliationLine> ExternalReconciliationLines { get; }
 		 IDbSet<FullAccountingSetting> FullAccountingSettings { get; }
 		 IDbSet<GLAccount> GLAccounts { get; }
+		 IDbSet<GLAccountCounter> GLAccountCounters { get; }
 		 IDbSet<GLAccountCurrency> GLAccountCurrencies { get; }
 		 IDbSet<GLAccountMoreData> GLAccountMoreDatas { get; }
 		 IDbSet<GLAccountTotalByMonth> GLAccountTotalByMonths { get; }
