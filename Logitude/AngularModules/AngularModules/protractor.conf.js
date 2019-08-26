@@ -138,11 +138,10 @@ exports.config = {
         login: 'e2e/Login/**/Login.e2e-spec.ts',
         NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
        // CustomerGLA: 'e2e/FullAccounting/'
-        FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
-        ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
+      
         CRM: 'e2e/CRM/**/CRMModule-spec.ts',
        //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
-        ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
+       
         NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
         NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
         Contact: 'e2e/Contacts/**/Contacts-spec.ts',
@@ -151,8 +150,12 @@ exports.config = {
         Opportunity :'e2e/CRM/**/CRMModule-spec.ts',
 
         // ********************* FullAccounting **********************************
+        ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
         NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
-        vendorgla: 'e2e/FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
+        FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
+        ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
+        VendorGLAccount: 'e2e/FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
+        CustomerGLAccount: 'e2e/FullAccounting/**/CustomerGLAccount-spec.ts',
         APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
         RevGLAccount: 'e2e/FullAccounting/**/GlAccount-spec.ts',
 
