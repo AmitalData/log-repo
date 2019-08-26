@@ -2559,8 +2559,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             //row[21] = shipment.ConsigneeCityCode;
             row[22] = shipment.ConsigneeCity;
             row[23] = shipment.DescriptionOfGoods;
-            //row[24] =;
-            //row[25] =;
+            row[24] = shipment.IsDangerous ? "ED" : "";
+            row[25] = shipment.DangerousUnNumber;
             row[26] = shipment.DescriptionOfGoods;
             dataTable1.Rows.Add(row);
 
