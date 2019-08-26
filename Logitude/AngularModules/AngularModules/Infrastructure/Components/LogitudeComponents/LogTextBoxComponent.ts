@@ -100,8 +100,9 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }
 
         this.textValue = newValue;
+        this.textValue = this.FormatTextValueNumbers(newValue);
         if (this.IsPasted) {
-            this.IsPasted=false;
+            this.IsPasted = false;
             switch (this.InputType && this.InputType.toLowerCase()) {
                 case 'text':
                 case 'ntext':
@@ -380,6 +381,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             else {
                 this.TextValue = this.DataContext[this.ObjectFieldName] != undefined && this.DataContext[this.ObjectFieldName] != null ? this.DataContext[this.ObjectFieldName] + '' : this.DataContext[this.ObjectFieldName];
             }
+            //this.TextValue = this.FormatTextValueNumbers();
             this.GetValueFormatted(this.TextValue);
         }
 
@@ -707,7 +709,11 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         var EQUAL = 187;
 
         //(key >= 48 && key <= 57) ARE THE NUMBERS ON TOP || (key >= 96 && key <= 105) ARE THE NUMBERS ON NUMPAD
-
+        var keyboardAndNumpadNumbers: number[] = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105];
+        var doubleUnsDecimalKeys: number[] = keyboardAndNumpadNumbers.concat([BACKSPACE, PERIOD, DECIMALPT, TAB, DELETE, END, HOME, SHIFT, PAGEUP, PAGEDOWN, LEFT, UP, RIGHT, DOWN, ADD, EQUAL]);
+        var decimalSigdoubleKeys: number[] = keyboardAndNumpadNumbers.concat([BACKSPACE, PERIOD, DECIMALPT, TAB, DELETE, END, HOME, SHIFT, PAGEUP, PAGEDOWN, LEFT, UP, RIGHT, DOWN, SUBTRACT, DASH, ADD, EQUAL, 173]);
+        var unsintegerKeys: number[] = keyboardAndNumpadNumbers.concat([BACKSPACE, TAB, DELETE, END, HOME, SHIFT, PAGEUP, PAGEDOWN, LEFT, UP, RIGHT, DOWN, ADD, EQUAL]);
+        var integerKeys: number[] = keyboardAndNumpadNumbers.concat([BACKSPACE, TAB, DELETE, END, HOME, SHIFT, PAGEUP, PAGEDOWN, LEFT, UP, RIGHT, DOWN, SUBTRACT, DASH, ADD, EQUAL, 173]);
         if (key == TAB) {
             this.keydown = false;
         }
@@ -731,12 +737,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                 case 'double':
                 case 'unsdecimal':
                     {
-                        if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == BACKSPACE || key == PERIOD 
-                        || key == DECIMALPT || key == TAB || key == DELETE
-                            || key == END || key == HOME || key == SHIFT 
-                            || key == PAGEUP || key == PAGEDOWN || key == LEFT
-                             || key == UP || key == RIGHT || key == DOWN 
-                             || key == ADD || key == EQUAL ||keyChar==this.decimalSeparator) {
+                        if (doubleUnsDecimalKeys.indexOf(key) > -1 || keyChar == this.decimalSeparator) {
+
 
                             if (key == 53) {
                                 if (keyChar == "%") {
@@ -774,7 +776,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                             if (keyChar == this.decimalSeparator) {
                                 return key;
                             }
-                            if(keyChar == this.thousandsSeparator){
+                            if (keyChar == this.thousandsSeparator) {
                                 return null;
                             }
                             return key;
@@ -783,8 +785,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     }
                 case 'unsinteger':
                     {
-                        if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == BACKSPACE || key == TAB || key == DELETE || key == END
-                            || key == HOME || key == SHIFT || key == PAGEUP || key == PAGEDOWN || key == LEFT || key == UP || key == RIGHT || key == DOWN || key == ADD || key == EQUAL) {
+                        if (unsintegerKeys.indexOf(key) > -1) {
 
                             if (key == 53) {
                                 if (keyChar == "%") {
@@ -825,12 +826,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                 case 'decimal':
                 case 'sigdouble':
                     {
-                        if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == BACKSPACE 
-                        || key == PERIOD || key == DECIMALPT || key == TAB || key == DELETE
-                            || key == END || key == HOME || key == SHIFT || key == PAGEUP 
-                            || key == PAGEDOWN || key == LEFT || key == UP || key == RIGHT 
-                            || key == DOWN || key == SUBTRACT || key == DASH || key == ADD 
-                            || key == EQUAL || key == 173) {
+                        if (decimalSigdoubleKeys.indexOf(key) > -1 || keyChar == this.decimalSeparator) {
+
                             if (key == SUBTRACT || key == DASH || key == 173) {
 
                                 if (!AppTool.IsNullOrEmpty(this.TextValue) && this.TextValue.toString().indexOf('-') > -1) {
@@ -887,7 +884,12 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 }
                             }
 
-
+                            if (keyChar == this.decimalSeparator) {
+                                return key;
+                            }
+                            if (keyChar == this.thousandsSeparator) {
+                                return null;
+                            }
 
                             return key;
                         }
@@ -895,8 +897,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     }
                 case 'integer':
                     {
-                        if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == BACKSPACE || key == TAB || key == DELETE || key == END
-                            || key == HOME || key == SHIFT || key == PAGEUP || key == PAGEDOWN || key == LEFT || key == UP || key == RIGHT || key == DOWN || key == SUBTRACT || key == DASH || key == ADD || key == EQUAL || key == 173) {
+                        if (integerKeys.indexOf(key) > -1) {
                             if (key == SUBTRACT || key == DASH || key == 173) {
 
                                 if (!AppTool.IsNullOrEmpty(this.TextValue) && this.TextValue.toString().indexOf('-') > -1) {
@@ -1203,13 +1204,13 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                             else {
                                 // if ((this.TextValue + "").indexOf(this.thousandsSeparator) == -1) {
                                 //     var txtwithDot=this.ReplaceDecimalSeparatorWithADot(this.TextValue);
-                                    val = this.GetNumber(this.TextValue);
+                                val = this.GetNumber(this.TextValue);
                                 // }
                                 if (this.AddCommasToNumbers) {
                                     // if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
                                     //     //var txtval = this.TextValue.replace(/,/g, "");
                                     //     var txtval = this.TextValue.split(this.thousandsSeparator).join('');//.replace(new RegExp(this.thousandsSeparator, 'g'), '');
-                                        val = this.GetNumber(this.TextValue);
+                                    val = this.GetNumber(this.TextValue);
                                     // }
                                 }
 
@@ -1241,7 +1242,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 //     txtNum = this.GetNumber(txtval);
                                 // }
                                 // else {
-                                    txtNum = this.GetNumber(this.TextValue);
+                                txtNum = this.GetNumber(this.TextValue);
                                 // }
 
                                 if (this.DataContext[this.ObjectFieldName] != txtNum) {
@@ -1336,7 +1337,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 value = this.GetNumber(txt) / 100;
                             }
                             else {
-                               
+
                                 value = this.GetNumber(this.TextValue);
                             }
 
@@ -1569,7 +1570,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     var val: number;
 
                     // if ((this.TextValue + "").indexOf(this.thousandsSeparator) == -1) {
-                        val = this.GetNumber(this.TextValue);
+                    val = this.GetNumber(this.TextValue);
                     // }
                     // if (this.AddCommasToNumbers) {
                     //     if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
@@ -1746,8 +1747,20 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }, 100);
     }
 
-    FormatNumbers() {
+    FormatTextValueNumbers(textValue: string) {
+        var formattedTxt = textValue;
+        if (this.InputType!="text"&&this.InputType!="ntext") {
+            if (!AppTool.IsNullOrEmpty(this.TextValue)) {
+                var value = Number(this.TextValue);
+                var textval = value + "";
 
+                if (textval.indexOf('.') > -1) {
+                    var textparts = textval.split('.');
+                    formattedTxt = textparts[0] + this.decimalSeparator + textparts[1];
+                }
+            }
+        }
+        return formattedTxt;
     }
 
     ReplaceDecimalSeparatorWithADot(value: string) {
@@ -1761,15 +1774,29 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
             value = value.split(this.thousandsSeparator).join('');
         }
-         return value;
+        return value;
     }
 
-    GetNumber(numberText:string){
-        var numberValue=0;
-        numberText = this.RemoveThousandsSeparator(numberText);
-        numberText=this.ReplaceDecimalSeparatorWithADot(numberText);
-        numberValue = Number(numberText);
+    GetNumber(numberText: string) {
+        var numberValue = NaN;
+        if (!AppTool.IsNullOrEmpty(numberText)) {
+            numberText = this.RemoveThousandsSeparator(numberText);
+            numberText = this.ReplaceDecimalSeparatorWithADot(numberText);
+            numberValue = Number(numberText);
+        }
         return numberValue;
+    }
+
+    CheckIfPercentageKeyAllowed(key: number, keyChar: string) {
+        var allowed = false;
+        if (key == 53) {
+            if (keyChar == "%") {
+                if (this.AllowPercentage && !AppTool.IsNullOrEmpty(this.TextValue)) {
+                    allowed = true;
+                }
+            }
+        }
+        return allowed;
     }
 
 }
