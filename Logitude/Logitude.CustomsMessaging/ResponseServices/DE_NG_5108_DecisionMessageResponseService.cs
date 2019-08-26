@@ -49,6 +49,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     this.MyResponseData.HasException = true;
                     this.MyResponseData.UserMessage = "לא נמצא תיק תפג " + deficitFileItem.TapagIdentifier.fileNumber;
+                    return;
                 }
                 DeficitPM deficitPM = deficitQueryService.GetDeficitByPaymentOrderNumberOrTapagId(null, tapagConnectionTablePM.TapagId, requestParams.Tenant);
                 if (deficitPM != null)
