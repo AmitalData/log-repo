@@ -643,26 +643,26 @@ export class EditSupplierInvoiceItem extends BaseComponent{
 
     //#region Tab: Packages
 
-    get PackageQuantity() { return this.OriginalItemPM.PackageQuantity; }
-    set PackageQuantity(value: number) {
-        if (this.OriginalItemPM.PackageQuantity != value) {
-            this.OriginalItemPM.PackageQuantity = value;
-        }
-    }
+    //get PackageQuantity() { return this.OriginalItemPM.PackageQuantity; }
+    //set PackageQuantity(value: string) {
+    //    if (this.OriginalItemPM.PackageQuantity != value) {
+    //        this.OriginalItemPM.PackageQuantity = value;
+    //    }
+    //}
 
-    get Weight() { return this.OriginalItemPM.Weight; }
-    set Weight(value: number) {
-        if (this.OriginalItemPM.Weight != value) {
-            this.OriginalItemPM.Weight = value;
-        }
-    }
+    //get Weight() { return this.OriginalItemPM.Weight; }
+    //set Weight(value: string) {
+    //    if (this.OriginalItemPM.Weight != value) {
+    //        this.OriginalItemPM.Weight = value;
+    //    }
+    //}
 
-    get MarksAndNumbers() { return this.OriginalItemPM.MarksAndNumbers; }
-    set MarksAndNumbers(value: string) {
-        if (this.OriginalItemPM.MarksAndNumbers != value) {
-            this.OriginalItemPM.MarksAndNumbers = value;
-        }
-    }
+    //get MarksAndNumber() { return this.OriginalItemPM.MarksAndNumber; }
+    //set MarksAndNumber(value: string) {
+    //    if (this.OriginalItemPM.MarksAndNumber != value) {
+    //        this.OriginalItemPM.MarksAndNumber = value;
+    //    }
+    //}
 
     //#endregion
 
