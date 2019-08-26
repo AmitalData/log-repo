@@ -94,7 +94,7 @@
     background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
 }
 </style>
-<table>
+<table  [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'">
     <tr>
         <td>
             <!--<table style="direction:rtl;">
