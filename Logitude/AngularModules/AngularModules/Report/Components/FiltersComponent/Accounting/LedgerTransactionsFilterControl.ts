@@ -356,7 +356,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     }
 
 
-    private attachedGLAccountCheckBox: boolean = false;
+    private attachedGLAccountCheckBox: boolean = true;
     get AttachedGLAccountCheckBox() { return this.attachedGLAccountCheckBox; }
     set AttachedGLAccountCheckBox(value: boolean) {
         if (this.attachedGLAccountCheckBox != value) {

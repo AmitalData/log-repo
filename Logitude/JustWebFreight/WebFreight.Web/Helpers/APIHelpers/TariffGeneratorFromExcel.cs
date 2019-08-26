@@ -80,7 +80,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 User loggedUser = userRepository.GetSingleUserByEmail(loggedUserEmail, tenant, false);
                 List<Card> airlines = iCommonDataContext.Cards.Where(d => d.Tenant == tenant && d.PartnerTypeId == "AL").Take(20).ToList();
                 List<string> currencyIds = iCommonDataContext.Currencies.Where(d => d.Tenant == tenant).Select(s => s.Id).ToList();
-
+              
                 for (int i = 0; i < 20; i++)
                 {
                     List<TariffVersion> versions = new List<TariffVersion>();
@@ -136,6 +136,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     versions.Add(draftVersion);
                     versions.Add(activeVersion);
 
+                    var twentyPercentOftariffLines = 0;
                     for (int j = 3; j <= 50; j++)
                     {
                         TariffVersion version = new TariffVersion()
@@ -157,8 +158,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     }
                     foreach (TariffVersion item in versions)
                     {
+                        twentyPercentOftariffLines = 0;
                         for (int k = 0; k < randomTariffList.Count(); k++)
                         {
+                            twentyPercentOftariffLines = twentyPercentOftariffLines + 1; 
                             TariffLine line = new TariffLine()
                             {
                                 Id = IdCounter.GetNumber("TariffLine", tenant),
@@ -173,17 +176,35 @@ namespace WebFreight.Web.Helpers.APIHelpers
                                 LineUniqueKey = randomTariffList.ElementAt(k).FromPortCode + "," + randomTariffList.ElementAt(k).ToPortCode,
                                 LineUniqueKeyText = randomTariffList.ElementAt(k).FromPortCode + "," + randomTariffList.ElementAt(k).ToPortCode + k,
                             };
-                            // Generate Random Lines
-                            line.MinPrice = randomTariffList.ElementAt(k).MinPrice.Value;
-                            line.Step1Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step1Price.Value), 3, MidpointRounding.AwayFromZero);
-                            line.Step2Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step2Price.Value), 3, MidpointRounding.AwayFromZero);
-                            line.Step3Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step3Price.Value), 3, MidpointRounding.AwayFromZero);
-                            line.Step4Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step4Price.Value), 3, MidpointRounding.AwayFromZero);
-                            line.Step5Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step5Price.Value), 3, MidpointRounding.AwayFromZero);
-                            line.Step6Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step6Price.Value), 3, MidpointRounding.AwayFromZero);
-                            line.Step7Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step7Price.Value), 3, MidpointRounding.AwayFromZero);
-                            line.Step8Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step8Price.Value), 3, MidpointRounding.AwayFromZero);
-                            iTariffModuleContext.TariffLines.Add(line);
+
+                            if(twentyPercentOftariffLines <= 14)
+                            {
+                                // Generate Random Lines
+                                line.MinPrice = randomTariffList.ElementAt(k).MinPrice.Value;
+                                line.Step1Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step1Price.Value), 3, MidpointRounding.AwayFromZero);
+                                line.Step2Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step2Price.Value), 3, MidpointRounding.AwayFromZero);
+                                line.Step3Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step3Price.Value), 3, MidpointRounding.AwayFromZero);
+                                line.Step4Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step4Price.Value), 3, MidpointRounding.AwayFromZero);
+                                line.Step5Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step5Price.Value), 3, MidpointRounding.AwayFromZero);
+                                line.Step6Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step6Price.Value), 3, MidpointRounding.AwayFromZero);
+                                line.Step7Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step7Price.Value), 3, MidpointRounding.AwayFromZero);
+                                line.Step8Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step8Price.Value), 3, MidpointRounding.AwayFromZero);
+                                iTariffModuleContext.TariffLines.Add(line);
+                            }
+                            else
+                            {
+                                // Excel Lines
+                                line.MinPrice = randomTariffList.ElementAt(k).MinPrice.Value;
+                                line.Step1Price = decimal.Round(randomTariffList.ElementAt(k).Step1Price.Value, 3, MidpointRounding.AwayFromZero);
+                                line.Step2Price = decimal.Round(randomTariffList.ElementAt(k).Step2Price.Value, 3, MidpointRounding.AwayFromZero);
+                                line.Step3Price = decimal.Round(randomTariffList.ElementAt(k).Step3Price.Value, 3, MidpointRounding.AwayFromZero);
+                                line.Step4Price = decimal.Round(randomTariffList.ElementAt(k).Step4Price.Value, 3, MidpointRounding.AwayFromZero);
+                                line.Step5Price = decimal.Round(randomTariffList.ElementAt(k).Step5Price.Value, 3, MidpointRounding.AwayFromZero);
+                                line.Step6Price = decimal.Round(randomTariffList.ElementAt(k).Step6Price.Value, 3, MidpointRounding.AwayFromZero);
+                                line.Step7Price = decimal.Round(randomTariffList.ElementAt(k).Step7Price.Value, 3, MidpointRounding.AwayFromZero);
+                                line.Step8Price = decimal.Round(randomTariffList.ElementAt(k).Step8Price.Value, 3, MidpointRounding.AwayFromZero);
+                                iTariffModuleContext.TariffLines.Add(line);
+                            }
                         }
                     }
 
@@ -199,10 +220,10 @@ namespace WebFreight.Web.Helpers.APIHelpers
         private static readonly Random random = new Random();
         private decimal RandomStepPrice(decimal value)
         {
-            var minValue = 1;
-            var maxValue = 10;
-            var next = random.NextDouble();
-            return (minValue + ((decimal)next * (maxValue - minValue))) / 2m;
+            var minValue = -6;
+            var maxValue = 6;
+            var next = random.Next(minValue, maxValue);
+            return (value + ((decimal)next)) / 1m;
         }
         private List<ExcelTariffLines> UniqueRandomList(List<ExcelTariffLines> tariffLines, int maxRange, int totalRandomnoCount)
         {
