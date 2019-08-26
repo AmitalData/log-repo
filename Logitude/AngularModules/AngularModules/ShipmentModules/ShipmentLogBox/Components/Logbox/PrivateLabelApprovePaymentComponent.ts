@@ -43,6 +43,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     DataContext: PrivateLabelApprovePaymentComponent = this;
     private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
+    Language: string = 'HB';
     AdditionalData: any;
     externalDocs: any[];
     public DimApproveButton: boolean = false;
@@ -58,6 +59,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
         this._ImageLibraryService = new ImageLibraryService();
         this._DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
+        this.Language = SessionLocator.TenantPM.Language;
     }
 
     private isAccepted: boolean = false;
@@ -351,7 +353,12 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         var newWindow = new LogitudeWindow();
         newWindow.Width = 722;
         newWindow.Height = 230;
-        newWindow.RTL = true;
+        if (this.Language == 'HB') {
+            newWindow.RTL = true;
+        }
+        else {
+            newWindow.RTL = false;
+        }
         newWindow.Title = TextCodeTranslator.Translate("Shipment.O.ProviderAccountInformation");//"פרטי חשבון ספק";
         var windowArgs: any = {};
         //windowArgs.IsNew = false;
@@ -367,7 +374,12 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         var newWindow = new LogitudeWindow();
         newWindow.Width = 550;
         newWindow.Height = 230;
-        newWindow.RTL = true;
+        if (this.Language == 'HB') {
+            newWindow.RTL = true;
+        }
+        else {
+            newWindow.RTL = false;
+        }
         newWindow.Title = TextCodeTranslator.Translate("Shipment.O.TaxInformation");//"פרטי מס";
         var windowArgs: any = {};
         //windowArgs.IsNew = false;

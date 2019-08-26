@@ -627,9 +627,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         Shipment.MainCarriageLeg1OBLDate = MasterData.MAWBOBLDate;
                     }
 
-                    if (item.CutoffDate != null)
+                    if (MasterData.CutoffDate != null)
                     {
-                        Shipment.MainCarriageLeg1CutoffDate = item.CutoffDate;
+                        Shipment.MainCarriageLeg1CutoffDate = MasterData.CutoffDate;
 
                     }
 
@@ -698,9 +698,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 {
 
 
-                    if (item.CutoffDate != null)
+                    if (MasterData.CutoffDate != null)
                     {
-                        Shipment.MainCarriageLeg1CutoffDate = item.CutoffDate;
+                        Shipment.MainCarriageLeg1CutoffDate = MasterData.CutoffDate;
 
                     }
                     if (MasterShipment != null)
