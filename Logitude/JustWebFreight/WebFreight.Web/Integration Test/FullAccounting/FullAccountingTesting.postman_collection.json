@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a9369d00-b469-4f15-bec7-d0743a15201c",
+		"_postman_id": "f75b848f-3b93-45de-8072-330fb20a0b64",
 		"name": "FullAccountingTesting",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -62,25 +62,21 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"khawla@logitudeworldglobal.com\",\"Password\":\"0597485181@kh\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1095} "
+					"raw": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\",\"GetInvalidDocumentToken\":true}\n"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1095",
-					"protocol": "http",
+					"raw": "{{URL}}/api/authentication?tenant={{Tenant}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"authentication"
 					],
 					"query": [
 						{
 							"key": "tenant",
-							"value": "1095"
+							"value": "{{Tenant}}"
 						}
 					]
 				}
@@ -186,7 +182,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Id\": \"{{VendorGLAccountId}}\",\n            \"Tenant\": {{CurrentTenant}},\n            \"InternalNumber\": \"{{InternalNumber}}\",\n            \"AccountTypeCode\": \"3\",\n            \"DisplayNumber\": \"PMGLVend\",\n            \"LocalName\": \"VendGlAccountLocal{{RandomNum}}\",\n            \"EnglishName\": \"VendGlAccountEnglish\",\n            \"SearchFields\": \"PMGLVend,VendGlAccountEnglish,VendGlAccountLocal\",\n            \"IsMultiCurrency\": true,\n            \"CurrencyId\": null,\n            \"RevenueExpenseType\": \"3\",\n            \"IsControlAccount\": false,\n            \"ChartOfAccountsId\": \"1-2228\",\n            \"Inactive\": false,\n            \"AccountTypeName\": \"Vendor\",\n            \"CurrencyName\": null,\n            \"RevenueExpenseName\": \"Other\",\n            \"ChartOfAccountsName\": \"ספקים\",\n            \"ChartOfAccountsTypeCode\": \"4\",\n            \"ChartOfAccountsTypeName\": \"Vendors\",\n            \"CurrencyCode\": \"Multi\",\n            \"ReconcileMethodCode\": \"0\",\n            \"ReconcileMethodName\": \"Local Currency\",\n            \"ControlAccountId\": \"{{VendorControlAccountId}}\",\n            \"ActiveStatusName\": \"Active\",\n            \"AutomaticReconcileId\": null,\n            \"AutomaticReconcileName\": null,\n            \"PreviousEnglishName\": null,\n            \"PreviousEnglishNameChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousLocalName\": null,\n            \"PreviousLocalNameChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousNumber\": null,\n            \"PreviousNumberChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousChartOfAccountsId\": null,\n            \"PreviousChartOfAccountsChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"CustomerGLAccountId\": null,\n            \"CustomerGLAccountName\": null,\n            \"CustomerGLAccountNumber\": null,\n            \"BalanceInLocalCurrency\": 1200,\n            \"RevaluationEnabled\": null,\n            \"ParentAccountId\": null,\n            \"ParentAccountName\": null,\n            \"ParentAccountNumber\": null,\n            \"Category1Id\": null,\n            \"Category1Name\": null,\n            \"Category2Id\": null,\n            \"Category2Name\": null,\n            \"Category3Id\": null,\n            \"Category3Name\": null,\n            \"Category4Id\": null,\n            \"Category4Name\": null,\n            \"Category5Id\": null,\n            \"Category5Name\": null,\n            \"IsVATExempt\": null,\n            \"LastActivityDate\": null,\n            \"LastActivityTypeName\": null,\n            \"LastActivityByUserName\": null,\n            \"VatNumber\": null,\n            \"PaymentTermId\": null,\n            \"SalesmanUserId\": null,\n            \"NewGLAccountCardId\": null,\n            \"LocalBalanceInDue\": 1200,\n            \"NextDueDate\": null,\n            \"CurrencySign\": \"\",\n            \"DeductionFileTypeId\": null,\n            \"DeductionFileNumber\": null,\n            \"AssessingOfficeCode\": null,\n            \"Occupation\": null,\n            \"DeductionTypeId\": null,\n            \"ConsolidationVat\": null,\n            \"IsEquipmentVendor\": false,\n            \"ExcludeFromDeductionReport\": false,\n            \"DeductionTypeName\": null,\n            \"DeductionFileTypeCode\": null,\n            \"DeductionFileTypeName\": null,\n            \"AssessingOfficeName\": null,\n            \"DeductionTypeEnglishName\": null,\n            \"TotalOpenChequesInLocalCur\": null,\n            \"AutomaticReconcileLocalName\": null,\n            \"ReconcileMethodLocalName\": \"מטבע מקומי\",\n            \"TotFutureOpenChequesInLocalCur\": null,\n            \"CardId\": null,\n            \"CreatedByUserId\": null,\n            \"UpdatedByUserId\": null,\n            \"CreateDate\": \"2019-06-24T11:40:54.267\",\n            \"UpdateDate\": \"2019-06-24T11:40:54.507\",\n            \"CreatedByUserName\": \"khawla T0 \",\n            \"UpdatedByUserName\": \"khawla T0 \",\n            \"CreatedByLocalName\": \"עברית חוולה\",\n            \"UpdatedByLocalName\": \"עברית חוולה\"\n        }"
+					"raw": "{\"Id\": \"{{VendorGLAccountId}}\",\n            \"Tenant\": {{CurrentTenant}},\n            \"InternalNumber\": \"{{InternalNumber}}\",\n            \"AccountTypeCode\": \"3\",\n            \"DisplayNumber\": \"{{DisplayNumber}}\",\n            \"LocalName\": \"VendGlAccountLocal{{RandomNum}}\",\n            \"EnglishName\": \"VendGlAccountEnglish\",\n            \"SearchFields\": \"PMGLVend,VendGlAccountEnglish,VendGlAccountLocal\",\n            \"IsMultiCurrency\": true,\n            \"CurrencyId\": null,\n            \"RevenueExpenseType\": \"3\",\n            \"IsControlAccount\": false,\n            \"ChartOfAccountsId\": \"{{ChartOfAccountsId}}\",\n            \"Inactive\": false,\n            \"AccountTypeName\": \"Vendor\",\n            \"CurrencyName\": null,\n            \"RevenueExpenseName\": \"Other\",\n            \"ChartOfAccountsName\": \"ספקים\",\n            \"ChartOfAccountsTypeCode\": \"4\",\n            \"ChartOfAccountsTypeName\": \"Vendors\",\n            \"CurrencyCode\": \"Multi\",\n            \"ReconcileMethodCode\": \"0\",\n            \"ReconcileMethodName\": \"Local Currency\",\n            \"ControlAccountId\": \"{{VendorControlAccountId}}\",\n            \"ActiveStatusName\": \"Active\",\n            \"AutomaticReconcileId\": null,\n            \"AutomaticReconcileName\": null,\n            \"PreviousEnglishName\": null,\n            \"PreviousEnglishNameChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousLocalName\": null,\n            \"PreviousLocalNameChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousNumber\": null,\n            \"PreviousNumberChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"PreviousChartOfAccountsId\": null,\n            \"PreviousChartOfAccountsChangeDate\": \"2019-06-24T11:40:54.927\",\n            \"CustomerGLAccountId\": null,\n            \"CustomerGLAccountName\": null,\n            \"CustomerGLAccountNumber\": null,\n            \"BalanceInLocalCurrency\": 1200,\n            \"RevaluationEnabled\": null,\n            \"ParentAccountId\": null,\n            \"ParentAccountName\": null,\n            \"ParentAccountNumber\": null,\n            \"Category1Id\": null,\n            \"Category1Name\": null,\n            \"Category2Id\": null,\n            \"Category2Name\": null,\n            \"Category3Id\": null,\n            \"Category3Name\": null,\n            \"Category4Id\": null,\n            \"Category4Name\": null,\n            \"Category5Id\": null,\n            \"Category5Name\": null,\n            \"IsVATExempt\": null,\n            \"LastActivityDate\": null,\n            \"LastActivityTypeName\": null,\n            \"LastActivityByUserName\": null,\n            \"VatNumber\": null,\n            \"PaymentTermId\": null,\n            \"SalesmanUserId\": null,\n            \"NewGLAccountCardId\": null,\n            \"LocalBalanceInDue\": 1200,\n            \"NextDueDate\": null,\n            \"CurrencySign\": \"\",\n            \"DeductionFileTypeId\": null,\n            \"DeductionFileNumber\": null,\n            \"AssessingOfficeCode\": null,\n            \"Occupation\": null,\n            \"DeductionTypeId\": null,\n            \"ConsolidationVat\": null,\n            \"IsEquipmentVendor\": false,\n            \"ExcludeFromDeductionReport\": false,\n            \"DeductionTypeName\": null,\n            \"DeductionFileTypeCode\": null,\n            \"DeductionFileTypeName\": null,\n            \"AssessingOfficeName\": null,\n            \"DeductionTypeEnglishName\": null,\n            \"TotalOpenChequesInLocalCur\": null,\n            \"AutomaticReconcileLocalName\": null,\n            \"ReconcileMethodLocalName\": \"מטבע מקומי\",\n            \"TotFutureOpenChequesInLocalCur\": null,\n            \"CardId\": null,\n            \"CreatedByUserId\": null,\n            \"UpdatedByUserId\": null,\n            \"CreateDate\": \"2019-06-24T11:40:54.267\",\n            \"UpdateDate\": \"2019-06-24T11:40:54.507\",\n            \"CreatedByUserName\": \"khawla T0 \",\n            \"UpdatedByUserName\": \"khawla T0 \",\n            \"CreatedByLocalName\": \"עברית חוולה\",\n            \"UpdatedByLocalName\": \"עברית חוולה\"\n        }"
 				},
 				"url": {
 					"raw": "https://test.logitudeworld.com/TEST/api/glaccounts/",
@@ -380,7 +376,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{InvoiceNumber}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending\n",
+					"raw": "https://test.logitudeworld.com/TEST/api/arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{InvoiceNumber}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending",
 					"protocol": "https",
 					"host": [
 						"test",

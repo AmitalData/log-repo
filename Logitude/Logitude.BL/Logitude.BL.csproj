@@ -370,6 +370,8 @@
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeStatusReplicaPM.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeReplicaQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeStatusReplicaQuery.cs" />
+    <Compile Include="QuoteModel\APIDataContract\QueryService\QuotePriceStepsQueryService.Generated.cs" />
+    <Compile Include="QuoteModel\APIDataContract\QuotePriceSteps.Generated.cs" />
     <Compile Include="QuoteModel\CustomFilters\QuoteTemplateCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
     <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />

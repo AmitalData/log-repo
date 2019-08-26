@@ -12,6 +12,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
+using Simplog.Data.QuoteModel.EntityPOCOs;
 
 namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
 {
@@ -193,6 +194,8 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     public DateTime? StageDate { get; set; }
     
     public string SameOrFixed { get; set; }
+    
+    public DateTime? StartDate { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

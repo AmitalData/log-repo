@@ -1138,7 +1138,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.OrderIsDangerouseGoods = shipment.OrderIsDangerouseGoods;
             shipmentPM.OrderGrossWeightEdited = shipment.OrderGrossWeightEdited;
             shipmentPM.OrderChargeableWeightEdited = shipment.OrderChargeableWeightEdited;
-            shipmentPM.CutoffDate = shipment.CutoffDate;
             shipmentPM.AsAgreedFreight = shipment.AsAgreedFreight;
             shipmentPM.AsAgreedOtherCharges = shipment.AsAgreedOtherCharges;
             shipmentPM.AccountNumber = shipment.AccountNumber;
@@ -10709,7 +10708,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          IsManifestSentToAgent = s.IsManifestSentToAgent,
                                                          IsNewARInvoiceBlocked = s.IsNewARInvoiceBlocked,
                                                          OperationalDate = s.OperationalDate,
-                                                         CutoffDate = s.CutoffDate,
+                                                         CutoffDate = m.CutoffDate,
                                                          ValueOfGoods = s.ValueOfGoods,
                                                          LocalCustomsTransmissionsStatusCode = s.LocalCustomsTransmissionsStatusCode,
                                                          LocalCustomsTransmissionsStatusName = s.CustomsTransmissionsStatus == null ? null : s.CustomsTransmissionsStatus.Name,
@@ -12351,7 +12350,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          IsManifestSentToAgent = s.IsManifestSentToAgent,
                                                          IsNewARInvoiceBlocked = s.IsNewARInvoiceBlocked,
                                                          OperationalDate = s.OperationalDate,
-                                                         CutoffDate = s.CutoffDate,
+                                                         CutoffDate = m.CutoffDate,
                                                          ValueOfGoods = s.ValueOfGoods,
                                                          ISFDate = s.ISFDate,
                                                          ISFNumber = s.ISFNumber,
