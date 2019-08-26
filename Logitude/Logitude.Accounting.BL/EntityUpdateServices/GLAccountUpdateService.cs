@@ -373,13 +373,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 SetDisplayNumber(entityPM);
             }
         }
-
-        protected override void UpdateComposition(GLAccountPM entityPM)
-        {
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                InsertGLAccountMoreData(entityPM);
-            }
+        
 
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
@@ -1702,25 +1696,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             SetPriv();
             this.Repository.Add(poco);
 
-        }
-
-        private void SetDisplayNumber(GLAccountPM entityPM)
-        {
-            GLAccountCounterService gLAccountCounterService = new GLAccountCounterService(entityPM.Tenant);
-            string _displayNumber = gLAccountCounterService.GetNewDisplayNumber(entityPM);
-
-            //check exist
-            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(entityPM.Tenant);
-            GLAccountPM gla = gLAccountQuery.GetByDisplayNumber(_displayNumber, entityPM.Tenant).FirstOrDefault();
-            if(gla == null)
-            {
-                entityPM.DisplayNumber = _displayNumber;
-            }
-            else
-            {
-                //skip this counter, get next
-                SetDisplayNumber(entityPM);
-            }
         }
 
         private void InsertGLAccountMoreData(GLAccountPM entityPM)
