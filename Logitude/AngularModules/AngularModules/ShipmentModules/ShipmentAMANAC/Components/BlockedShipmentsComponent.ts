@@ -20,6 +20,7 @@ export class BlockedShipmentsComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private shipmentDomainService: ShipmentDomainService;
     private entityListService: ShipmentListService;
+    public ObjectTableName: string = "Shipment";
     public ValidationErrorsList: string[] = [];
     constructor() {
         super();      
