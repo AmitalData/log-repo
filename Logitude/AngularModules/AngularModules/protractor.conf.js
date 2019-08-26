@@ -147,7 +147,7 @@ exports.config = {
         Contact: 'e2e/Contacts/**/Contacts-spec.ts',
         EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
         ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
-        Opportunity :'e2e/CRM/**/CRMModule-spec.ts',
+        
 
         // ********************* FullAccounting **********************************
         ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',

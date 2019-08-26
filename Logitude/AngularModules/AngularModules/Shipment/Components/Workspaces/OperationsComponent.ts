@@ -4,7 +4,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-
+import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 @Component({
     moduleId: module.id,
     selector: 'OperationsComponent',
@@ -25,28 +25,34 @@ export class OperationsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(res1 => {
-            this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe(res2 => {
-                this.IsResourcesReady = true;
+        var listservice: EntityListService = new EntityListService();
+        var loadPr = listservice.getMock("Port");
+        loadPr.then((res: any) => {
+            res.subscribe(resp => {
+                this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(res1 => {
+                    this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe(res2 => {
+                        this.IsResourcesReady = true;
 
-                if (FeatureLocator.HasFeaturePermession("Booking", "Booking.Menu")) {
-                    this.IsBookingItemVisible = true;
-                    this.IsMenuVisible = true;
-                }
+                        if (FeatureLocator.HasFeaturePermession("Booking", "Booking.Menu")) {
+                            this.IsBookingItemVisible = true;
+                            this.IsMenuVisible = true;
+                        }
 
-                if (FeatureLocator.HasFeaturePermession("Shipment", "AgentSharedManifest")) {
-                    this.IsSharedManifestItemVisible = true;
-                    this.IsMenuVisible = true;
-                }
+                        if (FeatureLocator.HasFeaturePermession("Shipment", "AgentSharedManifest")) {
+                            this.IsSharedManifestItemVisible = true;
+                            this.IsMenuVisible = true;
+                        }
 
-                if (FeatureLocator.HasFeaturePermession("Shipment", "Area.ContainersFU")) {
-                    this.IsContainersFUItemVisible = true;
-                    this.IsMenuVisible = true;
-                }
+                        if (FeatureLocator.HasFeaturePermession("Shipment", "Area.ContainersFU")) {
+                            this.IsContainersFUItemVisible = true;
+                            this.IsMenuVisible = true;
+                        }
 
-                this.IsAMANACItemVisible = ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC"? true: false;
+                        this.IsAMANACItemVisible = ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC" ? true : false;
 
-                this.RunComponent();
+                        this.RunComponent();
+                    });
+                });
             });
         });
     }
