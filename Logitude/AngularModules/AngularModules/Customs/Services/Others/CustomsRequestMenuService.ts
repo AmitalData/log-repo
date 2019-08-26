@@ -60,7 +60,11 @@ export class CustomsRequestMenuService {
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CargoQuery"), "MainfestStatus", './CustomsModules/CustomsGeneralRequests/Components/CargoQueryRequestComponent', 1010, 680, "8240"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Declaration.O.RestoreMessage"), "RestoreMessage", './CustomsModules/CustomsGeneralRequests/Components/CustomsRestoreMessagesComponent', 540, 380, ""));// 9010 or 9011
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ImporterDeclarationQuery"), "ImporterDeclarationQuery", './CustomsModules/CustomsGeneralRequests/Components/ImporterDeclarationComponent', 850, 800, "8326"));
+
+        var item8326 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ImporterDeclarationQuery"), "ImporterDeclarationQuery", './CustomsModules/CustomsGeneralRequests/Components/ImporterDeclarationComponent', 850, 800, "8326")
+        item8326.CanExportExcel = true;
+        this._CustomsRequestMenuItems.push(item8326);
+
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.BankAccountToRefundQuery"), "BankAccountToRefundQuery", './CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deposit/BankAccountToRefundComponent', 600, 420, "2018"));
          
         if (FeatureLocator.HasFeaturePermession("General", "RECALLSUPPLIER")) {

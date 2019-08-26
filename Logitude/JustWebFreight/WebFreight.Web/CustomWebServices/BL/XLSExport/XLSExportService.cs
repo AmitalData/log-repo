@@ -39,6 +39,10 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             ContainerAccessor.Container.RegisterType<IExcelExport, BlockListInWarehouseDetailExport>
     ((new BlockListInWarehouseDetailExport()).MainInterfaceCode);
 
+            
+            ContainerAccessor.Container.RegisterType<IExcelExport, ImporterDeclarationExport>
+   ((new ImporterDeclarationExport()).MainInterfaceCode);
+
         }
 
         public static IExcelExport GetExcelFormator(string mainInterfaceCode, string correlationId = "")

@@ -637,7 +637,8 @@ rgb(27, 144, 203)
     {
         Object = 0,
         Number,
-        Text
+        Text,
+        TrueFalse
     }
 
     public enum ExcelHAlignEnum
