@@ -21,8 +21,11 @@ export class NewCustomer{
     this.Helper.WaitByIdAndFill('Customer_Address2_Potential', 'Nablus');
     this.Helper.WaitByIdAndFill('Customer_ZipCode_Potential', '00970');
     this.Helper.WaitByIdAndFill('Customer_CountryId_Potential', 'ps');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-    this.Helper.WaitByIdAndFill('Customer_City_Potential','Nablus');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitBusyIndicator();
+
+      this.Helper.WaitByIdAndFill('Customer_City_Potential', 'Nablus');
+     
     this.Helper.WaitByIdAndFill('Contact_EnglishName', 'My Contact');
     this.Helper.WaitByIdAndClick('Ok-AddPotCustomer');
     this.Helper.WaitBusyIndicator();
@@ -34,7 +37,7 @@ export class NewCustomer{
 
   }
 
-  public ActivateCustomerGLAccount(Name: string,DisplayNumber: string){
+  public ActivateCustomerGLAccount(Name: string){
       this.Generator.QuickSearchTextBox('Card_Search', Name);
       this.Helper.WaitByIdAndClick('Customer.B.Activate');
       this.Helper.WaitByIdAndClick('Ok-activate');

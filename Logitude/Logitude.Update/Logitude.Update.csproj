@@ -402,6 +402,7 @@
     <EmbeddedResource Include="Properties\logitude.update.exe.licenses" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BKMVDATA.txt.txt" />
     <Content Include="logo_tr_AVr_icon.ico" />
     <Content Include="UpdateSettings.xml" />
   </ItemGroup>

@@ -2718,6 +2718,7 @@ namespace WebFreight.Web.InfrastructureModel
                     Name = a.Name,
                     LocalName = localName,
                     SearchFields = a.SearchFields,
+                    ViewOrder = a.ViewOrder,
 
                 };
                 theChargesGroupRepository.Add(chargesGroup);

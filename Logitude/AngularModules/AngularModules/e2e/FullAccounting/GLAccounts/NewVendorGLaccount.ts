@@ -19,7 +19,8 @@ export class NewVendor {
     this.Helper.WaitByIdAndClick('NewButton_Vendor');
     this.Helper.WaitByIdAndFill('Address_Name', Name);
     this.Helper.WaitByIdAndFill('Address_CountryId', 'ps');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitBusyIndicator();
     this.Helper.WaitByIdAndFill('Address_City', 'Nablus');
     this.Helper.WaitByIdAndClick('Ok-AddVendor');
     this.Helper.WaitBusyIndicator();
@@ -47,7 +48,7 @@ export class NewVendor {
       this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
       this.Helper.WaitBusyIndicator();
       this.Helper.WaitWindowClosed();
-      this.Helper.WaitBusyIndicatorToShow();
+     // this.Helper.WaitBusyIndicatorToShow();
       this.Helper.WaitBusyIndicator();
     //browser.sleep(5000);
     //this.Helper.WaitBusyIndicator();

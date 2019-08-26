@@ -228,7 +228,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public IQueryable<EntityStatus> GetEntityStatus(int tenant)
         {
             return (from a in context.EntityStatus
-                    where a.Tenant == tenant
+                    where a.Tenant == tenant && !a.InActive
                     select a);
         }
 

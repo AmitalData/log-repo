@@ -33,15 +33,12 @@ export class EditTabsComponent {
  
 
   EditTabs(shipperRef1:string,ShipmentType: string,Direction: string,TransportMode: string,QuoteType: string) {
-
    this.OverviewTabScenario.OverviewTab(ShipmentType);
    this.DetailsTabScenario .DetailsTab(ShipmentType);
    this.PartnerTabScenario .PartnerTab(ShipmentType);
    this.PackagesTabScenario .PackagesTab(ShipmentType,QuoteType);
    this.RoutingsTabScenario .RoutingsTab(ShipmentType);
    this.ChargesTabScenario .ChargesTab(ShipmentType);
-  
-
   }
 
 }

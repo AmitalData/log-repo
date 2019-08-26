@@ -58,12 +58,14 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
         this.BuildAdditionalFields();
     }
+    public ScreenIsReady: boolean = false;
 
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe(resp => {
+                this.ScreenIsReady = true;
 
                 this.BuildFiltersLists();
 
@@ -72,7 +74,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                 }
 
                 this.LoadAllowedAirline();
-                //this.ScreenIsReady = true;
             });
         });
 

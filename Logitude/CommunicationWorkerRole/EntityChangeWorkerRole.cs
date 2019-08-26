@@ -117,16 +117,19 @@ namespace CommunicationWorkerRole
                                     AutomationsList = automationRepository.GetAutomationsByObjectTableId(objectTableId, tenant, automationConditionFields.LastUpdateDate.ToString()).Where(d => d.Type == type && d.ResultCode == "EMAIL").OrderBy(d => d.Order).ToList();
                                 }
 
-                                if (automationConditionFields.IsRunMasterHouseAutomation)
+                                if (automationConditionFields.IsRunMasterHouseAutomation && !string.IsNullOrEmpty(automationConditionFields.OtherObjectTableIdWithLastUpdate))
                                 {
-                                    otherObjectTableId = automationConditionFields.OtherObjectTableIdWithLastUpdate.Split('@')[0];
-                                    otherObjectTableLastUpdateDate = automationConditionFields.OtherObjectTableIdWithLastUpdate.Split('@')[1];
+                                    var otherObjectTableDetails = automationConditionFields.OtherObjectTableIdWithLastUpdate.Split('@');
+                                    otherObjectTableId = otherObjectTableDetails[0];
+                                    if (otherObjectTableDetails.Length > 1) otherObjectTableLastUpdateDate = otherObjectTableDetails[1];
 
-                                    List<Automation> otherAutomations = automationRepository.GetAutomationsByObjectTableId(otherObjectTableId, tenant, otherObjectTableLastUpdateDate).Where(d => d.Type == type && d.ResultCode == "EMAIL").OrderBy(d => d.Order).ToList();
-
-                                    foreach (Automation item in otherAutomations)
+                                    if (!string.IsNullOrEmpty(otherObjectTableId) && !string.IsNullOrEmpty(otherObjectTableLastUpdateDate))
                                     {
-                                        AutomationsList.Add(item);
+                                        List<Automation> otherAutomations = automationRepository.GetAutomationsByObjectTableId(otherObjectTableId, tenant, otherObjectTableLastUpdateDate).Where(d => d.Type == type && d.ResultCode == "EMAIL").OrderBy(d => d.Order).ToList();
+                                        foreach (Automation item in otherAutomations)
+                                        {
+                                            AutomationsList.Add(item);
+                                        }
                                     }
                                 }
 

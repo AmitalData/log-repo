@@ -14,7 +14,13 @@ declare var window: any;
 
 export class ServiceHelper {
     public static Http: Http;
-    private static CurrentSession = SessionLocator.SelectedSession;
+    private static _CurrentSession = SessionLocator.SelectedSession;
+    private static get CurrentSession() {
+        if (this._CurrentSession == null) {
+            this._CurrentSession = SessionLocator.SelectedSession;
+        }
+        return this._CurrentSession;
+    }
     public static _LogitudeErrorHandler: LogitudeErrorHandler = new LogitudeErrorHandler();
 
     public static HandleServiceError(error: any) {
