@@ -503,14 +503,14 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
                 shipmentPayable.MeasurementCode = newRecord.UnitOfMesurmentCode;
                 var nweQuantity = this.GetQuantity(chargesType);
-                var expectedAmount = newRecord.Price;
+                var expectedAmount = newRecord.ActualPrice;
                 var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
                 var expectedAmountLocal = expectedAmount * rate;
 
                 var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
                 var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
 
-                shipmentPayable.UnitPrice = newRecord.Price != null ? AppTool.Round(newRecord.Price / nweQuantity, 3): null;
+                shipmentPayable.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3): null;
                 shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
                 shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
                 shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
@@ -533,7 +533,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId == item.TariffId)[0];
         var existsPayableOnSurcharges: ShipmentPayablePM [] = []; 
         item.Surcharges.forEach(surcharge => {
-            existsPayableOnSurcharges.push(this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId == surcharge.TariffId)[0]);
+            var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId == surcharge.TariffId)[0];
+            if (payable) {
+                existsPayableOnSurcharges.push(payable);
+            }
         });
 
         if (existsPayableOnAirFreight || (existsPayableOnSurcharges != null && existsPayableOnSurcharges.length > 0)) {
