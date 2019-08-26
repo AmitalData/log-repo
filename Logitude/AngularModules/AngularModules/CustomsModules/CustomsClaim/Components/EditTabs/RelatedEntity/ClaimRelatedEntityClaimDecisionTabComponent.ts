@@ -135,7 +135,6 @@ export class ClaimRelatedEntityClaimDecisionTabComponent extends BaseComponent {
             }
         }
     }
-
     //#endregion
 }
 

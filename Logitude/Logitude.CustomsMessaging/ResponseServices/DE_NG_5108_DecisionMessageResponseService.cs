@@ -45,6 +45,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             foreach (var deficitFileItem in customResponse.DeficitFile)
             {
                 TapagConnectionTablePM tapagConnectionTablePM = tapagConnectionTableQueryService.GetTapagConnectionByFileAndNumeral(deficitFileItem.TapagIdentifier.fileNumber, deficitFileItem.TapagIdentifier.numeral, requestParams.Tenant);
+                if (tapagConnectionTablePM == null)
+                {
+                    this.MyResponseData.HasException = true;
+                    this.MyResponseData.UserMessage = "לא נמצא תיק תפג " + deficitFileItem.TapagIdentifier.fileNumber;
+                    return;
+                }
                 DeficitPM deficitPM = deficitQueryService.GetDeficitByPaymentOrderNumberOrTapagId(null, tapagConnectionTablePM.TapagId, requestParams.Tenant);
                 if (deficitPM != null)
                 {
@@ -58,7 +64,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.UserMessage = userMessage;
 
                     DeficitDecisionPM deficitDecisionPM = new DeficitDecisionPM();
-                    if (deficitPM.DeficitDecisions != null)
+                    if (deficitPM.DeficitDecisions != null && deficitPM.DeficitDecisions.Count() > 0)
                     {
                         deficitDecisionPM = deficitPM.DeficitDecisions.FirstOrDefault(si => si.DeclarationId == tapagConnectionTablePM.DeclarationId);
                         if (deficitDecisionPM != null)
@@ -70,6 +76,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         deficitDecisionPM.ChangeSetOp = ChangeSetOperation.Insert;
                         deficitDecisionPM.DeclarationId = tapagConnectionTablePM.DeclarationId;
+                        deficitDecisionPM.DeficitId = deficitPM.Id;
+                        deficitDecisionPM.Tenant = deficitPM.Tenant;
                     }
 
                     deficitDecisionPM.RequestID = customResponse.DecisionMessage.requestID.ToString();
@@ -87,6 +95,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         deficitDecisionPM.TotalLinkingAmount = deficitFileItem.DebtBalance.totalLinkingAmount;
                     }
 
+                    if(deficitDecisionPM.ChangeSetOp == ChangeSetOperation.Insert)
+                    {
+                        deficitPM.DeficitDecisions.Add(deficitDecisionPM);
+                    }
+
+                    deficitPM.ChangeSetOp = ChangeSetOperation.Update;
+                    myDeficitUpdateService.Update(deficitPM, true);
+
                     var declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
                     DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(deficitDecisionPM.DeclarationId, false, false);
 
@@ -94,10 +110,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     string decisionTypeName = GetDecisionTypeName(customResponse.DecisionMessage.decisionCode.ToString(), requestParams.Tenant);
                     string description = "החלטת מכס בגין גרעון " + connectedDeclarationPM.CustomFileNo + " - " + decisionTypeName;
                     DoUpdateNotification("5108N", deficitPM, requestParams.Tenant, connectedDeclarationPM, description, "A");
-
-                    deficitPM.ChangeSetOp = ChangeSetOperation.Update;
-                    myDeficitUpdateService.Update(deficitPM, true);
-              
                 }
             }
         }

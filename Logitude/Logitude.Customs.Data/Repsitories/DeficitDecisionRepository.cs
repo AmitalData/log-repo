@@ -17,8 +17,10 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<DeficitDecision> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            DeficitKeys keys = entityKeys as DeficitKeys;
+            return (from a in context.DeficitDecisions
+                    where a.DeficitId == keys.Id
+                    select a).ToList();
         }
 
         //public List<DeficitDecision> GetDeficitDecisionByTapagId(string tapagId, int tenant)
