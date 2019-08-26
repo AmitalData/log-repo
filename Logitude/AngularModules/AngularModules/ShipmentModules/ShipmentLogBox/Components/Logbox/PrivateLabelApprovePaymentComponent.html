@@ -114,7 +114,7 @@
     </tr>
     <tr>
         <td>
-            <table style="direction:rtl;">
+            <table [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'">
                 <!--<tr style="height: 10px;">
                     <td style="height: 10px;">
                         <div style="float:right;">אישור היבואן להגשת הצהרת יבוא למכס</div>
