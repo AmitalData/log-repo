@@ -638,6 +638,31 @@ export class EditSupplierInvoiceItem extends BaseComponent{
 
     //#endregion
 
+    //#region Tab: Packages
+
+    //get PackageQuantity() { return this.OriginalItemPM.PackageQuantity; }
+    //set PackageQuantity(value: string) {
+    //    if (this.OriginalItemPM.PackageQuantity != value) {
+    //        this.OriginalItemPM.PackageQuantity = value;
+    //    }
+    //}
+
+    //get Weight() { return this.OriginalItemPM.Weight; }
+    //set Weight(value: string) {
+    //    if (this.OriginalItemPM.Weight != value) {
+    //        this.OriginalItemPM.Weight = value;
+    //    }
+    //}
+
+    //get MarksAndNumber() { return this.OriginalItemPM.MarksAndNumber; }
+    //set MarksAndNumber(value: string) {
+    //    if (this.OriginalItemPM.MarksAndNumber != value) {
+    //        this.OriginalItemPM.MarksAndNumber = value;
+    //    }
+    //}
+
+    //#endregion
+
     //#region Ok, Cancel Buttons Handler
     hasDash: boolean = false;
     OkButtonClicked() {
