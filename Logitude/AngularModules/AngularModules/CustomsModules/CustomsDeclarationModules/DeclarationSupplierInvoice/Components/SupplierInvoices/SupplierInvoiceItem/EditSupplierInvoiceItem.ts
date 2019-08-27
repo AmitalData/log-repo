@@ -178,7 +178,8 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         this.TabsSource.push({ Name: "Details", isSelected: true, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Details")  });
         this.TabsSource.push({ Name: "Declarations", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Declarations") });
         this.TabsSource.push({ Name: "SerialNumbers", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.SerialNumbers") });
-        this.TabsSource.push({ Name: "Levies", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Levies")  });
+        this.TabsSource.push({ Name: "Levies", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Levies") });
+        this.TabsSource.push({ Name: "Packages", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Packages") });
     }
     SelectionChanged(tab: any) {
         
@@ -634,6 +635,31 @@ export class EditSupplierInvoiceItem extends BaseComponent{
     Removelevy(item: LevyItemModel) {
         this.LevyList.Remove(item);
         this.OriginalItemPM.RemoveSupplierInvoiceItemsLevy(item.LevyPM); // remove from entity
+    }
+
+    //#endregion
+
+    //#region Tab: Packages
+
+    get PackageQuantity() { return this.OriginalItemPM.PackageQuantity; }
+    set PackageQuantity(value: number) {
+        if (this.OriginalItemPM.PackageQuantity != value) {
+            this.OriginalItemPM.PackageQuantity = value;
+        }
+    }
+
+    get Weight() { return this.OriginalItemPM.Weight; }
+    set Weight(value: number) {
+        if (this.OriginalItemPM.Weight != value) {
+            this.OriginalItemPM.Weight = value;
+        }
+    }
+
+    get MarksAndNumbers() { return this.OriginalItemPM.MarksAndNumbers; }
+    set MarksAndNumbers(value: string) {
+        if (this.OriginalItemPM.MarksAndNumbers != value) {
+            this.OriginalItemPM.MarksAndNumbers = value;
+        }
     }
 
     //#endregion
