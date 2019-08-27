@@ -29,7 +29,9 @@ import {AddEditRecoExPageComponent} from './Components/NewEntity/AddEditRecoExPa
 import {NewConnectedGLAccountComponent} from './Components/EditTabs/GLAccount/NewConnectedGLAccountComponent';
 import {NewPaymentChequeComponent} from './Components/NewEntity/NewPaymentChequeComponent';
 import {NewTaxWithholdingAssessingOfficeComponent} from './Components/Maintenance/NewTaxWithholdingAssessingOfficeComponent';
-import {FullAccountingSettingsComponent} from './Components/Maintenance/FullAccountingSettingsComponent';
+import { FullAccountingSettingsComponent } from './Components/Maintenance/FullAccountingSettingsComponent';
+import { FullAccountingAddControlComponent } from './Components/Maintenance/FullAccountingAddControlComponent';
+
 import {AccountingPeriodsComponent} from './Components/Maintenance/AccountingPeriodsComponent';
 import {EditAccountingPeriodComponent} from './Components/Maintenance/EditAccountingPeriodComponent';
 import {AccountingPeriodEventComponent} from './Components/Maintenance/AccountingPeriodEventComponent';
@@ -132,6 +134,7 @@ export const Components =
         NewCategory4Component,
         NewCategory5Component,
         FullAccountingSettingsComponent,
+        FullAccountingAddControlComponent,
         AccountingPeriodsComponent,
         EditAccountingPeriodComponent,
         AccountingPeriodEventComponent,
@@ -242,6 +245,7 @@ export class ModuleDeclarations {
             case "NewCategory4Component": { myResult = NewCategory4Component; break; }
             case "NewCategory5Component": { myResult = NewCategory5Component; break; }
             case "FullAccountingSettingsComponent": { myResult = FullAccountingSettingsComponent; break; }
+            case "FullAccountingAddControlComponent": { myResult = FullAccountingAddControlComponent; break; }
             case "YearTransferComponent": { myResult = YearTransferComponent; break; }
             case "AccountingPeriodsComponent": { myResult = AccountingPeriodsComponent; break; }
             case "EditAccountingPeriodComponent": { myResult = EditAccountingPeriodComponent; break; }
