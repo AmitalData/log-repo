@@ -167,7 +167,35 @@
                                         <div></div>
                                     </td>
                                 </tr>
+                                <!--InternalNotes-->
 
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <table>
+                                            <tr style="height:5px"></tr>
+                                            <tr>
+                                                <td style="vertical-align:top;">
+                                                    <LogLabel [ObjectFieldName]="'InternalNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td>
+                                        <table>
+                                            <tr style="height:10px"></tr>
+                                            <tr>
+                                                <td style="width:50px">
+                                                    <LogTextBox [ObjectFieldName]="'InternalNotes'" [IsMultiline]="true" [Text]="InternalNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="false"></LogTextBox>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
                                 <!-- BankAccountLiteId -->
                                 <tr class="FormFieldRow" *ngIf="!accountingActivated">
                                     <td>
@@ -318,30 +346,30 @@
                                         <LogLabel [ObjectFieldName]="'FechaPago'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
-                                  <td>
-                                      <table>
-                                          <tr>
-                                              <td>
-                                                  <LogDatePicker [ObjectFieldName]="'FechaPago'" [SelectedDateValue]="FechaPago" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                              </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'FechaPago'" [SelectedDateValue]="FechaPago" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                </td>
 
-                                              <td>
-                                                  <div></div>
-                                              </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
 
-                                              <td>
-                                                  <LogDatePicker [ObjectFieldName]="'FechaPago'" [SelectedDateValue]="FechaPago" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="false" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
-                                              </td>
-                                          </tr>
-                                      </table>
-                                  </td>
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'FechaPago'" [SelectedDateValue]="FechaPago" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="false" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
 
                                     <td>
                                         <div></div>
                                     </td>
 
                                 </tr>
-
+                               
                                 <tr>
                                     <td colspan="7">
                                         <div></div>
