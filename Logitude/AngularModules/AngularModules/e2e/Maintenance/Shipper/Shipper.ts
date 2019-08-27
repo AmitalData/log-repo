@@ -55,6 +55,7 @@ export class NewShipper {
         this.helper.WaitByIdAndClick('Customer.TH.Addresses');
         this.helper.WaitByIdAndClick('Edit');
         this.helper.WaitByIdAndFill('Address_Address1', "Palestine");
+        this.helper.WaitByIdAndClick('OKButtonID');
         this.helper.WaitByIdAndClick('Customer-Save');
 
 
