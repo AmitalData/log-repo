@@ -2088,6 +2088,19 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     TaxWithholding = param.BuildAccountingTenant.TaxWithholding,
                     VatAccounts = param.BuildAccountingTenant.VatAccounts,
                 };
+                if (BuildAccountingTenant.ControlAccounts)
+                {
+                    BuildAccountingTenant.ChartOfAccountsId = null;
+                    BuildAccountingTenant.ControlAccountId= null;
+                    //BuildAccountingTenant.CreateCustomerControlAccountId = true;
+                    //BuildAccountingTenant.CreateVendorControlAccountId = true;
+                    //BuildAccountingTenant.CreateFileControlAccountId = true;
+                    //BuildAccountingTenant.CreateOceanExportJobControlAccountId = true;
+                    //BuildAccountingTenant.CreateOceanImportJobControlAccountId = true;
+                    //BuildAccountingTenant.CreateAirImportJobControlAccountId = true;
+
+                }
+                BuildAccountingTenant.CheckAndInsertPoco = true;
                 int BuildGLAccountEachType = param.BuildGLAccountEachType;
                 int BuildJournalEachMonth = param.BuildJournalEachMonth;
 

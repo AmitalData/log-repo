@@ -388,7 +388,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             // Chart of Account change validation
-            if(entityPOCO.ChartOfAccountsId != entityPM.ChartOfAccountsId)
+            if (entityPOCO.ChartOfAccountsId != entityPM.ChartOfAccountsId)
             {
                 // ChartOfAccount changed
                 // get transactions in closed period
@@ -508,7 +508,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void SendHybridTask(GLAccountPM glaccounPM)
         {
-            if(glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5")
+            if (glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5")
             {
                 CommunicationsParams comParams = CreateCommunicationParamsForGLAccount(glaccounPM);
 
@@ -702,7 +702,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             base.UpdateComposition(entityPM);
         }
-      
+
         protected override void Trace(GLAccountPM entityPM, GLAccount entityPOCO, string changesXml)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -720,14 +720,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ObjectTableName = "GLAccount",
                     IsAddedManually = false,
                     EventTypeCode = "ACR",
-                    
+
 
                 });
 
 
                 if (entityPM.Type == "ADDED")
                 {
-                    string s = TranslateTextsClass.Translate("Accounting.General.O.Added", entityPM.Tenant,true);
+                    string s = TranslateTextsClass.Translate("Accounting.General.O.Added", entityPM.Tenant, true);
                     string[] text = s.Split('-');
 
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -775,7 +775,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         //}
 
 
-                        if (line.Changed)  
+                        if (line.Changed)
                         {
                             var currentContextTag = line.CurrentContextTag ?? "";
                             if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventWBLKConst)
@@ -842,11 +842,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         }
                     }
                 }
-               
+
                 //create trace event with updated type.
                 if (entityPM.DisplayNumber != entityPOCO.DisplayNumber && (!String.IsNullOrEmpty(entityPM.DisplayNumber) || !String.IsNullOrEmpty(entityPOCO.DisplayNumber)))
                 {
-                
+
                     // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
                     String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.DisplayNumber.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.DisplayNumber.ToString();
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -857,12 +857,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         ObjectTableName = "GLAccount",
                         IsAddedManually = false,
                         EventTypeCode = "ACH",
-                        Notes=notes,
+                        Notes = notes,
 
                     });
-                    
-                  //  EntityPOCO.PreviousNumber = entityPOCO.DisplayNumber;
-                  //  EntityPOCO.PreviousNumberChangeDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+
+                    //  EntityPOCO.PreviousNumber = entityPOCO.DisplayNumber;
+                    //  EntityPOCO.PreviousNumberChangeDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 }
                 if (entityPM.EnglishName != entityPOCO.EnglishName && (!String.IsNullOrEmpty(entityPM.EnglishName) || !String.IsNullOrEmpty(entityPOCO.EnglishName)))
                 {
@@ -896,8 +896,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         Notes = notes,
 
                     });
-                 //   EntityPOCO.PreviousEnglishName = entityPOCO.EnglishName;
-                 //   EntityPOCO.PreviousEnglishNameChangeDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                    //   EntityPOCO.PreviousEnglishName = entityPOCO.EnglishName;
+                    //   EntityPOCO.PreviousEnglishNameChangeDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 }
                 if (entityPM.LocalName != entityPOCO.LocalName && (!String.IsNullOrEmpty(entityPM.LocalName) || !String.IsNullOrEmpty(entityPOCO.LocalName)))
                 {
@@ -930,8 +930,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         Notes = notes,
 
                     });
-                 //   EntityPOCO.PreviousLocalName = entityPOCO.LocalName;
-                  //  EntityPOCO.PreviousLocalNameChangeDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                    //   EntityPOCO.PreviousLocalName = entityPOCO.LocalName;
+                    //  EntityPOCO.PreviousLocalNameChangeDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 }
                 GLAccountRepository glAccountRepo = new GLAccountRepository(entityPM.Tenant);
 
@@ -939,7 +939,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     String notes = "";
                     GLAccount oldParent = glAccountRepo.GetSingle(entityPOCO.ParentAccountId, entityPM.Tenant);
-                  
+
 
                     if (entityPM.ParentAccountId == null)
                     {
@@ -952,7 +952,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         GLAccount newParent = glAccountRepo.GetSingle(entityPM.ParentAccountId, entityPM.Tenant);
                         string oldName = null;
                         string newName = null;
-                        if(oldParent != null)
+                        if (oldParent != null)
                         {
                             if (oldParent.EnglishName == null)
                             {
@@ -1002,7 +1002,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 if (entityPM.Inactive != entityPOCO.Inactive && entityPM.Inactive == true)
                 {
-                  
+
                     // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
                     //String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.LocalName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.LocalName;
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -1013,7 +1013,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         ObjectTableName = "GLAccount",
                         IsAddedManually = false,
                         EventTypeCode = "BLK",
-                       
+
 
                     });
                 }
@@ -1036,7 +1036,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 if (entityPM.ChartOfAccountsId != entityPOCO.ChartOfAccountsId && (!String.IsNullOrEmpty(entityPM.ChartOfAccountsId) || !String.IsNullOrEmpty(entityPOCO.ChartOfAccountsId)))
                 {
-                  
+
                     // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
                     IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
                     ChartOfAccountQueryService query = new ChartOfAccountQueryService(accountingContext);
@@ -1092,7 +1092,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (entityPM.ChartOfAccountsTypeCode != entityPOCO.ChartOfAccountsTypeCode && (!String.IsNullOrEmpty(entityPM.ChartOfAccountsTypeCode) || !String.IsNullOrEmpty(entityPOCO.ChartOfAccountsTypeCode)))
                 {
-                   
+
                     // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
                     IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
                     ChartOfAccountsTypeQueryService query = new ChartOfAccountsTypeQueryService(accountingContext);
@@ -1144,7 +1144,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (entityPM.InternalNumber != entityPOCO.InternalNumber && (!String.IsNullOrEmpty(entityPM.InternalNumber) || !String.IsNullOrEmpty(entityPOCO.InternalNumber)))
                 {
-                 
+
                     // ContactPM loggedContact = LoggedContact(entityPM.Tenant);
                     String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.InternalNumber + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.InternalNumber;
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -1159,12 +1159,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     });
                 }
-                if(entityPM.Type == "ADDED")
+                if (entityPM.Type == "ADDED")
                 {
 
-                    string s = TranslateTextsClass.Translate("Accounting.General.O.Added", entityPM.Tenant,true);
+                    string s = TranslateTextsClass.Translate("Accounting.General.O.Added", entityPM.Tenant, true);
                     string[] text = s.Split('-');
-                 
+
 
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
@@ -1174,16 +1174,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         ObjectTableName = "GLAccount",
                         IsAddedManually = false,
                         EventTypeCode = "ADD",
-                        Notes = text[0] +"- " + entityPM.DisplayNumber + " "+ text[1],
+                        Notes = text[0] + "- " + entityPM.DisplayNumber + " " + text[1],
 
                     });
                 }
                 if (entityPM.Type == "CHILD")
                 {
-                    string s = TranslateTextsClass.Translate("Accounting.General.O.ChildAdded", entityPM.Tenant,true);
+                    string s = TranslateTextsClass.Translate("Accounting.General.O.ChildAdded", entityPM.Tenant, true);
                     string[] text = s.Split('-');
 
-               
+
 
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
@@ -1193,17 +1193,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         ObjectTableName = "GLAccount",
                         IsAddedManually = false,
                         EventTypeCode = "CHID",
-                        Notes = text[0] +"- " + entityPM.DisplayNumber + " "+text[1],
+                        Notes = text[0] + "- " + entityPM.DisplayNumber + " " + text[1],
 
                     });
                 }
 
                 if (entityPM.Type == "INACTIVE")
                 {
-                    string s = TranslateTextsClass.Translate("Accounting.General.O.Deactivated", entityPM.Tenant,true);
+                    string s = TranslateTextsClass.Translate("Accounting.General.O.Deactivated", entityPM.Tenant, true);
                     string[] text = s.Split('-');
 
-               
+
 
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
@@ -1223,7 +1223,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     string s = TranslateTextsClass.Translate("Accounting.General.O.Activated", entityPM.Tenant, true);
                     string[] text = s.Split('-');
 
-                 
+
 
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
@@ -1245,7 +1245,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         string[] text = xs.Split('-');
 
                         string[] s = entityPM.Type.Split(',');
-                      
+
 
                         EventTracer.CreateTraceEvent(new EventTracerArgs()
                         {
@@ -1270,9 +1270,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             // Update Card GLAccountId [Maheera]
             UpdateCardGLAccountId(entityPM.Tenant, entityPM.NewGLAccountCardId, entityPM.Id);
         }
+        public bool FullAccountingProvider { get; set; }
         protected override void Validate(GLAccountPM entityPM)
         {
-            ValidationResult result = GLAccountValidator.IsGLAccountValid(entityPM);
+            ValidationResult result = GLAccountValidator.IsGLAccountValid(entityPM, FullAccountingProvider);
             if (result != null)
             {
                 throw new ApplicationException(result.ErrorMessage);
