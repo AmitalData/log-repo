@@ -1,32 +1,37 @@
-declare @Tenant as int
-declare @ShipmentId as varchar(15)
-declare @ContainerNumberSum varchar(4000)
+update ShipmentComputedFields set ContainersNumbers = null
 
- 
-DECLARE ShipmentsCursor CURSOR READ_ONLY
-	FOR
-	SELECT  (STUFF((SELECT CAST(',' + ContainerNumber AS VARCHAR(4000)) 
-         FROM ShipmentPackages
-         WHERE (Shipments.Id = ShipmentPackages.ShipmentId  and ShipmentPackages.ContainerNumber is not null) 
-         FOR XML PATH ('')), 1, 1, '')) AS ContainerNumbers, Id, Tenant
-	FROM Shipments	  group by Id,Tenant
-	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO @ContainerNumberSum, @ShipmentId, @Tenant 
-	WHILE @@FETCH_STATUS = 0
-		BEGIN	
-		if(@ContainerNumberSum is not null)
-		BEGIN
-		update ShipmentComputedFields set ContainersNumbers=@ContainerNumberSum where Id=@ShipmentId and Tenant=@Tenant
-		END
-		FETCH NEXT FROM ShipmentsCursor INTO @ContainerNumberSum,@ShipmentId, @Tenant
-		END
-	CLOSE ShipmentsCursor
-	DEALLOCATE ShipmentsCursor
-	
-	
-	
-	
-	
-	
-	
-	
-	
+declare @Tenant integer
+declare @ShipmentId varchar(15)
+declare @ContainerNumbers varchar(4000)
+
+declare @MemoryTable table
+(
+  Tenant int not null,
+  ShipmentId varchar(15) not null,
+  ContainerNumbers varchar(4000) not null
+)
+
+insert into @MemoryTable
+SELECT Tenant, ShipmentId, ContainerNumber = 
+    STUFF((SELECT ', ' + ContainerNumber
+           FROM ShipmentPackages b 
+           WHERE b.ShipmentId = a.ShipmentId 
+          FOR XML PATH('')), 1, 2, '')
+FROM ShipmentPackages a
+where ContainerNumber is not null
+group by Tenant, ShipmentId
+
+
+       DECLARE DataCursor CURSOR READ_ONLY
+       FOR
+       SELECT Tenant, ShipmentId, ContainerNumbers
+       From @MemoryTable
+       OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Tenant, @ShipmentId, @ContainerNumbers
+       WHILE @@FETCH_STATUS = 0
+       BEGIN
+              update ShipmentComputedFields set ContainersNumbers = @ContainerNumbers where Id = @ShipmentId and Tenant = @Tenant
+       FETCH NEXT FROM DataCursor INTO @Tenant, @ShipmentId, @ContainerNumbers    
+       END
+       CLOSE DataCursor
+       DEALLOCATE DataCursor
+

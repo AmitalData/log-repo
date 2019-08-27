@@ -698,11 +698,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 {
 
 
-                    if (MasterData.CutoffDate != null)
-                    {
-                        Shipment.MainCarriageLeg1CutoffDate = MasterData.CutoffDate;
+                    //if (MasterData.CutoffDate != null)
+                    //{
+                    //    Shipment.MainCarriageLeg1CutoffDate = MasterData.CutoffDate;
 
-                    }
+                    //}
                     if (MasterShipment != null)
                     {
                         Shipment.Transshipment1ETD = MasterShipment != null ? MasterShipment.Transshipment1ETD : null;
