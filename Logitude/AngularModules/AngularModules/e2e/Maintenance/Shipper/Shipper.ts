@@ -35,19 +35,20 @@ export class NewShipper {
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndFill('Address_City', "Florence");
-        this.helper.WaitByIdAndClick('OkButtonId');
-        this.helper.WaitByIdAndClick('CheckBox_0_113_LBL')
-        this.helper.WaitByIdAndFill('Address_ContactEmail',"Test2mail.com");
-        this.helper.WaitByIdAndFill('Address_ContactName',"Test123")
+        // this.helper.WaitByIdAndClick('CheckBox_0_111_LBL')
+        // this.helper.WaitByIdAndFill('Address_ContactEmail',"Test@mail.com");
+        // this.helper.WaitByIdAndFill('Address_ContactName',"Test123");
+        this.helper.WaitByIdAndClick('Ok-AddCustomer');
 
     }
 
     SearchShipper() {
+        this.helper.WaitWindowClosed();
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndFill('SearchFieldsId_0_0', this.shipperName);
-        //click on row 
         this.helper.WaitByIdAndClick('LogGrid_0_0row0');
         //edit 
+        this.helper.WaitByIdAndClick('Customer.TH.General');
         this.helper.WaitByIdAndFill('Customer_LocalName', "Test Company 123")
         this.helper.WaitByIdAndClick('Customer-Save');
 
