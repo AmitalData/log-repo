@@ -393,7 +393,7 @@
                                                                                                 </td>
                                                                                                 <td style="width:100px;max-width:165px;font-size:x-large;font-weight:bold">
                                                                                                     <span style="font-size:x-large;font-weight:bold;color:#0e276d;float:right">
-                                                                                                        {{item.WholePrice | NumbersPipe:'N2'}} {{item.Currency}}
+                                                                                                        {{item.WholePrice | NumbersPipe:'N2'}} {{item.CurrencyCode}}
                                                                                                     </span>
                                                                                                 </td>
                                                                                             </tr>
@@ -463,7 +463,7 @@
                                                                                                     <div></div>
                                                                                                 </td>
                                                                                                 <td style="float:right;width:200px;height:100%" (click)="PriceClick(item)">
-                                                                                                    <p style="float:right;padding-top:12px;" class="hyperlink">{{item.price  | NumbersPipe:'N2'}} {{item.Currency}}</p>
+                                                                                                    <p style="float:right;padding-top:12px;font-size:small" class="hyperlink">{{item.Price  | NumbersPipe:'N2'}} {{item.CurrencyCode}}</p>
                                                                                                 </td>
                                                                                                 <td style="width:10px">
                                                                                                     <div></div>
@@ -508,7 +508,7 @@
                                                                                                     {{surcharge.Name}}
                                                                                                 </td>
                                                                                                 <td style="width:100px;float:right">
-                                                                                                    <div style="float:right;font-size:small">
+                                                                                                    <div style="float:right;font-size:small;margin-right:10px">
                                                                                                         {{surcharge.Price  | NumbersPipe:'N2'}}
                                                                                                     </div>
                                                                                                 </td>
@@ -534,7 +534,7 @@
                                                                                                     <p style="font-weight:bold;font-size:large">Total</p>
                                                                                                 </td>
                                                                                                 <td style="width:200px;float:right;height:100%;padding-top:12px">
-                                                                                                    <div style="float:right;margin-right:10px">{{item.WholePrice | NumbersPipe:'N2'}} {{item.Currency}}</div>
+                                                                                                    <div style="float:right;margin-right:10px">{{item.WholePrice | NumbersPipe:'N2'}} {{item.CurrencyCode}}</div>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>

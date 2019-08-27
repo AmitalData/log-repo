@@ -61,6 +61,23 @@ export class TariffDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }    
+    GetCheckDatesValidty(FromPort: string, ToPort: string, ToDate: Date, TariffId:string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetCheckDatesValidty?FromPort=' + FromPort + "&ToPort=" + ToPort +  "&ToDate=" + ServiceHelper.GetDateString(ToDate)  + "&TariffId=" + TariffId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var myJsonResult = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myJsonResult;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }    
 
     GenerateTariffs() {
         var authHeader = new Headers();
@@ -289,6 +306,7 @@ export class TariffSearchSummary {
     TariffNumber: string;
     ChargeTypeId: string;
     Price: string;
+    ActualPrice: number;
     EffictiveDate: Date;
     Remarks: string;
     ImageId: string;
@@ -301,6 +319,8 @@ export class TariffSearchSummary {
     Surcharges: Array<SurchargeSummary>;
     AllIn: string;
     IsShown: boolean = false;
+    UnitOfMesurmentCode: string;
+    UnitOfMesurmentId: string;
 }
 
 
@@ -308,10 +328,13 @@ export class SurchargeSummary {
     Code: string;
     Name: string;
     Price: number;
+    ActualPrice: number;
     ChargeTypeId: string;
     TariffId: string;
     TariffNumber: string;
     CurrencyId: string;
+    UnitOfMesurmentCode: string;
+    UnitOfMesurmentId: string;
 }
 
 export class ExcelTariffLines {
