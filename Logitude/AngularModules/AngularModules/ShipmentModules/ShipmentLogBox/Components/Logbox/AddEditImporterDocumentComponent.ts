@@ -216,17 +216,23 @@ export class AddEditImporterDocumentComponent implements OnInit {
         return this.description;
     }
     public set Description(newValue: string) {
-        this.EntityPm.Description = newValue;
+        this.ValidationErrorsList = [];
+        if (!AppTool.IsNullOrEmpty(newValue) && newValue.length > 70) {
+            this.ValidationErrorsList.push("Description shouldn't be more than 70 Character");
+        }
+        else {
+            this.EntityPm.Description = newValue;
+        } 
         if (AppTool.IsNullOrEmpty(newValue)) {
             this.UIProperties.SetRequired("Description", "DocumentsFiling", true);
         }
         else {
-            this.UIProperties.SetRequired("Description", "DocumentsFiling", false);
+            this.UIProperties.SetRequired("Description", "DocumentsFiling", false); 
         }
     }
 
     public get Notes() { return this.EntityPm.Notes }
-    public set Notes(newValue: string) {
+    public set Notes(newValue: string) { 
         this.EntityPm.Notes = newValue;
     }
 
