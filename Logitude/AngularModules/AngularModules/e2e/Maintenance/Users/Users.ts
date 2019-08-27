@@ -22,30 +22,38 @@ export class NewUser {
 
     SearchUserTab() {
 
-        this.helper.WaitByIdAndFill('null_Search', "Agent");
+        this.helper.WaitByIdAndFill('null_Search', "User");
         this.helper.WaitByIdAndClick('MaintenanceItemMTUS');
 
     }
 
     CreateNewUser() {
-        this.helper.WaitByIdAndClick('NewButton_Agent');
-        this.helper.WaitByIdAndFill('Address_Name', this.UserName);
-        this.helper.WaitByIdAndFill('Address_CountryId', "Poland");
+        this.helper.WaitByIdAndClick('NewUserId');
+        this.helper.WaitByIdAndFill('User_Email', "test2@mail.com");
+        this.helper.WaitByIdAndFill('', "123");
+        //retypepassword
+        //  this.helper.WaitByIdAndFill('', "Poland");
+        this.helper.WaitByIdAndFill('', this.UserName);
+        this.helper.WaitByIdAndFill('User_DepartmentId', "Management");
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.helper.WaitByIdAndFill('User_BranchId', "main");
+        this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
         this.helper.WaitBusyIndicator();
-        this.helper.WaitByIdAndFill('Address_City', "Poznan");
-        this.helper.WaitByIdAndClick('OkButtonId');
+        this.helper.WaitByIdAndClick('CheckBox_0_151_LBL');
+        this.helper.WaitByIdAndClick('OkIdButton');
     }
 
 
     SearchUser() {
         this.helper.WaitBusyIndicator();
-        this.helper.WaitByIdAndFill('SearchFieldsId_0_0', this.UserName);
+        this.helper.WaitByIdAndFill('User_Search', this.UserName);
+        //TO CHOOSE WICH USER YOU WANT TO EDI 
+        this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         //click on row 
-        this.helper.WaitByIdAndClick('LogGrid_0_0row0');
-        //edit 
-        this.helper.WaitByIdAndFill('Agent_Notes', "This Is Test For Protractor")
-        this.helper.WaitByIdAndClick('Agent-Save');
+        this.helper.WaitByIdAndFill('User_LocalName',"Raghad");
+        this.helper.WaitByIdAndFill('User_Notes', "This Is Test For Protractor")
+        this.helper.WaitByIdAndClick('User-Save');
 
     }
 
