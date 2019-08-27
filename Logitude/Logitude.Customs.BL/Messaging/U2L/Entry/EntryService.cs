@@ -312,18 +312,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                 return ("");
             }
 
-            if (_GTRTRANQueryService == null)
+            using (_AmitalContext = AmitalContext.GetContext(_MyDeclarationPM.Tenant))
             {
                 _GTRTRANQueryService = new GTRTRANQueryService(_AmitalContext);
+                var myGTRTRANPM = _GTRTRANQueryService.GetSingle(partnerID, tableID, partnerCode, null, true);
+
+                if (myGTRTRANPM == null)
+                {
+                    return ("");
+                }
+                return (myGTRTRANPM.LOCALCODE);
             }
 
-            var myGTRTRANPM = _GTRTRANQueryService.GetSingle(partnerID, tableID, partnerCode, null, true);
-
-            if (myGTRTRANPM == null)
-            {
-                return ("");
-            }
-            return (myGTRTRANPM.LOCALCODE);
         }
 
         private void DeserilazeObject(string xmlLOGIENTRY)
