@@ -25,7 +25,15 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             this._JournalPM = journalPM;
             this._NewLedgerTransactionsWithCounters =myLedgerTransactionsWithCounters;
         }
-
+        /// <summary>
+        /// יוצר 2 התאמות כנגד הפק יומן
+        /// 1- בנק לשלם 
+        /// 1.1 זכות תנועה ישנה
+        /// 1.2 חובה תנועה חדשה
+        /// 
+        /// 2.1 - בנק עו"ש -זיכוי תנועה חדשה 
+        /// 2.2 חובה תנועה ישנה  -דף בנק
+        /// </summary>
         internal void CreateAutoExternalReconcileWhileStreaming()
         {
 
