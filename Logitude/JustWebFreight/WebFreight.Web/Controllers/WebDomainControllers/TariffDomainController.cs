@@ -119,6 +119,39 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetCheckDatesValidty(string FromPort, string ToPort, string ToDate, string TariffId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
+
+                DateTime? ToDateOBJ = DateHelper.GetDate(ToDate);
+                if (ToDateOBJ == null)
+                {
+                    ToDateOBJ = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                }
+
+
+
+                TariffQueryService tariffQueryService = new TariffQueryService(tenant);
+
+                bool myResult = tariffQueryService.CheckDatesValidity(FromPort, ToPort, ToDateOBJ,TariffId);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage GetTenantTariffSetting()
         {
@@ -712,7 +745,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 List<ExcelTariffLines> tariffLinesResult = new List<ExcelTariffLines>();
                 if (filter.TariffType == "AFC")
                 {
-                    tariffLinesResult = this.BuildAirFreightCostExcelLines(sheet, authToken.Tenant);
+                    tariffLinesResult = this.BuildAirFreightCostExcelLines( sheet, authToken.Tenant, filter);
                 }
 
                 else if (filter.TariffType == "ASC")
@@ -846,17 +879,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public List<ExcelTariffLines> BuildAirFreightCostExcelLines(IWorksheet sheet, int tenant)
+        public List<ExcelTariffLines> BuildAirFreightCostExcelLines( IWorksheet sheet, int tenant, TariffFilterParameter filter = null)
         {
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
             int rowIndex = 0;
             string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
-
+           
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
                 String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
+                var StepLength = rowData.Length;
+                if (filter != null && !string.IsNullOrEmpty(filter.PriceSteps))
+                {
+                    StepLength = filter.PriceSteps.Split(',').Length + 3;
+                }
 
                 String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
 
@@ -914,7 +952,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
                 }
 
-                if (rowData.Length > 2)
+                if (StepLength > 2)
                 {
                     if (this.IsNumber(rowData[2]))
                     {
@@ -936,7 +974,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length > 3)
+                if (StepLength > 3)
                 {
                     if (this.IsNumber(rowData[3]))
                     {
@@ -958,7 +996,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length > 4)
+                if (StepLength > 4)
                 {
                     if (this.IsNumber(rowData[4]))
                     {
@@ -980,7 +1018,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length > 5)
+                if (StepLength > 5)
                 {
                     if (this.IsNumber(rowData[5]))
                     {
@@ -1002,7 +1040,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length > 6)
+                if (StepLength > 6)
                 {
                     if (this.IsNumber(rowData[6]))
                     {
@@ -1024,7 +1062,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length > 7)
+                if (StepLength > 7)
                 {
                     if (this.IsNumber(rowData[7]))
                     {
@@ -1046,7 +1084,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length > 8)
+                if (StepLength > 8)
                 {
                     if (this.IsNumber(rowData[8]))
                     {
@@ -1068,7 +1106,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length > 9)
+                if (StepLength > 9)
                 {
                     if (this.IsNumber(rowData[9]))
                     {
@@ -1090,7 +1128,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length > 10)
+                if (StepLength > 10)
                 {
                     if (this.IsNumber(rowData[10]))
                     {

@@ -118,6 +118,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                IsMultiPercentage = a.IsMultiPercentage,
                            }).FirstOrDefault();
 
+            VatTypePM securedPm = null;
+
             if (entityPM != null)
             {
                 entityPM.VatTypePercentages = vatTypePercentageQuery.GetVatTypePercentagesForVatType(tenant, entityPM.Id).ToList();
@@ -126,10 +128,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 //{
                 //    entityPM.Percentage = entityPM.VatTypePercentages.OrderByDescending(d => d.FromDate).FirstOrDefault().Percentage;
                 //}
-            }
+                securedPm = new VatTypePM();
+                SecuredMapping.GetMappedPM(entityPM, securedPm, "VatType", tenant);
 
-            VatTypePM securedPm = new VatTypePM();
-            SecuredMapping.GetMappedPM(entityPM, securedPm, "VatType", tenant);
+            }
 
             return securedPm;
         }

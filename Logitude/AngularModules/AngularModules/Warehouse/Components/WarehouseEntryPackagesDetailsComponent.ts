@@ -223,6 +223,8 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
     }
 
+
+    DimensionsUnitLable: string;
     ChargeableWeightLabel: string = null;
     SetAttachedLabels() {
         this.VolumeLabel = "Volume (" + this.warehouseEntryPM.VolumeUnitCode + ")";
@@ -230,6 +232,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         this.DimensionsLabel = "Dim(L-W-H) (" + this.warehouseEntryPM.DimensionsUnitCode + ")";
         this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseEntryPM.ChargeableWeightUnitCode + ")";
         this.ChargeableWeightUnitCodeLabel = "Chargeable Weight (" + this.warehouseEntryPM.ChargeableWeightUnitCode + ")";
+        this.DimensionsUnitLable = " ("+ this.warehouseEntryPM.DimensionsUnitCode + ")";
     }
 
 
@@ -441,7 +444,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
                 savedItem.CountryId = item.CountryId;
                 savedItem.Model = item.Model;
                 savedItem.Color = item.Color;
-
+                savedItem.ReleasesNumber = item.ReleasesNumber;
                 this.savedItems.push(savedItem);
                 this.WarehouseEntryPackagesLists.push(item);
 

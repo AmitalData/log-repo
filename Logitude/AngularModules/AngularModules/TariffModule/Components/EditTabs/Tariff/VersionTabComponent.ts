@@ -206,12 +206,13 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     get InitialEnddate() {
-        return (this.CurrentVersion == null ? null : this.CurrentVersion.InitialEnddate);
+        return (this.CurrentVersion == null ? null : this.CurrentVersion.ExpirationDate != null ? this.CurrentVersion.ExpirationDate : this.CurrentVersion.InitialEnddate);
     }
     set InitialEnddate(value: Date) {
         if (this.CurrentVersion.InitialEnddate != value) {
             this.CurrentVersion.InitialEnddate = value;
-            
+            this.CurrentVersion.ExpirationDate = value;
+
             this.UpdateDates("expire", value);
         }
     }
@@ -608,6 +609,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                     copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
                     copiedVersion.StartDate = s.StartDate;
                     copiedVersion.InitialEnddate = s.InitialEnddate;
+                    copiedVersion.ExpirationDate = s.InitialEnddate;
+
                     copiedVersion.IsDraft = true;
                     copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
                     copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;

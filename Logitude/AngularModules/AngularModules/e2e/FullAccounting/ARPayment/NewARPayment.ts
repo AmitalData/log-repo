@@ -33,8 +33,11 @@ export class NewARPayment {
         this.Helper.WaitByIdAndClick('ok-AddARPayment');
         this.Helper.WaitWindowClosed();
         this.Helper.WaitBusyIndicator();
+        this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('ARPayment_BranchId', 'Main Office');
         this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+        this.Helper.WaitBusyIndicator();
+        this.Helper.ItemsVisibility('row0');
 //        this.Helper.WaitWindowClosed();
 
         this.Helper.WaitByIdAndClick('ARPayment.B.Approve');

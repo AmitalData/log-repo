@@ -304,10 +304,24 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
             else {
                 var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-                var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
-                newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
-            }
+                var to: string = datePipe.transform(item.ExpirationDate == null ? item.InitialEnddate : item.ExpirationDate, 'dd/MM/yyyy');
 
+                if (!from) {
+                    from = "";
+                }
+
+                if (!to) {
+                    to = "";
+                }
+
+                if (!AppTool.IsNullOrEmpty(from) && !AppTool.IsNullOrEmpty(to)) {
+                    newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+                }
+
+                else {
+                    newVersion.Name = "Version " + item.Version + " (" + from + to + ")";
+                }                
+            }
 
             this.VersionsList.push(newVersion);
         });
@@ -418,7 +432,9 @@ export class VersionHistoryTabComponent implements OnDestroy {
         copiedVersion.Version = this.EntityPM.LastVersion;
         copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
         copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
-        copiedVersion.ExpirationDate = this.VersionPM.ExpirationDate;
+        copiedVersion.ExpirationDate = this.VersionPM.ExpirationDate != null ? this.VersionPM.ExpirationDate : this.VersionPM.InitialEnddate;
+
+
         copiedVersion.IsDraft = true;
         copiedVersion.StartDate = this.VersionPM.StartDate;
         copiedVersion.Tenant = SessionInfo.LoggedUserTenant;

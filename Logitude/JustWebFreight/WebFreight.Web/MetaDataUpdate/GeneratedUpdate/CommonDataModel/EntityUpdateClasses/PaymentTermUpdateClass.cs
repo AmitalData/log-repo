@@ -97,7 +97,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "EnglishName",
-			      				    NameField =  "EnglishName",
 			      				    LovDisplayMemberPath =  "CalculatedEnglishName",
 			      				    LovDisplayMemberPathLocal =  "CalculatedLocalName",
 			      				    DependencyFilter1 =  "DisplayInLOV",
@@ -1310,10 +1309,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   ObjectTable PaymentTermObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentTerm" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature PaymentTermFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentTermFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentTermFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature PaymentTermFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.PackageFeature", NameTextCodeDefaultText = "PaymentTerm Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature PaymentTermFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature PaymentTermFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature PaymentTermFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature PaymentTermFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.PackageFeature", NameTextCodeDefaultText = "PaymentTerm Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 

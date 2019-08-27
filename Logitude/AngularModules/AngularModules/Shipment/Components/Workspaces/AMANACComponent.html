@@ -8,11 +8,14 @@
                         <div class="QueriesSection">
                             <div>Ocean Shipments</div>
                             <div>
-                                <HyperlinkQuery>New Transfer</HyperlinkQuery>
+                                <HyperlinkQuery (click)="NewTransferClicked('Ocean')">New Transfer</HyperlinkQuery>
 
                                 <HyperlinkQuery>Not Ready Shipments</HyperlinkQuery>
 
-                                <HyperlinkQuery>Marked as blocked for transfer</HyperlinkQuery>
+                                <HyperlinkQuery (click)="ViewBlockedShipmentsClicked('Ocean')">
+                                    <span>Marked as blocked for transfer</span>
+                                    <span>({{BlockedOceanShipmentsCount}})</span>
+                                </HyperlinkQuery>
 
                                 <HyperlinkQuery>Transfer History </HyperlinkQuery>
                             </div>
@@ -40,11 +43,14 @@
                         <div class="QueriesSection">
                             <div>Air Shipments</div>
                             <div>
-                                <HyperlinkQuery>New Transfer</HyperlinkQuery>
+                                <HyperlinkQuery (click)="NewTransferClicked('Air')">New Transfer</HyperlinkQuery>
 
                                 <HyperlinkQuery>Not Ready Shipments</HyperlinkQuery>
 
-                                <HyperlinkQuery>Marked as blocked for transfer</HyperlinkQuery>
+                                <HyperlinkQuery (click)="ViewBlockedShipmentsClicked('Air')">
+                                    <span>Marked as blocked for transfer</span>
+                                    <span>({{BlockedAirShipmentsCount}})</span>
+                                </HyperlinkQuery>
 
                                 <HyperlinkQuery>Transfer History </HyperlinkQuery>
                             </div>

@@ -663,5 +663,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return query;
         }
 
+        public IQueryable<ChargesTypeList> GetChargesTypeListsByTenant(int tenant)
+        {
+            IQueryable<ChargesTypeList> charges = from a in repository.context.ChargesTypes
+                                                where a.Tenant == tenant
+                                                select new ChargesTypeList()
+                                                {
+                                                  Id= a.Id,
+                                                  Code = a.Code,
+                                                  ViewOrder = a.ViewOrder, 
+                                                  ChargesGroupId = a.ChargesGroupId,
+                                                };
+            return charges;
+        }
+
+
+
     }
 }

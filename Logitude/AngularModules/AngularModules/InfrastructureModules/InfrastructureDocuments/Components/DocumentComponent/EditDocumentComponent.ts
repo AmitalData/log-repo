@@ -636,100 +636,141 @@ export class EditDocumentComponent implements OnInit {
 
 
     OnSelectTemplateChange(selectedItem: DocumentTypeTemplateViewModel) {
-
         this.IsEditManageTemplate = true;
         if (selectedItem != this.SelectedDocumentTypeTemplateViewModel) {
-            
             this.CurrentDocument.DocumentTemplateId = selectedItem.Id;
             this.SelectedDocumentTypeTemplateViewModel = selectedItem;
-
             if (this.SelectedDocumentTypeTemplateViewModel.IsLoad) {
                 if (this.IsManageHtml) {
                     this.froalaEditorSetting.froalaEditorComponent.SetHtml(this.SelectedDocumentTypeTemplateViewModel.HtmlData);
                     this.ReloadFroalaEditor();
-
                 } else if (this.IsManageStimul) {
                     this.stimulsoftArg.NumberOfPage = 1;
                     this.stimulsoftArg.DocumenttypetemplateId = selectedItem.Id;
-                    
                     this.stimulsoftArg.EditableFieldLists = this.SelectedDocumentTypeTemplateViewModel.StimulData;
                     this.ReloadStimulsoftViewer();
                 }
             }
+
             else {
-                this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
                 if (this.IsManageHtml) {
-
-                    this._htmlEditorService.getEditorHtmlData("", this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, selectedItem.Id, "").subscribe(res => {
-                        var htmlresult = "";
-                        var pmResponse: ServiceResponse = res;
-                        if (!pmResponse.HasError) {
-                            var myResult = pmResponse.Result;
-                            if (myResult) {
-                                htmlresult = myResult.Htmlstring
-                                this.Subject = myResult.Subject;
-                                this.SelectedDocumentTypeTemplateViewModel.HtmlData = htmlresult;
-                                this.SelectedDocumentTypeTemplateViewModel.IsLoad = true;
-                                this.froalaEditorSetting.froalaEditorComponent.SetHtml(htmlresult);
-                                this.ReloadFroalaEditor();
-                            }
-                        }
-
-
-                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
-
-                    });
-
+                    this.HtmlDocumentTemplateSelectedChange(selectedItem);
                 }
                 else if (this.IsManageStimul) {
-                    this.stimulsoftArg.NumberOfPage = 1;
-                    this.stimulsoftArg.DocumenttypetemplateId = selectedItem.Id;
-                    this.stimulsoftArg.ReportKey = "";
+                    this.StimulSoftDocumentTemplateSelectedChange(selectedItem);
+                }
+            }
 
-                    var exportDocumentArgs = new ExportDocumentArgs();
-                    exportDocumentArgs.DocumentTypeTemplateId = selectedItem.Id;
-                    exportDocumentArgs.IsDisplayOnly = true;
-                    exportDocumentArgs.PageNumber = this.stimulsoftArg.NumberOfPage;
-                    exportDocumentArgs.RequestMethodType = "GenerateReport";
-                    exportDocumentArgs.ReportKey = "";
-                    exportDocumentArgs.Tenant = this.Tenant;
-                    exportDocumentArgs.CurrentDocumentOutId = this.CurrentDocumentOutId;
-                    exportDocumentArgs.CurrentDocumentTypeCode = this.DocumenttypeCode;
-                    exportDocumentArgs.DocumentTypeCopyId = this.DocumentTypeCopyId;
-                    exportDocumentArgs.EntityId = this.EntityId;
-                    exportDocumentArgs.ObjectTableId = this.ObjectTableId;
-                    exportDocumentArgs.LoggedContactId = SessionInfo.LoggedUserId;
-                    exportDocumentArgs.ChildEntityId = this.ChildEntityId;
-                    exportDocumentArgs.ChildObjectTableId = this.ChildObjectTableId;
-                    exportDocumentArgs.LoggedContactName = SessionLocator.LoggedUserPM.EnglishName;
-                    exportDocumentArgs.AccountingCurrencyId = SessionLocator.TenantPM.CurrencyId;
+        }
 
-                    this._exportDocumentService.PostReportStimulsoftViewer(exportDocumentArgs).subscribe(res => {
+    }
 
-                        var pmResponse: ServiceResponse = res;
-                        if (!pmResponse.HasError) {
-                            var myResult = pmResponse.Result;
-                            if (myResult) {
-                                this.SelectedDocumentTypeTemplateViewModel.StimulData = myResult;
-                                this.stimulsoftArg.EditableFieldLists = myResult;
-                                this.ReloadStimulsoftViewer();
-                                this.SelectedDocumentTypeTemplateViewModel.IsLoad = true;
-                            }
 
-                        }
+
+    HtmlDocumentTemplateSelectedChange(selectedItem: any) {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this._htmlEditorService.getEditorHtmlData("", this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, selectedItem.Id, "").subscribe(res => {
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+                if (myResult) {
+                    this.Subject = myResult.Subject;
+                    this.SelectedDocumentTypeTemplateViewModel.HtmlData = myResult.Htmlstring;
+                    this.SelectedDocumentTypeTemplateViewModel.IsLoad = true;
+                    this.froalaEditorSetting.froalaEditorComponent.SetHtml(myResult.Htmlstring);
+                    this.ReloadFroalaEditor();
+                }
+            }
+
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+
+        });
+    }
+
+    StimulSoftDocumentTemplateSelectedChange(selectedItem:any) {
+
+        var editableFieldsBody: string = this.CurrentDocument.EditableFields ? Base64ToString(this.CurrentDocument.EditableFields) : null;
+        if (editableFieldsBody && editableFieldsBody.indexOf("<Items isList='true' count='0' />") == -1) {
+            var confirmWindow: ConfirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Show("Do you want to lose the data you have entered manually to your edited template?");
+            confirmWindow.YesButtonText = "Yes";
+            confirmWindow.NoButtonText = "No";
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.CurrentDocument.EditableFields = null;
+                    this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+                    this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe(res => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
-
+                        this.ReportTemplates.filter(d => d.IsLoad == true).forEach((item) => { item.IsLoad = false; });
+                        this.LoadDocumentTemplateStimulSoftData(selectedItem);
                     });
                 }
+                else this.LoadDocumentTemplateStimulSoftData(selectedItem);
+            });
+        } else this.LoadDocumentTemplateStimulSoftData(selectedItem);
 
+    }
+
+
+
+
+
+
+    LoadDocumentTemplateStimulSoftData(selectedItem:any) {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.stimulsoftArg.NumberOfPage = 1;
+        this.stimulsoftArg.DocumenttypetemplateId = selectedItem.Id;
+        this.stimulsoftArg.ReportKey = "";
+
+        var exportDocumentArgs = new ExportDocumentArgs();
+        exportDocumentArgs.DocumentTypeTemplateId = selectedItem.Id;
+        exportDocumentArgs.IsDisplayOnly = true;
+        exportDocumentArgs.PageNumber = this.stimulsoftArg.NumberOfPage;
+        exportDocumentArgs.RequestMethodType = "GenerateReport";
+        exportDocumentArgs.ReportKey = "";
+        exportDocumentArgs.Tenant = this.Tenant;
+        exportDocumentArgs.CurrentDocumentOutId = this.CurrentDocumentOutId;
+        exportDocumentArgs.CurrentDocumentTypeCode = this.DocumenttypeCode;
+        exportDocumentArgs.DocumentTypeCopyId = this.DocumentTypeCopyId;
+        exportDocumentArgs.EntityId = this.EntityId;
+        exportDocumentArgs.ObjectTableId = this.ObjectTableId;
+        exportDocumentArgs.LoggedContactId = SessionInfo.LoggedUserId;
+        exportDocumentArgs.ChildEntityId = this.ChildEntityId;
+        exportDocumentArgs.ChildObjectTableId = this.ChildObjectTableId;
+        exportDocumentArgs.LoggedContactName = SessionLocator.LoggedUserPM.EnglishName;
+        exportDocumentArgs.AccountingCurrencyId = SessionLocator.TenantPM.CurrencyId;
+
+        this._exportDocumentService.PostReportStimulsoftViewer(exportDocumentArgs).subscribe(res => {
+            var pmResponse: ServiceResponse = res;
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+                if (myResult) {
+                    this.SelectedDocumentTypeTemplateViewModel.StimulData = myResult;
+                    this.stimulsoftArg.EditableFieldLists = myResult;
+                    this.ReloadStimulsoftViewer();
+                    this.SelectedDocumentTypeTemplateViewModel.IsLoad = true;
+                }
+
+            }
+            else {
+                if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                    this.ShowMessage(pmResponse.ErrorsArray[0]);
+                }
             }
 
 
 
-        }
 
+
+        });
 
     }
+
+
+
+
 
     public ValidationErrorsList: string[];
      @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;

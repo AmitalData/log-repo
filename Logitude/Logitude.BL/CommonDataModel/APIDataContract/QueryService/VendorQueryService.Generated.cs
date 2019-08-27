@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -48,6 +49,25 @@ using Simplog.Data.CommonDataModel;
 				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Id " + Id + " doesn't exist");
+
+				return VendorDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
+		public Vendor GetVendorByCode(string Code,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Card with Code " + Code + " doesn't exist");
 
 				return VendorDataMapping(temp,Tenant);
 			}
@@ -109,10 +129,14 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+					
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
+					} 					   
 					if(temp == null)
 					{   
-					    throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("Card with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{

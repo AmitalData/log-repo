@@ -68,8 +68,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 {
                     _mytoExtNum = Regex.Replace(toExtNum, @"\d+", n => n.Value.PadLeft(15, '0'));
                 }
-                _myfromExtNum = fromExtNum;
-                _mytoExtNum = toExtNum;
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);

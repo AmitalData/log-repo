@@ -1017,6 +1017,7 @@ export class AWBWizardComponent {
             this.AirlineRulesList = [];
             this.ValidateAllTabs();
             this.RefreshTab(this.SelectedTabCode);
+            this.ValidateAllTabs();
         }
 
         else {
@@ -1040,6 +1041,8 @@ export class AWBWizardComponent {
                         this.RefreshTab(this.SelectedTabCode);
                     }
                 }
+
+                this.ValidateAllTabs();
             });
         }
     }

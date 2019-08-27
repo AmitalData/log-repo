@@ -77,10 +77,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
 
-            var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FPG" && d.TenantNumber == SessionLocator.Tenant)[0];
-            if (featureToggle) {
+            //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FPG" && d.TenantNumber == SessionLocator.Tenant)[0];
+            //if (featureToggle) {
                 this.DisplayFechaPago = true;
-            }
+            //}
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
@@ -421,7 +421,12 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.LoadData();
         }
     }
-
+    get InternalNotes() { return this.newARPaymentPM.InternalNotes; }
+    set InternalNotes(newValue: string) {
+        if (this.newARPaymentPM.InternalNotes != newValue) {
+            this.newARPaymentPM.InternalNotes = newValue;
+        }
+    }
     public TodayDate: Date = new Date();
 
     get SelectableDateStart() { return this.TodayDate.setFullYear(this.TodayDate.getFullYear() - 100); }

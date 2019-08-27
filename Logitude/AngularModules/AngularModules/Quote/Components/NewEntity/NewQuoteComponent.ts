@@ -26,6 +26,7 @@ import {QuoteValidator} from '../../Validators/QuoteValidator';
 import {QuotePMInitService} from '../../EntityPMInitServices/QuotePMInitService';
 import {QuoteSettingPM} from '../../EntityPMs/QuoteSettingPM';
 import {QuoteDomainService} from '../../Services/QuoteDomainService';
+import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 
 @Component({
     moduleId: module.id,
@@ -62,12 +63,21 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             this.IsAddAgentVisible = true;
         }
     }
+    public ScreenIsReady: boolean = false;
 
     ngOnInit() {
+        var listservice: EntityListService = new EntityListService();
+        var loadPr = listservice.getMock("Port");
+        loadPr.then((res: any) => {
+            res.subscribe(resp => {
+                this.ScreenIsReady = true;
         this.BuildFiltersLists();
         this.OnFiltersChanged();
         this.BuildAdditionalFields();
-        this.LoadAllowedAirline();        
+        this.LoadAllowedAirline();
+
+            });
+        });
     }
 
     private myPortListService: PortListService;

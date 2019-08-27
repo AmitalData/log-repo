@@ -25,6 +25,10 @@ import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 //import {AutomaticExternalRconcilMthodsPM}  '../../Services/StandardPMs/AutomaticExternalRconcilMthodsPM';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import {ObjectsUpdater} from '../../../Infrastructure/Locators/ObjectsUpdater';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     moduleId: module.id,
@@ -53,20 +57,31 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.CurrentSession.StartBusyIndicatorLoading();
-       
+        
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) => {
+        this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) => {
         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
+            });
+
+            });
         });
         this.fullAccountingSettingPMService.get(SessionLocator.Tenant.toString()).subscribe((myResult: any) => {
             this.CurrentSession.StopBusyIndicator();
 
             this.EntityPM = myResult.Result;
-            this.ImageId = this.EntityPM.PaymentChequesLogoId;
-            this.EntityId = this.EntityPM.Id;
+            //this.ImageId = this.EntityPM.PaymentChequesLogoId;
+            //this.EntityId = this.EntityPM.Id;
 
             if (this.EntityPM == null || this.EntityPM == undefined) {
-                console.log("There is no F. Accounting setting found for tenant: " + SessionLocator.Tenant);
+                this.InsertIfNotExist();
             } else {
+
+
+                this.ImageId = this.EntityPM.PaymentChequesLogoId;
+                this.EntityId = this.EntityPM.Id;
+
+
                 this.AccountingActivationDate = this.EntityPM.AccountingActivationDate;
                 this.SetUIProperties();
             }
@@ -76,7 +91,38 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("AccountingActivationDate", "Tenant", false);
 
     }
+    InsertIfNotExist() {
+        console.log("There is no F. Accounting setting found for tenant: " + SessionLocator.Tenant);
+        this.EntityPM = new FullAccountingSettingPM();
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.Id = SessionLocator.Tenant.toString();
+        this.fullAccountingSettingPMService.insert(this.EntityPM).subscribe(myResult => {
 
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) { // Success
+                this.EntityPM = mm.Result;
+                this.ImageId = this.EntityPM.PaymentChequesLogoId;
+                this.EntityId = this.EntityPM.Id;
+
+
+                this.AccountingActivationDate = this.EntityPM.AccountingActivationDate;
+                this.SetUIProperties();
+
+            }
+
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+        }, error => {
+            this.CurrentSession.StopBusyIndicator();
+            var dd: Response = error;
+            console.log(dd.text);
+            this.ValidationErrorsList = [];
+            this.ValidationErrorsList.push('Server Error!');
+        });
+
+    }
     ngOnInit() {
         this.BuildTabs();
     }
@@ -416,19 +462,23 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-            this.SubmitChanges();
+            this.SubmitChanges("");
         }
 
 
     }
 
-    SubmitChanges() {
+    SubmitChanges(ControlAccountId:string) {
         //console.log("EntityPM: ", this.EntityPM);
         this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) { // Success
                 this.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.StopBusyIndicator();
+                if (!AppTool.IsNullOrEmpty(ControlAccountId)) {
+                    this.FullAccountingAddControl(ControlAccountId);
+                }
             }
 
             else {
@@ -507,8 +557,45 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.SelectedTab = item.Name;
     }
     //#endregion
+    _ControlAccountId: string;
+    CreateControlAccount(ControlAccountId: string) {
+        this._ControlAccountId = ControlAccountId
+        if (!AppTool.IsNullOrEmpty(this[ControlAccountId])) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Show("כרטיס מרכז מוגדר");
+            return;
+        }
+        
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.CurrentSession.StartBusyIndicatorLoading();
+                this.SubmitChanges(ControlAccountId);
+            }
+        });
+        confirmWindow.Show("אנא אשר שמירה והוספה של חשבון מרכז");
+    }
+    FullAccountingAddControl(ControlAccountId:string) {
+        var windowTitle = TextCodeTranslator.Translate("TaxReport.B.Download");
 
+        var windowArgs: any = {};
+        windowArgs.ControlAccountId = this._ControlAccountId;
+        this.CurrentSession.StartBusyIndicatorLoading();
 
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 350;
+        logWindow.Height = 250;
+        logWindow.Title = "בניית כרטיס מרכז";
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        //logWindow.WindowClosed.subscribe(($event: any) => {
+        //    if ($event != null) {
+        //        this[ControlAccountId] = $event;
+        //    }
+        //});
+        logWindow.Show('./Accounting/Components/Maintenance/FullAccountingAddControlComponent');
+        
+    }
 
 
 }

@@ -224,7 +224,20 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
     
 
-            var WindowArgs: any = { BetweenDate: betweenDate, FromPort: this.EntityPM.MainCarriageFromPortId, ToPort: this.EntityPM.MainCarriageToPortId, GrossWeight: this.EntityPM.GrossWeight, ChargeableWeight: this.EntityPM.ChargeableWeight, Volume: this.EntityPM.Volume, ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode, GrossWeightUnit: this.EntityPM.GrossWeightUnitCode, VolumeUnit: this.EntityPM.VolumeUnitCode };
+            var WindowArgs: any =
+            {
+                BetweenDate: betweenDate,
+                FromPort: this.EntityPM.MainCarriageFromPortId,
+                ToPort: this.EntityPM.ToPortId,
+                GrossWeight: this.EntityPM.GrossWeight,
+                ChargeableWeight: this.EntityPM.ChargeableWeight,
+                Volume: this.EntityPM.Volume,
+                ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode,
+                GrossWeightUnit: this.EntityPM.GrossWeightUnitCode,
+                VolumeUnit: this.EntityPM.VolumeUnitCode,
+                ShipmentPM: this.EntityPM,
+                FatherComponent: this
+            };
             var logWindow = new LogitudeWindow();
             logWindow.IsFillScreenHeight = true;
             logWindow.Width = 1200;
@@ -966,6 +979,17 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         logWindow.WindowArgs = this;
         logWindow.Show('./ShipmentModules/ShipmentTabs/Components/Windows/Tariffs/TariffsComponent');
     }
+    EditTariffClicked(tariffId: string) {
+        if (tariffId != null) {
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.ShowEditComponent(tariffId, "Tariff");
+        }
+    }
+
     ComputeShipmentFields() {
         if (this.EntityPM != null) {
             ShipmentTool.ComputeTotals(this.EntityPM);
@@ -1154,15 +1178,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     DeleteAllClicked() {
         if (this.IsEditingEnabled) {
 
-            var isDeletingAllowed: boolean = true;
-
             if (this.EntityPM.ShipmentPayables.filter(f => f.ShipmentPayableLineStatusCode == 'PACC' || f.ShipmentPayableLineStatusCode == 'ACCT').length > 0) {
-                isDeletingAllowed = false;
-            }
-
-            if (!isDeletingAllowed) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show("Can't delete all, some lines are connected to invoices");
+            }
+
+            else if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.ShipmentPayables.filter(f => f.ShipmentPayableParentId != null).length > 0) {
+                var messageWindow = new MessageWindow();
+                messageWindow.Show("Can't delete all, some lines are connected to master");
             }
 
             else {
@@ -1171,6 +1194,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
                         this.EntityPM.ShipmentPayables = [];
+                        this.EntityPM.IsDeletingAllPayables = true;
                         this.EntityPM.IsDirty = true;
                         this.BuildItemsSource();
                         this.ComputeShipmentFields();
@@ -1490,6 +1514,8 @@ export class ShipmentPayableItem extends BaseComponent {
     get ChargesTypeCode() { return this.EntityPM.ChargesTypeCode; }
     get ChargesTypeName() { return this.EntityPM.ChargesTypeName; }
     get ChargesGroupCode() { return this.EntityPM.ChargesGroupCode; }
+    get TariffNumber() { return this.EntityPM.TariffNumber; }
+    get TariffId() { return this.EntityPM.TariffId; }
 
     get ChargesTypeId() { return this.EntityPM.ChargesTypeId; }
     set ChargesTypeId(value: string) {

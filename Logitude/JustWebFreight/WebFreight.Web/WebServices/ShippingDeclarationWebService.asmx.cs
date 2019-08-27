@@ -718,10 +718,20 @@ namespace WebFreight.Web.WebServices
                 #region Carrier
 
                 myDataProvider.MainCarriageCarrierName = shipment.MainCarriageCarrierName;
+                myDataProvider.VoyageNumber = shipment.MainCarriageCarrierNumber;
 
-                if (shipment.TransportModeId == "A") { myDataProvider.CarrierNumberLabel = "AIRLINE/ FLIGHT NO."; }
-                else if (shipment.TransportModeId == "I") { myDataProvider.CarrierNumberLabel = "TRUCKER/ TRUCK NO."; }
-                else if (shipment.TransportModeId == "O") { myDataProvider.CarrierNumberLabel = "VESSEL/ VOYAGE NO."; }
+                if (shipment.TransportModeId == "A")
+                {
+                    myDataProvider.CarrierNumberLabel = "AIRLINE/ FLIGHT NO.";
+                }
+                else if (shipment.TransportModeId == "I")
+                {
+                    myDataProvider.CarrierNumberLabel = "TRUCKER/ TRUCK NO.";
+                }
+                else if (shipment.TransportModeId == "O")
+                {
+                    myDataProvider.CarrierNumberLabel = "VESSEL/ VOYAGE NO.";
+                }
 
                 if (shipment.TransportModeId == "O")
                 {
@@ -2287,6 +2297,7 @@ namespace WebFreight.Web.WebServices
                 #region CuttOff
                 if (shipment.CutoffDate != null)
                 {
+                    myDataProvider.CuttOffDateTime_Date = shipment.CutoffDate;
                     myDataProvider.CuttOffDateTime = String.Format("{0:dd MMM yyyy}", shipment.CutoffDate);
                     myDataProvider.CuttOffTime = String.Format("{0:t}", shipment.CutoffDate);
                 }

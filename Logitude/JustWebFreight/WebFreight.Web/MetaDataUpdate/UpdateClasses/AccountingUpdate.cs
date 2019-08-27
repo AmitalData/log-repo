@@ -1901,6 +1901,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Restore", DefaultText = "Restore", LocalDefaultText = "שחזר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RestoreIsNotPossible", DefaultText = "Restore is not possible , there are approved bank pages with a later date", LocalDefaultText = "לא ניתן לבטל את ביטול דף הבנק , ישנם דפי בנק מאושרים עם תאריך מאוחר יותר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.True", DefaultText = "True", LocalDefaultText = "נכון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.False", DefaultText = "False", LocalDefaultText = "שקר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.MoreData", DefaultText = "More Data", LocalDefaultText = "פרטים נוספים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
             #region MainMenu
 
@@ -2013,7 +2016,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MustBeMultiCurrency", DefaultText = "Parent GLAccount must be multi currency", LocalDefaultText = "כרטיס אב חייב להיות רב מטבעי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CheckInvoiceDate", DefaultText = "Invoice Date can't be bigger than the Accounting Date", LocalDefaultText = "לא ניתן להקליד תאריך אסמכתא מאוחר מהתאריך החשבונאי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.VendorGLAccount", DefaultText = "The bill to doesn’t have GLAccount connected to it", LocalDefaultText = "הספק לא מקושר לכרטיס הנה''ח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.VendorGLAccount", DefaultText = "The vendor is not connected to GLAccount", LocalDefaultText = "הספק לא קושר לכרטיס הנהלת חשבונות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
 
@@ -2233,6 +2236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartDate", DefaultText = "Start Date", LocalDefaultText = "תאריך התחלה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.EndDate", DefaultText = "End Date", LocalDefaultText = "תאריך סיום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FailedWhilePerforming", DefaultText = "failed while performing", LocalDefaultText = "תקלה בביצוע", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NoVendors", DefaultText = "No Vendors found with Vat Number and Deduction File Number", LocalDefaultText = "לא אותרו ספקים עם תיק ניכויים ועם מספר עוסק מורשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
         }
         #endregion
 

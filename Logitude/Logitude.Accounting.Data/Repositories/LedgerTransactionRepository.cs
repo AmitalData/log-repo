@@ -446,9 +446,9 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             {
                 q = q.Where(rec => rec.CurrencyId == currencyId);
             }
-            if (isReconciled.HasValue && isReconciled.Value == true)
+            if (isReconciled.HasValue )
             {
-                q = q.Where(rec => rec.IsReconciled == true);
+                q = q.Where(rec => rec.IsReconciled == isReconciled.Value);
             }
 
             if (!string.IsNullOrWhiteSpace(searchByFilter))
@@ -1111,14 +1111,14 @@ on record.JournalId equals j.Id
 
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
-            DateTime date = DateTime.Now.AddDays(-180);
-            DateTime last180days=  new DateTime(date.Year, date.Month, 1);
+            //DateTime date = DateTime.Now.AddDays(-180);
+            //DateTime last180days=  new DateTime(date.Year, date.Month, 1);
             //taxReportMonth. = 1;
             return (from a in context.LedgerTransactions
                     join j in context.Journals on a.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
                     where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) && a.AccountingDate <= taxdate
-                    && a.DocumentDate >= last180days
+                   // && a.DocumentDate >= last180days
                     && a.AccountId == setting.VATInputsGLAccountId
                     select new TaxReportData()
                     {
