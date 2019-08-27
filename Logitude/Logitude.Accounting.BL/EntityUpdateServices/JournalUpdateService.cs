@@ -111,12 +111,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 journalReconcileUpdateService.UpdateMulti(entityPM.JournalExternalReconciles, entityPM.DeletedJournalExternalReconciles, entityPM, true);
 
 
-                //var listTransactionId = entityPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
-                //if (listTransactionId.Count > 0)
-                //{
-                //    var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-                //    ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, Tenant, true);
-                //}
+                var listTransactionId = entityPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
+                if (listTransactionId.Count > 0)
+                {
+                    var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+                    ledgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, Tenant, true);
+                }
+                var listReconcileExternalPageLineId = entityPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
+                if (listReconcileExternalPageLineId.Count > 0)
+                {
+                    var reconcileExternalPageLineUpdateService = new ReconcileExternalPageLineUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+                    reconcileExternalPageLineUpdateService.Update_InProgressExternalReconcile(listReconcileExternalPageLineId, Tenant, true);
+                }
+
             }
         }
 
