@@ -171,6 +171,14 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Company Address Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+            if (SessionLocator.Tenant == 0) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "PAGD";
+                item.ObjectTableName = "Payment Gateway Definition";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
 
             if (SessionLocator.Tenant == 0) {
                 var item = new MenusTablePM();
@@ -753,6 +761,16 @@ export class MaintenanceComponent {
                     logWindow.Title = windowTitle;
                     logWindow.IsShowCloseButton = true;
                     logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/CompanyAddress/CompanyAddressSettingsComponent');
+                    break;
+                }
+                case "PAGD": {
+                    var windowTitle = "Payment Gateway Definition";
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = 750;
+                    logWindow.Height = 500;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/PaymentGateway/PaymentGatewayComponent');
                     break;
                 }
                 case "SYCR": {
@@ -1528,6 +1546,7 @@ class MaintenanceMenuItem {
                 case "SIGN": { myResult = "Set Signature Settings"; break; }
                 case "CHPA": { myResult = "Change Password"; break; }
                 case "COAD": { myResult = "Company Address Settings"; break; }
+                case "PAGD": { myResult = "Payment Gateway Definition"; break; }
                 case "CODE": { myResult = "System Defaults"; break; }
                 case "LBSE": { myResult = "LogBox Settings"; break; }
                 case "COCO": { myResult = "Counters"; break; }
