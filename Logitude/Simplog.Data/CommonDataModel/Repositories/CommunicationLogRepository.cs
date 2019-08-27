@@ -123,6 +123,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public void Add(CommunicationLog entity)
         {
+            entity.SearchFields = entity.BCC + "," + entity.CC + "," + entity.To + "," + entity.From + "," + entity.EntityReference + "," + entity.Subject;
             context.CommunicationLogs.Add(entity);
         }
 
@@ -136,6 +137,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             try
             {
+                entity.SearchFields = entity.BCC + "," + entity.CC + "," + entity.To + "," + entity.From + "," + entity.EntityReference + "," + entity.Subject;
                 context.CommunicationLogs.Attach(entity);
                
             }
