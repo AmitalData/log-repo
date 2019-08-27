@@ -39,6 +39,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public double? AmountInProfitCurrency { get; set; }
         public string InvoiceNumbers { get; set; }
         public string BillToName { get; set; }
+        public string BillToLocalName { get; set; }
         public string PaymentCurrencyCode { get; set; }
         public string CreatedByUserName { get; set; }
         public string StatusName { get; set; }
