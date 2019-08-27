@@ -2,7 +2,7 @@ import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 import { LoginComp } from '../../Login/Login.po';
-import { NewShipper} from './Shipper';
+import { NewShipper } from './Shipper';
 
 
 export class NewShipperScenario {
@@ -36,6 +36,9 @@ export class NewShipperScenario {
         this.Newshipper.SearchShipper();
 
     }
+    public EditOnShipper() {
+        this.Newshipper.EditOnShipper();
 
+    }
 
 }
