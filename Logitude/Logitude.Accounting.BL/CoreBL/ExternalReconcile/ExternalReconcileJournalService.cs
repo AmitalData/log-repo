@@ -21,17 +21,36 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         {
             _ExternalReconcileDataProvider = externalReconcileDataProvider;
         }
+        /// <summary>
+        /// בתהליך שבו מעבירים את ההמחאה מכרטיס "לשלם" לכרטיס "עוש" נוצרת פק' יומן 
+        ///             journalLine.DebitAccountId = myBankAccountPM.TransferGLAcccountId;
+        ///             journalLine.CreditAccountId = myBankAccountPM.GLAccountId;
 
+        /// 
+        /// Validate:
+        //        err.Add("התנועה איננה בחשבון בנק לשלם ");
+        //        err.Add("הדף איננה בחשבון בנק לשלם ");
+        //        err.Add("אין תאימות דף הבנק שייך לבנק אחר הנשלף מהתנועה");
+        //       err.Add("סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות");
+        //        err.Add("סכום החובה בדף בנק חייב להיות גדול מאפס כנדרש בצק");
+        //        err.Add("התנועה מסומנת בתהליך התאמה חצונית");
+        //        err.Add("התנועה מסומנת שהותאמה כבר חיצונית");
+        //        err.Add("השורה בדף מסומנת שהותאמה כבר חיצונית");
+        //        err.Add("השורה בדף מסומנת בתהליך התאמה חצונית");
+        /// </summary>
+        /// <param name="tenant"></param>
+        /// <param name="ledgerTransactionId"></param>
+        /// <param name="reconcileExternalPageLineId"></param>
         public void MoveBankCheckFromTransfer2GLAccount(int tenant, string ledgerTransactionId, string reconcileExternalPageLineId)
         {
 
 
-            LedgerTransactionPM myLedgerTransactionTransferPM = _ExternalReconcileDataProvider.GetLedgerTransactionList(new List<string>() { ledgerTransactionId }).FirstOrDefault();
-            if (myLedgerTransactionTransferPM == null)
+            LedgerTransactionPM myLedgerTransactionBankTransferPM = _ExternalReconcileDataProvider.GetLedgerTransactionList(new List<string>() { ledgerTransactionId }).FirstOrDefault();
+            if (myLedgerTransactionBankTransferPM == null)
             {
                 throw new Exception("Ledger not exist ");
             }
-            BankAccountPM bankAccountFromTransfer = _ExternalReconcileDataProvider.GetBankAccountFromTransferAccount(myLedgerTransactionTransferPM.AccountId);
+            BankAccountPM bankAccountFromTransfer = _ExternalReconcileDataProvider.GetBankAccountFromTransferAccount(myLedgerTransactionBankTransferPM.AccountId);
 
             BankAccountPM bankAccountFromReconcileExternalPageLine = _ExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(reconcileExternalPageLineId);
 
@@ -39,13 +58,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             
 
 
-            var errString= Validate(tenant, myLedgerTransactionTransferPM, myReconcileExternalPageLinePM, bankAccountFromTransfer, bankAccountFromReconcileExternalPageLine);
+            var errString= Validate(tenant, myLedgerTransactionBankTransferPM, myReconcileExternalPageLinePM, bankAccountFromTransfer, bankAccountFromReconcileExternalPageLine);
 
             if (!string.IsNullOrWhiteSpace(errString))
             {
                 throw new Exception(errString);
             }
-            JournalPM journal = CreateJournal(myLedgerTransactionTransferPM, myReconcileExternalPageLinePM, bankAccountFromTransfer);
+            JournalPM journal = CreateJournal(myLedgerTransactionBankTransferPM, myReconcileExternalPageLinePM, bankAccountFromTransfer);
             if (journal.JournalExternalReconciles.Count > 1)
             {
                 throw new Exception("Sorry meanwhile only one Adjust Allowed !!!");
@@ -62,13 +81,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             }
 
             //newJournalMoveBankCheckFromTransfer2GLAccount/
-               var journal = new JournalPM()
+            var journal = new JournalPM()
             {
 
             };
             //newJournalMoveBankCheckFromTransfer2GLAccount.JournalReconciles.Add()
             //newJournalMoveBankCheckFromTransfer2GLAccount.JournalLines.Add
-              journal.Tenant = myLedgerTransactionTransferPM.Tenant;
+            journal.Tenant = myLedgerTransactionTransferPM.Tenant;
             journal.Id = "new";
             journal.JournalNumber = "1";
             journal.CreateDate = TenantServerConfigration.GetCurrentDateTime(myLedgerTransactionTransferPM.Tenant);
@@ -85,7 +104,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             journal.UpdatedByUserId = AuthenticationUtil.ResolveUserId(myLedgerTransactionTransferPM.Tenant); ;
             journal.ApproveDate = TenantServerConfigration.GetCurrentDateTime(myLedgerTransactionTransferPM.Tenant);
             journal.ApprovedByUserId = AuthenticationUtil.ResolveUserId(myLedgerTransactionTransferPM.Tenant); ;
-            
+
             journal.ChangeSetOp = ChangeSetOperation.Insert;
             const string MyNotes = "פרעון שיק מהתאמה";
 
@@ -93,10 +112,10 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             journalLineDebitTransfer.Tenant = myLedgerTransactionTransferPM.Tenant;
             journalLineDebitTransfer.JournalId = journal.Id;
             journalLineDebitTransfer.Line = 1;
-            journalLineDebitTransfer.ActionTypeCodeEnum =  MyJournalActionTypeEnum.Debit;
+            journalLineDebitTransfer.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
             //journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
             journalLineDebitTransfer.DocumentDate = myReconcileExternalPageLinePM.ReferenceDate;
-            journalLineDebitTransfer.DueDate= myReconcileExternalPageLinePM.ReferenceDate;
+            journalLineDebitTransfer.DueDate = myReconcileExternalPageLinePM.ReferenceDate;
             journalLineDebitTransfer.AccountingDate = journal.AccountingDate;
             journalLineDebitTransfer.LocalAmount = myLedgerTransactionTransferPM.LocalAmountCredit;
             journalLineDebitTransfer.CurrencyId = myLedgerTransactionTransferPM.CurrencyId;
@@ -132,11 +151,12 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             journalLineCreditBankGLId.ChangeSetOp = ChangeSetOperation.Insert;
             journal.JournalLines.Add(journalLineCreditBankGLId);
 
+            TryCreateInternalReconcileIfNotReconcile(myLedgerTransactionTransferPM, journal);
 
             journal.JournalExternalReconciles.Add(new JournalExternalReconcilePM()
             {
-                Tenant= journal.Tenant,
-                 ChangeSetOp =  ChangeSetOperation.Insert,
+                Tenant = journal.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
 
                 JournalId = journal.Id,
                 Line = 1,
@@ -147,12 +167,27 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             return journal;
         }
 
+        private static void TryCreateInternalReconcileIfNotReconcile(LedgerTransactionPM myLedgerTransactionTransferPM, JournalPM journal)
+        {
+            throw new Exception("TryCreateInternalReconcileIfNotReconcile");
+            journal.JournalReconciles.Add(new JournalReconcilePM()
+            {
+                Tenant = journal.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
 
-        private string Validate(int tenant, LedgerTransactionPM myLedgerTransactionTransfer, ReconcileExternalPageLinePM myReconcileExternalPageLinePM, 
+                JournalId = journal.Id,
+                Line = 1,
+                LedgerTransactionId = myLedgerTransactionTransferPM.Id,
+                CurrencyId = myLedgerTransactionTransferPM.CurrencyId,
+                ReconciliationAmount = myLedgerTransactionTransferPM.LocalAmountCredit,
+            });
+        }
+
+        private string Validate(int tenant, LedgerTransactionPM myLedgerTransactionBankTransferPM, ReconcileExternalPageLinePM myReconcileExternalPageLinePM, 
             BankAccountPM bankAccountFromTransfer, BankAccountPM bankAccountFromReconcileExternalPageLine)
         {
             var err = new List<string>();
-            if (myLedgerTransactionTransfer.Tenant != tenant)
+            if (myLedgerTransactionBankTransferPM.Tenant != tenant)
             {
                 err.Add("myLedgerTransaction.Tenant!= tenant");
             }
@@ -174,19 +209,19 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             {
                 err.Add("אין תאימות דף הבנק שייך לבנק אחר הנשלף מהתנועה");
             }
-            if (myLedgerTransactionTransfer.LocalAmountCredit != myReconcileExternalPageLinePM.DebitAmount)
+            if (myLedgerTransactionBankTransferPM.LocalAmountCredit != myReconcileExternalPageLinePM.DebitAmount)
             {
-                err.Add("סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בזכות");
+                err.Add("סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות");
             }
             if (myReconcileExternalPageLinePM.DebitAmount <= 0){
                 err.Add("סכום החובה בדף בנק חייב להיות גדול מאפס כנדרש בצק");
             }
 
-            if (myLedgerTransactionTransfer.InProgressExternalReconcile)
+            if (myLedgerTransactionBankTransferPM.InProgressExternalReconcile)
             {
                 err.Add("התנועה מסומנת בתהליך התאמה חצונית");
             }
-            if (myLedgerTransactionTransfer.IsExternalReconcile)
+            if (myLedgerTransactionBankTransferPM.IsExternalReconcile)
             {
                 err.Add("התנועה מסומנת שהותאמה כבר חיצונית");
             }

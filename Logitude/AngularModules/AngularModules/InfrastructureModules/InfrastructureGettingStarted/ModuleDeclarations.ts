@@ -1,4 +1,4 @@
-﻿import {GettingStartedComponent} from './Components/Workspaces/GettingStartedComponent';
+import {GettingStartedComponent} from './Components/Workspaces/GettingStartedComponent';
 import {SystemDefaultsComponent} from './Components/SystemDefaults/SystemDefaultsComponent';
 import {CompanyAddressSettingsComponent} from  './Components/CompanyAddress/CompanyAddressSettingsComponent';
 import {SystemCurrenciesComponent} from './Components/SystemCurrencies/SystemCurrenciesComponent';
@@ -14,7 +14,7 @@ import {LocalSettingsComponent} from  './Components/LocalSettings/LocalSettingsC
 import {InvoiceSettingsComponent} from './Components/InvoiceSettings/InvoiceSettingsComponent';
 import {AirlineSettingsComponent} from './Components/AirlineSettings/AirlineSettingsComponent';
 import {UploadLogoComponent} from './Components/UploadImage/UploadLogoComponent';
-
+import {PaymentGatewayComponent} from './Components/PaymentGateway/PaymentGatewayComponent';
 export const Components =
     [
         GettingStartedComponent,
@@ -33,6 +33,7 @@ export const Components =
         InvoiceSettingsComponent,  
         AirlineSettingsComponent,
         UploadLogoComponent,
+        PaymentGatewayComponent,
 
     ];
 
@@ -58,7 +59,7 @@ export class ModuleDeclarations {
             case "InvoiceSettingsComponent": { myResult = InvoiceSettingsComponent; break; }
             case "AirlineSettingsComponent": { myResult = AirlineSettingsComponent; break; }
             case "UploadLogoComponent": { myResult = UploadLogoComponent; break; }
-
+            case "PaymentGatewayComponent": { myResult = PaymentGatewayComponent; break; }
         }
 
         return myResult;
