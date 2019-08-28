@@ -538,6 +538,11 @@ namespace Logitude.XSD.INTTRA.BL
                         }
                     }
 
+                    if (item.Temperature != null)
+                    {
+                        item.Temperature = item.Temperature.Trim();
+                    }
+
                     if (!string.IsNullOrEmpty(item.Temperature))
                     {
                         if (!this.IsDecimalFormat(item.Temperature))
