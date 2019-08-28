@@ -538,6 +538,15 @@ namespace Logitude.XSD.INTTRA.BL
                         }
                     }
 
+                    if (!string.IsNullOrEmpty(item.Temperature))
+                    {
+                        if (!this.IsDecimalFormat(item.Temperature))
+                        {
+                            string msg = TranslateTextsClass.Translate("ShipmentPackage.F.Temperature", this.Tenant) + " invalid format";
+                            this.Errors.Add(msg);
+                        }
+                    }
+
                     if (item.IsDangerous)
                     {
                         if (item.IMDGCode != null)
@@ -558,23 +567,7 @@ namespace Logitude.XSD.INTTRA.BL
 
                         if (!string.IsNullOrEmpty(item.FlashPoint))
                         {
-
-                            bool isFlashPointValid = false;
-
-                            Regex isMatched = new Regex(@"[^0-9\-\.]*");
-                            if (isMatched.IsMatch(item.FlashPoint))
-                            {
-                                string myStringFlashPoint = item.FlashPoint;
-                                myStringFlashPoint = myStringFlashPoint.Replace(".", "");
-                                myStringFlashPoint = myStringFlashPoint.Replace("-", "");
-
-                                if(myStringFlashPoint.Length == 3)
-                                {
-                                    isFlashPointValid = true;
-                                }
-                            }
-
-                            if (!isFlashPointValid)
+                            if (!this.IsDecimalFormat(item.FlashPoint))
                             {
                                 string msg = TranslateTextsClass.Translate("ShipmentPackage.F.FlashPoint", this.Tenant) + " invalid format";
                                 this.Errors.Add(msg);
@@ -1772,7 +1765,7 @@ namespace Logitude.XSD.INTTRA.BL
                     itemDetails.EquipmentTemperature = new INTTRA_Out.EquipmentTemperature()
                     {
                         UOM = INTTRA_Out.EquipmentTemperatureUOM.CEL,
-                        Value = 999,
+                        Value = "999",
                     };
 
                     if (item.TemperatureUnitCode != "CEL")
@@ -1786,7 +1779,7 @@ namespace Logitude.XSD.INTTRA.BL
                     itemDetails.EquipmentTemperature = new INTTRA_Out.EquipmentTemperature()
                     {
                         UOM = INTTRA_Out.EquipmentTemperatureUOM.CEL,
-                        Value = (float)(decimal)item.Temperature.Value,
+                        Value = item.Temperature,
                     };
 
                     if (item.TemperatureUnitCode != "CEL")
@@ -2529,6 +2522,30 @@ namespace Logitude.XSD.INTTRA.BL
             }
 
             return resultAddress;
+        }
+        private bool IsDecimalFormat(string field)
+        {
+            bool isDecimalFormat = true;
+
+            if (!string.IsNullOrEmpty(field))
+            {
+                isDecimalFormat = false;
+
+                Regex isMatched = new Regex(@"[^0-9\-\.]*");
+                if (isMatched.IsMatch(field))
+                {
+                    string myStringfield = field;
+                    field = field.Replace(".", "");
+                    field = field.Replace("-", "");
+
+                    if (field.Length == 3)
+                    {
+                        isDecimalFormat = true;
+                    }
+                }
+            }
+
+            return isDecimalFormat;
         }
 
         public enum INTTRAPattern
