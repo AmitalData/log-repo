@@ -571,6 +571,7 @@
     <Compile Include="Validators\IJournalValidatorContextDataProvider.Shared.cs" />
     <Compile Include="Validators\JournalActionTypeValidator.cs" />
     <Compile Include="Validators\JournalValidator.cs" />
+    <Compile Include="Validators\ReconcileExternalPageValidator.cs" />
     <Compile Include="Validators\ReconciliationValidator.cs" />
     <Compile Include="Validators\RevaluationValidator.cs" />
     <Compile Include="EntityQueryServices\AccountingPeriodQueryService.cs" />
