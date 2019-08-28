@@ -1,5 +1,5 @@
 import { browser, by, element } from 'protractor';
-import { NewShipper} from './Shipper';
+import { NewShipper } from './Shipper';
 import { NewShipperScenario } from './ShipperScenario';
 import { LoginComp } from "../../login/Login.po";
 
@@ -37,6 +37,10 @@ describe('NewAgent', () => {
         ShipperScenario.SearchShipper();
     });
 
+    it('EditOnShipper', function () {
+        ShipperScenario.EditOnShipper();
+
+    });
 
 
 });
