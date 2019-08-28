@@ -38,9 +38,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         public BankAccountPM GetBankAccountFromReconcileExternalPageLineId(string reconcileExternalPageLineId, int tenant)
         {
             var bankPageLineQS = new ReconcileExternalPageLineRepository(this._AccountingContext);
-            var bankPageLine = bankPageLineQS.GetSingle(reconcileExternalPageLineId, tenant);
+            var reconcileExternalPageLinePM = bankPageLineQS.GetSingle(reconcileExternalPageLineId, tenant);
+            if (reconcileExternalPageLinePM==null)
+            {
+                throw new Exception("bankPageLine is null");
+            }
             var bankPageQS = new ReconcileExternalPageRepository(this._AccountingContext);
-            var page = bankPageQS.GetSingle(bankPageLine.ReconcileExternalPageId, tenant);
+            var page = bankPageQS.GetSingle(reconcileExternalPageLinePM.ReconcileExternalPageId, tenant);
             var bankAccountQS = new BankAccountQueryService(this._AccountingContext);
             var bankAccount = bankAccountQS.GetSingle(page.BankAccountId, false, false);
             return bankAccount;
