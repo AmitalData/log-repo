@@ -225,8 +225,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.Validate(entityPM);
         }
 
-        void Validate_Move2_ReconcileExternalPageValidator(ReconcileExternalPagePM entityPM) { 
+        void Validate_Move2_ReconcileExternalPageValidator(ReconcileExternalPagePM entityPM) {
 
+            List<string> errors = new List<string>();
             if (entityPM.StatusCode != "1") // 1- Draft
             {
 
