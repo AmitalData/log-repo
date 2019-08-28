@@ -90,7 +90,7 @@
       <QueryFilter QueryCode="&quot;Air Surcharges Cost Tariffs&quot;" PredefinedValue="&quot;ASC&quot;" ObjectFieldName="&quot;TypeCode&quot;" IsPredefined="true" Operator="&quot;Equal&quot;" IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Screen Name="&quot;TariffHeaderScreen&quot;" ObjectTableName="&quot;Tariff&quot;" NumberOfColumns="4" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true">
+  <Screen Name="&quot;TariffHeaderScreen&quot;" ObjectTableName="&quot;Tariff&quot;" NumberOfColumns="4" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;Tariff.HeaderScreen&quot;">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Name&quot;" ScreenName="TariffHeaderScreen" />
       <ScreenField Column="0" Row="1" ObjectFieldName="&quot;StartDate&quot;" ScreenName="TariffHeaderScreen" />
@@ -101,7 +101,7 @@
       <ScreenField Column="3" Row="0" ObjectFieldName="&quot;TariffNumber&quot;" ScreenName="TariffHeaderScreen" />
     </ScreenFields>
   </Screen>
-  <Screen Name="&quot;TariffSurchagesHeaderScreen&quot;" ObjectTableName="&quot;Tariff&quot;" NumberOfColumns="4" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true">
+  <Screen Name="&quot;TariffSurchagesHeaderScreen&quot;" ObjectTableName="&quot;Tariff&quot;" NumberOfColumns="4" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;Tariff.SurchagesHeaderScreen&quot;">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Name&quot;" ScreenName="TariffSurchagesHeaderScreen" />
       <ScreenField Column="0" Row="1" ObjectFieldName="&quot;CreateDate&quot;" ScreenName="TariffSurchagesHeaderScreen" />
@@ -128,9 +128,9 @@
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;TariffEdit&quot;" MenuButtonGroupName="&quot;TariffEditButtonsGroup&quot;">
-    <MenuButton EventCode="&quot;Actions&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;More&quot;">
-      <MenuItem EventCode="&quot;Inactive&quot;" DefaultText="&quot;Inactive&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;Inactive&quot;" />
-      <MenuItem EventCode="&quot;Reactivate&quot;" DefaultText="&quot;Reactivate&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="1" LocalDefaultText="&quot;Reactivate&quot;" />
+    <MenuButton EventCode="&quot;Actions&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;More&quot;" IsPackagable="false">
+      <MenuItem EventCode="&quot;Inactive&quot;" DefaultText="&quot;Inactive&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;Inactive&quot;" IsPackagable="false" />
+      <MenuItem EventCode="&quot;Reactivate&quot;" DefaultText="&quot;Reactivate&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="1" LocalDefaultText="&quot;Reactivate&quot;" IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

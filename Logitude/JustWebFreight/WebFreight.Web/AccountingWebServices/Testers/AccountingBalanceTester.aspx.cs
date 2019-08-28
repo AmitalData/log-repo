@@ -2273,7 +2273,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 
                 var myExternalReconcileJournalService = new ExternalReconcileJournalService();
-                myExternalReconcileJournalService.MustInit(new ExternalReconcileDataProvider( AccountingContext.GetContext(Tenant),Tenant ));
+                myExternalReconcileJournalService.MustInit(new ExternalReconcileDataProvider( AccountingContext.GetContext(Tenant)));
                 myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
                 var us = new JournalUpdateService(AccountingContext.GetContext(Tenant), new Dictionary<string, IContext>(),Tenant);
                 us.Update(myExternalReconcileJournalService.TheJournalPM, true);
