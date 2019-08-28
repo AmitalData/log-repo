@@ -65,8 +65,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             }
 
 
-            BankAccountPM bankAccountFromTransfer = _ExternalReconcileDataProvider.GetBankAccountFromTransferAccount(myLedgerTransactionTransferInCredit.AccountId);
-            BankAccountPM bankAccountFromPage = _ExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(myJournalExternalReconcile.ReconcileExternalPageLineId);
+            BankAccountPM bankAccountFromTransfer = _ExternalReconcileDataProvider.GetBankAccountFromTransferAccount(myLedgerTransactionTransferInCredit.AccountId, _JournalPM.Tenant);
+            BankAccountPM bankAccountFromPage = _ExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(myJournalExternalReconcile.ReconcileExternalPageLineId, _JournalPM.Tenant);
             if (bankAccountFromTransfer.Id != bankAccountFromPage.Id)
             {
                 throw new Exception("bankAccountFromTransfer.Id != bankAccountFromPage.Id");
@@ -123,7 +123,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         private List<LedgerTransactionPM> GetOldTransToReconcileThrowIfNotInProgress()
         {
             var theReconcileAgainstLTranIdList = _JournalPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
-            List<LedgerTransactionPM> myOldTransToReconcile = _ExternalReconcileDataProvider.GetLedgerTransactionList(theReconcileAgainstLTranIdList);
+            List<LedgerTransactionPM> myOldTransToReconcile = _ExternalReconcileDataProvider.GetLedgerTransactionList(theReconcileAgainstLTranIdList, _JournalPM.Tenant);
             if (myOldTransToReconcile.Any(r => !r.InProgressExternalReconcile))
             {
                 throw new Exception("_JournalPM.JournalReconciles have  myOldTransToReconcile.Any( r=> !r.InProgressExternalReconcile) ");
