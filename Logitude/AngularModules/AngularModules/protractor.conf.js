@@ -147,13 +147,14 @@ exports.config = {
         Contact: 'e2e/Contacts/**/Contacts-spec.ts',
         EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
         ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
-        Opportunity :'e2e/CRM/**/CRMModule-spec.ts',
+        
 
         // ********************* FullAccounting **********************************
         ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
         NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
         FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
         ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
+        BankAccount: 'e2e/FullAccounting/BankAccount/**/NewBank-spec.ts',
         VendorGLAccount: 'e2e/FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
         CustomerGLAccount: 'e2e/FullAccounting/**/CustomerGLAccount-spec.ts',
         APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
@@ -165,11 +166,11 @@ exports.config = {
         //*************ShipmentView********************
         ShipmentView: 'e2e/**/ShipmentView-spec.ts',
 
-     //*************CompanyAddressSetting********************
+     //*************Maintenance********************
         CompanyAddressSetting: 'e2e/Maintenance/**/CompanyAddressSetting-spec.ts',
-
-        //*************Agent********************
         NewAgent: 'e2e/Maintenance/**/Agent-spec.ts',
+        NewUser: 'e2e/Maintenance/**/Users-spec.ts',
+        NewShipper: 'e2e/Maintenance/**/Shipper-spec.ts',
 
         //*************DocOutTab***************
         DocOut: 'e2e/**/DocsOut.e2e-spec.ts'

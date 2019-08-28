@@ -14,6 +14,7 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string TariffNumber { get; set; }
         public string ChargeTypeId { get; set; }
         public string Price { get; set; }
+        public decimal? ActualPrice { get; set; }
         public DateTime? EffictiveDate { get; set; }
         public string Remarks { get; set; }
         public string Name { get; set; }
@@ -25,6 +26,8 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string TotalSurcharge { get; set; }
         public string WholePrice { get; set; }
         public string AllIn { get; set; }
+        public string UnitOfMesurmentCode { get; set; }
+        public string UnitOfMesurmentId { get; set; }
         public List<SurchargeSummary> Surcharges { get; set; }
 
 

@@ -121,7 +121,6 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.CustomerURL = entityPM.CustomerURL;
             entityPOCO.HideSharedlogistics = entityPM.HideSharedlogistics;
             entityPOCO.SilverlightEndDate = entityPM.SilverlightEndDate;
-            entityPM.PackageName = entityPM.PackageCode;
             entityPOCO.IsParentTenant = entityPM.IsParentTenant;
             entityPOCO.ParentTenantId = entityPM.ParentTenantId;
             entityPOCO.AgentSharedLogisticsStatisticsLastDate = entityPM.AgentSharedLogisticsStatisticsLastDate;
@@ -135,18 +134,13 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied;
             entityPOCO.TotalPrice = entityPM.TotalPrice;
 
-            if (entityPM.IsMultiPackage)
-            {
-                entityPM.PackageName = "Multi Package";
-            }
-
-            entityPOCO.PackageName = entityPM.PackageName;
-
+            string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantRepository tenantRepository = new TenantRepository(entityPM.Id);
-                Tenant tenant = tenantRepository.GetSingleTenant(entityPM.Id);
+                PackageRepository packageRepository = new PackageRepository(entityPM.Id);
 
+                Tenant tenant = tenantRepository.GetSingleTenant(entityPM.Id);
                 if (tenant != null)
                 {
                     tenant.Company = entityPM.Name;
@@ -164,9 +158,23 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                     tenantRepository.SubmitChanges();
                 }
 
+                Package package = packageRepository.GetSinglePackage(entityPM.PackageCode);
+                if(package != null)
+                {
+                    packageName = package.Name;
+                }
+
                 scope.Complete();
             }
 
+            if (entityPM.IsMultiPackage)
+            {
+                entityPM.PackageName = "Multi Package";
+            }
+            else
+            {
+                entityPOCO.PackageName = entityPM.PackageName = packageName;
+            }            
 
             BuildPackageCodeSearchFields(entityPM, entityPOCO);
         }

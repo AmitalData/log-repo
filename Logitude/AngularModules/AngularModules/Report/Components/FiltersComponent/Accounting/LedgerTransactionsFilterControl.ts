@@ -8,6 +8,7 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
 
 @Component({
     moduleId: module.id,
@@ -60,7 +61,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, !this.GLAccountId);
         this.UIProperties.SetRequired("FromDate", this.ObjectTableName, !this.FromDate);
         this.UIProperties.SetRequired("ToDate", this.ObjectTableName, !this.ToDate);
-        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+        // this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
 
     }
 
@@ -274,12 +275,12 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             myFilterItems.push(new QueryFilterItem("CurrencyId", this.CurrencyId ? this.CurrencyId : null));
             if (!this.AttachedGLAccountCheckBox) {
                 this.IsReconciled = false;
-            
+
             }
             else {
                 this.IsReconciled = null;
             }
-           
+
             myFilterItems.push(new QueryFilterItem("IsReconciled", this.IsReconciled));
             myFilterItems.push(new QueryFilterItem("IncludeChildAccounts", this.IncludeChildAccounts ? this.IncludeChildAccounts : null));
             myFilterItems.push(new QueryFilterItem("SearchFields", this.SearchFields ? this.SearchFields : null));
@@ -356,7 +357,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     }
 
 
-    private attachedGLAccountCheckBox: boolean = false;
+    private attachedGLAccountCheckBox: boolean = true;
     get AttachedGLAccountCheckBox() { return this.attachedGLAccountCheckBox; }
     set AttachedGLAccountCheckBox(value: boolean) {
         if (this.attachedGLAccountCheckBox != value) {
@@ -381,7 +382,23 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this._GLAccountId = value;
 
             this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, !value);
+        }
+    }
 
+    private glaccountPM: any;
+    get GLAccount() { return this.glaccountPM; }
+    set GLAccount(value: any) {
+        if (this.glaccountPM != value) {
+            this.glaccountPM = value;
+
+            if (this.glaccountPM.IsMultiCurrency) {
+
+                this.CurrencyId = null;
+                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+            } else {
+                this.CurrencyId = this.glaccountPM.CurrencyId;
+                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+            }
         }
     }
 

@@ -2559,8 +2559,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             //row[21] = shipment.ConsigneeCityCode;
             row[22] = shipment.ConsigneeCity;
             row[23] = shipment.DescriptionOfGoods;
-            //row[24] =;
-            //row[25] =;
+            row[24] = shipment.IsDangerous ? "ED" : "";
+            row[25] = shipment.DangerousUnNumber;
             row[26] = shipment.DescriptionOfGoods;
             dataTable1.Rows.Add(row);
 
@@ -2644,6 +2644,68 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetUnblockedShipment(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                Shipment shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+
+                if (shipment != null)
+                {
+                    shipment.LocalCustomsTransmissionsStatusCode = "NSEN";
+                    shipmentRepository.Update(shipment);
+                    shipmentRepository.SubmitChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetShipmentsTransferSummary()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);               
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ShipmentTransferSummary myResult = new ShipmentTransferSummary();
+                
+                if (SecurityUtility.CheckTableContactFeature("Shipment", "READ", tenant))
+                {
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                    IQueryable<Shipment> shipments = shipmentRepository.GetShipments(tenant);
+
+                    shipments = shipments.Where(d => !d.IsCancelled && !d.IsAccountingClosed && !d.IsOperationalClosed && d.TransportModeId != "I");
+                    shipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<Shipment>(new QueryOperations(), shipments, tenant);
+
+                    myResult.BlockedOceanShipmentsCount = shipments.Where(d => d.LocalCustomsTransmissionsStatusCode == "BLOK" && d.TransportModeId == "O").Count();
+                    myResult.BlockedAirShipmentsCount = shipments.Where(d => d.LocalCustomsTransmissionsStatusCode == "BLOK" && d.TransportModeId == "A").Count();                    
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }
 
@@ -2686,4 +2748,10 @@ public class ShipmentConnectedEntity
     public DateTime? OpenDate { get; set; }
     public DateTime? AcceptedDate { get; set; }
     public string Salesman { get; set; }
+}
+
+public class ShipmentTransferSummary
+{
+    public int BlockedOceanShipmentsCount { get; set; }
+    public int BlockedAirShipmentsCount { get; set; }
 }

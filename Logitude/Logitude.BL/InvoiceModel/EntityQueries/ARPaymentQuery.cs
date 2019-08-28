@@ -96,6 +96,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        StatusName = a.Status != null ? a.Status.Name : null,
                                        TransferStatusName = a.TransferStatus == null ? "" : a.TransferStatus.Name,
                                        BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
+                                       BillToLocalName = a.BillToCard == null ? "" : a.BillToCard.LocalName,
                                        BillToPartnerTypeId = a.BillToCard == null ? "" : a.BillToCard.PartnerTypeId,
                                        LocalCurrencyCode = a.LocalCurrency != null ? a.LocalCurrency.Code : null,
                                        PaymentCurrencyCode = a.PaymentCurrency == null ? null : a.PaymentCurrency.Code,
@@ -303,6 +304,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 Card billto = CardRepository.GetSingleCard(payment.BillToId, payment.Tenant, true);
                 payment.BillToName = billto != null ? billto.EnglishName : null;
+                payment.BillToLocalName = billto != null ? billto.LocalName : null;
 
                 AccountingPaymentMethod method = paymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
                 payment.AccountingPaymentMethodName = method != null ? method.Name : null;
@@ -326,6 +328,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    BillToAddressId = entity.BillToAddressId,
                                                    BillToId = entity.BillToId,
                                                    BillToName = entity.BillToCard == null ? null : entity.BillToCard.EnglishName,
+                                                   BillToLocalName = entity.BillToCard == null ? null : entity.BillToCard.LocalName,
                                                    BranchId = entity.BranchId,
                                                    BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                                                    CreateByUserId = entity.CreatedByUserId,
@@ -410,6 +413,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BillToAddressId = entity.BillToAddressId,
                             BillToId = entity.BillToId,
                             BillToName = entity.BillToCard == null ? null : entity.BillToCard.EnglishName,
+                            BillToLocalName = entity.BillToCard == null ? null : entity.BillToCard.LocalName,
                             BranchId = entity.BranchId,
                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                             CreateByUserId = entity.CreatedByUserId,
@@ -493,6 +497,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BillToAddressId = entity.BillToAddressId,
                             BillToId = entity.BillToId,
                             BillToName = entity.BillToCard == null ? null : entity.BillToCard.EnglishName,
+                            BillToLocalName = entity.BillToCard == null ? null : entity.BillToCard.LocalName,
                             BranchId = entity.BranchId,
                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                             CreateByUserId = entity.CreatedByUserId,

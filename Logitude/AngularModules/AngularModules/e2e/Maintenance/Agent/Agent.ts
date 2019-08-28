@@ -39,8 +39,10 @@ export class NewAgent {
     }
 
 
-    SearchAgent() {
+    SearchAgent() {  
+     
         this.helper.WaitBusyIndicator();
+        this.helper.WaitWindowClosed();
         this.helper.WaitByIdAndFill('SearchFieldsId_0_0', this.agentName);
         //click on row 
         this.helper.WaitByIdAndClick('LogGrid_0_0row0');
