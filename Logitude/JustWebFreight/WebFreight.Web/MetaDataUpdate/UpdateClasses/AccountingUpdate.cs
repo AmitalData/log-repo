@@ -1307,6 +1307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             LoadTextCodes_YearTransfer(textcodes);
             LoadTextCodes_AutomaticReconcileMethod(textcodes);
             LoadTextCodes_ReconcileExternalPage(textcodes);
+            LoadTextCodes_System1000(textcodes);
             #region ObjectTable
             ObjectTable ChartOfAccountTable = objectContext.ObjectTables.Where(f => f.Name == "ChartOfAccount" && f.Tenant == 0).FirstOrDefault();
             ObjectTable JournalTable = objectContext.ObjectTables.Where(f => f.Name == "Journal" && f.Tenant == 0).FirstOrDefault();
@@ -2212,6 +2213,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartDate", DefaultText = "Start Date", LocalDefaultText = "תאריך התחלה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.EndDate", DefaultText = "End Date", LocalDefaultText = "תאריך סיום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FailedWhilePerforming", DefaultText = "failed while performing", LocalDefaultText = "תקלה בביצוע", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NoVendors", DefaultText = "No Vendors found with Vat Number and Deduction File Number", LocalDefaultText = "לא אותרו ספקים עם תיק ניכויים ועם מספר עוסק מורשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
         }
         #endregion
 

@@ -215,6 +215,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Validate(ReconcileExternalPagePM entityPM)
         {
+
+            var result = ReconcileExternalPageValidator.IsReconciliationValid(entityPM, null);
+            if (result != null)
+            {
+                throw new ApplicationException(result.ErrorMessage);
+            }
+            base.Validate(entityPM);
+        }
+
+        void Validate_Move2_ReconcileExternalPageValidator(ReconcileExternalPagePM entityPM) { 
+
             if (entityPM.StatusCode != "1") // 1- Draft
             {
 
