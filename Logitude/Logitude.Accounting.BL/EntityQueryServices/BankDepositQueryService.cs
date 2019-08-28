@@ -314,7 +314,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountPM glaccountPM = glaQuery.GetSingle(journalLineCredit.CreditAccountId, false, false);
             journalLineCredit.CreditControlAccountId = glaccountPM.ControlAccountId;
 
-            journalPM.JournalLines.Add(journalLineCredit);
+          
 
 
             // create debit journal line
@@ -370,7 +370,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             // opposit account
             journalLineDebit.CreditAccountId = journalLineCredit.CreditAccountId;
-
+            journalLineCredit.DebitAccountId = journalLineDebit.DebitAccountId;
+            journalPM.JournalLines.Add(journalLineCredit);
             journalPM.JournalLines.Add(journalLineDebit);
 
 

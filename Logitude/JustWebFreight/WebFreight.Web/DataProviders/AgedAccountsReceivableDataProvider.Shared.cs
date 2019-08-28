@@ -47,6 +47,9 @@ namespace WebFreight.Web.DataProviders
             public double? DaysPastDue16_30 { get; set; }
             public double? DaysPastDue1_24 { get; set; }
             public double? DaysPastDue25_30 { get; set; }
+
+            public double? DaysPastDue31_45 { get; set; }
+            public double? DaysPastDue46_60 { get; set; }
         }
     }
 }

@@ -95,6 +95,7 @@
     <Compile Include="EntityPMs\Generated\ExternalReconciliationLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FullAccountingSettingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GLAccountCounterPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountCurrencyPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountMoreDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountPM.Generated.cs" />
