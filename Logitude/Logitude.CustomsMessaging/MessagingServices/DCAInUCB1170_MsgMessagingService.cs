@@ -81,9 +81,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
+        protected override bool? IsOurEnvironment(DCAInUCB1170WithResponseContentHeader customsResponse, GenericRequestParams RequestParams)
+        {
+            return false;
+        }
 
-
-       
 
         public string CreateCRS(int tenant, string LoggingUserId,
             //string CourierMasterId, string master, string courierDeclarationStatusCode, List<string> DeclarationsList = null)
