@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .BoxItemRow td span {
         color: #0B3861;
@@ -67,7 +67,7 @@
                         </td>
 
                         <td style="width: 1px;">
-                            <button class="Button" (click)="AddAddressClicked()" [disabled]="!IsEditingEnabled">{{'Address.B.NewAddress' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'addAddress' | IdGeneratorPipe}}" class="Button" (click)="AddAddressClicked()" [disabled]="!IsEditingEnabled">{{'Address.B.NewAddress' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>
@@ -141,7 +141,7 @@
                                                     <td>{{item.CityLineText}}</td>
                                                 </tr>
 
-                                                <tr class="BoxItemRow">
+                                                <tr id="{{'rowid' | IdGeneratorPipe}}" class="BoxItemRow">
                                                     <td>{{item.CountryName}}</td>
                                                 </tr>
 
