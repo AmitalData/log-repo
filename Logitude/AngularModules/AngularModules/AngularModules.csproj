@@ -359,6 +359,7 @@
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\AnalyzeQueue\MessageBodyTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\Communications\CommunicationsTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentsFiling\DocumentsFilingGeneralTabComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\MoveType\NewMoveTypeComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAdaptationItemComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineMessagingRuleComponent.html" />
@@ -826,6 +827,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Workspaces\TasksWorkspaceComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\CustomControls\RatioBoxComponent.ts" />
