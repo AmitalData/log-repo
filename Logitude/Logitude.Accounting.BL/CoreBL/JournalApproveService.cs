@@ -232,7 +232,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (featureTested)
                     {
                         var myCreateAutoExternalReconcileWhileStreamingService = new CreateAutoExternalReconcileWhileStreamingService();
-                        var providor = new ExternalReconcileDataProvider(_AccountingContext, _JournalPM.Tenant);
+                        var providor = new ExternalReconcileDataProvider(_AccountingContext);
                         myCreateAutoExternalReconcileWhileStreamingService.MustInit(providor, _JournalPM, myLedgerTransactionsWithCounters);
                         myCreateAutoExternalReconcileWhileStreamingService.CreateAutoExternalReconcileWhileStreaming();
                         if (myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList != null &&

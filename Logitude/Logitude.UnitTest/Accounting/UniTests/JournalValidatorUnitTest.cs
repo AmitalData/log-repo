@@ -1455,7 +1455,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
             MyAccountingPeriodPM = MyAccountingPeriodPM ?? new AccountingPeriodPM() { Year = 2016, ClosedMonth = 1, OpenMonth = 9 ,PeriodTypeCode="1"  };
             //string journalNumber = "";
             IJournalValidatorContextDataProvider myStubIJournalValidatorContextDataProvider = A.Fake<IJournalValidatorContextDataProvider>( );
-            
+            IExternalReconcileDataProvider myIExternalReconcileDataProvider = A.Fake<IExternalReconcileDataProvider>();
+
             {
                 A.CallTo(() =>myStubIJournalValidatorContextDataProvider.GetGLAccount(A<string>.Ignored,A<int>.Ignored))
                     .ReturnsLazily(
@@ -1550,6 +1551,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 entityPM, 
                 AccountingPeriodList, 
                 myStubIJournalValidatorContextDataProvider,
+                myIExternalReconcileDataProvider,
                 myFullAccountingSettingPM ,
                 SuppressCheckGLAccountIsMultiCurrencyWI40640,
                 dateTimeUtcNow);
