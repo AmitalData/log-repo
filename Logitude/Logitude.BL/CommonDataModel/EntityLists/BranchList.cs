@@ -19,5 +19,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string INTTRAId { get; set; }
         public string INTTRAAlias { get; set; }
         public string INTTRAContactId { get; set; }
+        public string CalculatedEnglishName { get; set; }
+        public string CalculatedLocalName { get; set; }
     }
 }

@@ -10,7 +10,7 @@ export class NewShipper {
 
     constructor() {
         this.helper = new FieldsHelper();
-        this.shipperName = 'TestCompany-' + Math.random();
+        this.shipperName = 'XYZShipper-' + Math.random();
     }
 
 
@@ -22,7 +22,7 @@ export class NewShipper {
     }
 
     SearchShippertTab() {
-
+        browser.sleep(1000);
         this.helper.WaitByIdAndFill('null_Search', "Shipper");
         this.helper.WaitByIdAndClick('MaintenanceItemMTCL');
 
@@ -35,16 +35,16 @@ export class NewShipper {
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndFill('Address_City', "Florence");
-     //   this.helper.WaitByIdAndClick('CheckBox_0_111_LBL')
-     //   this.helper.WaitByIdAndFill('Address_ContactEmail', "Test@mail.com");
-     //   this.helper.WaitByIdAndFill('Address_ContactName', "Test123");
+        //   this.helper.WaitByIdAndClick('CheckBox_0_111_LBL')
+        //   this.helper.WaitByIdAndFill('Address_ContactEmail', "Test@mail.com");
+        //   this.helper.WaitByIdAndFill('Address_ContactName', "Test123");
         this.helper.WaitByIdAndClick('Ok-AddCustomer');
 
     }
 
     SearchShipper() {
-        this.helper.WaitWindowClosed();
         this.helper.WaitBusyIndicator();
+        this.helper.WaitWindowClosed();
         this.helper.WaitByIdAndFill('SearchFieldsId_0_0', this.shipperName);
         this.helper.WaitByIdAndClick('LogGrid_0_0row0');
     }
@@ -53,10 +53,13 @@ export class NewShipper {
         this.helper.WaitByIdAndClick('Customer.TH.General');
         this.helper.WaitByIdAndFill('Customer_LocalName', "Test Company 123")
         this.helper.WaitByIdAndClick('Customer.TH.Addresses');
+        this.helper.WaitByIdAndClick('rowid')
         this.helper.WaitByIdAndClick('Edit');
         this.helper.WaitByIdAndFill('Address_Address1', "Palestine");
+        this.helper.WaitByIdAndFill('Address_ZipCode', "123")
+        //NEW 
         this.helper.WaitByIdAndClick('OKButtonID');
-        this.helper.WaitByIdAndClick('Customer-Save');
+        //this.helper.WaitByIdAndClick('Customer-Save');
 
 
     }
