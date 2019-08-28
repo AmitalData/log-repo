@@ -29,7 +29,7 @@ describe('CRM Module', function () {
     GLA.CreateNewGLAccount(Gl);
     GLA.CreateNewGLAccount(diff);
     GLA.CreateNewGLAccountandmove(trans);
-  //  this.Helper. WaitByIdAndClick('FABNKS');
+     this.Helper. WaitByIdAndClick('NEWBANK');
      BNk.CreateNewBankAccount(bank,Gl,diff,trans);
      h.WaitByIdAndClick('BANKQUERY');
      edit.EditBankAccount(bank);
