@@ -7,6 +7,7 @@ namespace Logitude.XSD.CW_API.ABM
 {
     public class ABMDataBuilder
     {
+
         public ABMDataContext Context { get; set; }
         public ABMDataBuilder(ABMDataContext myContext)
         {
@@ -79,8 +80,38 @@ namespace Logitude.XSD.CW_API.ABM
             myItem.Version = "4.35";
             myItem.Command = "Update";
 
-            myItem.ConsignmentHeader = new ConsignmentHeader();
+            myItem.ConsignmentHeader = new ConsignmentHeader()
+            {
+                AccountCode = null,
+                BarCode = null,
+                BookIn = null,
+                ConsignmentBaseCurrency = null,
+                ConsignmentComplete = null,
+                ConsignmentDate = null,
+                GoodsDescription = "",
+            };
+
             myItem.ConsignmentHeader.ConsignmentReference = this.Context.ShipmentNumber;
+
+            #region ValueAmount
+            //if (this.Context.ValueOfGoods != null)
+            //{
+            //    List<ValueAmount> iValueAmounts = new List<ValueAmount>();
+
+            //    iValueAmounts.Add(new ValueAmount()
+            //    {
+            //        AmountValue = this.Context.ValueOfGoods.Value,
+            //        Currency = new Currency()
+            //        {
+            //            CodeType = CurrencyCodeType.TXT,
+            //            CurrencyType = "",
+            //            Text = "",
+            //        },
+            //    });
+
+            //    myItem.ConsignmentHeader.ValueAmount = iValueAmounts.ToArray<ValueAmount>();
+            //}
+            #endregion
 
             #region Reference 
             List<Reference> references = new List<Reference>();

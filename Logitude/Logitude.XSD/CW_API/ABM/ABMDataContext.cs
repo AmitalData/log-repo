@@ -33,6 +33,8 @@ namespace Logitude.XSD.CW_API.ABM
         public string ShipmentNumber { get; set; }
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
+        public double? ValueOfGoods { get; set; }
+        public string ValueOfGoodsCurrencyCode { get; set; }
 
         public string MainCarriageFromPortCountryCode { get; set; }
         public string FinalDestinationPortCountryCode { get; set; }
@@ -70,11 +72,13 @@ namespace Logitude.XSD.CW_API.ABM
         public List<ShipmentPackagePM> Containers = new List<ShipmentPackagePM>();
 
         private ComputingPartnerTranslationHelper computingPartnerHelper;
+        private ICommonDataContext iCommonContext;
 
-        public ABMDataContext(string shipmentId, int tenant)
+        public ABMDataContext(string shipmentId, int tenant, ICommonDataContext commonContext)
         {
             this.Tenant = tenant;
             this.ShipmentId = shipmentId;
+            this.iCommonContext = commonContext;
 
             this.computingPartnerHelper = new ComputingPartnerTranslationHelper(Tenant);
 
@@ -117,6 +121,16 @@ namespace Logitude.XSD.CW_API.ABM
             this.ShipmentNumber = this.Shipment.ShipmentNumber;
             this.HouseNumber = this.Shipment.House;
             this.MasterNumber = this.Shipment.Master;
+            this.ValueOfGoods = this.Shipment.ValueOfGoods;
+
+            if(this.Shipment.ValueOfGoodsCurrencyId != null)
+            {
+                Currency iCurrency = (from d in iCommonContext.Currencies where d.Id == this.Shipment.ValueOfGoodsCurrencyId select d).FirstOrDefault();
+                if(iCurrency != null)
+                {
+                    this.ValueOfGoodsCurrencyCode = iCurrency.Code;
+                }
+            }
 
             this.DescriptionOfGoods = this.Shipment.DescriptionOfGoods;
             this.IncotermCode = this.Shipment.IncotermCode;
