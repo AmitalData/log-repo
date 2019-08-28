@@ -10,14 +10,22 @@ using System.Threading.Tasks;
 namespace Logitude.Accounting.BL.Validators
 {
 
-
     public interface IJournalValidatorContextDataProvider : IGLAccountDataProvider
     {
         //GLAccountPM GetGLAccount(string GLAccountId, int tenant);//DO NOT USE OBJECT FROM DIFF TENANT
         CurrencyPM GetCurrency(string CurrencyId, int tenant);//DO NOT USE OBJECT FROM DIFF TENANT
-        
+
         List<String> GetGLAccountCurrencyList(string CustomerGLAccountId, int tenant);
         string CheckExternalNoAndSystemReturnJournalNumber(string externalNo, string externalSystem, int tenant);
+    }
+
+    public interface IExternalReconcileDataProvider 
+    {
+        BankAccountPM GetBankAccountFromTransferAccount(string myLedgerTransactionTransferInCreditAccountId, int tenant);//DO NOT USE OBJECT FROM DIFF TENANT
+        BankAccountPM GetBankAccountFromReconcileExternalPageLineId(string reconcileExternalPageLineId, int tenant);
+
+        ReconcileExternalPageLinePM GetReconcileExternalPageLinePM(int tenant, string reconcileExternalPageLineId);
+        List<LedgerTransactionPM> GetLedgerTransactionList(List<string> theReconcileAgainstLTranIdList, int tenant);
     }
     public interface IGLAccountDataProvider
     {
