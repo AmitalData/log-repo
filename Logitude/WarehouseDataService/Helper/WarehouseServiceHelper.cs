@@ -166,7 +166,14 @@ namespace WarehouseDataService.Helper
                     reader.Read();
 
                     var dbConnectionString = reader["DBConnection"];
-                    if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString())) result = dbConnectionString.ToString();
+                    if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString()))
+                    {
+                        result = dbConnectionString.ToString();
+                        if(result == "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com")
+                        {
+                            result = "LogitudeMain-Test2,sa,Saas256,.";
+                        }
+                    }
                     else
                     {
                         dbConnectionString = reader["SecondaryAzureDBConnection"];
