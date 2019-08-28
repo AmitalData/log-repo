@@ -3057,7 +3057,7 @@ namespace Logitude.XSD.INTTRA_Out
         
         private FlashpointTemperatureUOM uOMField;
         
-        private float valueField;
+        private string valueField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified)]
@@ -3072,7 +3072,7 @@ namespace Logitude.XSD.INTTRA_Out
         
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        public float Value {
+        public string Value {
             get {
                 return this.valueField;
             }

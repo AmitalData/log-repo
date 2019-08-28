@@ -1940,18 +1940,11 @@ namespace Logitude.XSD.INTTRA.BL
 
                             if (myShipmentPackage.FlashPoint != null)
                             {
-                                float myDecimalFlashPoint = 0;
-
-                                bool isDecimal = float.TryParse(myShipmentPackage.FlashPoint, out myDecimalFlashPoint);
-
-                                if (isDecimal)
+                                HazardousGoodsItem.FlashpointTemperature = new INTTRA_Out.FlashpointTemperature()
                                 {
-                                    HazardousGoodsItem.FlashpointTemperature = new INTTRA_Out.FlashpointTemperature()
-                                    {
-                                        UOM = myShipmentPackage.FlashPointTemperatureUnitCode == "CEL" ? INTTRA_Out.FlashpointTemperatureUOM.CEL : INTTRA_Out.FlashpointTemperatureUOM.FAH,
-                                        Value = myDecimalFlashPoint
-                                    };
-                                }
+                                    UOM = myShipmentPackage.FlashPointTemperatureUnitCode == "CEL" ? INTTRA_Out.FlashpointTemperatureUOM.CEL : INTTRA_Out.FlashpointTemperatureUOM.FAH,
+                                    Value = myShipmentPackage.FlashPoint
+                                };
                             }
 
                             if (myShipmentPackage.ProperShippingName != null)
