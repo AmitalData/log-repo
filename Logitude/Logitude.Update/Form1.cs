@@ -3760,9 +3760,42 @@ User/Pass",
             }
 
         }
+
+        //label3
+        private void button45_Click(object sender, EventArgs e)
+        {
+            SetControlPropertyValue(label3, "ForeColor", Color.Black);
+            SetControlPropertyValue(label3, "Text", "Updating...");
+
+            PackageRepository packageRepository = new PackageRepository(0);
+            List<Package> packages = packageRepository.GetPackages().ToList();
+
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                IQueryable<TenantManagement> allTenants = tenantManagementRepository.GetAllTenants();                
+                
+                foreach (TenantManagement tenantManagement in allTenants)
+                {
+                    if (!string.IsNullOrEmpty(tenantManagement.PackageCode))
+                    {
+                        Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();
+                        if (tenantPackage != null)
+                        {
+                            tenantManagement.PackageName = tenantPackage.Name;
+                            tenantManagementRepository.Update(tenantManagement);
+                        }
+                    }
+                }
+
+                tenantManagementRepository.SubmitChanges();
+                scope.Complete();
+            }
+
+            SetControlPropertyValue(label3, "ForeColor", Color.Green);
+            SetControlPropertyValue(label3, "Text", "Done");
+        }
     }
-
-
 
     public class MyFeature
     {

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL.Validators;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -42,28 +43,38 @@ namespace Logitude.Accounting.BL.CoreBL
             var accountingPeriodQueryService = new AccountingPeriodQueryService(_AccountingContext);
             var accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodByType(typeregular, journalPM.Tenant);
             var newJournalValidatorDataProvider = new JournalValidatorDataProvider(_AccountingContext);
+            
+            var newExternalReconcileDataProvider = new ExternalReconcileDataProvider(_AccountingContext);
             var myFullAccountingSettingPM = FullAccountingSettingQueryService.Get(journalPM.Tenant);
 
 
 
-            return NewJournalValidatorContext(journalPM, accountingPeriodsByTypeRegular, newJournalValidatorDataProvider, myFullAccountingSettingPM, 
-                SuppressCheckGLAccountIsMultiCurrencyWI40640);
+            return NewJournalValidatorContext(journalPM, accountingPeriodsByTypeRegular, 
+                newJournalValidatorDataProvider,
+                newExternalReconcileDataProvider,
+                myFullAccountingSettingPM,
+                SuppressCheckGLAccountIsMultiCurrencyWI40640
+                
+                );
         }
 
         public static ValidationContext NewJournalValidatorContext(
             JournalPM journalPM, 
             List<AccountingPeriodPM> accountingPeriodsByTypeRegular, 
-            IJournalValidatorContextDataProvider newJournalValidatorDataProvider, 
+            IJournalValidatorContextDataProvider newJournalValidatorDataProvider,
+            IExternalReconcileDataProvider newExternalReconcileDataProvider,
             FullAccountingSettingPM myFullAccountingSettingPM,
             bool SuppressCheckGLAccountIsMultiCurrencyWI40640,
+            
             DateTime? DateTimeUtcNow = null
             )
         {
             
             var contextServiceProvider = new AccountingValidationContextServiceProvider();
             contextServiceProvider.AddService<IJournalValidatorContextDataProvider>(newJournalValidatorDataProvider);
+            contextServiceProvider.AddService<IExternalReconcileDataProvider>(newExternalReconcileDataProvider);
+            
 
-           
             //var myFullAccountingSettingPM = FullAccountingSettingQueryService.Get(journalPM.Tenant);
 
             var contextItems = new Dictionary<object, object>
