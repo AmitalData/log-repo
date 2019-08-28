@@ -55,7 +55,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.entityPM.TenantVATManagement = true;
-
             
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
@@ -64,11 +63,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 scope.Complete();
             }
 
+            PackageRepository packageRepository = new PackageRepository(0);
+            List<Package> packages = packageRepository.GetPackages().ToList();
+
+            string packageCode = "BUSN";
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 SettingRepository settingRepository = new SettingRepository();
                 Setting setting = settingRepository.GetSingleSetting("1");
-                string packageCode = "BUSN";
+                
                 if (setting.WorkEnvironment == "customs")
                 {
                     packageCode = "CUST";
@@ -79,7 +82,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
-                TenantManagementRepository tenantManagementRep = new TenantManagementRepository();
+                TenantManagementRepository tenantManagementRep = new TenantManagementRepository();                
+
                 GlobalDB database = GetActiveDatabaseNumber();
                 int version = globalTenantRepository.GetCurrentVersion();
                 GlobalTenant globalTenant = new GlobalTenant()
@@ -106,8 +110,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     PackageCode = packageCode,
                     NumberOfUsers = 1,
                     SearchFields = globalTenant.Id + "," + globalTenant.CompanyName + ",1",
-                    AWBMessagesCCSTypeCode = "CHAMP",                   
+                    AWBMessagesCCSTypeCode = "CHAMP",    
+                    MainAdditionalPackageApplied = true,
                 };
+
+                Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();
+                if (tenantPackage != null)
+                {
+                    tenantManagement.PackageName = tenantPackage.Name;
+                }
 
                 if (packageCode == "IMPO")
                 {
@@ -121,10 +132,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     tenantManagement.TenantTypeCode = "FOR";
                     tenantManagement.Technology = "AG";
                     //theEntityPm.ExportQuotationsToIntegratedSystem = false;
-                }            
-
+                }
+                
                 tenantManagementRep.Add(tenantManagement);
                 tenantManagementRep.SubmitChanges();
+
+                
                 scope.Complete();
             }
 
@@ -139,13 +152,27 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             AesFunction aesFunction = new AesFunction();
             Poco.StorageEncryptionKey = aesFunction.GenerateAesKey();
-
-
+            
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
-            CreateDWHSettings();
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{
+            //    TenantManagementLicenseRepository tenantManagementLicenseRepository = new TenantManagementLicenseRepository();
+            //    TenantManagementLicense tenantManagementLicense = new TenantManagementLicense()
+            //    {
+            //        Id = IdCounter.GetNumber("TenantManagementLicense", Poco.Id),
+            //        Tenant = Poco.Id,
+            //        NumberOfUsers = 1,
+            //        PackageCode = packageCode,
+            //    };
+            //    tenantManagementLicenseRepository.Add(tenantManagementLicense);
+            //    tenantManagementLicenseRepository.SubmitChanges();
 
+            //    scope.Complete();
+            //}
+
+            CreateDWHSettings();
         }
         public void Update(TenantPM theEntityPm)
         {

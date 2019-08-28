@@ -195,6 +195,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
             }
 
+            // validate totals
+            double SubTotalInLocalCurrency =    Math.Round(apinvoice.InvoiceLines.Sum(d => d.LocalCurrencyAmount).Value, 2);
+            double linesInvoiceAmount =  Math.Round(apinvoice.InvoiceLines.Sum(d => d.InvoiceCurrencyAmount.Value), 2);
+
+            if(apinvoice.AmountInInvoiceCurrency != linesInvoiceAmount)
+            {
+                throw new ApplicationException("Invoice Amount field doesnt match the total amount");
+            }
+
 
         }
 

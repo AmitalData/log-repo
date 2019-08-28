@@ -38,5 +38,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.OnCreating(entityPM, entityParentPM);
         }
 
+
+        internal void Update_InProgressExternalReconcile(List<string> listReconcileExternalPageLineId, int tenant, bool Value_ExternalReconcileInProgress)
+        {
+            var reconcileExternalPageLineQueryService = new ReconcileExternalPageLineQueryService(MainContext as IAccountingContext);
+            var pmList = reconcileExternalPageLineQueryService.GetPageLinesPMsByIdList(listReconcileExternalPageLineId, tenant);
+
+            foreach (var item in pmList)
+            {
+                if (Value_ExternalReconcileInProgress == true)//while prepare check while streaming do not check !!
+                {
+                    if (item.InProgressExternalReconcile)
+                    {
+                        throw new Exception("Already InReconcileProgress");
+                    }
+                }
+                item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                item.InProgressExternalReconcile = /*true*/ Value_ExternalReconcileInProgress;
+            }
+            this.UpdateMulti(pmList, new List<ReconcileExternalPageLinePM>(), new ReconcileExternalPagePM(), true);
+        }
     }
 }

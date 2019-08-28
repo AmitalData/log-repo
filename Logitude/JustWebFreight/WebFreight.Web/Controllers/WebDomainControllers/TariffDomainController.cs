@@ -891,7 +891,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
                 var StepLength = rowData.Length;
-                if (!string.IsNullOrEmpty(filter.PriceSteps))
+                if (filter != null && !string.IsNullOrEmpty(filter.PriceSteps))
                 {
                     StepLength = filter.PriceSteps.Split(',').Length + 3;
                 }
