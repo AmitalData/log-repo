@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Utils;
@@ -68,10 +69,22 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
                 {
                     _BankAccountQueryService = new BankAccountQueryService(tenant);
                     var accurateBankAccount = _BankAccountQueryService.GetSingle(validBankAccountDTO.DBBankaccountPM.Id, false, false);
-                    using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                    try
                     {
-                        AnalyzeNewPage(tenant, accurateBankAccount, newPageOfBankAccountDTO);
-                        scope.Complete();
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                        {
+                            var successCommit=AnalyzeNewPage(tenant, accurateBankAccount, newPageOfBankAccountDTO);
+                            if (successCommit)
+                            {
+                                scope.Complete();
+                            }
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
                     }
 
                 }
@@ -308,7 +321,7 @@ s             b                   a
 
 
 
-        private void AnalyzeNewPage(int tenant, BankAccountPM dbBankaccountPM, BankPageDTO newPageOfBankAccount)
+        private bool AnalyzeNewPage(int tenant, BankAccountPM dbBankaccountPM, BankPageDTO newPageOfBankAccount)
         {
             string errorPageValidation = PageValidationClientSide(newPageOfBankAccount);
             if (!string.IsNullOrWhiteSpace(errorPageValidation))
@@ -319,7 +332,7 @@ s             b                   a
                           Message = $"PageValidationClientSide():BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  {errorPageValidation}  "
                       })
                          ;
-                return;
+                return true;
             }
             //if (dbBankaccountPM.LastPageCloseBalance != newPageOfBankAccount.MyBankAccountM.OpenBalance)
             //{
@@ -354,7 +367,7 @@ s             b                   a
                             RawLine = newBankPageLines.First().RawLine
 
                         });
-                    return;
+                    return true;
                 }
 
 
@@ -370,25 +383,30 @@ s             b                   a
                         });
 
 
-                    return;
+                    return true;
                 }
             }
 
 
             ReconcileExternalPagePM entityPM = MapReconcileExternalPagePM(tenant, newPageOfBankAccount, dbBankaccountPM);
 
-            InsertBankPage(tenant, newPageOfBankAccount, entityPM);
+            bool successCommit= InsertBankPage(tenant, newPageOfBankAccount, entityPM);
+            return successCommit;
 
         }
 
-        private void InsertBankPage(int tenant, BankPageDTO newPageOfBankAccount, ReconcileExternalPagePM entityPM)
+        private bool InsertBankPage(int tenant, BankPageDTO newPageOfBankAccount, ReconcileExternalPagePM entityPM)
         {
             try
             {
 
 
 
-
+                var result = ReconcileExternalPageValidator.IsReconciliationValid(entityPM, null);
+                if (result != null)
+                {
+                    throw new ApplicationException(result.ErrorMessage);
+                }
 
                 var MyContext = AccountingContext.GetContext(entityPM.Tenant);
                 ReconcileExternalPageUpdateService service = new ReconcileExternalPageUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
@@ -397,12 +415,14 @@ s             b                   a
 
                 //scope.Complete();
                 this.AddSuccessInsertBankPage(entityPM, newPageOfBankAccount);
+                return true;
 
             }
 
             catch (Exception ex)
             {
                 this.AddExceptionInsertBankPage(entityPM, newPageOfBankAccount, ex);
+                return false;
             }
         }
 

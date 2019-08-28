@@ -39,8 +39,24 @@ export class GLAccountExtendedListService {
                 return serviceResponse;
              }).catch(ServiceHelper.HandleServiceError);
          });
-     }
+    }
+    GetInsertControlAccount(ControlAccountId:string , ChartOfAccountsId: string )
+    {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
+        var url = this._apiUrl + '/GetInsertControlAccount?ControlAccountId=' + ControlAccountId + '&ChartOfAccountsId=' + ChartOfAccountsId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var resAccountId = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = resAccountId;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
     GetChildrenGLAccounts(GLAccountId: string) {
         var authHeader = new Headers();

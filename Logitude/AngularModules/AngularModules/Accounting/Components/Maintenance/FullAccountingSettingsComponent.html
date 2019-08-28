@@ -510,6 +510,9 @@
                                                                 (SelectedItemChanged)="CustomerControlAccount = $event">
                                                         </LogLov>
                                                     </td>
+                                                    <td style="width: 57px;">
+                                                        <button *ngIf="CustomerControlAccountId ==null" class="Button" (click)="CreateControlAccount('CustomerControlAccountId')">הוסף</button>
+                                                    </td>
                                                     <td><div></div></td>
                                                 </tr>
 
@@ -529,6 +532,10 @@
                                                                 (SelectedItemChanged)="VendorControlAccount = $event">
                                                         </LogLov>
                                                     </td>
+                                                    <td style="width: 57px;">
+                                                        <button *ngIf="VendorControlAccountId ==null" class="Button" (click)="CreateControlAccount('VendorControlAccountId')">הוסף</button>
+                                                    </td>
+
                                                     <td><div></div></td>
                                                 </tr>
 
@@ -548,6 +555,10 @@
                                                                 [LookUpTableName]="'GLAccount'">
                                                         </LogLov>
                                                     </td>
+                                                    <td style="width: 57px;">
+                                                        <button *ngIf="FileControlAccountId ==null" class="Button" (click)="CreateControlAccount('FileControlAccountId')">הוסף</button>
+                                                    </td>
+
                                                     <td><div></div></td>
                                                 </tr>
 
@@ -566,6 +577,10 @@
                                                                 [LookUpTableName]="'GLAccount'">
                                                         </LogLov>
                                                     </td>
+                                                    <td style="width: 57px;">
+                                                        <button *ngIf="OceanExportJobControlAccountId ==null" class="Button" (click)="CreateControlAccount('OceanExportJobControlAccountId')">הוסף</button>
+                                                    </td>
+
                                                     <td><div></div></td>
                                                 </tr>
 
@@ -584,6 +599,10 @@
                                                                 [LookUpTableName]="'GLAccount'">
                                                         </LogLov>
                                                     </td>
+                                                    <td style="width: 57px;">
+                                                        <button *ngIf="OceanImportJobControlAccountId ==null" class="Button" (click)="CreateControlAccount('OceanImportJobControlAccountId')">הוסף</button>
+                                                    </td>
+
                                                     <td><div></div></td>
                                                 </tr>
 
@@ -602,6 +621,10 @@
                                                                 [LookUpTableName]="'GLAccount'">
                                                         </LogLov>
                                                     </td>
+                                                    <td style="width: 57px;">
+                                                        <button *ngIf="AirExportJobControlAccountId ==null" class="Button" (click)="CreateControlAccount('AirExportJobControlAccountId')">הוסף</button>
+                                                    </td>
+
                                                     <td><div></div></td>
                                                 </tr>
 
@@ -620,6 +643,10 @@
                                                                 [LookUpTableName]="'GLAccount'">
                                                         </LogLov>
                                                     </td>
+                                                    <td style="width: 57px;">
+                                                        <button *ngIf="AirImportJobControlAccountId ==null" class="Button" (click)="CreateControlAccount('AirImportJobControlAccountId')">הוסף</button>
+                                                    </td>
+
                                                     <td><div></div></td>
                                                 </tr>
 

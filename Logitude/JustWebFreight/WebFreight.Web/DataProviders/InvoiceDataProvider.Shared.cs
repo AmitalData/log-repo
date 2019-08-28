@@ -512,6 +512,7 @@ namespace WebFreight.Web.DataProviders
         public string TenantCAAT { get; set; }
         public string CarrierCBSA { get; set; }
         public string CarrierCAAT { get; set; }
+        public string AccountDisplayNumber { get; set; }
     }
 
     public class SAT

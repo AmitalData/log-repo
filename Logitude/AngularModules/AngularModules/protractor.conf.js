@@ -166,11 +166,11 @@ exports.config = {
         //*************ShipmentView********************
         ShipmentView: 'e2e/**/ShipmentView-spec.ts',
 
-     //*************CompanyAddressSetting********************
+     //*************Maintenance********************
         CompanyAddressSetting: 'e2e/Maintenance/**/CompanyAddressSetting-spec.ts',
-
-        //*************Agent********************
         NewAgent: 'e2e/Maintenance/**/Agent-spec.ts',
+        NewUser: 'e2e/Maintenance/**/Users-spec.ts',
+        NewShipper: 'e2e/Maintenance/**/Shipper-spec.ts',
 
         //*************DocOutTab***************
         DocOut: 'e2e/**/DocsOut.e2e-spec.ts'

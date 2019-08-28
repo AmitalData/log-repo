@@ -17,13 +17,14 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using System.Diagnostics;
 
 namespace Logitude.Accounting.BL.Validators
 {
     public partial class GLAccountValidator
     {
 
-        public static ValidationResult IsGLAccountValid(GLAccountPM myGLAccountPM)
+        public static ValidationResult IsGLAccountValid(GLAccountPM myGLAccountPM,bool FromFullAccountingProvider=false)
         {
             // GET logged contact, RTL
             ContactPM contact = GetLoggedContact(myGLAccountPM.Tenant);
@@ -161,14 +162,21 @@ namespace Logitude.Accounting.BL.Validators
             }
             if (myGLAccountPM.IsControlAccount.GetValueOrDefault())
             {
-                var fullPM =FullAccountingSettingQueryService.Get(myGLAccountPM.Tenant);
-                if (fullPM==null)
+                if (FromFullAccountingProvider)
                 {
-                    return null;
+                    AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Information);
+                    Debug.WriteLine("Is control account - A void Check due FromFullAccountingProvider");
                 }
-                var list = new List<string> ()
+                else
                 {
-                        
+                    var fullPM = FullAccountingSettingQueryService.Get(myGLAccountPM.Tenant);
+                    if (fullPM == null)
+                    {
+                        return null;
+                    }
+                    var list = new List<string>()
+                {
+
                         fullPM.AirExportJobControlAccountId ,
                         fullPM.AirImportJobControlAccountId ,
                         fullPM.CustomerControlAccountId ,
@@ -176,14 +184,15 @@ namespace Logitude.Accounting.BL.Validators
                         fullPM.OceanImportJobControlAccountId,
                         fullPM.VendorControlAccountId,
                         fullPM.FileControlAccountId,
-                        
+
                 };
-                if (list.Contains(myGLAccountPM.Id) == false)
-                {
-                    return new ValidationResult(
-                       // "The Account is defined as a Control Account but is not connected to the Full Accounting Settings"
-                        TextCodesTranslator.TranslateText("GLAccounts.O.ControlAccountNotDefined", myGLAccountPM.Tenant)
-                        );
+                    if (list.Contains(myGLAccountPM.Id) == false)
+                    {
+                        return new ValidationResult(
+                            // "The Account is defined as a Control Account but is not connected to the Full Accounting Settings"
+                            TextCodesTranslator.TranslateText("GLAccounts.O.ControlAccountNotDefined", myGLAccountPM.Tenant)
+                            );
+                    }
                 }
             }
             else if (String.IsNullOrWhiteSpace(myGLAccountPM.ControlAccountId) && (myGLAccountPM.AccountTypeCode == "4" || myGLAccountPM.AccountTypeCode == "5" || myGLAccountPM.AccountTypeCode == "2" || myGLAccountPM.AccountTypeCode == "3"))
