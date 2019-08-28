@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
@@ -16,7 +17,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         //private IAccountingContext _AccountingContext;
         private JournalPM _JournalPM;
         private List<LedgerTransactionPM> _NewLedgerTransactionsWithCounters;
-        ExternalReconcileDataProvider _ExternalReconcileDataProvider;
+        IExternalReconcileDataProvider _ExternalReconcileDataProvider;
         public List<ExternalReconciliationPM> ExternalReconciliationList { get; private set; }
 
         internal void MustInit(ExternalReconcileDataProvider externalReconcileDataProvider, JournalPM journalPM, List<LedgerTransactionPM> myLedgerTransactionsWithCounters)
