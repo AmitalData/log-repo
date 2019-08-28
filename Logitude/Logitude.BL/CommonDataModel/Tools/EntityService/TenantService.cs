@@ -55,7 +55,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.entityPM.TenantVATManagement = true;
-
             
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
@@ -63,6 +62,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 this.tenant = entityPM.Id;
                 scope.Complete();
             }
+
+            PackageRepository packageRepository = new PackageRepository(0);
+            List<Package> packages = packageRepository.GetPackages().ToList();
 
             string packageCode = "BUSN";
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -111,7 +113,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     AWBMessagesCCSTypeCode = "CHAMP",    
                     MainAdditionalPackageApplied = true,
                 };
-                
+
+                Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();
+                if (tenantPackage != null)
+                {
+                    tenantManagement.PackageName = tenantPackage.Name;
+                }
+
                 if (packageCode == "IMPO")
                 {
                     tenantManagement.TenantTypeCode = "SHC";
