@@ -49,7 +49,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public string Harmonize { get; set; }
     
-    public double? Temperature { get; set; }
+    public string Temperature { get; set; }
     
     public double? Ventilation { get; set; }
     
