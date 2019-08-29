@@ -528,7 +528,7 @@
                                     </log-column>
 
                                     <!-- Tariff Link -->
-                                    <log-column [header]="'Tariff'" [width]="'80'" [Alignment]="'center'">
+                                    <log-column *ngIf="IsPriceCheckVisible" [header]="'Tariff'" [width]="'80'" [Alignment]="'center'">
                                         <log-cell-template template="let item" [TabIndex]="-1" [Alignment]="'center'">
                                             <div style="width: 100%; height: 100%; position: relative;">
                                                 <table>
@@ -536,7 +536,7 @@
 
                                                         <td *ngIf="item.TariffNumber != null">
                                                             <div class="MediaFill">
-                                                                <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditTariffClicked(item.TariffId)">{{ item.TariffNumber}}</Hyperlink>
+                                                                <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditTariffClicked(item)">{{ item.TariffNumber}}</Hyperlink>
                                                             </div>
                                                         </td>
                                                     </tr>

@@ -391,6 +391,11 @@ export class ShipmentPayablePM {
     public set TariffNumber(newValue: string) { if (this.tariffNumber != newValue) { this.tariffNumber = newValue; this.MarkAsDirty("TariffNumber"); } }
        
 	 
+    private tariffVersion: number;
+    public get TariffVersion() { return this.tariffVersion; }
+    public set TariffVersion(newValue: number) { if (this.tariffVersion != newValue) { this.tariffVersion = newValue; this.MarkAsDirty("TariffVersion"); } }
+       
+	 
 
     public OldEntityPM: ShipmentPayablePM;
 	    
