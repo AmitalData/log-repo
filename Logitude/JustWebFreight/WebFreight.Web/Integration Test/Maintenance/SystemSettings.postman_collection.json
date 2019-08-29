@@ -786,6 +786,181 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GetSystemInfoFromMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b781a940-1072-4fa3-9e91-c11cc370021a",
+						"exec": [
+							"pm.test(\"GetSystemDefaultsFromMyTenant\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"     var idvalue1 = pm.response.json();",
+							"     var idexist = idvalue1 !== null;",
+							"    ",
+							"    pm.expect(idexist);",
+							"    ",
+							"      if (idvalue1 !== null)  {",
+							"       tests[\"UsedSpace \" + idvalue1] = responseBody.has(idvalue1);",
+							"   ",
+							"    } ",
+							" ",
+							"",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 OPR/62.0.3331.116"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19290814/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@test.com; ASP.NET_SessionId=bcnhxmem2y11pnejrrx2yktb"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/ExportDocument?tenant={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ExportDocument"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSystemInfoFromNotMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b781a940-1072-4fa3-9e91-c11cc370021a",
+						"exec": [
+							"pm.test(\"GetSystemInfoFromNotMyTenant Fail\", function () {",
+							"     pm.response.to.have.status(400);",
+							"     ",
+							"     var idvalue1 = pm.response.json().ErrorMessage;",
+							"   ",
+							"    ",
+							"         pm.test(\"Sorry you’re not authenticated to view system info\", function () {",
+							"          pm.expect(pm.response.json().ErrorMessage).to.include(\"Sorry you’re not authenticated to view system info.\");",
+							"    ",
+							"         });",
+							"",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 OPR/62.0.3331.116"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19290814/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@test.com; ASP.NET_SessionId=bcnhxmem2y11pnejrrx2yktb"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/ExportDocument?tenant={{Tenant2}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ExportDocument"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant2}}"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
