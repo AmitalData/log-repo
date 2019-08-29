@@ -36,9 +36,11 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public BluesnapEAWBSContractIdFilterItems: ApiQueryFilters;
     public BluesnapCRMContractIdFilterItems: ApiQueryFilters;
     public BluesnapInttraStockContractIdFilterItems: ApiQueryFilters;
+    public IsMainAdditionalPackageApplied: boolean = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
+        this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
         this.iGlobalDomainService = new GlobalDomainService();
         this.LoadParentTenants();
         this.Listen();
@@ -70,6 +72,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
                     this.BuildPackagesList();
                     this.BuildAddOnsList();
                     this.SetUIProperties();
@@ -80,6 +83,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
                     this.BuildPackagesList();
                     this.BuildAddOnsList();
                     this.SetUIProperties();

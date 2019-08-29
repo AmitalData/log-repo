@@ -36,7 +36,8 @@ import {TimeToHoursMinutesPipe} from './Pipes/TimeToHoursMinutesPipe';
 import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
 
 // Controls Components
-import {GeneralSendComponent} from './Components/LogitudeComponents/GeneralSendComponent';
+import { GeneralSendComponent } from './Components/LogitudeComponents/GeneralSendComponent';
+import { ImageLibraryComponent } from './Components/LogitudeComponents/ImageLibraryComponent';
 import {LogLabelComponent} from './Components/LogitudeComponents/LogLabelComponent';
 import {LogToolTipComponent} from './Components/LogitudeComponents/LogToolTip/LogToolTipComponent';
 import {LogTextBoxComponent} from './Components/LogitudeComponents/LogTextBoxComponent';
@@ -268,6 +269,7 @@ export const ControlsComponents =
         DocsInTabComponent,
         LastSuccessfulLoginComponent,
         LogTextBoxComponentV3,
+        ImageLibraryComponent,
     ];
 export const Components =
     [
@@ -439,7 +441,7 @@ export class ModuleDeclarations {
             case 'BTEParameterTabComponent': { myResult = BTEParameterTabComponent; break; }
             case 'LastSuccessfulLoginComponent': { myResult = LastSuccessfulLoginComponent; break; }
             case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
-
+            case 'ImageLibraryComponent': { myResult = ImageLibraryComponent; break; }
 
         }
 
