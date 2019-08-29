@@ -216,7 +216,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.OrderChargeableWeight = entityPM.OrderChargeableWeight;
             entityPoco.BookingNumberOfPackages = entityPM.BookingNumberOfPackages;
             entityPoco.OrderIsDangerouseGoods = entityPM.OrderIsDangerouseGoods;
-            entityPoco.CutoffDate = entityPM.CutoffDate;
             entityPoco.ShipmentLevelCode = entityPM.ShipmentLevelCode;
             entityPoco.IncotermId = entityPM.IncotermId;
             entityPoco.FreightPrepaidCollectId = entityPM.FreightPrepaidCollectId;

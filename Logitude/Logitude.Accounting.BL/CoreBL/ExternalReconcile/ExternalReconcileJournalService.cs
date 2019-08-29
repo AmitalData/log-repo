@@ -116,7 +116,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 TenantServerConfigration.GetCurrentDateTime(myLedgerTransactionTransferPM.Tenant);
             journal.TypeCode = "0";
 
-            bool testedAndFoundAllOK = false;
+            bool testedAndFoundAllOK = true;
             if (testedAndFoundAllOK)
             {
                 journal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Approved;

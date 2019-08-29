@@ -16,6 +16,7 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string TariffId { get; set; }
         public string CurrencyId { get; set; }
         public string TariffNumber { get; set; }
+        public string VersionId { get; set; }
         public decimal? Price { get; set; }
         public decimal? ActualPrice { get; set; }
     }

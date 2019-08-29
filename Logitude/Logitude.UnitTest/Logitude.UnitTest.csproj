@@ -105,6 +105,7 @@
     <Compile Include="Accounting\UniTests\JournalUpdateOnCreatingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnUpdatingUnderTest.CheckVoid.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnUpdatingUnderTest.cs" />
+    <Compile Include="Accounting\UniTests\JournalValidatorUnitTest.Reco.cs" />
     <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeDataMappingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnUpdatingServiceUnitTest.cs" />

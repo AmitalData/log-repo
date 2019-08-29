@@ -300,21 +300,30 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @DIM_PartnersReceivablesAccountingCardNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersReceivablesAccountingCardNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersReceivablesAccountingCardNewId,0,'DIM_Partners','[Receivables Accounting Card]','Receivables Accounting Card','Text','false',0,25,'false','false','true','false','false','false')  
-declare @DIM_PartnersPayablesAccountingCardNewId varchar(15)
-execute usp_GetNextTableIdValue @DIM_PartnersPayablesAccountingCardNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersPayablesAccountingCardNewId,0,'DIM_Partners','[Payables Accounting Card]','Payables Accounting Card','Text','false',0,25,'false','false','true','false','false','false')  
 declare @DIM_PartnersCodeNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersCodeNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,LOVAdditionalColumns,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersCodeNewId,0,'DIM_Partners','[Code]','Code','Text','true',0,15,'false','false','true','[Name],[Partner Type]','false','false','false')  
-declare @DIM_Partnersaddress1NewId varchar(15)
-execute usp_GetNextTableIdValue @DIM_Partnersaddress1NewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@DIM_Partnersaddress1NewId,0,'DIM_Partners','[address1]','address1','Text','false',0,65,'false','false','true','Operational ','false','false','false')  
-declare @DIM_Partnersaddress2NewId varchar(15)
-execute usp_GetNextTableIdValue @DIM_Partnersaddress2NewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@DIM_Partnersaddress2NewId,0,'DIM_Partners','[address2]','address2','Text','false',0,65,'false','false','true','Operational ','false','false','false')  
+declare @DIM_PartnersAddress1NewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersAddress1NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersAddress1NewId,0,'DIM_Partners','[Address1]','Address1','Text','false',0,65,'false','false','true','Operational ','false','false','false')  
+declare @DIM_PartnersAddress2NewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersAddress2NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersAddress2NewId,0,'DIM_Partners','[Address2]','Address2','Text','false',0,65,'false','false','true','Operational ','false','false','false')  
 declare @DIM_PartnersPhoneNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersPhoneNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersPhoneNewId,0,'DIM_Partners','[Phone]','Phone','Text','false',0,40,'false','false','true','Partners','false','false','false')  
+declare @DIM_PartnersIndustryNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersIndustryNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersIndustryNewId,0,'DIM_Partners','[Industry]','Industry','nText','false',0,60,'false','false','true','false','false','false')  
+declare @DIM_PartnersCustomerSizeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersCustomerSizeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersCustomerSizeNewId,0,'DIM_Partners','[Customer Size]','Customer Size','nText','false',0,60,'false','false','true','false','false','false')  
+declare @DIM_PartnersRegionNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersRegionNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersRegionNewId,0,'DIM_Partners','[Region]','Region','Text','false',0,100,'false','false','true','false','false','false')  
+declare @DIM_PartnersVATNumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersVATNumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersVATNumberNewId,0,'DIM_Partners','[VAT Number ]','VAT Number ','Text','false',0,20,'false','false','true','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @DIM_PortsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PortsNewId OUTPUT,'DWObjectTable' 

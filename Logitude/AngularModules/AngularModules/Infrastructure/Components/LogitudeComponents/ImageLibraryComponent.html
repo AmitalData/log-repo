@@ -1,0 +1,36 @@
+<!--<div style="height:25px;">
+    <div>
+        <a *ngFor="let url of Imageurls" (click)="OnImageClick(url)" style="cursor:pointer;margin:5px;padding:5px;">
+            <img [src]="url" class="rounded mb-3" width="180" height="180">
+        </a>
+
+    </div>
+</div>-->
+
+
+<div class="LocationDirective" LocationDirective Code="SREQ" style="height:calc(100% - 6px);">
+    <div style="overflow-y:auto;overflow-x:hidden;" class="BodyBackground MediaFill">
+
+        <div *ngFor="let url of Imageurls; let i = index" style="padding:5px;float:left;width:170px;">
+            <a (click)="OnImageClick(url)" style="cursor:pointer;margin:5px;padding:5px;">
+                <img [src]="url" class="rounded mb-3" width="150" height="150">
+            </a>
+
+        </div>
+
+    </div>
+</div>
+
+        <!--<div *ngFor="let url of Imageurls; let i = index">
+            <div *ngIf="i % 3 == 0" class="row">
+                <a (click)="OnImageClick(url)" style="cursor:pointer;margin:5px;padding:5px;">
+                    <img [src]="url" class="rounded mb-3" width="180" height="180">
+                </a>
+            </div>
+
+            <div *ngIf="i % 3 != 0" class="row">
+                <a (click)="OnImageClick(url)" style="cursor:pointer;margin:5px;padding:5px;">
+                    <img [src]="url" class="rounded mb-3" width="180" height="180">
+                </a>
+            </div>
+        </div>-->
