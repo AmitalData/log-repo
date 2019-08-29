@@ -95,9 +95,9 @@
 							"     ",
 							"    pm.globals.set(\"Token2\", idvalue1);",
 							"    pm.globals.set(\"DocumentDownloadToken2\", idvalue2);",
-							"    pm.globals.set(\"UserName\", idvalue3);",
+							"    pm.globals.set(\"UserName2\", idvalue3);",
 							"    ",
-							"    var expected = pm.globals.get(\"UserName\");",
+							"    var expected = pm.globals.get(\"UserName2\");",
 							"    tests[\"Body cointains Email: \" + expected] = responseBody.has(expected);",
 							"});"
 						],
