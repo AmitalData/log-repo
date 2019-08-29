@@ -45,11 +45,11 @@ it('EditNewView', function () {
  
  
  
- it('DeleteNewView', function () {
+ //it('DeleteNewView', function () {
 
  //   CreatView.DeleteNewView();
-    ShipmentScenario.DeleteNewView();
-});
+    //ShipmentScenario.DeleteNewView();
+//});
 
 
 

@@ -181,33 +181,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     throw new Exception("JournalApproveParser(" + this._JournalPM.Id + "): No Journal line ");
                 }
 
-                foreach (JournalLinePM item in _JournalPM.JournalLines)
-                {
-                    switch (item.EnsureSettingActionTypeCodeEnum())
-                    {
-                        case MyJournalActionTypeEnum.Credit:
-                            AddCredit(item);
-                            break;
-                        case MyJournalActionTypeEnum.Debit:
-                            AddDebit(item, false);
-                            break;
-                        case MyJournalActionTypeEnum.DebitAndCredit:
-                            AddCredit(item);
-                            AddDebit(item, false);
-                            break;
-                        case MyJournalActionTypeEnum.DebitCreditAndVatdeduction:
-                            AddCredit(item);
-                            AddDebit(item, true);
-                            AddTaxDebit(item);
-                            break;
-                        case MyJournalActionTypeEnum.NotValid:
-                        default:
-                            throw new Exception("JournalApproveParser():JournalActionType is must ");
-                            break;
-                    }
+                CreateLedger_MapByJournalActionType();
 
-
-                }
                 CheckLedgerTransactions();
 
                 CreateGLAccountTotalByMonthFromLedger();
@@ -245,6 +220,37 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
             }
             return true;
+        }
+
+        public void CreateLedger_MapByJournalActionType()
+        {
+            foreach (JournalLinePM item in _JournalPM.JournalLines)
+            {
+                switch (item.EnsureSettingActionTypeCodeEnum())
+                {
+                    case MyJournalActionTypeEnum.Credit:
+                        AddCredit(item);
+                        break;
+                    case MyJournalActionTypeEnum.Debit:
+                        AddDebit(item, false);
+                        break;
+                    case MyJournalActionTypeEnum.DebitAndCredit:
+                        AddCredit(item);
+                        AddDebit(item, false);
+                        break;
+                    case MyJournalActionTypeEnum.DebitCreditAndVatdeduction:
+                        AddCredit(item);
+                        AddDebit(item, true);
+                        AddTaxDebit(item);
+                        break;
+                    case MyJournalActionTypeEnum.NotValid:
+                    default:
+                        throw new Exception("JournalApproveParser():JournalActionType is must ");
+                        break;
+                }
+
+
+            }
         }
 
         private void CheckTotalByMonthDateType()
@@ -720,25 +726,33 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private void AddTaxDebit(JournalLinePM item)
         {
-            var journalLineDebitMapping = new JournalLineDebitTaxMapping(item, _JournalPM, GetIJournalValidatorContextDataProvider());
+            var journalLineDebitMapping = new JournalLineDebitTaxMapping(item, _JournalPM, GetIJournalValidatorContextDataProvider(), GetIIAccountingSettingResolver());
             journalLineDebitMapping.DoIt();
             LedgerTransactions.Add(journalLineDebitMapping.MyLedgerTransaction);
             //AddMyGLAccountTotalByMonth(journalLineDebitMapping.MyGLAccountTotalByMonth);
         }
+
+        
         private void AddDebit(JournalLinePM item, bool vatExtract)
         {
-            var journalLineDebitMapping = new JournalLineDebitMapping(item, _JournalPM, vatExtract, GetIJournalValidatorContextDataProvider());
+            var journalLineDebitMapping = new JournalLineDebitMapping(item, _JournalPM, vatExtract, GetIJournalValidatorContextDataProvider(), GetIIAccountingSettingResolver());
             journalLineDebitMapping.DoIt();
             LedgerTransactions.Add(journalLineDebitMapping.MyLedgerTransaction);
             //AddMyGLAccountTotalByMonth(journalLineDebitMapping.MyGLAccountTotalByMonth);
         }
+
+        private IAccountingSettingResolver GetIIAccountingSettingResolver()
+        {
+            return _JournalValidatorContext.GetService(typeof(IAccountingSettingResolver)) as IAccountingSettingResolver;
+        }
+
         IJournalValidatorContextDataProvider GetIJournalValidatorContextDataProvider()
         {
             return _JournalValidatorContext.GetService(typeof(IJournalValidatorContextDataProvider)) as IJournalValidatorContextDataProvider;
         }
         private void AddCredit(JournalLinePM item)
         {
-            var journalLineCreditMapping = new JournalLineCreditMapping(item, _JournalPM, GetIJournalValidatorContextDataProvider());
+            var journalLineCreditMapping = new JournalLineCreditMapping(item, _JournalPM, GetIJournalValidatorContextDataProvider(),GetIIAccountingSettingResolver());
             journalLineCreditMapping.DoIt();
             LedgerTransactions.Add(journalLineCreditMapping.MyLedgerTransaction);
             //AddMyGLAccountTotalByMonth(journalLineCreditMapping.MyGLAccountTotalByMonth);
