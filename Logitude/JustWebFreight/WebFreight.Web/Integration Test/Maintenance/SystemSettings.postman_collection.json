@@ -17,13 +17,17 @@
 							"    pm.response.to.have.status(200);",
 							"     var idvalue1 = (pm.response.json().Token);",
 							"     var idvalue2 = (pm.response.json().DocumentDownloadToken);",
+							"     var idvalue3 = (pm.response.json().UserName);",
+							"     ",
 							"     var id1exist = idvalue1 !== null;",
 							"     var id2exist = idvalue2 !== null;",
+							"     var id3exist = idvalue3 !== null;",
 							"     ",
 							"    pm.globals.set(\"Token\", idvalue1);",
 							"    pm.globals.set(\"DocumentDownloadToken\", idvalue2);",
+							"    pm.globals.set(\"UserName1\", idvalue3);",
 							"    ",
-							"    var expected = pm.globals.get(\"Email1\");",
+							"    var expected = pm.globals.get(\"UserName1\");",
 							"    tests[\"Body cointains Email: \" + expected] = responseBody.has(expected);",
 							"});"
 						],
@@ -84,13 +88,16 @@
 							"    pm.response.to.have.status(200);",
 							"     var idvalue1 = (pm.response.json().Token);",
 							"     var idvalue2 = (pm.response.json().DocumentDownloadToken);",
+							"     var idvalue3 = (pm.response.json().UserName);",
 							"     var id1exist = idvalue1 !== null;",
 							"     var id2exist = idvalue2 !== null;",
+							"     var id3exist = idvalue3 !== null;",
 							"     ",
 							"    pm.globals.set(\"Token2\", idvalue1);",
 							"    pm.globals.set(\"DocumentDownloadToken2\", idvalue2);",
+							"    pm.globals.set(\"UserName2\", idvalue3);",
 							"    ",
-							"    var expected = pm.globals.get(\"Email2\");",
+							"    var expected = pm.globals.get(\"UserName2\");",
 							"    tests[\"Body cointains Email: \" + expected] = responseBody.has(expected);",
 							"});"
 						],
@@ -234,11 +241,11 @@
 					"script": {
 						"id": "21513698-73d9-410c-bed5-40eb5e0112e8",
 						"exec": [
-							"pm.test(\"GetAccountingSettingsFromNotMyTenant\", function () {",
+							"pm.test(\"GetAccountingSettingsFromNotMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(200);",
 							"     ",
 							"      var idvalue1 = pm.response.json().Id;",
-							"      var idvalue2 = pm.globals.get(\"Tenant2\");",
+							"      var idvalue2 = pm.globals.get(\"Tenant\");",
 							"      ",
 							"    // pm.expect(idvalue2pm.response.json().Id).to.eql(pm.globals.get(\"Tenant\"));",
 							"    ",
@@ -772,7 +779,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"$id\": \"1\",\n  \"id\": \"{{Tenant}}\",\n  \"addressId\": \"{{TenantAddressId}}\",\n  \"localAddressId\": \"{{TenantLocalAddressId}}\",\n  \"companyAddress\": \"Te\",\n  \"company\": \"Integration Test\",\n  \"iATA\": \"\",\n  \"vatNumber\": \"11111\",\n  \"searchFields\": \"Integration Test,EN,11111\",\n  \"paymentTermId\": \"{{TenantPaymentTermId}}\",\n  \"paymentTermName\": \"Net 30\",\n  \"isHybrid\": false,\n  \"isQuoteSubjectEdited\": false,\n  \"agentId\": \"{{TenantAgentId}}\",\n  \"agentName\": \"Integration Test\",\n  \"cASSCode\": \"\",\n  \"currencyId\": \"{{TenantCurrencyId}}\",\n  \"accountingCurrencyCode\": \"USD\",\n  \"accountingCurrencyName\": \"United States Of America Dollar\",\n  \"profitCurrencyId\": \"TenantProfitCurrencyId\",\n  \"profitCurrencyCode\": \"EUR\",\n  \"profitCurrencyRate\": 1,\n  \"freightCurrencyId\": \"{{TenantFreightCurrencyId}}\",\n  \"freightCurrencyCode\": \"USD\",\n  \"otherChargesCurrencyId\": \"{{TenantOtherChargesCurrencyId}}\",\n  \"otherChargesCurrencyCode\": \"EUR\",\n  \"quoteSaleCurrencyId\": \"{{TenantQuoteSaleCurrencyId}}\",\n  \"quoteSaleCurrencyCode\": \"EUR\",\n  \"volumeUnitCode\": \"CBM\",\n  \"dimensionsUnitCode\": \"Cm\",\n  \"grossWeightUnitCode\": \"KG\",\n  \"chargeableWeightUnitCode\": \"KG\",\n  \"weightMeasurementUnitCode\": \"MT\",\n  \"exportFreightPrepaidCollectId\": \"P\",\n  \"importFreightPrepaidCollectId\": \"P\",\n  \"exportOtherPrepaidCollectId\": \"P\",\n  \"importOtherPrepaidCollectId\": \"P\",\n  \"masterExportFreightPrepaidCollectId\": \"P\",\n  \"masterImportFreightPrepaidCollectId\": \"P\",\n  \"masterExportOtherPrepaidCollectId\": \"P\",\n  \"masterImportOtherPrepaidCollectId\": \"P\",\n  \"timeZoneOffset\": 2,\n  \"language\": \"EN\",\n  \"dateTimeFormat\": \"dd\\\\/MM\\\\/yyyy\",\n  \"email\": \"\",\n  \"dayLightOffset\": 0,\n  \"passwordPolicyCode\": \"MEDU\",\n  \"passwordStrength\": \"Meduim\",\n  \"isDataBackupBuilt\": false,\n  \"countryCode\": \"US\",\n  \"countryName\": \"United States of America\",\n  \"packageCode\": \"DVMT\",\n  \"currencyCode\": \"USD\",\n  \"invoiceSection1\": \"Integration Test\\r\\nRamallah-PS\\r\\n\",\n  \"invoiceSection2\": \"Integration Test\",\n  \"isSharedLogisticsActivated\": false,\n  \"isWebAccessActivated\": false,\n  \"isMobileActivated\": false,\n  \"sharedLogisticsMessageLink\": false,\n  \"vatUniqueTypeCode\": \"UNT\",\n  \"vatMandatoryTypeCode\": \"MNT\",\n  \"vatMandatoryForPotentialCustomers\": false,\n  \"isCustomerTelRequired\": false,\n  \"isCustomerFaxRequired\": false,\n  \"isPickDelAdrsRequired\": false,\n  \"isCustomerAddress1Required\": false,\n  \"hasPrimaryContact\": false,\n  \"allowEAWBMoreThanTenPackages\": false,\n  \"regulatedAgentRegimeActivated\": false,\n  \"isDocumentsArchive\": false,\n  \"isCustomerTenantShare\": false,\n  \"customerTenantShareImportFile\": false,\n  \"customerTenantShareExportFile\": false,\n  \"allowAgentInCustomersLOV\": false,\n  \"isPotentialTelRequired\": false,\n  \"isPotentialFaxRequired\": false,\n  \"isNumeric\": false,\n  \"createTenantFromSignUp\": false,\n  \"isCorrespondenceRightToLeftEnabled\": false,\n  \"isNotesRightToLeftEnabled\": false,\n  \"accountingActivated\": false,\n  \"isInternalTicketByDefault\": false,\n  \"prorateMasterReceivables\": false,\n  \"exportQuotationsToIntegratedSystem\": false,\n  \"tenantVATManagement\": true,\n  \"documentShareAsDefault\": false,\n  \"numberFormatCode\": \"CD\",\n  \"defaultSLAId\": \"{{TenantDefaultSLAId}}\",\n  \"autoArchiveOnInvoice\": false,\n  \"isTestTenant\": false,\n  \"checkDigitControlAlgorithmCode\": \"NONE\",\n  \"applyVATForAllPartners\": false,\n  \"OldEntityPM\": null,\n  \"temperatureUnitCode\": \"FAH\"\n}"
+					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"$id\": \"1\",\n  \"id\": \"{{Tenant}}\",\n  \"addressId\": \"{{TenantAddressId}}\",\n  \"localAddressId\": \"{{TenantLocalAddressId}}\",\n  \"companyAddress\": \"Te\",\n  \"company\": \"Integration Test\",\n  \"iATA\": \"\",\n  \"vatNumber\": \"11111\",\n  \"searchFields\": \"Integration Test,EN,11111\",\n  \"paymentTermId\": \"{{TenantPaymentTermId}}\",\n  \"paymentTermName\": \"Net 30\",\n  \"isHybrid\": false,\n  \"isQuoteSubjectEdited\": false,\n  \"agentId\": \"{{TenantAgentId}}\",\n  \"agentName\": \"Integration Test\",\n  \"cASSCode\": \"\",\n  \"currencyId\": \"{{TenantCurrencyId}}\",\n  \"accountingCurrencyCode\": \"USD\",\n  \"accountingCurrencyName\": \"United States Of America Dollar\",\n  \"profitCurrencyId\": \"{{TenantProfitCurrencyId}}\",\n  \"profitCurrencyCode\": \"EUR\",\n  \"profitCurrencyRate\": 1,\n  \"freightCurrencyId\": \"{{TenantFreightCurrencyId}}\",\n  \"freightCurrencyCode\": \"USD\",\n  \"otherChargesCurrencyId\": \"{{TenantOtherChargesCurrencyId}}\",\n  \"otherChargesCurrencyCode\": \"EUR\",\n  \"quoteSaleCurrencyId\": \"{{TenantQuoteSaleCurrencyId}}\",\n  \"quoteSaleCurrencyCode\": \"EUR\",\n  \"volumeUnitCode\": \"CBM\",\n  \"dimensionsUnitCode\": \"Cm\",\n  \"grossWeightUnitCode\": \"KG\",\n  \"chargeableWeightUnitCode\": \"KG\",\n  \"weightMeasurementUnitCode\": \"MT\",\n  \"exportFreightPrepaidCollectId\": \"P\",\n  \"importFreightPrepaidCollectId\": \"P\",\n  \"exportOtherPrepaidCollectId\": \"P\",\n  \"importOtherPrepaidCollectId\": \"P\",\n  \"masterExportFreightPrepaidCollectId\": \"P\",\n  \"masterImportFreightPrepaidCollectId\": \"P\",\n  \"masterExportOtherPrepaidCollectId\": \"P\",\n  \"masterImportOtherPrepaidCollectId\": \"P\",\n  \"timeZoneOffset\": 2,\n  \"language\": \"EN\",\n  \"dateTimeFormat\": \"dd\\\\/MM\\\\/yyyy\",\n  \"email\": \"\",\n  \"dayLightOffset\": 0,\n  \"passwordPolicyCode\": \"MEDU\",\n  \"passwordStrength\": \"Meduim\",\n  \"isDataBackupBuilt\": false,\n  \"countryCode\": \"US\",\n  \"countryName\": \"United States of America\",\n  \"packageCode\": \"DVMT\",\n  \"currencyCode\": \"USD\",\n  \"invoiceSection1\": \"Integration Test\\r\\nRamallah-PS\\r\\n\",\n  \"invoiceSection2\": \"Integration Test\",\n  \"isSharedLogisticsActivated\": false,\n  \"isWebAccessActivated\": false,\n  \"isMobileActivated\": false,\n  \"sharedLogisticsMessageLink\": false,\n  \"vatUniqueTypeCode\": \"UNT\",\n  \"vatMandatoryTypeCode\": \"MNT\",\n  \"vatMandatoryForPotentialCustomers\": false,\n  \"isCustomerTelRequired\": false,\n  \"isCustomerFaxRequired\": false,\n  \"isPickDelAdrsRequired\": false,\n  \"isCustomerAddress1Required\": false,\n  \"hasPrimaryContact\": false,\n  \"allowEAWBMoreThanTenPackages\": false,\n  \"regulatedAgentRegimeActivated\": false,\n  \"isDocumentsArchive\": false,\n  \"isCustomerTenantShare\": false,\n  \"customerTenantShareImportFile\": false,\n  \"customerTenantShareExportFile\": false,\n  \"allowAgentInCustomersLOV\": false,\n  \"isPotentialTelRequired\": false,\n  \"isPotentialFaxRequired\": false,\n  \"isNumeric\": false,\n  \"createTenantFromSignUp\": false,\n  \"isCorrespondenceRightToLeftEnabled\": false,\n  \"isNotesRightToLeftEnabled\": false,\n  \"accountingActivated\": false,\n  \"isInternalTicketByDefault\": false,\n  \"prorateMasterReceivables\": false,\n  \"exportQuotationsToIntegratedSystem\": false,\n  \"tenantVATManagement\": true,\n  \"documentShareAsDefault\": false,\n  \"numberFormatCode\": \"CD\",\n  \"defaultSLAId\": \"{{TenantDefaultSLAId}}\",\n  \"autoArchiveOnInvoice\": false,\n  \"isTestTenant\": false,\n  \"checkDigitControlAlgorithmCode\": \"NONE\",\n  \"applyVATForAllPartners\": false,\n  \"OldEntityPM\": null,\n  \"temperatureUnitCode\": \"FAH\"\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/api/tenants",
@@ -782,6 +789,181 @@
 					"path": [
 						"api",
 						"tenants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSystemInfoFromMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b781a940-1072-4fa3-9e91-c11cc370021a",
+						"exec": [
+							"pm.test(\"GetSystemDefaultsFromMyTenant\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"     var idvalue1 = pm.response.json();",
+							"     var idexist = idvalue1 !== null;",
+							"    ",
+							"    pm.expect(idexist);",
+							"    ",
+							"      if (idvalue1 !== null)  {",
+							"       tests[\"UsedSpace \" + idvalue1] = responseBody.has(idvalue1);",
+							"   ",
+							"    } ",
+							" ",
+							"",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 OPR/62.0.3331.116"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19290814/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@test.com; ASP.NET_SessionId=bcnhxmem2y11pnejrrx2yktb"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/ExportDocument?tenant={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ExportDocument"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSystemInfoFromNotMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b781a940-1072-4fa3-9e91-c11cc370021a",
+						"exec": [
+							"pm.test(\"GetSystemInfoFromNotMyTenant Fail\", function () {",
+							"     pm.response.to.have.status(400);",
+							"     ",
+							"     var idvalue1 = pm.response.json().ErrorMessage;",
+							"   ",
+							"    ",
+							"         pm.test(\"Sorry you’re not authenticated to view system info\", function () {",
+							"          pm.expect(pm.response.json().ErrorMessage).to.include(\"Sorry you’re not authenticated to view system info.\");",
+							"    ",
+							"         });",
+							"",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 OPR/62.0.3331.116"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19290814/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@test.com; ASP.NET_SessionId=bcnhxmem2y11pnejrrx2yktb"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/ExportDocument?tenant={{Tenant2}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ExportDocument"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant2}}"
+						}
 					]
 				}
 			},
