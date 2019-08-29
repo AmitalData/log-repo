@@ -34,7 +34,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             get ;//{ return MappingTypeEnum.none; }
         }
 
-        public JournalLineMappingBase(JournalLinePM journalLine, JournalPM journalPM, IGLAccountDataProvider myGLAccountPMProvider)
+        public JournalLineMappingBase(JournalLinePM journalLine, JournalPM journalPM, IGLAccountDataProvider myGLAccountPMProvider, IAccountingSettingResolver myIAccountingSettingResolver)
         {
             _GLAccountPMProvider =myGLAccountPMProvider;
             this._JournalLine = journalLine;

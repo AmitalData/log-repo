@@ -414,6 +414,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     }
                     //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
                     tariffsSummary.Price = Math.Round((double)CalculateLocalAmount(item.Price != null ? item.Price.Value : 0, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
+                    tariffsSummary.ActualPrice = item.Price;
                     List<TariffVersionAllInCharge> allinList = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).ToList();
                     if (allinList != null && allinList.Count > 0)
                     {
@@ -467,7 +468,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     SurchargeItem.Code = surchargeCode;
                                                     SurchargeItem.Name = surchargeName;
                                                     SurchargeItem.ChargeTypeId = surchargeChargeTypeId;
-
+                                                    SurchargeItem.UnitOfMesurmentCode = UsedMesurment.Code;
+                                                    SurchargeItem.UnitOfMesurmentId = UsedMesurment.Id; 
                                                     switch (UsedMesurment.Code)
                                                     {
                                                         case "GRWT": { myQuantity = (decimal?)GrossWeight; break; }
@@ -497,10 +499,12 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     }
 
                                                     SurchargeItem.Price = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrentSurcharge.CurrencyId, tenant);
+                                                    SurchargeItem.ActualPrice = CurrentSurchargePriceCalculation.Value;
                                                     Sum += SurchargeItem.Price;
                                                     SurchargeItem.TariffId =  CurrentSurcharge.Id;
                                                     SurchargeItem.CurrencyId = CurrentSurcharge.CurrencyId;
                                                     SurchargeItem.TariffNumber = CurrentSurcharge.TariffNumber;
+                                                    SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
                                                     tariffsSummary.Surcharges.Add(SurchargeItem);
                                                 }
 
@@ -530,9 +534,12 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.VersionId = item.TariffVersion + "";
                     tariffsSummary.TariffId = item.tariffid;
                     tariffsSummary.TariffNumber = result.TariffNumber;
-                    tariffsSummary.ChargeTypeId = chargesTypes.Where(p => p.Code == "AFT").Select(p => p.Id).FirstOrDefault();
+                    var airChrageType = chargesTypes.Where(p => p.Code == "AFT").Select(p => p).FirstOrDefault();
+                    tariffsSummary.ChargeTypeId = airChrageType.Id;
                     tariffsSummary.TotalSurcharge = Sum + "";
                     tariffsSummary.WholePrice = (decimal?)Sum + CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId, tenant) + "";
+                    tariffsSummary.UnitOfMesurmentId = airChrageType.MeasurementId;
+                    tariffsSummary.UnitOfMesurmentCode = UsedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault(); 
 
                     byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
                     string resultImage = "";

@@ -40,6 +40,7 @@ export class ARPaymentList {
 		AmountInProfitCurrency: number;
 		InvoiceNumbers: string;
 		BillToName: string;
+		BillToLocalName: string;
 		PaymentCurrencyCode: string;
 		CreatedByUserName: string;
 		StatusName: string;
@@ -83,5 +84,5 @@ export class ARPaymentList {
 		FirstApproveDate: Date;
 		IsFullAccounting: boolean;
 		FechaPago: Date;
-	
-}
+
+}

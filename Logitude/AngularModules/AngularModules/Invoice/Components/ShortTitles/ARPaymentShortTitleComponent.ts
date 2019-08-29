@@ -13,10 +13,13 @@ export class ARPaymentShortTitleComponent {
     public EntityPM: ARPaymentPM;
     public DisplaySATSettings: boolean = false;
     public isRTL: boolean = false;
+    public showLocals: boolean = false;
 
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");   
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.showLocals = !(SessionLocator.LoggedUserPM.DontShowLocal);
+
         if (this.EntityPM != null) {
             this.BuildComponent();
         }
@@ -27,7 +30,7 @@ export class ARPaymentShortTitleComponent {
     }
 
     private BuildComponent() {
-        
+
     }
 
     get EntityNumber() {

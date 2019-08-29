@@ -20,5 +20,7 @@ export class BranchList {
 		INTTRAId: string;
 		INTTRAAlias: string;
 		INTTRAContactId: string;
+		CalculatedEnglishName: string;
+		CalculatedLocalName: string;
 	
 }

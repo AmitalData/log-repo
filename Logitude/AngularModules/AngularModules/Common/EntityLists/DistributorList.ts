@@ -7,7 +7,8 @@
 //------------------------------------------------------------------------------
 
 export class DistributorList {
-   		Code: string;
+   		Id: string;
+		Code: string;
 		EnglishName: string;
 		LocalName: string;
 		SearchFields: string;

@@ -42,6 +42,8 @@ using System.Web;
 using Logitude.Server.Tools;
 using System.Drawing;
 using WebFreight.Web.Helpers;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -123,7 +125,7 @@ namespace WebFreight.Web.ReportsWebServices
                 ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(invoiceRepository);
                 SATInterfaceSettingRepository satInterfaceSettingRepository = new SATInterfaceSettingRepository(invoiceCotnext);
                 SATInterfaceSetting satSetting = satInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
-
+              
                 if (tenantSettings != null)
                 {
                     invoicedataprovider.TenantName = tenantSettings.Company;
@@ -1174,6 +1176,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.IRSPlace = billToCard.IRSPlace;
                     invoicedataprovider.IRSNumber = billToCard.IRSNumber;
                     invoicedataprovider.BillToCustomerCode = billToCard.Code;
+                    invoicedataprovider.ReceivablesExternalID = billToCard.ReceivablesAccountingCard;
 
                     Address billToCardAddress = addressRepository.GetSingleAddress(currentInvoice.BillToAddressId, tenant);
                     if (billToCardAddress != null)
@@ -2058,6 +2061,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.BillToAccountNumber = cards.AccountNumber;
                 invoicedataprovider.BillToIBANNumber = cards.IBANNumber;
                 invoicedataprovider.BillToSwift = cards.Swift;
+                invoicedataprovider.ReceivablesExternalID = cards.ReceivablesAccountingCard;
                 #endregion
 
                 #region SATInterface Properties
@@ -2501,7 +2505,7 @@ namespace WebFreight.Web.ReportsWebServices
                 List<Currency> allCurrencies = (from d in commonContext.Currencies where d.Tenant == tenant select d).ToList();
                 List<Measurement> allMeasurements = (from d in commonContext.Measurements where d.Tenant == tenant select d).ToList();
                 List<ChargesType> allChargesTypes = (from d in commonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
-
+                invoiceDataProvider.AccountDisplayNumber = GetGLAccountDisplayNumberByBillToId(entityPOCO);
                 #region Tenant Properties
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -3989,6 +3993,21 @@ namespace WebFreight.Web.ReportsWebServices
             }
         }
 
+        private string GetGLAccountDisplayNumberByBillToId(ARInvoice invoice)
+        {
+            GLAccountQueryService accountQueryService = new GLAccountQueryService(invoice.Tenant);
+
+            GLAccountPM account = accountQueryService.GetSinglePM(invoice.BillTo.GLAccountId, invoice.Tenant);
+            if (account != null)
+            {
+
+                return account.DisplayNumber;
+            }
+            else return null;
+
+
+
+        }
         private string BuildVATAmounts(List<TotalVat> list)
         {
             string myResult = "";

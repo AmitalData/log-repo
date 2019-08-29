@@ -54,6 +54,16 @@ export class TaxReportMenuButtonsHandler {
                                 }
                                 break;
                             }
+
+                        case "TRDL": {
+                            if (this.EntityPM.IsCancelled) {
+                                button.IsDisabled = true;
+                            }
+                            else {
+                                button.IsDisabled = false;
+                            }
+                            break;
+                        }
                     }
                 }
             }

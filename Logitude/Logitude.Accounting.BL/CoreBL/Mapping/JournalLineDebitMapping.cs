@@ -10,11 +10,13 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 {
     public class JournalLineDebitMapping : JournalLineMappingBase
     {
+        private IAccountingSettingResolver _myIAccountingSettingResolver;
         private bool _VatExtract;
 
-        internal JournalLineDebitMapping(JournalLinePM journalLine, JournalPM journalPM, bool vatExtract, IGLAccountDataProvider myGLAccountPMProvider)
-            : base(journalLine, journalPM, myGLAccountPMProvider)
+        internal JournalLineDebitMapping(JournalLinePM journalLine, JournalPM journalPM, bool vatExtract, IGLAccountDataProvider myGLAccountPMProvider, IAccountingSettingResolver myIAccountingSettingResolver)
+            : base(journalLine, journalPM, myGLAccountPMProvider, myIAccountingSettingResolver)
         {
+            _myIAccountingSettingResolver = myIAccountingSettingResolver;
             this._VatExtract = vatExtract;
         }
         protected override void MapIt()
@@ -144,11 +146,15 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
         public virtual decimal ResolveVat(int Tenant, DateTime DocumentDate)
         {
             //(new AccountingSettingResolver()).
-            return (new AccountingSettingResolver()).ResolveVat(Tenant, DocumentDate);// Convert.ToDecimal(1.18);
+            return //(new AccountingSettingResolver())
+            _myIAccountingSettingResolver
+                .ResolveVat(Tenant, DocumentDate);// Convert.ToDecimal(1.18);
         }
         public virtual string ResolveAccountingCurrencyId(int Tenant)
         {
-            return (new AccountingSettingResolver()).ResolveAccountingCurrencyId(Tenant);
+            return
+                _myIAccountingSettingResolver//(new AccountingSettingResolver())
+                .ResolveAccountingCurrencyId(Tenant);
         }
         protected override void AddGLAccountTotalByMounth(GLAccountTotalByMonthPM currGLAccountTotalByMounth, LedgerTransactionPM currLedgerTransaction)
         {

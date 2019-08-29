@@ -99,6 +99,8 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     
     public double? ValueOfGoods { get; set; }
     
+    public DateTime? StartDate { get; set; }
+    
     public double? Volume { get; set; }
     
     public Contact AgentContact { get; set; }
@@ -194,8 +196,6 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     public DateTime? StageDate { get; set; }
     
     public string SameOrFixed { get; set; }
-    
-    public DateTime? StartDate { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
