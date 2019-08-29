@@ -30,7 +30,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool OpenAmountEditedByUser { get; set; }
         public string TariffId { get; set; }
         public string TariffNumber { get; set; }
-
+        public int TariffVersion { get; set; }
 
     }
 }
