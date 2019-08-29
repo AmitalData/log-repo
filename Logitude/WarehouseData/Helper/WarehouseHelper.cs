@@ -1541,28 +1541,15 @@ namespace WarehouseData.Helper
                                  .ToList();
 
                 table.UpdatedCount = columns != null ? columns.Count() : 0;
+                table.RefreshIds = ProcessingeDataWarehousUpdatedRows(table, columns, destinationConnectionString);
 
-                string ids = String.Empty;
-                foreach (string id in columns)
-                {
-                    ids += "'" + id + "'" + ",";
-                }
-
-                if (!string.IsNullOrEmpty(ids))
+                if (!string.IsNullOrEmpty(table.RefreshIds))
                 {
                     DateTime automaticLastUpdateDate = (DateTime)dataTable.Rows
                                   .Cast<DataRow>()
                                   .Max(d => d["AutomaticLastUpdateDate"]);
 
 
-                    if (!string.IsNullOrEmpty(ids))
-                    {
-                        ids = "(" + ids + ")";
-                        ids = ids.Replace(",)", ")");
-
-                    }
-
-                    RemoveDataBase(table, ids, destinationConnectionString);
 
                     using (SqlConnection destinationConnection =
                                new SqlConnection(destinationConnectionString))
@@ -1598,7 +1585,6 @@ namespace WarehouseData.Helper
                                     this.UpdateWareMarkTable(table, lastUpdateDate, sourceConnectionString);
 
                                     table.IsUpdated = true;
-                                    table.RefreshIds = ids;
 
                                 }
 
@@ -1623,7 +1609,30 @@ namespace WarehouseData.Helper
 
         }
 
-        private void RemoveDataBase(TableClass table, string ids, string connectionString)
+        private string ProcessingeDataWarehousUpdatedRows(TableClass table,  List<string> rows , string destinationConnectionString)
+        {
+            int rowsCount = 0;
+            string deletedRowIds = string.Empty;
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (string id in rows)
+            {
+                stringBuilder.Append("'" + id + "'" + ",");
+                rowsCount += 1;
+                if (rowsCount == 1000 || (rows.IndexOf(id) == rows.IndexOf(rows.Last())))
+                { 
+                    deletedRowIds += stringBuilder.ToString();
+                    DataWarehousDeletedRows(table, ("(" + stringBuilder.ToString() + ")").Replace(",)", ")"), destinationConnectionString);
+                    rowsCount = 0;
+                    stringBuilder.Clear();
+                }
+            }
+
+            return !string.IsNullOrEmpty(deletedRowIds) ? ("(" + deletedRowIds + ")").Replace(",)", ")"):null;
+        }
+
+
+
+        private void DataWarehousDeletedRows(TableClass table, string ids, string connectionString)
         {
             if (!string.IsNullOrEmpty(ids))
             {
@@ -1631,7 +1640,6 @@ namespace WarehouseData.Helper
                 ExecuteSql(cmd, connectionString);
 
             }
-
         }
 
         public string RemoveDataFromFactShipment(TableClass table, string connectionString)
