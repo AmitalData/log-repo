@@ -234,11 +234,11 @@
 					"script": {
 						"id": "21513698-73d9-410c-bed5-40eb5e0112e8",
 						"exec": [
-							"pm.test(\"GetAccountingSettingsFromNotMyTenant\", function () {",
+							"pm.test(\"GetAccountingSettingsFromNotMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(200);",
 							"     ",
 							"      var idvalue1 = pm.response.json().Id;",
-							"      var idvalue2 = pm.globals.get(\"Tenant2\");",
+							"      var idvalue2 = pm.globals.get(\"Tenant\");",
 							"      ",
 							"    // pm.expect(idvalue2pm.response.json().Id).to.eql(pm.globals.get(\"Tenant\"));",
 							"    ",
