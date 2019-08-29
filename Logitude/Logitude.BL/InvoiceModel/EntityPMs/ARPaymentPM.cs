@@ -52,6 +52,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? RegisterDate { get; set; }
         public string SearchFields { get; set; }
         public string BillToName { get; set; }
+        public string BillToLocalName { get; set; }
         public string PaymentCurrencyCode { get; set; }
         public string CreatedByUserName { get; set; }
         public string StatusName { get; set; }

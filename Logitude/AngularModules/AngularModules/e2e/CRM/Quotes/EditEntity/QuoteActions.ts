@@ -21,6 +21,7 @@ export class QuoteActions {
             this.BuildShipmentFromQuote();
         }
         else if (ActionName == 'copybuild') {
+        
             this.CopyQuote();
             this.QuoteAccepted();
             this.BuildShipmentFromQuote();
@@ -30,12 +31,15 @@ export class QuoteActions {
         this.Helper.WaitByIdAndClick('MenuButtons');
         this.Helper.WaitByIdAndClick('Quote.B.CopyQuote');
 
+        // browser.driver.sleep(500000);
+
         this.Helper.WaitEditComponentBusyIndicator();
-        var includePickup = element(by.id('CheckBox_0_10'));
+        var includePickup = element(by.id('CheckBox_0_7'));
         browser.executeScript("arguments[0].click();", includePickup.getWebElement());
 
-        var includeDelivery = element(by.id('CheckBox_0_11'));
+        var includeDelivery = element(by.id('CheckBox_0_8'));
         browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
+
 
         // this.Helper.WaitByIdAndFill('Quote_FromAddressCity_1', 'Ramallah');
         // this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId_1', 'State Of Palestine');

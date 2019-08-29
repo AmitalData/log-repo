@@ -232,7 +232,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (featureTested)
                     {
                         var myCreateAutoExternalReconcileWhileStreamingService = new CreateAutoExternalReconcileWhileStreamingService();
-                        var providor = new ExternalReconcileDataProvider(_AccountingContext, _JournalPM.Tenant);
+                        var providor = new ExternalReconcileDataProvider(_AccountingContext);
                         myCreateAutoExternalReconcileWhileStreamingService.MustInit(providor, _JournalPM, myLedgerTransactionsWithCounters);
                         myCreateAutoExternalReconcileWhileStreamingService.CreateAutoExternalReconcileWhileStreaming();
                         if (myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList != null &&
@@ -242,7 +242,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                             myExternalReconciliationUpdateService.UpdateMulti(myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList, new List<ExternalReconciliationPM>(), _JournalPM, true);
 
-                            var toUpdateInReconcileProgressToFalse = false;// next sprint
+                            var toUpdateInReconcileProgressToFalse = true;// next sprint
                             if (toUpdateInReconcileProgressToFalse)
                             {
                                 UpdateInExternalReconcileProgressToFalse();
@@ -289,7 +289,21 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void UpdateInExternalReconcileProgressToFalse()
         {
-            throw new NotImplementedException();
+            var myLedgerTransactionUpdateService = new LedgerTransactionUpdateService(_AccountingContext, new Dictionary<string, IContext>(), _JournalPM.Tenant);
+
+            var listTransactionId = _JournalPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
+            if (listTransactionId.Count > 0)
+            {
+                myLedgerTransactionUpdateService.Update_InProgressExternalReconcile(listTransactionId, _JournalPM.Tenant, false);
+            }
+
+            var listReconcileExternalPageLineId = _JournalPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
+            if (listReconcileExternalPageLineId.Count > 0)
+            {
+                var reconcileExternalPageLineUpdateService = new ReconcileExternalPageLineUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _JournalPM.Tenant);
+                reconcileExternalPageLineUpdateService.Update_InProgressExternalReconcile(listReconcileExternalPageLineId, _JournalPM.Tenant, false);
+            }
+
         }
 
         private void UpdateInReconcileProgressToFalse()

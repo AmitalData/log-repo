@@ -111,6 +111,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         public ShipmentComputedFields entityComputedFields;
         private bool IsLCLEntity;
         private bool IsFCLEntity;
+        private ShipmentContainerStatusRepository shipmentContainerStatusRepository;
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
             this.entityPM = entityPM;
@@ -143,6 +144,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentCommodityRepository = new ShipmentCommodityRepository(objectContext);
             this.shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
             this.shipmentAssemblyRepository = new ShipmentAssemblyRepository(objectContext);
+            this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(objectContext);
             this.GetLoggedData();
         }
         private void GetLoggedData()
@@ -5099,6 +5101,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (itemPoco != null)
             {
+                List<ShipmentContainerStatus> shipmentContainerStatuses = shipmentContainerStatusRepository.GetShipmentContainerStatusByContainerId(itemPoco.Id, itemPoco.Tenant).ToList();
+                if (shipmentContainerStatuses != null)
+                {
+                    foreach (ShipmentContainerStatus item in shipmentContainerStatuses)
+                    {
+                        shipmentContainerStatusRepository.Remove(item);
+                    }
+                }
+
                 List<InsideShipmentPackage> list = insideShipmentPackageRepository.GetInsidePackagesByShipmentPackageId(itemPoco.Id, itemPoco.Tenant).ToList();
                 if (list != null)
                 {

@@ -7307,8 +7307,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "BLK",
-                EnglishName =  "Account Deactivated",
-                LocalName =  "החשבון נחסם",
+                EnglishName =  "Account Inactivated",
+                LocalName =  "הכרטיס נחסם",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7327,7 +7327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UBLK",
                 EnglishName =  "Account Activated",
-                LocalName =  "החשבון הופעל",
+                LocalName =  "הכרטיס הופעל",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -7345,7 +7345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "GLRC",
-                EnglishName =  "GLAccount Reactivated",
+                EnglishName =  "Account Reactivated",
                 LocalName =  "הכרטיס הופעל מחדש",
                 IsManualEntry =  false,
                 ShortView =  false,

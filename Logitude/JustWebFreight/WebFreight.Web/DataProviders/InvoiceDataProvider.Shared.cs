@@ -34,6 +34,7 @@ namespace WebFreight.Web.DataProviders
         public string BillToCustomerCode { get; set; }
         public string BillToTelephone { get; set; }
         public string BillToStateCode { get; set; }
+        public string ReceivablesExternalID { get; set; }
         public string DebitAccount { get; set; }
         public string AccountingNumber { get; set; }
         public string InvoiceDate { get; set; }
@@ -512,6 +513,7 @@ namespace WebFreight.Web.DataProviders
         public string TenantCAAT { get; set; }
         public string CarrierCBSA { get; set; }
         public string CarrierCAAT { get; set; }
+        public string AccountDisplayNumber { get; set; }
     }
 
     public class SAT

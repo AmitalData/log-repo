@@ -8,7 +8,7 @@
                             <div  class="ShortTitleControl" style="background: rgba(255, 0, 0, 0.1);display: flex;">
                                 <span float-start >{{'ARPayment.S.ShortTitle' | TextCodeTranslationPipe}}:</span>
                                 <span float-start style="margin-left: 5px;">{{EntityNumber}}</span>
-                                <span float-start class="TextTrimming" style="max-width: 200px;">{{EntityPM.BillToName}}</span>
+                                <span float-start class="TextTrimming" style="max-width: 200px;">{{showLocals ? (EntityPM.BillToLocalName != null ? EntityPM.BillToLocalName : EntityPM.BillToName) : EntityPM.BillToName}}</span>
                             </div>
                         </td>
 

@@ -1088,7 +1088,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
     RebuildButtonClicked() {
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Rebuild Packages?");
+
+        if (this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.LastStatusCode)).length > 0) {
+            confirmWindow.Show("Note that this will result in deleting container level statuses. Rebuild Packages?");
+        }
+
+        else {
+            confirmWindow.Show("Rebuild Packages?");
+        }
+        
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
 
@@ -1098,17 +1106,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.BuildItemsSource();
                     this.ComputeTotals();
                 }
-
-                //this.EntityPM.ShipmentPackages.filter(f => f.OriginalShipmentPackageId != null).forEach(item => {
-                //    this.EntityPM.RemovePackage(item);
-                //});
-
-                //this.EntityPM.ShipmentPackages.forEach(item => {
-                //    item.InsideShipmentPackages.filter(f => f.OriginalShipmentPackageId != null).forEach(itemInside => {
-                //        item.RemoveInsideShipmentPackagePM(itemInside);
-                //    });
-                //});
-
+                
                 this.BuildButtonClicked();
             }
         });
@@ -1476,7 +1474,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     DeletePackagesButtonClicked() {
         if (this.EntityPM.ShipmentPackages.length > 0) {
             var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show("Are you sure you want to delete all packages?");
+
+            if (this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.LastStatusCode)).length > 0) {
+                confirmWindow.Show("Note that this will result in deleting container level statuses. Delete Packages?");
+            }
+
+            else {
+                confirmWindow.Show("Are you sure you want to delete all packages?");
+            }
+            
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.StartDelete();

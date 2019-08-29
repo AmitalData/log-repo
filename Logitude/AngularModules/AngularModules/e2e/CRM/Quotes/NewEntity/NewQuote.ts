@@ -65,7 +65,7 @@ export class NewQuote {
   FillQuoteFields(QuoteNumber: string, TransportMode: string, Direction: string, ShipmentType: string, QuoteType: string) {
     var quotetypeBtn: any;
     var EC = protractor.ExpectedConditions;
-    this.Helper.WaitByIdAndFill('Quote_CustomerId', 'TestShipper');
+    this.Helper.WaitByIdAndFill('Quote_ShipperId', 'TestShipper');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     this.Helper.WaitByIdAndFill('Quote_ConsigneeId', 'TestShipper');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);

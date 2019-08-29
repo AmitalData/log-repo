@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
@@ -10,21 +11,21 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 {
-    public class ExternalReconcileDataProvider
+    public class ExternalReconcileDataProvider : IExternalReconcileDataProvider
     {
         private IAccountingContext _AccountingContext;
-        private int _Tenant;
-        public ExternalReconcileDataProvider(IAccountingContext accountingContext,int tenant)
+        
+        public ExternalReconcileDataProvider(IAccountingContext accountingContext)
         {
             _AccountingContext = accountingContext;
-            _Tenant = tenant;
+        
         }
 
 
-        public BankAccountPM GetBankAccountFromTransferAccount(string myLedgerTransactionTransferInCreditAccountId)
+        public BankAccountPM GetBankAccountFromTransferAccount(string myLedgerTransactionTransferInCreditAccountId,int tenant)
         {
             var bankAccountQS = new BankAccountQueryService(this._AccountingContext);
-            var bankAccountPM = bankAccountQS.GetBankAccountByTransferGLAcccountId(myLedgerTransactionTransferInCreditAccountId, _Tenant);
+            var bankAccountPM = bankAccountQS.GetBankAccountByTransferGLAcccountId(myLedgerTransactionTransferInCreditAccountId, tenant);
             if (bankAccountPM == null)
             {
                 throw new Exception("could not found bank from myLedgerTransactionTransferInCredit.id ");
@@ -34,12 +35,16 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         }
 
 
-        public BankAccountPM GetBankAccountFromReconcileExternalPageLineId(string reconcileExternalPageLineId)
+        public BankAccountPM GetBankAccountFromReconcileExternalPageLineId(string reconcileExternalPageLineId, int tenant)
         {
             var bankPageLineQS = new ReconcileExternalPageLineRepository(this._AccountingContext);
-            var bankPageLine = bankPageLineQS.GetSingle(reconcileExternalPageLineId, _Tenant);
+            var reconcileExternalPageLinePM = bankPageLineQS.GetSingle(reconcileExternalPageLineId, tenant);
+            if (reconcileExternalPageLinePM==null)
+            {
+                throw new Exception("bankPageLine is null");
+            }
             var bankPageQS = new ReconcileExternalPageRepository(this._AccountingContext);
-            var page = bankPageQS.GetSingle(bankPageLine.ReconcileExternalPageId, _Tenant);
+            var page = bankPageQS.GetSingle(reconcileExternalPageLinePM.ReconcileExternalPageId, tenant);
             var bankAccountQS = new BankAccountQueryService(this._AccountingContext);
             var bankAccount = bankAccountQS.GetSingle(page.BankAccountId, false, false);
             return bankAccount;
@@ -52,11 +57,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             return PM;
         }
 
-        public virtual List<LedgerTransactionPM> GetLedgerTransactionList(List<string> theReconcileAgainstLTranIdList)
+        public virtual List<LedgerTransactionPM> GetLedgerTransactionList(List<string> theReconcileAgainstLTranIdList,int tenant)
         {
             var qs = new LedgerTransactionQueryService(_AccountingContext);
 
-            var myOldTransToReconcile = qs.GetLedgerTransactionPMsByIdList(theReconcileAgainstLTranIdList, _Tenant);
+            var myOldTransToReconcile = qs.GetLedgerTransactionPMsByIdList(theReconcileAgainstLTranIdList, tenant);
             return myOldTransToReconcile;
         }
 

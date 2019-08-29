@@ -22,7 +22,7 @@ export class NewAgent {
     }
 
     SearchAgentTab() {
-
+        browser.sleep(1000)
         this.helper.WaitByIdAndFill('null_Search', "Agent");
         this.helper.WaitByIdAndClick('MaintenanceItemMTAG');
 
@@ -35,12 +35,15 @@ export class NewAgent {
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndFill('Address_City', "Poznan");
+        browser.sleep(1000)
         this.helper.WaitByIdAndClick('OkButtonId');
     }
 
 
     SearchAgent() {
+
         this.helper.WaitBusyIndicator();
+        this.helper.WaitWindowClosed();
         this.helper.WaitByIdAndFill('SearchFieldsId_0_0', this.agentName);
         //click on row 
         this.helper.WaitByIdAndClick('LogGrid_0_0row0');

@@ -11,6 +11,7 @@ export class EditBankAccount {
     }
 
     EditBankAccount(DisplayNumber: string) {
+        this.Helper.WaitByIdAndClick('BANKSQUIERY');
         this.Helper.WaitByIdAndFill('SearchFieldsId', DisplayNumber);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
         this.Helper.WaitByIdAndClick('BankAccount.TH.General');
