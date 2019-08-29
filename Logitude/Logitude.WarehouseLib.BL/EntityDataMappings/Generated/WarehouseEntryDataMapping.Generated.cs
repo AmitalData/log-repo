@@ -75,9 +75,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ToPartnerId, 
 	         ChargeableWeightUnitCode, 
 	         TotalVolumetricWeight, 
-	          
-	         ConnectedTo,
 	         LastStatusUpdateDate, 
+	         ConnectedTo, 
 	         Ratio,
 	      }
 
@@ -149,9 +148,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         TotalVolumetricWeight, 
 	         LastStatusUpdateDate, 
 	         MasterHouse, 
-	          
-	         ConnectedTo,
 	         EntryReferencesAndDate, 
+	         ConnectedTo, 
 	         Ratio,
 	      }
 
@@ -716,6 +714,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             {
 					entityPM.ConnectedTo = entityPOCO.ConnectedTo;
             }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Ratio))
             {
 					entityPM.Ratio = entityPOCO.Ratio;

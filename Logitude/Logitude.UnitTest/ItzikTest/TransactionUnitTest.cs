@@ -12,6 +12,8 @@ namespace Logitude.UnitTest.ItzikTest
     [TestClass]
     public class TransactionUnitTest
     {
+
+
         
         public void AmbientScope_ALLcomplete_Success()
         {
@@ -85,6 +87,27 @@ namespace Logitude.UnitTest.ItzikTest
 
         }
 
+
+
+        [TestMethod]
+        public void WhenRequestsheet_2()
+        {
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    throw new Exception("Test!!");
+                }
+                catch (Exception)
+                {
+
+                    
+                }
+
+                scope.Complete();
+
+            }
+        }
 
         [TestMethod]
         public void WhenRequestsheet_1_ScopeNotComplete_CreateNewTransToAbandonQueue_AvoidCrush

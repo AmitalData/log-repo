@@ -1,0 +1,317 @@
+{
+	"info": {
+		"_postman_id": "49116d38-8156-4499-bce6-b16b69322fe2",
+		"name": "SystemSettings",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AuthenticationOnMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
+						"exec": [
+							"pm.test(\"AuthenticationOnMyTenant\", function () {",
+							"    pm.response.to.have.status(200);",
+							"     var idvalue1 = (pm.response.json().Token);",
+							"     var idvalue2 = (pm.response.json().DocumentDownloadToken);",
+							"     var id1exist = idvalue1 !== null;",
+							"     var id2exist = idvalue2 !== null;",
+							"     ",
+							"    pm.globals.set(\"Token\", idvalue1);",
+							"    pm.globals.set(\"DocumentDownloadToken\", idvalue2);",
+							"    ",
+							"    var expected = pm.globals.get(\"Email1\");",
+							"    tests[\"Body cointains Email: \" + expected] = responseBody.has(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"{{Email1}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"CardId\":null,\"CardType\":null,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\"}\n"
+				},
+				"url": {
+					"raw": "{{URL}}/api/authentication?tenant={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AuthenticationOnNotMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
+						"exec": [
+							"pm.test(\"AuthenticationOnNotMyTenant\", function () {",
+							"    pm.response.to.have.status(200);",
+							"     var idvalue1 = (pm.response.json().Token);",
+							"     var idvalue2 = (pm.response.json().DocumentDownloadToken);",
+							"     var id1exist = idvalue1 !== null;",
+							"     var id2exist = idvalue2 !== null;",
+							"     ",
+							"    pm.globals.set(\"Token2\", idvalue1);",
+							"    pm.globals.set(\"DocumentDownloadToken2\", idvalue2);",
+							"    ",
+							"    var expected = pm.globals.get(\"Email2\");",
+							"    tests[\"Body cointains Email: \" + expected] = responseBody.has(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"{{Email2}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"CardId\":null,\"CardType\":null,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant2}}\"}\n"
+				},
+				"url": {
+					"raw": "{{URL}}/api/authentication?tenant={{Tenant2}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAccountingSettingsFromMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "21513698-73d9-410c-bed5-40eb5e0112e8",
+						"exec": [
+							"pm.test(\"GetAccountingSettingsFromMyTenant\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"      var idvalue1 = pm.response.json().Id;",
+							"      var idvalue2 = pm.globals.get(\"Tenant\");",
+							"      ",
+							"    // pm.expect(idvalue2pm.response.json().Id).to.eql(pm.globals.get(\"Tenant\"));",
+							"    ",
+							"    //pm.environment.set(\"AddressId\",idvalue3);",
+							"    ",
+							"     if (idvalue1 == idvalue2)  {",
+							"        tests[\"GetAccountingSettingsFromMyTenant successfully : \" + idvalue2] = responseBody.has(idvalue2);",
+							"   ",
+							"    } ",
+							"",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 OPR/62.0.3331.116"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19280810/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@test.com; ASP.NET_SessionId=bcnhxmem2y11pnejrrx2yktb"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/accountingsettings/getsingle?id={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingsettings",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAccountingSettingsFromNotMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "21513698-73d9-410c-bed5-40eb5e0112e8",
+						"exec": [
+							"pm.test(\"GetAccountingSettingsFromNotMyTenant\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"      var idvalue1 = pm.response.json().Id;",
+							"      var idvalue2 = pm.globals.get(\"Tenant2\");",
+							"      ",
+							"    // pm.expect(idvalue2pm.response.json().Id).to.eql(pm.globals.get(\"Tenant\"));",
+							"    ",
+							"    //pm.environment.set(\"AddressId\",idvalue3);",
+							"    ",
+							"     if (idvalue1 == idvalue2)  {",
+							"        tests[\"GetAccountingSettingsFromNotMyTenant successfully : \" + idvalue2] = responseBody.has(idvalue2);",
+							"   ",
+							"    } ",
+							"",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 OPR/62.0.3331.116"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19280810/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@test.com; ASP.NET_SessionId=bcnhxmem2y11pnejrrx2yktb"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/accountingsettings/getsingle?id={{Tenant2}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"accountingsettings",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{Tenant2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
