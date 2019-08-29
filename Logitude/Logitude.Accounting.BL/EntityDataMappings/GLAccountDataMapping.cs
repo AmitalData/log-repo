@@ -217,7 +217,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 ChartOfAccountQueryService chartOfAccountQueryService = new ChartOfAccountQueryService(entityPOCO.Tenant);
                 ChartOfAccountPM chartOfAccounts = chartOfAccountQueryService.GetSingle(entityPOCO.ChartOfAccountsId, false, true);
-                if (chartOfAccounts != null) entityPM.ChartOfAccountsName = (showLocals ? chartOfAccounts.LocalName : chartOfAccounts.EnglishName);
+                if (chartOfAccounts != null)
+                {
+                    entityPM.ChartOfAccountsName = (showLocals ? chartOfAccounts.LocalName : chartOfAccounts.EnglishName);
+                    entityPM.ChartOfAccountsCode = chartOfAccounts.Code;
+                }
 
                 if (entityPOCO.ChartOfAccountsTypeCode != null)
                 {

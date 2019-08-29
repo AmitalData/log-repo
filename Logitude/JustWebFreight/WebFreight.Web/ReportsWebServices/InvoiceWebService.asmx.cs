@@ -1173,6 +1173,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.IRSPlace = billToCard.IRSPlace;
                     invoicedataprovider.IRSNumber = billToCard.IRSNumber;
                     invoicedataprovider.BillToCustomerCode = billToCard.Code;
+                    invoicedataprovider.ReceivablesExternalID = billToCard.ReceivablesAccountingCard;
 
                     Address billToCardAddress = addressRepository.GetSingleAddress(currentInvoice.BillToAddressId, tenant);
                     if (billToCardAddress != null)
@@ -2057,6 +2058,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.BillToAccountNumber = cards.AccountNumber;
                 invoicedataprovider.BillToIBANNumber = cards.IBANNumber;
                 invoicedataprovider.BillToSwift = cards.Swift;
+                invoicedataprovider.ReceivablesExternalID = cards.ReceivablesAccountingCard;
                 #endregion
 
                 #region SATInterface Properties

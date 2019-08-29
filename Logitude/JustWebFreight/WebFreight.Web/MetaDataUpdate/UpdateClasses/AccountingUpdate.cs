@@ -1307,6 +1307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             LoadTextCodes_YearTransfer(textcodes);
             LoadTextCodes_AutomaticReconcileMethod(textcodes);
             LoadTextCodes_ReconcileExternalPage(textcodes);
+            LoadTextCodes_System1000(textcodes);
             #region ObjectTable
             ObjectTable ChartOfAccountTable = objectContext.ObjectTables.Where(f => f.Name == "ChartOfAccount" && f.Tenant == 0).FirstOrDefault();
             ObjectTable JournalTable = objectContext.ObjectTables.Where(f => f.Name == "Journal" && f.Tenant == 0).FirstOrDefault();
