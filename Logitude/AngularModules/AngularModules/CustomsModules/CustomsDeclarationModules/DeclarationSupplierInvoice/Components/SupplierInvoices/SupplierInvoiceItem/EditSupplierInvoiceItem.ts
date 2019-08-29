@@ -66,7 +66,6 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         this.IdentificationsList = new ObservableCollection([]);
         this.LevyList = new ObservableCollection([]);
     }
-
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.IsDisplayOnly = args.IsDisplayOnly;

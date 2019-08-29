@@ -256,5 +256,32 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
             customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
         }
     }
+
+    public FillConnectedDocumentPointer(customsDocumentPointerPM: CustomsDocumentPointerPM) {
+        if (this.claimPM.ClaimsRelatedEntities == null || this.claimPM.ClaimsRelatedEntities.length == 0 || customsDocumentPointerPM == null) {
+            return null;
+        }
+
+        var selectedIndex: number = 0;
+        var displayConnectedEntityNumber: string;
+
+        switch (customsDocumentPointerPM.Child1EntityCode) {
+            case "ClaimsRelatedEntity":
+                selectedIndex = 1;
+                break;
+            case "ClaimRelatedEntityCancelOrObjection":
+                selectedIndex = 2;
+                break;
+        }
+
+        displayConnectedEntityNumber = customsDocumentPointerPM.Child1EntityId;
+
+        let connectedDocumentPointer = {
+            "SelectedIndex": selectedIndex,
+            "DisplayConnectedEntityNumber": displayConnectedEntityNumber,
+        };
+
+        return connectedDocumentPointer;
+    }
 }
 

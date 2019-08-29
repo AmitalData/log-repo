@@ -167,5 +167,9 @@ export class CollateralCustomsDocumentsController implements ICustomsDocumentsCo
     SetDefaultConnectedEntityNumber(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any) {
 
     }
+
+    FillConnectedDocumentPointer(customsDocumentPointerPM: CustomsDocumentPointerPM) {
+
+    }
 }
 
