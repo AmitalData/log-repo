@@ -207,6 +207,10 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this.CheckEditEnabled(this.IsCustomsDocumentInRequest, !this.IsDisplayOnly);
         this.SelectedIndex = 0;
         this.FillConnectedToItems();
+        if (this.CustomsDocumentsTicket.CustomsDocumentPointers != null && this.CustomsDocumentsTicket.CustomsDocumentPointers.length > 0) {
+            this.FillConnectedDocumentPointer();
+        }
+
         if (this.CustomsDocumentsTicket != null) {//&& this.objectTableName != "Customs.CustomsCollateral") { this is to be added later when work on collateral
             this.ChildrenComboBoxVisibility = this.iCustomsDocumentsController.GetChildrenComboboxVisibility();
             this.SecondChildVisibility = this.iCustomsDocumentsController.GetSecondChildVisibility();
@@ -774,6 +778,17 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         //    this.ConnectedToItems.push(new ConnectedToItem() { Id = 0, Name = TextCodeTranslator.Translate("Customs.CustomsCollateral") });
         // }
 
+    }
+
+    FillConnectedDocumentPointer() {
+        let connectedDocumentPointer: any = this.iCustomsDocumentsController.FillConnectedDocumentPointer(this.CustomsDocumentsTicket.CustomsDocumentPointers[0]);
+        if (connectedDocumentPointer != null) {
+            this.SelectedIndex = connectedDocumentPointer.SelectedIndex;
+            this.DisplayConnectedEntityNumber = connectedDocumentPointer.DisplayConnectedEntityNumber;
+            if (this.ParentEntityCode == "Declaration" && connectedDocumentPointer.SupplierInvoiceItemNumber != null) {
+                this.SupplierInvoiceItemNumber = connectedDocumentPointer.SupplierInvoiceItemNumber;
+            }
+        }
     }
 
     SetDefaultConnectedEntityNumber() {

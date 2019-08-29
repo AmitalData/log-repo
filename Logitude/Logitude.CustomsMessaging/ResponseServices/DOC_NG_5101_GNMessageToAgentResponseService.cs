@@ -81,6 +81,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string notificationDescription = "";
             string notificationStatusCode = "";
             string assigneToNotificationTypeCode = "I";
+            string responseToMessage = null;
 
             switch (customResponse.MessageToAgent.msgCode)
             {
@@ -224,6 +225,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "עמידה/אי עמידה בדרישה לבטוחה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     notificationStatusCode = "COL";
+                    responseToMessage = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     break;
                 default:
                     notificationDefinitionCode = "5101N";
@@ -494,7 +496,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!string.IsNullOrWhiteSpace(notificationDefinitionCode))
             {
                 LogMessagingUtil.Instance.AppendLine("Start Sending Notification...");
-                DoUpdateNotification(notificationDefinitionCode, requestParams.Tenant, customResponse.MessageToAgent.responseToMessage.ToString(), notificationDescription, assigneToNotificationTypeCode);
+                if(string.IsNullOrEmpty(responseToMessage) && customResponse.MessageToAgent.responseToMessage != null)
+                {
+                    responseToMessage = customResponse.MessageToAgent.responseToMessage.ToString();
+                }
+                DoUpdateNotification(notificationDefinitionCode, requestParams.Tenant, responseToMessage, notificationDescription, assigneToNotificationTypeCode);
             }
         }
 

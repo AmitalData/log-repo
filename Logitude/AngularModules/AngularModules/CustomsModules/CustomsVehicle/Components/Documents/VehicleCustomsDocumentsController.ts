@@ -129,6 +129,10 @@ export class VehicleCustomsDocumentsController implements ICustomsDocumentsContr
         return connectedItems;
     }
 
+    FillConnectedDocumentPointer(customsDocumentPointerPM: CustomsDocumentPointerPM) {
+
+    }
+
     GetRelatedEntityLabel() {
         return "";
     }
