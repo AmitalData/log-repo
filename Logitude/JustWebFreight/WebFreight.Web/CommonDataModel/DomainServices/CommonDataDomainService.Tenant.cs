@@ -62,6 +62,13 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 objectContext = CommonDataContext.GetContext(tenant.Id);
             }
 
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken == null || (authToken != null && authToken.Tenant != tenant.Id))
+            {
+                throw new ApplicationException("You are not authorized to do this operation");
+            }
+
             tenantRepository = new TenantRepository(objectContext);
             passwordPolicyRepository = new PasswordPolicyRepository(objectContext);
             tenant.Id = CodeCounter.GetNumber("Tenant", 0);
@@ -181,10 +188,14 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             string entityPmName = "TenantPM" + currentTenant.Id;
             string datetimeoffset = "datetimeoffset" + currentTenant.Id;
 
-            if (CacheManager.CacheWrapper.Get(datetimeoffset) != null)
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken == null || (authToken != null && authToken.Tenant != currentTenant.Id))
             {
-                CacheManager.CacheWrapper.Invalidate(datetimeoffset);
+                throw new ApplicationException("You are not authorized to do this operation");
             }
+
+            
 
             if (CacheManager.CacheWrapper.Get(entityName) != null)
             {
