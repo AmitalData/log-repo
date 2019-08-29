@@ -257,3 +257,36 @@ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_
          SET @SQLCustomPickLists ='CREATE TRIGGER Trigger_AutomaticLastUpdateDateCustomPickLists ON CustomPickLists AFTER UPDATE  AS  BEGIN UPDATE CustomPickLists SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;'
          EXEC (@SQLCustomPickLists);
  end
+
+
+
+
+    --Regions
+ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_AutomaticLastUpdateDateRegions'))
+ Begin
+ declare @SQLRegions  as varchar(8000)
+         SET @SQLRegions ='CREATE TRIGGER Trigger_AutomaticLastUpdateDateRegions ON Regions AFTER UPDATE  AS  BEGIN UPDATE Regions SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;'
+         EXEC (@SQLRegions);
+ end
+
+
+
+ 
+    --CustomerSizes
+ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_AutomaticLastUpdateDateCustomerSizes'))
+ Begin
+ declare @SQLCustomerSizes  as varchar(8000)
+         SET @SQLCustomerSizes ='CREATE TRIGGER Trigger_AutomaticLastUpdateDateCustomerSizes ON CustomerSizes AFTER UPDATE  AS  BEGIN UPDATE CustomerSizes SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;'
+         EXEC (@SQLCustomerSizes);
+ end
+
+
+ 
+    --Industries
+ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_AutomaticLastUpdateDateIndustries'))
+ Begin
+ declare @SQLIndustries  as varchar(8000)
+         SET @SQLIndustries ='CREATE TRIGGER Trigger_AutomaticLastUpdateDateIndustries ON Industries AFTER UPDATE  AS  BEGIN UPDATE Industries SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;'
+         EXEC (@SQLIndustries);
+ end
+

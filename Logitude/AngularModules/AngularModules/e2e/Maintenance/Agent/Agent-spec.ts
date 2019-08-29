@@ -8,7 +8,7 @@ import { LoginComp } from "../../login/Login.po";
 
 describe('NewAgent', () => {
 
-    let gAgent: NewAgent = new NewAgent();
+  //  let gAgent: NewAgent = new NewAgent();
     let AgentScenario: NewAgentScenario = new NewAgentScenario();
 
     beforeEach(() => {

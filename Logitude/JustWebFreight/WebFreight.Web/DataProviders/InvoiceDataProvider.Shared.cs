@@ -34,6 +34,7 @@ namespace WebFreight.Web.DataProviders
         public string BillToCustomerCode { get; set; }
         public string BillToTelephone { get; set; }
         public string BillToStateCode { get; set; }
+        public string ReceivablesExternalID { get; set; }
         public string DebitAccount { get; set; }
         public string AccountingNumber { get; set; }
         public string InvoiceDate { get; set; }

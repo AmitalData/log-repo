@@ -487,9 +487,12 @@ namespace Logitude.Accounting.BL.Validators
                 BankAccountPM bankAccountFromTransfer;
                 ReconcileExternalPageLinePM myReconcileExternalPageLinePM;
                 string errString;
-                myExternalReconcileJournalService.PrepareAndValidate(myJournalPM.Tenant, myJournalPM.JournalExternalReconciles[0].LedgerTransactionId, myJournalPM.JournalExternalReconciles[0].ReconcileExternalPageLineId, out myLedgerTransactionBankTransferPM, out bankAccountFromTransfer, out myReconcileExternalPageLinePM, out errString);
-
-
+                myExternalReconcileJournalService.PrepareAndValidate(myJournalPM.Tenant, false ,myJournalPM.JournalExternalReconciles[0].LedgerTransactionId, myJournalPM.JournalExternalReconciles[0].ReconcileExternalPageLineId, out myLedgerTransactionBankTransferPM, out bankAccountFromTransfer, out myReconcileExternalPageLinePM, out errString);
+                if (!string.IsNullOrWhiteSpace(errString))
+                {
+                    errorsList.Add(errString);
+                }
+                
             }
         }
 

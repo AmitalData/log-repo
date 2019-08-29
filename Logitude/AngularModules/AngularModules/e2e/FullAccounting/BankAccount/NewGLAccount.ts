@@ -44,6 +44,7 @@ export class NewGLAccount {
     this.Helper.WaitByIdAndClick('NewGLAccount');
     this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsTypeCode', 'Banks');
     this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+    this.Helper.WaitBusyIndicator();
     this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'בנקים');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitBusyIndicator();
@@ -57,7 +58,10 @@ export class NewGLAccount {
     this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
     this.Helper.WaitBusyIndicator();
     this.Helper.WaitWindowClosed();
-    this.Helper.WaitByIdAndClick('FABNKS');
+     
+     // browser.sleep(5000);
+             // browser.driver.sleep(6000);
+
     
   }
 

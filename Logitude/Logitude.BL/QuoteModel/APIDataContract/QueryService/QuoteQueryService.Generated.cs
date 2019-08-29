@@ -123,6 +123,7 @@ using Simplog.Data.QuoteModel;
 				   temp.TotalContainers = MyEntityPM.TotalContainers;
 				   temp.TransitTime = MyEntityPM.TransitTime;
 				   temp.ValueOfGoods = MyEntityPM.ValueOfGoods;
+				   temp.StartDate = MyEntityPM.StartDate;
 				   temp.Volume = MyEntityPM.Volume;			  
 				   if(MyEntityPM.AgentContactId != null)
 				   {
@@ -398,8 +399,7 @@ using Simplog.Data.QuoteModel;
 
 							 
 				   temp.StageDate = MyEntityPM.LastStageDate;
-				   temp.SameOrFixed = MyEntityPM.SameOrFixed;
-				   temp.StartDate = MyEntityPM.StartDate;					
+				   temp.SameOrFixed = MyEntityPM.SameOrFixed;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -469,6 +469,7 @@ using Simplog.Data.QuoteModel;
 					temp.TotalContainers = MyEntity.TotalContainers;
 					temp.TransitTime = MyEntity.TransitTime;
 					temp.ValueOfGoods = MyEntity.ValueOfGoods;
+					temp.StartDate = MyEntity.StartDate;
 					temp.Volume = MyEntity.Volume;
 					ContactQueryService AgentContactContactService = new ContactQueryService(Tenant);
 					if(MyEntity.AgentContact != null)
@@ -926,8 +927,7 @@ using Simplog.Data.QuoteModel;
 
 								 
 					temp.LastStageDate = MyEntity.StageDate;
-					temp.SameOrFixed = MyEntity.SameOrFixed;
-					temp.StartDate = MyEntity.StartDate;					   
+					temp.SameOrFixed = MyEntity.SameOrFixed;					   
 					   return temp;
 		    }
             catch (Exception ex)
