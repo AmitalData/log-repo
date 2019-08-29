@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Simplog.Server.Infrastructure.Helpers;
 using FakeItEasy;
 using Logitude.Accounting.BL.Validators;
+using Logitude.Accounting.BL.CoreBL;
 
 namespace Logitude.UnitTest.Accounting.UniTests
 {
@@ -56,7 +57,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         return func(pId);
                     });    
             }
-            return new JournalLineDebitMapping(journalLine, journalPM, false, fakeIGLAccountDataProvider);
+            return new JournalLineDebitMapping(journalLine, journalPM, false, fakeIGLAccountDataProvider, A.Fake<IAccountingSettingResolver>());
         }
 
 #if CHECK        
