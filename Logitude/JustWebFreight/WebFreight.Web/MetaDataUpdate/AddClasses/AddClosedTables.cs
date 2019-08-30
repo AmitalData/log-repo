@@ -2987,6 +2987,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
+
         public static void AddWithholdingTaxDeductionType(WithholdingTaxDeductionTypeDetails details, WithholdingTaxDeductionTypeRepository repository)
         {
 
