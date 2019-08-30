@@ -4147,7 +4147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
 
 
-            //withholdingTaxDeductionTypeRepository.SubmitChanges();
+           withholdingTaxDeductionTypeRepository.SubmitChanges();
 
         }
 
