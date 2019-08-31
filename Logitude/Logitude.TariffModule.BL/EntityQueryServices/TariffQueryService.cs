@@ -504,6 +504,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     SurchargeItem.TariffId =  CurrentSurcharge.Id;
                                                     SurchargeItem.CurrencyId = CurrentSurcharge.CurrencyId;
                                                     SurchargeItem.TariffNumber = CurrentSurcharge.TariffNumber;
+                                                    SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
                                                     tariffsSummary.Surcharges.Add(SurchargeItem);
                                                 }
 

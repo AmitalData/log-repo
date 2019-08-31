@@ -44,6 +44,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = new AccountingSetting();
             this.Poco.Id = this.entityPm.Id;
 
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken == null || (authToken != null && authToken.Tenant != entityPM.Id))
+            {
+                throw new ApplicationException("You are not authorized to do this operation");
+            }
+
             //AccountingSettingTracing.Trace(entityPM, Poco, isNewEntity);
             AccountingSettingMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
@@ -64,6 +71,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void Update(AccountingSettingPM entityPM)
         {
+
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken == null || (authToken != null && authToken.Tenant != entityPM.Id))
+            {
+                throw new ApplicationException("You are not authorized to do this operation");
+            }
+
             this.isNewEntity = false;
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleAccountingSetting(entityPM.Id);

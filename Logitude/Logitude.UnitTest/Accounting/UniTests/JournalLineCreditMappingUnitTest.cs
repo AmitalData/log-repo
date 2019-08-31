@@ -11,8 +11,7 @@ using System.Diagnostics;
 //using Logitude.Accounting.BL.CoreBL.Fakes;
 using Logitude.Accounting.BL.Validators;
 using FakeItEasy;
-
-
+using Logitude.Accounting.BL.CoreBL;
 
 namespace Logitude.UnitTest.Accounting.UniTests
 {
@@ -51,7 +50,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 TestsUtil.AssertThrows<Exception>(delegate
                 {
                     // Arrange
-                    var journalLineCreditMapping = new JournalLineCreditMapping(item.Item1, item.Item2, GetDefaultFakeGLAccountDataProvider());
+                    var journalLineCreditMapping = new JournalLineCreditMapping(item.Item1, item.Item2, GetDefaultFakeGLAccountDataProvider(), GetDefaultIAccountingSettingResolver());
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
 
@@ -61,6 +60,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             }
         }
 
+        
 
         [TestMethod]
         //[ExpectedException(typeof(Exception), "this.MyMappingTypeEnum != MappingTypeEnum.Debit")]
@@ -76,7 +76,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             TestsUtil.AssertThrows<Exception>(delegate
             {
                 // Arrange
-                var journalLineCreditMapping = new JournalLineCreditMapping(myState.Item1, myState.Item2, GetDefaultFakeGLAccountDataProvider());
+                var journalLineCreditMapping = new JournalLineCreditMapping(myState.Item1, myState.Item2, GetDefaultFakeGLAccountDataProvider(), GetDefaultIAccountingSettingResolver());
                 // Act: Run the method under test:
                 journalLineCreditMapping.DoIt();
 
@@ -103,7 +103,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
             };
             JournalPM journalPM = new JournalPM { Tenant = 1, Id = id };
 
-            var journalLineCreditMapping = new JournalLineCreditMapping(journalLine, journalPM, GetDefaultFakeGLAccountDataProvider());
+            var journalLineCreditMapping = new JournalLineCreditMapping(journalLine, journalPM,
+               GetDefaultFakeGLAccountDataProvider(), GetDefaultIAccountingSettingResolver());
 
 
             TestsUtil.AssertThrows<Exception>(delegate
@@ -146,7 +147,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item2,
                           journalPM: state2Check.Item1,
-                          myGLAccountPMProvider:GetDefaultFakeGLAccountDataProvider()
+                          myGLAccountPMProvider:GetDefaultFakeGLAccountDataProvider(), myIAccountingSettingResolver:GetDefaultIAccountingSettingResolver()
                           );
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
@@ -339,7 +340,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item2,
                           journalPM: state2Check.Item1,
-                          myGLAccountPMProvider:GetDefaultFakeGLAccountDataProvider());
+                          myGLAccountPMProvider:GetDefaultFakeGLAccountDataProvider(),
+                          myIAccountingSettingResolver: GetDefaultIAccountingSettingResolver());
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
                     // Assert: Verify the result:
@@ -569,7 +571,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2
-                          , myGLAccountPMProvider:GetFakeGLAccountDataProvider(myfun));
+                          , myGLAccountPMProvider:GetFakeGLAccountDataProvider(myfun),
+                          myIAccountingSettingResolver: GetDefaultIAccountingSettingResolver());
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
                     // Assert: Verify the result:
@@ -699,7 +702,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2,
-                          myGLAccountPMProvider:GetFakeGLAccountDataProvider(myFunc));
+                          myGLAccountPMProvider:GetFakeGLAccountDataProvider(myFunc),
+                          myIAccountingSettingResolver: GetDefaultIAccountingSettingResolver());
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
                     // Assert: Verify the result:
@@ -1009,7 +1013,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     .WithArgumentsForConstructor(
                     () => new JournalLineCreditMapping(
 state2Check.Item1, state2Check.Item2,
-null
+null, GetDefaultIAccountingSettingResolver()
                     )
                   ));
             return journalLineCreditMapping;
@@ -1070,7 +1074,8 @@ null
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item2,
                           journalPM: state2Check.Item1,
-                          myGLAccountPMProvider: GetDefaultFakeGLAccountDataProvider()
+                          myGLAccountPMProvider: GetDefaultFakeGLAccountDataProvider(),
+                          myIAccountingSettingResolver: GetDefaultIAccountingSettingResolver()
                           );
                     // Act: Run the method under test:
                     journalLineCreditMapping.DoIt();
@@ -1126,7 +1131,10 @@ null
         {
             return FakeItEasy.A.Fake<IGLAccountDataProvider>();
         }
-
+        static IAccountingSettingResolver GetDefaultIAccountingSettingResolver()
+        {
+            return FakeItEasy.A.Fake<IAccountingSettingResolver>();
+        }
         private IGLAccountDataProvider GetFakeGLAccountDataProvider(string expectedControlAccountId,  string myGLAccountTypeEnumCard)
         {
             myGLAccountTypeEnumCard = "";

@@ -41,6 +41,7 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
     EntityResourceService: EntityResourceService = new EntityResourceService();
     BankAccountPMService: BankAccountPMService = new BankAccountPMService();
     private CurrentSession = SessionLocator.SelectedSession;
+    PayToGLAccountIdOldValue: string;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.entityPM = entityArgs.EntityPM;
@@ -96,6 +97,7 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
     get PayToGLAccountId() { return this.entityPM.PayToGLAccountId; }
     set PayToGLAccountId(value: string) {
         if (this.entityPM.PayToGLAccountId != value) {
+            this.PayToGLAccountIdOldValue = this.entityPM.PayToGLAccountId;
             this.entityPM.PayToGLAccountId = value;
         }
     }
@@ -181,21 +183,23 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
     private account: GLAccountPM;
     get Account() { return this.account; }
     set Account(value: GLAccountPM) {
+        if ((!AppTool.IsNullOrEmpty(this.PayToGLAccountIdOldValue)) && this.PayToGLAccountIdOldValue != value.Id) {
         if (this.account != value) {
             this.account = value;
             if (value != null) {
-             
+
                 if (value.AccountTypeCode == "3" && this.entityPM.APPaymentId == null) {
-                  
+
                     this.UIProperties.SetValidity("PayToGLAccountId", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.VendorsGLAccount"));
                 }
                 else {
                     this.UIProperties.SetValidity("PayToGLAccountId", this.ObjectTableName, true, null);
 
-                 
-                    this.PayToName = value.LocalName;
+                  
+                        this.PayToName = value.LocalName;
+                   
                 }
-                
+            }
             }
         }
     }
