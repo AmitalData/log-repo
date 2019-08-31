@@ -38,7 +38,7 @@ export class FieldsHelper {
         });
 
     }
-
+    
     WaitByIdAndClickRabaia(Id: string) {
         var EC = protractor.ExpectedConditions;
         return browser.wait(EC.elementToBeClickable(element(by.id(Id))), 1000000);

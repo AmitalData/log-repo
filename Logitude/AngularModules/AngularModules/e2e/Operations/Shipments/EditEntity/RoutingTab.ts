@@ -224,7 +224,7 @@ export class RoutingTabComponent {
 
 
     this.Helper.WaitByIdAndClick('SaveBtn');
-    this.Helper.WaitBusyIndicator();
+    this.Helper.WaitEditComponentBusyIndicator(); 
     this.Helper.WaitByIdAndClick('CloseBtn');
   }
 
@@ -356,7 +356,7 @@ export class RoutingTabComponent {
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_Notes', 'Adding Delivery ');
 
     this.Helper.WaitByIdAndClick('SaveBtn');
-    this.Helper.WaitBusyIndicator();
+    this.Helper.WaitEditComponentBusyIndicator();
     this.Helper.WaitByIdAndClick('CloseBtn');
   }
 
