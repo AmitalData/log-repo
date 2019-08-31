@@ -251,3 +251,47 @@ IF not EXISTS(SELECT 1 FROM sys.columns
 		   ALTER TABLE ObjectFields ADD  AutomaticLastUpdateDate datetime NULL DEFAULT GETDATE();
 		
 		  End
+
+		  
+--CustomPickLists
+		    IF not EXISTS(SELECT 1 FROM sys.columns 
+ WHERE Name = N'AutomaticLastUpdateDate'
+          AND Object_ID = Object_ID(N'CustomPickLists'))
+		  Begin
+		   ALTER TABLE CustomPickLists ADD  AutomaticLastUpdateDate datetime NULL DEFAULT GETDATE();
+		
+		  End
+
+
+
+		  		   --Regions
+IF not EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'AutomaticLastUpdateDate'
+          AND Object_ID = Object_ID(N'Regions'))
+		  Begin
+		   ALTER TABLE Regions ADD  AutomaticLastUpdateDate datetime NULL DEFAULT GETDATE(); 
+		  End
+
+
+
+
+		  		   --CustomerSizes
+IF not EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'AutomaticLastUpdateDate'
+          AND Object_ID = Object_ID(N'CustomerSizes'))
+		  Begin
+		   ALTER TABLE CustomerSizes ADD  AutomaticLastUpdateDate datetime NULL DEFAULT GETDATE(); 
+		  End
+
+
+
+		  		   --Industries
+IF not EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'AutomaticLastUpdateDate'
+          AND Object_ID = Object_ID(N'Industries'))
+		  Begin
+		   ALTER TABLE Industries ADD  AutomaticLastUpdateDate datetime NULL DEFAULT GETDATE(); 
+		  End
+
+
+

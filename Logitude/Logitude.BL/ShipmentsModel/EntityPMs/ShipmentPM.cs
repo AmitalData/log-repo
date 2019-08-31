@@ -2357,5 +2357,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool FromCountryIsEC { get; set; }
         public bool ToCountryIsEC { get; set; }
         public bool PackagesDeleted { get; set; }
+        public string MasterCreatedFromHouseId { get; set; }
+        public bool IsDeletingAllPayables { get; set; }
     }
 }

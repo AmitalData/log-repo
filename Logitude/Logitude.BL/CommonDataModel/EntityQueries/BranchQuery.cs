@@ -237,10 +237,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 								  CounterCode = a.CounterCode,
 							  }).FirstOrDefault();
                 }
-                BranchPM securedPm = new BranchPM();
-                SecuredMapping.GetMappedPM(entity, securedPm, "Branch", tenant);
 
-                return securedPm;
+                if (entity != null)
+                {
+                    BranchPM securedPm = new BranchPM();
+                    SecuredMapping.GetMappedPM(entity, securedPm, "Branch", tenant);
+                    return securedPm;
+                }
+                else
+                {
+                    return null;
+                }
             }
             return null;
         }       
@@ -315,6 +322,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 INTTRAId = branch.INTTRAId,
                                                 INTTRAAlias = branch.INTTRAAlias,
                                                 INTTRAContactId = branch.INTTRAContactId,
+                                                CalculatedEnglishName = string.IsNullOrEmpty(branch.EnglishName) ? branch.LocalName : branch.EnglishName,
+                                                CalculatedLocalName = string.IsNullOrEmpty(branch.LocalName) ? branch.EnglishName : branch.LocalName,
                                             };
             return result;
         }

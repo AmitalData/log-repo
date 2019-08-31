@@ -301,9 +301,11 @@
     <Compile Include="Models\AmitalRestrictOwnerModel.cs" />
     <Compile Include="MyRegularExpressionAttribute.Shared.cs" />
     <Compile Include="QueueService\AzureQueueService.cs" />
+    <Compile Include="QueueService\ConcurrentQueueService.cs" />
     <Compile Include="QueueService\CustomDbQueueService.cs" />
     <Compile Include="QueueService\IQueueService.cs" />
     <Compile Include="QueueService\DbQueueService.cs" />
+    <Compile Include="QueueService\LogQueueMessage.cs" />
     <Compile Include="QueueService\QueueExt.cs" />
     <Compile Include="Helpers\CommCounterUtil.cs" />
     <Compile Include="Helpers\EmailAlersManager.cs" />

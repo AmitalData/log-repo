@@ -9,6 +9,8 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.Validators;
 using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools.Utils;
+using System.Diagnostics;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -31,7 +33,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public List<ReconciliationPM> ReconciliationList { get; private set; }
         public void CreateAutoReconcileWhileStreaming()
         {
-
+            
             if (_JournalPM.JournalReconciles.Count == 0)
             {
                 return;//nothing to do !!!
@@ -42,7 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 throw new Exception("_JournalPM.JournalReconciles have  myOldTransToReconcile.Any( r=> !r.InReconcileProgress) ");
             }
-
+            MakeTesterIfNeeded(myOldTransToReconcile);
             //From JournalReconcile take old Ledger  - Match new Ledger 
             foreach (var oldLTransGroupByAccountId in myOldTransToReconcile.GroupBy(r => r.AccountId))
             {
@@ -51,6 +53,25 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
+
+        }
+
+        private void MakeTesterIfNeeded(List<LedgerTransactionPM> myOldTransToReconcile)
+        {
+            bool MakeTester = false;
+            if (!MakeTester) return;
+            string jsonOldTransToReconcile =ProxyUtil.JsonConvertSerialize(myOldTransToReconcile);
+            string jsonJournalPM = ProxyUtil.JsonConvertSerialize(_JournalPM);
+            string jsonNewLedgerTransactionsWithCounters = ProxyUtil.JsonConvertSerialize(_NewLedgerTransactionsWithCounters);
+
+            Debug.WriteLine("jsonOldTransToReconcile=");
+            Debug.WriteLine(jsonOldTransToReconcile);
+
+            Debug.WriteLine("jsonJournalPM=");
+            Debug.WriteLine(jsonJournalPM);
+
+            Debug.WriteLine("jsonNewLedgerTransactionsWithCounters=");
+            Debug.WriteLine(jsonNewLedgerTransactionsWithCounters);
 
         }
 
@@ -63,8 +84,8 @@ namespace Logitude.Accounting.BL.CoreBL
                  on jr.LedgerTransactionId equals oldLTrans.Id
                  select jr
                  ).ToList();
-            decimal totReconciliationAmount = currrentAccountJournalReconcileList.Sum(r => r.ReconciliationAmount);
-            decimal totReconciliationAmountUseAsStack = totReconciliationAmount;
+            decimal totalAmountFromJournalReconciliation = currrentAccountJournalReconcileList.Sum(r => r.ReconciliationAmount);
+            decimal totalAmountFromJournalReconciliation_AsStack = totalAmountFromJournalReconciliation;
 
 
 
@@ -74,26 +95,42 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             var newLTranListOfAccountID = _NewLedgerTransactionsWithCounters.Where(r => r.AccountId == currentAccountId).ToList();
-            decimal totNew = newLTranListOfAccountID.Sum(r => r.OpenAmount);
+            decimal totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);
             //if (totNew + totReconciliationAmount != 0)
-            if (Math.Abs(totNew) < Math.Abs( totReconciliationAmount))
+            if (Math.Abs(totalNewLedgerOpenAmount) < Math.Abs( totalAmountFromJournalReconciliation))
             {
-                throw new Exception($"for JournalPM.Id ={_JournalPM.Id} Account {currentAccountId}  (totNew != totReconciliationAmount) = ({totNew} >= -1* {totReconciliationAmount})");
+                throw new Exception($"for JournalPM.Id ={_JournalPM.Id} Account {currentAccountId}  (totNew != totReconciliationAmount) = ({totalNewLedgerOpenAmount} >= -1* {totalAmountFromJournalReconciliation})");
+            }
+            bool isPartialReconciliation = (Math.Abs(totalNewLedgerOpenAmount) > Math.Abs(totalAmountFromJournalReconciliation));
+
+            if (isPartialReconciliation)
+            {
+                Debug.WriteLine("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
+                if (newLTranListOfAccountID.Count!=1 || oldLTransGroupByAccountId.Count() != 1)
+                {
+                    throw new Exception("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
+                }
+
+            }
+            else
+            {
+                Debug.WriteLine("NOT!!! Partial Reconciliation!!!! new.amount againt  old.amount = (eyal said reference1 + 2 +2 + not the same- but who care - its all in 1 group )");
             }
 
             ReconciliationPM myReconciliationPM = GetReconciliationPM(currentAccountId);
 
             int lineCounter = 1;
-            AddRecoLines_FromNewTransaction_FromRecoStackAmount(ref totReconciliationAmountUseAsStack, newLTranListOfAccountID, myReconciliationPM, ref lineCounter);
+            AddRecoLines_FromNewTransaction_FromRecoStackAmount(ref totalAmountFromJournalReconciliation_AsStack, newLTranListOfAccountID, myReconciliationPM, ref lineCounter, isPartialReconciliation);
             AddRecoLines_FromOldDBTransaction(oldLTransGroupByAccountId, myReconciliationPM, ref lineCounter);
 
-
-            if (totReconciliationAmountUseAsStack < 0)
+            if (isPartialReconciliation)
             {
+                if (totalAmountFromJournalReconciliation_AsStack < 0)
+                {
 
-                throw new Exception($"for JournalPM.Id ={_JournalPM.Id} Account {currentAccountId}  (if (totReconciliationAmount < 0)");
+                    throw new Exception($"for JournalPM.Id ={_JournalPM.Id} Account {currentAccountId}  (if (totReconciliationAmount < 0)");
+                }
             }
-
             ValidationResult result = ValidateReconcile(myReconciliationPM);
             if (result != null)
             {
@@ -137,18 +174,23 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
-        private static void AddRecoLines_FromNewTransaction_FromRecoStackAmount(ref decimal totReconciliationAmountUseAsStack, List<LedgerTransactionPM> newLTranListOfAccountID, ReconciliationPM myReconciliationPM, ref int lineCounter)
+        private static void AddRecoLines_FromNewTransaction_FromRecoStackAmount(ref decimal totReconciliationAmountUseAsStack, List<LedgerTransactionPM> newLTranListOfAccountID, ReconciliationPM myReconciliationPM, ref int lineCounter, bool isPartialReconciliation)
         {
             foreach (var newLTran in newLTranListOfAccountID)
             {
-                ReconciliationLinePM myReconciliationLinePM = GetRecoLineFromNewLTRansSetReconciliationAmountFromStack(ref totReconciliationAmountUseAsStack, myReconciliationPM, ref lineCounter, newLTran);
+                ReconciliationLinePM myReconciliationLinePM = GetRecoLineFromNewLTRansSetReconciliationAmountFromStack(ref totReconciliationAmountUseAsStack, myReconciliationPM, ref lineCounter, newLTran, isPartialReconciliation);
                 myReconciliationPM.ReconciliationLines.Add(myReconciliationLinePM);
 
             }
         }
-        private static ReconciliationLinePM GetRecoLineFromNewLTRansSetReconciliationAmountFromStack(ref decimal totReconciliationAmount, ReconciliationPM myReconciliationPM, ref int lineCounter, LedgerTransactionPM newLTran)
+        private static ReconciliationLinePM GetRecoLineFromNewLTRansSetReconciliationAmountFromStack(ref decimal totReconciliationAmount, ReconciliationPM myReconciliationPM, ref int lineCounter, LedgerTransactionPM newLTran, bool isPartialReconciliation)
         {
-            decimal newLTranReconciliationAmount = CalcNewLTranReconciliationAmount(ref totReconciliationAmount, newLTran);
+            decimal newLTranReconciliationAmount = //CalcNewLTranReconciliationAmount(ref totReconciliationAmount, newLTran);
+                newLTran.OpenAmount;
+            if (isPartialReconciliation)
+            {
+                newLTranReconciliationAmount = CalcNewLTranReconciliationAmount(ref totReconciliationAmount, newLTran);
+            }
             var myReconciliationLinePM = new ReconciliationLinePM();
             myReconciliationLinePM.ChangeSetOp = ChangeSetOperation.Insert; ;
             myReconciliationLinePM.ReconciliationId = myReconciliationPM.Id;
@@ -171,8 +213,10 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             else
             {
+                ///throw new Exception("test !!");
                 newLTranReconciliationAmount = -1 * totReconciliationAmount;
                 newLTranReconciliationAmount = -1 * totReconciliationAmount;
+                totReconciliationAmount = totReconciliationAmount + newLTranReconciliationAmount;
             }
 
             return newLTranReconciliationAmount;

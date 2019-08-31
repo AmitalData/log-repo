@@ -233,6 +233,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 this.UpdateAllPayablesAccountedAmountAndStatus();
             }
+            this.UpdateInvoiceAmountDue();
 
             // Journal Work
             this.AddAPInvoiceJournalAndJournalLines(entityPM, setApproved);
@@ -539,8 +540,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void InitializeAmountDueFields()
         {
             entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
-            entityPM.AmountDueInLocalCurrency = entityPM.AmountDueInLocalCurrency == null ? 0 : entityPM.AmountDueInLocalCurrency.Value;
-            entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
+            entityPM.AmountDueInLocalCurrency = entityPM.AmountInLocalCurrency == null ? 0 : entityPM.AmountInLocalCurrency.Value;
+            entityPM.AmountDueInProfitCurrency = entityPM.AmountInProfitCurrency == null ? 0 : entityPM.AmountInProfitCurrency.Value;
         }
         private void InitializeGLAccountFields()
         {

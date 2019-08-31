@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -118,14 +119,15 @@ using Simplog.Data.InvoiceModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("ARInvoiceLine with Id " + item.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 						temp.Id = item.Id;
 					}
-					temp.LineNumber = item.LineNumber;					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
+					temp.LineNumber = item.LineNumber;
+					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
 					{
 						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeCustomDataMappingAndValidatin(item.ChargesType,Tenant);
@@ -136,7 +138,8 @@ using Simplog.Data.InvoiceModel;
 						 
 					}
 			
-										CurrencyQueryService ForeignCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					
+					CurrencyQueryService ForeignCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.ForeignCurrency != null)
 					{
 						var myForeignCurrencyPM = ForeignCurrencyCurrencyService.CurrencyCustomDataMappingAndValidatin(item.ForeignCurrency,Tenant);
@@ -154,7 +157,8 @@ using Simplog.Data.InvoiceModel;
 					temp.LocalDescription = item.LocalDescription;
 					temp.Notes = item.Notes;
 					temp.ValueDate = item.ValueDate;
-					temp.DateForInterest = item.DateForInterest;					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
+					temp.DateForInterest = item.DateForInterest;
+					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
 					if(item.VatType != null)
 					{
 						var myVatTypePM = VatTypeVatTypeService.VatTypeCustomDataMappingAndValidatin(item.VatType,Tenant);
@@ -174,7 +178,8 @@ using Simplog.Data.InvoiceModel;
 					temp.ExchangeRateDate = item.ExchangeRateDate;
 					temp.Quantity = item.Quantity;
 					temp.Tenant = item.Tenant;
-					temp.GLAccountId = item.GLAccountId;					ARInvoiceLineActionQueryService ARInvoiceLineActionARInvoiceLineActionService = new ARInvoiceLineActionQueryService(Tenant);
+					temp.GLAccountId = item.GLAccountId;
+					ARInvoiceLineActionQueryService ARInvoiceLineActionARInvoiceLineActionService = new ARInvoiceLineActionQueryService(Tenant);
 					if(item.ARInvoiceLineAction != null)
 					{
 						var myARInvoiceLineActionPM = ARInvoiceLineActionARInvoiceLineActionService.ARInvoiceLineActionDataMappingAndValidatin(item.ARInvoiceLineAction,Tenant,ComputingPartnerName);

@@ -258,5 +258,24 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public bool ShowHeaderLabelsPackages { get; set; }
         public bool ShowHeaderLabelsContainers { get; set; }
+
+
+        public int SpaceLinesBeforeContainers { get; set; }
+        public int SpaceLinesBeforePackages { get; set; }
+        public int SpaceLinesBeforeQuoteHeaders { get; set; }
+        public int SpaceLinesBeforeQuoteDetails { get; set; }
+        public int SpaceLinesBeforeHeaders { get; set; }
+        public int SpaceLinesBeforeFooters { get; set; }
+        public int SpaceLinesBeforePerContainers { get; set; }
+
+
+        public int QuoteTemplatePDFMarginTop { get; set; }
+        public int QuoteTemplatePDFMarginBottom { get; set; }
+
+
+        public bool ShowIncludedChargesPackages { get; set; }
+        public bool ShowIncludedChargesContainers { get; set; }
+        public bool ShowIncludedChargesPerContainers { get; set; }
+
     }
 }

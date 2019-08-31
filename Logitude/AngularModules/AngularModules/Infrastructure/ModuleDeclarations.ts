@@ -36,7 +36,8 @@ import {TimeToHoursMinutesPipe} from './Pipes/TimeToHoursMinutesPipe';
 import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
 
 // Controls Components
-import {GeneralSendComponent} from './Components/LogitudeComponents/GeneralSendComponent';
+import { GeneralSendComponent } from './Components/LogitudeComponents/GeneralSendComponent';
+import { ImageLibraryComponent } from './Components/LogitudeComponents/ImageLibraryComponent';
 import {LogLabelComponent} from './Components/LogitudeComponents/LogLabelComponent';
 import {LogToolTipComponent} from './Components/LogitudeComponents/LogToolTip/LogToolTipComponent';
 import {LogTextBoxComponent} from './Components/LogitudeComponents/LogTextBoxComponent';
@@ -44,7 +45,7 @@ import {MultilineTextBoxWindow} from './Components/LogitudeComponents/MultilineT
 import {LogTextBoxV2Component} from './Components/LogitudeComponents/LogTextBoxV2Component';
 import {LogLovComponent} from './Components/LogitudeComponents/LogLovComponent';
 import {LogLovV2Component} from './Components/LogitudeComponents/LogLovV2Component';
-
+import {LogTextBoxComponentV3} from './Components/LogitudeComponents/LogTextBoxComponentV3';
 import {DWLovComponent} from './Components/LogitudeComponents/DWLovComponent';
 import {DWDateComponent} from './Components/LogitudeComponents/DWDateComponent'
 
@@ -267,6 +268,8 @@ export const ControlsComponents =
         DocsOutTabComponent,
         DocsInTabComponent,
         LastSuccessfulLoginComponent,
+        LogTextBoxComponentV3,
+        ImageLibraryComponent,
     ];
 export const Components =
     [
@@ -438,7 +441,7 @@ export class ModuleDeclarations {
             case 'BTEParameterTabComponent': { myResult = BTEParameterTabComponent; break; }
             case 'LastSuccessfulLoginComponent': { myResult = LastSuccessfulLoginComponent; break; }
             case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
-
+            case 'ImageLibraryComponent': { myResult = ImageLibraryComponent; break; }
 
         }
 

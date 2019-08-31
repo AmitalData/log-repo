@@ -26,6 +26,7 @@ import {QuoteValidator} from '../../Validators/QuoteValidator';
 import {QuotePMInitService} from '../../EntityPMInitServices/QuotePMInitService';
 import {QuoteSettingPM} from '../../EntityPMs/QuoteSettingPM';
 import {QuoteDomainService} from '../../Services/QuoteDomainService';
+import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 
 @Component({
     moduleId: module.id,
@@ -62,12 +63,21 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             this.IsAddAgentVisible = true;
         }
     }
+    public ScreenIsReady: boolean = false;
 
     ngOnInit() {
+        var listservice: EntityListService = new EntityListService();
+        var loadPr = listservice.getMock("Port");
+        loadPr.then((res: any) => {
+            res.subscribe(resp => {
+                this.ScreenIsReady = true;
         this.BuildFiltersLists();
         this.OnFiltersChanged();
         this.BuildAdditionalFields();
-        this.LoadAllowedAirline();        
+        this.LoadAllowedAirline();
+
+            });
+        });
     }
 
     private myPortListService: PortListService;
@@ -206,6 +216,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetEnabled("MoveTypeId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ExpirationDays", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ExpirationDate", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, isScreenEnabled);
+
         this.UIProperties.SetEnabled("IsAutomaticallyClosed", this.ObjectTableName, isScreenEnabled);
 
         // Pickup
@@ -1075,16 +1087,21 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             }
 
             else {
-                var date = DateTool.GetDateByDay(newValue);
+                this.SetExpirationDate();
+            }
+        }
+    }
 
-                if (this.ExpirationDate == null) {
+    private SetExpirationDate() {
+        if (this.EntityPM.ExpirationDays == null && this.EntityPM.ExpirationDate == null) { }
+        else {
+            var date = DateTool.AddDays(this.StartDate, this.ExpirationDays);
+            if (date == null) {
+                this.EntityPM.ExpirationDays = null;
+            }
+            else {
+                if (this.ExpirationDate.valueOf() != date.valueOf()) {
                     this.EntityPM.ExpirationDate = date;
-                }
-
-                else {
-                    if (this.ExpirationDate.valueOf() != date.valueOf()) {
-                        this.EntityPM.ExpirationDate = date;
-                    }
                 }
             }
         }
@@ -1100,15 +1117,28 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             }
 
             else {
-                var todayDate = DateTool.GetCurrentDateAsUtc();
-                var days = this.GetDaysBetweenDates(newValue, todayDate);
+                var days = this.GetDaysBetweenDates(newValue, this.StartDate);
                 if (this.ExpirationDays != days) {
                     this.EntityPM.ExpirationDays = days;
                 }
             }
         }
     }
-    
+
+    get StartDate() { return this.EntityPM.StartDate; }
+    set StartDate(newValue: Date) {
+        if (this.EntityPM.StartDate != newValue) {
+            this.EntityPM.StartDate = newValue;
+
+            if (newValue == null) {
+                this.EntityPM.ExpirationDays = null;
+            }
+            else {
+                this.SetExpirationDate();
+            }
+        }
+    }
+
     get IsAutomaticallyClosed() { return this.EntityPM.IsAutomaticallyClosed; }
     set IsAutomaticallyClosed(newValue: boolean) {
         if (this.EntityPM.IsAutomaticallyClosed != newValue) {

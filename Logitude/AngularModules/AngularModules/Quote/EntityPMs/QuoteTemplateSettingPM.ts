@@ -834,6 +834,67 @@ export class QuoteTemplateSettingPM {
 
 
 
+    private spaceLinesBeforeContainers: number;
+    public get SpaceLinesBeforeContainers() { return this.spaceLinesBeforeContainers; }
+    public set SpaceLinesBeforeContainers(newValue: number) { if (this.spaceLinesBeforeContainers != newValue) { this.spaceLinesBeforeContainers = newValue; this.MarkAsDirty("SpaceLinesBeforeContainers"); } }
+
+
+    private spaceLinesBeforePackages: number;
+    public get SpaceLinesBeforePackages() { return this.spaceLinesBeforePackages; }
+    public set SpaceLinesBeforePackages(newValue: number) { if (this.spaceLinesBeforePackages != newValue) { this.spaceLinesBeforePackages = newValue; this.MarkAsDirty("SpaceLinesBeforePackages"); } }
+
+
+    private spaceLinesBeforeQuoteHeaders: number;
+    public get SpaceLinesBeforeQuoteHeaders() { return this.spaceLinesBeforeQuoteHeaders; }
+    public set SpaceLinesBeforeQuoteHeaders(newValue: number) { if (this.spaceLinesBeforeQuoteHeaders != newValue) { this.spaceLinesBeforeQuoteHeaders = newValue; this.MarkAsDirty("SpaceLinesBeforeQuoteHeaders"); } }
+
+
+    private spaceLinesBeforeQuoteDetails: number;
+    public get SpaceLinesBeforeQuoteDetails() { return this.spaceLinesBeforeQuoteDetails; }
+    public set SpaceLinesBeforeQuoteDetails(newValue: number) { if (this.spaceLinesBeforeQuoteDetails != newValue) { this.spaceLinesBeforeQuoteDetails = newValue; this.MarkAsDirty("SpaceLinesBeforeQuoteDetails"); } }
+
+
+    private spaceLinesBeforeHeaders: number;
+    public get SpaceLinesBeforeHeaders() { return this.spaceLinesBeforeHeaders; }
+    public set SpaceLinesBeforeHeaders(newValue: number) { if (this.spaceLinesBeforeHeaders != newValue) { this.spaceLinesBeforeHeaders = newValue; this.MarkAsDirty("SpaceLinesBeforeHeaders"); } }
+
+
+    private spaceLinesBeforeFooters: number;
+    public get SpaceLinesBeforeFooters() { return this.spaceLinesBeforeFooters; }
+    public set SpaceLinesBeforeFooters(newValue: number) { if (this.spaceLinesBeforeFooters != newValue) { this.spaceLinesBeforeFooters = newValue; this.MarkAsDirty("SpaceLinesBeforeFooters"); } }
+
+
+    private spaceLinesBeforePerContainers: number;
+    public get SpaceLinesBeforePerContainers() { return this.spaceLinesBeforePerContainers; }
+    public set SpaceLinesBeforePerContainers(newValue: number) { if (this.spaceLinesBeforePerContainers != newValue) { this.spaceLinesBeforePerContainers = newValue; this.MarkAsDirty("SpaceLinesBeforePerContainers"); } }
+
+
+    private quoteTemplatePDFMarginTop: number;
+    public get QuoteTemplatePDFMarginTop() { return this.quoteTemplatePDFMarginTop; }
+    public set QuoteTemplatePDFMarginTop(newValue: number) { if (this.quoteTemplatePDFMarginTop != newValue) { this.quoteTemplatePDFMarginTop = newValue; this.MarkAsDirty("QuoteTemplatePDFMarginTop"); } }
+
+    private quoteTemplatePDFMarginBottom: number;
+    public get QuoteTemplatePDFMarginBottom() { return this.quoteTemplatePDFMarginBottom; }
+    public set QuoteTemplatePDFMarginBottom(newValue: number) { if (this.quoteTemplatePDFMarginBottom != newValue) { this.quoteTemplatePDFMarginBottom = newValue; this.MarkAsDirty("QuoteTemplatePDFMarginBottom"); } }
+
+
+    
+    private showIncludedChargesPerContainers: boolean;
+    public get ShowIncludedChargesPerContainers() { return this.showIncludedChargesPerContainers; }
+    public set ShowIncludedChargesPerContainers(newValue: boolean) { if (this.showIncludedChargesPerContainers != newValue) { this.showIncludedChargesPerContainers = newValue; this.MarkAsDirty("ShowIncludedChargesPerContainers"); } }
+
+    private showIncludedChargesPackages: boolean;
+    public get ShowIncludedChargesPackages() { return this.showIncludedChargesPackages; }
+    public set ShowIncludedChargesPackages(newValue: boolean) { if (this.showIncludedChargesPackages != newValue) { this.showIncludedChargesPackages = newValue; this.MarkAsDirty("ShowIncludedChargesPackages"); } }
+
+    private showIncludedChargesContainers: boolean;
+    public get ShowIncludedChargesContainers() { return this.showIncludedChargesContainers; }
+    public set ShowIncludedChargesContainers(newValue: boolean) { if (this.showIncludedChargesContainers != newValue) { this.showIncludedChargesContainers = newValue; this.MarkAsDirty("ShowIncludedChargesContainers"); } }
+
+
+
+
+
     public OldEntityPM: QuoteTemplateSettingPM;
 		
     public IsDirty: boolean;
@@ -856,4 +917,4 @@ export class QuoteTemplateSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -394,6 +394,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             IShipmentFollowUpDataViewContext dataViewEntities = ShipmentFollowUpDataViewContext.GetContext(tenant);
             IQueryable<ShipmentFollowUpDataView> result = (from a in dataViewEntities.ShipmentFollowUpDataViews where a.Tenant == tenant && a.IsCancelled == false select a);
+            var test = result.ToList();
             return result;
         }
 
@@ -643,6 +644,17 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                                              select a;
             return shipments;
         }
+
+
+        public IQueryable<Shipment> GetShipmentsForCrossDock(List<string> shipmentIds , int tenant)
+        {
+            IQueryable<Shipment> shipments = from a in context.Shipments.Include("Direction").Include("TransportMode")
+                                             where shipmentIds.Contains(a.Id) && a.Tenant == tenant
+                                             select a;
+            return shipments;
+        }
+
+
 
         public void Add(Shipment entity)
         {

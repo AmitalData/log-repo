@@ -49,7 +49,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public LocalCurrencyId: string;
     public LocalCurrencyCode: string;
     public AllInMatchText: string;
-    IsShowTotalPerContainer: boolean = true;
+    IsShowTotalPerContainer: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -61,10 +61,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ItemsSource = new ObservableCollection([]);
         this.AllInMatchText = TextCodeTranslator.Translate("Quote.M.UnableToDoAllIn") + "\n" + TextCodeTranslator.Translate("Quote.M.IfMatchesFrieghtCharge");
-
-       //if( FeatureLocator.HasFeaturePermession("Quote", "QUOTEQUOTATION")) {
-       //     this.IsShowTotalPerContainer = true;
-       // }
+        
+       if( FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) {
+            this.IsShowTotalPerContainer = true;
+        }
 
      
         this.InitializeServices();
@@ -1323,7 +1323,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             //isAllInInfoIconVisible = false;
         }
 
-        if (this.ChargesGroupCode == "FRT") {
+      else  if (this.ChargesGroupCode == "FRT") {
             isAllInCheckBoxVisible = false;
             isAllInInfoIconVisible = false;
         }

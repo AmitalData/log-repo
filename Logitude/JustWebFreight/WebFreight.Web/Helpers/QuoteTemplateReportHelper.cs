@@ -31,6 +31,14 @@ using Logitude.BL.Interfaces;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
+using WebFreight.Web.Security;
+using Logitude.Server.Tools.StorageService;
+using Logitude.Server.Tools;
+using Document = Simplog.Data.CommonDataModel.EntityPOCOs.Document;
+using Logitude.Server.Tools.Counters;
+using Logitude.BL.QuoteModel.Tools.EntityService;
+using Logitude.BL.InfrastructureModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityLists;
 
 namespace Logitude.BL.Helpers
 {
@@ -49,7 +57,7 @@ namespace Logitude.BL.Helpers
         string from = "";
         string replyTo = "";
         string cc = "";
-        public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, QuotePM quotePM =null)
+        public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, QuotePM quotePM = null)
         {
 
 
@@ -63,14 +71,14 @@ namespace Logitude.BL.Helpers
             QuoteTemplateTableDesignQuery quotetemplateTableDesignQuery = new QuoteTemplateTableDesignQuery(new QuoteTemplateTableDesignRepository(context));
             QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-            byte[] data = null;
+            byte[] pdfData = null;
             string headerHtmlString = null;
             string footerHtmlString = null;
             string bodyHtmlString = null;
             string RequestArea = "Maintenance";
-
             QuoteTemplatePM template = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
-
+            ObjectTableRepository objectTabelRepository = null;
+            ObjectTable objectTable = null;
 
             if (!string.IsNullOrEmpty(quoteId) && quotePM == null)
             {
@@ -80,7 +88,6 @@ namespace Logitude.BL.Helpers
 
             if (quotePM == null) quotePM = BuildingQuotePM();
 
-      
 
             if (templateSections == null)
             {
@@ -149,10 +156,6 @@ namespace Logitude.BL.Helpers
                 }
             }
 
-            QuoteTemplateSectionPM headerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PH").FirstOrDefault();
-
-
-
 
 
             quoteTemplateBuildArges.Tenant = tenant;
@@ -167,27 +170,11 @@ namespace Logitude.BL.Helpers
             quoteTemplateBuildArges.QuoteTemplateSectionPMLists = templateSections;
             quoteTemplateBuildArges.QuoteTemplatePM = template;
 
-            SetSectionTypeCode(quoteTemplateBuildArges, "PH");
-            byte[] headerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
-            headerHtmlString += GetBodyString(headerdata);
 
 
 
-            if(setting.PageHeaderArea1Type =="Quote Header" || setting.PageHeaderArea2Type == "Quote Header" || setting.PageHeaderArea3Type == "Quote Header")
-            {
-                quoteTemplateBuildArges.HideQuoteHeaderFromPdf = true;
-            }
 
 
-            SetSectionTypeCode(quoteTemplateBuildArges,null);
-            byte[] bodyData = GetQuoteTemplateHtmlReport(quoteTemplateBuildArges, false, RequestArea);
-            bodyHtmlString = GetBodyString(bodyData);
-
-            QuoteTemplateSectionPM footerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PF").FirstOrDefault();
-
-            SetSectionTypeCode(quoteTemplateBuildArges, "PF");
-            byte[] footerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
-            footerHtmlString += GetBodyString(footerdata);
 
             HtmlToPdfConverter pdfConverter = new HtmlToPdfConverter();
             pdfConverter.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
@@ -195,63 +182,71 @@ namespace Logitude.BL.Helpers
             pdfConverter.HtmlViewerWidth = 800;
             pdfConverter.PdfDocumentOptions.PdfCompressionLevel = PdfCompressionLevel.Normal;
             pdfConverter.PdfDocumentOptions.EnhancedGraphicsQuality = true;
-
-
-            if (setting != null)
-            {
-                int marginleft = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
-                int marginRight = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
-
-                pdfConverter.PdfDocumentOptions.LeftMargin = marginleft;
-                pdfConverter.PdfDocumentOptions.RightMargin = marginRight;
-            }
-
-
             pdfConverter.PdfDocumentOptions.PdfPageOrientation = PdfPageOrientation.Portrait;
-            pdfConverter.PdfDocumentOptions.ShowHeader = true;
-            pdfConverter.PdfDocumentOptions.ShowFooter = true;
+            pdfConverter.TriggeringMode = TriggeringMode.Auto;
+            SetPdfMargins(setting, pdfConverter.PdfDocumentOptions);
+
 
             // set the header HTML area
-            ObjectTableRepository objectTabelRepository = null;
-            ObjectTable objectTable = null;
-
-
-            headerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, headerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
-
-            HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, headerHtmlString, null, 2040, 0);
-            pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
-
-            pdfConverter.PdfHeaderOptions.HeaderHeight = 1;
+            QuoteTemplateSectionPM headerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PH").FirstOrDefault();
             if (!headerSection.IsExcluded)
             {
-                pdfConverter.PdfHeaderOptions.HeaderHeight = setting.PageHeaderAreaHeight * 28;
-                pdfConverter.PdfHeaderOptions.HeaderHeight += 7;
+                pdfConverter.PdfDocumentOptions.ShowHeader = true;
+                if (setting.PageHeaderArea1Type == "Quote Header" || setting.PageHeaderArea2Type == "Quote Header" || setting.PageHeaderArea3Type == "Quote Header") quoteTemplateBuildArges.HideQuoteHeaderFromPdf = true;
+                SetSectionTypeCode(quoteTemplateBuildArges, "PH");
+                byte[] headerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
+                headerHtmlString += GetBodyString(headerdata);
+
+
+
+                headerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, headerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
+                HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, headerHtmlString, null, 2040, 0);
+                pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
+                pdfConverter.PdfHeaderOptions.HeaderHeight = 1;
+                pdfConverter.PdfHeaderOptions.HeaderHeight = setting.PageHeaderAreaHeight * 29;
+            
+
             }
 
-            footerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, footerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
 
-
-            HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, footerHtmlString, null, 2040, 0);
-            pdfConverter.PdfFooterOptions.AddElement(footerHtml);
-            float heightFooter = (setting.PageFooterAreaHeight * 28) + 7;
+            // set the Footer HTML area
+            QuoteTemplateSectionPM footerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PF").FirstOrDefault();
             if (!footerSection.IsExcluded)
             {
+                pdfConverter.PdfDocumentOptions.ShowFooter = true;
+                SetSectionTypeCode(quoteTemplateBuildArges, "PF");
+                byte[] footerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
+                footerHtmlString += GetBodyString(footerdata);
+
+                double footerTopMargin = (double)setting.SpaceLinesBeforeFooters * 21;
+                float heightFooter = (setting.PageFooterAreaHeight * 29) + (float)footerTopMargin;
+
+                footerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, footerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
+                HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, footerHtmlString, null, 2040, 0);
+                pdfConverter.PdfFooterOptions.AddElement(footerHtml);
                 pdfConverter.PdfFooterOptions.FooterHeight = (heightFooter + 10);
+
+
+                TextElement footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
+                footerTextElement.TextAlign = HorizontalTextAlign.Right;
+                pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
+
 
             }
             else pdfConverter.PdfFooterOptions.FooterHeight = 1;
 
 
-            TextElement footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ",
-            new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
 
-            footerTextElement.TextAlign = HorizontalTextAlign.Right;
-            pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
+
+            //Body
+
+            SetSectionTypeCode(quoteTemplateBuildArges, null);
+            byte[] bodyData = GetQuoteTemplateHtmlReport(quoteTemplateBuildArges, false, RequestArea);
+            bodyHtmlString = GetBodyString(bodyData);
 
             HtmlAgilityPack.HtmlDocument htmlDocument = new HtmlAgilityPack.HtmlDocument();
             htmlDocument.LoadHtml(bodyHtmlString);
             var nodes = htmlDocument.DocumentNode.Elements("p");
-
             foreach (HtmlAgilityPack.HtmlNode node in nodes)
             {
                 if (node.Attributes["dir"] != null && node.Attributes["dir"].Value.ToString() == "RTL")
@@ -271,18 +266,79 @@ namespace Logitude.BL.Helpers
                     }
                 }
             }
-
             bodyHtmlString = htmlDocument.DocumentNode.InnerHtml;
-
             bodyHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, bodyHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
-            pdfConverter.TriggeringMode = TriggeringMode.Auto;
-            //data = pdfConverter.GetPdfBytesFromHtmlString(bodyHtmlString);
-            data = pdfConverter.ConvertHtml(bodyHtmlString, null);
 
-            return data;
+            pdfData = pdfConverter.ConvertHtml(bodyHtmlString, null);
+            if (quotePM.Id != "10697")
+            {
+                string fullHtml = headerHtmlString + bodyHtmlString + footerHtmlString;
+                CreateHtmlQuotationDocument(tenant, quotePM, fullHtml);
+            }
+
+            return pdfData;
         }
 
-        private static void SetSectionTypeCode(QuoteTemplateBuildArges quoteTemplateBuildArges ,string sectionTypeCode )
+        private  void SetPdfMargins(QuoteTemplateSettingPM setting, PdfDocumentOptions PdfDocumentOptions)
+        {
+            if (setting != null)
+            {
+                int marginleft = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
+                int marginRight = (setting.QuoteTemplatePDFMarginRight * 72) / 96;
+                int marginTop = (setting.QuoteTemplatePDFMarginTop * 72) / 96;
+                int marginBottom = (setting.QuoteTemplatePDFMarginBottom * 72) / 96;
+
+
+                PdfDocumentOptions.LeftMargin = marginleft;
+                PdfDocumentOptions.RightMargin = marginRight;
+                PdfDocumentOptions.TopMargin = marginTop;
+                PdfDocumentOptions.BottomMargin = marginBottom;
+
+            }
+        }
+
+        private static void CreateHtmlQuotationDocument(int tenant, QuotePM quotePM, string fullHtml)
+        {
+            if (!string.IsNullOrEmpty(fullHtml))
+            {
+                var fullQuotationHtmlByte = Encoding.UTF8.GetBytes(fullHtml);
+                DocumentRepository documentRep = new DocumentRepository(tenant);
+                Document document = new Document()
+                {
+                    FileName = "QuotationHtml-" + quotePM.QuoteNumber,
+                    CalculatedFileName = "QuotationHtml-" + quotePM.QuoteNumber,
+                    CreateDate = DateTime.Now,
+                    Extension = "html",
+                    FileSize = fullQuotationHtmlByte.Length,
+                    Tenant = tenant,
+                    Id = IdCounter.GetNumber("Document", tenant),
+                    HasFile = true,
+                    Folder = "others",
+                    IsEncrypted = true,
+                };
+                documentRep.Add(document);
+
+
+                string filename = document.Id + "." + document.Extension;
+                string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = fullQuotationHtmlByte.Length,
+                    IsEncrypted = true,
+                };
+
+                storageservice.Write(fullQuotationHtmlByte, fileInfo);
+                documentRep.SubmitChanges();
+                quotePM.QuoteHTMLDocumentId = document.Id;
+            }
+        }
+
+        private static void SetSectionTypeCode(QuoteTemplateBuildArges quoteTemplateBuildArges, string sectionTypeCode)
         {
             quoteTemplateBuildArges.SectionTypeCode = sectionTypeCode;
         }
@@ -307,9 +363,9 @@ namespace Logitude.BL.Helpers
 
         #region Quote Template Page Header And Footer
 
-        public byte[] GetQuoteTemplatePageHeaderFooter(QuoteTemplateBuildArges quoteTemplateBuildArges )
+        public byte[] GetQuoteTemplatePageHeaderFooter(QuoteTemplateBuildArges quoteTemplateBuildArges)
         {
-           
+
             QuoteTemplatePM template = quoteTemplateBuildArges.QuoteTemplatePM;
             QuoteTemplateSettingPM setting = quoteTemplateBuildArges.QuoteTemplateSettingPM;
             List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList = quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists;
@@ -330,7 +386,7 @@ namespace Logitude.BL.Helpers
 
             int Centimeter = type == "Header" ? setting.PageHeaderAreaHeight : setting.PageFooterAreaHeight;
 
-            var per = isPdf ? 2.4  : 1;
+            var per = isPdf ? 2.4 : 1;
             heightAreaNumber = CmToPx(Centimeter) * per;
             if (Centimeter == 1 || Centimeter == 2) heightAreaNumber -= 5;
 
@@ -350,6 +406,13 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("<meta charset='utf-8'>");
             HtmlTemplate.Append("</head>");
             HtmlTemplate.Append("<body>");
+
+            if (type == "Footer")
+            {
+                var perc = isPdf ? 2.2 : 1;
+                var spaceLinesBefore = GetHtmlStringLine(setting.SpaceLinesBeforeFooters, false, perc);
+                HtmlTemplate.Append(spaceLinesBefore);
+            }
 
             string dir = "dir='RTL'";
             if (!setting.RightToLeft) dir = "";
@@ -399,9 +462,9 @@ namespace Logitude.BL.Helpers
             {
                 AppendHeaderFooterAreaText(borderTypeCode, area1Width, area1FreeText, area1FreeTextDesignId, quoteTemplateTextDesignsList, ref NumberOfTd, ref CountArea, widthArea1, HeightArea, HtmlTemplate, TableDesign, isPdf);
             }
-            else if (pageArea1Type == "Quote Header" && type =="Header" && area1Width > 0)
+            else if (pageArea1Type == "Quote Header" && type == "Header" && area1Width > 0)
             {
-                AppendHeaderFooterAreaQuoteHeaderText(borderTypeCode, area1Width,  ref NumberOfTd, ref CountArea, widthArea1, HeightArea, HtmlTemplate, TableDesign, isPdf, quoteTemplateBuildArges);
+                AppendHeaderFooterAreaQuoteHeaderText(borderTypeCode, area1Width, ref NumberOfTd, ref CountArea, widthArea1, HeightArea, HtmlTemplate, TableDesign, isPdf, quoteTemplateBuildArges);
             }
 
 
@@ -458,7 +521,7 @@ namespace Logitude.BL.Helpers
                 quoteTemplateBuildArges.RequestArea = "Header";
                 var quoteHeaderHtmlByte = GetQuoteTemplateHeader(quoteTemplateBuildArges);
 
-                string quoteHeaderHtml = "<td " + styleTd + ">" +  Encoding.UTF8.GetString(quoteHeaderHtmlByte)+ "</td>";
+                string quoteHeaderHtml = "<td " + styleTd + ">" + Encoding.UTF8.GetString(quoteHeaderHtmlByte) + "</td>";
 
                 if (isPdf)
                 {
@@ -467,7 +530,7 @@ namespace Logitude.BL.Helpers
                 }
 
                 HtmlTemplate.Append(quoteHeaderHtml);
-      
+
             }
         }
 
@@ -504,7 +567,7 @@ namespace Logitude.BL.Helpers
         {
             string styleTd = GetStyleRowTablePageHeaderFooter(borderTypeCode, HeightArea, areaWidth, areaImageAlignment, ++NumberOfTd, TableDesign, "#ffffff");
 
-            var per = isPdf ? 2.5: 1;
+            var per = isPdf ? 2.5 : 1;
             string Height = ((double)areaHeight * per) > heightAreaNumber ? "100%" : ((double)areaHeight * per).ToString() + "px";
             string Width = ((int)imageWidth * per) > 820 ? "100%" : ((double)imageWidth * per).ToString() + "px";
             // heightAreaNumber
@@ -525,6 +588,25 @@ namespace Logitude.BL.Helpers
         }
         #endregion
 
+
+        public string GetHtmlStringLine(int line, bool firstSectionInBody  , double per=1)
+        {
+           string result = string.Empty;
+            string firstSectionInBodyId = string.Empty;
+            if (line > 0)
+            {
+                double lineheight = (double)line * (double)30;
+                lineheight = per * (double)lineheight;
+                if (firstSectionInBody)
+                {
+                    lineheight = lineheight - 10;
+                    firstSectionInBodyId = "FirstSectionInBody";
+                }
+
+                result = "<div id='" + firstSectionInBodyId + "'  style='height:" + lineheight.ToString() + "px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>";
+            }
+            return result;
+        }
 
         public byte[] GetQuoteTemplateHtmlReport(QuoteTemplateBuildArges quoteTemplateBuildArges, bool includeHeaderFooter, string requestArea )
         {
@@ -559,26 +641,29 @@ namespace Logitude.BL.Helpers
             if (includeHeaderFooter)
             {
                 QuoteTemplateSectionPM headerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PH" && !s.IsExcluded).FirstOrDefault();
-
                 SetSectionTypeCode(quoteTemplateBuildArges,"PH");
                 byte[] headerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
                 if (headerdata != null)
                 {
                     htmlString += GetBodyString(headerdata);
+
                 }
             }
 
-            foreach (QuoteTemplateSectionPM section in templateSections.Where(s => s.QuoteTemplateSectionTypeCode != "PF" && s.QuoteTemplateSectionTypeCode != "PH" && !s.IsExcluded))
+            quoteTemplateBuildArges.FirstSectionInBody =true;
+            foreach (QuoteTemplateSectionPM section in templateSections.Where(s => s.QuoteTemplateSectionTypeCode != "PF" && s.QuoteTemplateSectionTypeCode != "PH" && !s.IsExcluded).OrderBy(x => x.Order).ToList())
             {
+             
                 if (section.QuoteTemplateSectionTypeCode == "PP" || section.QuoteTemplateSectionTypeCode == "PC")
                 {
                     SetSectionTypeCode(quoteTemplateBuildArges, section.QuoteTemplateSectionTypeCode);
                     byte[] pricingdata = GetQuoteTemplatePricingHtmlData(quoteTemplateBuildArges);
 
-                    if (pricingdata != null)
+                    if (pricingdata != null && pricingdata.Length>0)
                     {
-                        htmlString += Environment.NewLine + GetBodyString(pricingdata);
+                        htmlString += GetBodyString(pricingdata);
                     }
+                    
                 }
                 else if (section.QuoteTemplateSectionTypeCode == "QD" || section.QuoteTemplateSectionTypeCode == "QH")
                 {
@@ -591,51 +676,45 @@ namespace Logitude.BL.Helpers
                             byte[] quoteHeaderdata = GetQuoteTemplateHeader(quoteTemplateBuildArges);
                             if (quoteHeaderdata != null)
                             {
-
-                                htmlString += Environment.NewLine + GetBodyString(quoteHeaderdata);
+                                htmlString += GetBodyString(quoteHeaderdata);
                             }
                         }
 
                     }
-                    else
+                    else if (section.QuoteTemplateSectionTypeCode == "QD")
                     {
                         byte[] quoteDetailrdata = GetQuoteTemplateDetails(quoteTemplateBuildArges);
                         if (quoteDetailrdata != null)
                         {
-                            htmlString += Environment.NewLine + GetBodyString(quoteDetailrdata);
+                            htmlString += GetBodyString(quoteDetailrdata);
+
                         }
 
 
                     }
 
-                    htmlString += Environment.NewLine;
                 }
-                else if (section.QuoteTemplateSectionTypeCode == "PB")
-                {
-
-                    htmlString += Environment.NewLine + "<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>";
-                }
+                else if (section.QuoteTemplateSectionTypeCode == "PB") htmlString += "<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>";
                 else
                 {
-
                     byte[] sectiondata = DownloadQuoteTemplateSectionDataFile(section.SectionDocId, tenant);
-
                     if (sectiondata != null)
                     {
-                        htmlString += Environment.NewLine + GetBodyString(sectiondata);
-                        htmlString += Environment.NewLine;
-
+                        htmlString += GetBodyString(sectiondata);
                     }
                 }
+
+                if (quoteTemplateBuildArges.FirstSectionInBody == true && (htmlString.Contains("FirstSectionInBody") || section.QuoteTemplateSectionTypeCode == "S" || section.QuoteTemplateSectionTypeCode == "PB")) quoteTemplateBuildArges.FirstSectionInBody = false;
+
             }
+
 
             if (includeHeaderFooter)
             {
                 SetSectionTypeCode(quoteTemplateBuildArges, "PF");
                 QuoteTemplateSectionPM footerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PF" && !s.IsExcluded).FirstOrDefault();
-
                 byte[] footerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
-                htmlString += Environment.NewLine + GetBodyString(footerdata);
+                htmlString +=  GetBodyString(footerdata);
             }
 
             return Encoding.UTF8.GetBytes(htmlString);
@@ -654,96 +733,73 @@ namespace Logitude.BL.Helpers
             int tenant = quoteTemplateBuildArges.Tenant;
             int? userTenant = quoteTemplateBuildArges.UserTenant;
             string pricingSectionType = quoteTemplateBuildArges.SectionTypeCode;
-
-            if(textcodes==null || textcodes.Count == 0)
-            {
-                QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
-                textcodes = quoteTemplateTextCodeQuery.GetQuoteTemplateTextCodePMsByQuoteTemplateId(template.Tenant, template.Id).ToList();
-            }
-
-
-            
-           QuoteTemplateTableDesignPM quotetemplatetableDesignPM = null;
-            QuoteTemplateTextDesignPM quotetemplateTextDesignPMPricingTitle = null;
-            QuoteTemplateTextDesignPM quotetemplateTextDesignPMHeader = null;
-            QuoteTemplateTextDesignPM quoteTemplateTextDesignLines = null;
-            StringBuilder HtmlTemplate = new StringBuilder();
-
-            SystemDataQuery systemDataQuery = new SystemDataQuery();
-
             string email = HttpContext.Current.User.Identity.Name;
-
-
             int tenantNumber = userTenant != null ? (int)userTenant : tenant;
-
-
-
-            ContactRepository contactrep = new ContactRepository(tenantNumber);
-            Contact contact = contactrep.GetSingleContactByEmail(email, tenantNumber);
-            CurrencyRepository currencyRepository = new CurrencyRepository(tenantNumber);
-            if (contact != null)
-            {
-                SystemDataPM systemEntity = systemDataQuery.GetSinglePM(contact.Id, tenantNumber);
-
-                if (systemEntity != null)
-                {
-
-                    if (!string.IsNullOrEmpty(systemEntity.LocalCurrencyId))
-                    {
-                        Currency currency = currencyRepository.GetSingleCurrency(systemEntity.LocalCurrencyId, tenantNumber);
-                        if (currency != null) LocalCurrencyCode = currency.Code;
-                    }
-                }
-            }
+            LocalCurrencyCode = GetLocalCurrencyCode(tenantNumber, email);
 
             if (quotePM == null) quotePM = BuildingQuotePM();
 
-
-            if (setting.ShowFixedPriceContainers)
+            if (textcodes == null || textcodes.Count == 0)
             {
-                ViewFixedPrice = IsShowFixedPriceContainer(quotePM.QuoteSaleCharges);
+                QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
+                textcodes = quoteTemplateTextCodeQuery.GetQuoteTemplateTextCodePMsByQuoteTemplateId(template.Tenant, template.Id).ToList();
+                quoteTemplateBuildArges.QuoteTemplateTextCodePMLists = textcodes;
             }
+
+
+            ChargesGroupQuery chargesGroupQuery = new ChargesGroupQuery(tenant);
+            List<ChargesGroupList> chargesGroupLists = chargesGroupQuery.GetChargesGroupListsByTenant(tenant).ToList();
+
+            StringBuilder HtmlTemplate = new StringBuilder();
+
+
 
             IsShowlanguage = setting.ShowLocalLanguage;
-
-            bool isHaveMaxMinValue = quotePM.QuoteSaleCharges.Where(d => d.SaleMaxAmount != null || d.SaleMinAmount != null).Any();
-            if (!isHaveMaxMinValue)
-            {
-                if (pricingSectionType == "PP") setting.ShowSaleMaxMinAmountPackages = false;
-                else if (pricingSectionType == "PC") setting.ShowSaleMaxMinAmountContainers = false;
-            }
+            var isSplitChargesbyGroups = (pricingSectionType == "PP" && setting.SplitChargesbyGroupsPackages) ? true : (pricingSectionType == "PC" && setting.SplitChargesbyGroupsContainers) ? true : false;
+            var isRoutingRates = template != null ? template.TemplateTypeCode == "P" ? true : false : false;
+            bool isShowPerContainers = pricingSectionType == "PC" && quotePM.TotalPerContainer && !string.IsNullOrEmpty(setting.TotalPerContainersTableDesignId) ? true : false;
+            if (setting != null && isRoutingRates) setting.ShowUnitsPackages = false;
 
 
+            List<QuoteSaleChargePM> QuoteSaleChargePricingTableLists = quotePM.QuoteSaleCharges;
+            List<QuoteSaleChargePM> QuoteSaleChargePerContainersLists = quotePM.QuoteSaleCharges;
 
+            if (IsShowIncludedChargesPricingTable(pricingSectionType, setting)) QuoteSaleChargePricingTableLists = QuoteSaleChargePricingTableLists.Concat(quotePM.QuotationSaleCharges).ToList();
+            if (setting.ShowIncludedChargesPerContainers) QuoteSaleChargePerContainersLists = QuoteSaleChargePerContainersLists.Concat(quotePM.QuotationSaleCharges).ToList();
+            if (setting.ShowFixedPriceContainers) ViewFixedPrice = IsShowFixedPriceContainer(QuoteSaleChargePricingTableLists);
+            SetQuoteTemplateSettingShowSaleMaxMinAmount(setting, pricingSectionType, QuoteSaleChargePricingTableLists);
             GetCountHeader(setting, quotePM, pricingSectionType);
 
-    
-            ChargesGroupRepository chargesGroupRepository = new ChargesGroupRepository(tenant);
-            List<ChargesGroup> groups = chargesGroupRepository.GetChargesGroups(tenant).ToList();
 
+            #region Set Quote Sale Charge Related Order Fields
+            //Set Quote Sale Charge Related Order Fields
+            if (isSplitChargesbyGroups || isShowPerContainers)
+            {
+                ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(tenant);
+                List<ChargesTypeList> chargesTypeLists = chargesTypeQuery.GetChargesTypeListsByTenant(tenant).ToList();
+                if (isSplitChargesbyGroups) SetQuoteSaleChargeRelatedOrderFields(QuoteSaleChargePricingTableLists, chargesGroupLists, chargesTypeLists);
+                if (isShowPerContainers) SetQuoteSaleChargeRelatedOrderFields(QuoteSaleChargePerContainersLists, chargesGroupLists, chargesTypeLists);
+            }
+            #endregion
 
-            bool isShowPerContainers = pricingSectionType == "PC" && quotePM.TotalPerContainer && !string.IsNullOrEmpty(setting.TotalPerContainersTableDesignId) ? true : false;
             #region PricingTable
+
 
             if (TdCount != 0)
             {
-                if (pricingSectionType == "PP")
-                {
-                    quotetemplatetableDesignPM = quoteTemplateTableDesignsList.Where(t => t.Id == setting.PackagesTableDesignId).FirstOrDefault();
-                    quotetemplateTextDesignPMPricingTitle = quoteTemplateTextDesignsList.Where(t => t.Id == setting.PricingPackagesTitleDesignId).FirstOrDefault();
-                }
-                else
-                {
-                    quotetemplatetableDesignPM = quoteTemplateTableDesignsList.Where(t => t.Id == setting.ContainserTableDesignId).FirstOrDefault();
-                    quotetemplateTextDesignPMPricingTitle = quoteTemplateTextDesignsList.Where(t => t.Id == setting.PricingContainsersTitleDesignId).FirstOrDefault();
-                }
+                // Space Line
 
-                quotetemplateTextDesignPMHeader = quoteTemplateTextDesignsList.Where(t => t.Id == quotetemplatetableDesignPM.HeaderDesignId).FirstOrDefault();
-                quoteTemplateTextDesignLines = quoteTemplateTextDesignsList.Where(t => t.Id == quotetemplatetableDesignPM.LinesDesignId).FirstOrDefault();
-
+                string tableDesignId = pricingSectionType == "PP" ? setting.PackagesTableDesignId : setting.ContainserTableDesignId;
+                string titleDesignId = pricingSectionType == "PP" ? setting.PricingPackagesTitleDesignId : setting.PricingContainsersTitleDesignId;
+               
+                QuoteTemplateTableDesignPM quotetemplatetableDesignPM = quoteTemplateTableDesignsList.Where(t => t.Id == tableDesignId).FirstOrDefault(); 
+                QuoteTemplateTextDesignPM quotetemplateTextDesignPMPricingTitle = quoteTemplateTextDesignsList.Where(t => t.Id == titleDesignId).FirstOrDefault();
+                QuoteTemplateTextDesignPM quotetemplateTextDesignPMHeader = quoteTemplateTextDesignsList.Where(t => t.Id == quotetemplatetableDesignPM.HeaderDesignId).FirstOrDefault();
+                QuoteTemplateTextDesignPM quoteTemplateTextDesignLines = quoteTemplateTextDesignsList.Where(t => t.Id == quotetemplatetableDesignPM.LinesDesignId).FirstOrDefault();
                 isRightToLeft = setting.RightToLeft;
+                int line = pricingSectionType == "PP" ? setting.SpaceLinesBeforePackages : setting.SpaceLinesBeforeContainers;
+                HtmlTemplate.Append(GetHtmlStringLine(line, quoteTemplateBuildArges.FirstSectionInBody));
 
-                HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
                 if ((pricingSectionType == "PP" && setting.ShowTitlePricingPackages) || (pricingSectionType == "PC" && setting.ShowTitlePricingContainsers))
                 {
@@ -769,7 +825,7 @@ namespace Logitude.BL.Helpers
                 }
 
 
-                IEnumerable<IGrouping<string, QuoteSaleChargePM>> chargegroups = quotePM.QuoteSaleCharges.GroupBy(q => q.ChargesGroupCode);
+                IEnumerable<IGrouping<string, QuoteSaleChargePM>> chargegroups = QuoteSaleChargePricingTableLists.GroupBy(q => q.ChargesGroupCode).OrderBy(d => d.ToList().FirstOrDefault().ChargesGroupViewOrder).ThenBy(n => n.ToList().FirstOrDefault().ChargesTypeViewOrder).ThenBy(d => d.ToList().FirstOrDefault().ChargesGroupName).ToList();
 
                 bool showHeaderLabels = pricingSectionType == "PC" ? setting.ShowHeaderLabelsContainers : setting.ShowHeaderLabelsPackages;
 
@@ -784,20 +840,13 @@ namespace Logitude.BL.Helpers
                 {
 
                     QuoteTemplateTextDesignPM quoteTemplateTextDesignPMGroupByHeader = pricingSectionType == "PP" ? quoteTemplateTextDesignsList.Where(t => t.Id == setting.GroupByPackagesValueDesignId).FirstOrDefault() : quoteTemplateTextDesignsList.Where(t => t.Id == setting.GroupByContainsersValueDesignId).FirstOrDefault();
-                    QuoteTemplateTextDesignPM quoteTemplateTextDesignPMGroupByTotal = pricingSectionType == "PP" ? quoteTemplateTextDesignsList.Where(t => t.Id == setting.GroupByPackagesLabelDesignId).FirstOrDefault() : quoteTemplateTextDesignsList.Where(t => t.Id == setting.GroupByContainsersLabelDesignId).FirstOrDefault();
-
                     string groupByHeaderStyle = GetSpanRowStyle(quoteTemplateTextDesignPMGroupByHeader, "Total");
-                    string groupByTotalStyle = GetSpanRowStyle(quoteTemplateTextDesignPMGroupByTotal, "Lable");
-
 
                     string StyleTrHeaderGroupBy = GetStyleGroupByTd("", quotetemplatetableDesignPM.BorderColor, quotetemplatetableDesignPM.BorderThickness, quotetemplatetableDesignPM.BorderTypeCode, quoteTemplateTextDesignPMGroupByHeader, setting.RightToLeft);
-                    string StyleTrGroupByTotal = GetStyleGroupByTd("Empty", quotetemplatetableDesignPM.BorderColor, quotetemplatetableDesignPM.BorderThickness, quotetemplatetableDesignPM.BorderTypeCode, quoteTemplateTextDesignPMGroupByTotal, setting.RightToLeft);
-
 
                     foreach (IGrouping<string, QuoteSaleChargePM> chargegroup in chargegroups)
                     {
-                        ChargesGroup group = groups.Where(d => d.Code == chargegroup.Key).FirstOrDefault();
-
+                        ChargesGroupList group = chargesGroupLists.Where(d => d.Code == chargegroup.Key).FirstOrDefault();
 
                         string chargeGroupName = setting.ShowLocalLanguage ? group.LocalName : group.Name;
                         string textValue = quoteTemplateTextDesignPMGroupByHeader.Italic ? "</i>" + "<span " + groupByHeaderStyle + " > " + chargeGroupName + "&nbsp" + "</span>" + "</i>" : "<span " + groupByHeaderStyle + "> " + chargeGroupName + "&nbsp" + "</span>";
@@ -805,134 +854,29 @@ namespace Logitude.BL.Helpers
                         HtmlTemplate.Append("<tr  style= 'height:auto; width:auto;vertical-align:central'>" + "<td " + StyleTrHeaderGroupBy + "colspan=' " + TdCount.ToString() + "';" + ">" + textValue + " </td>" + "</tr>");
 
                         List<QuoteSaleChargePM> charges = chargegroup.ToList();
-                        BuildTableRows(quotePM, charges, HtmlTemplate, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, pricingSectionType, setting);
-
+                        BuildTableRows(charges, HtmlTemplate, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, quoteTemplateBuildArges);
                         bool showTotalPerChargeGroup = pricingSectionType == "PP" ? setting.ShowTotalPerChargeGroupPackages : setting.ShowTotalPerChargeGroupContainers;
-
                         if (showTotalPerChargeGroup)
                         {
-                            IEnumerable<IGrouping<string, QuoteSaleChargePM>> QuoteSaleChargeGroup = charges.GroupBy(q => q.CurrencyCode);
-                            string currencyCode = "";
-                            double? amount = 0;
-
-
-                            HtmlTemplate.Append("<tr  style= 'height:auto; width:auto;vertical-align:central'>");
-                            HtmlTemplate.Append("<td " + StyleTrGroupByTotal + "colspan=' " + (ShowLocalCurrencyColumnPosition - 1).ToString() + "';" + ">"); HtmlTemplate.Append("<div " + groupByTotalStyle + " >" + "<div>"); HtmlTemplate.Append("</td>");
-
-                            HtmlTemplate.Append("<td " + StyleTrGroupByTotal + ">");
-
-                            foreach (IGrouping<string, QuoteSaleChargePM> quoteSaleCharge in QuoteSaleChargeGroup)
-                            {
-                                currencyCode = "";
-                                amount = 0;
-                                List<QuoteSaleChargePM> quoteSaleCharges = quoteSaleCharge.ToList();
-                                foreach (QuoteSaleChargePM quoteSaleChargePM in quoteSaleCharges)
-                                {
-                                    currencyCode = quoteSaleChargePM.CurrencyCode;
-                                    amount += quoteSaleChargePM.SaleTotalAmount;
-
-                                }
-
-                                string amountValue = " ";
-                                if (amount != null)
-                                {
-                                    double value = (double)amount;
-                                    amountValue = value.ToString("N"); // 1,234.512
-                                }
-
-
-
-                                HtmlTemplate.Append("<div " + groupByTotalStyle + " >" + amountValue.ToString() + " " + currencyCode + "<div>");
-
-                            }
-
-                            HtmlTemplate.Append("</td>");
-
-                            HtmlTemplate.Append("<td " + StyleTrGroupByTotal + "colspan=' " + (TdCount - ShowLocalCurrencyColumnPosition).ToString() + "';" + ">"); HtmlTemplate.Append("<div " + groupByTotalStyle + " >" + "<div>"); HtmlTemplate.Append("</td>");
-
-                            HtmlTemplate.Append("</tr>");
-
+                            BuildTotalPerChargeGroup(quoteTemplateBuildArges, HtmlTemplate, charges);
 
                         }
-
                     }
 
                 }
                 else
                 {
-
-
-                    BuildTableRows(quotePM, quotePM.QuoteSaleCharges, HtmlTemplate, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, pricingSectionType, setting);
-
+                    BuildTableRows(QuoteSaleChargePricingTableLists, HtmlTemplate, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, quoteTemplateBuildArges);
                     HtmlTemplate.Append("</tr>");
-
-
                 }
-
-
-
+                
                 HtmlTemplate.Append("</table>");
 
-                //HtmlTemplate.Append("<div style='height:5px ;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</p>");
                 #endregion
 
-                if (!isShowPerContainers)
+                if (!isShowPerContainers && !isRoutingRates)
                 {
-
-                    #region Total
-
-
-                    QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsLabel = null;
-                    QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsValue = null;
-
-                    if (pricingSectionType == "PC")
-                    {
-                        quoteTemplateTextDesignTotalsLabel = quoteTemplateTextDesignsList.Where(t => t.Id == setting.TotalsContainsersLabelDesignId).FirstOrDefault();//quotetemplateTextDesignQuery.GetSinglePM(setting.TotalsContainsersLabelDesignId, tenant);
-                        quoteTemplateTextDesignTotalsValue = quoteTemplateTextDesignsList.Where(t => t.Id == setting.TotalsContainsersValueDesignId).FirstOrDefault();//quotetemplateTextDesignQuery.GetSinglePM(setting.TotalsContainsersValueDesignId, tenant);
-                    }
-                    else
-                    {
-                        quoteTemplateTextDesignTotalsLabel = quoteTemplateTextDesignsList.Where(t => t.Id == setting.TotalsPackagesLabelDesignId).FirstOrDefault();//quotetemplateTextDesignQuery.GetSinglePM(setting.TotalsPackagesLabelDesignId, tenant);
-                        quoteTemplateTextDesignTotalsValue = quoteTemplateTextDesignsList.Where(t => t.Id == setting.TotalsPackagesValueDesignId).FirstOrDefault();//quotetemplateTextDesignQuery.GetSinglePM(setting.TotalsPackagesValueDesignId, tenant);
-                    }
-                    string Name = GetNameColum("TOTALAMOUNTS", textcodes, pricingSectionType);
-                    if (quotePM.SaleCurrencyCode == null && quotePM.SaleCurrencyId != null)
-                    {
-                        quotePM.SaleCurrencyCode = currencyRepository.GetSingleCurrency(quotePM.SaleCurrencyId, tenant).Code;
-                    }
-
-                    string SaleTotalAmountInSaleCurrency = " ";
-                    if (quotePM.SaleTotalAmountInSaleCurrency != null)
-                    {
-                        double value = (double)quotePM.SaleTotalAmountInSaleCurrency;
-                        SaleTotalAmountInSaleCurrency = value.ToString("N"); // 1,234.512
-                    }
-                    string SaleTotalAmountInLocalCurrency = " ";
-                    if (quotePM.SaleTotalAmountInLocalCurrency != null)
-                    {
-                        double value = (double)quotePM.SaleTotalAmountInLocalCurrency;
-                        SaleTotalAmountInLocalCurrency = value.ToString("N"); // 1,234.512
-                    }
-
-
-                    #region Total Currency Containers
-                    bool ShowTotalInSaleCurrency = pricingSectionType == "PC" ? setting.ShowTotalInSaleCurrencyContainers : setting.ShowTotalInSaleCurrencyPackages;
-                    bool ShowTotalInLocalCurrency = pricingSectionType == "PC" ? setting.ShowTotalInLocalCurrencyContainers : setting.ShowTotalInLocalCurrencyPackages;
-
-
-                    if (ShowTotalInSaleCurrency || ShowTotalInLocalCurrency)
-                    {
-                        HtmlTemplate.Append("<div  style='height:5px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
-                    }
-                    AppendTotalCurrencyHtml(quotePM, setting, HtmlTemplate, ShowTotalInSaleCurrency, ShowTotalInLocalCurrency, quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue,
-                      Name, SaleTotalAmountInSaleCurrency, SaleTotalAmountInLocalCurrency);
-                    #endregion
-
-
-                    HtmlTemplate.Append("</div>");
-                    HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
-
-                    #endregion
+                    BuilQuoteTotalCurrency(quoteTemplateBuildArges, HtmlTemplate);
                 }
 
             }
@@ -947,11 +891,36 @@ namespace Logitude.BL.Helpers
             #region TotalPerContainers Table
             if (isShowPerContainers)
             {
+                BuildTotalPerContainers(quoteTemplateBuildArges,  chargesGroupLists, HtmlTemplate, QuoteSaleChargePerContainersLists);
+            }
+
+            #endregion
+
+
+            return Encoding.UTF8.GetBytes(HtmlTemplate.ToString());
+        }
+
+        private void BuildTotalPerContainers(QuoteTemplateBuildArges quoteTemplateBuildArges, List<ChargesGroupList> chargesGroupLists, StringBuilder HtmlTemplate, List<QuoteSaleChargePM> QuoteSaleChargePerContainersLists)
+        {
+            int tenant = quoteTemplateBuildArges.Tenant;
+            bool exist = SecurityUtility.CheckFeature("Quote", "TOTALPERCONTAINER", tenant);
+            if (exist)
+            {
+                QuotePM quotePM = quoteTemplateBuildArges.QuotePM;
+                QuoteTemplateSettingPM setting = quoteTemplateBuildArges.QuoteTemplateSettingPM;
+                List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList = quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists;
+                List<QuoteTemplateTextCodePM> textcodes = quoteTemplateBuildArges.QuoteTemplateTextCodePMLists;
+                List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList = quoteTemplateBuildArges.QuoteTemplateTableDesignsLists;
+                string pricingSectionType = quoteTemplateBuildArges.SectionTypeCode;
+
+
+                bool showIncludedChargesPerContainers = setting.ShowIncludedChargesPerContainers;
                 List<TotalPerContainerClass> totalPerContainerClassLists = new List<TotalPerContainerClass>();
+                BuildTotalPerContainerClassLists(quotePM, QuoteSaleChargePerContainersLists, HtmlTemplate, setting, totalPerContainerClassLists);
 
-                BuildTotalPerContainerClassLists(quotePM, quotePM.QuoteSaleCharges, HtmlTemplate, setting, totalPerContainerClassLists);
 
-                IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainerGroupingListsByGroupCode = totalPerContainerClassLists.GroupBy(q => q.ChargeGroupCode);
+                IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainerGroupingListsByGroupCode = totalPerContainerClassLists.GroupBy(q => q.ChargeGroupCode).OrderBy(d => d.ToList().FirstOrDefault().ChargesGroupViewOrder).ThenBy(n => n.ToList().FirstOrDefault().ChargesTypeViewOrder).ThenBy(d => d.ToList().FirstOrDefault().ChargesGroupName).ToList();
+
                 IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainerGroupingListsByFieldCode = totalPerContainerClassLists.GroupBy(q => q.FieldCode);
                 QuoteTemplateTextDesignPM totalPerContainersAdditionalTextDesign = quoteTemplateTextDesignsList.Where(t => t.Id == setting.TotalPerContainersAdditionalTextDesignId).FirstOrDefault();
                 QuoteTemplateTableDesignPM totalPerContainersTableDesign = quoteTemplateTableDesignsList.Where(t => t.Id == setting.TotalPerContainersTableDesignId).FirstOrDefault();
@@ -960,12 +929,15 @@ namespace Logitude.BL.Helpers
 
                 if (totalPerContainerGroupingListsByGroupCode.Count() > 0)
                 {
-                    HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+                    string translateInclueLable = GetTranslateInclueLable(quoteTemplateBuildArges.QuoteTemplateTextCodePMLists, "TotalPerContainers");
+
 
                     if (setting.ShowPageBreakBeforeTotalPerContainersTable)
                     {
                         HtmlTemplate.Append("<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>");
                     }
+
+                    HtmlTemplate.Append(GetHtmlStringLine(setting.SpaceLinesBeforePerContainers, quoteTemplateBuildArges.FirstSectionInBody));
 
                     //HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
@@ -1014,33 +986,41 @@ namespace Logitude.BL.Helpers
                     List<TotalPerContainerClass> totals = new List<TotalPerContainerClass>();
                     foreach (IGrouping<string, TotalPerContainerClass> totalPerContainer in totalPerContainerGroupingListsByGroupCode)
                     {
+                        bool includedChargesPerContainers = !(totalPerContainer.Where(d => !d.Included).Any());
                         HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
                         IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainerGroupByFieldCode = totalPerContainer.GroupBy(q => q.FieldCode);
 
-                        ChargesGroup group = groups.Where(d => d.Code == totalPerContainer.Key).FirstOrDefault();
+                        ChargesGroupList group = chargesGroupLists.Where(d => d.Code == totalPerContainer.Key).FirstOrDefault();
                         string chargeGroupName = setting.ShowLocalLanguage ? group.LocalName : group.Name;
                         HtmlTemplate.Append(BuildTableColumn(chargeGroupName, totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, setting.RightToLeft));
                         foreach (IGrouping<string, TotalPerContainerClass> totalPerContainerGroup in totalPerContainerGroupByFieldCode)
                         {
-                            List<TotalPerContainerClass> totalPerContainersLists = totalPerContainerGroup.ToList();
-                            double value = 0;
-                            foreach (TotalPerContainerClass item in totalPerContainersLists)
+                            if (!includedChargesPerContainers)
                             {
-                                value += item.Value;
+                                List<TotalPerContainerClass> totalPerContainersLists = totalPerContainerGroup.ToList();
+                                double value = 0;
+                                foreach (TotalPerContainerClass item in totalPerContainersLists)
+                                {
+                                    value += item.Value;
 
+                                }
+
+                                if (setting.TotalPerContainersCurrencyType == "LOCAL")
+                                {
+                                    value = value * (double)totalPerContainersLists[0].SaleExchangeRate;
+                                }
+                                totals.Add(new TotalPerContainerClass() { Value = value, FieldCode = totalPerContainersLists[0].FieldCode });
+                                HtmlTemplate.Append(BuildTableColumn(value.ToString("N"), totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, true));
                             }
-
-                            if (setting.TotalPerContainersCurrencyType == "LOCAL")
+                            else
                             {
-                                value = value * (double)totalPerContainersLists[0].SaleExchangeRate;
+                                HtmlTemplate.Append(BuildTableColumn(translateInclueLable, totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, true));
                             }
-                            totals.Add(new TotalPerContainerClass() { Value = value, FieldCode = totalPerContainersLists[0].FieldCode });
-                            HtmlTemplate.Append(BuildTableColumn(value.ToString("N"), totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, true));
                         }
                         HtmlTemplate.Append("</tr>");
                     }
 
-                   
+
                     AppendPerContainerTotalBySaleCurrency(quotePM, setting, HtmlTemplate, totalPerContainersTableDesign, totalPerContainersTableLines, totals);
 
                     if (setting.TotalPerContainersCurrencyType == "MULTIPLE")
@@ -1079,15 +1059,236 @@ namespace Logitude.BL.Helpers
                     }
 
                     HtmlTemplate.Append("</table>");
-                    HtmlTemplate.Append("<div style='height:10px ;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</div>");
+
+
+                }
+            }
+        }
+
+        private void BuilQuoteTotalCurrency(QuoteTemplateBuildArges quoteTemplateBuildArges , StringBuilder HtmlTemplate)
+        {
+           
+       
+            QuotePM quotePM = quoteTemplateBuildArges.QuotePM;
+            QuoteTemplateSettingPM setting = quoteTemplateBuildArges.QuoteTemplateSettingPM;
+            List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList = quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists;
+            List<QuoteTemplateTextCodePM> textcodes = quoteTemplateBuildArges.QuoteTemplateTextCodePMLists;
+            int tenant = quoteTemplateBuildArges.Tenant;
+            string pricingSectionType = quoteTemplateBuildArges.SectionTypeCode;
+
+            QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsLabel = null;
+            QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsValue = null;
+
+            if (pricingSectionType == "PC")
+            {
+                quoteTemplateTextDesignTotalsLabel = quoteTemplateTextDesignsList.Where(t => t.Id == setting.TotalsContainsersLabelDesignId).FirstOrDefault();//quotetemplateTextDesignQuery.GetSinglePM(setting.TotalsContainsersLabelDesignId, tenant);
+                quoteTemplateTextDesignTotalsValue = quoteTemplateTextDesignsList.Where(t => t.Id == setting.TotalsContainsersValueDesignId).FirstOrDefault();//quotetemplateTextDesignQuery.GetSinglePM(setting.TotalsContainsersValueDesignId, tenant);
+            }
+            else
+            {
+                quoteTemplateTextDesignTotalsLabel = quoteTemplateTextDesignsList.Where(t => t.Id == setting.TotalsPackagesLabelDesignId).FirstOrDefault();//quotetemplateTextDesignQuery.GetSinglePM(setting.TotalsPackagesLabelDesignId, tenant);
+                quoteTemplateTextDesignTotalsValue = quoteTemplateTextDesignsList.Where(t => t.Id == setting.TotalsPackagesValueDesignId).FirstOrDefault();//quotetemplateTextDesignQuery.GetSinglePM(setting.TotalsPackagesValueDesignId, tenant);
+            }
+            string Name = GetNameColum("TOTALAMOUNTS", textcodes, pricingSectionType);
+            if (quotePM.SaleCurrencyCode == null && quotePM.SaleCurrencyId != null)
+            {
+                SetSaleCurrencyCode(quotePM, tenant);
+            }
+
+            string SaleTotalAmountInSaleCurrency = " ";
+            if (quotePM.SaleTotalAmountInSaleCurrency != null)
+            {
+                double value = (double)quotePM.SaleTotalAmountInSaleCurrency;
+                SaleTotalAmountInSaleCurrency = value.ToString("N"); // 1,234.512
+            }
+            string SaleTotalAmountInLocalCurrency = " ";
+            if (quotePM.SaleTotalAmountInLocalCurrency != null)
+            {
+                double value = (double)quotePM.SaleTotalAmountInLocalCurrency;
+                SaleTotalAmountInLocalCurrency = value.ToString("N"); // 1,234.512
+            }
+
+
+            #region Total Currency Containers
+            bool ShowTotalInSaleCurrency = pricingSectionType == "PC" ? setting.ShowTotalInSaleCurrencyContainers : setting.ShowTotalInSaleCurrencyPackages;
+            bool ShowTotalInLocalCurrency = pricingSectionType == "PC" ? setting.ShowTotalInLocalCurrencyContainers : setting.ShowTotalInLocalCurrencyPackages;
+
+
+            if (ShowTotalInSaleCurrency || ShowTotalInLocalCurrency)
+            {
+                HtmlTemplate.Append("<div  style='height:5px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            }
+            AppendTotalCurrencyHtml(quotePM, setting, HtmlTemplate, ShowTotalInSaleCurrency, ShowTotalInLocalCurrency, quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue,
+              Name, SaleTotalAmountInSaleCurrency, SaleTotalAmountInLocalCurrency);
+            #endregion
+
+
+            HtmlTemplate.Append("</div>");
+
+    
+        }
+
+        private void BuildTotalPerChargeGroup(QuoteTemplateBuildArges quoteTemplateBuildArges, StringBuilder HtmlTemplate ,  List<QuoteSaleChargePM> charges)
+        {
+
+
+            string pricingSectionType = quoteTemplateBuildArges.SectionTypeCode;
+            IEnumerable<IGrouping<string, QuoteSaleChargePM>> QuoteSaleChargeGroup = charges.GroupBy(q => q.CurrencyCode);
+            string currencyCode = "";
+            double? amount = 0;
+
+            QuoteTemplateTextDesignPM quoteTemplateTextDesignPMGroupByTotal = pricingSectionType == "PP" ? quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists.Where(t => t.Id == quoteTemplateBuildArges.QuoteTemplateSettingPM.GroupByPackagesLabelDesignId).FirstOrDefault() : quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists.Where(t => t.Id == quoteTemplateBuildArges.QuoteTemplateSettingPM.GroupByContainsersLabelDesignId).FirstOrDefault();
+            string groupByTotalStyle = GetSpanRowStyle(quoteTemplateTextDesignPMGroupByTotal, "Lable");
+       
+            string tableDesignId = pricingSectionType == "PP" ? quoteTemplateBuildArges.QuoteTemplateSettingPM.PackagesTableDesignId : quoteTemplateBuildArges.QuoteTemplateSettingPM.ContainserTableDesignId;
+            QuoteTemplateTableDesignPM quotetemplatetableDesignPM = quoteTemplateBuildArges.QuoteTemplateTableDesignsLists.Where(d => d.Id == tableDesignId).FirstOrDefault() ;
+
+            string StyleTrGroupByTotal = GetStyleGroupByTd("Empty", quotetemplatetableDesignPM.BorderColor, quotetemplatetableDesignPM.BorderThickness, quotetemplatetableDesignPM.BorderTypeCode, quoteTemplateTextDesignPMGroupByTotal, quoteTemplateBuildArges.QuoteTemplateSettingPM.RightToLeft);
+
+            string translateInclueLable = GetTranslateInclueLable(quoteTemplateBuildArges.QuoteTemplateTextCodePMLists, pricingSectionType);
+
+
+            HtmlTemplate.Append("<tr  style= 'height:auto; width:auto;vertical-align:central'>");
+
+            if (ShowSaleCurrencyColumnColumnPosition > 1)
+            {
+                HtmlTemplate.Append("<td " + StyleTrGroupByTotal + "colspan=' " + (ShowSaleCurrencyColumnColumnPosition - 1).ToString() + "';" + ">"); HtmlTemplate.Append("<div " + groupByTotalStyle + " >" + "<div>"); HtmlTemplate.Append("</td>");
+            }
+
+            HtmlTemplate.Append("<td " + StyleTrGroupByTotal + ">");
+
+            foreach (IGrouping<string, QuoteSaleChargePM> quoteSaleCharge in QuoteSaleChargeGroup)
+            {
+                currencyCode = "";
+                amount = 0;
+                List<QuoteSaleChargePM> quoteSaleCharges = quoteSaleCharge.ToList();
+
+                bool allChargeIncluded = !(quoteSaleCharges.Where(d => d.IsAllIN == null || (d.IsAllIN != null && d.IsAllIN.ToLower() == "false")).Any());
+                foreach (QuoteSaleChargePM quoteSaleChargePM in quoteSaleCharges)
+                {
+                    if (quoteSaleChargePM.IsAllIN == null || (quoteSaleChargePM.IsAllIN != null && quoteSaleChargePM.IsAllIN.ToLower() == "false"))
+                    {
+                        currencyCode = quoteSaleChargePM.CurrencyCode;
+                        amount += quoteSaleChargePM.SaleTotalAmount;
+                    }
 
                 }
 
+                string amountValue = " ";
+                if (amount != null)
+                {
+                    double value = (double)amount;
+                    amountValue = value.ToString("N"); // 1,234.512
+                }
+                string displayValue = amountValue.ToString() + " " + currencyCode;
+                if (allChargeIncluded) displayValue = translateInclueLable;
+
+                HtmlTemplate.Append("<div " + groupByTotalStyle + " >" + displayValue + "<div>");
+
             }
 
-            #endregion
+            HtmlTemplate.Append("</td>");
 
-            return Encoding.UTF8.GetBytes(HtmlTemplate.ToString());
+            HtmlTemplate.Append("<td " + StyleTrGroupByTotal + "colspan=' " + (TdCount - ShowSaleCurrencyColumnColumnPosition).ToString() + "';" + ">"); HtmlTemplate.Append("<div " + groupByTotalStyle + " >" + "<div>"); HtmlTemplate.Append("</td>");
+
+            HtmlTemplate.Append("</tr>");
+        }
+
+        private string GetTranslateInclueLable(List<QuoteTemplateTextCodePM> quoteTemplateTextCodePMLists, string pricingSectionType)
+        {
+           return  GetNameColum("INCLUDED", quoteTemplateTextCodePMLists, pricingSectionType);
+        }
+
+        private  void SetSaleCurrencyCode(QuotePM quotePM, int tenant)
+        {
+            CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
+            var currency = currencyRepository.GetSingleCurrency(quotePM.SaleCurrencyId, tenant);
+            if (currency != null)
+            {
+                quotePM.SaleCurrencyCode = currency.Code;
+            }
+        }
+
+        private string GetLocalCurrencyCode(int tenantNumber , string email)
+        {
+            string localCurrencyCode = string.Empty;
+
+
+            ContactRepository contactrep = new ContactRepository(tenantNumber);
+            Contact contact = contactrep.GetSingleContactByEmail(email, tenantNumber);
+            CurrencyRepository currencyRepository = new CurrencyRepository(tenantNumber);
+
+            if (contact != null)
+            {
+                SystemDataQuery systemDataQuery = new SystemDataQuery(tenantNumber);
+                SystemDataPM systemEntity = systemDataQuery.GetSinglePM(contact.Id, tenantNumber);
+
+                if (systemEntity != null)
+                {
+
+                    if (!string.IsNullOrEmpty(systemEntity.LocalCurrencyId))
+                    {
+                        Currency currency = currencyRepository.GetSingleCurrency(systemEntity.LocalCurrencyId, tenantNumber);
+                        if (currency != null) localCurrencyCode = currency.Code;
+                    }
+                }
+            }
+
+            return localCurrencyCode;
+        }
+
+        private static void SetQuoteTemplateSettingShowSaleMaxMinAmount(QuoteTemplateSettingPM setting, string pricingSectionType, List<QuoteSaleChargePM> QuoteSaleChargePricingTableLists)
+        {
+            bool isHaveMaxMinValue = QuoteSaleChargePricingTableLists.Where(d => d.SaleMaxAmount != null || d.SaleMinAmount != null).Any();
+            if (!isHaveMaxMinValue)
+            {
+                if (pricingSectionType == "PP") setting.ShowSaleMaxMinAmountPackages = false;
+                else if (pricingSectionType == "PC") setting.ShowSaleMaxMinAmountContainers = false;
+            }
+        }
+
+        private static void SetQuoteSaleChargeRelatedOrderFields( List<QuoteSaleChargePM> QuoteSaleChargePerContainersLists, List<ChargesGroupList> chargesGroupLists, List<ChargesTypeList> chargesTypeLists)
+        {
+
+            foreach (QuoteSaleChargePM item in QuoteSaleChargePerContainersLists)
+            {
+                var group = chargesGroupLists.Where(d => d.Code == item.ChargesGroupCode).FirstOrDefault();
+                if (group != null)
+                {
+                    item.ChargesGroupViewOrder = item.ChargesTypeViewOrder = group.ViewOrder;
+                    item.ChargesGroupName = group.Name;
+                    var chargesTypeList = chargesTypeLists.Where(d => d.Id == item.ChargesTypeId).FirstOrDefault();
+                    if (chargesTypeList != null) item.ChargesTypeViewOrder = chargesTypeList.ViewOrder;
+                }
+            }
+        }
+
+        private List<ChargeGroupOrderList> BuildChargeGroupOrderList(List<ChargesGroupList> chargesGroups , int tenant)
+        {
+            ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(tenant);
+            var chargesTypeLists = chargesTypeQuery.GetChargesTypeListsByTenant(tenant);
+
+            List<ChargeGroupOrderList> items = new List<ChargeGroupOrderList>();
+            foreach (ChargesGroupList item in chargesGroups)
+            {
+                var chargesTypeList = chargesTypeLists.Where(d => d.ChargesGroupId == item.Id).FirstOrDefault();
+                items.Add(new ChargeGroupOrderList() { GroupOrder = item.ViewOrder,Name = item.Name, ChargeTypeOrder= chargesTypeList!=null? chargesTypeList.ViewOrder: item.ViewOrder,Code = item.Code });
+            }
+
+            int i = 1;
+            foreach (var s in items.OrderBy(c => c.GroupOrder).ThenBy(n => n.ChargeTypeOrder).ThenBy(d => d.Name).ToList())
+            {
+                s.Order = i;
+                i += 1;
+            }
+           
+            return items;
+        }
+
+        private bool IsShowIncludedChargesPricingTable(string pricingSectionType, QuoteTemplateSettingPM setting)
+        {
+            return pricingSectionType == "PP" ? setting.ShowIncludedChargesPackages: setting.ShowIncludedChargesContainers;
+
         }
 
         private void AppendPerContainerTotalBySaleCurrency(QuotePM quotePM, QuoteTemplateSettingPM setting,  StringBuilder HtmlTemplate, QuoteTemplateTableDesignPM totalPerContainersTableDesign, QuoteTemplateTextDesignPM totalPerContainersTableLines, List<TotalPerContainerClass> totals)
@@ -1262,13 +1463,13 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("<body>"); 
 
 
-            int spaceTopQuoteHeader = 10;
-            if (quoteTemplateBuildArges.RequestArea == "Header") spaceTopQuoteHeader = 5;
-
-            HtmlTemplate.Append("<div  style='height:" + spaceTopQuoteHeader.ToString() + "px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
-
             if (QuoteTemplaetHeaderFieldList.Count() > 0)
             {
+                if (quoteTemplateBuildArges.RequestArea != "Header")
+                {
+                    HtmlTemplate.Append(GetHtmlStringLine(setting.SpaceLinesBeforeQuoteHeaders, quoteTemplateBuildArges.FirstSectionInBody));
+                }
+
 
                 List<QuoteTemplateHeaderFieldPM> QuoteTemplaetHeaderColum0;
                 List<QuoteTemplateHeaderFieldPM> QuoteTemplaetHeaderColum1;
@@ -1515,7 +1716,7 @@ namespace Logitude.BL.Helpers
                 HtmlTemplate.Append("</div>");
             }
 
-            HtmlTemplate.Append("<div  style='height:" + spaceTopQuoteHeader.ToString() + "px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+
  
             HtmlTemplate.Append("</body>");
             HtmlTemplate.Append("</html>");
@@ -1563,11 +1764,12 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("<meta charset='utf-8'>");
             HtmlTemplate.Append("</head>");
             HtmlTemplate.Append("<body>");
-            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+
 
             if (QuoteTemplaetDetailsFieldList.Count() > 0)
             {
 
+                HtmlTemplate.Append(GetHtmlStringLine(setting.SpaceLinesBeforeQuoteDetails, quoteTemplateBuildArges.FirstSectionInBody));
                 List<QuoteTemplateDetailsFieldPM> QuoteTemplaetDetailsColum0;
                 List<QuoteTemplateDetailsFieldPM> QuoteTemplaetDetailsColum1;
 
@@ -1635,9 +1837,6 @@ namespace Logitude.BL.Helpers
 
                     HtmlTemplate.Append("<div  style='height:8px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
                 }
-
-
-
 
 
 
@@ -1848,7 +2047,6 @@ namespace Logitude.BL.Helpers
                 HtmlTemplate.Append("</div>");
             }
 
-            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
             HtmlTemplate.Append("</body>");
             HtmlTemplate.Append("</html>");
 
@@ -1897,7 +2095,7 @@ namespace Logitude.BL.Helpers
                 SaleTotalAmountInLocalCurrency = 4000,
                 SaleTotalAmountInSaleCurrency = 1750,
                 SaleCurrencyCode = "USD",
-
+                TotalPerContainer = true,
             };
 
             quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT", Notes = "test", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description", SaleMaxAmount = 50, SaleMinAmount = 20 });
@@ -2384,6 +2582,7 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
 
 
+
             IsShowlanguage = setting.ShowLocalLanguage;
             if (pricingSectionType == "PP")
             {
@@ -2642,31 +2841,31 @@ namespace Logitude.BL.Helpers
             return style;
         }
 
-        int ShowLocalCurrencyColumnPosition = 0;
+        int ShowSaleCurrencyColumnColumnPosition = 0;
         private void GetCountHeader(QuoteTemplateSettingPM setting, QuotePM quotePM, string sectionType)
         {
 
             TdCount = 0;
-            ShowLocalCurrencyColumnPosition = 0;
-            if (sectionType == "PP")
+            ShowSaleCurrencyColumnColumnPosition = 0;
+            if (sectionType == "PP" && setting.ShowPricesTablePackages)
             {
-
                 if (setting.ShowChargeCodePackages) ++TdCount;
                 if (setting.ShowChargeNamePackages) ++TdCount;
                 if (setting.ShowUnitsPackages) ++TdCount;
                 if (setting.ShowUnitPricePackages) ++TdCount;
                 if (setting.ShowMeasurementPackages) ++TdCount;
-                if (setting.ShowLocalCurrencyColumnPackages)
+                if (setting.ShowSaleCurrencyColumnPackages)
                 {
                     ++TdCount;
-                    ShowLocalCurrencyColumnPosition = TdCount;
+                    ShowSaleCurrencyColumnColumnPosition = TdCount;
                 }
-                if (setting.ShowSaleCurrencyColumnPackages) ++TdCount;
+
+                if (setting.ShowLocalCurrencyColumnPackages) ++TdCount;
                 if (setting.ShowChargeDescriptionPackages) ++TdCount;
                 if (setting.ShowChargeNotePackages) ++TdCount;
                 if (setting.ShowSaleMaxMinAmountPackages) ++TdCount;
             }
-            else
+            else if (sectionType == "PC" && setting.ShowPricesTableContainers)
             {
                 TdCount = 0;
                 if (setting.ShowChargeCodeContainers) ++TdCount;
@@ -2687,13 +2886,13 @@ namespace Logitude.BL.Helpers
 
                 }
 
-
-                if (setting.ShowLocalCurrencyColumnContainers)
+                if (setting.ShowSaleCurrencyColumnContainers)
                 {
                     ++TdCount;
-                    ShowLocalCurrencyColumnPosition = TdCount;
+                    ShowSaleCurrencyColumnColumnPosition = TdCount;
                 }
-                if (setting.ShowSaleCurrencyColumnContainers) ++TdCount;
+                if (setting.ShowLocalCurrencyColumnContainers) ++TdCount;
+   
                 if (setting.ShowChargeDescriptionContainers) ++TdCount;
                 if (setting.ShowChargeNoteContainers) ++TdCount;
                 if (setting.ShowSaleMaxMinAmountContainers) ++TdCount;
@@ -2807,29 +3006,29 @@ namespace Logitude.BL.Helpers
             if (quotetemplatetableDesignPM.BorderTypeCode == "ALL")
             {
                 style = "style='" + "border-top:" + BorderThickness + " solid " + BorderColor + ";border-bottom:" + BorderThickness + " solid " + BorderColor + ";border-left:" + BorderThickness + " solid " + BorderColor + ";border-right:" + BorderThickness + " solid " + BorderColor + ";table-layout: auto"
-                  + "; text-indent:5px" + "; vertical-align:central" + ";background-color:" + BackgroundColor + "'";
+                  + "; text-indent:4px" + "; vertical-align:central" + ";background-color:" + BackgroundColor + "'";
             }
 
             else if (quotetemplatetableDesignPM.BorderTypeCode == "HORIZONTALLINES")
             {
                 style = "style='" + "border-top:" + BorderThickness + " solid " + BorderColor + ";border-bottom:" + BorderThickness + " solid " + BorderColor + ";table-layout: auto"
-               + "; text-indent:5px" + "; vertical-align:central" + ";background-color:" + BackgroundColor + "'";
+               + "; text-indent:4px" + "; vertical-align:central" + ";background-color:" + BackgroundColor + "'";
             }
             else if (quotetemplatetableDesignPM.BorderTypeCode == "BOX")
             {
                 style = "style='" + ";table-layout: auto"
-               + ";text-indent:5px" + "; vertical-align:central" + ";background-color:" + BackgroundColor + "'";
+               + ";text-indent:4px" + "; vertical-align:central" + ";background-color:" + BackgroundColor + "'";
             }
             else if (quotetemplatetableDesignPM.BorderTypeCode == "VERTICALLINES")
             {
                 style = "style='" + "border-left:" + BorderThickness + " solid " + BorderColor + ";border-right:" + BorderThickness + " solid " + BorderColor + ";table-layout: auto"
-                                    + "; text-indent:5px" + "; vertical-align:central" + ";background-color:" + BackgroundColor + "'";
+                                    + "; text-indent:4px" + "; vertical-align:central" + ";background-color:" + BackgroundColor + "'";
             }
 
             else if (quotetemplatetableDesignPM.BorderTypeCode == "NONE")
             {
                 style = "style='" + "border-collapse: collapse; " + "table-layout: auto"
-                                             + "; text-indent:5px" + "; vertical-align:central" + ";background-color:" + BackgroundColor + "'";
+                                             + "; text-indent:4px" + "; vertical-align:central" + ";background-color:" + BackgroundColor + "'";
             }
 
             if (width != null && width != "Auto")
@@ -2883,13 +3082,17 @@ namespace Logitude.BL.Helpers
             return BuildTableColumn(text, headerDesign, tableDesign, typeRow, width, bodyRightToLeft , headeLeftToRight);
         }
 
-        private void BuildTableRows(QuotePM quotePM, List<QuoteSaleChargePM> quoteSaleCharges, StringBuilder HtmlTemplate, QuoteTemplateTextDesignPM quoteTemplateTextDesignLines, QuoteTemplateTableDesignPM quotetemplatetableDesignPM, string pricingSectionType, QuoteTemplateSettingPM setting)
+        private void BuildTableRows(List<QuoteSaleChargePM> quoteSaleCharges, StringBuilder HtmlTemplate, QuoteTemplateTextDesignPM quoteTemplateTextDesignLines, QuoteTemplateTableDesignPM quotetemplatetableDesignPM, QuoteTemplateBuildArges quoteTemplateBuildArges )
         {
-
+            QuotePM quotePM = quoteTemplateBuildArges.QuotePM;
+            string pricingSectionType = quoteTemplateBuildArges.SectionTypeCode;
+            QuoteTemplateSettingPM setting = quoteTemplateBuildArges.QuoteTemplateSettingPM;
+            string translateInclueLable = GetTranslateInclueLable(quoteTemplateBuildArges.QuoteTemplateTextCodePMLists, pricingSectionType);
 
             int i = -1;
             foreach (QuoteSaleChargePM chargePM in quoteSaleCharges)
             {
+                bool included = (chargePM.IsAllIN != null && chargePM.IsAllIN.ToLower() == "true" ? true : false);
                 ++i;
                 HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
 
@@ -2916,20 +3119,15 @@ namespace Logitude.BL.Helpers
                             double value = (double)chargePM.SaleQuantity;
                             text = value.ToString("N"); // 1,234.512
                         }
+
+                        if (included) text = translateInclueLable;
                         HtmlTemplate.Append(AddTableRows(text, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
                     }
 
                     if (setting.ShowUnitPricePackages)
                     {
-                        string text = " ";
-
-                        if (chargePM.SaleUnitPrice != null)
-                        {
-                            double value = (double)chargePM.SaleUnitPrice;
-                            text = value.ToString("N"); // 1,234.512
-                        }
-
-                        HtmlTemplate.Append(AddTableRows(text, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
+                        string saleUnitPriceValues = GetUnitPricePackagesValue(quoteTemplateBuildArges, chargePM, included);
+                        HtmlTemplate.Append(AddTableRows(saleUnitPriceValues, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
                     }
 
                     if (setting.ShowMeasurementPackages)
@@ -2948,6 +3146,7 @@ namespace Logitude.BL.Helpers
                             double value = (double)chargePM.SaleTotalAmount;
                             text = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                         }
+                        if (included) text = translateInclueLable;
                         HtmlTemplate.Append(AddTableRows(text, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
                     }
 
@@ -2959,6 +3158,7 @@ namespace Logitude.BL.Helpers
                             double value = (double)chargePM.SaleTotalAmountLocal;
                             text = value.ToString("N") + " " + LocalCurrencyCode;
                         }
+                        if (included) text = translateInclueLable;
                         HtmlTemplate.Append(AddTableRows(text, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
 
                     }
@@ -2976,7 +3176,7 @@ namespace Logitude.BL.Helpers
                     }
                     if (setting.ShowSaleMaxMinAmountPackages)
                     {
-                        string text = GetSaleMaxMinAmountValue(chargePM);
+                        string text = included ? translateInclueLable : GetSaleMaxMinAmountValue(chargePM);
 
                         HtmlTemplate.Append(AddTableRows(text, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
                     }
@@ -2988,6 +3188,8 @@ namespace Logitude.BL.Helpers
                 else if (pricingSectionType == "PC")
                 {
                     int row = 0;
+               
+
                     if (setting.ShowChargeCodeContainers)
                     {
                         HtmlTemplate.Append(AddTableRows(chargePM.ChargesTypeCode, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
@@ -3027,7 +3229,7 @@ namespace Logitude.BL.Helpers
                                     fixedPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
                             }
-
+                            if (included) fixedPrice = translateInclueLable;
                             HtmlTemplate.Append(AddTableRows(fixedPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
                             row += 1;
                         }
@@ -3049,6 +3251,8 @@ namespace Logitude.BL.Helpers
                                     value = (double)chargePM.SaleContainerType1UnitPrice;
                                     saleContainerType1UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM); ;
                                 }
+
+                                if(included) saleContainerType1UnitPrice = translateInclueLable;
                                 HtmlTemplate.Append(AddTableRows(saleContainerType1UnitPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
                             }
 
@@ -3067,7 +3271,7 @@ namespace Logitude.BL.Helpers
                                     value = (double)chargePM.SaleContainerType2UnitPrice;
                                     saleContainerType2UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
-
+                                if (included) saleContainerType2UnitPrice = translateInclueLable;
                                 HtmlTemplate.Append(AddTableRows(saleContainerType2UnitPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
                             }
                         }
@@ -3085,7 +3289,7 @@ namespace Logitude.BL.Helpers
                                     saleContainerType3UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
 
                                 }
-
+                                if (included) saleContainerType3UnitPrice = translateInclueLable;
                                 HtmlTemplate.Append(AddTableRows(saleContainerType3UnitPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
                             }
                         }
@@ -3102,7 +3306,7 @@ namespace Logitude.BL.Helpers
                                     value = (double)chargePM.SaleContainerType4UnitPrice;
                                     saleContainerType4UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
-
+                                if (included) saleContainerType4UnitPrice = translateInclueLable;
                                 HtmlTemplate.Append(AddTableRows(saleContainerType4UnitPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
                             }
                         }
@@ -3119,7 +3323,7 @@ namespace Logitude.BL.Helpers
                                     value = (double)chargePM.SaleContainerType5UnitPrice;
                                     saleContainerType5UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
-
+                                if (included) saleContainerType5UnitPrice = translateInclueLable;
                                 HtmlTemplate.Append(AddTableRows(saleContainerType5UnitPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
                             }
                         }
@@ -3135,7 +3339,7 @@ namespace Logitude.BL.Helpers
                             double value = (double)chargePM.SaleTotalAmount;
                             saleTotalAmount = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                         }
-
+                        if (included) saleTotalAmount = translateInclueLable;
                         HtmlTemplate.Append(AddTableRows(saleTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
                     }
 
@@ -3150,8 +3354,10 @@ namespace Logitude.BL.Helpers
                             AA = value.ToString("N"); // 1,234.512
                         }
 
-                        string LocalTotalAmount = AA + " " + LocalCurrencyCode;
-                        HtmlTemplate.Append(AddTableRows(LocalTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
+                        string localTotalAmount = AA + " " + LocalCurrencyCode;
+
+                        if (included) localTotalAmount = translateInclueLable;
+                        HtmlTemplate.Append(AddTableRows(localTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft, true));
                     }
 
 
@@ -3170,13 +3376,54 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowSaleMaxMinAmountContainers)
                     {
-                        string saleMaxMinAmount = GetSaleMaxMinAmountValue(chargePM);
+                        string saleMaxMinAmount = included ? translateInclueLable : GetSaleMaxMinAmountValue(chargePM);
                         HtmlTemplate.Append(AddTableRows(saleMaxMinAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
                     }
                 }
 
                 HtmlTemplate.Append("</tr>");
             }
+        }
+
+        private  string GetUnitPricePackagesValue(QuoteTemplateBuildArges quoteTemplateBuildArges, QuoteSaleChargePM chargePM, bool included)
+        {
+            string saleUnitPriceValues = "";
+            QuotePM quotePM = quoteTemplateBuildArges.QuotePM;
+
+            if (chargePM.IsChargeBySteps && quotePM.QuoteTypeCode == "P")
+            {
+                if (!string.IsNullOrEmpty(chargePM.PriceBreaks))
+                {
+                    var priceBreaks = chargePM.PriceBreaks;
+                    priceBreaks = priceBreaks.Replace("\r", "^");
+                    var priceBreaksArrays = priceBreaks.Split('^');
+                    priceBreaks = null;
+                    int i = 1;
+                    foreach (var item in priceBreaksArrays)
+                    {
+                        if (i > 1) priceBreaks += "&nbsp;";
+                        priceBreaks += ((item + " " + quotePM.SaleCurrencyCode) + "<br>");
+                        i += 1;
+                    }
+
+                    saleUnitPriceValues = priceBreaks;
+                }
+            }
+            else
+            {
+                if (chargePM.SaleUnitPrice != null)
+                {
+                    double value = (double)chargePM.SaleUnitPrice;
+                    saleUnitPriceValues = value.ToString("N"); // 1,234.512
+                    saleUnitPriceValues += " " + quotePM.SaleCurrencyCode;
+                }
+                if (included)
+                {
+                    saleUnitPriceValues = GetNameColum("INCLUDED", quoteTemplateBuildArges.QuoteTemplateTextCodePMLists, quoteTemplateBuildArges.SectionTypeCode);
+                }
+            }
+
+            return saleUnitPriceValues;
         }
 
         private static string GetChargeCurrencyCode(QuotePM quotePM, QuoteSaleChargePM chargePM)
@@ -3304,7 +3551,19 @@ namespace Logitude.BL.Helpers
                     SaleExchangeRate = chargePM.SaleExchangeRate,
                     CurrencyCode = chargePM.CurrencyCode,
                     OrginalValue = orginalValue,
+                    ChargesGroupName = chargePM.ChargesGroupName,
+                    ChargesTypeViewOrder = chargePM.ChargesTypeViewOrder,
+                    ChargesGroupViewOrder = chargePM.ChargesGroupViewOrder,
                 };
+
+                if (chargePM.IsAllIN != null && chargePM.IsAllIN.ToLower() == "true")
+                {
+                    totalPerContainerClass.Included = true;
+                    totalPerContainerClass.OrginalValue = 0;
+                    totalPerContainerClass.Value = 0;
+                }
+
+
                 totalPerContainerClassLists.Add(totalPerContainerClass);
             }
         }
@@ -3401,16 +3660,7 @@ namespace Logitude.BL.Helpers
             PdfConverter pdfConverter = new PdfConverter();
             pdfConverter.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
             pdfConverter.PdfDocumentOptions.PdfPageSize = PdfPageSize.A4;
-
-            if (setting != null)
-            {
-                int marginleft = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
-                int marginRight = (setting.QuoteTemplatePDFMarginLeft * 72) / 96;
-
-                pdfConverter.PdfDocumentOptions.LeftMargin = marginleft;
-                pdfConverter.PdfDocumentOptions.RightMargin = marginRight;
-
-            }
+            SetPdfMargins(setting, pdfConverter.PdfDocumentOptions);
 
             pdfConverter.PdfDocumentOptions.PdfCompressionLevel = PdfCompressionLevel.Normal;
             pdfConverter.PdfDocumentOptions.PdfPageOrientation = PdfPageOrientation.Portrait;
@@ -3478,7 +3728,11 @@ namespace Logitude.BL.Helpers
         public double? SaleExchangeRate { get; set; }
         public string CurrencyCode { get; set; }
         public double? OrginalValue { get; set; }
-       
+        public bool Included { get; set; }
+        public string ChargesGroupName { get; set; }
+        public int ChargesTypeViewOrder { get; set; }
+        public int ChargesGroupViewOrder { get; set; }
+
     }
 
     public class QuoteTemplateBuildArges
@@ -3495,9 +3749,23 @@ namespace Logitude.BL.Helpers
         public int? UserTenant { get; set; }
         public string UserId { get; set; }
         public List<QuoteTemplateSectionPM> QuoteTemplateSectionPMLists { get; set; }
-
         public bool HideQuoteHeaderFromPdf { get; set; }
         public string RequestArea { get; set; }
+        public bool FirstSectionInBody { get; set; }
+
+        
+
+    }
+
+
+    public class ChargeGroupOrderList
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public int GroupOrder { get; set; }
+        public int ChargeTypeOrder { get; set; }
+        public int Order { get; set; }
+        public int IsOrder { get; set; }
     }
 
 

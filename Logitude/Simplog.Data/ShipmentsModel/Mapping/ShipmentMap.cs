@@ -265,7 +265,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ValueOfGoodsCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OriginShipmentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReleasingAgentId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ReleasingAgentAddressId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ReleasingAgentAddressId).HasMaxLength(15).IsUnicode(false);           
+
             this.Property(t => t.ReleasingAgentContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReleasingAgentReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ReleasingAgentReference2).HasMaxLength(50).IsUnicode(false);
@@ -520,7 +521,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.AWBComments).HasColumnName("AWBComments");
-            this.Property(t => t.CutoffDate).HasColumnName("CutoffDate");
             this.Property(t => t.OpenPayablesInLocalCurrency).HasColumnName("OpenPayablesInLocalCurrency");           
             this.Property(t => t.OpenPayablesInProfitCurrency).HasColumnName("OpenPayablesInProfitCurrency");            
             this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode");
@@ -629,6 +629,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OperationalDate).HasColumnName("OperationalDate");
             this.Property(t => t.ReleasingAgentId).HasColumnName("ReleasingAgentId");
             this.Property(t => t.ReleasingAgentAddressId).HasColumnName("ReleasingAgentAddressId");
+           
+
             this.Property(t => t.ReleasingAgentContactId).HasColumnName("ReleasingAgentContactId");
             this.Property(t => t.ReleasingAgentReference1).HasColumnName("ReleasingAgentReference1");
             this.Property(t => t.ReleasingAgentReference2).HasColumnName("ReleasingAgentReference2");
@@ -825,6 +827,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.Notify1Card).WithMany().HasForeignKey(d => d.Notify1Id);
             this.HasOptional(t => t.Notify2Card).WithMany().HasForeignKey(d => d.Notify2Id);
             this.HasOptional(t => t.AgentCard).WithMany().HasForeignKey(d => d.AgentId);
+            this.HasOptional(t => t.AgentComputedCard).WithMany().HasForeignKey(d => d.AgentComputed);
             this.HasOptional(t => t.ShipperNotExporterCard).WithMany().HasForeignKey(d => d.ShipperNotExporterId);
             this.HasOptional(t => t.AgentContact).WithMany().HasForeignKey(d => d.AgentContactId);
             this.HasOptional(t => t.ShipperContact).WithMany().HasForeignKey(d => d.ShipperContactId);

@@ -38,6 +38,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime ToMonthInclusive  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+       [DataMember]
+       public bool ShouldFix  { get; set; }
    }
 
 }

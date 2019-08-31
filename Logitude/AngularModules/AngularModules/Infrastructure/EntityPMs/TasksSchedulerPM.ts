@@ -80,9 +80,9 @@ export class TasksSchedulerPM {
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
-    private serviceClassName: string;
-    public get ServiceClassName() { return this.serviceClassName; }
-    public set ServiceClassName(newValue: string) { if (this.serviceClassName != newValue) { this.serviceClassName = newValue; this.MarkAsDirty("ServiceClassName"); } }
+    private procedureCode: string;
+    public get ProcedureCode() { return this.procedureCode; }
+    public set ProcedureCode(newValue: string) { if (this.procedureCode != newValue) { this.procedureCode = newValue; this.MarkAsDirty("ProcedureCode"); } }
        
 	 
     private triggerType: string;
@@ -205,12 +205,16 @@ export class TasksSchedulerPM {
     public set LastRunStartTime(newValue: Date) { if (this.lastRunStartTime != newValue) { this.lastRunStartTime = newValue; this.MarkAsDirty("LastRunStartTime"); } }
        
 	 
-    private schedulerDetailsData: any;
+    private averageRunTime: number;
+    public get AverageRunTime() { return this.averageRunTime; }
+    public set AverageRunTime(newValue: number) { if (this.averageRunTime != newValue) { this.averageRunTime = newValue; this.MarkAsDirty("AverageRunTime"); } }
+       
+	 
+    private schedulerDetailsData: string;
     public get SchedulerDetailsData() { return this.schedulerDetailsData; }
-    public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
-
-
-
+    public set SchedulerDetailsData(newValue: string) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
+       
+	 
 
     public OldEntityPM: TasksSchedulerPM;
 		

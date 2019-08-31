@@ -14,7 +14,13 @@ declare var window: any;
 
 export class ServiceHelper {
     public static Http: Http;
-    private static CurrentSession = SessionLocator.SelectedSession;
+    private static _CurrentSession = SessionLocator.SelectedSession;
+    private static get CurrentSession() {
+        if (this._CurrentSession == null) {
+            this._CurrentSession = SessionLocator.SelectedSession;
+        }
+        return this._CurrentSession;
+    }
     public static _LogitudeErrorHandler: LogitudeErrorHandler = new LogitudeErrorHandler();
 
     public static HandleServiceError(error: any) {
@@ -26,7 +32,7 @@ export class ServiceHelper {
             //var mm = error.json();
             if (error.status == 400) {
                 var apiException = error.json();
-                if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType =="ApplicationException") {
+                if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException" || apiException.ErrorType == "EntityCommandExecutionException" || apiException.ErrorType == "NullReferenceException") {
 
                     var errorMessage:string = apiException.ShortErrorMessage;
                     if (apiException.ShortErrorMessage) {

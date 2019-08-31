@@ -4235,6 +4235,15 @@ export class ShipmentPM {
         }
     }
 
+    private masterCreatedFromHouseId: string;
+    public get MasterCreatedFromHouseId() { return this.masterCreatedFromHouseId; }
+    public set MasterCreatedFromHouseId(newValue: string) {
+        if (this.masterCreatedFromHouseId != newValue) {
+            this.masterCreatedFromHouseId = newValue;
+            this.MarkAsDirty("MasterCreatedFromHouseId");
+        }
+    }
+
     private convertShipmentToLCL: boolean;
     public get ConvertShipmentToLCL() { return this.convertShipmentToLCL; }
     public set ConvertShipmentToLCL(newValue: boolean) { if (this.convertShipmentToLCL != newValue) { this.convertShipmentToLCL = newValue; this.MarkAsDirty("ConvertShipmentToLCL"); } }
@@ -4250,6 +4259,11 @@ export class ShipmentPM {
     private packagesDeleted: boolean;
     public get PackagesDeleted() { return this.packagesDeleted; }
     public set PackagesDeleted(newValue: boolean) { if (this.packagesDeleted != newValue) { this.packagesDeleted = newValue; this.MarkAsDirty("PackagesDeleted"); } }
+
+    private isDeletingAllPayables: boolean;
+    public get IsDeletingAllPayables() { return this.isDeletingAllPayables; }
+    public set IsDeletingAllPayables(newValue: boolean) { if (this.isDeletingAllPayables != newValue) { this.isDeletingAllPayables = newValue; this.MarkAsDirty("IsDeletingAllPayables"); } }
+
 
     public OldEntityPM: ShipmentPM;
 

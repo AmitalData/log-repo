@@ -94,6 +94,8 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public int TotalQuantity  { get; set; }
        [DataMember]
        public string ChargeableWeightUnitCode  { get; set; }
+       [DataMember]
+       public string ConnectedTo  { get; set; }
    }
 
 }

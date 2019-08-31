@@ -185,6 +185,7 @@
     <None Include="EntityFiles\CommonDataModel\AirlineArea.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\CommonDataModel\CardContactProduct.lxml" />
     <None Include="EntityFiles\CommonDataModel\CheckDigitControlAlgorithm.lxml" />
     <None Include="EntityFiles\CommonDataModel\NumberFormat.lxml">
       <SubType>Designer</SubType>
@@ -463,6 +464,7 @@
     <None Include="EntityFiles\InfrastructureModel\ObjectTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\RatesTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\SchedulerLogs.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\SchedulerProcedure.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TaskSchedulerHistory.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TasksScheduler.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TransportMode.lxml" />
@@ -529,6 +531,9 @@
     <None Include="EntityFiles\InvoiceModel\ARInvoiceTransferStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoiceType.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARPayment.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\ARPaymentChequeReplica.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\InvoiceModel\SATInvoiceStatus.lxml">

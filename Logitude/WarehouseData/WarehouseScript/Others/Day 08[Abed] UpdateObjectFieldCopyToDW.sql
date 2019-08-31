@@ -1,12 +1,17 @@
 
 
+
+
+
+
+update  ObjectFields set CopyToDW = 0 where ObjectTableId = (select id from ObjectTables where Name = 'Card')
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'DWHSetting') and (FieldName = 'Tenant' or FieldName = 'ParentTenant')
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Direction') and (FieldName = 'Id' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'TransportMode')and (FieldName = 'Id' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentLevel')and (FieldName = 'Code' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentType')and (FieldName = 'Id' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'Branch') and (FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Code' )
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Card') and (FieldName = 'EnglishName' or FieldName = 'Code' or FieldName = 'LocalName' or FieldName = 'CityName' or FieldName = 'ZipCode'  or FieldName='SalesmanUserId' or FieldName='PrimaryContactId' or FieldName='PartnerTypeId'  or  FieldName='CountryName' or FieldName = 'CountryId' or FieldName = 'ReceivablesAccountingCard' or FieldName = 'PayablesAccountingCard' or FieldName = 'Address1' or  FieldName = 'Address2'  or  FieldName = 'Phone')
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Card') and (FieldName = 'EnglishName' or FieldName = 'Code' or FieldName = 'LocalName'  or FieldName = 'VatNumber' or FieldName = 'CityName' or FieldName = 'ZipCode'  or FieldName='SalesmanUserId' or FieldName='PrimaryContactId' or FieldName='PartnerTypeId'  or  FieldName='CountryName' or FieldName = 'CountryId' or FieldName = 'ReceivablesAccountingCard'  or FieldName = 'Address1' or  FieldName = 'Address2'  or  FieldName = 'Phone')
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'User') and (FieldName = 'BranchId' or FieldName = 'DepartmentId'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Contact') and (FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Email' )
 
@@ -22,7 +27,7 @@ update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from Obje
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'PartnerType') and (FieldName = 'Name' )
 
 
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Customer') and (FieldName = 'AccountManagerUserId' or FieldName = 'RankId'  )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Customer') and (FieldName = 'AccountManagerUserId' or FieldName = 'RankId'  or FieldName = 'RegionId' or FieldName = 'CustomerSizeId'  or FieldName = 'IndustryId' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Tenant') and (FieldName = 'AddressId' or FieldName = 'CountryId' or FieldName = 'Company' or  FieldName = 'CurrencyId' )
 
 
@@ -31,8 +36,14 @@ update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from Obje
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'EntityStatus') and (FieldName = 'Name' or FieldName = 'Code' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Rank') and (FieldName = 'Name'  )
 
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Region') and (FieldName = 'Name'  )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'CustomerSize') and (FieldName = 'Name'  )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Industry') and (FieldName = 'Name'  )
+
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'CustomPickList') and (FieldName = 'Value' or FieldName = 'Code' or FieldName = 'IsMultipleChoice' )
 
 
+ 
 
 
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Shipment') and (FieldName = 'DirectionId' or FieldName = 'TransportModeId' or FieldName = 'ShipmentLevelCode' or FieldName = 'ShipmentTypeId' or FieldName = 'DepartmentId' or FieldName = 'BranchId'or FieldName = 'MasterShipmentDataId' or FieldName = 'ShipperId'or FieldName = 'ConsigneeId' or FieldName = 'AgentId'or FieldName = 'CustomerId' or FieldName = 'IncotermId'or FieldName = 'SalesmanUserId' or FieldName = 'AccountManagerUserId'or FieldName = 'ProfitCurrencyId' or FieldName = 'StatusId'or FieldName = 'FromPortId' or FieldName = 'ToPortId'  

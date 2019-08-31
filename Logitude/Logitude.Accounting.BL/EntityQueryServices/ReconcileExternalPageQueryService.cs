@@ -38,7 +38,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             if (temp != null)
             {
                 ReconcileExternalPage MyPoco = temp.FirstOrDefault();
-                myPM = GetEntityPM(MyPoco);
+                ReconcileExternalPageKeys keys = new ReconcileExternalPageKeys();
+                keys.Id = MyPoco.Id;
+                myPM = GetEntityPM(MyPoco, true, keys);
                 return myPM;
             }
             else
@@ -116,7 +118,78 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 return 0;
 
         }
+        public bool CheckLastApprovedBankPage(ReconcileExternalPagePM page, int tenant)
+        {
+            //
+            ReconcileExternalPagePM reconcileExternalPage = GetLastApprovedBankPage(page.BankAccountId, tenant); 
 
+            if (reconcileExternalPage != null && (reconcileExternalPage.Id == page.Id))
+            { return true; }
+            else return false;
+        }
+
+        //public ReconcileExternalPagePM GetLastCancelledBankPage(string bankAccountId, int tenant)
+        //{
+        //    //
+        //    ReconcileExternalPagePM ReconcileExternalPage= GetLastCancelledBankPage(bankAccountId, tenant);
+
+        //    return ReconcileExternalPage;
+
+        //}
+
+
+        public ReconcileExternalPagePM GetLastApprovedBankPage(string bankAccountId, int tenant)
+        {
+            ReconcileExternalPage reconcileExternalPage = (from a in context.ReconcileExternalPages
+                                                           where a.BankAccountId == bankAccountId && a.Tenant == tenant && a.StatusCode == "2"
+                                                           orderby a.PageNo descending
+                                                           select a).FirstOrDefault();
+            return GetEntityPM(reconcileExternalPage); ;
+        }
+
+
+        public bool CheckNextUnCancelledBankPage(string bankAccountId, int pageNo, int tenant)
+        {
+            
+                bool nextUncancelledBankPageExist = ChecNextUnCancelledBankPges(bankAccountId, pageNo,tenant );
+                if (nextUncancelledBankPageExist)
+                {
+                    return false;
+
+                }
+                else
+                {
+                    return true;
+                }
+            
+          
+        }
+
+        //private  List<ReconcileExternalPage> GetBankAccountBankPages(string  bankAccountId, int tenant)
+        //{
+
+        //    return (from a in context.ReconcileExternalPages
+        //            where a.BankAccountId == bankAccountId && a.Tenant == tenant select a).ToList();
+
+
+        //}
+        //private  bool CheckPreviousBankPageStatus(List<ReconcileExternalPage> reconcileExternalPages, int pageNo)
+        //{
+        //    pageNo = pageNo - 1;
+        //    return (from a in reconcileExternalPages 
+        //            where a.StatusCode == "3"   && a.PageNo == pageNo
+        //            select a).Any();
+        //}
+
+        private bool ChecNextUnCancelledBankPges(string bankAccountId, int pageNo, int tenant)
+        {
+
+           return (from a in context.ReconcileExternalPages
+                   where  a.PageNo > pageNo && a.StatusCode != "3" && a.BankAccountId == bankAccountId && a.Tenant == tenant
+
+             select a).Any();
+
+        }
     }
 
 }

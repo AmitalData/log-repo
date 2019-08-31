@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {TariffVersionPM} from './TariffVersionPM';
+import {TariffLineExpirationDatePM} from './TariffLineExpirationDatePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -333,6 +334,20 @@ export class TariffPM {
     public set IsSurchargeUpdate(newValue: boolean) { if (this.isSurchargeUpdate != newValue) { this.isSurchargeUpdate = newValue; this.MarkAsDirty("IsSurchargeUpdate"); } }
        
 	 
+     
+	private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
+    get  DeletedLinesExpirationDates() {
+        if (this.deletedLinesExpirationDates == null) {
+            this.deletedLinesExpirationDates = [];
+        }
+
+        return this.deletedLinesExpirationDates;
+    }
+    set  DeletedLinesExpirationDates(newValue: TariffLineExpirationDatePM[]) {
+        if (this.deletedLinesExpirationDates != newValue) {
+            this.deletedLinesExpirationDates = newValue;
+        }
+    }
 
     public OldEntityPM: TariffPM;
 		

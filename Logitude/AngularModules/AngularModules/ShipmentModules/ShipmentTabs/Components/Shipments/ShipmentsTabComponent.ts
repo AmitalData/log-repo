@@ -47,8 +47,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         this.LoadAllHouses();
         this.Listen();
     }
-
-
+    
     Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -91,6 +90,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
 
                     if (this.isLoadHousesRequested) {
                         this.LoadAllHouses();
+                        this.CurrentSession.SessionEvent.emit("RefreshConnections");
                     }
                 }
 
@@ -108,7 +108,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             }
         });
     }
-
+    
     private SessionEvent: any = null;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null; 
@@ -461,6 +461,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             cmp.EntityPM.BranchId = this.EntityPM.BranchId;
             cmp.EntityPM.DepartmentId = this.EntityPM.DepartmentId;
             cmp.EntityPM.MasterShipmentDataId = this.EntityPM.MasterShipmentDataId;
+            cmp.EntityPM.CutoffDate = this.EntityPM.CutoffDate;
             cmp.EntityPM.SCI = this.EntityPM.SCI;
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {

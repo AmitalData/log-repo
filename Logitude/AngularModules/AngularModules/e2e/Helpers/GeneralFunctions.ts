@@ -18,13 +18,13 @@ export class GeneralFunctions {
         return randomNumber;
     }
     public RandomNumAcc() {
-        var randomNumber = Math.floor(Math.random() * 100000).toString();
+        var randomNumber = Math.floor(Math.random() * 10000).toString();
         return randomNumber;
     }
-    UseSearchBox(searchFeildId: string, searchByRef: string) {
+    UseSearchBox(searchFeildId: string, searchByRef: string, listItemCss: string) {
 
         this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.'+listItemCss, 0);
     }
     QuickSearchTextBox(searchFeildId: string, searchByRef: string) {
         this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);

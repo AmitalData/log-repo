@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -125,7 +126,7 @@ using Simplog.Data.CommonDataModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
@@ -134,7 +135,8 @@ using Simplog.Data.CommonDataModel;
 					}
 					temp.EnglishName = MyEntity.EnglishName;
 					temp.LocalName = MyEntity.LocalName;
-					temp.VatNumber = MyEntity.VatNumber;					PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
+					temp.VatNumber = MyEntity.VatNumber;
+					PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
 					if(MyEntity.PaymentTerm != null)
 					{
 						var myPaymentTermPM = PaymentTermPaymentTermService.PaymentTermDataMappingAndValidatin(MyEntity.PaymentTerm,Tenant,ComputingPartnerName);
@@ -145,7 +147,8 @@ using Simplog.Data.CommonDataModel;
 						 
 					}
 			
-										AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
+					
+					AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.MainAddress != null)
 					{
 						var myMainAddressPM = MainAddressAddressService.AddressDataMappingAndValidatin(MyEntity.MainAddress,Tenant,ComputingPartnerName);
@@ -164,7 +167,8 @@ using Simplog.Data.CommonDataModel;
 						temp.Contacts = ContactService4.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName);
 					}
 
-								 					AddressQueryService BillingAddressAddressService = new AddressQueryService(Tenant);
+								 
+					AddressQueryService BillingAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.BillingAddress != null)
 					{
 						var myBillingAddressPM = BillingAddressAddressService.AddressDataMappingAndValidatin(MyEntity.BillingAddress,Tenant,ComputingPartnerName);
@@ -175,7 +179,8 @@ using Simplog.Data.CommonDataModel;
 						 
 					}
 			
-										GLAccountQueryService GLAccountGLAccountService = new GLAccountQueryService(Tenant);
+					
+					GLAccountQueryService GLAccountGLAccountService = new GLAccountQueryService(Tenant);
 					if(MyEntity.GLAccount != null)
 					{
 						var myGLAccountPM = GLAccountGLAccountService.GLAccountCustomDataMappingAndValidatin(MyEntity.GLAccount,Tenant);

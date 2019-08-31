@@ -338,6 +338,8 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new SATTransferStatusMap());
             modelBuilder.Configurations.Add(new SATInvoiceStatusMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
+            modelBuilder.Configurations.Add(new ARPaymentChequeReplicaMap());
+            modelBuilder.Configurations.Add(new ARPaymentChequeStatusReplicaMap());
 
 
             base.OnModelCreating(modelBuilder);
@@ -488,7 +490,8 @@ namespace Simplog.Data.InvoiceModel
 
         public IDbSet<ARInvoiceStock> ARInvoiceStocks { get; set; }
         public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
-
+        public IDbSet<ARPaymentChequeReplica> ARPaymentChequeReplicas { get; set; }
+       public IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas { get; set; }
         public void DetectChanges()
         {
             this.ChangeTracker.DetectChanges();

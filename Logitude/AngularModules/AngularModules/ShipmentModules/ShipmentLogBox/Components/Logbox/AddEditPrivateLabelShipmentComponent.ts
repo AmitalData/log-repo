@@ -390,7 +390,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     public set GrossWeight(newValue: number) { this.EntityPM.GrossWeight = +(newValue); }
 
     public get Master() { return this.EntityPM.Master }
-    public set Master(newValue: string) { this.EntityPM.Master = newValue; }
+    public set Master(newValue: any) { this.EntityPM.Master = newValue; }
 
     public get House() { return this.EntityPM.House }
     public set House(newValue: string) { this.EntityPM.House = newValue; }
@@ -403,7 +403,11 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         return this.containerNumber;
     }
     public set ContainerNumber(newValue: string) {
-        if (this.EntityPM.ShipmentPackages && this.EntityPM.ShipmentPackages.length == 0) {
+        if (AppTool.IsNullOrEmpty(newValue)) {
+            this.EntityPM.ShipmentPackages = [];
+            this.containerNumber = newValue;
+        }
+        if (this.EntityPM.ShipmentPackages && this.EntityPM.ShipmentPackages.length == 0 && !AppTool.IsNullOrEmpty(newValue)) {
             this.EntityPM.ShipmentPackages = [];
             var MyPackage = new ShipmentPackagePM(this.EntityPM);
             MyPackage.ContainerNumber = newValue;
@@ -412,11 +416,11 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             MyPackage.Quantity = this.PackagesQuantity;
             this.EntityPM.ShipmentPackages.push(MyPackage);
         }
-        else if (this.EntityPM.ShipmentPackages.length > 0) {
-            this.EntityPM.ShipmentPackages[0].ContainerNumber = newValue;
-            this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
-            this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
-            this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity; 
+        else if (this.EntityPM.ShipmentPackages.length > 0) { 
+                this.EntityPM.ShipmentPackages[0].ContainerNumber = newValue;
+                this.EntityPM.ShipmentPackages[0].Weight = this.GrossWeight;
+                this.EntityPM.ShipmentPackages[0].PackageTypeId = this.UnAssignedPackageTypeId;
+                this.EntityPM.ShipmentPackages[0].Quantity = this.PackagesQuantity;  
         }
         //this.ValidateContainerNumber(newValue);
     }
@@ -424,12 +428,12 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
      
 
     ValidateContainerNumber(input: string) {
+        //this.ValidationErrorsList = [];
         this.ValidationErrorsList = [];
-        this.WarningErrorsList = [];
         var error = FormatTool.ValidateContainerNumber(input);
 
         if (!AppTool.IsNullOrEmpty(error)) {
-            this.WarningErrorsList.push(error);
+            this.ValidationErrorsList.push(error);
         }
     }
     
@@ -441,9 +445,16 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         }
         this.isSaveClicked = true;
         this.ValidationErrorsList = [];
+       
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber)) {
+            var error = FormatTool.ValidateContainerNumber(this.ContainerNumber);
 
+            if (!AppTool.IsNullOrEmpty(error)) {
+                this.ValidationErrorsList.push(error);
+            }
+        }
         if (!this.SelectedTransportationTypes) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportationTypes"));
         }
@@ -629,9 +640,14 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         //if (AppTool.IsNullOrEmpty(this.CustomerReference2)) {
         //    this.ValidationErrorsList.push(msg.replace("%FieldName", "My Reference"));
         //}
+        var isMasterAllDigits = this.Master != null ? /^\d+$/.test(this.Master) : true;//typeof this.Master;
+        if (!isMasterAllDigits) {
+            this.ValidationErrorsList.push("Master Field must be all digits");
+        }
         if ((typeof this.PackagesQuantity != 'number' || this.PackagesQuantity.toString() == "NaN") && this.PackagesQuantity != null) {
             this.ValidationErrorsList.push("Quantity must be numaric value");
         }
+        //Master Field must be all digits
         if ((typeof this.GrossWeight != 'number' || this.GrossWeight.toString() == "NaN") && this.GrossWeight != null) {
             this.ValidationErrorsList.push("Weight must be numaric value");
         }
@@ -759,6 +775,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
 
         }
         else {
+            this.isSaveClicked = false;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
     }

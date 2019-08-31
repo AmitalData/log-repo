@@ -2,15 +2,15 @@ import { Component, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import { TariffDomainService, TariffFilterParameter, ExcelTariffLines } from '../../../Services/TariffDomainService';
+import { TariffDomainService } from '../../../Services/TariffDomainService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { TariffPM } from '../../../EntityPMs/TariffPM';
 import { TariffLinePM } from '../../../EntityPMs/TariffLinePM';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
+import { TariffLineExpirationDatePM } from '../../../EntityPMs/TariffLineExpirationDatePM';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -25,7 +25,6 @@ import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/Ta
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { UpdateTariffArgs } from '../../../Args';
 import { AirSurchargeTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
-declare var ResultAsArray: any;
 
 @Component({
     moduleId: module.id,
@@ -39,11 +38,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public DataContext = this;
     public IsResourcesReady: boolean = false;
     private TariffDomainService: TariffDomainService;
-    private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
-    private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsUpdateSurchargesButtonVisible: boolean = false;
     public IsFirstDraft: boolean = false;
@@ -58,7 +55,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public AllMeasurements: MeasurementList[];
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
-        this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.TariffDomainService = new TariffDomainService();
 
         this.CurrentVersion = args['CurrentVersion'];
@@ -134,30 +130,42 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
-                    if (this.isUploadExcelFinished) {
-                        this.isUploadExcelFinished = false;
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    if (this.isTariffLinesDeleted) {
+                        this.isTariffLinesDeleted = false;
+                        this.CurrentSession.FireEvent("TariffLinesDeleted");                       
                     }
-
+  
                     this.SetSurchargesLabelsAndVisibility();
                 }
 
                 else {
+                    //if (this.isApproveButtonClicked) {
+                        //if (this.isTariffLinesDeleted) {
+                        //    this.ResetDeletedLinesExpirationDates();                        
+                        //}
+                    //}
+
                     this.StopAllFlags();
                 }
             });
         }
     }
 
-    StopAllFlags() {
-
+    private StopAllFlags() {
         if (this.EntityPM.IsApprovingDraftVersion) {
             this.EntityPM.IsApprovingDraftVersion = false;
         }
 
         this.isApproveButtonClicked = false;
-        this.isUploadExcelFinished = false;
+        this.isTariffLinesDeleted = false;
     }
+    //private ResetDeletedLinesExpirationDates() {
+    //    this.CurrentVersion.TariffLines.forEach(item => {
+    //        item.ExpirationDate = null;
+    //    });
+
+    //    this.EntityPM.DeletedLinesExpirationDates = [];
+    //}
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
@@ -508,182 +516,38 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
+    private isTariffLinesDeleted: boolean = false;
     DeleteTariffButtonClicked(item: AirSurchargeTariffLineData) {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show("Delete this Tariff Line?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.CurrentVersion.RemoveTariffLine(item.EntityPM);
-                this.TariffsLinesSource.Remove(item);
-                this.FillTariffLines(this.CurrentVersion.TariffLines);
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 450;
+                logWindow.Height = 200;
+                logWindow.WindowArgs = { CurrentLine: item.EntityPM, TariffType: this.EntityPM.TypeCode, };
+                logWindow.Title = "Expiration Date";
+
+                logWindow.ComponentLoaded.subscribe(s => {
+                    logWindow.WindowClosed.subscribe(d => {
+                        if (s && d == "ok") {
+                            var deletedItem: TariffLineExpirationDatePM = new TariffLineExpirationDatePM();
+                            deletedItem.TariffLineId = item.EntityPM.Id;
+                            deletedItem.ExpirationDate = item.EntityPM.ExpirationDate;
+
+                            this.EntityPM.DeletedLinesExpirationDates.push(deletedItem);
+                            this.CurrentVersion.RemoveTariffLine(item.EntityPM);
+                            this.TariffsLinesSource.Remove(item);
+                            this.FillTariffLines(this.CurrentVersion.TariffLines);
+
+                            this.isTariffLinesDeleted = true;
+                        }
+                    });
+                });
+
+                logWindow.Show('./TariffModule/Components/EditTabs/Tariff/TariffDatesValidationComponent');
             }
         });
-    }
-
-    // Upload Excel File 
-    OnFileChanged(fileEvent) {
-        var file = fileEvent.target.files[0];
-
-        if (file) {
-            var extension: string = file.name.split('.')[1];
-
-            if (extension.includes("xls")) {
-                var file = fileEvent.target.files[0];
-                this.UploadExcel(file);
-            }
-
-            else {
-                var messageWindow: MessageWindow = new MessageWindow();
-                messageWindow.Show("You have to upload excel files only");
-            }
-        }
-    }
-    UploadExcel(file: any) {
-        this.FileName = null;
-        if (!AppTool.IsNullOrEmpty(file.name)) {
-            var name = file.name.split('.');
-            if (name.length == 2) {
-                this.FileName = name[0];
-            }
-        }
-
-        if (file && file.size > 0) {
-            this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var myResult = response.Result;
-                    if (myResult) {
-                        this.StartUploadingExcelFile(file);
-                    }
-                }
-            });
-        }
-    }
-    StartUploadingExcelFile(file: any) {
-        if (file && file.size > 0) {
-            var filebuffer = file.slice(0, file.size);
-            this.ConvertArrayBufferToBase64(filebuffer, this);
-        }
-    }
-    ConvertArrayBufferToBase64(file: any, context: any) {
-        var reader: FileReader = new FileReader();
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            var binary = '';
-            var bytes = new Uint8Array(ResultAsArray(e));
-            var len = bytes.byteLength;
-            for (var i = 0; i < len; i++) {
-                binary += String.fromCharCode(bytes[i]);
-            }
-
-            var filter = new TariffFilterParameter();
-            filter.FileData = window.btoa(binary);
-            filter.PriceSteps = context.PriceSteps;
-            filter.TariffId = context.EntityPM.Id;
-            filter.Version = context.CurrentVersion.Version;
-            filter.TariffType = context.EntityPM.TypeCode;
-            filter.FileName = context.FileName;
-
-            context.SendExcelToServer(filter);
-        };
-
-        reader.onerror = function (e) {
-            console.log(e);
-        };
-        reader.readAsArrayBuffer(file);
-        context.EntityPM.FileUploadedName = this.FileName;
-
-    }
-    SendExcelToServer(filter: any) {
-        this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                var tariffLines: ExcelTariffLines[] = response.Result;
-                if (tariffLines) {
-                    this.CurrentVersion.TariffLines = [];
-                    this.InsertNewRowsFromExcel(tariffLines);
-                }
-            }
-        });
-    }
-
-    private isUploadExcelFinished: boolean = false;
-    private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
-        tariffLines.forEach(item => {
-            var tariffLine = new TariffLinePM(null);
-            tariffLine.StartDate = this.StartDate;
-            tariffLine.ExpirationDate = this.ExpirationDate;
-            tariffLine.Tenant = SessionLocator.Tenant;
-            tariffLine.Version = this.CurrentVersion.Version;
-            tariffLine.OriginPortId = item.FromPortId;
-            tariffLine.OriginPortCode = item.FromPortCode;
-            tariffLine.OriginPortName = item.FromPortName;
-            tariffLine.DestinationPortId = item.ToPortId;
-            tariffLine.DestinationPortCode = item.ToPortCode;
-            tariffLine.DestinationPortName = item.ToPortName;
-            tariffLine.OriginPortText = item.FromPortText;
-            tariffLine.DestinationPortText = item.ToPortText;
-            tariffLine.HasErrors = item.HasErrors;
-            tariffLine.ErrorText = item.ErrorText;
-            tariffLine.Index = item.Index;
-            tariffLine.Notes = item.Notes;
-            tariffLine.StartDate = item.StartDate;
-            //tariffLine.StartDateText = item.StartDateText;
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
-                tariffLine.Surcharge1Price = item.Surcharge1Price;
-                tariffLine.Surcharge1PriceText = item.Surcharge1PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2Id)) {
-                tariffLine.Surcharge2Price = item.Surcharge2Price;
-                tariffLine.Surcharge2PriceText = item.Surcharge2PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3Id)) {
-                tariffLine.Surcharge3Price = item.Surcharge3Price;
-                tariffLine.Surcharge3PriceText = item.Surcharge3PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4Id)) {
-                tariffLine.Surcharge4Price = item.Surcharge4Price;
-                tariffLine.Surcharge4PriceText = item.Surcharge4PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5Id)) {
-                tariffLine.Surcharge5Price = item.Surcharge5Price;
-                tariffLine.Surcharge5PriceText = item.Surcharge5PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge6Id)) {
-                tariffLine.Surcharge6Price = item.Surcharge6Price;
-                tariffLine.Surcharge6PriceText = item.Surcharge6PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge7Id)) {
-                tariffLine.Surcharge7Price = item.Surcharge7Price;
-                tariffLine.Surcharge7PriceText = item.Surcharge7PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge8Id)) {
-                tariffLine.Surcharge8Price = item.Surcharge8Price;
-                tariffLine.Surcharge8PriceText = item.Surcharge8PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge9Id)) {
-                tariffLine.Surcharge9Price = item.Surcharge9Price;
-                tariffLine.Surcharge9PriceText = item.Surcharge9PriceText;
-            }
-
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge10Id)) {
-                tariffLine.Surcharge10Price = item.Surcharge10Price;
-                tariffLine.Surcharge10PriceText = item.Surcharge10PriceText;
-            }
-
-            this.CurrentVersion.AddTariffLine(tariffLine);
-        });
-
-        this.EntityPM.TariffLinesAddedFromExcel = true;
-        this.isUploadExcelFinished = true;
-        this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
     }
 
     // Download Excel 

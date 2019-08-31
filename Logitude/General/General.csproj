@@ -207,6 +207,10 @@
     <Content Include="2019.R2\05 - 2019\Day 9 [Abed] UpdateMeasuremntsLocalName.sql" />
     <Content Include="2019.R3\07 - 2019\Day 03 [Samar] Add new help resources.sql" />
     <Content Include="2019.R3\07 - 2019\Day 06 [Maheera] Add new UOM Volume in CBM.sql" />
+    <Content Include="2019.R3\07 - 2019\Day 21 [Khalid] ComputeShipmendFieldsPickupsAndDeliveriesForDW.sql" />
+    <Content Include="2019.R3\07 - 2019\Day 17 [Islam] fix users without roles.sql" />
+    <Content Include="2019.R3\07 - 2019\Day 17 [Khalid] shipment_Fact_Fields_Fill.sql" />
+    <Content Include="2019.R3\08 - 2019\Day 6 [Khalid] ComputeShipmentPackagesForDW.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
@@ -218,6 +222,7 @@
     <Content Include="2018.R2\06 - 2018\Day 12 [Ayman] ApplyMoveTypeComputingPartner.sql" />
     <Content Include="2018.R2\06 - 2018\Day 25 [Samar] Add new event type set as potential.sql" />
     <Content Include="DataViews And Procedures\DataViews\MessagingStockDataView.sql" />
+    <Content Include="DataViews And Procedures\Scripts Needs Inputs\UpdateTenantDayLightStartandEndDates.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateAllTenantsCustomersActualData.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateConstituentShipment.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateCustomerActualData.sql" />
@@ -592,6 +597,20 @@
     <Content Include="Main Branch\2019\06 - 2019\Day 19 [Abed] SetDefultValueToShowHeaderLabelsInQuoteTemplateSetting.sql" />
     <Content Include="Main Branch\2019\07 - 2019\Day 16 [Abdullah] update bankaccounts currencies.sql" />
     <Content Include="Main Branch\2019\07 - 2019\Day 14 [Maheera] Update Shipment e-Booking INTTRA Statuses.sql" />
+    <Content Include="Main Branch\2019\07 - 2019\Day 31 [Abed] updateHeaderScreenWarehouseEntry.sql" />
+    <Content Include="Main Branch\2019\07 - 2019\Day 31 [Nawras] updateSchedulerProceduresetDefualtIsInternallyDefined.sql" />
+    <Content Include="Main Branch\2019\07 - 2019\Day 31 [Nawras] Delete Duplicate ServiceClassNameHelpText LastRunTimeHelpText .sql" />
+    <Content Include="Main Branch\2019\07 - 2019\Day 29 [Rabaia] Delete Service Class Name OField.sql" />
+    <Content Include="Main Branch\2019\07 - 2019\Day 22 [Abed] updateQuoteTemplateSettingsSetDefultSpaceLines.sql" />
+    <Content Include="Main Branch\2019\07 - 2019\Day 28 [Maheera]Add BIReportsExecutionLogWorkerRole.sql" />
+    <Content Include="Main Branch\2019\07 - 2019\Day 31 [Abed] updateFieldLastStatusUpdateDateOnWarehouseEntry.sql" />
+    <Content Include="Main Branch\2019\08 - 2019\Day 07 [Maheera] Update Last Opportunity columns of Customer .sql" />
+    <Content Include="Main Branch\2019\08 - 2019\Day 05 [Islam] add LogMessages  batch service.sql" />
+    <Content Include="Main Branch\2019\08 - 2019\Day 21 [Maheera]  Inactive the In Progress Statuses In EntityStatus Table For Logitudeworld Production Version Only.sql" />
+    <Content Include="Main Branch\2019\08 - 2019\Day 25 [Maheera] Fill Cut Off Date Field On Shipment Master Data Table.sql" />
+    <Content Include="Main Branch\2019\08 - 2019\Day20 [Abed] InSertRecordToQuoteTemplateTextCode%28Included%29.sql" />
+    <Content Include="Main Branch\2019\08 - 2019\Day 18 [Abed] SetViewOrderInChargesGroup.sql" />
+    <Content Include="Main Branch\2019\08 - 2019\Day28 [Ayman] CalculateTenantManagementTotalPrice.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
@@ -1818,6 +1837,7 @@
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments NumberOfHouses.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] Calculate Shipments TEU.sql" />
     <Content Include="Usefull Scripts\Fill Data\[Ayman] ShipmentPayablesReceivablesFields.sql" />
+    <Content Include="Usefull Scripts\Islam\bulk update shipments_new.sql" />
     <Content Include="Usefull Scripts\Islam\contact computed Key.sql" />
     <Content Include="Usefull Scripts\Islam\duplicated contacts issue script fix.sql" />
     <Content Include="Usefull Scripts\Islam\duplicated Global Contacts Fix.sql" />
@@ -1891,6 +1911,8 @@
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Spatial, Version=5.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

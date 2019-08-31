@@ -51,7 +51,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsReconciled, 
 	         IsExternalReconcile, 
 	         InReconcileProgress, 
-	         ReconcileRemarks,
+	         ReconcileRemarks, 
+	         InProgressExternalReconcile,
 	      }
 
 
@@ -108,7 +109,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         OppositeAccountDisplayNumber, 
 	         RecoNumber, 
 	         ReconciliationId, 
-	         PaymentReconciledAmount,
+	         PaymentReconciledAmount, 
+	         InProgressExternalReconcile,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -260,6 +262,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconcileRemarks))
             {
 				entityPOCO.ReconcileRemarks = entityPM.ReconcileRemarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InProgressExternalReconcile))
+            {
+				entityPOCO.InProgressExternalReconcile = entityPM.InProgressExternalReconcile;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -418,6 +425,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ReconcileRemarks = entityPOCO.ReconcileRemarks;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InProgressExternalReconcile))
+            {
+					entityPM.InProgressExternalReconcile = entityPOCO.InProgressExternalReconcile;
+            }
+
 		}
 
 		public void PMToOldPM(LedgerTransactionPM entityPM, LedgerTransactionPM oldEntityPM)
@@ -567,6 +579,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconcileRemarks))
             {
                 oldEntityPM.ReconcileRemarks = entityPM.ReconcileRemarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InProgressExternalReconcile))
+            {
+                oldEntityPM.InProgressExternalReconcile = entityPM.InProgressExternalReconcile;
             }
 			
 		}

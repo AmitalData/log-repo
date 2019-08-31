@@ -22,7 +22,8 @@ import {MeasurementListService} from '../../../../Common/Services/StandardLists/
 import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
 import {UserListService} from '../../../../Common/Services/StandardLists/UserListService';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
@@ -32,7 +33,6 @@ import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
 import {QuotePMService} from '../../../../Quote/Services/StandardPMs/QuotePMService';
 import {CardList} from '../../../../Common/EntityLists/CardList';
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
-
 @Component({
     moduleId: module.id,
     templateUrl: './PayablesTabComponent.html',
@@ -53,7 +53,9 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
     public ItemsSource: ObservableCollection;
     public IsResourcesReady: boolean = false;  
     public myDomainService: ShipmentDomainService;
+    public IsPriceCheckVisible:boolean=false;
     public myUserListService: UserListService = null;
+    public ComponentRef: any;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
@@ -69,7 +71,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         this.myUserListService = new UserListService();
         this.Listen();
         this.SetEditEnabled();
-        this.LoadRequiredData();
+        this.LoadRequiredData();        
     }
 
     private SessionEvent: any = null;
@@ -210,6 +212,51 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         }
     }
 
+    PriceCheck() {
+        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageATD)) {
+                betweenDate = this.EntityPM.MainCarriageATD;
+            }
+            else if (!AppTool.IsNullOrEmpty(this.EntityPM.MainCarriageETD)) {
+                betweenDate = this.EntityPM.MainCarriageETD;
+            }
+
+    
+
+            var WindowArgs: any =
+            {
+                BetweenDate: betweenDate,
+                FromPort: this.EntityPM.MainCarriageFromPortId,
+                ToPort: this.EntityPM.ToPortId,
+                GrossWeight: this.EntityPM.GrossWeight,
+                ChargeableWeight: this.EntityPM.ChargeableWeight,
+                Volume: this.EntityPM.Volume,
+                ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode,
+                GrossWeightUnit: this.EntityPM.GrossWeightUnitCode,
+                VolumeUnit: this.EntityPM.VolumeUnitCode,
+                ShipmentPM: this.EntityPM,
+                FatherComponent: this
+            };
+            var logWindow = new LogitudeWindow();
+            logWindow.IsFillScreenHeight = true;
+            logWindow.Width = 1200;
+            logWindow.Title = "Price Check";
+            logWindow.ComponentLoaded.subscribe(cmpRef => {
+                this.ComponentRef = cmpRef;
+
+                if (WindowArgs != null) {
+                    if (this.ComponentRef['SetWindowArgs']) {
+                        this.ComponentRef.SetWindowArgs(WindowArgs);
+                    }
+                }
+            });
+
+            logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
+           
+        });      
+    }
+
     // Set Labels
     public ExpectedAmountLocalHeader: string;
     SetLabels() {
@@ -218,7 +265,18 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
     // SetUIProperties
     public IsEditingEnabled: boolean = true;
+    public IsDeleteAllPayablesVisible: boolean = false;
     SetEditEnabled() {
+
+        if (FeatureLocator.HasFeaturePermession("Shipment", "DeleteAllPayables")) {
+            this.IsDeleteAllPayablesVisible = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentPriceCheck") && this.EntityPM.TransportModeId == "A") {
+            this.IsPriceCheckVisible = true;
+        }
+
+        
         var isEditingEnabled: boolean = true;
 
         if (this.EntityPM) {
@@ -921,6 +979,17 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         logWindow.WindowArgs = this;
         logWindow.Show('./ShipmentModules/ShipmentTabs/Components/Windows/Tariffs/TariffsComponent');
     }
+    EditTariffClicked(item: ShipmentPayableItem) {
+        if (item != null) {
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.ShowEditComponent(item.TariffId, "Tariff", item.TariffVersion + "" );
+        }
+    }
+
     ComputeShipmentFields() {
         if (this.EntityPM != null) {
             ShipmentTool.ComputeTotals(this.EntityPM);
@@ -1104,6 +1173,35 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         });
 
         this.CheckUpdateQuantities();
+    }
+
+    DeleteAllClicked() {
+        if (this.IsEditingEnabled) {
+
+            if (this.EntityPM.ShipmentPayables.filter(f => f.ShipmentPayableLineStatusCode == 'PACC' || f.ShipmentPayableLineStatusCode == 'ACCT').length > 0) {
+                var messageWindow = new MessageWindow();
+                messageWindow.Show("Can't delete all, some lines are connected to invoices");
+            }
+
+            else if (this.EntityPM.ShipmentLevelCode == "H" && this.EntityPM.ShipmentPayables.filter(f => f.ShipmentPayableParentId != null).length > 0) {
+                var messageWindow = new MessageWindow();
+                messageWindow.Show("Can't delete all, some lines are connected to master");
+            }
+
+            else {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Show("Please note that deleting will erase all the lines with the amounts inserted");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.EntityPM.ShipmentPayables = [];
+                        this.EntityPM.IsDeletingAllPayables = true;
+                        this.EntityPM.IsDirty = true;
+                        this.BuildItemsSource();
+                        this.ComputeShipmentFields();
+                    }
+                });
+            }
+        }
     }
 }
 export class ShipmentPayableItem extends BaseComponent {
@@ -1416,6 +1514,10 @@ export class ShipmentPayableItem extends BaseComponent {
     get ChargesTypeCode() { return this.EntityPM.ChargesTypeCode; }
     get ChargesTypeName() { return this.EntityPM.ChargesTypeName; }
     get ChargesGroupCode() { return this.EntityPM.ChargesGroupCode; }
+    get TariffNumber() { return this.EntityPM.TariffNumber; }
+    get TariffId() { return this.EntityPM.TariffId; }
+    get TariffVersion() { return this.EntityPM.TariffVersion; }
+
 
     get ChargesTypeId() { return this.EntityPM.ChargesTypeId; }
     set ChargesTypeId(value: string) {

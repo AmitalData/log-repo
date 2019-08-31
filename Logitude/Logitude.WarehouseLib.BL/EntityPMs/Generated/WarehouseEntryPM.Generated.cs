@@ -1481,6 +1481,121 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? lastStatusUpdateDate ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastStatusUpdateDate  
+	   {
+	    
+	     get
+		{
+		   return lastStatusUpdateDate;
+		 }
+		 set
+		 {
+		   if(lastStatusUpdateDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusUpdateDate",OldValue=lastStatusUpdateDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   lastStatusUpdateDate=value;
+		   }
+			
+		 }
+	   }
+	  private string masterHouse ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MasterHouse  
+	   {
+	    
+	     get
+		{
+		   return masterHouse;
+		 }
+		 set
+		 {
+		   if(masterHouse != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MasterHouse",OldValue=masterHouse,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   masterHouse=value;
+		   }
+			
+		 }
+	   }
+	  private string entryReferencesAndDate ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntryReferencesAndDate  
+	   {
+	    
+	     get
+		{
+		   return entryReferencesAndDate;
+		 }
+		 set
+		 {
+		   if(entryReferencesAndDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntryReferencesAndDate",OldValue=entryReferencesAndDate,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entryReferencesAndDate=value;
+		   }
+			
+		 }
+	   }
+	  private string connectedTo ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConnectedTo  
+	   {
+	    
+	     get
+		{
+		   return connectedTo;
+		 }
+		 set
+		 {
+		   if(connectedTo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConnectedTo",OldValue=connectedTo,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   connectedTo=value;
+		   }
+			
+		 }
+	   }
+	  private double? ratio ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? Ratio  
+	   {
+	    
+	     get
+		{
+		   return ratio;
+		 }
+		 set
+		 {
+		   if(ratio != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Ratio",OldValue=ratio,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   ratio=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

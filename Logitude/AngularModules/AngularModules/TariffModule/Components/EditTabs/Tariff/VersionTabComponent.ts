@@ -205,13 +205,14 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
     }
 
-    get ExpirationDate() {
-        return (this.CurrentVersion == null ? null : this.CurrentVersion.ExpirationDate);
+    get InitialEnddate() {
+        return (this.CurrentVersion == null ? null : this.CurrentVersion.ExpirationDate != null ? this.CurrentVersion.ExpirationDate : this.CurrentVersion.InitialEnddate);
     }
-    set ExpirationDate(value: Date) {
-        if (this.CurrentVersion.ExpirationDate != value) {
+    set InitialEnddate(value: Date) {
+        if (this.CurrentVersion.InitialEnddate != value) {
+            this.CurrentVersion.InitialEnddate = value;
             this.CurrentVersion.ExpirationDate = value;
-            
+
             this.UpdateDates("expire", value);
         }
     }
@@ -361,7 +362,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         var logWindow = new LogitudeWindow();
         var itemPM = new TariffLinePM(null);
         itemPM.StartDate = this.StartDate;
-        itemPM.ExpirationDate = this.ExpirationDate;
+        itemPM.ExpirationDate = this.InitialEnddate;
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
         itemPM.Index = 0;
@@ -490,7 +491,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
             var tariffLine = new TariffLinePM(null);
             tariffLine.StartDate = this.StartDate;
-            tariffLine.ExpirationDate = this.ExpirationDate;
+            tariffLine.ExpirationDate = this.InitialEnddate;
             tariffLine.Tenant = SessionLocator.Tenant;
             tariffLine.Version = this.CurrentVersion.Version;
             tariffLine.OriginPortId = item.FromPortId;
@@ -592,7 +593,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 450;
         logWindow.Height = 200;
-        logWindow.WindowArgs = this.CurrentVersion;
+        logWindow.WindowArgs = { CurrentVersion: this.CurrentVersion, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = windowTitle;
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
@@ -600,14 +601,16 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                     this.isCopyButtonClicked = true;
                     this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
                     this.EntityPM.LastStartDate = this.StartDate;
-                    this.EntityPM.LastExpirationDate = this.ExpirationDate;
+                    this.EntityPM.LastExpirationDate = this.InitialEnddate;
                     var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
                     copiedVersion.TariffId = this.CurrentVersion.TariffId;
                     copiedVersion.Version = this.EntityPM.LastVersion;
                     copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
                     copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
                     copiedVersion.StartDate = s.StartDate;
-                    copiedVersion.ExpirationDate = s.ExpirationDate;
+                    copiedVersion.InitialEnddate = s.InitialEnddate;
+                    copiedVersion.ExpirationDate = s.InitialEnddate;
+
                     copiedVersion.IsDraft = true;
                     copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
                     copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
@@ -616,7 +619,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                     this.loadedTariffLines.forEach(item => {
                         var tariffLine = new TariffLinePM(copiedVersion);
                         tariffLine.StartDate = this.StartDate;
-                        tariffLine.ExpirationDate = this.ExpirationDate;
+                        tariffLine.ExpirationDate = this.InitialEnddate;
                         tariffLine.Tenant = SessionLocator.Tenant;
                         tariffLine.Version = copiedVersion.Version;
                         tariffLine.OriginPortId = item.OriginPortId;

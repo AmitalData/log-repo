@@ -42,31 +42,30 @@ export class EditTabsComponent {
 
     this.QuickSearch = new ShipmentSearch();
   }
-  GoToShipment(){
+  GoToShipment() {
     this.Operation.GoToMainMenu('General.MH.Operations');
     this.Operation.SelectMenuWorkSpaceTabs('SHIP');
     // this.QuickSearch.UseQuickSearch('SR1545342');
   }
 
-  EditTabs(shipperRef1:string,ShipmentLevelCode:string,ShipmentType: string,Direction:string) {
-
-
-    this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
-   this.GeneralTabScenario.GeneralTab(ShipmentLevelCode);
-   this.OrderTabScenario.OrderTab(ShipmentLevelCode,ShipmentType);
-  this.PartnersTabScenario.PartnersTab(ShipmentLevelCode);
-   this.PackagesTabScenario.PackagesTab(ShipmentLevelCode,ShipmentType);
-   this.RoutingTabScenario.RoutingTab(ShipmentLevelCode,ShipmentType,Direction);
-   this.PayablesTabScenario.PayablesTab(shipperRef1,ShipmentType);
-  this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode,ShipmentType);
-  //this.DocsOutTabScenario.DocsOutTab();
-  
-   if(ShipmentLevelCode=='M'){
-     this.ShipmentsTabScenario.ShipmentsTab();
+  EditTabs(shipperRef1: string, ShipmentLevelCode: string, ShipmentType: string, Direction: string) {
+    if (browser.params.ShipParams.ShipmentEditTabs == 'docs') {
+      this.DocsOutTabScenario.DocsOutTab();
     }
-      this.Helper.WaitByIdAndClick('Shipment-Save');
-    this.Helper.WaitBusyIndicator();
-  }
+    else {
+      this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
+      this.GeneralTabScenario.GeneralTab(ShipmentLevelCode);
+      this.OrderTabScenario.OrderTab(ShipmentLevelCode, ShipmentType);
+      this.PartnersTabScenario.PartnersTab(ShipmentLevelCode);
+      this.PackagesTabScenario.PackagesTab(ShipmentLevelCode, ShipmentType);
+      this.RoutingTabScenario.RoutingTab(ShipmentLevelCode, ShipmentType, Direction);
+      this.PayablesTabScenario.PayablesTab(shipperRef1, ShipmentType);
+      this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode, ShipmentType);
 
+      if (ShipmentLevelCode == 'M') {
+        this.ShipmentsTabScenario.ShipmentsTab();
+      }
+    }
+  }
 }
 

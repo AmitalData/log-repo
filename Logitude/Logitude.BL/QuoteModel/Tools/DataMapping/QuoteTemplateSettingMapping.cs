@@ -252,6 +252,19 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
           itemPoco.ShowHeaderLabelsContainers = itemPM.ShowHeaderLabelsContainers;
           itemPoco.ShowHeaderLabelsPackages = itemPM.ShowHeaderLabelsPackages;
 
+            itemPoco.SpaceLinesBeforeContainers = itemPM.SpaceLinesBeforeContainers;
+            itemPoco.SpaceLinesBeforeFooters = itemPM.SpaceLinesBeforeFooters;
+            itemPoco.SpaceLinesBeforeHeaders = itemPM.SpaceLinesBeforeHeaders;
+            itemPoco.SpaceLinesBeforePackages = itemPM.SpaceLinesBeforePackages;
+            itemPoco.SpaceLinesBeforeQuoteDetails = itemPM.SpaceLinesBeforeQuoteDetails;
+            itemPoco.SpaceLinesBeforeQuoteHeaders = itemPM.SpaceLinesBeforeQuoteHeaders;
+            itemPoco.SpaceLinesBeforePerContainers = itemPM.SpaceLinesBeforePerContainers;
+            itemPoco.QuoteTemplatePDFMarginBottom = itemPM.QuoteTemplatePDFMarginBottom;
+            itemPoco.QuoteTemplatePDFMarginTop = itemPM.QuoteTemplatePDFMarginTop;
+            itemPoco.ShowIncludedChargesPerContainers = itemPM.ShowIncludedChargesPerContainers;
+            itemPoco.ShowIncludedChargesPackages = itemPM.ShowIncludedChargesPackages;
+            itemPoco.ShowIncludedChargesContainers = itemPM.ShowIncludedChargesContainers;
+
         }
     }
 }

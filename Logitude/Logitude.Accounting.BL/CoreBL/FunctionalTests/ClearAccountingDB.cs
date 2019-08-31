@@ -22,7 +22,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
             {
                 throw new Exception("tenant!= 1148");
             }
-            using (var scope = TransactionFactory.GetTransaction())
+            using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(5)))
             {
 
 
@@ -81,7 +81,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 
 
                 (accountingContext as DbContextBase)
-    .DeleteWhere<ARPaymentCheque>(rec => rec.Tenant == tenant);
+    .DeleteWhere((Data.EntityPOCOs.ARPaymentCheque rec) => rec.Tenant == tenant);
 
                 (accountingContext as DbContextBase)
     .DeleteWhere<ARInvoicePayment>(rec => rec.Tenant == tenant);

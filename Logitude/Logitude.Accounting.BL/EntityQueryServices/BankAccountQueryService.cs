@@ -26,27 +26,47 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return EntityPM;
         }
 
-        
-            public BankAccountPM GetBankAccountByBankIdAccNumber(string BankId, string AccountNumber, int tenant)
+
+        public BankAccountPM GetBankAccountByTransferGLAcccountId(string transferGLAcccountId, int tenant)
         {
-            BankAccount bankAccount = this.repository.GetBankAccountByBankIdAccNumber(BankId, AccountNumber, tenant);
+            BankAccount bankAccount = this.repository.GetBankAccountByTransferGLAcccountId(transferGLAcccountId, tenant);
 
             if (bankAccount != null)
             {
-                EntityPM = new BankAccountPM();
+                return this.GetEntityPM(bankAccount);
+            }
+
+            return null;
+        }
+
+        public BankAccountPM GetBankAccountByBankIdAccNumber(string BankId, string AccountNumber, int tenant)
+        {
+            BankAccount bankAccount = this.repository.GetBankAccountByBankIdAccNumber(BankId, AccountNumber, tenant);
+            return this.GetEntityPM(bankAccount, false);
+        }
+        public BankAccountPM GetByAccountNumber(string number, int tenant)
+        {
+            BankAccount bankAccount = this.repository.GetBankAccountByNumber(number, tenant);
+
+            var EntityPM = new BankAccountPM();
+            if (bankAccount != null)
+            {
+                
                 mapping.CustomPOCOToPM(EntityPM, bankAccount);
                 mapping.POCOToPM(EntityPM, bankAccount);
             }
 
             return EntityPM;
         }
-        public BankAccountPM GetByAccountNumber(string number, int tenant)
-        {
-            BankAccount bankAccount = this.repository.GetBankAccountByNumber(number, tenant);
 
+        public BankAccountPM GetByGLAccountId(string accountId, int tenant)
+        {
+            BankAccount bankAccount = this.repository.GetBankAccountByGLAccountId(accountId, tenant);
+
+            var EntityPM = new BankAccountPM();
             if (bankAccount != null)
             {
-                EntityPM = new BankAccountPM();
+                
                 mapping.CustomPOCOToPM(EntityPM, bankAccount);
                 mapping.POCOToPM(EntityPM, bankAccount);
             }

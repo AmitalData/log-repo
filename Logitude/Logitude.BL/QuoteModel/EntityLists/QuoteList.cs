@@ -36,7 +36,8 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public bool TotalPerContainer { get; set; }
         public string QuoteNumber { get; set; }
         public DateTime OpenDate { get; set; }
-        public DateTime? ExpirationDate { get; set; }        
+        public DateTime? ExpirationDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public string QuoteTypeName { get; set; }
         public string CarrierName { get; set; }
@@ -187,5 +188,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string NotifyNote { get; set; }
         public int? NumberOfFollowUps { get; set; }
         public bool IsDangerous { get; set; }
+
+        public string QuoteHTMLDocumentId { get; set; }
     }
 }

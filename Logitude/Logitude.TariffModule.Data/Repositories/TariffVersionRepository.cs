@@ -45,10 +45,14 @@ namespace Logitude.TariffModule.Data.Repositories
             {
                 DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-                return (from a in context.TariffVersions
-                        where a.TariffId == tariffId && a.Tenant == tenant && !a.IsDraft
-                        && DbFunctions.TruncateTime(a.ExpirationDate) >= DbFunctions.TruncateTime(todayDate)
-                        select a).ToList();
+                IQueryable<TariffVersion> TariffVersions = (from a in context.TariffVersions
+                                                             where a.TariffId == tariffId && a.Tenant == tenant && !a.IsDraft &&
+                                                             DbFunctions.TruncateTime(a.ExpirationDate) >= DbFunctions.TruncateTime(todayDate)
+                                                             select a).AsQueryable();               
+                        TariffVersions = TariffVersions.Concat(from a in context.TariffVersions
+                                         where a.TariffId == tariffId && a.Tenant == tenant && !a.IsDraft && a.ExpirationDate == null select a);
+
+                return TariffVersions.ToList();
             }
         }
 

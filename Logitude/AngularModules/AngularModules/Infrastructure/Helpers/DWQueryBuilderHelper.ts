@@ -151,6 +151,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
             this.DataTypeCode = DWObjectField.DataTypeCode;
             this.IsCustom = DWObjectField.IsCustom;
+            this.CustomPickListCode = DWObjectField.CustomPickListCode;
 
             if (DWObjectField.FilterItems.length == 0) {
                 this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
@@ -234,6 +235,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
     private isCustom: boolean;
     public get IsCustom() { return this.isCustom; }
     public set IsCustom(newValue: boolean) { this.isCustom = newValue; }
+
+    
+    private customPickListCode: string;
+    public get CustomPickListCode() { return this.customPickListCode; }
+    public set CustomPickListCode(newValue: string) { this.customPickListCode = newValue; }
 
 
     private name: string;

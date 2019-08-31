@@ -43,6 +43,8 @@ using Logitude.Accounting.BL.CoreBL.BankAccountPages;
 using Logitude.Accounting.BL;
 using Logitude.Accounting.BL.CoreBL.FunctionalTests;
 using Logitude.Accounting.BL.CoreBL.Batch;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+using Logitude.Accounting.BL.EntityUpdateServices;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -83,6 +85,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonGetSystem1000_Click,
             _ButtonLoadSystem1000_Click,
             _ButtonYearTransferCancel_Click,
+            _ButtonExternalReconcile_click
         }
 
         //DateTime _MyDate;
@@ -345,7 +348,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 }
 
                 param = JsonConvert.DeserializeObject<AccountingIntegrityInParam>(_TextBoxParam.Text);
-
+                
 
                 var accountingIntegrityService = new AccountingIntegrityService();
 
@@ -613,7 +616,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         static QueueClient _QueueClient;
         protected void _ButtonJournalApproveQueue_Click(object sender, EventArgs e)
         {
-            var myWorker = new JournalApproveService.JournalApproveWorkrer();
+            var myWorker = new JournalApproveService.JournalApproveWorker();
             var sw = Stopwatch.StartNew();
             myWorker.WorkUntilQEmptyQueueDB();
             sw.Stop();
@@ -2085,6 +2088,19 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     TaxWithholding = param.BuildAccountingTenant.TaxWithholding,
                     VatAccounts = param.BuildAccountingTenant.VatAccounts,
                 };
+                if (BuildAccountingTenant.ControlAccounts)
+                {
+                    BuildAccountingTenant.ChartOfAccountsId = null;
+                    BuildAccountingTenant.ControlAccountId= null;
+                    //BuildAccountingTenant.CreateCustomerControlAccountId = true;
+                    //BuildAccountingTenant.CreateVendorControlAccountId = true;
+                    //BuildAccountingTenant.CreateFileControlAccountId = true;
+                    //BuildAccountingTenant.CreateOceanExportJobControlAccountId = true;
+                    //BuildAccountingTenant.CreateOceanImportJobControlAccountId = true;
+                    //BuildAccountingTenant.CreateAirImportJobControlAccountId = true;
+
+                }
+                BuildAccountingTenant.CheckAndInsertPoco = true;
                 int BuildGLAccountEachType = param.BuildGLAccountEachType;
                 int BuildJournalEachMonth = param.BuildJournalEachMonth;
 
@@ -2219,6 +2235,73 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             }
         }
 
+
+
+
+        protected void _ButtonExternalReconcile_click(object sender, EventArgs e)
+        {
+
+
+
+            dynamic param = null;
+
+            var paramDefault = new
+            {
+                Tenant = 1064,
+
+                LedgerTransactionId = "1-3069551",
+                ReconcileExternalPageLineId = "1-1313",//"1-12225"
+            };
+            
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonExternalReconcile_click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
+
+                int Tenant = param.Tenant;
+                string LedgerTransactionId = param.LedgerTransactionId;
+                string ReconcileExternalPageLineId = param.ReconcileExternalPageLineId;
+
+                
+                var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+                myExternalReconcileJournalService.MustInit(new ExternalReconcileDataProvider( AccountingContext.GetContext(Tenant)));
+                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
+                var us = new JournalUpdateService(AccountingContext.GetContext(Tenant), new Dictionary<string, IContext>(),Tenant);
+                us.Update(myExternalReconcileJournalService.TheJournalPM, true);
+                _LabelResult.Text = JsonConvert.SerializeObject(myExternalReconcileJournalService.TheJournalPM); ;
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonExternalReconcile_click.ToString();
+                if (param == null)
+                {
+                    _TextBoxParam.Text = JsonConvert.SerializeObject(paramDefault);
+                }
+                else
+                {
+                    _TextBoxParam.Text = JsonConvert.SerializeObject(param);
+                }
+
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+
+                
+            }
+        }
         private void SetHttpAuth(int tenant)
         {
             var email = AuthenticationUtil.SystemIdentityName(tenant);

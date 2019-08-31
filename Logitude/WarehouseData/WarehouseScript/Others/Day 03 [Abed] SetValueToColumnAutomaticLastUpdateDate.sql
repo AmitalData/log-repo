@@ -25,4 +25,10 @@ update  MoveTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpda
 update  Vessels set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  SpecialServicesTypes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  ObjectFields set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+update  CustomPickLists set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 
+
+    
+update  Regions set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+update  CustomerSizes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+update  Industries set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null

@@ -38,6 +38,7 @@ export class ARInvoiceMenuButtonsHandler {
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
                     var myButtonIsDisabled = false;
+                   
 
                     switch (button.EventCode) {
                         case "SaveAsDraft":
@@ -59,20 +60,26 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "CancelDraft":
                             {
-                                button.IsHidden = this.EntityPM.IsConstituentInvoice ? true : false;
+                                
 
-                                myButtonIsDisabled = true;
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    button.IsHidden = true;
+                                }
+                                else {
+                                    button.IsHidden = this.EntityPM.IsConstituentInvoice ? true : false;
 
-                                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                    if (this.EntityPM.StatusCode != "LL") {
-                                        if (this.EntityPM.IsConstituentInvoice) {
-                                            if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId) && this.EntityPM.StatusCode == "NT") {
+                                    myButtonIsDisabled = true;
+                                    if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        if (this.EntityPM.StatusCode != "LL") {
+                                            if (this.EntityPM.IsConstituentInvoice) {
+                                                if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId) && this.EntityPM.StatusCode == "NT") {
+                                                    myButtonIsDisabled = false;
+                                                }
+                                            }
+
+                                            else if (this.EntityPM.StatusCode == "DR") {
                                                 myButtonIsDisabled = false;
                                             }
-                                        }
-
-                                        else if (this.EntityPM.StatusCode == "DR") {
-                                            myButtonIsDisabled = false;
                                         }
                                     }
                                 }
@@ -93,14 +100,18 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "SetAsSent":
                             {
-                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                    myButtonIsDisabled = true;
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    button.IsHidden = true;
                                 }
+                                else {
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        myButtonIsDisabled = true;
+                                    }
 
-                                else if (this.EntityPM.Sent || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "LL") {
-                                    myButtonIsDisabled = true;
+                                    else if (this.EntityPM.Sent || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "LL") {
+                                        myButtonIsDisabled = true;
+                                    }
                                 }
-
                                 break;
                             }
 
@@ -196,12 +207,17 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "ReTransfer":
                             {
-                                myButtonIsDisabled = true;
-                                button.IsHidden = this.EntityPM.IsConstituentInvoice;
-                                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
-                                    if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
-                                        if (this.EntityPM.TransferStatusCode == "TR") {
-                                            myButtonIsDisabled = false;
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    button.IsHidden = true;
+                                }
+                                else {
+                                    myButtonIsDisabled = true;
+                                    button.IsHidden = this.EntityPM.IsConstituentInvoice;
+                                    if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
+                                        if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
+                                            if (this.EntityPM.TransferStatusCode == "TR") {
+                                                myButtonIsDisabled = false;
+                                            }
                                         }
                                     }
                                 }
@@ -252,6 +268,15 @@ export class ARInvoiceMenuButtonsHandler {
 
                                 break;
                             }
+
+                        case "InvoiceOperationsSeparator":
+                       case "VoidARInvoiceOperationsSeparator": {
+                            if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                button.IsHidden = true;
+
+                            }
+                            break;
+                        }
                     }
 
                     button.IsDisabled = myButtonIsDisabled;
@@ -849,6 +874,7 @@ export class ARInvoiceMenuButtonsHandler {
     AutoCreditDate: Date = null;
     AutoCreditManualNumber: string = null;
     AutoCreditClicked() {
+        
         if (this.EntityPM.InvoicePayments.length > 0) {
             var messageWindow = new MessageWindow();
             messageWindow.Show(TextCodeTranslator.Translate("ARInvoice.S.AutoCreditingMsg1"));
@@ -1035,6 +1061,7 @@ export class ARInvoiceMenuButtonsHandler {
             newInvoiceLine.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1;
             newInvoiceLine.IsExpense = item.IsExpense;
             newInvoiceLine.GLAccountId = item.GLAccountId;
+            newInvoiceLine.LineActionCode= "1";
             AutoCreditInvoice.AddARInvoiceLinePM(newInvoiceLine);
             index++;
         });

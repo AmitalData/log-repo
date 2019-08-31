@@ -91,6 +91,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool IsDangerous { get; set; }
         public int? ExpirationDays { get; set; }
         public DateTime? ExpirationDate { get; set; }
+        public DateTime? StartDate { get; set; }
         public bool IsFreightBySteps { get; set; }
         public string DepartmentId { get; set; }
         public string BranchId { get; set; }
@@ -178,9 +179,14 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string NotifyContactId { get; set; }
         public int? NumberOfFollowUps { get; set; }
 
+
+        public string QuoteHTMLDocumentId { get; set; }
+
+
         public virtual Card NotifyCard { get; set; }
         public virtual Contact NotifyContact { get; set; }
         public virtual Address NotifyAddress { get; set; }
+
 
         [ForeignKey("AgentId")]
         public virtual Card AgentCard { get; set; }
@@ -335,6 +341,10 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public bool GrossWeightEdited { get; set; }
         public bool ChargeableWeightEdited { get; set; }
+
+
+        [ForeignKey("QuoteHTMLDocumentId")]
+        public virtual Document QuoteHTMLDocument { get; set; }
 
 
     }

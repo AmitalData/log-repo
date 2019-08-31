@@ -17,5 +17,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public DateTime CreateDate { get; set; }
         public string Log { get; set; }
         public string HistoryId { get; set; }
+       
     }
 }

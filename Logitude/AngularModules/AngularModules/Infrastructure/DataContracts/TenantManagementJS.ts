@@ -27,6 +27,7 @@ export class TenantManagementJS {
     public PaidDaysLeft: number;
     public SuspendDaysLeft: number;
     public NumberOfUsers: number;
+    public NumberOfFreeUsers: number;
     public BluesnapContractId: string;
     public BluesnapCRMContractId: string;
     public BluesnapEAWBContractId: string;
@@ -52,6 +53,8 @@ export class TenantManagementJS {
     public PackagesCodes_PK: Array<string> = [];
     public PackagesCodes_BS: Array<string> = [];
     public CountryName: string;
+    public MainAdditionalPackageApplied: boolean;
+
     private tenantManagementLicenses: TenantManagementLicensePM[];
     get TenantManagementLicenses() {
         if (this.tenantManagementLicenses == null) {

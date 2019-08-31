@@ -164,7 +164,7 @@
 
 
                                                                                                     <!--Price 1-->
-                                                                                                    <tr style="height:22px">
+                                                                                                    <tr *ngIf="(!IsRoutingRates && QuoteTemplateSectionTypeName == 'Packages') || QuoteTemplateSectionTypeName != 'Packages'" style="height:22px">
                                                                                                         <td style="width:8px"></td>
                                                                                                         <td>
                                                                                                             <div class="CheckBox">
@@ -258,6 +258,19 @@
                                                                                                     </tr>
 
 
+                                                                                                    <tr style="height:22px">
+                                                                                                        <td style="width:8px"></td>
+                                                                                                        <td>
+                                                                                                            <div class="CheckBox">
+                                                                                                                <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowIncludedCharges" class="LeftCenter" style="text-align:center" [attr.id]="ShowIncludedChargesKey" type="checkbox" />
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowIncludedChargesKey">{{'QuoteTemplate.S.ShowIncludedCharges' | TextCodeTranslationPipe}} </label>
+                                                                                                            </div>
+
+
+                                                                                                        </td>
+
+                                                                                                    </tr>
+
 
                                                                                                 </table>
                                                                                             </td>
@@ -295,7 +308,7 @@
 
                                                                                             <td >
                                                                                                 <div *ngIf="SplitChargesbyGroups" class="CheckBox">
-                                                                                                    <input  [disabled]="!ShowSaleCurrencyColumn" [(ngModel)]="ShowTotalPerChargeGroup" class="LeftCenter" style="text-align:center" [attr.id]="ShowTotalPerChargeGroupKey" type="checkbox" />
+                                                                                                    <input  [disabled]="!ShowSaleCurrencyColumn || !ShowPricesTable" [(ngModel)]="ShowTotalPerChargeGroup" class="LeftCenter" style="text-align:center" [attr.id]="ShowTotalPerChargeGroupKey" type="checkbox" />
                                                                                                     <label style="color:black" class="LeftCenter" [attr.for]="ShowTotalPerChargeGroupKey">{{'QuoteTemplate.S.ShowTotalPerChargeGroup' | TextCodeTranslationPipe}} </label>
                                                                                                 </div>
                                                                                             </td>
@@ -334,7 +347,7 @@
                                                 </tr>
 
                                                 <!--Totals-->
-                                                <tr style="height:80px">
+                                                <tr *ngIf="!IsRoutingRates" style="height:80px">
                                                     <td style="vertical-align:top;height:90px">
                                                         <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
                                                             <table style="border :none;">
@@ -543,7 +556,7 @@
                                                 </tr>
 
                                                 <!--Totals-->
-                                                <tr *ngIf="QuoteTemplateSettingPM && QuoteTemplateSettingPM.TotalPerContainersTableDesignId && QuoteTemplateSectionTypeName!='Packages'" style="height:80px">
+                                                <tr *ngIf="QuoteTemplateSettingPM && QuoteTemplateSettingPM.TotalPerContainersTableDesignId && QuoteTemplateSectionTypeName!='Packages' && ShowTotalPerContinerLink" style="height:80px">
                                                     <td style="vertical-align:central;height:90px">
                                                    <a class="Link" style="margin-left:10px;font-size:13px;" (click)="ShowTotalPerContainer()">{{'QuoteTemplate.S.TotalPerContainerSettings' | TextCodeTranslationPipe}} </a>
                                                     </td>
@@ -624,7 +637,7 @@
                                                                 <tr style="height:15px"><td colspan="3"></td></tr>
                                                          <!--abed-->
 
-                                                                <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent [QuoteTemplateTableDesignPM]="TableDesignPM"></TextDesignComponent></td> <td style="width:10px"></td></tr>
+                                                                <tr style="height:140px"><td style="width:10px"></td><td><TextDesignComponent [QuoteTemplateTableDesignPM]="TableDesignPM" [QuoteTemplateSettingPM]="QuoteTemplateSettingPM"  [SectionType]="QuoteTemplateSectionTypeName"></TextDesignComponent></td> <td style="width:10px"></td></tr>
 
                                                                 
                                                                 <tr style="height:15px"><td colspan="3"></td></tr>

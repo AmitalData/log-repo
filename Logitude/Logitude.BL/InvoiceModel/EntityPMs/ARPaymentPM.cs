@@ -52,6 +52,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? RegisterDate { get; set; }
         public string SearchFields { get; set; }
         public string BillToName { get; set; }
+        public string BillToLocalName { get; set; }
         public string PaymentCurrencyCode { get; set; }
         public string CreatedByUserName { get; set; }
         public string StatusName { get; set; }
@@ -140,7 +141,12 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsFullAccounting { get; set; }
         public string GLAccountId { get; set; }
         public string GLAccountRecoMethodCode { get; set; }
+
+        public DateTime? FechaPago { get; set; }
         public bool IsExternalEntity { get; set; }
+        public string JournalNumber { get; set; }
+        public string JournalId { get; set; }
+
         private List<LedgerTransactionPM> invoicesLedgerTransactions;
         public virtual List<LedgerTransactionPM> InvoicesLedgerTransactions
         {
@@ -162,5 +168,28 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
             }
         }
 
+        private List<ARPaymentChequeReplicaPM> paymentChequeReplicas;
+        [Include]
+        [Composition]
+        [Association("ARPaymentARPaymentChequeReplicas", "Id", "PaymentId")]
+        public virtual List<ARPaymentChequeReplicaPM> ARPaymentChequeReplicas
+        {
+            get
+            {
+                if (paymentChequeReplicas == null)
+                {
+                    paymentChequeReplicas = new List<ARPaymentChequeReplicaPM>();
+                }
+
+                return this.paymentChequeReplicas;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    paymentChequeReplicas = value;
+                }
+            }
+        }
     }
 }

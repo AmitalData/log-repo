@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Utils;
@@ -68,10 +69,22 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
                 {
                     _BankAccountQueryService = new BankAccountQueryService(tenant);
                     var accurateBankAccount = _BankAccountQueryService.GetSingle(validBankAccountDTO.DBBankaccountPM.Id, false, false);
-                    using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                    try
                     {
-                        AnalyzeNewPage(tenant, accurateBankAccount, newPageOfBankAccountDTO);
-                        scope.Complete();
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                        {
+                            var successCommit=AnalyzeNewPage(tenant, accurateBankAccount, newPageOfBankAccountDTO);
+                            if (successCommit)
+                            {
+                                scope.Complete();
+                            }
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
                     }
 
                 }
@@ -95,95 +108,116 @@ s             b                   a
 
 
 
-            _BankPagesDTO.ForEach(BankPagesDTO => {
+            _BankPagesDTO.ForEach(BankPagesDTO =>
+            {
+                try
+                {
+                    BankPageValidateAndFix(BankPagesDTO);
+                }
+                catch (Exception eee)
+                {
 
-            var bankPageLineLast = BankPagesDTO.MyBankPageLines.Last();
+                    this.AddBadInputPage(eee.Message);
+                }
+
+
+            });
+
+        }
+
+        private void BankPageValidateAndFix(BankPageDTO BankPagesDTO)
+        {
+            var bankPageLineLast = BankPagesDTO.MyBankPageLines.LastOrDefault();
+            if (bankPageLineLast == null)
+            {
+                //this.AddBadInputPage($"No BankPageLines for Page BankCode:{BankPagesDTO.BankCode}/AccountNumber{BankPagesDTO.MyBankAccountM.AccountNumber}");
+                throw new Exception($"לא נמצאו שרות לדף הבנק :{BankPagesDTO.BankCode}-{BankPagesDTO.MyBankAccountM.AccountNumber}/{BankPagesDTO.MyBankAccountM.PageNo}");
+
+
+            }
             if (Math.Abs(bankPageLineLast.BalanceAfter) != Math.Abs(BankPagesDTO.MyBankAccountM.CloseBalance))
             {
                 throw new Exception($"FixSignOfOpenCloseBalance():Exception:Close:Abs({bankPageLineLast.BalanceAfter})!={BankPagesDTO.MyBankAccountM.CloseBalance} " + BankPagesDTO.MyBankAccountM.RawLine);
 
             }
 
-                BankPagesDTO.MyBankPageLines.ForEach(
-                    currBankPageLine =>
-                    //for (int i = BankPagesDTO.MyBankPageLines.Count - 1; i >= 0; i--)
+            BankPagesDTO.MyBankPageLines.ForEach(
+                currBankPageLine =>
+                //for (int i = BankPagesDTO.MyBankPageLines.Count - 1; i >= 0; i--)
+                {
+                    //var currBankPageLine = BankPagesDTO.MyBankPageLines[i];
+                    //NewMethod(currBankPageLine);
+
+                    switch (currBankPageLine.DEBIT0_CREDIT1)
                     {
-                        //var currBankPageLine = BankPagesDTO.MyBankPageLines[i];
-                        //NewMethod(currBankPageLine);
-
-                        switch (currBankPageLine.DEBIT0_CREDIT1)
-                        {
-                            case "0":
-                                {
-                                    //0(+        3749.39)(+       55828.03) ===a>0 >> 0=+1*B
-                                    currBankPageLine.RealAmount = -1 * currBankPageLine.Amount;
-                                }
-                                break;
-                            case "1":
-                                {
-                                    //1(+        3749.39)(+       55828.03) == a>0 >> 1=-1* B
-                                    currBankPageLine.RealAmount = +1 * currBankPageLine.Amount;
-                                }
-                                break;
-                            default:
-                                {
-                                    throw new Exception($"0/1  {currBankPageLine.RawLine}");
-                                }
-                                break;
-                        }
-
+                        case "0":
+                            {
+                                //0(+        3749.39)(+       55828.03) ===a>0 >> 0=+1*B
+                                currBankPageLine.RealAmount = -1 * currBankPageLine.Amount;
+                            }
+                            break;
+                        case "1":
+                            {
+                                //1(+        3749.39)(+       55828.03) == a>0 >> 1=-1* B
+                                currBankPageLine.RealAmount = +1 * currBankPageLine.Amount;
+                            }
+                            break;
+                        default:
+                            {
+                                throw new Exception($"0/1  {currBankPageLine.RawLine}");
+                            }
+                            break;
                     }
-                    );
-
-
-                var bankPageLine1st = BankPagesDTO.MyBankPageLines.First();
-                decimal realOpenBalance = 0;
-                if (Math.Abs(BankPagesDTO.MyBankAccountM.OpenBalance) == Math.Abs(bankPageLine1st.BalanceAfter - bankPageLine1st.RealAmount))
-                {
-                    realOpenBalance = bankPageLine1st.BalanceAfter - bankPageLine1st.RealAmount;
-                }
-                else
-                {
-                    throw new Exception("unable to resolve sign open balance of rawline " + BankPagesDTO.MyBankAccountM.RawLine);
 
                 }
+                );
 
-                
 
-                BankPagesDTO.MyBankAccountM.RealOpenBalance = realOpenBalance;
-                BankPagesDTO.MyBankAccountM.RealCloseBalance = bankPageLineLast.BalanceAfter;
-                decimal tot = BankPagesDTO.MyBankAccountM.RealOpenBalance;
-                foreach (var itemBankPageLine in BankPagesDTO.MyBankPageLines)
+            var bankPageLine1st = BankPagesDTO.MyBankPageLines.First();
+            decimal realOpenBalance = 0;
+            if (Math.Abs(BankPagesDTO.MyBankAccountM.OpenBalance) == Math.Abs(bankPageLine1st.BalanceAfter - bankPageLine1st.RealAmount))
+            {
+                realOpenBalance = bankPageLine1st.BalanceAfter - bankPageLine1st.RealAmount;
+            }
+            else
+            {
+                throw new Exception("unable to resolve sign open balance of rawline " + BankPagesDTO.MyBankAccountM.RawLine);
+
+            }
+
+
+
+            BankPagesDTO.MyBankAccountM.RealOpenBalance = realOpenBalance;
+            BankPagesDTO.MyBankAccountM.RealCloseBalance = bankPageLineLast.BalanceAfter;
+            decimal tot = BankPagesDTO.MyBankAccountM.RealOpenBalance;
+            foreach (var itemBankPageLine in BankPagesDTO.MyBankPageLines)
+            {
+                tot = tot +
+                //itemBankPageLine.RealAmount;
+                (itemBankPageLine.DEBIT0_CREDIT1 == "0" ? -1 : +1) *
+                itemBankPageLine.Amount;
+                if (tot != itemBankPageLine.BalanceAfter)
                 {
-                    tot = tot +
-                    //itemBankPageLine.RealAmount;
-                    (itemBankPageLine.DEBIT0_CREDIT1 == "0" ? -1 : +1) *
-                    itemBankPageLine.Amount;
-                    if (tot != itemBankPageLine.BalanceAfter)
-                    {
-                        throw new Exception("tot!= itemBankPageLine.BalanceAfter "+ itemBankPageLine.RawLine);
-                    }
+                    throw new Exception("tot!= itemBankPageLine.BalanceAfter " + itemBankPageLine.RawLine);
                 }
+            }
 
 
-                var sumAmount = BankPagesDTO.MyBankPageLines
-                //.Sum(bankPageLine => bankPageLine.RealAmount);
-                .Sum(bankPageLine =>
-                //bankPageLine.RealAmount
-                                    (bankPageLine.DEBIT0_CREDIT1 == "0" ? -1 : +1) *
-                    bankPageLine.Amount
+            var sumAmount = BankPagesDTO.MyBankPageLines
+            //.Sum(bankPageLine => bankPageLine.RealAmount);
+            .Sum(bankPageLine =>
+                                //bankPageLine.RealAmount
+                                (bankPageLine.DEBIT0_CREDIT1 == "0" ? -1 : +1) *
+                bankPageLine.Amount
 
-            );
-                if (BankPagesDTO.MyBankAccountM.RealCloseBalance !=
-                BankPagesDTO.MyBankAccountM.RealOpenBalance + sumAmount)
-                {
-                    throw new Exception($"FixSignOfOpenCloseBalance():Exception:OpenBalance + sumAmount!=Close:Abs({BankPagesDTO.MyBankAccountM.RealOpenBalance + sumAmount})!={BankPagesDTO.MyBankAccountM.RealOpenBalance } " + BankPagesDTO.MyBankAccountM.RawLine);
-                }
-            
-
-            });
-
+        );
+            if (BankPagesDTO.MyBankAccountM.RealCloseBalance !=
+            BankPagesDTO.MyBankAccountM.RealOpenBalance + sumAmount)
+            {
+                throw new Exception($"FixSignOfOpenCloseBalance():Exception:OpenBalance + sumAmount!=Close:Abs({BankPagesDTO.MyBankAccountM.RealOpenBalance + sumAmount})!={BankPagesDTO.MyBankAccountM.RealOpenBalance } " + BankPagesDTO.MyBankAccountM.RawLine);
+            }
         }
+
 
         private static void NewMethod(BankPageLineDTO currBankPageLine)
         {
@@ -287,7 +321,7 @@ s             b                   a
 
 
 
-        private void AnalyzeNewPage(int tenant, BankAccountPM dbBankaccountPM, BankPageDTO newPageOfBankAccount)
+        private bool AnalyzeNewPage(int tenant, BankAccountPM dbBankaccountPM, BankPageDTO newPageOfBankAccount)
         {
             string errorPageValidation = PageValidationClientSide(newPageOfBankAccount);
             if (!string.IsNullOrWhiteSpace(errorPageValidation))
@@ -298,7 +332,7 @@ s             b                   a
                           Message = $"PageValidationClientSide():BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  {errorPageValidation}  "
                       })
                          ;
-                return;
+                return true;
             }
             //if (dbBankaccountPM.LastPageCloseBalance != newPageOfBankAccount.MyBankAccountM.OpenBalance)
             //{
@@ -307,12 +341,12 @@ s             b                   a
             //}
 
             ReconcileExternalPagePM prevReconcileExternalPagePM = null;
-            if (dbBankaccountPM.LastPageNumber!=null)
+            if (dbBankaccountPM.LastPageNumber != null)
             {
                 _ReconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
                 prevReconcileExternalPagePM =
                 _ReconcileExternalPageQueryService.GetBankPageByPageNo(int.Parse(dbBankaccountPM.LastPageNumber), dbBankaccountPM.Id, tenant);
-            } 
+            }
 
 
             var newBankPageLines = newPageOfBankAccount.GetCopyOfBankPageLines();
@@ -320,7 +354,7 @@ s             b                   a
             if (prevReconcileExternalPagePM != null)
             {
 
-                
+
 
                 if (prevReconcileExternalPagePM.ToDate >= newBankPageLines.First().ReferenceDate)
                 {
@@ -329,11 +363,11 @@ s             b                   a
                     MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
                         new MyDTO()
                         {
-                            Message = $"חשבון בנק {ACCNUMBER} דף מספר {newPageOfBankAccount.MyBankAccountM.PageNo} מכיל תנעות ישנות ",
-                             RawLine= newBankPageLines.First().RawLine
+                            Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} - מכיל תנעות ישנות ",
+                            RawLine = newBankPageLines.First().RawLine
 
                         });
-                    return;
+                    return true;
                 }
 
 
@@ -344,30 +378,35 @@ s             b                   a
                     MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
                         new MyDTO()
                         {
-                            Message = "חשבון בנק {ACCNUMBER} דף מספר {newPageOfBankAccount.MyBankAccountM.PageNo} יתרת פתיחה לא תואמת ",
-                             RawLine=""
+                            Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} יתרת פתיחה לא תואמת ",
+                            RawLine = ""
                         });
-                        
 
-                    return;
+
+                    return true;
                 }
             }
 
 
             ReconcileExternalPagePM entityPM = MapReconcileExternalPagePM(tenant, newPageOfBankAccount, dbBankaccountPM);
 
-            InsertBankPage(tenant, newPageOfBankAccount, entityPM);
+            bool successCommit= InsertBankPage(tenant, newPageOfBankAccount, entityPM);
+            return successCommit;
 
         }
 
-        private void InsertBankPage(int tenant, BankPageDTO newPageOfBankAccount, ReconcileExternalPagePM entityPM)
+        private bool InsertBankPage(int tenant, BankPageDTO newPageOfBankAccount, ReconcileExternalPagePM entityPM)
         {
             try
             {
 
 
 
-
+                var result = ReconcileExternalPageValidator.IsReconciliationValid(entityPM, null);
+                if (result != null)
+                {
+                    throw new ApplicationException(result.ErrorMessage);
+                }
 
                 var MyContext = AccountingContext.GetContext(entityPM.Tenant);
                 ReconcileExternalPageUpdateService service = new ReconcileExternalPageUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
@@ -376,20 +415,22 @@ s             b                   a
 
                 //scope.Complete();
                 this.AddSuccessInsertBankPage(entityPM, newPageOfBankAccount);
+                return true;
 
             }
 
             catch (Exception ex)
             {
                 this.AddExceptionInsertBankPage(entityPM, newPageOfBankAccount, ex);
+                return false;
             }
         }
 
-   
+
 
         private static ReconcileExternalPagePM MapReconcileExternalPagePM(int tenant,
             BankPageDTO newPageOfBankAccount,
-             
+
 
              BankAccountPM dbBankaccountPM
             )
@@ -425,6 +466,18 @@ s             b                   a
             int lineCounterNumber = 1;
             newBankPageLines.ForEach(line =>
             {
+
+
+                string Notes = line.Bankactioncode;
+                //if (!string.IsNullOrWhiteSpace(line.Bankdetails))
+                //{
+                //    if (!String.IsNullOrWhiteSpace(Notes))
+                //    {
+                //        Notes += "-";
+                //    }
+                //    Notes += line.Bankdetails;
+                //}
+                Notes = line.Bankdetails;
                 entityPM.ReconcileExternalPageLines.Add(new ReconcileExternalPageLinePM()
                 {
                     Tenant = entityPM.Tenant,
@@ -436,7 +489,9 @@ s             b                   a
                     CreditAmount = line.DEBIT0_CREDIT1 == "0" ? line.Amount : 0,
 
                     ReferenceDate = line.ReferenceDate,
-                    Reference = line.Reference
+                    Reference = line.Reference,
+                    Notes = Notes
+
 
 
                 });
@@ -446,6 +501,18 @@ s             b                   a
         private BankCodeQueryService _BankCodeQueryService;
         private BankAccountQueryService _BankAccountQueryService;
         public ResultLoadBankPage MyResultLoadBankPage = new ResultLoadBankPage();
+
+        private void AddBadInputPage(string mess)
+        {
+            this.MyResultLoadBankPage.DBExceptionPageList
+                .Add(new MyDTO()
+                {
+
+                    Message = mess,
+                    Verbose = "",
+                    RawLine = ""
+                });
+        }
         private void AddExceptionInsertBankPage(ReconcileExternalPagePM entityPM, BankPageDTO newPageOfBankAccount, Exception ex)
         {
 
@@ -456,7 +523,7 @@ s             b                   a
                 .Add(new MyDTO()
                 {
 
-                    Message = $"כשלון בקליטת דף {newPageOfBankAccount.MyBankAccountM.PageNo} לחשבון בנק {bank} - {ex.Message}",
+                    Message = $"כשלון בקליטת דף {newPageOfBankAccount.PageNo()} לחשבון בנק {bank} - {ex.Message}",
                     Verbose = ex.ToString(),
                     RawLine = dataXml
                 });
@@ -466,10 +533,12 @@ s             b                   a
         {
             string b = $"{newPageOfBankAccount.BankCode}-{newPageOfBankAccount.MyBankAccountM.AccountNumber}";
             this.MyResultLoadBankPage.DBSuccessPageList.Add(
-                new MyDTO() {
-                    Message = "דף {entityPM.PageNo} בנק {b} נטען בהצלחה ",
+                new MyDTO()
+                {
+                    Message = $"דף {entityPM.PageNo} בנק {b} נטען בהצלחה ",
                     Verbose =
-                $"Success insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/{newPageOfBankAccount.MyBankAccountM.PageNo} =new DbId:{entityPM.Id}/DBPageNo:{entityPM.PageNo}  "
+                    ///{newPageOfBankAccount.MyBankAccountM.PageNo} =
+                $"Success insert Page BankCode:{newPageOfBankAccount.BankCode}/AccountNumber{newPageOfBankAccount.MyBankAccountM.AccountNumber}/new DbId:{entityPM.Id}/DBPageNo:{entityPM.PageNo}  "
                 });
         }
 
@@ -653,6 +722,17 @@ s             b                   a
             }
             MyBankPageLines.Add(myBankPageLineM);
         }
+
+        internal String PageNo()
+        {
+            DateTime my1stRefDate = DateTime.MinValue;
+            var line1 = MyBankPageLines.FirstOrDefault();
+            if (line1 != null)
+            {
+                my1stRefDate = line1.ReferenceDate;
+            }
+            return $"תאריך:{my1stRefDate.ToString("dd.MM.yyyy")}";
+        }
     }
     class BankAccountDTO
     {
@@ -736,11 +816,13 @@ s             b                   a
         }
         public string RawLine { get; set; }
         public string Reference { get; private set; }
-        public DateTime ReferenceDate { get; private set; }
+        public string Bankactioncode { get; set; }
+        public DateTime ReferenceDate { get; set; }
         public decimal Amount { get; private set; }
         public decimal BalanceAfter { get; private set; }
         public string DEBIT0_CREDIT1 { get; private set; }
         public decimal RealAmount { get; internal set; }
+        public string Bankdetails { get; set; }
 
         public const string RowType = "033";
         public static BankPageLineDTO Create(string rawLine)
@@ -754,6 +836,10 @@ s             b                   a
             var rec = new BankPageLineDTO();
             rec.RawLine = rawLine;
             rec.Reference = rawLine.Substring(4 - 1, 16).Trim();
+
+            rec.Bankactioncode = rawLine.Substring(52 - 1, 10).Trim();
+            rec.Bankdetails = rawLine.Substring(62 - 1, 25).Trim();
+
 
             string txtDateTime = rawLine.Substring(87 - 1, 8);
             string fieldname = "ReferenceDate";

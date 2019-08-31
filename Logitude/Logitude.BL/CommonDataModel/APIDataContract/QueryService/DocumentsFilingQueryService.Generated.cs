@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -137,7 +138,7 @@ using Simplog.Data.CommonDataModel;
 						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
 					} 					   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("DocumentsFiling with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
@@ -147,7 +148,8 @@ using Simplog.Data.CommonDataModel;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 						temp.Code = MyEntity.Code;
-					}					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
+					}
+					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
 						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName);
@@ -159,7 +161,8 @@ using Simplog.Data.CommonDataModel;
 					}
 			
 					
-					temp.EntityReference = MyEntity.EntityNumber;					ObjectTableQueryService EntityTypeObjectTableService = new ObjectTableQueryService(Tenant);
+					temp.EntityReference = MyEntity.EntityNumber;
+					ObjectTableQueryService EntityTypeObjectTableService = new ObjectTableQueryService(Tenant);
 					if(MyEntity.EntityType != null)
 					{
 						var myEntityTypePM = EntityTypeObjectTableService.ObjectTableDataMappingAndValidatin(MyEntity.EntityType,Tenant,ComputingPartnerName);
@@ -170,7 +173,8 @@ using Simplog.Data.CommonDataModel;
 						 
 					}
 			
-										DocumentTypeQueryService DocumentTypeDocumentTypeService = new DocumentTypeQueryService(Tenant);
+					
+					DocumentTypeQueryService DocumentTypeDocumentTypeService = new DocumentTypeQueryService(Tenant);
 					if(MyEntity.DocumentType != null)
 					{
 						var myDocumentTypePM = DocumentTypeDocumentTypeService.DocumentTypeDataMappingAndValidatin(MyEntity.DocumentType,Tenant,ComputingPartnerName);

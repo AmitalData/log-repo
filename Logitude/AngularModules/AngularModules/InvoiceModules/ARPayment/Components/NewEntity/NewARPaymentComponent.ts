@@ -47,6 +47,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     private IsLoadCurrencyList: boolean = false;
     private customerId = null;
     public DisplaySATSettings: boolean = false;
+    public DisplayFechaPago: boolean = false;
     public EnableNegativeOffsetARPayments: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public IsCreatedFromInvoiceSide: boolean = false;
@@ -75,6 +76,11 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
+
+            //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FPG" && d.TenantNumber == SessionLocator.Tenant)[0];
+            //if (featureToggle) {
+                this.DisplayFechaPago = true;
+            //}
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
@@ -353,6 +359,16 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         }
     }
 
+
+    get FechaPago() { return this.newARPaymentPM.FechaPago; }
+    set FechaPago(value: Date) {
+        if (this.newARPaymentPM.FechaPago != value) {
+            this.newARPaymentPM.FechaPago = value;
+            
+        }
+    }
+
+
     SetCurrencyRateData() {
         if (this.invoicePm != null && AppTool.IsNullOrEmpty(this.invoicePm.Id)) {
             var rate = null;
@@ -405,7 +421,12 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.LoadData();
         }
     }
-
+    get InternalNotes() { return this.newARPaymentPM.InternalNotes; }
+    set InternalNotes(newValue: string) {
+        if (this.newARPaymentPM.InternalNotes != newValue) {
+            this.newARPaymentPM.InternalNotes = newValue;
+        }
+    }
     public TodayDate: Date = new Date();
 
     get SelectableDateStart() { return this.TodayDate.setFullYear(this.TodayDate.getFullYear() - 100); }

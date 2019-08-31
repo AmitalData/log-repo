@@ -985,6 +985,8 @@ namespace MeatadataGeneratorTool
             SetAttribute("IsNewWizard", table.IsNewWizard.ToString().ToLower(), entityElement);
             SetAttribute("LookUp1", GetStringValue(table.LookUp1), entityElement);
             SetAttribute("LookUp2", GetStringValue(table.LookUp2), entityElement);
+            SetAttribute("CodeField", GetStringValue(table.CodeField), entityElement);
+            SetAttribute("NameField", GetStringValue(table.NameField), entityElement);
             SetAttribute("LovDisplayMemberPath", GetStringValue(table.LovDisplayMemberPath), entityElement);
             SetAttribute("LovDisplayMemberPathLocal", GetStringValue(table.LovDisplayMemberPathLocal), entityElement);
             SetAttribute("DependencyFilter1", GetStringValue(table.DependencyFilter1), entityElement);
@@ -1652,8 +1654,11 @@ namespace MeatadataGeneratorTool
                     if (!string.IsNullOrEmpty(f.FeatureCode))
                     {
                         SetAttribute("FeatureCode", GetStringValue(f.FeatureCode), MenuButtonElement, null);
-                        SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), MenuButtonElement, null);
+                      
                     }
+
+                    SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), MenuButtonElement, null);
+
                     if (!string.IsNullOrEmpty(f.TextCodeCode))
                     {
                         SetAttribute("TextCodeCode", GetStringValue(f.TextCodeCode), MenuButtonElement, null);
@@ -1684,9 +1689,11 @@ namespace MeatadataGeneratorTool
                             if (!string.IsNullOrEmpty(item.FeatureCode))
                             {
                                 SetAttribute("FeatureCode", GetStringValue(item.FeatureCode), MenuItemElement, null);
-                                SetAttribute("IsPackagable", item.IsPackagable.ToString().ToLower(), MenuItemElement, null);
 
                             }
+
+                            SetAttribute("IsPackagable", item.IsPackagable.ToString().ToLower(), MenuItemElement, null);
+
                             if (!string.IsNullOrEmpty(item.TextCodeCode))
                             {
                                 SetAttribute("TextCodeCode", GetStringValue(item.TextCodeCode), MenuItemElement, null);

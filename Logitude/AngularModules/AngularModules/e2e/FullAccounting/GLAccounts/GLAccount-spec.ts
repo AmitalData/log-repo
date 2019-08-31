@@ -23,10 +23,10 @@ describe('CRM Module', function () {
     gn1.GoToMainMenu('General.MH.FullAccounting');
     h.WaitByIdAndClick('FAGLAccouts');
     var GlaccountNumber = gn1.RandomNum();
-    
+      var s = 'My Auto GLAccount';
 
-    GLA.CreateNewGLAccount('My Auto GLAccount', GlaccountNumber);
-    EditGLA.EditGLAccount(GlaccountNumber);
+    GLA.CreateNewGLAccount(s+GlaccountNumber);
+      EditGLA.EditGLAccount(s +GlaccountNumber);
    
 
 

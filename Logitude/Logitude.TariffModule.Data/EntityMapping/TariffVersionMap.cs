@@ -46,6 +46,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.ApprovedByUserId).HasColumnName("ApprovedByUserId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ParentVersionNumber).HasColumnName("ParentVersionNumber");
+
+            this.Property(t => t.InitialEnddate).HasColumnName("InitialEnddate");
         }
     }
 }

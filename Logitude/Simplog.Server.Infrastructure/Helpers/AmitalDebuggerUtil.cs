@@ -34,7 +34,6 @@ using System.Threading.Tasks;
 
                 Debug.WriteLine(@"to filter Debug try this
 AmitalDebuggerUtil.MyDebuggerLevel = AmitalDebuggerLevel.Information;");
-               System.Diagnostics.Debugger.Break();
             }
             if (AmitalDebuggerUtil.MyDebuggerLevel < CurrentBreak)
             {

@@ -191,3 +191,38 @@ ON [dbo].[SpecialServicesTypes]([AutomaticLastUpdateDate])
 ON [dbo].[ObjectFields]([AutomaticLastUpdateDate])
   end  
   
+
+  
+      IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_CustomPickLists_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dbo].[CustomPickLists]'))
+  begin
+    CREATE NONCLUSTERED INDEX [IX_CustomPickLists_AutomaticLastUpdateDate]
+ON [dbo].[CustomPickLists]([AutomaticLastUpdateDate])
+  end  
+  
+
+  		  
+  		  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_Regions_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dbo].[Regions]'))
+  begin
+    CREATE NONCLUSTERED INDEX [IX_Regions_AutomaticLastUpdateDate]
+ON [dbo].[Regions]([AutomaticLastUpdateDate])
+  end   
+
+
+
+		  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_CustomerSizes_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dbo].[CustomerSizes]'))
+  begin
+    CREATE NONCLUSTERED INDEX [IX_CustomerSizes_AutomaticLastUpdateDate]
+ON [dbo].[CustomerSizes]([AutomaticLastUpdateDate])
+  end   
+
+
+
+  		  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_Industries_AutomaticLastUpdateDate' 
+    AND object_id = OBJECT_ID('[dbo].[Industries]'))
+  begin
+    CREATE NONCLUSTERED INDEX [IX_Industries_AutomaticLastUpdateDate]
+ON [dbo].[Industries]([AutomaticLastUpdateDate])
+  end   

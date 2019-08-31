@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .subTitle{
         color: #1b90cb;
         font-size: 16px;
@@ -12,9 +12,9 @@
                     <tr class="TabTitleRow">
                         <td>{{'BankAccount.TH.General' | TextCodeTranslationPipe}} </td>
                     </tr>
-                    
+
                     <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
-                    
+
                     <tr>
                         <td style="width: 400px">
                             <table>
@@ -67,6 +67,25 @@
                                                 <td><div></div></td>
                                             </tr>
 
+                                            <!-- CurrencyId -->
+                                            <tr class="FormFieldRow">
+                                                    <td style="width: 180px;">
+                                                            <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                        <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="CurrencyId"
+                                                            [LookUpTableName]="'Currency'"
+                                                            [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
                                             <!-- GLAccountId -->
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -82,7 +101,7 @@
                                                             [DependencyFilter2Value]="'1'"
                                                             [QueryFilterItems]="GLAccountsFilterItems"
                                                             (SelectedItemChanged)="GLAccount = $event"
-                                                            [ForceShowAddLink]="true"                                                            
+                                                            [ForceShowAddLink]="true"
                                                             [HideColumns]="false">
                                                     </LogLov>
                                                 </td>
@@ -145,25 +164,6 @@
                                                 <td><div></div></td>
                                             </tr>
 
-                                            
-                                            <!-- CurrencyId -->
-                                            <tr class="FormFieldRow">
-                                                    <td style="width: 180px;">
-                                                            <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
-                                                        <LogLov [ObjectFieldName]="'CurrencyId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="CurrencyId"
-                                                            [LookUpTableName]="'Currency'"
-                                                            [HideColumns]="true">
-                                                    </LogLov>
-                                                </td>
-                                                <td><div></div></td>
-                                            </tr>
 
                                             <!-- LocalName -->
                                             <tr class="FormFieldRow">
@@ -244,7 +244,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'BranchAddress'" [InputType]="'text'" [DataContext]="DataContext"
+                                                    <LogTextBox [ObjectFieldName]="'BranchAddress'" [InputType]="'ntext'" [DataContext]="DataContext"
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td><div></div></td>

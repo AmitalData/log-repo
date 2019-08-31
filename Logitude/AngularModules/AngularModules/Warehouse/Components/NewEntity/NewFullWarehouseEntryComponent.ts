@@ -731,6 +731,9 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
     OnFiltersChanged() {
         this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
         this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
+        this.warehouseEntryPM.Ratio = AppTool.GetRatio(this.DirectionId, this.TransportModeId, this.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+
+
         this.SetScreenEnabled();
         this.SetPartners();
         this.SetUIProperties();

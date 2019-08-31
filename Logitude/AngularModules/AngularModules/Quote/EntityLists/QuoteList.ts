@@ -37,6 +37,7 @@ export class QuoteList {
 		QuoteNumber: string;
 		OpenDate: Date;
 		ExpirationDate: Date;
+		StartDate: Date;
 		QuoteTypeName: string;
 		CarrierName: string;
 		ChargeableWeight: number;
@@ -171,5 +172,6 @@ export class QuoteList {
 		NotifyNote: string;
 		NumberOfFollowUps: number;
 		IsDangerous: boolean;
+		QuoteHTMLDocumentId: string;
 	
 }

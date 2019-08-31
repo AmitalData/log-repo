@@ -37,8 +37,10 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     public ValidationErrorsList: string[] = [];
     isNewEntity: boolean = false;
     IsCancelApprovedEnabled: boolean = false;
+    IsRestoreButtonVisibile: boolean = false;
     public IsDisplayOnly: boolean = false;
     public IsMultiCurrency: boolean = false;
+    RestoreToolTipMessage: string;
     currency: any;
     AMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount");
     CreditAMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.CreditAmount");
@@ -68,11 +70,18 @@ export class AddEditRecoExPageComponent extends BaseComponent{
 
         this.SetUIProperties();
     }
-
+    IsEditButtonDisabled: boolean = false;
+    EditWindowToolTip: string = null;
+    IsRestoreButtonEnabled: boolean
     SetWindowArgs(args) {
         if (args != null) {
             var prevPageNo;
             this.BankAccountPM = args.BankAccount;
+            this.IsRestoreButtonEnabled = args.IsRestoreButtonEnabled;
+            this.IsEditButtonDisabled = !args.EnableReconcileEditButton;
+            this.IsRestoreButtonVisibile = args.IsRestoreButtonVisibile;
+            this.EditWindowToolTip = args.message;
+            this.RestoreToolTipMessage = args.RestoreToolTipMessage;
             this.GetDefaultValues();
             if (args.entity)
             {
@@ -265,7 +274,16 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+    closeScreen: boolean = true;
+    EditButtonClicked() {
+        this.ReconcileExternalPagePM.StatusCode = "1";
+        this.IsDisplayOnly = false;
+        this.SetUIProperties();
+        this.closeScreen = false;
+         
+        this.SaveEntity();
 
+    }
     //* grid handlers in seperate region
 
     //#endregion
@@ -335,6 +353,11 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         }
     }
 
+    RestoreButtonClicked() {
+        this.IsCancelApprovedEnabled = true;
+        this.EditButtonClicked();
+    }
+
     SubmitChanges() {
         this.CurrentSession.StartBusyIndicatorSaving();
         if (this.isNewEntity) {
@@ -360,13 +383,29 @@ export class AddEditRecoExPageComponent extends BaseComponent{
             this._ReconcileExternalPagePMService.update(this.ReconcileExternalPagePM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
-                if (!mm.HasError) {
+                if (!mm.HasError && this.closeScreen) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
-
+                
                 else {
+                    if (!this.closeScreen) {
+                        this.CurrentSession.StartBusyIndicatorSaving();
+                        this._ReconcileExternalPagePMService.get(mm.Result.Id).subscribe(myResult => {
+                            
+                            var result: ServiceResponse = myResult;
+                            if (!result.HasError) {
+                                this.ReconcileExternalPagePM = result.Result;
+                                if (this.IsRestoreButtonVisibile) {
+                                    this.IsRestoreButtonVisibile = false;
+                                }
+                                
+                                this.FillGridsData();
+                            }
+                            this.CurrentSession.StopBusyIndicator();
 
-                    if (this.isApprovedButtonClicked) {
+                        });
+                    }
+                   else if (this.isApprovedButtonClicked) {
                         this.isApprovedButtonClicked = false;
                         this.ReconcileExternalPagePM.StatusCode = '1' // 1- Draft
                     }
@@ -374,6 +413,10 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                     this.ValidationErrorsList = mm.ErrorsArray;
                     this.CurrentSession.StopBusyIndicator();
                 }
+
+
+                this.closeScreen = true;
+                this.ReconcileExternalPagePM.StatusName = mm.Result.StatusName;
             });
 
         }
@@ -480,6 +523,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("StartBalance", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("CloseBalance", this.ObjectTableName, !this.IsDisplayOnly);
+
         //this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
         //this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
     }
@@ -582,8 +626,8 @@ export class AddEditRecoExPageComponent extends BaseComponent{
             for (var line of this.PageLinesList.Collection) {
 
                 //debit
-                sum += !line.DebitAmount?0:line.DebitAmount;
-                sum -= !line.CreditAmount?0:line.CreditAmount;
+                sum -= !line.DebitAmount?0:line.DebitAmount;
+                sum += !line.CreditAmount?0:line.CreditAmount;
 
             }
         }

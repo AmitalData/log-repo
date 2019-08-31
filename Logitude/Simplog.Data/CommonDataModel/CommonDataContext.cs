@@ -446,7 +446,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CustomerDepositionMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
-
+            modelBuilder.Configurations.Add(new CardContactProductMap());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -992,6 +992,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
         public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
+        public IDbSet<CardContactProduct> CardContactProducts { get; set; }
 
         public DbConnection GetConnection()
         {

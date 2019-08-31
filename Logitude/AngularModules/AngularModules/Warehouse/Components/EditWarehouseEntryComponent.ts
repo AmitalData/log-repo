@@ -21,7 +21,6 @@ import {CardListService} from '../../Common/Services/StandardLists/CardListServi
     moduleId: module.id,
     selector: 'EditWarehouseEntryComponent',
     templateUrl: './EditWarehouseEntryComponent.html',
-    providers: [TraceEventExtendedPMService],
 })
 
 
@@ -29,7 +28,6 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
     public ValidationErrorsList: string[];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     DataContext: any = this;
-    EventTypeCodeList: EventTypeClass[];
 
     warehouseEntryPM: WarehouseEntryPM;
     private myCardListService: CardListService;
@@ -42,7 +40,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
     ExpectedEntryDateOldValue: Date;
 
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public _traceEventExtendedPMService: TraceEventExtendedPMService ) {
+    constructor(public entityArgs: EntityArgs) {
         super();
         this.warehouseEntryPM = this.entityArgs.EntityPM;
         if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.ReceivedBy)) {
@@ -91,28 +89,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
             if (this.SaveCompletedEvent == null) {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EventTypeCodeList = [];
-                        this.warehouseEntryPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-
-                        //if (this.WarehouseEntryPackagesDetailsComponent) {
-                        //    var windowArgs: any = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this, IsFromShipment: true, IsEditMode: true };
-                        //    this.WarehouseEntryPackagesDetailsComponent.ReloadComponent(windowArgs);
-                        //}
-
-                        this.EventTypeCodeList.push(new EventTypeClass("UPEN", null));
-
-                        if (this.warehouseEntryPM.ExpectedEntryDate != this.ExpectedEntryDateOldValue) {
-                            this.ExpectedEntryDateOldValue = this.warehouseEntryPM.ExpectedEntryDate;
-                            this.EventTypeCodeList.push(new EventTypeClass("EXEN", this.warehouseEntryPM.ExpectedEntryDate));
-                        }
-
-                        if (this.warehouseEntryPM.ActualEntryDate != this.ActualEntryDateOldValue) {
-                            this.ActualEntryDateOldValue = this.warehouseEntryPM.ActualEntryDate;
-                            this.EventTypeCodeList.push(new EventTypeClass("ENEN", this.warehouseEntryPM.ActualEntryDate));
-                        }
-
-
-                        this.UpdateEventType();
+                        this.CurrentSession.FireEvent("LoadEventTabData");
                     }
 
                 });
@@ -255,23 +232,6 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
     }
 
  
-
-
-
-    UpdateEventType() {
-        if (this.EventTypeCodeList && this.EventTypeCodeList.length != 0) {
-            var traceEventArgs: EventTypeArgs = new EventTypeArgs();
-            traceEventArgs.EventTypeList = this.EventTypeCodeList;
-            traceEventArgs.Tenant = SessionLocator.Tenant;
-            traceEventArgs.ObjectTableId = this.ObjectTableId;
-            traceEventArgs.EntityId = this.warehouseEntryPM.Id;
-            traceEventArgs.LoggedContactId = SessionLocator.LoggedUserId;
-            this._traceEventExtendedPMService.PutTraceEventGroup(traceEventArgs).subscribe(res => {
-                this.CurrentSession.FireEvent("LoadEventTabData");
-            });
-        }      
-    }
-
     
     get ActualEntryDate() {
     var actualEntryDate: Date = null;

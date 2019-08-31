@@ -116,7 +116,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 return;
             }
              
-            this.DisableAddDocumentButton = true;
+            //this.DisableAddDocumentButton = true;
             this.StartBusyIndicator("Loading ...");
             var div = document.getElementById("DocsTab");
             this.Style = { "max-height": div.clientHeight };
@@ -137,6 +137,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                         else {
                             this.DisableAddDocumentButton = false;
                         }
+                        this.ReloadDocuments(true);
                     });
                     this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe(theResult => {
                         if (!theResult.HasError) {
@@ -149,10 +150,13 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     //    }
                     //});
                 }
+                else {
+                    this.ReloadDocuments(true);
+                }
             });
             
 
-            this.ReloadDocuments(true);
+            //this.ReloadDocuments(true);
 
         });
         this.OnImporterShipmentsFilterChanged.subscribe((res) => {
@@ -942,7 +946,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DownloadAllFilesComponent');
 
     }
-    DisableAddDocumentButton: boolean = false;
+    DisableAddDocumentButton: boolean = true;
 
     ShareDocumentsClick() {
         if (this.SharedDocs.length > 0) {

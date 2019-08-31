@@ -718,10 +718,20 @@ namespace WebFreight.Web.WebServices
                 #region Carrier
 
                 myDataProvider.MainCarriageCarrierName = shipment.MainCarriageCarrierName;
+                myDataProvider.VoyageNumber = shipment.MainCarriageCarrierNumber;
 
-                if (shipment.TransportModeId == "A") { myDataProvider.CarrierNumberLabel = "AIRLINE/ FLIGHT NO."; }
-                else if (shipment.TransportModeId == "I") { myDataProvider.CarrierNumberLabel = "TRUCKER/ TRUCK NO."; }
-                else if (shipment.TransportModeId == "O") { myDataProvider.CarrierNumberLabel = "VESSEL/ VOYAGE NO."; }
+                if (shipment.TransportModeId == "A")
+                {
+                    myDataProvider.CarrierNumberLabel = "AIRLINE/ FLIGHT NO.";
+                }
+                else if (shipment.TransportModeId == "I")
+                {
+                    myDataProvider.CarrierNumberLabel = "TRUCKER/ TRUCK NO.";
+                }
+                else if (shipment.TransportModeId == "O")
+                {
+                    myDataProvider.CarrierNumberLabel = "VESSEL/ VOYAGE NO.";
+                }
 
                 if (shipment.TransportModeId == "O")
                 {
@@ -1763,6 +1773,16 @@ namespace WebFreight.Web.WebServices
                     {
                         case "PART":
                             {
+                                Card toPartner = CardRepository.GetSingleCard(myDelivery.ToPartnerCardId, tenant, false);
+                                if (!string.IsNullOrEmpty(toPartner.PrimaryContactId))
+                                {
+                                    Contact toPartnerContact = contactRepository.GetSingleContact(toPartner.PrimaryContactId, tenant);
+                                    if (toPartnerContact != null)
+                                    {
+                                        myDataProvider.FirstDeliveryToContactPhone = toPartnerContact.BusinessPhone;
+                                    }
+                                }
+
                                 if (!string.IsNullOrEmpty(myDelivery.ToAddressId))
                                 {
                                     Address myPartnerAddress = addressRepository.GetSingleAddress(myDelivery.ToAddressId, tenant);
@@ -1772,7 +1792,7 @@ namespace WebFreight.Web.WebServices
                                         myDataProvider.PlaceOfDelivery = myPartnerAddress.City;
                                         myDataProvider.PlaceOfDeliveryCountryCode = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.Code;
                                         myDataProvider.PlaceOfDeliveryCountryName = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
-                                        myDataProvider.PlaceOfDeliveryStateCode = myPartnerAddress.State == null ? "" : myPartnerAddress.State.Code;
+                                        myDataProvider.PlaceOfDeliveryStateCode = myPartnerAddress.State == null ? "" : myPartnerAddress.State.Code;                                        
                                     }
 
                                     if (!string.IsNullOrEmpty(myDataProvider.DeliveryTo))
@@ -2277,6 +2297,7 @@ namespace WebFreight.Web.WebServices
                 #region CuttOff
                 if (shipment.CutoffDate != null)
                 {
+                    myDataProvider.CuttOffDateTime_Date = shipment.CutoffDate;
                     myDataProvider.CuttOffDateTime = String.Format("{0:dd MMM yyyy}", shipment.CutoffDate);
                     myDataProvider.CuttOffTime = String.Format("{0:t}", shipment.CutoffDate);
                 }

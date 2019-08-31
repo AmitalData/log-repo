@@ -106,7 +106,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ChassisNumber, 
 	         RegistrationNumber, 
 	         CountryId, 
-	         CommodityNumber,
+	         CommodityNumber, 
+	         ReleasesNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

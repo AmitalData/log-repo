@@ -1284,7 +1284,37 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<TariffLineExpirationDatePM> deletedLinesExpirationDates;
+	 
+	   [DataMember]
+	   public virtual List<TariffLineExpirationDatePM> DeletedLinesExpirationDates  
+	   {
+	        get
+             {
+                 if (deletedLinesExpirationDates == null)
+                 {
+                     deletedLinesExpirationDates = new List<TariffLineExpirationDatePM>();
+                 }
+                 return deletedLinesExpirationDates;
+              }
+             set { deletedLinesExpirationDates = value; }
+	    }
+		   
+	   private List<TariffLineExpirationDatePM>  deletedDeletedLinesExpirationDates;
+	   public virtual List<TariffLineExpirationDatePM> DeletedDeletedLinesExpirationDates  
+	   {
+	        get
+             {
+                 if ( deletedDeletedLinesExpirationDates == null)
+                 {
+                      deletedDeletedLinesExpirationDates = new List<TariffLineExpirationDatePM>();
+                 }
+                 return  deletedDeletedLinesExpirationDates;
+              }
+             set {  deletedDeletedLinesExpirationDates = value; }
+	    }
+	     }
    
 }
 	 

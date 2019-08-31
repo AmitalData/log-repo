@@ -369,6 +369,31 @@ export class WarehouseEntryPM {
     public set TotalVolumetricWeight(newValue: number) { if (this.totalVolumetricWeight != newValue) { this.totalVolumetricWeight = newValue; this.MarkAsDirty("TotalVolumetricWeight"); } }
        
 	 
+    private lastStatusUpdateDate: Date;
+    public get LastStatusUpdateDate() { return this.lastStatusUpdateDate; }
+    public set LastStatusUpdateDate(newValue: Date) { if (this.lastStatusUpdateDate != newValue) { this.lastStatusUpdateDate = newValue; this.MarkAsDirty("LastStatusUpdateDate"); } }
+       
+	 
+    private masterHouse: string;
+    public get MasterHouse() { return this.masterHouse; }
+    public set MasterHouse(newValue: string) { if (this.masterHouse != newValue) { this.masterHouse = newValue; this.MarkAsDirty("MasterHouse"); } }
+       
+	 
+    private entryReferencesAndDate: string;
+    public get EntryReferencesAndDate() { return this.entryReferencesAndDate; }
+    public set EntryReferencesAndDate(newValue: string) { if (this.entryReferencesAndDate != newValue) { this.entryReferencesAndDate = newValue; this.MarkAsDirty("EntryReferencesAndDate"); } }
+       
+	 
+    private connectedTo: string;
+    public get ConnectedTo() { return this.connectedTo; }
+    public set ConnectedTo(newValue: string) { if (this.connectedTo != newValue) { this.connectedTo = newValue; this.MarkAsDirty("ConnectedTo"); } }
+       
+	 
+    private ratio: number;
+    public get Ratio() { return this.ratio; }
+    public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPM;
 		

@@ -123,7 +123,7 @@
                                                                         </tr>
 
                                                                         <tr style="height:10px"><td colspan="3"></td></tr>
-                                                                        <tr style="height:20px">
+                                                                        <tr style="height:30px">
                                                                             <td style="width:18px"><div style="width:18px"></div></td>
                                                                             <td>
 
@@ -147,8 +147,18 @@
                                                                                         </td>
                                                                                     </tr>
 
+                                                                                    <tr style="height:8px;"><td style="height:8px" colspan="2"><div></div></td></tr>
 
-                                                                                    <!--<tr style="height:10px;"><td style="height:10px"><div></div></td></tr>-->
+                                                                                    <tr>
+
+                                                                                        <td>
+                                                                                            <div>
+                                                                                                <CheckBox [Text]="'QuoteTemplate.S.ShowIncludedCharges' | TextCodeTranslationPipe" [IsChecked]="ShowIncludedChargesPerContainers" (Checked)="ShowIncludedChargesPerContainers = $event"></CheckBox>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+
+
                                                                                 </table>
                                                                             </td>
                                                                             <td style="width:10px"><div style="width:10px"></div></td>
@@ -357,7 +367,7 @@
                                                 <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="TitleTextDesignPM" [QuoteTemplateTextDesignPM]="TitleTextDesignPM"></TextDesignComponent></td> <td style="width:10px"></td></tr>
 
                                                 <tr style="height:15px"><td colspan="3"></td></tr>
-                                                <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="TableDesignPM" [QuoteTemplateTableDesignPM]="TableDesignPM"></TextDesignComponent></td> <td style="width:10px"></td></tr>
+                                                <tr style="height:90px"><td style="width:10px"></td><td><TextDesignComponent *ngIf="TableDesignPM" [QuoteTemplateTableDesignPM]="TableDesignPM" [QuoteTemplateSettingPM]="QuoteTemplateSettingPM"  [SectionType]="'Per'"></TextDesignComponent></td> <td style="width:10px"></td></tr>
                                                 <!--<tr>
                                                     <td style="width:10px"></td>
                                                     <td style="width:10px">

@@ -176,6 +176,8 @@ export class BatchServiceItemClass extends BaseComponent {
     get DoneItemsInOneMinute() { return this.EntityPM.DoneItemsInOneMinute; }
     get DoneItemsInFiveMinutes() { return this.EntityPM.DoneItemsInFiveMinutes; }
     get DoneItemsInOneHour() { return this.EntityPM.DoneItemsInOneHour; }
+    get WaitingItems() { return this.EntityPM.WaitingItems; }
+    get FailedItems() { return this.EntityPM.FailedItems; }
 
     get NumberOfThreads() { return this.EntityPM.NumberOfThreads; }
     set NumberOfThreads(newValue: number) {

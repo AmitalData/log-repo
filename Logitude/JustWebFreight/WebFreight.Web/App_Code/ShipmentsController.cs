@@ -1149,6 +1149,23 @@ namespace WebFreight.Web
 
             ShipmentPM pm = shipmentQuery.GetSinglePMBySecurityKey(securitykey, id, tenant);
 
+            SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
+            SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
+            if (sharedLogisticsSetting != null)
+            {
+                pm.IsSharedLogisticsMoneyTabEnabled = sharedLogisticsSetting.IsMoneyTabEnabled;
+                pm.IsSharedLogisticsMainCarrierVisible = sharedLogisticsSetting.IsMainCarrierShared;
+                pm.IsSharedLogisticsPickDelvCarrierVisible = sharedLogisticsSetting.IsPickDelivCarriesShared;
+                pm.IsSharedLogisticsAgentVisible = sharedLogisticsSetting.IsAgentShared;
+                pm.IsSharedLogisticsShipperVisible = sharedLogisticsSetting.IsShipperShared;
+                pm.IsSharedLogisticsConsigneeVisible = sharedLogisticsSetting.IsConsigneeShared;
+            }
+
+
+
+
+
+
             return pm;
         }
 
@@ -2713,9 +2730,30 @@ namespace WebFreight.Web
 
             if (shipment != null && shipment.SecurityKey == securitykey)
             {
-                if (!string.IsNullOrEmpty(shipment.ShipperId))
+                SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(shipment.Tenant);
+                SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(shipment.Tenant.ToString(), shipment.Tenant);
+                bool isShipperShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsShipperShared;
+                bool isConsigneeShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsigneeShared;
+                bool isAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsAgentShared;
+                bool isColoaderShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsColoaderShared;
+                bool isConsigneeNotImporterShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsigneeNotImporterShared;
+                bool isFreightForwarderShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsFreightForwarderShared;
+                bool isNotify1Shared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsNotify1Shared;
+                bool isNotify2Shared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsNotify2Shared;
+                bool isShipperNotExporterShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsShipperNotExporterShared;
+                bool isCustomsAgentExportShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomsAgentExportShared;
+                bool isCustomsAgentImportShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomsAgentImportShared;
+                bool isCustomClearancePoinShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsCustomClearancePoinShared;
+                bool isConsolidatorShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsolidatorShared;
+                bool isReleasingAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsReleasingAgentShared;
+                bool isIssuingCarrierAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsIssuingCarrierAgentShared;
+
+
+                if (!string.IsNullOrEmpty(shipment.ShipperId) && isShipperShared)
                 {
                     #region Shipper
+                    CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
+
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
                     item.Id = shipment.ShipperId;
                     item.ReferenceVisibility = "visible";
@@ -2726,8 +2764,8 @@ namespace WebFreight.Web
                     item.FlagSRC = "";
                     item.Email = "";
                     item.ContactName = "";
-
                     Card card = CardRepository.GetSingleCard(shipment.ShipperId, tenant, true);
+
                     if (card != null)
                     {
                         item.PartnerName = string.IsNullOrEmpty(card.EnglishName) ? "" : card.EnglishName;
@@ -2743,7 +2781,7 @@ namespace WebFreight.Web
                         item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
                         item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
 
-                        Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
                         if (country != null)
                         {
                             item.CountryName = country.EnglishName;
@@ -2751,7 +2789,7 @@ namespace WebFreight.Web
                         }
                     }
 
-                    Contact contact = contactRepository.GetSingleContact(shipment.ShipperContactId, tenant);
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.ShipperContactId, tenant, true);
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
@@ -2762,7 +2800,7 @@ namespace WebFreight.Web
                     #endregion
                 }
 
-                if (!string.IsNullOrEmpty(shipment.ConsigneeId))
+                if (!string.IsNullOrEmpty(shipment.ConsigneeId) && isConsigneeShared)
                 {
                     #region Consignee
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
@@ -2775,7 +2813,6 @@ namespace WebFreight.Web
                     item.FlagSRC = "";
                     item.Email = "";
                     item.ContactName = "";
-
                     Card card = CardRepository.GetSingleCard(shipment.ConsigneeId, tenant, true);
                     if (card != null)
                     {
@@ -2792,7 +2829,7 @@ namespace WebFreight.Web
                         item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
                         item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
 
-                        Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
                         if (country != null)
                         {
                             item.CountryName = country.EnglishName;
@@ -2800,7 +2837,7 @@ namespace WebFreight.Web
                         }
                     }
 
-                    Contact contact = contactRepository.GetSingleContact(shipment.ConsigneeContactId, tenant);
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.ConsigneeContactId, tenant, true);
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
@@ -2811,7 +2848,7 @@ namespace WebFreight.Web
                     #endregion
                 }
 
-                if (!string.IsNullOrEmpty(shipment.AgentId))
+                if (!string.IsNullOrEmpty(shipment.AgentId) && isAgentShared)
                 {
                     #region Agent
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
@@ -2824,7 +2861,6 @@ namespace WebFreight.Web
                     item.FlagSRC = "";
                     item.Email = "";
                     item.ContactName = "";
-
                     Card card = CardRepository.GetSingleCard(shipment.AgentId, tenant, true);
                     if (card != null)
                     {
@@ -2841,7 +2877,7 @@ namespace WebFreight.Web
                         item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
                         item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
 
-                        Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
                         if (country != null)
                         {
                             item.CountryName = country.EnglishName;
@@ -2849,7 +2885,7 @@ namespace WebFreight.Web
                         }
                     }
 
-                    Contact contact = contactRepository.GetSingleContact(shipment.AgentContactId, tenant);
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.AgentContactId, tenant, true);
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
@@ -2860,7 +2896,7 @@ namespace WebFreight.Web
                     #endregion
                 }
 
-                if (!string.IsNullOrEmpty(shipment.CustomAgentExportId))
+                if (!string.IsNullOrEmpty(shipment.CustomAgentExportId) && isCustomsAgentExportShared)
                 {
                     #region CustomAgentExport
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
@@ -2872,8 +2908,8 @@ namespace WebFreight.Web
                     item.FlagSRC = "";
                     item.Email = "";
                     item.ContactName = "";
-
                     Card card = CardRepository.GetSingleCard(shipment.CustomAgentExportId, tenant, true);
+
                     if (card != null)
                     {
                         item.PartnerName = card.EnglishName;
@@ -2889,7 +2925,7 @@ namespace WebFreight.Web
                         item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
                         item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
 
-                        Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
                         if (country != null)
                         {
                             item.CountryName = country.EnglishName;
@@ -2897,7 +2933,7 @@ namespace WebFreight.Web
                         }
                     }
 
-                    Contact contact = contactRepository.GetSingleContact(shipment.CustomAgentExportContactId, tenant);
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.CustomAgentExportContactId, tenant, true);
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
@@ -2908,7 +2944,7 @@ namespace WebFreight.Web
                     #endregion
                 }
 
-                if (!string.IsNullOrEmpty(shipment.CustomAgentImportId))
+                if (!string.IsNullOrEmpty(shipment.CustomAgentImportId) && isCustomsAgentImportShared)
                 {
                     #region CustomAgentImport
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
@@ -2920,8 +2956,8 @@ namespace WebFreight.Web
                     item.FlagSRC = "";
                     item.Email = "";
                     item.ContactName = "";
-
                     Card card = CardRepository.GetSingleCard(shipment.CustomAgentImportId, tenant, true);
+
                     if (card != null)
                     {
                         item.PartnerName = card.EnglishName;
@@ -2937,7 +2973,7 @@ namespace WebFreight.Web
                         item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
                         item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
 
-                        Country country = countryRepository.GetSingleCountry(address.CountryId, tenant);
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
                         if (country != null)
                         {
                             item.CountryName = country.EnglishName;
@@ -2945,7 +2981,7 @@ namespace WebFreight.Web
                         }
                     }
 
-                    Contact contact = contactRepository.GetSingleContact(shipment.CustomAgentImportContactId, tenant);
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.CustomAgentImportContactId, tenant, true);
                     if (contact != null)
                     {
                         item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
@@ -2955,6 +2991,480 @@ namespace WebFreight.Web
                     result.Add(item);
                     #endregion
                 }
+
+                if (!string.IsNullOrEmpty(shipment.ColoaderId) && isColoaderShared)
+                {
+                    #region Coloader
+                    ShipmentPartnerPM item = new ShipmentPartnerPM();
+                    item.Id = shipment.ColoaderId;
+                    item.ReferenceVisibility = "visible";
+                    item.Reference2Visibility = "collapse";
+                    item.Reference1 = string.IsNullOrEmpty(shipment.ColoaderReference1) ? "" : shipment.ColoaderReference1;
+                    item.PartnerType = "Coloader";
+                    item.FlagSRC = "";
+                    item.Email = "";
+                    item.ContactName = "";
+                    Card card = CardRepository.GetSingleCard(shipment.ColoaderId, tenant, true);
+
+                    if (card != null)
+                    {
+                        item.PartnerName = card.EnglishName;
+                    }
+
+                    Address address = addressRepository.GetSingleAddress(shipment.ColoaderAddressId, tenant);
+                    if (address != null)
+                    {
+                        item.Name = address.Name;
+                        item.Address1 = string.IsNullOrEmpty(address.Address1) ? "" : address.Address1;
+                        item.Address2 = string.IsNullOrEmpty(address.Address2) ? "" : address.Address2;
+                        item.Phone = string.IsNullOrEmpty(address.PhoneNumber) ? "" : address.PhoneNumber;
+                        item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
+                        item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
+
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
+                        if (country != null)
+                        {
+                            item.CountryName = country.EnglishName;
+                            item.FlagSRC = "../images/Flags/" + country.Code + ".png";
+                        }
+                    }
+
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.ColoaderContactId, tenant, true);
+                    if (contact != null)
+                    {
+                        item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                    }
+
+                    result.Add(item);
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.ConsigneeNotImporterId) && isConsigneeNotImporterShared)
+                {
+                    #region ConsigneeNotImporter
+                    ShipmentPartnerPM item = new ShipmentPartnerPM();
+                    item.Id = shipment.ConsigneeNotImporterId;
+                    item.ReferenceVisibility = "visible";
+                    item.Reference2Visibility = "collapse";
+                    item.Reference1 = string.IsNullOrEmpty(shipment.ConsigneeNotImporterReference) ? "" : shipment.ConsigneeNotImporterReference;
+                    item.PartnerType = "Consignee Not Importer";
+                    item.FlagSRC = "";
+                    item.Email = "";
+                    item.ContactName = "";
+                    Card card = CardRepository.GetSingleCard(shipment.ConsigneeNotImporterId, tenant, true);
+
+                    if (card != null)
+                    {
+                        item.PartnerName = card.EnglishName;
+                    }
+
+                    Address address = addressRepository.GetSingleAddress(shipment.ConsigneeNotImporterAddressId, tenant);
+                    if (address != null)
+                    {
+                        item.Name = address.Name;
+                        item.Address1 = string.IsNullOrEmpty(address.Address1) ? "" : address.Address1;
+                        item.Address2 = string.IsNullOrEmpty(address.Address2) ? "" : address.Address2;
+                        item.Phone = string.IsNullOrEmpty(address.PhoneNumber) ? "" : address.PhoneNumber;
+                        item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
+                        item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
+
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
+                        if (country != null)
+                        {
+                            item.CountryName = country.EnglishName;
+                            item.FlagSRC = "../images/Flags/" + country.Code + ".png";
+                        }
+                    }
+
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.ConsigneeNotImporterContactId, tenant, true);
+                    if (contact != null)
+                    {
+                        item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                    }
+
+                    result.Add(item);
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.FreightForwarderId) && isFreightForwarderShared)
+                {
+                    #region FreightForwarder
+                    ShipmentPartnerPM item = new ShipmentPartnerPM();
+                    item.Id = shipment.FreightForwarderId;
+                    item.ReferenceVisibility = "visible";
+                    item.Reference2Visibility = "collapse";
+                    item.Reference1 = string.IsNullOrEmpty(shipment.FreightForwarderReference) ? "" : shipment.FreightForwarderReference;
+                    item.PartnerType = "Freight Forwarder";
+                    item.FlagSRC = "";
+                    item.Email = "";
+                    item.ContactName = "";
+                    Card card = CardRepository.GetSingleCard(shipment.FreightForwarderId, tenant, true);
+
+                    if (card != null)
+                    {
+                        item.PartnerName = card.EnglishName;
+                    }
+
+                    Address address = addressRepository.GetSingleAddress(shipment.FreightForwarderAddressId, tenant);
+                    if (address != null)
+                    {
+                        item.Name = address.Name;
+                        item.Address1 = string.IsNullOrEmpty(address.Address1) ? "" : address.Address1;
+                        item.Address2 = string.IsNullOrEmpty(address.Address2) ? "" : address.Address2;
+                        item.Phone = string.IsNullOrEmpty(address.PhoneNumber) ? "" : address.PhoneNumber;
+                        item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
+                        item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
+
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
+                        if (country != null)
+                        {
+                            item.CountryName = country.EnglishName;
+                            item.FlagSRC = "../images/Flags/" + country.Code + ".png";
+                        }
+                    }
+
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.FreightForwarderContactId, tenant, true);
+                    if (contact != null)
+                    {
+                        item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                    }
+
+                    result.Add(item);
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.Notify1Id) && isNotify1Shared)
+                {
+                    #region Notify1
+                    ShipmentPartnerPM item = new ShipmentPartnerPM();
+                    item.Id = shipment.Notify1Id;
+                    item.ReferenceVisibility = "visible";
+                    item.Reference2Visibility = "collapse";
+                    item.Reference1 = string.IsNullOrEmpty(shipment.Notify1Reference) ? "" : shipment.Notify1Reference;
+                    item.PartnerType = "Notify 1";
+                    item.FlagSRC = "";
+                    item.Email = "";
+                    item.ContactName = "";
+                    Card card = CardRepository.GetSingleCard(shipment.Notify1Id, tenant, true);
+
+                    if (card != null)
+                    {
+                        item.PartnerName = card.EnglishName;
+                    }
+
+                    Address address = addressRepository.GetSingleAddress(shipment.Notify1AddressId, tenant);
+                    if (address != null)
+                    {
+                        item.Name = address.Name;
+                        item.Address1 = string.IsNullOrEmpty(address.Address1) ? "" : address.Address1;
+                        item.Address2 = string.IsNullOrEmpty(address.Address2) ? "" : address.Address2;
+                        item.Phone = string.IsNullOrEmpty(address.PhoneNumber) ? "" : address.PhoneNumber;
+                        item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
+                        item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
+
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
+                        if (country != null)
+                        {
+                            item.CountryName = country.EnglishName;
+                            item.FlagSRC = "../images/Flags/" + country.Code + ".png";
+                        }
+                    }
+
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.Notify1ContactId, tenant, true);
+                    if (contact != null)
+                    {
+                        item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                    }
+
+                    result.Add(item);
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.Notify2Id) && isNotify2Shared)
+                {
+                    #region Notify2
+                    ShipmentPartnerPM item = new ShipmentPartnerPM();
+                    item.Id = shipment.Notify2Id;
+                    item.ReferenceVisibility = "visible";
+                    item.Reference2Visibility = "collapse";
+                    item.Reference1 = string.IsNullOrEmpty(shipment.Notify2Reference) ? "" : shipment.Notify2Reference;
+                    item.PartnerType = "Notify 2";
+                    item.FlagSRC = "";
+                    item.Email = "";
+                    item.ContactName = "";
+
+                    Card card = CardRepository.GetSingleCard(shipment.Notify2Id, tenant, true);
+                    if (card != null)
+                    {
+                        item.PartnerName = card.EnglishName;
+                    }
+
+                    Address address = addressRepository.GetSingleAddress(shipment.Notify2AddressId, tenant);
+                    if (address != null)
+                    {
+                        item.Name = address.Name;
+                        item.Address1 = string.IsNullOrEmpty(address.Address1) ? "" : address.Address1;
+                        item.Address2 = string.IsNullOrEmpty(address.Address2) ? "" : address.Address2;
+                        item.Phone = string.IsNullOrEmpty(address.PhoneNumber) ? "" : address.PhoneNumber;
+                        item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
+                        item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
+
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
+                        if (country != null)
+                        {
+                            item.CountryName = country.EnglishName;
+                            item.FlagSRC = "../images/Flags/" + country.Code + ".png";
+                        }
+                    }
+
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.Notify2ContactId, tenant, true);
+                    if (contact != null)
+                    {
+                        item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                    }
+
+                    result.Add(item);
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.ShipperNotExporterId) && isShipperNotExporterShared)
+                {
+                    #region ShipperNotExporter
+                    ShipmentPartnerPM item = new ShipmentPartnerPM();
+                    item.Id = shipment.ShipperNotExporterId;
+                    item.ReferenceVisibility = "visible";
+                    item.Reference2Visibility = "collapse";
+                    item.Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference) ? "" : shipment.ShipperNotExporterReference;
+                    item.PartnerType = "Shipper Not Exporter";
+                    item.FlagSRC = "";
+                    item.Email = "";
+                    item.ContactName = "";
+
+                    Card card = CardRepository.GetSingleCard(shipment.ShipperNotExporterId, tenant, true);
+                    if (card != null)
+                    {
+                        item.PartnerName = card.EnglishName;
+                    }
+
+                    Address address = addressRepository.GetSingleAddress(shipment.ShipperNotExporterAddressId, tenant);
+                    if (address != null)
+                    {
+                        item.Name = address.Name;
+                        item.Address1 = string.IsNullOrEmpty(address.Address1) ? "" : address.Address1;
+                        item.Address2 = string.IsNullOrEmpty(address.Address2) ? "" : address.Address2;
+                        item.Phone = string.IsNullOrEmpty(address.PhoneNumber) ? "" : address.PhoneNumber;
+                        item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
+                        item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
+
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
+                        if (country != null)
+                        {
+                            item.CountryName = country.EnglishName;
+                            item.FlagSRC = "../images/Flags/" + country.Code + ".png";
+                        }
+                    }
+
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.ShipperNotExporterContactId, tenant, true);
+                    if (contact != null)
+                    {
+                        item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                    }
+
+                    result.Add(item);
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.CustomClearancePointId) && isCustomClearancePoinShared)
+                {
+                    #region CustomClearancePoint
+                    ShipmentPartnerPM item = new ShipmentPartnerPM();
+                    item.Id = shipment.CustomClearancePointId;
+                    item.ReferenceVisibility = "visible";
+                    item.Reference2Visibility = "collapse";
+                    item.Reference1 = string.IsNullOrEmpty(shipment.CustomClearancePointReference1) ? "" : shipment.CustomClearancePointReference1;
+                    item.PartnerType = "Custom Clearance Point";
+                    item.FlagSRC = "";
+                    item.Email = "";
+                    item.ContactName = "";
+
+                    Card card = CardRepository.GetSingleCard(shipment.CustomClearancePointId, tenant, true);
+                    if (card != null)
+                    {
+                        item.PartnerName = card.EnglishName;
+                    }
+
+                    Address address = addressRepository.GetSingleAddress(shipment.CustomClearancePointAddressId, tenant);
+                    if (address != null)
+                    {
+                        item.Name = address.Name;
+                        item.Address1 = string.IsNullOrEmpty(address.Address1) ? "" : address.Address1;
+                        item.Address2 = string.IsNullOrEmpty(address.Address2) ? "" : address.Address2;
+                        item.Phone = string.IsNullOrEmpty(address.PhoneNumber) ? "" : address.PhoneNumber;
+                        item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
+                        item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
+
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
+                        if (country != null)
+                        {
+                            item.CountryName = country.EnglishName;
+                            item.FlagSRC = "../images/Flags/" + country.Code + ".png";
+                        }
+                    }
+
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.CustomClearancePointContactId, tenant, true);
+                    if (contact != null)
+                    {
+                        item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                    }
+
+                    result.Add(item);
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.ConsolidatorId) && isConsolidatorShared)
+                {
+                    #region Consolidator
+                    ShipmentPartnerPM item = new ShipmentPartnerPM();
+                    item.Id = shipment.ConsolidatorId;
+                    item.ReferenceVisibility = "visible";
+                    item.Reference2Visibility = "collapse";
+                    item.Reference1 = string.IsNullOrEmpty(shipment.ConsolidatorReference) ? "" : shipment.ConsolidatorReference;
+                    item.PartnerType = "Consolidator";
+                    item.FlagSRC = "";
+                    item.Email = "";
+                    item.ContactName = "";
+
+                    Card card = CardRepository.GetSingleCard(shipment.ConsolidatorId, tenant, true);
+                    if (card != null)
+                    {
+                        item.PartnerName = card.EnglishName;
+                    }
+
+                    Address address = addressRepository.GetSingleAddress(shipment.ConsolidatorAddressId, tenant);
+                    if (address != null)
+                    {
+                        item.Name = address.Name;
+                        item.Address1 = string.IsNullOrEmpty(address.Address1) ? "" : address.Address1;
+                        item.Address2 = string.IsNullOrEmpty(address.Address2) ? "" : address.Address2;
+                        item.Phone = string.IsNullOrEmpty(address.PhoneNumber) ? "" : address.PhoneNumber;
+                        item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
+                        item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
+
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
+                        if (country != null)
+                        {
+                            item.CountryName = country.EnglishName;
+                            item.FlagSRC = "../images/Flags/" + country.Code + ".png";
+                        }
+                    }
+
+                    Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.ConsolidatorContactId, tenant, true);
+                    if (contact != null)
+                    {
+                        item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                    }
+
+                    result.Add(item);
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.ReleasingAgentId) && isReleasingAgentShared)
+                {
+                    #region ReleasingAgent
+                    ShipmentPartnerPM item = new ShipmentPartnerPM();
+                    item.Id = shipment.ReleasingAgentId;
+                    item.ReferenceVisibility = "visible";
+                    item.Reference2Visibility = "visible";
+                    item.Reference1 = string.IsNullOrEmpty(shipment.ReleasingAgentReference1) ? "" : shipment.ReleasingAgentReference1;
+                    item.Reference2 = string.IsNullOrEmpty(shipment.ReleasingAgentReference2) ? "" : shipment.ReleasingAgentReference2;
+                    item.PartnerType = "Releasing Agent";
+                    item.FlagSRC = "";
+                    item.Email = "";
+                    item.ContactName = "";
+
+                    Card card = CardRepository.GetSingleCard(shipment.ReleasingAgentId, tenant, true);
+                    if (card != null)
+                    {
+                        item.PartnerName = card.EnglishName;
+                    }
+
+                    Address address = addressRepository.GetSingleAddress(shipment.ReleasingAgentAddressId, tenant);
+                    if (address != null)
+                    {
+                        item.Name = address.Name;
+                        item.Address1 = string.IsNullOrEmpty(address.Address1) ? "" : address.Address1;
+                        item.Address2 = string.IsNullOrEmpty(address.Address2) ? "" : address.Address2;
+                        item.Phone = string.IsNullOrEmpty(address.PhoneNumber) ? "" : address.PhoneNumber;
+                        item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
+                        item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
+
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
+                        if (country != null)
+                        {
+                            item.CountryName = country.EnglishName;
+                            item.FlagSRC = "../images/Flags/" + country.Code + ".png";
+                        }
+                    }
+
+                    Contact contact = contactRepository.GetSingleContact(shipment.ReleasingAgentContactId, tenant);
+                    if (contact != null)
+                    {
+                        item.Email = string.IsNullOrEmpty(contact.Email) ? "" : contact.Email;
+                        item.ContactName = string.IsNullOrEmpty(contact.EnglishName) ? "" : contact.EnglishName;
+                    }
+
+                    result.Add(item);
+                    #endregion
+                }
+
+                if (!string.IsNullOrEmpty(shipment.IssuingCarrierAgentId) && isIssuingCarrierAgentShared && shipment.TransportModeId == "A")
+                {
+                    #region IssuingCarrierAgent
+                    ShipmentPartnerPM item = new ShipmentPartnerPM();
+                    item.Id = shipment.IssuingCarrierAgentId;
+                    item.ReferenceVisibility = "visible";
+                    item.Reference2Visibility = "collapse";
+                    item.Reference1 = string.IsNullOrEmpty(shipment.IssuingCarrierReference1) ? "" : shipment.IssuingCarrierReference1;
+                    item.PartnerType = "Issuing Carrier Agent";
+                    item.FlagSRC = "";
+                    item.Email = "";
+                    item.ContactName = "";
+
+                    Card card = CardRepository.GetSingleCard(shipment.IssuingCarrierAgentId, tenant, true);
+                    if (card != null)
+                    {
+                        item.PartnerName = card.EnglishName;
+                    }
+
+                    Address address = addressRepository.GetSingleAddress(shipment.IssuingCarrierAddressId, tenant);
+                    if (address != null)
+                    {
+                        item.Name = address.Name;
+                        item.Address1 = string.IsNullOrEmpty(address.Address1) ? "" : address.Address1;
+                        item.Address2 = string.IsNullOrEmpty(address.Address2) ? "" : address.Address2;
+                        item.Phone = string.IsNullOrEmpty(address.PhoneNumber) ? "" : address.PhoneNumber;
+                        item.Fax = string.IsNullOrEmpty(address.FaxNumber) ? "" : address.FaxNumber;
+                        item.CityZipCode = address.City + (string.IsNullOrEmpty(address.ZipCode) ? "" : ", " + address.ZipCode);
+
+                        Country country = countryRepository.GetSingleCountryByIdAndTenant(address.CountryId, tenant, true);
+                        if (country != null)
+                        {
+                            item.CountryName = country.EnglishName;
+                            item.FlagSRC = "../images/Flags/" + country.Code + ".png";
+                        }
+                    }
+
+                    result.Add(item);
+                    #endregion
+                }                
             }
 
             return result;

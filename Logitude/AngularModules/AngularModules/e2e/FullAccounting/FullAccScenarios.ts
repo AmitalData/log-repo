@@ -41,7 +41,7 @@ export class FullAccountingScenarios {
             this.Helper.WaitByIdAndClick('ACC');
             this.Helper.WaitByIdAndClick('MaintenanceItemMTCA');
             this.newChart.CreateNewChartOFAccount(chartOfAccountNo, 'Customer');
-            this.editChart.EditChartOfAccount(chartOfAccountNo);
+           // this.editChart.EditChartOfAccount(chartOfAccountNo);
 
 
             
@@ -51,7 +51,7 @@ export class FullAccountingScenarios {
             this.generalFunction.GoToMainMenu('General.MH.CRM');
             this.Helper.WaitByIdAndClick('CRMCUS');
             this.customer.CreateNewCustomerGLAccount('CustomerGLAccount' + number);
-            this.customer.ActivateCustomerGLAccount('CustomerGLAccount' + number, number);
+           // this.customer.ActivateCustomerGLAccount('CustomerGLAccount' + number, number);
            this.Helper.WaitByIdAndClick('General.MH.FullAccounting');
             this.Helper.WaitByIdAndClick('FACS');
         //   this.arInvoice.CreateNewARInvoice('CustomerGLAccount' + number);
@@ -76,7 +76,7 @@ export class FullAccountingScenarios {
             var GlaccountNumber = this.generalFunction.RandomNum();
             this.Helper.WaitByIdAndClick('General.MH.FullAccounting');
             this.Helper.WaitByIdAndClick('FAGLAccouts');
-            this.GLA.CreateNewGLAccount('My Auto GLAccount', GlaccountNumber);
+            this.GLA.CreateNewGLAccount('My Auto GLAccount');
             this.EditGLA.EditGLAccount(GlaccountNumber);
 
         }

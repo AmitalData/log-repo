@@ -133,6 +133,21 @@ namespace CommunicationWorkerRole
                                 {
                                     if (cl != null)
                                     {
+                                        if (cl.Subject != null && cl.Subject.ToLower() == "kill my thread" && cl.Retries < 4)
+                                        {
+                                            
+                                            cl.Retries++;
+                                            cl.ExceptionMessage = "Thread was killed";
+                                            SetNextTryDateTime(cl);
+                                            if (context != null)
+                                            {
+                                                communicationLogRep.Update(cl);
+                                                communicationLogRep.SubmitChanges();
+                                            }
+
+                                            return;
+
+                                        }
 
                                         if (cl.CommunicationStatusTypeCode == "D")
                                         {
@@ -190,6 +205,13 @@ namespace CommunicationWorkerRole
                                         }
                                         else
                                         {
+
+                                            //cl.CommunicationStatusTypeCode = "F";
+                                            //cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
+                                            //cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
+                                            //communicationLogRep.Update(cl);
+                                            //communicationLogRep.SubmitChanges();
+
                                             queueservice.Complete();
                                             AzureLog.SaveLogsInStorage("couldn't find communication log and the message is completed: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
                                                 + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);

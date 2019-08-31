@@ -186,6 +186,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<CardContactProduct> CardContactProducts
+        {
+            get;
+            set;
+        }
         public IDbSet<PartnerType> PartnerTypes
         {
             get;
@@ -1626,6 +1631,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         }
 
         public IDbSet<SchedulerLogs> SchedulerLogs
+        {
+            get;
+            set;
+        }
+        public IDbSet<SchedulerProcedure> SchedulerProcedures
         {
             get;
             set;
@@ -3323,7 +3333,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
-        public IDbSet<ARPaymentCheque> ARPaymentCheques
+        public IDbSet<Accounting.Data.EntityPOCOs.ARPaymentCheque> ARPaymentCheques
         {
             get;
             set;
@@ -3375,6 +3385,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<TaxDeductionReport> TaxDeductionReports { get; set; }
         public IDbSet<TaxDeductionReportStatus> TaxDeductionReportStatuses { get; set; }
         public IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; set; }
+        public IDbSet<JournalExternalReconcile> JournalExternalReconciles{get; set;}
 
         public IDbSet<OpenFormatReport> OpenFormatReports { get; set; }
         public IDbSet<OpenFormatReportStatus> OpenFormatReportStatuses { get; set; }
@@ -3575,6 +3586,15 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
 
         }
+
+        public IDbSet<BIReportsExecutionLog> BIReportsExecutionLogs
+        {
+            get;
+            set;
+
+        }
+
+        
         public IDbSet<BIReportsType> BIReportsTypes
         {
             get;
@@ -4308,6 +4328,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TaxDeductionReportMap());
             modelBuilder.Configurations.Add(new TaxDeductionReportStatusMap());
             modelBuilder.Configurations.Add(new JournalAdditionalDataMap());
+            modelBuilder.Configurations.Add(new JournalExternalReconcileMap());
             modelBuilder.Configurations.Add(new OpenFormatReportMap());
         //    modelBuilder.Configurations.Add(new OpenFormatDateTypeMap());
             modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
@@ -4350,6 +4371,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ToggleMap());
             modelBuilder.Configurations.Add(new FeatureToggleMap());
             modelBuilder.Configurations.Add(new BIReportMap());
+            modelBuilder.Configurations.Add(new BIReportsExecutionLogMap());
             modelBuilder.Configurations.Add(new BIReportsTypeMap());
             modelBuilder.Configurations.Add(new BusinessRoleMap());
             modelBuilder.Configurations.Add(new BusinessProcessQueueMap());
@@ -4537,6 +4559,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CardExternalCodeByCurrencyMap());
             modelBuilder.Configurations.Add(new BranchMap());
             modelBuilder.Configurations.Add(new CardContactMap());
+            modelBuilder.Configurations.Add(new CardContactProductMap());
             modelBuilder.Configurations.Add(new CardMap());
             modelBuilder.Configurations.Add(new CategoryTypeMap());
             modelBuilder.Configurations.Add(new ChargesGroupMap());
@@ -4900,6 +4923,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
             modelBuilder.Configurations.Add(new SchedulerLogsMap());
+            modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
 

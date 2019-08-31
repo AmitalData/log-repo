@@ -154,7 +154,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     ObjectFieldPM objectFieldPM = objectFieldPMs.Where(d => d.FieldName == field.Name).FirstOrDefault();
                     if (objectFieldPM != null)
                     {
-                        if (objectFieldPM.DataTypeCode != "PickList" && objectFieldPM.DataTypeCode != "LookUp")
+                        if (objectFieldPM.DataTypeCode != "LookUp")
                         {
                             field.DisplayName = objectFieldPM.FullNameTextCodeDefaultText;//TranslateTextsClass.Translate(objectFieldPM.FullNameTextCodeCode, tenant);
                             field.DataTypeCode = objectFieldPM.DataTypeCode;
@@ -162,6 +162,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                             {
                                 field.DataTypeCode = "Dimension";
                                 field.DimensionTableCode = "DIM_Dates";
+                            }
+                            else if (field.DataTypeCode == "PickList")
+                            {
+                                field.DataTypeCode = "Dimension";
+                                field.DimensionTableCode = "DIM_CustomPickLists";
+                                field.HideTree = true;
+                                field.CustomPickListCode = objectFieldPM.CustomPickListCode;
                             }
 
 

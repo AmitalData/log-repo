@@ -57,5 +57,19 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
             APIDataContract.ApiV1.GLAccountQueryService query = new APIDataContract.ApiV1.GLAccountQueryService(Tenant);
             return query.GLAccountDataMappingAndValidatin(MyEntity, Tenant);
         }
+
+
+        public GLAccountPM  GetSplittedByCurrencyGLAccount(string accountId, int tenant, string currency)
+        {
+            EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
+
+
+            GLAccountPM gLAccount = query.GetSplittedByCurrencyGLAccount(accountId, tenant, currency);
+
+            return gLAccount;
+
+
+        }
+
     }
 }

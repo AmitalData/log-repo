@@ -495,7 +495,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
             //get cardid if exisit
             CardQuery cardQuery = new CardQuery(entityPM.Tenant);
-            CardList cardList = cardQuery.GetSingleByGLAccount(entityPM.Id, entityPM.Tenant);
+            bool fromCache = true;
+            CardList cardList = cardQuery.GetSingleByGLAccount(entityPM.Id, entityPM.Tenant, fromCache);
             if(cardList != null)
             {
                 entityPM.CardId = cardList.Id;

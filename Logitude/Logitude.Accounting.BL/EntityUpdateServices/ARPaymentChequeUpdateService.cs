@@ -33,7 +33,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            
         }
 
-        protected override void OnUpdating(ARPaymentChequePM entityPM, ARPaymentCheque entityPOCO)
+        protected override void OnUpdating(ARPaymentChequePM entityPM, Data.EntityPOCOs.ARPaymentCheque entityPOCO)
         {
             //TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             //TenantPM tenant = tenantQuery.GetSinglePM(entityPM.Tenant);

@@ -3,9 +3,9 @@
  * License https://froala.com/wysiwyg-editor/terms/
  * Copyright 2014-2017 Froala Labs
  */
-/*.fr-view{
-    overflow :auto;
-}*/
+.fr-view{
+    padding-top :0px;
+}
 
 .clearfix::after {
   clear: both;

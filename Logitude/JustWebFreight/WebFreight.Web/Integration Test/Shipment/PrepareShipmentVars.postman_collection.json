@@ -21,22 +21,18 @@
 							"    var idvalue2 = (pm.response.json().Tenant);",
 							"    var idvalue3 = (pm.response.json().UserId);",
 							"    var idvalue4 = (pm.response.json().DocumentDownloadToken);",
-							"    var idvalue5 = (pm.response.json().InvalidDocumentToken);",
 							"    var id1exist = idvalue1 !== null;",
 							"    var id2exist = idvalue2 !== null;",
 							"    var id3exist = idvalue3 !== null;",
 							"    var id4exist = idvalue4 !== null;",
-							"    var id5exist = idvalue5 !== null;",
 							"    pm.expect(id1exist);",
 							"    pm.expect(id2exist);",
 							"    pm.expect(id3exist);",
 							"    pm.expect(id4exist);",
-							"    pm.expect(id5exist);",
 							"    pm.globals.set(\"Token\",idvalue1);",
 							"    pm.globals.set(\"Tenant\",idvalue2);",
-							"    pm.globals.set(\"LoggedUserId\",idvalue3);",
+							"    pm.environment.set(\"LoggedUserId\",idvalue3);",
 							"    pm.globals.set(\"DocumentDownloadToken\",idvalue4);",
-							"    pm.globals.set(\"InvalidDocumentToken\",idvalue5);",
 							"    ",
 							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
 							"});"
@@ -65,24 +61,9 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"ahmadb@test.com\",\"Password\":\"ahmed13!A15\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\",\"GetInvalidDocumentToken\":true}\n"
+					"raw": "{\n\t\"Email\":\"{{MyEmail}}\",\n\t\"Password\":\"{{MyPass}}\",\n\t\"GetToken\":true\n\t\n}\n"
 				},
-				"url": {
-					"raw": "{{URL}}/api/authentication?tenant={{Tenant}}",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"authentication"
-					],
-					"query": [
-						{
-							"key": "tenant",
-							"value": "{{Tenant}}"
-						}
-					]
-				}
+				"url": "{{LogitudeURL}}/api/authentication"
 			},
 			"response": []
 		},
@@ -94,32 +75,31 @@
 					"script": {
 						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
 						"exec": [
-							"pm.test(\"GetLoggedUserId\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   ",
+							"pm.test(\"GetLoogedUserData\",function(){",
+							"    pm.response.to.have.status(200);",
 							"    ",
-							"    var idvalue1 = (pm.response.json().Result.filter(a => a.Email == 'ahmadb@test.com')[0].DepartmentId);",
-							"    var idvalue2 = (pm.response.json().Result.filter(a => a.Email == 'ahmadb@test.com')[0].BranchId);",
+							"    // var BranchId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].BranchId;",
+							"    // var DepartmentId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].DepartmentId;",
+							"    // var CreatedByUserId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].Id;",
 							"    ",
-							"    var id1exist = idvalue1 !== null;",
-							"    var id2exist = idvalue2 !== null;",
 							"    ",
-							"    pm.expect(id1exist);",
-							"    pm.expect(id2exist);",
+							"    var BranchId=pm.response.json().Result[0].BranchId;",
+							"    var DepartmentId=pm.response.json().Result[0].DepartmentId;",
+							"    var CreatedByUserId=pm.response.json().Result[0].Id;",
 							"    ",
-							"    pm.environment.set(\"DepartmentId\",idvalue1);",
-							"    pm.environment.set(\"BranchId\",idvalue2);",
-							"  ",
-							" if (id1exist)  {",
-							"    postman.setNextRequest(\"GetIncotermIdCIF\");  ",
-							"    } ",
+							"    var test1 =BranchId !== null;",
+							"    var test2 =DepartmentId !== null;",
+							"    var test3 =CreatedByUserId !== null;",
 							"    ",
-							"});",
-							"     ",
-							"",
-							"",
-							"",
-							""
+							"    pm.expect(test1);",
+							"    pm.expect(test2);",
+							"    pm.expect(test3);",
+							"    ",
+							"    pm.environment.set(\"DepartmentId\",DepartmentId);",
+							"    pm.environment.set(\"BranchId\",BranchId);",
+							"    pm.environment.set(\"CreatedByUserId\",CreatedByUserId);",
+							"    ",
+							"})"
 						],
 						"type": "text/javascript"
 					}
@@ -158,9 +138,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{URL}}/api/userviews/getbyfilters?Filter1Name=Email&Filter1Operator=equals&Filter1Value=ahmadb@test.com&PageSize=22",
+					"raw": "{{LogitudeURL}}/api/userviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{MyEmail}}&GetCount=true&PageIndex=0&PageSize=23",
 					"host": [
-						"{{URL}}"
+						"{{LogitudeURL}}"
 					],
 					"path": [
 						"api",
@@ -169,20 +149,36 @@
 					],
 					"query": [
 						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
 							"key": "Filter1Name",
-							"value": "Email"
+							"value": "SearchFields"
 						},
 						{
 							"key": "Filter1Operator",
-							"value": "equals"
+							"value": "Contains"
 						},
 						{
 							"key": "Filter1Value",
-							"value": "ahmadb@test.com"
+							"value": "{{MyEmail}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
 						},
 						{
 							"key": "PageSize",
-							"value": "22"
+							"value": "23"
 						}
 					]
 				}
@@ -2300,6 +2296,7 @@
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
 							"    pm.environment.set(\"ShipperIdTestShipExport1\",idvalue);",
+							"    ",
 							"    ",
 							"        if (idexist)  {",
 							"    postman.setNextRequest(\"GetShipperIdTestShipperImport1\"); ",

@@ -513,6 +513,11 @@ export class QuotePM {
     public set ExpirationDate(newValue: Date) { if (this.expirationDate != newValue) { this.expirationDate = newValue; this.MarkAsDirty("ExpirationDate"); } }
        
 	 
+    private startDate: Date;
+    public get StartDate() { return this.startDate; }
+    public set StartDate(newValue: Date) { if (this.startDate != newValue) { this.startDate = newValue; this.MarkAsDirty("StartDate"); } }
+       
+	 
     private isFreightBySteps: boolean;
     public get IsFreightBySteps() { return this.isFreightBySteps; }
     public set IsFreightBySteps(newValue: boolean) { if (this.isFreightBySteps != newValue) { this.isFreightBySteps = newValue; this.MarkAsDirty("IsFreightBySteps"); } }
@@ -1203,6 +1208,11 @@ export class QuotePM {
     public set ChargeableWeightEdited(newValue: boolean) { if (this.chargeableWeightEdited != newValue) { this.chargeableWeightEdited = newValue; this.MarkAsDirty("ChargeableWeightEdited"); } }
        
 	 
+    private quoteHTMLDocumentId: string;
+    public get QuoteHTMLDocumentId() { return this.quoteHTMLDocumentId; }
+    public set QuoteHTMLDocumentId(newValue: string) { if (this.quoteHTMLDocumentId != newValue) { this.quoteHTMLDocumentId = newValue; this.MarkAsDirty("QuoteHTMLDocumentId"); } }
+       
+	 
     private numberOfFollowUps: number;
     public get NumberOfFollowUps() { return this.numberOfFollowUps; }
     public set NumberOfFollowUps(newValue: number) { if (this.numberOfFollowUps != newValue) { this.numberOfFollowUps = newValue; this.MarkAsDirty("NumberOfFollowUps"); } }
@@ -1331,6 +1341,21 @@ export class QuotePM {
         }
     }
     //public QuoteCostCharges: Array<QuoteCostChargePMPM>= [];
+      
+	private quotationSaleCharges: QuoteSaleChargePM[];
+    get  QuotationSaleCharges() {
+        if (this.quotationSaleCharges == null) {
+            this.quotationSaleCharges = [];
+        }
+
+        return this.quotationSaleCharges;
+    }
+    set  QuotationSaleCharges(newValue: QuoteSaleChargePM[]) {
+        if (this.quotationSaleCharges != newValue) {
+            this.quotationSaleCharges = newValue;
+        }
+    }
+    //public QuotationSaleCharges: Array<QuoteSaleChargePMPM>= [];
       
 	private quoteSaleCharges: QuoteSaleChargePM[];
     get  QuoteSaleCharges() {

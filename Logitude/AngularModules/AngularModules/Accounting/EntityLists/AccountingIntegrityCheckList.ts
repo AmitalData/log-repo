@@ -20,6 +20,7 @@ export class AccountingIntegrityCheckList {
 	FromMonthInclusive: Date;
 	ToMonthInclusive: Date;
 	SearchFields: string;
+	ShouldFix: boolean;
 	
 }
  

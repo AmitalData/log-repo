@@ -21,6 +21,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.Helpers;
+using Logitude.BL.GlobalModel.Tools.Validating;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -39,6 +40,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private bool isConnectedToCard = false;
         private Contact oldSimilarContact = null;
         private List<CardContact> allCardContact;
+        public bool ValidateNumberOfUsers = true;
         public ContactService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -149,6 +151,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.ComputeCompanyName();
+
+            if (entityPM.IsUser && this.ValidateNumberOfUsers)
+            {
+                this.ValidateActiveUsers();
+            }
 
             ContactMapping.MapEntity(entityPM, Poco, isNewEntity);
 
@@ -545,6 +552,27 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardContact.IsOceanImport = contactPM.IsOceanImport;
             cardContact.IsCustomsImport = contactPM.IsCustomsImport;
             cardContact.IsInlandDomestic = contactPM.IsInlandDomestic;
+        }
+        private void ValidateActiveUsers()
+        {
+            UserRepository userRepository = new UserRepository(objectContext);
+            User user = userRepository.GetSingleUser(entityPM.Id, entityPM.Tenant);
+            
+            if (user != null)
+            {
+                NumberOfUsersArgs numberOfUsersArgs = new NumberOfUsersArgs()
+                {
+                    UserEnglishName = this.entityPM.EnglishName,
+                    UserPMIsDistributor = user.IsDistributor,
+                    UserPOCOInactive = this.Poco.InActive,
+                    UserPMInactive = this.entityPM.InActive,    
+                    UserPMAdditionalPackagesOnly = user.AdditionalPackagesOnly,                    
+                    UserId = this.entityPM.Id,
+                };
+
+                NumberOfUsersService numberOfUsersService = new NumberOfUsersService(userRepository, tenant);
+                numberOfUsersService.CheckNumberOfUsersOnUpdateUser(numberOfUsersArgs);
+            }
         }
     }
 }

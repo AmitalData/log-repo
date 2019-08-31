@@ -160,6 +160,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsDangerous { get; set; }
         public int? ExpirationDays { get; set; }
         public DateTime? ExpirationDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public bool IsFreightBySteps { get; set; }
         public bool TotalPerContainer { get; set; }
@@ -392,6 +393,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool GrossWeightEdited { get; set; }
         public bool ChargeableWeightEdited { get; set; }
 
+        public string QuoteHTMLDocumentId { get; set; }
+
+        
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? NumberOfFollowUps { get; set; }
 
@@ -489,6 +493,29 @@ namespace Logitude.BL.QuoteModel.EntityPMs
                 }
             }
         }
+
+        private List<QuoteSaleChargePM> quotationSaleCharges;
+        public List<QuoteSaleChargePM> QuotationSaleCharges
+        {
+            get
+            {
+                if (quotationSaleCharges == null)
+                {
+                    quotationSaleCharges = new List<QuoteSaleChargePM>();
+                }
+
+                return quotationSaleCharges;
+            }
+
+            set
+            {
+                if (value != null)
+                {
+                    quotationSaleCharges = value;
+                }
+            }
+        }
+
 
         private List<QuoteSaleChargePM> quoteSaleCharges;
         public List<QuoteSaleChargePM> QuoteSaleCharges

@@ -242,6 +242,18 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                   ShowHeaderLabelsContainers = a.ShowHeaderLabelsContainers,
                                                   ShowHeaderLabelsPackages = a.ShowHeaderLabelsPackages,
 
+                                                  SpaceLinesBeforeContainers =a.SpaceLinesBeforeContainers,
+                                                  SpaceLinesBeforeFooters =a.SpaceLinesBeforeFooters,
+                                                  SpaceLinesBeforeHeaders =a.SpaceLinesBeforeHeaders,
+                                                  SpaceLinesBeforePackages = a.SpaceLinesBeforePackages,
+                                                  SpaceLinesBeforeQuoteDetails = a.SpaceLinesBeforeQuoteDetails,
+                                                  SpaceLinesBeforeQuoteHeaders = a.SpaceLinesBeforeQuoteHeaders,
+                                                  SpaceLinesBeforePerContainers = a.SpaceLinesBeforePerContainers,
+                                                  QuoteTemplatePDFMarginBottom = a.QuoteTemplatePDFMarginBottom,
+                                                  QuoteTemplatePDFMarginTop = a.QuoteTemplatePDFMarginTop,
+                                                  ShowIncludedChargesContainers = a.ShowIncludedChargesContainers,
+                                                  ShowIncludedChargesPackages = a.ShowIncludedChargesPackages,
+                                                  ShowIncludedChargesPerContainers = a.ShowIncludedChargesPerContainers,
                                               }).FirstOrDefault();
 
             return entity;
@@ -453,6 +465,18 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                        ShowSaleMaxMinAmountPackages = a.ShowSaleMaxMinAmountPackages,
                                                        ShowHeaderLabelsContainers = a.ShowHeaderLabelsContainers,
                                                        ShowHeaderLabelsPackages = a.ShowHeaderLabelsPackages,
+                                                       SpaceLinesBeforeContainers = a.SpaceLinesBeforeContainers,
+                                                       SpaceLinesBeforeFooters = a.SpaceLinesBeforeFooters,
+                                                       SpaceLinesBeforeHeaders = a.SpaceLinesBeforeHeaders,
+                                                       SpaceLinesBeforePackages = a.SpaceLinesBeforePackages,
+                                                       SpaceLinesBeforeQuoteDetails = a.SpaceLinesBeforeQuoteDetails,
+                                                       SpaceLinesBeforeQuoteHeaders = a.SpaceLinesBeforeQuoteHeaders,
+                                                       SpaceLinesBeforePerContainers = a.SpaceLinesBeforePerContainers,
+                                                       QuoteTemplatePDFMarginBottom = a.QuoteTemplatePDFMarginBottom,
+                                                       QuoteTemplatePDFMarginTop = a.QuoteTemplatePDFMarginTop,
+                                                       ShowIncludedChargesContainers = a.ShowIncludedChargesContainers,
+                                                       ShowIncludedChargesPackages = a.ShowIncludedChargesPackages,
+                                                       ShowIncludedChargesPerContainers = a.ShowIncludedChargesPerContainers,
 
 
                                                                       };
@@ -659,7 +683,18 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                     ShowSaleMaxMinAmountPackages = quoteTemplateSetting.ShowSaleMaxMinAmountPackages,
                                                     ShowHeaderLabelsContainers = quoteTemplateSetting.ShowHeaderLabelsContainers,
                                                     ShowHeaderLabelsPackages = quoteTemplateSetting.ShowHeaderLabelsPackages,
-
+                                                    SpaceLinesBeforeContainers = quoteTemplateSetting.SpaceLinesBeforeContainers,
+                                                    SpaceLinesBeforeFooters = quoteTemplateSetting.SpaceLinesBeforeFooters,
+                                                    SpaceLinesBeforeHeaders = quoteTemplateSetting.SpaceLinesBeforeHeaders,
+                                                    SpaceLinesBeforePackages = quoteTemplateSetting.SpaceLinesBeforePackages,
+                                                    SpaceLinesBeforeQuoteDetails = quoteTemplateSetting.SpaceLinesBeforeQuoteDetails,
+                                                    SpaceLinesBeforeQuoteHeaders = quoteTemplateSetting.SpaceLinesBeforeQuoteHeaders,
+                                                    SpaceLinesBeforePerContainers = quoteTemplateSetting.SpaceLinesBeforePerContainers,
+                                                    QuoteTemplatePDFMarginBottom = quoteTemplateSetting.QuoteTemplatePDFMarginBottom,
+                                                    QuoteTemplatePDFMarginTop = quoteTemplateSetting.QuoteTemplatePDFMarginTop,
+                                                    ShowIncludedChargesContainers = quoteTemplateSetting.ShowIncludedChargesContainers,
+                                                    ShowIncludedChargesPackages = quoteTemplateSetting.ShowIncludedChargesPackages,
+                                                    ShowIncludedChargesPerContainers = quoteTemplateSetting.ShowIncludedChargesPerContainers,
                                                           };
             return result;
         }

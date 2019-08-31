@@ -112,6 +112,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
             shipments.ForEach(item =>
             {
+ 
                 UnicargoExport Shipment = new UnicargoExport();
 
                 #region  General Section
@@ -203,7 +204,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
                 Shipment.CreateDate = item.CreateDateTime;
                 Shipment.ValueofGoods = item.ValueOfGoods;
-                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, item, Shipment);
+               // customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, item, Shipment);
 
 
                 #endregion
@@ -438,11 +439,109 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 }
 
+                if (myLastDelivery != null)
+                {
+                    if (myLastDelivery.PickUpDeliveryToTypeCode == "PART")
+                    {
+                        if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
+                        {
+                            Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.CardId == myLastDelivery.ToPartnerCardId).FirstOrDefault();
+                            if (myPartnerAddress != null)
+                            {
+                                Shipment.DeliveryToPatnerAddress = DataProviders.General.GetAddress(myPartnerAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                            }
+
+                            Card card = cardRepository.GetSingleCardByIdAndTenant(myLastDelivery.ToPartnerCardId, tenant, true);
+
+                            if (card != null)
+                            {
+                                Shipment.DeliveryToPartner = card.EnglishName;
+                            }
+                        }
+
+
+
+
+                    }
+
+
+                    if (myLastDelivery.PickUpDeliveryFromTypeCode == "PART")
+
+                        if (!string.IsNullOrEmpty(myLastDelivery.FromPartnerCardId))
+                        {
+
+                            Card card = cardRepository.GetSingleCardByIdAndTenant(myLastDelivery.FromPartnerCardId, tenant, true);
+
+                            if (card != null)
+                            {
+                                Shipment.DeliveryFromPartner = card.EnglishName;
+                            }
+                        }
+
+
+                    if (myLastDelivery.PickUpDeliveryFromTypeCode == "PORT")
+                    {
+                        if (!string.IsNullOrEmpty(myLastDelivery.FromPortId))
+                        {
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.FromPortId, true);
+                            if (myPort != null)
+                            {
+                                Shipment.DeliveryFromPort = myPort.Code + " " + myPort.EnglishName;
+                            }
+                        }
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    if (!string.IsNullOrEmpty(myLastDelivery.TransportModeCode))
+                    {
+                        Shipment.DeliveryTransportMode = transportmodes.ContainsKey(myLastDelivery.TransportModeCode) ? transportmodes[myLastDelivery.TransportModeCode] != null ? transportmodes[myLastDelivery.TransportModeCode] : null : null;
+                    }
+
+
+                    if (myLastDelivery.ETD != null)
+                    {
+                        Shipment.DeliveryExpectedDeparture = myLastDelivery.ETD;
+                    }
+
+                    if (myLastDelivery.ETA != null)
+                    {
+                        Shipment.DeliveryExpectedArrival = myLastDelivery.ETA;
+                    }
+
+                    if (myLastDelivery.ATA != null)
+                    {
+                        Shipment.DeliveryActualArrival = myLastDelivery.ATA;
+                    }
+
+                    if (myLastDelivery.ATD != null)
+                    {
+                        Shipment.DeliveryActualDeparture = myLastDelivery.ATD;
+                    }
+                }
+
                 ShipmentMasterData MasterData = shipmentMasterDatas.Where(p => p.Id == item.Id).FirstOrDefault();
+
+                ShipmentMasterData MasterShipment = null;
+                if (item.MasterShipmentDataId != null)
+                {
+                    MasterShipment = shipmentMasterDatas.Where(p => p.Id == item.MasterShipmentDataId).FirstOrDefault();
+
+                }
+
                 if (MasterData != null)
                 {
-
-
+                    
                     if (!string.IsNullOrEmpty(MasterData.MainCarriageFromPortId))
                     {
 
@@ -490,28 +589,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
 
 
-                    if (!string.IsNullOrEmpty(MasterData.MainCarriageToPortId))
+                    if (!string.IsNullOrEmpty(MasterData.MainCarriageFinalDestinationPortId))
                     {
-
-                        PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.MainCarriageToPortId, true);
+                        PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.MainCarriageFinalDestinationPortId, true);
                         if (myPort != null)
                         {
                             Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
                         }
 
                     }
-
-
-                    if (!string.IsNullOrEmpty(MasterData.MainCarriageToPortId))
-                    {
-
-                        PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.MainCarriageToPortId, true);
-                        if (myPort != null)
-                        {
-                            Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
-                        }
-
-                    }
+           
 
 
                     if (!string.IsNullOrEmpty(MasterData.MainCarriageCarrierId))
@@ -540,9 +627,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         Shipment.MainCarriageLeg1OBLDate = MasterData.MAWBOBLDate;
                     }
 
-                    if (item.CutoffDate != null)
+                    if (MasterData.CutoffDate != null)
                     {
-                        Shipment.MainCarriageLeg1CutoffDate = item.CutoffDate;
+                        Shipment.MainCarriageLeg1CutoffDate = MasterData.CutoffDate;
 
                     }
 
@@ -555,25 +642,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     }
 
 
-                    if (MasterData.MainCarriageETD != null)
-                    {
-                        Shipment.MainCarriageLeg1ETD = MasterData.MainCarriageETD;
-                    }
+                        Shipment.MainCarriageLeg1ETD=MasterData.MainCarriageETD != null ? MasterData.MainCarriageETD : (MasterShipment != null ? MasterShipment.MainCarriageETD : null);
 
-                    if (MasterData.MainCarriageETA != null)
-                    {
-                        Shipment.MainCarriageLeg1ETA = MasterData.MainCarriageETA;
-                    }
+                        Shipment.MainCarriageLeg1ETA = MasterData.MainCarriageETA != null ? MasterData.MainCarriageETA : (MasterShipment != null ? MasterShipment.MainCarriageETA : null);
 
-                    if (MasterData.MainCarriageATD != null)
-                    {
-                        Shipment.MainCarriageLeg1ATD = MasterData.MainCarriageATD;
-                    }
+                        Shipment.MainCarriageLeg1ATD = MasterData.MainCarriageATD != null ? MasterData.MainCarriageATD : (MasterShipment != null ? MasterShipment.MainCarriageATD : null);
 
-                    if (MasterData.MainCarriageATA != null)
-                    {
-                        Shipment.MainCarriageLeg1ATA = MasterData.MainCarriageATA;
-                    }
+                        Shipment.MainCarriageLeg1ATA = MasterData.MainCarriageATA != null ? MasterData.MainCarriageATA : (MasterShipment != null ? MasterShipment.MainCarriageATA : null);
+
+
+
+           
+                    
+                  
+                    
 
                     if (!string.IsNullOrEmpty(MasterData.Transshipment1CarrierId))
                     {
@@ -602,115 +684,185 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         Shipment.Transshipment1Vessel = vessel;
                     }
 
-                    if (MasterData.Transshipment1ETD != null)
-                    {
-                        Shipment.Transshipment1ETD = MasterData.Transshipment1ETD;
-                    }
+                    Shipment.Transshipment1ETD = MasterData.Transshipment1ETD != null ? MasterData.Transshipment1ETD : (MasterShipment != null ? MasterShipment.Transshipment1ETD : null);
+                    Shipment.Transshipment1ETA = MasterData.Transshipment1ETA != null ? MasterData.Transshipment1ETA : (MasterShipment != null ? MasterShipment.Transshipment1ETA : null);
+                    Shipment.Transshipment1ATD = MasterData.Transshipment1ATD != null ? MasterData.Transshipment1ATD : (MasterShipment != null ? MasterShipment.Transshipment1ATD : null);
+                    Shipment.Transshipment1ATA = MasterData.Transshipment1ATA != null ? MasterData.Transshipment1ATA : (MasterShipment != null ? MasterShipment.Transshipment1ATA : null);
 
-                    if (MasterData.Transshipment1ETA != null)
-                    {
-                        Shipment.Transshipment1ETA = MasterData.Transshipment1ETA;
-                    }
 
-                    if (MasterData.Transshipment1ATD != null)
-                    {
-                        Shipment.Transshipment1ATD = MasterData.Transshipment1ATD;
-                    }
+            
 
-                    if (MasterData.Transshipment1ATA != null)
-                    {
-                        Shipment.Transshipment1ATA = MasterData.Transshipment1ATA;
-                    }
 
-                    if (myLastDelivery != null)
+                }
+                else
+                {
+
+
+                    //if (MasterData.CutoffDate != null)
+                    //{
+                    //    Shipment.MainCarriageLeg1CutoffDate = MasterData.CutoffDate;
+
+                    //}
+                    if (MasterShipment != null)
                     {
-                        if (myLastDelivery.PickUpDeliveryToTypeCode == "PART")
+                        Shipment.Transshipment1ETD = MasterShipment != null ? MasterShipment.Transshipment1ETD : null;
+                        Shipment.Transshipment1ETA = MasterShipment != null ? MasterShipment.Transshipment1ETA : null;
+                        Shipment.Transshipment1ATD = MasterShipment != null ? MasterShipment.Transshipment1ATD : null;
+                        Shipment.Transshipment1ATA = MasterShipment != null ? MasterShipment.Transshipment1ATA : null;
+                        Shipment.MainCarriageLeg1ETD = MasterShipment != null ? MasterShipment.MainCarriageETD : null;
+                        Shipment.MainCarriageLeg1ETA = MasterShipment != null ? MasterShipment.MainCarriageETA : null;
+                        Shipment.MainCarriageLeg1ATD = MasterShipment != null ? MasterShipment.MainCarriageATD : null;
+                        Shipment.MainCarriageLeg1ATA = MasterShipment != null ? MasterShipment.MainCarriageATA : null;
+
+                        if (MasterShipment != null)
                         {
-                            if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
-                            {
-                                Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.CardId == myLastDelivery.ToPartnerCardId).FirstOrDefault();
-                                if (myPartnerAddress != null)
-                                {
-                                    Shipment.DeliveryToPatnerAddress = DataProviders.General.GetAddress(myPartnerAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
-                                }
-
-                                Card card = cardRepository.GetSingleCardByIdAndTenant(myLastDelivery.ToPartnerCardId, tenant, true);
-
-                                if (card != null)
-                                {
-                                    Shipment.DeliveryToPartner = card.EnglishName;
-                                }
-                            }
-
-
-
-
-                        }
-
-
-                        if (myLastDelivery.PickUpDeliveryFromTypeCode == "PART")
-
-                            if (!string.IsNullOrEmpty(myLastDelivery.FromPartnerCardId))
+                            if (!string.IsNullOrEmpty(MasterShipment.MainCarriageFromPortId))
                             {
 
-                                Card card = cardRepository.GetSingleCardByIdAndTenant(myLastDelivery.FromPartnerCardId, tenant, true);
-
-                                if (card != null)
-                                {
-                                    Shipment.DeliveryFromPartner = card.EnglishName;
-                                }
-                            }
-
-
-                        if (myLastDelivery.PickUpDeliveryFromTypeCode == "PORT")
-                        {
-                            if (!string.IsNullOrEmpty(myLastDelivery.FromPortId))
-                            {
-                                PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.FromPortId, true);
+                                PortPM myPort = PortQuery.GetSinglePort(tenant, MasterShipment.MainCarriageFromPortId, true);
                                 if (myPort != null)
                                 {
-                                    Shipment.DeliveryFromPort = myPort.Code + " " + myPort.EnglishName;
+                                    Shipment.MainCarriageLeg1LoadingPort = myPort.Code + " " + myPort.EnglishName;
+                                }
+
+                            }
+
+                            if (!string.IsNullOrEmpty(MasterShipment.Transshipment1FromPortId))
+                            {
+
+                                PortPM myPort = PortQuery.GetSinglePort(tenant, MasterShipment.Transshipment1FromPortId, true);
+                                if (myPort != null)
+                                {
+                                    Shipment.MainCarriageLeg1ViaPort1 = myPort.Code + " " + myPort.EnglishName;
+                                }
+
+                            }
+
+                            if (!string.IsNullOrEmpty(MasterShipment.Transshipment2FromPortId))
+                            {
+
+                                PortPM myPort = PortQuery.GetSinglePort(tenant, MasterShipment.Transshipment2FromPortId, true);
+                                if (myPort != null)
+                                {
+                                    Shipment.MainCarriageLeg1ViaPort2 = myPort.Code + " " + myPort.EnglishName;
+                                }
+
+                            }
+
+
+                            if (!string.IsNullOrEmpty(MasterShipment.Transshipment3FromPortId))
+                            {
+
+                                PortPM myPort = PortQuery.GetSinglePort(tenant, MasterShipment.Transshipment3FromPortId, true);
+                                if (myPort != null)
+                                {
+                                    Shipment.MainMainCarriageLeg1ViaPort3 = myPort.Code + " " + myPort.EnglishName;
+                                }
+
+                            }
+
+
+
+                            if (!string.IsNullOrEmpty(MasterShipment.MainCarriageFinalDestinationPortId))
+                            {
+                                PortPM myPort = PortQuery.GetSinglePort(tenant, MasterShipment.MainCarriageFinalDestinationPortId, true);
+                                if (myPort != null)
+                                {
+                                    Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
+                                }
+
+                            }
+
+
+
+                            if (!string.IsNullOrEmpty(MasterShipment.MainCarriageCarrierId))
+                            {
+                                Card card = cardRepository.GetSingleCardByIdAndTenant(MasterShipment.MainCarriageCarrierId, tenant, true);
+                                if (card != null)
+                                {
+                                    Shipment.MainCarriageLeg1ShippingLine = card.EnglishName;
                                 }
                             }
+
+
+
+                            if (!string.IsNullOrEmpty(MasterShipment.MainCarriageCarrierNumber))
+                            {
+                                Shipment.MainCarriageLeg1VoyageNo = MasterShipment.MainCarriageCarrierNumber;
+                            }
+
+                            if (!string.IsNullOrEmpty(MasterShipment.Master))
+                            {
+                                Shipment.MainCarriageLeg1OBL = MasterShipment.Master;
+                            }
+
+                            if (MasterShipment.MAWBOBLDate != null)
+                            {
+                                Shipment.MainCarriageLeg1OBLDate = MasterShipment.MAWBOBLDate;
+                            }
+
+
+                            if (!string.IsNullOrEmpty(MasterShipment.MainCarriageVesselId))
+                            {
+                                string vessel = Vessels.ContainsKey(MasterShipment.MainCarriageVesselId) ? Vessels[MasterShipment.MainCarriageVesselId] != null ? Vessels[MasterShipment.MainCarriageVesselId] : null : null;
+
+                                Shipment.MainCarriageLeg1Vessel = vessel;
+
+                            }
+
+
+                            if (!string.IsNullOrEmpty(MasterShipment.Transshipment1CarrierId))
+                            {
+                                Card card = cardRepository.GetSingleCardByIdAndTenant(MasterShipment.Transshipment1CarrierId, tenant, true);
+
+                                if (card != null)
+                                {
+                                    Shipment.Transshipment1ShippingLine = card.EnglishName;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(MasterShipment.Transshipment1CarrierNumber))
+                            {
+                                Shipment.Transshipment1VoyageNo = MasterShipment.Transshipment1CarrierNumber;
+                            }
+
+                            if (!string.IsNullOrEmpty(MasterShipment.Transshipment1AdditionalMAWBOBLBL))
+                            {
+                                Shipment.Transshipment1OBL = MasterShipment.Transshipment1AdditionalMAWBOBLBL;
+                            }
+
+                            if (!string.IsNullOrEmpty(MasterShipment.Transshipment1VesselId))
+                            {
+                                string vessel = Vessels.ContainsKey(MasterShipment.Transshipment1VesselId) ? Vessels[MasterShipment.Transshipment1VesselId] != null ? Vessels[MasterShipment.Transshipment1VesselId] : null : null;
+
+                                Shipment.Transshipment1Vessel = vessel;
+                            }
                         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        if (!string.IsNullOrEmpty(myLastDelivery.TransportModeCode))
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(item.FromPortId))
                         {
-                            Shipment.DeliveryTransportMode = transportmodes.ContainsKey(myLastDelivery.TransportModeCode) ? transportmodes[myLastDelivery.TransportModeCode] != null ? transportmodes[myLastDelivery.TransportModeCode] : null : null;
+
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, item.FromPortId, true);
+                            if (myPort != null)
+                            {
+                                Shipment.MainCarriageLeg1LoadingPort = myPort.Code + " " + myPort.EnglishName;
+                            }
+
                         }
 
 
-                        if (myLastDelivery.ETD != null)
+                        if (!string.IsNullOrEmpty(item.ToPortId))
                         {
-                            Shipment.DeliveryExpectedDeparture = myLastDelivery.ETD;
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, item.ToPortId, true);
+                            if (myPort != null)
+                            {
+                                Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
+                            }
+
                         }
 
-                        if (myLastDelivery.ETA != null)
-                        {
-                            Shipment.DeliveryExpectedArrival = myLastDelivery.ETA;
-                        }
-
-                        if (myLastDelivery.ATA != null)
-                        {
-                            Shipment.DeliveryActualArrival = myLastDelivery.ATA;
-                        }
-
-                        if (myLastDelivery.ATD != null)
-                        {
-                            Shipment.DeliveryActualDeparture = myLastDelivery.ATD;
-                        }
                     }
 
 

@@ -371,6 +371,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int DoneItemsInOneHour = 0;
                     int DoneItemsInOneMinute = 0;
                     int NumberOfDoneItems = 0;
+                    int WaitingItems = 0;
+                    int FailedItems = 0;
                     DateTime? LActivity = null;
 
                     foreach (BatchServicesLog Log in Logs)
@@ -379,6 +381,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DoneItemsInFiveMinutes += Log.DoneItemsInFiveMinutes;
                         DoneItemsInOneHour += Log.DoneItemsInOneHour;
                         DoneItemsInOneMinute += Log.DoneItemsInOneMinute;
+                        WaitingItems += Log.WaitingItems;
+                        FailedItems += Log.FailedItems;
                         NumberOfDoneItems += Log.NumberOfDoneItems != null ? (int)Log.NumberOfDoneItems : 0;
 
                         if (Log.LastActivity > LActivity && LActivity != null)
@@ -395,6 +399,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     item.DoneItemsInOneHour = DoneItemsInOneHour;
                     item.DoneItemsInOneMinute = DoneItemsInOneMinute;
                     item.NumberOfDoneItems = NumberOfDoneItems;
+                    item.WaitingItems = WaitingItems;
+                    item.FailedItems = FailedItems;
                     item.LastActivity = LActivity;
                     TempList.Add(item);
                 }
@@ -510,6 +516,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         ManageLicencesPerUser = entityPM.ManageLicencesPerUser,
                         ManagesRegisteredAgent = entityPM.ManagesRegisteredAgent,
                         NumberOfUsers = entityPM.NumberOfUsers,
+                        NumberOfFreeUsers = entityPM.FreeUsers == null ? 0 : entityPM.FreeUsers.Value,
                         PaidDaysLeft = entityPM.PaidDaysLeft,
                         PaymentFailure = entityPM.PaymentFailure,
                         PrivateLabelId = entityPM.PrivateLabelId,
@@ -519,9 +526,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         PackagesCodes_BS = entityPM.PackagesCodes_BS,
                         PackagesCodes_PK = entityPM.PackagesCodes_PK,
                         TrailDaysLeft = entityPM.TrailDaysLeft,
-                         TenantManagementLicenses = entityPM.TenantManagementLicenses,
-                         CountryName=entityPM.CountryName,
-                         BluesnapContractQTY=entityPM.BluesnapContractQTY,
+                        TenantManagementLicenses = entityPM.TenantManagementLicenses,
+                        CountryName = entityPM.CountryName,
+                        BluesnapContractQTY = entityPM.BluesnapContractQTY,
                         BluesnapCRMContractQTY = entityPM.BluesnapCRMContractQTY,
                         BluesnapEAWBContractQTY = entityPM.BluesnapEAWBContractQTY,
                         BluesnapEAWBSContractQTY = entityPM.BluesnapEAWBSContractQTY,
@@ -530,8 +537,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         BluesnapEAWBContractId = entityPM.BluesnapEAWBContractId,
                         BluesnapEAWBSContractId = entityPM.BluesnapEAWBSContractId,
                         BluesnapOneTimeContract = entityPM.BluesnapOneTimeContract,
-                        BluesnapInttraStockContractId=entityPM.BluesnapInttraStockContractId,
-                        BluesnapInttraStockContractQTY=entityPM.BluesnapInttraStockContractQTY,
+                        BluesnapInttraStockContractId = entityPM.BluesnapInttraStockContractId,
+                        BluesnapInttraStockContractQTY = entityPM.BluesnapInttraStockContractQTY,
+                        MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied,
                     };
 
                     if (entityPM.PaymentFailure)
@@ -613,9 +621,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                         scope.Complete();
                     }
-
-
-
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -676,6 +681,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public int PaidDaysLeft { get; set; }
         public int SuspendDaysLeft { get; set; }
         public int NumberOfUsers { get; set; }
+        public int NumberOfFreeUsers { get; set; }
         public string BluesnapContractId { get; set; }
         public string BluesnapAccount { get; set; }
         public string BluesnapCRMContractId { get; set; }
@@ -696,6 +702,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string PackageName { get; set; }
         public string TemporalPackageCode { get; set; }
         public string CountryName { get; set; }
+        public bool MainAdditionalPackageApplied { get; set; }
 
         private List<string> packagesCodes_PK;
         public List<string> PackagesCodes_PK

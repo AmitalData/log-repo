@@ -23,6 +23,7 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ConvertDirectionArgs } from './ShipmenDirectionConvertComponent';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
@@ -289,6 +290,23 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             button.IsHidden = true;
                         }
                     }
+
+                    if (button.EventCode == "SendToAMANAC") {
+                        if (buttonEnabled) {
+                            if (this.EntityPM.IsCancelled || this.EntityPM.IsOperationalClosed || this.EntityPM.IsAccountingClosed) {
+                                button.IsDisabled = true;
+                            }
+
+                            else {
+                                if (this.EntityPM.TransportModeId == 'I' || this.EntityPM.ShipmentLevelCode == "C" || (this.EntityPM.ShipmentLevelCode == "H" && AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId))) {
+                                    button.IsHidden = true;
+                                }
+                            }                            
+                        }
+                        else {
+                            button.IsHidden = true;
+                        }
+                    }
                 }
 
                 return menuButtons;
@@ -379,6 +397,12 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         break;
                     }
 
+                    case "SendToAMANAC":
+                        {
+                            this.SendToAMANACClicked();
+                            break;
+                        }
+
                     default: {
                         this.isButtonClicked = false;
                         break;
@@ -422,6 +446,10 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             this.DoConvertShipmentDirection();
                         }
 
+                        if (this.IsSendToAMANACClicked) {
+                            this.DoSendToAMANA();
+                        }
+
                         if (this.Reload) {
                             this.entityArgs.EditComponent.ReloadEntityPM();
                         }
@@ -460,6 +488,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
         this.IsConvertToLCLClicked = false;
         this.IsConvertToFCLClicked = false;
         this.IsConvertDirectionClicked = false;
+        this.IsSendToAMANACClicked = false;
     }
     Validate() {
         var validator = new ShipmentValidator();
@@ -1276,6 +1305,37 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     this.ResetButtonClicked();
                 }
             });
+        });
+    }
+
+    private IsSendToAMANACClicked: boolean = false;
+    private SendToAMANACClicked() {
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+        if (errors.length == 0) {
+            this.IsSendToAMANACClicked = true;
+            this.OkButton();
+        }
+    }
+    private DoSendToAMANA() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        this.shipmentService.SendToAMANAC(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var fileName: string = myResponse.Result;               
+
+                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + fileName;
+                {
+                    window.open(url);
+                }
+            }
+
+            else {
+                
+            }
+
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 

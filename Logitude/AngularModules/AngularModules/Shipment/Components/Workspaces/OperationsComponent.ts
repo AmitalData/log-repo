@@ -3,7 +3,8 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 @Component({
     moduleId: module.id,
     selector: 'OperationsComponent',
@@ -17,32 +18,41 @@ export class OperationsComponent implements OnInit {
     public IsSharedManifestItemVisible: boolean = false;
     public IsContainersFUItemVisible: boolean = false;
     public IsResourcesReady: boolean = false;
+    public IsAMANACItemVisible: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService) {
 
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(res1 => {
-            this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe(res2 => {
-                this.IsResourcesReady = true;
+        var listservice: EntityListService = new EntityListService();
+        var loadPr = listservice.getMock("Port");
+        loadPr.then((res: any) => {
+            res.subscribe(resp => {
+                this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(res1 => {
+                    this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe(res2 => {
+                        this.IsResourcesReady = true;
 
-                if (FeatureLocator.HasFeaturePermession("Booking", "Booking.Menu")) {
-                    this.IsBookingItemVisible = true;
-                    this.IsMenuVisible = true;
-                }
+                        if (FeatureLocator.HasFeaturePermession("Booking", "Booking.Menu")) {
+                            this.IsBookingItemVisible = true;
+                            this.IsMenuVisible = true;
+                        }
 
-                if (FeatureLocator.HasFeaturePermession("Shipment", "AgentSharedManifest")) {
-                    this.IsSharedManifestItemVisible = true;
-                    this.IsMenuVisible = true;
-                }
+                        if (FeatureLocator.HasFeaturePermession("Shipment", "AgentSharedManifest")) {
+                            this.IsSharedManifestItemVisible = true;
+                            this.IsMenuVisible = true;
+                        }
 
-                if (FeatureLocator.HasFeaturePermession("Shipment", "Area.ContainersFU")) {
-                    this.IsContainersFUItemVisible = true;
-                    this.IsMenuVisible = true;
-                }
+                        if (FeatureLocator.HasFeaturePermession("Shipment", "Area.ContainersFU")) {
+                            this.IsContainersFUItemVisible = true;
+                            this.IsMenuVisible = true;
+                        }
 
-                this.RunComponent();
+                        this.IsAMANACItemVisible = ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC" ? true : false;
+
+                        this.RunComponent();
+                    });
+                });
             });
         });
     }
@@ -103,6 +113,8 @@ export class OperationsComponent implements OnInit {
     private Page_BOOK: any = null;
     private Page_SHIP: any = null;
     private Page_CNFU: any = null;
+    private Page_AMANAC: any = null;
+
     SelectionChanged() {
         if (this.isLoaderReady) {
             if (this.SelectedItem != null) {
@@ -160,6 +172,17 @@ export class OperationsComponent implements OnInit {
                             SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/ContainersFUsComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.Page_CNFU = cmpRef.instance;
+                                });
+
+                            break;
+                        }
+
+
+                        case "AMANAC": {
+
+                            SessionLocator.DynamicLoader.Load('./Shipment/Components/Workspaces/AMANACComponent', myLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.Page_AMANAC = cmpRef.instance;
                                 });
 
                             break;

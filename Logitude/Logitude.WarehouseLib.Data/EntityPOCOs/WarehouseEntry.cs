@@ -167,6 +167,12 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public string ChargeableWeightUnitCode { get; set; }
         [Column("TotalVolumetricWeight")]
 	    public decimal TotalVolumetricWeight { get; set; }
+        [Column("LastStatusUpdateDate")]
+	    public DateTime? LastStatusUpdateDate { get; set; }
+        [Column("ConnectedTo")]
+	    public string ConnectedTo { get; set; }
+        [Column("Ratio")]
+	    public double? Ratio { get; set; }
     }
 }
 	 

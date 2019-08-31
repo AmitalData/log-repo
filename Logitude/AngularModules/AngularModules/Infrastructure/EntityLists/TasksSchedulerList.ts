@@ -18,7 +18,7 @@ export class TasksSchedulerList {
 		NextRunTime: Date;
 		LastRunResult: string;
 		InActive: boolean;
-		ServiceClassName: string;
+		ProcedureCode: string;
 		TriggerType: string;
 		Satarday: boolean;
 		Sunday: boolean;
@@ -41,5 +41,6 @@ export class TasksSchedulerList {
 		Version: number;
 		Status: string;
 		Retries: number;
+		AverageRunTime: number;
 	
 }

@@ -701,7 +701,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
     GrossWeightLostFocus(input: any) {        
 
-
         var valueComputed: number = 0;
         var valueInserted: number = 0;
 
@@ -712,35 +711,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         });
 
         if (!AppTool.IsNullOrEmpty(input)) {
-
-            if (this.firstDigit == ".") {
-                if (!this.GrossWeightPasted) {
-                    input = input.replace(/\./g, '');
-                }
-                input = input.replace(/,/g, ".");
-            }
-
-            else if (this.firstDigit == "'") {
-                input = input.replace(/'/g, '');
-            }
-            else {
-                input = AppTool.Replace(input, ",", "");
-            }
+            input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
-
-
         }
 
-        if (!valueComputed) {
-            valueComputed = 0;
-        }
+        valueComputed = valueComputed == null ? 0 : valueComputed;
+        valueInserted = valueInserted == null ? 0 : valueInserted;
 
-        if (!valueInserted) {
-            valueInserted = 0;
-        }
-
-        if (this.GrossWeight != valueInserted) {
-            this.GrossWeightEdited = !(valueComputed == valueInserted);
+        if (valueComputed != valueInserted) {
+            this.GrossWeightEdited = true;
             this.GrossWeight = valueInserted;
             this.ComputeTotals();
         }
@@ -753,35 +732,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
         if (!AppTool.IsNullOrEmpty(input)) {
-
-            if (this.firstDigit == ".") {
-                if (!this.ChargeableWeightPasted) {
-                    input = input.replace(/\./g, '');
-                }
-                input = input.replace(/,/g, ".");
-            }
-
-            else if (this.firstDigit == "'") {
-                input = input.replace(/'/g, '');
-            }
-            else {
-                input = AppTool.Replace(input, ",", "");
-            }
-
+            input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
             valueInserted = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
         }
 
-        if (!valueComputed) {
-            valueComputed = 0;
-        }
-
-        if (!valueInserted) {
-            valueInserted = 0;
-        }
-
-        if (this.ChargeableWeight != valueInserted) {
-            this.ChargeableWeightEdited = !(valueComputed == valueInserted);
+        valueComputed = valueComputed == null ? 0 : valueComputed;
+        valueInserted = valueInserted == null ? 0 : valueInserted;
+        if (valueComputed != valueInserted) {
+            this.ChargeableWeightEdited = true;
             this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
             this.ComputeTotals();
         }
@@ -1129,7 +1088,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
     RebuildButtonClicked() {
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Rebuild Packages?");
+
+        if (this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.LastStatusCode)).length > 0) {
+            confirmWindow.Show("Note that this will result in deleting container level statuses. Rebuild Packages?");
+        }
+
+        else {
+            confirmWindow.Show("Rebuild Packages?");
+        }
+        
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
 
@@ -1139,17 +1106,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.BuildItemsSource();
                     this.ComputeTotals();
                 }
-
-                //this.EntityPM.ShipmentPackages.filter(f => f.OriginalShipmentPackageId != null).forEach(item => {
-                //    this.EntityPM.RemovePackage(item);
-                //});
-
-                //this.EntityPM.ShipmentPackages.forEach(item => {
-                //    item.InsideShipmentPackages.filter(f => f.OriginalShipmentPackageId != null).forEach(itemInside => {
-                //        item.RemoveInsideShipmentPackagePM(itemInside);
-                //    });
-                //});
-
+                
                 this.BuildButtonClicked();
             }
         });
@@ -1399,7 +1356,21 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         logWindow.Show(myPath);
     }
     DeletePackageClicked(itemComponent: ShipmentPackageItem) {
-        var message = this.IsLCLEntity ? TextCodeTranslator.Translate("Shipment.M.DeleteThisPackage") : "Delete This Container";
+        var message: string = "";
+
+        if (this.IsLCLEntity) {
+            message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPackage");
+        }
+
+        else {
+            if (!AppTool.IsNullOrEmpty(itemComponent.EntityPM.LastStatusCode)) {
+                message = "Note that this will result in deleting container level statuses. Delete This Container?";
+            }
+
+            else {
+                message = "Delete This Container";
+            }
+        }
 
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show(message);
@@ -1517,7 +1488,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     DeletePackagesButtonClicked() {
         if (this.EntityPM.ShipmentPackages.length > 0) {
             var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show("Are you sure you want to delete all packages?");
+
+            if (this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.LastStatusCode)).length > 0) {
+                confirmWindow.Show("Note that this will result in deleting container level statuses. Delete Packages?");
+            }
+
+            else {
+                confirmWindow.Show("Are you sure you want to delete all packages?");
+            }
+            
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.StartDelete();

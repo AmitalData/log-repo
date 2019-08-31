@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.Tools.EntityService;
@@ -122,6 +123,7 @@ using Simplog.Data.QuoteModel;
 				   temp.TotalContainers = MyEntityPM.TotalContainers;
 				   temp.TransitTime = MyEntityPM.TransitTime;
 				   temp.ValueOfGoods = MyEntityPM.ValueOfGoods;
+				   temp.StartDate = MyEntityPM.StartDate;
 				   temp.Volume = MyEntityPM.Volume;			  
 				   if(MyEntityPM.AgentContactId != null)
 				   {
@@ -422,7 +424,7 @@ using Simplog.Data.QuoteModel;
 						temp = query.GetSinglePMByQuoteNumber(MyEntity.QuoteNumber, Tenant);
 					} 					   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("Quote with QuoteNumber " + MyEntity.QuoteNumber + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
@@ -467,7 +469,9 @@ using Simplog.Data.QuoteModel;
 					temp.TotalContainers = MyEntity.TotalContainers;
 					temp.TransitTime = MyEntity.TransitTime;
 					temp.ValueOfGoods = MyEntity.ValueOfGoods;
-					temp.Volume = MyEntity.Volume;					ContactQueryService AgentContactContactService = new ContactQueryService(Tenant);
+					temp.StartDate = MyEntity.StartDate;
+					temp.Volume = MyEntity.Volume;
+					ContactQueryService AgentContactContactService = new ContactQueryService(Tenant);
 					if(MyEntity.AgentContact != null)
 					{
 						var myAgentContactPM = AgentContactContactService.ContactDataMappingAndValidatin(MyEntity.AgentContact,Tenant,ComputingPartnerName);
@@ -478,7 +482,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										CardQueryService AgentCardService = new CardQueryService(Tenant);
+					
+					CardQueryService AgentCardService = new CardQueryService(Tenant);
 					if(MyEntity.Agent != null)
 					{
 						var myAgentPM = AgentCardService.CardDataMappingAndValidatin(MyEntity.Agent,Tenant,ComputingPartnerName);
@@ -489,7 +494,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
+					
+					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
 					if(MyEntity.Branch != null)
 					{
 						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName);
@@ -500,7 +506,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										DepartmentQueryService DepartmentDepartmentService = new DepartmentQueryService(Tenant);
+					
+					DepartmentQueryService DepartmentDepartmentService = new DepartmentQueryService(Tenant);
 					if(MyEntity.Department != null)
 					{
 						var myDepartmentPM = DepartmentDepartmentService.DepartmentDataMappingAndValidatin(MyEntity.Department,Tenant,ComputingPartnerName);
@@ -511,7 +518,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										WeightUnitQueryService ChargeableWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
+					
+					WeightUnitQueryService ChargeableWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
 					if(MyEntity.ChargeableWeightUnit != null)
 					{
 						var myChargeableWeightUnitPM = ChargeableWeightUnitWeightUnitService.WeightUnitDataMappingAndValidatin(MyEntity.ChargeableWeightUnit,Tenant,ComputingPartnerName);
@@ -522,7 +530,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										ContactQueryService ShipperContactContactService = new ContactQueryService(Tenant);
+					
+					ContactQueryService ShipperContactContactService = new ContactQueryService(Tenant);
 					if(MyEntity.ShipperContact != null)
 					{
 						var myShipperContactPM = ShipperContactContactService.ContactDataMappingAndValidatin(MyEntity.ShipperContact,Tenant,ComputingPartnerName);
@@ -533,7 +542,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										CardQueryService ShipperCardService = new CardQueryService(Tenant);
+					
+					CardQueryService ShipperCardService = new CardQueryService(Tenant);
 					if(MyEntity.Shipper != null)
 					{
 						var myShipperPM = ShipperCardService.CardDataMappingAndValidatin(MyEntity.Shipper,Tenant,ComputingPartnerName);
@@ -544,7 +554,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										ContactQueryService ConsigneeContactContactService = new ContactQueryService(Tenant);
+					
+					ContactQueryService ConsigneeContactContactService = new ContactQueryService(Tenant);
 					if(MyEntity.ConsigneeContact != null)
 					{
 						var myConsigneeContactPM = ConsigneeContactContactService.ContactDataMappingAndValidatin(MyEntity.ConsigneeContact,Tenant,ComputingPartnerName);
@@ -555,7 +566,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										CardQueryService ConsigneeCardService = new CardQueryService(Tenant);
+					
+					CardQueryService ConsigneeCardService = new CardQueryService(Tenant);
 					if(MyEntity.Consignee != null)
 					{
 						var myConsigneePM = ConsigneeCardService.CardDataMappingAndValidatin(MyEntity.Consignee,Tenant,ComputingPartnerName);
@@ -566,7 +578,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
+					
+					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
 						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName);
@@ -577,7 +590,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
+					
+					UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.UpdatedByUser != null)
 					{
 						var myUpdatedByUserPM = UpdatedByUserUserService.UserDataMappingAndValidatin(MyEntity.UpdatedByUser,Tenant,ComputingPartnerName);
@@ -588,7 +602,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										ContactQueryService CustomerContactContactService = new ContactQueryService(Tenant);
+					
+					ContactQueryService CustomerContactContactService = new ContactQueryService(Tenant);
 					if(MyEntity.CustomerContact != null)
 					{
 						var myCustomerContactPM = CustomerContactContactService.ContactDataMappingAndValidatin(MyEntity.CustomerContact,Tenant,ComputingPartnerName);
@@ -599,7 +614,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										CardQueryService CustomerCardService = new CardQueryService(Tenant);
+					
+					CardQueryService CustomerCardService = new CardQueryService(Tenant);
 					if(MyEntity.Customer != null)
 					{
 						var myCustomerPM = CustomerCardService.CardDataMappingAndValidatin(MyEntity.Customer,Tenant,ComputingPartnerName);
@@ -610,7 +626,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										AddressQueryService DeliveryAddressAddressService = new AddressQueryService(Tenant);
+					
+					AddressQueryService DeliveryAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.DeliveryAddress != null)
 					{
 						var myDeliveryAddressPM = DeliveryAddressAddressService.AddressDataMappingAndValidatin(MyEntity.DeliveryAddress,Tenant,ComputingPartnerName);
@@ -621,7 +638,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										DimensionsUnitQueryService DimensionsUnitDimensionsUnitService = new DimensionsUnitQueryService(Tenant);
+					
+					DimensionsUnitQueryService DimensionsUnitDimensionsUnitService = new DimensionsUnitQueryService(Tenant);
 					if(MyEntity.DimensionsUnit != null)
 					{
 						var myDimensionsUnitPM = DimensionsUnitDimensionsUnitService.DimensionsUnitDataMappingAndValidatin(MyEntity.DimensionsUnit,Tenant,ComputingPartnerName);
@@ -632,7 +650,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										DirectionQueryService DirectionDirectionService = new DirectionQueryService(Tenant);
+					
+					DirectionQueryService DirectionDirectionService = new DirectionQueryService(Tenant);
 					if(MyEntity.Direction != null)
 					{
 						var myDirectionPM = DirectionDirectionService.DirectionDataMappingAndValidatin(MyEntity.Direction,Tenant,ComputingPartnerName);
@@ -643,7 +662,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										TransportModeQueryService TransportModeTransportModeService = new TransportModeQueryService(Tenant);
+					
+					TransportModeQueryService TransportModeTransportModeService = new TransportModeQueryService(Tenant);
 					if(MyEntity.TransportMode != null)
 					{
 						var myTransportModePM = TransportModeTransportModeService.TransportModeDataMappingAndValidatin(MyEntity.TransportMode,Tenant,ComputingPartnerName);
@@ -654,7 +674,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										PortQueryService FromPortPortService = new PortQueryService(Tenant);
+					
+					PortQueryService FromPortPortService = new PortQueryService(Tenant);
 					if(MyEntity.FromPort != null)
 					{
 						var myFromPortPM = FromPortPortService.PortDataMappingAndValidatin(MyEntity.FromPort,Tenant,ComputingPartnerName);
@@ -665,7 +686,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										PortQueryService ToPortPortService = new PortQueryService(Tenant);
+					
+					PortQueryService ToPortPortService = new PortQueryService(Tenant);
 					if(MyEntity.ToPort != null)
 					{
 						var myToPortPM = ToPortPortService.PortDataMappingAndValidatin(MyEntity.ToPort,Tenant,ComputingPartnerName);
@@ -676,7 +698,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										WeightUnitQueryService GrossWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
+					
+					WeightUnitQueryService GrossWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
 					if(MyEntity.GrossWeightUnit != null)
 					{
 						var myGrossWeightUnitPM = GrossWeightUnitWeightUnitService.WeightUnitDataMappingAndValidatin(MyEntity.GrossWeightUnit,Tenant,ComputingPartnerName);
@@ -687,7 +710,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										IncotermQueryService IncotermIncotermService = new IncotermQueryService(Tenant);
+					
+					IncotermQueryService IncotermIncotermService = new IncotermQueryService(Tenant);
 					if(MyEntity.Incoterm != null)
 					{
 						var myIncotermPM = IncotermIncotermService.IncotermDataMappingAndValidatin(MyEntity.Incoterm,Tenant,ComputingPartnerName);
@@ -698,7 +722,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										CardQueryService MainCarriageCarrierCardService = new CardQueryService(Tenant);
+					
+					CardQueryService MainCarriageCarrierCardService = new CardQueryService(Tenant);
 					if(MyEntity.MainCarriageCarrier != null)
 					{
 						var myMainCarriageCarrierPM = MainCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.MainCarriageCarrier,Tenant,ComputingPartnerName);
@@ -709,7 +734,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										MoveTypeQueryService MoveTypeMoveTypeService = new MoveTypeQueryService(Tenant);
+					
+					MoveTypeQueryService MoveTypeMoveTypeService = new MoveTypeQueryService(Tenant);
 					if(MyEntity.MoveType != null)
 					{
 						var myMoveTypePM = MoveTypeMoveTypeService.MoveTypeDataMappingAndValidatin(MyEntity.MoveType,Tenant,ComputingPartnerName);
@@ -720,7 +746,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										AddressQueryService PickUpAddressAddressService = new AddressQueryService(Tenant);
+					
+					AddressQueryService PickUpAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.PickUpAddress != null)
 					{
 						var myPickUpAddressPM = PickUpAddressAddressService.AddressDataMappingAndValidatin(MyEntity.PickUpAddress,Tenant,ComputingPartnerName);
@@ -731,7 +758,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										QuoteTypeQueryService QuoteTypeQuoteTypeService = new QuoteTypeQueryService(Tenant);
+					
+					QuoteTypeQueryService QuoteTypeQuoteTypeService = new QuoteTypeQueryService(Tenant);
 					if(MyEntity.QuoteType != null)
 					{
 						var myQuoteTypePM = QuoteTypeQuoteTypeService.QuoteTypeDataMappingAndValidatin(MyEntity.QuoteType,Tenant,ComputingPartnerName);
@@ -742,7 +770,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										CurrencyQueryService SaleCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					
+					CurrencyQueryService SaleCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.SaleCurrency != null)
 					{
 						var mySaleCurrencyPM = SaleCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.SaleCurrency,Tenant,ComputingPartnerName);
@@ -753,7 +782,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										UserQueryService SalesmanUserUserService = new UserQueryService(Tenant);
+					
+					UserQueryService SalesmanUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.SalesmanUser != null)
 					{
 						var mySalesmanUserPM = SalesmanUserUserService.UserDataMappingAndValidatin(MyEntity.SalesmanUser,Tenant,ComputingPartnerName);
@@ -764,7 +794,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										ShipmentTypeQueryService ShipmentTypeShipmentTypeService = new ShipmentTypeQueryService(Tenant);
+					
+					ShipmentTypeQueryService ShipmentTypeShipmentTypeService = new ShipmentTypeQueryService(Tenant);
 					if(MyEntity.ShipmentType != null)
 					{
 						var myShipmentTypePM = ShipmentTypeShipmentTypeService.ShipmentTypeCustomDataMappingAndValidatin(MyEntity.ShipmentType,Tenant);
@@ -775,7 +806,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										QuoteStageQueryService StageQuoteStageService = new QuoteStageQueryService(Tenant);
+					
+					QuoteStageQueryService StageQuoteStageService = new QuoteStageQueryService(Tenant);
 					if(MyEntity.Stage != null)
 					{
 						var myStagePM = StageQuoteStageService.QuoteStageDataMappingAndValidatin(MyEntity.Stage,Tenant,ComputingPartnerName);
@@ -786,7 +818,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										CurrencyQueryService ValueOfGoodsCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					
+					CurrencyQueryService ValueOfGoodsCurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(MyEntity.ValueOfGoodsCurrency != null)
 					{
 						var myValueOfGoodsCurrencyPM = ValueOfGoodsCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.ValueOfGoodsCurrency,Tenant,ComputingPartnerName);
@@ -797,7 +830,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										VolumeUnitQueryService VolumeUnitVolumeUnitService = new VolumeUnitQueryService(Tenant);
+					
+					VolumeUnitQueryService VolumeUnitVolumeUnitService = new VolumeUnitQueryService(Tenant);
 					if(MyEntity.VolumeUnit != null)
 					{
 						var myVolumeUnitPM = VolumeUnitVolumeUnitService.VolumeUnitDataMappingAndValidatin(MyEntity.VolumeUnit,Tenant,ComputingPartnerName);
@@ -816,7 +850,8 @@ using Simplog.Data.QuoteModel;
 						temp.QuoteCharges = QuoteChargeService36.QuoteChargeDataMappingAndValidatin(MyEntity.QuoteCharges,Tenant,ComputingPartnerName);
 					}
 
-								 					PackageTypeQueryService PackageType1PackageTypeService = new PackageTypeQueryService(Tenant);
+								 
+					PackageTypeQueryService PackageType1PackageTypeService = new PackageTypeQueryService(Tenant);
 					if(MyEntity.PackageType1 != null)
 					{
 						var myPackageType1PM = PackageType1PackageTypeService.PackageTypeDataMappingAndValidatin(MyEntity.PackageType1,Tenant,ComputingPartnerName);
@@ -827,7 +862,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										PackageTypeQueryService PackageType2PackageTypeService = new PackageTypeQueryService(Tenant);
+					
+					PackageTypeQueryService PackageType2PackageTypeService = new PackageTypeQueryService(Tenant);
 					if(MyEntity.PackageType2 != null)
 					{
 						var myPackageType2PM = PackageType2PackageTypeService.PackageTypeDataMappingAndValidatin(MyEntity.PackageType2,Tenant,ComputingPartnerName);
@@ -838,7 +874,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										PackageTypeQueryService PackageType3PackageTypeService = new PackageTypeQueryService(Tenant);
+					
+					PackageTypeQueryService PackageType3PackageTypeService = new PackageTypeQueryService(Tenant);
 					if(MyEntity.PackageType3 != null)
 					{
 						var myPackageType3PM = PackageType3PackageTypeService.PackageTypeDataMappingAndValidatin(MyEntity.PackageType3,Tenant,ComputingPartnerName);
@@ -849,7 +886,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										PackageTypeQueryService PackageType4PackageTypeService = new PackageTypeQueryService(Tenant);
+					
+					PackageTypeQueryService PackageType4PackageTypeService = new PackageTypeQueryService(Tenant);
 					if(MyEntity.PackageType4 != null)
 					{
 						var myPackageType4PM = PackageType4PackageTypeService.PackageTypeDataMappingAndValidatin(MyEntity.PackageType4,Tenant,ComputingPartnerName);
@@ -860,7 +898,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-										PackageTypeQueryService PackageType5PackageTypeService = new PackageTypeQueryService(Tenant);
+					
+					PackageTypeQueryService PackageType5PackageTypeService = new PackageTypeQueryService(Tenant);
 					if(MyEntity.PackageType5 != null)
 					{
 						var myPackageType5PM = PackageType5PackageTypeService.PackageTypeDataMappingAndValidatin(MyEntity.PackageType5,Tenant,ComputingPartnerName);

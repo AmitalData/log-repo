@@ -33,7 +33,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool CannotFilter { get; set; }
         public string HelpText { get; set; }
         public bool IsCustom { get; set; }
-        
+        public string CustomPickListCode { get; set; }
+
     }
 
 }

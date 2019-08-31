@@ -87,6 +87,11 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     {
                         myAccountingIntegrityResult.HasException = myAccountingIntegrityResult.MyAccountingIntegrityStep
                             .Any(r => !String.IsNullOrWhiteSpace(r.ExceptionMessage));
+
+
+                        myAccountingIntegrityResult.ShouldFix
+                            = myAccountingIntegrityResult.MyAccountingIntegrityStep
+                            .Any(r => r.ShouldFix);
                     }
 
                 }
@@ -468,7 +473,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         public List<GLAccountTotalByMonthsDTO> LedgerToMounthTotalResult { get; set; }
         public List<GLAccountBalanceDTO> BalanceInLocalCurrencyResult { get; set; }
         public List<DueLocalBalanceDiffM> DueLocalBalance { get; set; }
-
+        public bool ShouldFix { get;  set; }
     }
 
     public class AccountingIntegrityStep

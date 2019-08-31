@@ -383,7 +383,9 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         }
         this.preventSelect = false;
     }
-
+    IsRestoreButtonVisibile: boolean = false;
+    message: string = null;
+    RestoreToolTipMessage: string = null;
     OpenWindow(entity: any = null) {
         this.CurrentSession.StartBusyIndicatorLoading();
 
@@ -392,11 +394,39 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
             var entityPM;
             this._ReconcileExternalPagePMService.get(entity.Id).subscribe((myResult) => {
                 entityPM = myResult.Result;
-                this.ShowWindow(entityPM);
+
+                this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(entity.Id).subscribe((myResult) => {
+                    if (!myResult.HasError) {
+                        if (myResult.Result == null) {
+                            this.EnableReconcileEditButton = true;
+                            this.message = null;
+                        }
+                        else {
+                            this.EnableReconcileEditButton = false;
+                            this.message = myResult.Result;
+                        }
+                        if (entityPM.StatusCode == "3") {
+                            this.CheckRestorePossibility(entity.Id, entityPM);
+
+                        }
+                        else {
+                            this.IsRestoreButtonVisibile = false;
+                            this.RestoreToolTipMessage = null;
+                            this.ShowWindow(entityPM);
+                            
+                        }
+                    }
+                    
+                });
+
+
+               
+
             });
         }
         else
         {
+            this.EnableReconcileEditButton = false;
             this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id).subscribe((myResult) =>
             {
                 var draftPage = myResult.Result;
@@ -418,6 +448,35 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
             });
         }
     }
+    CheckRestorePossibility(id: string, entityPM: any) {
+       
+        this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response) => {
+            if (!response.HasError) {
+                this.SetRestoreButtonVisibility(response.Result)
+               
+
+                this.ShowWindow(entityPM);
+            }
+
+        });
+
+    }
+
+    SetRestoreButtonVisibility(result: any) {
+
+        if (result == null) {
+            this.IsRestoreButtonVisibile = true;
+            this.IsRestoreButtonEnabled = true;
+            this.RestoreToolTipMessage = null;
+        }
+        else {
+            this.RestoreToolTipMessage = result;
+            this.IsRestoreButtonEnabled = false;
+            this.IsRestoreButtonVisibile = true;
+        }
+    }
+    IsRestoreButtonEnabled: boolean;
+    EnableReconcileEditButton: boolean = false;
     ShowWindow(entity: any = null) {
 
         // get bank account, then open window
@@ -427,6 +486,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
             this.CurrentSession.StopBusyIndicator();
             var bankAccount = myResult.Result;
 
+           
             if (!AppTool.IsNullOrEmpty(bankAccount))
             {
 
@@ -435,8 +495,13 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
                 var windowArgs: any = {};
                 windowArgs.entity = entity;
                 windowArgs.BankAccountId = this.EntityPM.Id;
+                windowArgs.IsRestoreButtonEnabled = this.IsRestoreButtonEnabled;
+                windowArgs.IsRestoreButtonVisibile = this.IsRestoreButtonVisibile;
+                windowArgs.RestoreToolTipMessage = this.RestoreToolTipMessage;
+                windowArgs.EnableReconcileEditButton = this.EnableReconcileEditButton;
                 windowArgs.GLAccountId = bankAccount.GLAccountId;
                 windowArgs.BankAccount = bankAccount;
+                windowArgs.message = this.message;
                 var logWindow = new LogitudeWindow();
                 logWindow.Width = 1000;
                 logWindow.Height = 600;

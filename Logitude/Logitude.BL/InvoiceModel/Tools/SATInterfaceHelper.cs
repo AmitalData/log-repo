@@ -693,11 +693,22 @@ namespace Logitude.BL.InvoiceModel.Tools
                     profitAmountTotal += record.ProfitCurrencyVATAmount;
                     invoiceVatableAmountTotal += record.InvoiceCurrencyVatableAmount;
                 }
-                var subtotal = Math.Abs(invoiceVatableAmountTotal.Value);
-                var total = Math.Abs((invoiceVatableAmountTotal + invoiceAmountTotal).Value);
-                comprobante.SubTotal = Math.Abs((decimal)subtotal);
-                comprobante.Total = Math.Abs((decimal)total);
+                //var subtotal = Math.Abs(invoiceVatableAmountTotal.Value);
+                //var total = Math.Abs((invoiceVatableAmountTotal + invoiceAmountTotal).Value);
+                //comprobante.SubTotal = Math.Abs((decimal)subtotal);
+                //comprobante.Total = Math.Abs((decimal)total);
 
+                double subtotal = 0;
+                List<ARInvoiceLinePM> myDataLines = entityPM.InvoiceLines.Where(d => !allChargesTypes.First(c => c.Id == d.ChargesTypeId).IsExpense && d.VatTypeId != null).ToList();
+                foreach(var line in myDataLines)
+                {
+                    subtotal += (line.InvoiceCurrencyAmount != null ? line.InvoiceCurrencyAmount.Value : 0);
+                }
+
+                comprobante.SubTotal = Math.Abs((decimal)subtotal);
+                var total = Math.Abs((subtotal + invoiceAmountTotal).Value);
+                comprobante.Total = Math.Abs((decimal)total);
+                //comprobante.Total = Math.Abs((decimal)total);
             }
 
 
@@ -1947,6 +1958,10 @@ namespace Logitude.BL.InvoiceModel.Tools
             TimeSpan time = new TimeSpan(12, 00, 00);
             DateTime resultdate = pagoItem.FechaPago.Date + time;
             pagoItem.FechaPago = resultdate;
+            if (entityPM.FechaPago != null && FeatureToggleHelper.HasFeatureToggle("FPG", tenant))
+            {
+                pagoItem.FechaPago = entityPM.FechaPago.Value;
+            }
 
             List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado> doctos = new List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado>();
             int number = 1;
@@ -2012,7 +2027,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     if (paymentCurrency.Code == "MXN" || paymentCurrency.Code == "MX")
                     {
                         decimal tipoCambioDR = 1 / (decimal)paymentInvoice.ExchangeRate.Value;
-                        doctoItem.TipoCambioDR = GetDecimalWith6DigitsAfterPoint((tipoCambioDR));
+                        doctoItem.TipoCambioDR = GetDecimalWith6DigitsAfterPoint((tipoCambioDR)) + decimal.Parse("0.000001");
                     }
                     else
                         doctoItem.TipoCambioDR = (decimal)paymentInvoice.ExchangeRate.Value;

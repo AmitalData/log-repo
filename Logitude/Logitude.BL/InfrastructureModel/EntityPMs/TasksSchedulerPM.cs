@@ -25,7 +25,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public DateTime? NextRunTime { get; set; }
         public string LastRunResult { get; set; }
         public bool InActive  { get; set; }
-        public string ServiceClassName { get; set; }
+        public string ProcedureCode { get; set; }
         public string TriggerType { get; set; } // Daily,mounthly … 
         public bool Satarday  { get; set; }
         public bool Sunday { get; set; }
@@ -53,7 +53,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public DateTime? LastRunEndTimeUTC { get; set; }
         public DateTime? LastRunStartTimeUTC { get; set; }
         public DateTime? LastRunStartTime { get; set; }
-
+        public double AverageRunTime { get; set; }
         [DataMember]
         public SchedulerDetails SchedulerDetailsData { get; set; }
         

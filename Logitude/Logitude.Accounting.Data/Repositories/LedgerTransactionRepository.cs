@@ -99,6 +99,14 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                     select a).ToList();
 
         }
+        public IQueryable<LedgerTransaction> GetByJournalAndReference1(string journalId, string reference1, int tenant)
+        {
+
+            return (from a in context.LedgerTransactions
+                    where a.JournalId == journalId && a.Reference1 == reference1 && a.Tenant == tenant
+                    select a);
+
+        }
 
         public List<LedgerTransaction> GetByJournalIdAndLine(string journalId, int line, int tenant)
         {
@@ -438,9 +446,9 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             {
                 q = q.Where(rec => rec.CurrencyId == currencyId);
             }
-            if (isReconciled.HasValue && isReconciled.Value == true)
+            if (isReconciled.HasValue )
             {
-                q = q.Where(rec => rec.IsReconciled == true);
+                q = q.Where(rec => rec.IsReconciled == isReconciled.Value);
             }
 
             if (!string.IsNullOrWhiteSpace(searchByFilter))
@@ -480,12 +488,12 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
 
 
-                 where
-                 //string.IsNullOrWhiteSpace(j.VoidedByJournalId)
-                 (j.VoidedByJournalId == null || j.VoidedByJournalId.Trim() == string.Empty)
-                 where
-                 //string.IsNullOrWhiteSpace(j.OriginalJournalId)
-                 (j.OriginalJournalId == null || j.OriginalJournalId.Trim() == string.Empty)
+                 //where
+                 ////string.IsNullOrWhiteSpace(j.VoidedByJournalId)
+                 //(j.VoidedByJournalId == null || j.VoidedByJournalId.Trim() == string.Empty)
+                 //where
+                 ////string.IsNullOrWhiteSpace(j.OriginalJournalId)
+                 //(j.OriginalJournalId == null || j.OriginalJournalId.Trim() == string.Empty)
                  select j
                 );
             DateTime beginOfYear = new DateTime(year, 1, 1);
@@ -1103,14 +1111,14 @@ on record.JournalId equals j.Id
 
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
-            DateTime date = DateTime.Now.AddDays(-180);
-            DateTime last180days=  new DateTime(date.Year, date.Month, 1);
+            //DateTime date = DateTime.Now.AddDays(-180);
+            //DateTime last180days=  new DateTime(date.Year, date.Month, 1);
             //taxReportMonth. = 1;
             return (from a in context.LedgerTransactions
                     join j in context.Journals on a.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
                     where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) && a.AccountingDate <= taxdate
-                    && a.DocumentDate >= last180days
+                   // && a.DocumentDate >= last180days
                     && a.AccountId == setting.VATInputsGLAccountId
                     select new TaxReportData()
                     {

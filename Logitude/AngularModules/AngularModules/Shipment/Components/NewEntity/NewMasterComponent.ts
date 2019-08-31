@@ -58,12 +58,14 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
         this.BuildAdditionalFields();
     }
+    public ScreenIsReady: boolean = false;
 
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe(resp => {
+                this.ScreenIsReady = true;
 
                 this.BuildFiltersLists();
 
@@ -72,7 +74,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                 }
 
                 this.LoadAllowedAirline();
-                //this.ScreenIsReady = true;
             });
         });
 
@@ -81,11 +82,13 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
     private SourceEntityPM: ShipmentPM;
     public IsBuildFromQuote: boolean = false;
     public IsCopyFromShipment: boolean = false;
+    public IsMasterCreatedFromHouse: boolean = false;
     SetWindowArgs(args: any) {
         if (args.IsNew == null) {
             this.SourceEntityPM = args.Shipment;
             this.IsCopyFromShipment = args.IsCopyFromShipment;
             this.IsBuildFromQuote = args.IsBuildFromQuote;
+            this.IsMasterCreatedFromHouse = args.IsMasterCreatedFromHouse;
 
             this.BuildFiltersLists();
             this.SetUIProperties();
@@ -136,8 +139,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
             }
         }
     }
-
-
+    
     public DirectionsList: FilterClass[] = [];
     public TransportModesList: FilterClass[] = [];
     public ShipmentTypesList: FilterClass[] = [];
@@ -241,8 +243,16 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetEnabled("AgentReference2", this.ObjectTableName, isScreenEnabled);
 
         // General
-        this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("MainCarriageToPortId", this.ObjectTableName, isScreenEnabled);
+        if (this.IsMasterCreatedFromHouse) {
+            this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("MainCarriageToPortId", this.ObjectTableName, false);
+        }
+
+        else {
+            this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, isScreenEnabled);
+            this.UIProperties.SetEnabled("MainCarriageToPortId", this.ObjectTableName, isScreenEnabled);
+        }
+                
         this.UIProperties.SetEnabled("MainCarriageCarrierId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MainCarriageCarrierNumber", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("Master", this.ObjectTableName, isScreenEnabled);
@@ -277,12 +287,42 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
     public IsFCLEntity: boolean = false;
     public IsInlandDomestic: boolean = false;
     OnFiltersChanged() {
+        if (!this.IsMasterCreatedFromHouse) {
+            this.IsDirectionListEnabled = true;
+            this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
+            this.IsMasterTypesListEnabled = true;
+        }
+
         this.SetScreenEnabled();
         this.SetUIProperties();        
         this.SetUnits();
         this.SetLabels();
         this.SetPartners();
         this.SetPrepaidCollect();
+    }
+
+    private isDirectionListEnabled: boolean = false;
+    get IsDirectionListEnabled() { return this.isDirectionListEnabled; }
+    set IsDirectionListEnabled(value: boolean) {
+        if (this.isDirectionListEnabled != value) {
+            this.isDirectionListEnabled = value;
+        }
+    }
+
+    private isTransportModesListEnabled: boolean = false;
+    get IsTransportModesListEnabled() { return this.isTransportModesListEnabled; }
+    set IsTransportModesListEnabled(value: boolean) {
+        if (this.isTransportModesListEnabled != value) {
+            this.isTransportModesListEnabled = value;
+        }
+    }
+
+    private isMasterTypesListEnabled: boolean = false;
+    get IsMasterTypesListEnabled() { return this.isMasterTypesListEnabled; }
+    set IsMasterTypesListEnabled(value: boolean) {
+        if (this.isMasterTypesListEnabled != value) {
+            this.isMasterTypesListEnabled = value;
+        }
     }
 
     get DirectionId() { return this.EntityPM.DirectionId; }

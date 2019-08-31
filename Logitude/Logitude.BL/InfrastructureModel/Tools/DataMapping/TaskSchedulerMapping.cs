@@ -28,7 +28,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.NextRunTime = TaskSchedulerPM.NextRunTime;
             TaskScheduler.RepeatInMinutes = TaskSchedulerPM.RepeatInMinutes;
             TaskScheduler.Satarday = TaskSchedulerPM.Satarday;
-            TaskScheduler.ServiceClassName = TaskSchedulerPM.ServiceClassName;
+            TaskScheduler.ProcedureCode = TaskSchedulerPM.ProcedureCode;
             TaskScheduler.StartDateTime = TaskSchedulerPM.StartDateTime;
             TaskScheduler.Sunday = TaskSchedulerPM.Sunday;
             TaskScheduler.Thursday = TaskSchedulerPM.Thursday;
@@ -50,6 +50,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.LastRunStartTime = TaskSchedulerPM.LastRunStartTime;
 
             TaskScheduler.LastRunStartTimeUTC = TaskSchedulerPM.LastRunStartTimeUTC;
+            TaskScheduler.AverageRunTime = TaskSchedulerPM.AverageRunTime;
 
 
         }

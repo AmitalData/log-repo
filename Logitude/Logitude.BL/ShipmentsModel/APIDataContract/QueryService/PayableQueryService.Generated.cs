@@ -15,6 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -105,13 +106,14 @@ using Simplog.Data.ShipmentsModel;
 					} 
 										   
 					if(temp == null)
-					{
+					{   
 					    throw new ApplicationException("ShipmentPayable with Id " + item.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 						temp.Id = item.Id;
-					}					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
+					}
+					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
 					{
 						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName);
@@ -122,7 +124,8 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										MeasurementQueryService MeasurementMeasurementService = new MeasurementQueryService(Tenant);
+					
+					MeasurementQueryService MeasurementMeasurementService = new MeasurementQueryService(Tenant);
 					if(item.Measurement != null)
 					{
 						var myMeasurementPM = MeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.Measurement,Tenant,ComputingPartnerName);
@@ -135,7 +138,8 @@ using Simplog.Data.ShipmentsModel;
 			
 					
 					temp.Quantity = item.Quantity;
-					temp.UnitPrice = item.UnitPrice;					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					temp.UnitPrice = item.UnitPrice;
+					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.Currency != null)
 					{
 						var myCurrencyPM = CurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.Currency,Tenant,ComputingPartnerName);
@@ -147,7 +151,8 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-					temp.Rate = item.Rate;					PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
+					temp.Rate = item.Rate;
+					PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
 					if(item.PrepaidCollect != null)
 					{
 						var myPrepaidCollectPM = PrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(item.PrepaidCollect,Tenant,ComputingPartnerName);

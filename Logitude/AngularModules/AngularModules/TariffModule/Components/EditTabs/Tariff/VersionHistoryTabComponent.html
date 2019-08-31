@@ -21,7 +21,7 @@
                                 <img src="./Images/ToggleIcon.png" />
 
                                 <div class="ToggleButtonMenu">
-                                    <button (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
+                                    <button *ngIf="IsDownloadExcelTemplateVisible" (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
                                     <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
                                     <button (click)="CopyVersionClicked()">Copy into new Version</button>
                                     <button *ngIf="EntityPM.TypeCode == 'AFC'" (click)="AllInChargesClicked()">All-In Charges</button>
@@ -61,6 +61,15 @@
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span>{{item.DestinationPortCode}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- ExpirationDate -->
+                                    <log-column [header]="'TariffLine.F.ExpirationDate' | TextCodeTranslationPipe" [width]="'120'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -146,6 +155,15 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- Notes -->
+                                    <log-column [width]="'40'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            <div style="height: 100%; width: 100%; left:5px;">
+                                                <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
+                                                <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
                                 </logitude-edit-grid>
                             </div>
 
@@ -176,8 +194,26 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- StartDate -->
+                                    <log-column [header]="'TariffLine.F.StartDate' | TextCodeTranslationPipe" [width]="'120'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.StartDate | DateTimePipe:'SD'}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- ExpirationDate -->
+                                    <log-column [header]="'TariffLine.F.ExpirationDate' | TextCodeTranslationPipe" [width]="'120'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
                                     <!-- Surcharge1Price -->
-                                    <log-column *ngIf="Surcharge1PriceVisibility" [header]="Surcharge1PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge1PriceVisibility" [header]="Surcharge1PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span>{{item.Surcharge1Price | NumbersPipe:'N3'}}</span>
@@ -186,7 +222,7 @@
                                     </log-column>
 
                                     <!-- Surcharge2Price -->
-                                    <log-column *ngIf="Surcharge2PriceVisibility" [header]="Surcharge2PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge2PriceVisibility" [header]="Surcharge2PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span>{{item.Surcharge2Price | NumbersPipe:'N3'}}</span>
@@ -195,7 +231,7 @@
                                     </log-column>
 
                                     <!-- Surcharge3Price -->
-                                    <log-column *ngIf="Surcharge3PriceVisibility" [header]="Surcharge3PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge3PriceVisibility" [header]="Surcharge3PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span>{{item.Surcharge3Price | NumbersPipe:'N3'}}</span>
@@ -204,7 +240,7 @@
                                     </log-column>
 
                                     <!-- Surcharge4Price -->
-                                    <log-column *ngIf="Surcharge4PriceVisibility" [header]="Surcharge4PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge4PriceVisibility" [header]="Surcharge4PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span>{{item.Surcharge4Price | NumbersPipe:'N3'}}</span>
@@ -213,7 +249,7 @@
                                     </log-column>
 
                                     <!-- Surcharge5Price -->
-                                    <log-column *ngIf="Surcharge5PriceVisibility" [header]="Surcharge5PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge5PriceVisibility" [header]="Surcharge5PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span>{{item.Surcharge5Price | NumbersPipe:'N3'}}</span>
@@ -222,7 +258,7 @@
                                     </log-column>
 
                                     <!-- Surcharge6Price -->
-                                    <log-column *ngIf="Surcharge6PriceVisibility" [header]="Surcharge6PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge6PriceVisibility" [header]="Surcharge6PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span>{{item.Surcharge6Price | NumbersPipe:'N3'}}</span>
@@ -231,7 +267,7 @@
                                     </log-column>
 
                                     <!-- Surcharge7Price -->
-                                    <log-column *ngIf="Surcharge7PriceVisibility" [header]="Surcharge7PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge7PriceVisibility" [header]="Surcharge7PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span>{{item.Surcharge7Price | NumbersPipe:'N3'}}</span>
@@ -240,7 +276,7 @@
                                     </log-column>
 
                                     <!-- Surcharge8Price -->
-                                    <log-column *ngIf="Surcharge8PriceVisibility" [header]="Surcharge8PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge8PriceVisibility" [header]="Surcharge8PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span>{{item.Surcharge8Price | NumbersPipe:'N3'}}</span>
@@ -249,7 +285,7 @@
                                     </log-column>
 
                                     <!-- Surcharge9Price -->
-                                    <log-column *ngIf="Surcharge9PriceVisibility" [header]="Surcharge9PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge9PriceVisibility" [header]="Surcharge9PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span>{{item.Surcharge9Price | NumbersPipe:'N3'}}</span>
@@ -258,10 +294,20 @@
                                     </log-column>
 
                                     <!-- Surcharge10Price -->
-                                    <log-column *ngIf="Surcharge10PriceVisibility" [header]="Surcharge10PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge10PriceVisibility" [header]="Surcharge10PriceLabel" [width]="'100'" [Alignment]="'center'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span>{{item.Surcharge10Price | NumbersPipe:'N3'}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- Notes -->
+                                    <log-column [width]="'40'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            <div style="height: 100%; width: 100%; left:5px;">
+                                                <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
+                                                <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
                                             </div>
                                         </log-cell-template>
                                     </log-column>

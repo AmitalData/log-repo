@@ -13,8 +13,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 import {WarehouseEntryPM} from '../../Warehouse/EntityPMs/WarehouseEntryPM';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {WarehouseEntryPackagePM} from '../../Warehouse/EntityPMs/WarehouseEntryPackagePM';
-import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
-import {EventTypeClass} from '../../Infrastructure/DataContracts/EventTypeArgs';
+
 
 import {ShipmentPM} from '../../Shipment/EntityPMs/ShipmentPM';
 
@@ -36,7 +35,6 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     warehouseHelper: WarehouseHelper = new WarehouseHelper();
     public ValidationErrorsList: string[];
 
-    EventTypeCodeList: EventTypeClass[];
     IsNotSetWarehouseIdForWarehouseLegShipment: boolean = false;
     DataContext: any = this;
     ShipmentPM: ShipmentPM;
@@ -54,8 +52,6 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
         this.warehouseEntryPM = this.warehouseHelper.GetNewWarehouseEntry(this);
 
         this.validator = new ClassLevelValidator();
-        this.EventTypeCodeList = [];
- 
 
         var table = window.ObjectTables.filter(d=> d.Name == "WarehouseEntry")[0];
         if (table) this.ObjectTableId = table.Id;
@@ -113,7 +109,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
                 this.warehouseEntryPM.ShipmentLevelCode = this.ShipmentPM.ShipmentLevelCode;
                 this.warehouseEntryPM.TransportModeId = this.ShipmentPM.TransportModeId;
                 this.warehouseEntryPM.ShipmentTypeId = this.ShipmentPM.ShipmentTypeId;
-
+                this.warehouseEntryPM.ConnectedTo = args.ConnectedTo;
 
                 this.warehouseEntryPM.DirectionId = this.ShipmentPM.DirectionId;
 
@@ -142,6 +138,17 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
 
 
             }
+
+
+            this.warehouseEntryPM.Ratio = AppTool.GetRatio(this.warehouseEntryPM.DirectionId, this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+
+
+
+
+
+
+
+
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
             this.IsNotSetWarehouseIdForWarehouseLegShipment = args.IsNotSetWarehouseIdForWarehouseLegShipment;

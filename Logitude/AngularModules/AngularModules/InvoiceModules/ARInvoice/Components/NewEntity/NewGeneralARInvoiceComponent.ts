@@ -672,9 +672,9 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             if (isEntityValid) {
 
                 this.CurrentSession.StartBusyIndicatorLoading();
-                this.LoadCurrencyRates().then(res => {
+               // this.LoadCurrencyRates().then(res => {
                     this.SubmitChanges();
-                });
+              //  });
 
             }
 

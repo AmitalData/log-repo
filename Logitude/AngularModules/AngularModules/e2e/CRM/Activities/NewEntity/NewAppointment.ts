@@ -27,7 +27,7 @@ export class NewAppointment {
 
 
   FillAppointmentFields(AppointmentNo: string) {
-    this.Helper.WaitByIdAndFill('Activity_Subject', AppointmentNo);
+    this.Helper.WaitByIdAndFill('Activity_Subject', 'Create  ' + AppointmentNo + ' : Protractor ..');
     this.Helper.WaitByIdAndFill('Activity_Location', 'Ramallah');
 
     // this.Helper.WaitByIdAndFill('date_Activity_StartDateTime', '2');
@@ -36,8 +36,11 @@ export class NewAppointment {
     // this.Helper.WaitByIdAndFill('date_Activity_DueDate', '3');
     // this.Helper.WaitByIdAndFill('time_Activity_DueDate', '17');
 
-    this.Helper.WaitByIdAndFill('Activity_OwnerId', 'ra');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
+    this.Helper.WaitByIdAndFill('Activity_OwnerId', 'Protractor user');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+    this.Helper.WaitByIdAndFill('Activity_CustomerId', 'Customer Activity');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('Activity_Description', AppointmentNo);
 

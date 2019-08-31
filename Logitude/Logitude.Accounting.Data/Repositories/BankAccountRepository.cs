@@ -41,6 +41,17 @@ namespace Logitude.Accounting.Data.Repositories
 
             return entity;
         }
+
+        public BankAccount GetBankAccountByGLAccountId(string accountId, int tenant)
+        {
+            BankAccount entity;
+
+            entity = (from a in context.BankAccounts
+                      where a.GLAccountId == accountId && a.Tenant == tenant
+                      select a).FirstOrDefault();
+
+            return entity;
+        }
         public BankAccount GetBankAccountByBankIdAccNumber(string  BankId, string AccountNumber, int tenant)
         {
             BankAccount entity;
@@ -49,6 +60,20 @@ namespace Logitude.Accounting.Data.Repositories
                       where
                       a.BankId == BankId &&
                       a.AccountNumber == AccountNumber && 
+                      a.Tenant == tenant
+                      select a).FirstOrDefault();
+
+            return entity;
+        }
+
+        public BankAccount GetBankAccountByTransferGLAcccountId(string transferGLAcccountId, int tenant)
+        {
+            BankAccount entity;
+
+            entity = (from a in context.BankAccounts
+                      where
+                      a.TransferGLAcccountId== transferGLAcccountId &&
+                      
                       a.Tenant == tenant
                       select a).FirstOrDefault();
 

@@ -344,6 +344,7 @@
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />
     <Compile Include="BatchTaskExecutionWR.cs" />
+    <Compile Include="BIReportsExecutionLogWorkerRole.cs" />
     <Compile Include="ChampMessageInWR.cs" />
     <Compile Include="CheckandUpdateWorkerRole.cs" />
     <Compile Include="CommunicationLogWorkerRole.cs" />
@@ -358,6 +359,7 @@
     <Compile Include="FTPToAnalyzeQueueWorkerRole.cs" />
     <Compile Include="INTTRAAnalyzerWorkerRole.cs" />
     <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
+    <Compile Include="LogMessagesWorkerRole.cs" />
     <Compile Include="Services\FTPSchedulerTaskService.cs" />
     <Compile Include="ImporterApprovalReceivedWorkerRole.cs" />
     <Compile Include="Services\FTPSchedulerTaskServiceBase.cs" />
@@ -365,6 +367,7 @@
     <Compile Include="Tasks\DeleteTaskSchedulerHistoriesTask.cs" />
     <Compile Include="Tasks\FTPSchedulerTask.cs" />
     <Compile Include="Tasks\SFTPSchedulerTask.cs" />
+    <Compile Include="Tasks\TestLogToFileTask.cs" />
     <Compile Include="Tasks\TestUnexpectedShutDownHandling.cs" />
     <Compile Include="Tasks\TestLoggingWarningTask.cs" />
     <Compile Include="Tasks\TestLoggingInfoWithExceptionIfCurrentMinuteisEvenTask.cs" />
