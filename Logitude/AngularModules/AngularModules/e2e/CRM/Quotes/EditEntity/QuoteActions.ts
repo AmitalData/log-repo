@@ -7,7 +7,7 @@ export class QuoteActions {
     constructor() {
         this.Helper = new FieldsHelper();
     }
-    QuoteMenubuttonActions(ActionName: string, Direction: string, TransportMode: string,QuoteType:string) {
+    QuoteMenubuttonActions(ActionName: string, Direction: string, TransportMode: string, QuoteType: string) {
         if (ActionName == 'copy') {
             this.CopyQuote(Direction, TransportMode);
         }
@@ -43,9 +43,9 @@ export class QuoteActions {
         // browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
 
         if (Direction == 'Domestic' && TransportMode == 'I') {
-           
+
         }
-        else{
+        else {
             this.Helper.WaitByIdAndFill('Quote_FromAddressCity_1', 'Ramallah');
             this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId_1', 'State Of Palestine');
             this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
@@ -57,24 +57,34 @@ export class QuoteActions {
         this.Helper.WaitByIdAndClick('CreateQuote');
     }
 
-    BuildShipmentFromQuote(QuoteType:string) {
-        if(QuoteType!='RoutingRate'){
+    BuildShipmentFromQuote(QuoteType: string) {
+        if (QuoteType != 'RoutingRate') {
             this.Helper.WaitByIdAndClick('Quote.B.BuildShipment_1');
 
             this.Helper.ItemsVisibility('LogLov_Shipment_ShipperId');
             this.Helper.ItemsPresent('LogLov_Shipment_ShipperId');
-    
+
             var shipmentTypeBtn = element(by.id('ShipmentLevelRadio_0D'));
             browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
             this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
             this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
+        } else {
+            var EC = protractor.ExpectedConditions;
+            browser.wait(EC.visibilityOf(element(by.id('Quote.B.BuildShipment_1'))), 100000).then(a => {
+                console.log('no build shipments inside routing rate ...');
+            });
         }
     }
     QuoteAccepted() {
         this.Helper.WaitByIdAndClick('Quote.B.Accept_1');
         this.Helper.WaitByIdAndFill('Quote_EventNote', 'Quote Accepted by protractor ... ');
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.visibilityOf(element(by.id('Quote_EventNote'))), 100000).then(a => {
+            console.log('inside accept quote ');
+        });
         this.Helper.WaitByIdAndClick('ConfrimApproved');
         this.Helper.WaitEditComponentBusyIndicator();
+       
     }
     QuoteDeclined() {
         this.Helper.WaitByIdAndClick('Quote.B.Decline');
