@@ -699,8 +699,8 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     FiltersMenu: ApiQueryFilters = null;
     private isLoaderReady: boolean;
+   View:string;
     RunComponent() {
-
 
 
         if (window.Tips) {
@@ -720,8 +720,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
         if (this.ObjectTable.Name == "Customer") {
-
+          this.View ="View"
         }
+else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         if (FeatureLocator.HasFeaturePermession("General", "EXPORTEXCEL")) {
             if (!AppTool.IsNullOrEmpty(this.ObjectTable.DownloadToExcelFeatureCode)) {
                 if (FeatureLocator.HasFeaturePermession(this.ObjectTable.Name, this.ObjectTable.DownloadToExcelFeatureCode)) {
@@ -2164,18 +2165,23 @@ export class ListComponent implements OnInit, AfterViewInit {
             //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
             if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
                 var tempText = TextCodeTranslator.Translate(this.listArgs.ObjectTableName + ".NewButton");
-                if (!AppTool.IsNullOrEmpty(tempText)) {
+                if (!AppTool.IsNullOrEmpty(tempText) ) {
                     this.listArgs.NewButtonLabel = tempText;
                 }
             }
             if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
                 var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-                if (useLocal == true) {
+                if (useLocal == true ) {
                     var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
-                    var ChangedText = GeneralText.split('%')[0];
-                    var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
-                    var FinalText = NewText + " " + ChangedText;
+                  
+                        var ChangedText = GeneralText.split('%')[0];
+                        var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
+                        var FinalText = NewText + " " + ChangedText;
+                    if (this.ObjectTableName == "Customer") {
+                        FinalText = "New" + " " + NewText;
+                    }
                     this.NewEntityButtonLabel = FinalText;//TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
+                    
                 }
                 else {
                     this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));

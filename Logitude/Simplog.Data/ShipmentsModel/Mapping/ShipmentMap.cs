@@ -521,7 +521,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.AWBComments).HasColumnName("AWBComments");
-            this.Property(t => t.CutoffDate).HasColumnName("CutoffDate");
             this.Property(t => t.OpenPayablesInLocalCurrency).HasColumnName("OpenPayablesInLocalCurrency");           
             this.Property(t => t.OpenPayablesInProfitCurrency).HasColumnName("OpenPayablesInProfitCurrency");            
             this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode");

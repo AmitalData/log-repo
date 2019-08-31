@@ -538,7 +538,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        CustomFileId = myShipment.CustomFileId,
                                                        CustomFileNumber = myShipment.CustomFileNumber,
                                                        CustomsDeclarationNumber = myShipment.CustomsDeclarationNumber,
-                                                       CutoffDate = myShipment.CutoffDate,
+                         
                                                        DeliveryOrder = myShipment.DeliveryOrder,
                                                        DepartmentId = myShipment.DepartmentId,
                                                        EstimateProfitInLocalCurrency = myShipment.EstimateProfitInLocalCurrency,
@@ -626,6 +626,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        #endregion
 
                                                        #region Master Fields
+                                                       CutoffDate = myMaster.CutoffDate,
                                                        AirlinePrefix = myMaster.AirlinePrefix,
                                                        MainCarriageATA = myMaster.MainCarriageATA,
                                                        FWBStatusCode = myMaster.FWBStatusCode,
@@ -1383,7 +1384,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        CustomFileId = myShipment.CustomFileId,
                                                        CustomFileNumber = myShipment.CustomFileNumber,
                                                        CustomsDeclarationNumber = myShipment.CustomsDeclarationNumber,
-                                                       CutoffDate = myShipment.CutoffDate,
+                                                    
                                                        DeliveryOrder = myShipment.DeliveryOrder,
                                                        DepartmentId = myShipment.DepartmentId,
                                                        EstimateProfitInLocalCurrency = myShipment.EstimateProfitInLocalCurrency,
@@ -1474,6 +1475,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                                                        #endregion
 
                                                        #region Master Fields
+                                                       CutoffDate = myMaster.CutoffDate,
                                                        AirlinePrefix = myMaster.AirlinePrefix,
                                                        MainCarriageATA = myMaster.MainCarriageATA,
                                                        FWBStatusCode = myMaster.FWBStatusCode,

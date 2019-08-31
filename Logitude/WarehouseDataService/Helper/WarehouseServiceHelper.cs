@@ -166,7 +166,14 @@ namespace WarehouseDataService.Helper
                     reader.Read();
 
                     var dbConnectionString = reader["DBConnection"];
-                    if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString())) result = dbConnectionString.ToString();
+                    if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString()))
+                    {
+                        result = dbConnectionString.ToString();
+                        if(result == "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com")
+                        {
+                            result = "LogitudeMain-Test2,sa,Saas256,.";
+                        }
+                    }
                     else
                     {
                         dbConnectionString = reader["SecondaryAzureDBConnection"];
@@ -234,9 +241,9 @@ namespace WarehouseDataService.Helper
             ApplicationInfo.Days = new List<DayOfWeekClass>();
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Sunday, 0));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Monday, 1));
-            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Thursday, 2));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Tuesday, 2));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Wednesday, 3));
-            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Tuesday, 4));
+            ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Thursday, 4));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Friday, 5));
             ApplicationInfo.Days.Add(new DayOfWeekClass(DayOfWeek.Saturday, 6));
         }

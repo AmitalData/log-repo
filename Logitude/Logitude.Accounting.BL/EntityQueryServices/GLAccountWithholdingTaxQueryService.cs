@@ -18,6 +18,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public GLAccountWithholdingTaxPM GetAccountWithholdingTaxPMByglAccountAndDate(string glaccountId, DateTime? date)
         {
+
+            date = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day, 12, 00, 00);
             GLAccountWithholdingTax poco=(from a in context.GLAccountWithholdingTax
                     where a.GLAccountId == glaccountId && !a.Inactive && ((a.FromDate < date || a.FromDate == date) && (a.ToDate > date || a.ToDate== date) )  
                     select a).FirstOrDefault();

@@ -419,6 +419,36 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 });
             }
         });
+        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+        this.uiProperty.UIPropertyChanged.subscribe(value => {
+
+            if (value instanceof UIPropertyArgs) {
+                var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
+                var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
+                if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
+                    if (uiPropertyArgs.property == "IsEnabled") {
+                        var isEnabled = uiPropertyArgs.newValue;
+                        this.IsDisabled = !isEnabled;
+                        this.uiProperty.IsEnabled = isEnabled;
+                    }
+                    else if (uiPropertyArgs.property == "IsRequired") {
+                        if (this.searchTextChanged) {
+
+                            this.ValidateField(false);
+                        }
+                    }
+                    else if (uiPropertyArgs.property == "IsVisible") {
+                        if (uiPropertyArgs.newValue == true && this.AfterViewInitialized == false) {
+                            this.InitializeAfterViewInit();
+                        }
+                    }
+                    else if (uiPropertyArgs.property == "IsValid") {
+                        this.ValidateField(false);
+                    }
+                }
+            }
+
+        });
         this.InitializeControl();
 
     }
@@ -730,35 +760,35 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             }
 
 
-                            this.uiProperty.UIPropertyChanged.subscribe(value => {
+                            // this.uiProperty.UIPropertyChanged.subscribe(value => {
 
-                                if (value instanceof UIPropertyArgs) {
-                                    var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
-                                    var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
-                                    if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
-                                        if (uiPropertyArgs.property == "IsEnabled") {
-                                            var isEnabled = uiPropertyArgs.newValue;
-                                            this.IsDisabled = !isEnabled;
-                                            this.uiProperty.IsEnabled = isEnabled;
-                                        }
-                                        else if (uiPropertyArgs.property == "IsRequired") {
-                                            if (this.searchTextChanged) {
+                            //     if (value instanceof UIPropertyArgs) {
+                            //         var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
+                            //         var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
+                            //         if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
+                            //             if (uiPropertyArgs.property == "IsEnabled") {
+                            //                 var isEnabled = uiPropertyArgs.newValue;
+                            //                 this.IsDisabled = !isEnabled;
+                            //                 this.uiProperty.IsEnabled = isEnabled;
+                            //             }
+                            //             else if (uiPropertyArgs.property == "IsRequired") {
+                            //                 if (this.searchTextChanged) {
 
-                                                this.ValidateField(false);
-                                            }
-                                        }
-                                        else if (uiPropertyArgs.property == "IsVisible") {
-                                            if (uiPropertyArgs.newValue == true && this.AfterViewInitialized == false) {
-                                                this.InitializeAfterViewInit();
-                                            }
-                                        }
-                                        else if (uiPropertyArgs.property == "IsValid") {
-                                            this.ValidateField(false);
-                                        }
-                                    }
-                                }
+                            //                     this.ValidateField(false);
+                            //                 }
+                            //             }
+                            //             else if (uiPropertyArgs.property == "IsVisible") {
+                            //                 if (uiPropertyArgs.newValue == true && this.AfterViewInitialized == false) {
+                            //                     this.InitializeAfterViewInit();
+                            //                 }
+                            //             }
+                            //             else if (uiPropertyArgs.property == "IsValid") {
+                            //                 this.ValidateField(false);
+                            //             }
+                            //         }
+                            //     }
 
-                            });
+                            // });
                         });
                     });
                 });
