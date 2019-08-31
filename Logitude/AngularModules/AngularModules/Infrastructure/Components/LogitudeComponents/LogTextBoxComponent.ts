@@ -92,6 +92,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
     @Input() Max: number;
     @Input() Min: number;
     @Input() RowsCount: number;
+    @Input() ForceDisable: boolean = false;
     // @Input() ForceDirection: string; // for now, its working only for multiline textbox,
 
 
@@ -285,7 +286,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                     });
         });
 
-        if (this.IsDisabled) {
+        if (this.IsDisabled || this.ForceDisable) {
             this.SetDisabled();
         }
         else {
@@ -436,7 +437,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
 
         this.IsDisabled = !this.uiProperty.IsEnabled;
 
-        if (this.IsDisabled) {
+        if (this.IsDisabled || this.ForceDisable) {
             this.SetDisabled();
         }
         else {
@@ -1006,6 +1007,14 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                     }
 
                     else {
+
+                        if (!AppTool.IsNullOrEmpty(this.TextValue)) {
+                            var selection = window.getSelection().toString();
+                            if (selection == this.TextValue) {
+                                return key;
+                            }
+                        }
+
                         if (keyChar == "+") {
                             if (selectionStart(input) == 0) {
                                 if (!AppTool.IsNullOrEmpty(this.TextValue)) {
@@ -1106,7 +1115,6 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                             }
                         }
                     }
-
 
                     if (isOk) {
                         return key;

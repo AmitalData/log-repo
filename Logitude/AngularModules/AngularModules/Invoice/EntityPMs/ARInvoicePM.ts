@@ -98,6 +98,11 @@ export class ARInvoicePM {
     public set BillToName(newValue: string) { if (this.billToName != newValue) { this.billToName = newValue; this.MarkAsDirty("BillToName"); } }
        
 	 
+    private billToLocalName: string;
+    public get BillToLocalName() { return this.billToLocalName; }
+    public set BillToLocalName(newValue: string) { if (this.billToLocalName != newValue) { this.billToLocalName = newValue; this.MarkAsDirty("BillToLocalName"); } }
+       
+	 
     private billToType: string;
     public get BillToType() { return this.billToType; }
     public set BillToType(newValue: string) { if (this.billToType != newValue) { this.billToType = newValue; this.MarkAsDirty("BillToType"); } }

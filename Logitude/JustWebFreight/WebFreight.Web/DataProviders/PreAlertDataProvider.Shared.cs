@@ -75,6 +75,7 @@ namespace WebFreight.Web.DataProviders
         
         public string Origin { get; set; }
         public string Destination { get; set; }
+        public string IncotermCode { get; set; }
         public string OperationalClosingDate { get; set; }
         public string AccountingClosingDate { get; set; }
         public string Shipper { get; set; }

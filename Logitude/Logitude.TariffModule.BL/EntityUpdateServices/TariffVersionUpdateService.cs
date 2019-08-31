@@ -29,15 +29,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {  
-                //if(entityPM.StartDate != entityPOCO.StartDate)
-                //{
-
-                //}
-
-                //if (entityPM.ExpirationDate != entityPOCO.ExpirationDate)
-                //{
-
-                //}
+                
             }            
         }
 
@@ -46,7 +38,10 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             this.ComputeLinesUniqueKey(entityPM);
 
             TariffLineUpdateService tariffLineUpdateService = new TariffLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            TariffVersionAllInChargeUpdateService tariffVersionAllInChargeUpdateService = new TariffVersionAllInChargeUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+
             tariffLineUpdateService.UpdateMulti(entityPM.TariffLines, entityPM.DeletedTariffLines, entityPM, false);
+            tariffVersionAllInChargeUpdateService.UpdateMulti(entityPM.TariffAllInCharges, entityPM.DeletedTariffAllInCharges, entityPM, false);
         }
 
         private void ComputeLinesUniqueKey(TariffVersionPM entityPM)
@@ -59,6 +54,10 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 {
                     line.OriginPortCode = line.OriginPortCode.Trim().ToUpper();
                     iUniqueKey = line.OriginPortCode;
+                }
+                else if(line.IsFromAllOtherPorts)
+                {
+                    iUniqueKey = "From All Other Ports";
                 }
 
                 if (!string.IsNullOrEmpty(line.DestinationPortCode))
@@ -75,18 +74,25 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         iUniqueKey += "," + line.DestinationPortCode;
                     }
                 }
+                else if (line.IsToAllOtherPorts)
+                {
+                    if (iUniqueKey == null)
+                    {
+                        iUniqueKey = "To All Other Ports";
+                    }
+
+                    else
+                    {
+                        iUniqueKey += "," + "To All Other Ports";
+                    }
+                }
 
                 if (line.ErrorText == "Line is a duplicate")
                 {
                     line.HasErrors = false;
                     line.ErrorText = null;
                 }
-
-                //if (iUniqueKey == null)
-                //{
-                //    iUniqueKey = "";
-                //}
-
+                
                 line.LineUniqueKey = iUniqueKey;
                 line.LineUniqueKeyText = iUniqueKey;
 
@@ -135,9 +141,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     }
                 }
             }
-
-
         }
-
     }
 }

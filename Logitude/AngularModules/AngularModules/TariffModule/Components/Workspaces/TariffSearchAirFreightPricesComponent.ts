@@ -7,7 +7,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { TariffDomainService } from '../../../TariffModule/Services/TariffDomainService';
 import { TariffSearchSummary } from '../../../TariffModule/Services/TariffDomainService';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
-
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 @Component({
     moduleId: module.id,
     templateUrl: './TariffSearchAirFreightPricesComponent.html',
@@ -28,6 +28,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.SetUIProperties();
         this.Date = DateTool.GetCurrentDateAsUtc();
     }
+
+
+
 
     private originPortId: string;
     get OriginPortId() {
@@ -71,8 +74,47 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     set WeightCode(value: string) {
         if (this.weightCode != value) {
             this.weightCode = value;
+            this.ComputeVolume();
+            this.ComputeVolumetricWeight();
        }
     }
+
+    private grossWeightCode: string = "KG";
+    get GrossWeightCode() {
+        return this.grossWeightCode;
+    }
+    set GrossWeightCode(value: string) {
+        if (this.grossWeightCode != value) {
+            this.grossWeightCode = value;
+            this.ComputeVolume();
+            this.ComputeVolumetricWeight();
+        }
+    }
+
+    private Ratio: number = 6.00;
+
+    private volumeUnitCode: string = "CBM";
+    get VolumeUnitCode() {
+        return this.volumeUnitCode;
+    }
+    set VolumeUnitCode(value: string) {
+        if (this.volumeUnitCode != value) {
+            this.volumeUnitCode = value;
+            this.ComputeVolume();
+            this.ComputeVolumetricWeight();
+        }
+    }
+
+
+
+
+
+    private ComputeVolumetricWeight() {
+        this.Weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
+    }
+
+
+    
 
     private weight: number;
     get Weight() {
@@ -83,6 +125,39 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.weight = value;
             this.SetUIProperties();
         }
+    }
+
+
+    private volume: number;
+    get Volume() {
+        return this.volume;
+    }
+    set Volume(value: number) {
+        if (this.volume != value) {
+            this.volume = value;
+            this.ComputeVolumetricWeight();
+        }
+    }
+
+
+
+
+    private grossWeight: number;
+    get GrossWeight() {
+        return this.grossWeight;
+    }
+    set GrossWeight(value: number) {
+        if (this.grossWeight != value) {
+            this.grossWeight = value;
+            this.ComputeVolumetricWeight();
+        }
+    }
+
+
+    private ComputeVolume() {
+
+
+        this.Volume = AppTool.ComputePackageVolume(null, null, null, null, this.Weight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
     }
 
     SearchButtonClicked() {
@@ -100,17 +175,24 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
 
         if (AppTool.IsNullOrEmpty(this.Weight)) {
-            this.ValidationErrorsList.push("Weight is required");
+            this.ValidationErrorsList.push("Chargeable Weight is required");
         }
 
         if (AppTool.IsNullOrEmpty(this.WeightCode)) {
-            this.ValidationErrorsList.push("Weight unit is required");
+            this.ValidationErrorsList.push("Chargeable Weight unit is required");
         }
 
         if (this.ValidationErrorsList.length == 0) {
+            if (AppTool.IsNullOrEmpty(this.GrossWeight)) {
+                this.GrossWeight = this.Weight;
+            }
+
+            if (AppTool.IsNullOrEmpty(this.Volume)) {
+                this.ComputeVolume();
+            }
+
             this.CurrentSession.StartBusyIndicatorLoading();
-            var computedWeight: number = this.ComputeWeightInKG(this.Weight);
-            this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, computedWeight).subscribe(res => {
+            this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, this.Weight, this.WeightCode, this.GrossWeight, this.GrossWeightCode, this.Volume, this.VolumeUnitCode).subscribe(res => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.AvailableTariffs = res.Result;
@@ -150,16 +232,12 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     PriceClick(item: TariffSearchSummary) {
         if (item) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({
-                        EntityId: item.Id,
-                        ObjectTableName: "Tariff",
-                        SelectedTabCode: item.VersionId,
-
-                    });
-                });
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.ShowEditComponent(item.Id, "Tariff", item.VersionId);
         }
 
     }

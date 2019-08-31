@@ -102,6 +102,8 @@
     </MenuButton>
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode Code="&quot;Cashbook.O.Name&quot;" DefaultText="&quot;Cashbook&quot;" LocalDefaultText="&quot;שם הקופה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

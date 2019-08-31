@@ -258,6 +258,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return base.GetEntityPM(poco);
         }
 
+        public JournalPM GetByAccountingEntityIdAndAccountingEntityCode(string entityId, string accountingEntityCode, int tenant)
+        {
+            Journal poco = repository.GetByAccountingEntityId(entityId, accountingEntityCode, tenant);
+            return base.GetEntityPM(poco);
+        }
+
         public bool CheckIfExternalNoAndSystemExist(string externalNo, string externalSystem, out string journalNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(externalNo) || String.IsNullOrWhiteSpace(externalSystem))
@@ -313,11 +319,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
                                                  Id = a.Id,
                                                  IsVoided = a.IsVoided,
+                                                 OriginalJournalId = a.OriginalJournalId,
                                              };
 
             return journals;
         }
 
+        public JournalPM GetSinglePMByOriginal(string originalId, int tenant)
+        {
+            Journal poco = repository.GetByOriginal(originalId, tenant).FirstOrDefault();
+
+            JournalPM journalPM = this.GetEntityPM(poco);
+
+            return journalPM;
+        }
 
         public JournalPM GetSinglePM(string id, int tenant)
         {

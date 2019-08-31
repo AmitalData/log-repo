@@ -157,6 +157,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public IsOpen: boolean;
     public SelectedItem: any;
     @Input() SelectedItemObject: any;
+
     public ItemsSource: any[];
     public ItemsSourceCount: number = -1;
     public ItemsSourceStatic: any[];
@@ -296,6 +297,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     PartnersPopupTop: string;
     PartnersPopupLeft: string;
     _KeyDownSubscribe: any;
+    @Output() KeyDownEvent: EventEmitter<any> = new EventEmitter();
+
     ngAfterViewInit() {
         this.RunComponent();
         //this.InitializeAfterViewInit();
@@ -353,11 +356,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         var HOME = 36;
                         var CTRL = 17;
                         var BACKSPACE = 8;
+                     
                         var which = logLoveReturnWhich(keyboardEvent);
+
                         if (which == TABKEY || which == ENTERKEY || which == DOWNKEY || which == UPKEY
                             || which == ESC || which == END || which == HOME || which == 220 || which == CTRL || this.IsCTRLDown) {
                             return;
                         }
+
+                       
+
+
                         if (this.SearchTextNgModel != undefined) {
 
                             this.OldSearchInput = this.SearchTextNgModel;
@@ -510,7 +519,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.LookUp2 = this.LookUpTable.LookUp2;
         this.headerColumns = [];
         this.dataColumns = [];
-        if (this.LookUpTableName == 'Card' || this.LookUpTableName == 'User') {
+        if (this.LookUpTableName == 'Card' || this.LookUpTableName == 'User' || this.LookUpTableName == 'ChargesType') {
             this.DropDownWidth = 400;
         }
         if (this.LookUpTableName == 'Carrier') {
@@ -1274,6 +1283,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         }
                     }
                 }
+            }
+            else {
+                this.KeyDownEvent.emit(13)
             }
         }
 

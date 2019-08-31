@@ -80,7 +80,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                             JournalToGLAccountMoreData.BuildJournals(parameterArgsFromCommunicationsData.Tenant, parameterArgsFromCommunicationsData.JournalInput);
                             parameterArgs.MyState = AccFunctionalState.CheckTrailReport.ToString();
-                            BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask(parameterArgs,true);
+                            this.CreateQBatchTaskExecution<BatchFunctionalTestTaskArg>(parameterArgs, parameterArgs.Tenant, $"CreateBatchFunctionalTestTask({parameterArgs.MyState.ToString()})", true);
                             scope.Complete();
                         }
                         break;
@@ -219,7 +219,7 @@ $">>BAD Expected:{r.ExpectedLocalCloseBalance.GetValueOrDefault()}!=Real:{r.Loca
             }
         }
 
-
+#if false
         public static void CreateBatchFunctionalTestTask(BatchFunctionalTestTaskArg args,bool delay2Min)
         {
 
@@ -279,6 +279,8 @@ $">>BAD Expected:{r.ExpectedLocalCloseBalance.GetValueOrDefault()}!=Real:{r.Loca
 
         }
 
+
+#endif
     }
     public class BatchFunctionalTestTaskArg
     {

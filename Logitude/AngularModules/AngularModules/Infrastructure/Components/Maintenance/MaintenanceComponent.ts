@@ -262,6 +262,14 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Customer Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.VATSettings")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "VATS";
+                item.ObjectTableName = "VAT Settings";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.SupportManagement")) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
@@ -979,6 +987,18 @@ export class MaintenanceComponent {
                         logWindow.Title = windowTitle;
                         logWindow.IsShowCloseButton = true;
                         logWindow.Show('./Common/Components/Maintenance/CustomerActivationSettingsComponent');
+                    });
+                    break;
+                }
+                case "VATS": {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+                        var windowTitle = "VAT Settings";
+                        var logWindow = new LogitudeWindow();
+                        logWindow.Width = 800;
+                        logWindow.Height = 700;
+                        logWindow.Title = windowTitle;
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./Common/Components/Maintenance/VATSettingsComponent');
                     });
                     break;
                 }

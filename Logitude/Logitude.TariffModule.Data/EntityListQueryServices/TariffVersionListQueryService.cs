@@ -43,6 +43,8 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 					
 					                          ApproveDate = a.ApproveDate,
 					
+					                          ParentVersionNumber = a.ParentVersionNumber,
+					
 		                    	            });
             return query;
 		}

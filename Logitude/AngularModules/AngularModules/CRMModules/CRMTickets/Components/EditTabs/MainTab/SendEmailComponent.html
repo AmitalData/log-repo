@@ -1,10 +1,12 @@
-﻿<style type="text/css">
+
+<style type="text/css">
     .SearchBox input::-webkit-input-placeholder {
         font-family: Arial;
         font-size: 11px;
         color: #8F9293;
         font-style: italic;
     }
+
     #SearchBoxPartnersHeader {
         background: grey; /* For browsers that do not support gradients */
         background: -webkit-linear-gradient(#dcdcdc, #bababa);
@@ -14,36 +16,44 @@
         height: 20px;
         font-weight: bold;
     }
+
     .SearchBox input:-moz-placeholder {
         font-family: Arial;
         font-size: 11px;
         color: #8F9293;
         font-style: italic;
     }
+
     .SearchBox input::-moz-placeholder {
         font-family: Arial;
         font-size: 11px;
         color: #8F9293;
         font-style: italic;
     }
+
     .SearchBox input:-ms-input-placeholder {
         font-family: Arial;
         font-size: 11px;
         color: #8F9293;
         font-style: italic;
     }
+
     .SearchBox input:focus::-webkit-input-placeholder {
         color: transparent;
     }
+
     .SearchBox input:focus:-moz-placeholder {
         color: transparent;
     }
+
     .SearchBox input:focus::-moz-placeholder {
         color: transparent;
     }
+
     .SearchBox input:focus:-ms-input-placeholder {
         color: transparent;
     }
+
     .SearchBox .DeleteIcon {
         position: absolute;
         right: 4px;
@@ -52,6 +62,7 @@
         margin: auto;
         cursor: pointer;
     }
+
     .SearchBox .SearchIcon {
         position: absolute;
         right: 2px;
@@ -59,11 +70,13 @@
         bottom: 0;
         margin: auto;
     }
+
     .SearchBox {
         height: 22px;
         width: 100%;
         position: relative;
     }
+
     .QuickSearchDropDown .ListBoxItem:hover {
         background: #f4f9ff; /* Old browsers */
         background: -moz-linear-gradient(top, #f4f9ff 0%, #bcdff2 100%); /* FF3.6-15 */
@@ -71,6 +84,7 @@
         background: linear-gradient(to bottom, #f4f9ff 0%,#bcdff2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f9ff', endColorstr='#bcdff2',GradientType=0 ); /* IE6-9 */
     }
+
     .QuickSearchDropDown .ListBoxItem {
         height: 22px;
         min-height: 22px;
@@ -83,6 +97,7 @@
         padding-right: 2px;
         cursor: pointer;
     }
+
     .QuickSearchDropDown {
         position: absolute;
         left: 0;
@@ -99,11 +114,13 @@
         overflow: hidden;
         padding-top: 0px;
     }
-     .customtrclass td {
+
+    .customtrclass td {
         text-align: left;
         font-size: 11px;
         color: #6E7172;
     }
+
     .customtrclass {
         height: 22px;
     }
@@ -131,7 +148,7 @@
                                 <table>
 
                                     <!-- To -->
-                                    <tr class="customtrclass" *ngIf="ToVisibility">
+                                    <tr style="width:100%;" class="customtrclass" *ngIf="ToVisibility">
                                         <td style="width:90px;">
                                             <label> To: </label>
                                         </td>
@@ -140,15 +157,17 @@
                                                 <EmailSearchTextBox [EmailsText]="ContactEmail" [IsDisabled]="'true'"></EmailSearchTextBox>
                                             </div>
                                         </td>
-                                        <td style="width:10px;">
+                                      
+                                    </tr>
+
+                                    <tr style="height:2px;">
+                                        <td>
                                             <div></div>
                                         </td>
                                     </tr>
 
-                                    <tr style="height:2px;"><td><div></div></td></tr>
-
                                     <!-- Cc -->
-                                    <tr class="customtrclass" *ngIf="CcVisibility">
+                                    <tr  style="width:100%;" class="customtrclass" *ngIf="CcVisibility">
                                         <td style="width:90px;">
                                             <label> CCs: </label>
                                         </td>
@@ -157,16 +176,16 @@
                                                 <EmailSearchTextBox [EmailsText]="CCs" (EmailsTextChanged)="CCs = $event" (ValidationErrorsListChanged)="ValidateEmails($event)"></EmailSearchTextBox>
                                             </div>
                                         </td>
+                                    </tr>
 
-                                        <td style="width:10px;">
+                                    <tr style="height:2px;">
+                                        <td>
                                             <div></div>
                                         </td>
                                     </tr>
 
-                                    <tr style="height:2px;"><td><div></div></td></tr>
-
                                     <!-- Internal User -->
-                                    <tr class="customtrclass">
+                                    <tr  style="width:100%;" class="customtrclass">
                                         <td style="width:90px;">
                                             <label> Notify Internal: </label>
                                         </td>
@@ -175,16 +194,16 @@
                                                 <EmailSearchTextBox [EmailsText]="InternalUsers" [IsUsersList]="true" (EmailsTextChanged)="InternalUsers = $event"></EmailSearchTextBox>
                                             </div>
                                         </td>
+                                    </tr>
 
-                                        <td style="width:10px;">
+                                    <tr style="height:2px;">
+                                        <td>
                                             <div></div>
                                         </td>
                                     </tr>
 
-                                    <tr style="height:2px;"><td><div></div></td></tr>
-
                                     <!-- Attachments -->
-                                    <tr class="customtrclass" *ngIf="AttachmentsVisibility">
+                                    <tr  style="width:100%;" class="customtrclass" *ngIf="AttachmentsVisibility">
                                         <td style="width:80px;">
                                             <label> Attachments: </label>
                                         </td>
@@ -197,75 +216,105 @@
                                                 </li>
                                             </ul>
                                         </td>
+                                    </tr>
 
-                                        <td style="width:10px;">
+                                    <tr style="height:10px;">
+                                        <td>
                                             <div></div>
                                         </td>
                                     </tr>
 
-                                    <tr style="height:2px;"><td><div></div></td></tr>
-
-                                    <tr class="FormFieldRow">
+                                    <tr style="width:100%;height:30px;">
                                         <td colspan="3">
-                                            <table>
-                                                <tr>
-                                                    <td style="width:210px;text-align:left;">
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width:80px">
-                                                                    <LogCheckBox [NoObjectField]="true"  [ObjectFieldName]="'NotifyMe'" [Text]="'Notify Me'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                </td>
-                                                                <td width="10px;"><div></div></td>
-                                                                <td style="width:100px" *ngIf="NotifyOwnerVisibility">
-                                                                    <LogCheckBox [NoObjectField]="true"  [ObjectFieldName]="'NotifyOwner'" [Text]="'Notify Owner'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                </td>
-                                                                <td><div></div></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                    <td><div></div></td>
+                                            <div class="MediaFill" style="padding:3px;border:1px solid #AAAAAA;border-radius:3px;text-align:center;border-bottom:none;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:200px;text-align:left;">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:80px">
+                                                                        <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'NotifyMe'" [Text]="'Notify Me'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
+                                                                    <td width="10px;">
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td style="width:100px" *ngIf="NotifyOwnerVisibility">
+                                                                        <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'NotifyOwner'" [Text]="'Notify Owner'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
 
-                                                    <td style="text-align:center;width:50px;">
-                                                        <table>
-                                                            <tr *ngIf="TextAlignRegionVisibility">
-                                                                <td style="width: 20px;height: 25px;" [ngStyle]="{background:BackgroundAlignLeft}">
-                                                                    <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="AlignLeftClicked()" />
-                                                                </td>
-                                                                <td width="10px;"><div></div></td>
-                                                                <td style="width: 20px;height: 25px;" [ngStyle]="{background: BackgroundAlignRight}">
-                                                                    <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="AlignRightClicked()" />
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
+                                                        <td style="width:5px;">
+                                                            <div>
+                                                                <span class="CellSeparator" style="float: left;width: 3px"></span>
+                                                            </div>
+                                                        </td>
 
-                                                    <td><div></div></td>
+                                                        <td style="width:5px;">
+                                                            <div></div>
+                                                        </td>
 
-                                                    <td style="width:190px; text-align:right;">
-                                                        <table>
-                                                            <tr>
-                                                                <td> <span class="hyperlink" (click)="AttachInternalFile()">Attach Internal File</span></td>
-                                                                <td style="width:5px;"></td>
-                                                                <td><span class="hyperlink" (click)="AttachExternalFile()">Attach External File</span></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
+                                                        <td style="width:50px;">
+                                                            <table>
+                                                                <tr *ngIf="TextAlignRegionVisibility">
+                                                                    <td style="width: 20px;height: 25px;">
+                                                                        <div [title]="'RTL'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;margin-top:3px;" (click)="AlignRightClicked()">
+                                                                            <i class="fa fa-long-arrow-left"></i>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td width="10px;">
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td style="width: 20px;height: 25px;">
+                                                                        <div [title]="'LTR'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;margin-top:3px;" (click)="AlignLeftClicked()">
+                                                                            <i class="fa fa-long-arrow-right"></i>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
 
-                                    <tr>
-                                        <td colspan="3">
-                                            <div style="height: 100%; width: 100%;">
-                                                <LogTextBox
-                                                    [NoObjectField]="true" [ForceDirection]="FlowDirection" [IsMultiline]="true"
-                                                    [HideColumns]="true" [ObjectFieldName]="'CorrespondenceLine'" [Text]="CorrespondenceLine" [DataContext]="DataContext"></LogTextBox>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width:190px; float:right;">
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <span class="hyperlink" (click)="AttachInternalFile()">Attach Internal File</span>
+                                                                    </td>
+                                                                    <td style="width:5px;"></td>
+                                                                    <td>
+                                                                        <span class="hyperlink" (click)="AttachExternalFile()">Attach External File</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                         </td>
                                     </tr>
 
-                                    <tr style="height:5px"><td colspan="3"><div></div></td></tr>
+                                    <tr style="vertical-align:top;">
+                                        <td colspan="3">
+                                            <div class="MediaFill">
+                                                <LogTextBox [NoObjectField]="true" [ForceDirection]="FlowDirection" [IsMultiline]="true"
+                                                            [HideColumns]="true" [ObjectFieldName]="'CorrespondenceLine'" [Text]="CorrespondenceLine" [DataContext]="DataContext"></LogTextBox>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:5px">
+                                        <td colspan="3">
+                                            <div></div>
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>

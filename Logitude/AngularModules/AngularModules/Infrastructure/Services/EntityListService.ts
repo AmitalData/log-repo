@@ -149,6 +149,22 @@ export class EntityListService {
         });
     }
 
+
+    getReconciliationsByFilter(objectTableName: string, accountId: string, filters: ApiQueryFilters) {
+        var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "ExtendedListService";
+        var servicelink = './' + moduleName + '/Services/ExtendedLists/' + servicename;
+        return new Promise((resolve, reject) => {
+            SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                resolve(service.getReconciliationsByFilter(accountId,filters));
+            });
+        });
+    }
+
     getExternalReoncilioationsByFilter(objectTableName: string, bankAccountId: string, filters: ApiQueryFilters) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
         if (objectTableName.indexOf('Customs.') > -1) {
@@ -190,8 +206,8 @@ export class EntityListService {
     //        var R: string = myTableName.toLowerCase();
     //        var myServiceName = myTableName + "ListService";
 
-    //        switch (R) {                                
-    //            case "address":                
+    //        switch (R) {
+    //            case "address":
     //            case "branch":
     //            case "card":
     //            case "chargestype":
@@ -298,9 +314,9 @@ export class EntityListService {
     }
 
     getDWDimByFilters(objectTableName: string, filters: ApiQueryFilters) {
-          
+
         var servicelink = './Infrastructure/Services/ExtendedPMs/DWQueryBuilderService';
-         
+
 
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
@@ -308,4 +324,4 @@ export class EntityListService {
             });
         });
     }
-} 
+}

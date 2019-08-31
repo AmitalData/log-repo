@@ -101,7 +101,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 this.InitializeComponent();
 
-                ParticipantValidating.Validate(entityPM);
 
                 foreach (AddressPM itemPM in entityPM.Addresses)
                 {
@@ -119,6 +118,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 ParticipantMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+                ParticipantValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
                 cardRepository.Add(entityCard);
                 entityRepository.Add(entityPOCO);
@@ -147,9 +147,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                  this.InitializeComponent();
 
-                 ParticipantValidating.Validate(entityPM);
 
-                 if (entityPM.Registered != entityPOCO.Registered)
+                if (entityPM.Registered != entityPOCO.Registered)
                  {
                      this.UpdateAirline();
 
@@ -190,8 +189,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                  }
 
                  ParticipantMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+                ParticipantValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
-                 cardRepository.Update(entityCard);
+                cardRepository.Update(entityCard);
                  entityRepository.Update(entityPOCO);
                  entityRepository.SubmitChanges();
              }

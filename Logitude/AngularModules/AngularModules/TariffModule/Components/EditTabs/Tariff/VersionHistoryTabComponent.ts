@@ -4,6 +4,7 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { TariffPM } from '../../../EntityPMs/TariffPM';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
 import { TariffLinePM } from '../../../EntityPMs/TariffLinePM';
+import { TariffVersionAllInChargePM } from '../../../EntityPMs/TariffVersionAllInChargePM';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
@@ -16,6 +17,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
 import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/TariffVersionExtendedPMService';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: module.id,
@@ -360,7 +362,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 var fileName = myResponse.Result;
                 var tempDate = new Date();
                 var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + "Tariffs" + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007";
+                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + fileName;
                 {
                     window.open(url);
                 }
@@ -381,8 +383,29 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
     private isCopyButtonClicked: boolean = false;
     private DoCopy() {
-        this.isCopyButtonClicked = true;
+        if (this.EntityPM.TypeCode == "AFC") {
+            var windowTitle = "New Copy Version";
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 450;
+            logWindow.Height = 200;
+            logWindow.WindowArgs = this.VersionPM;
+            logWindow.Title = windowTitle;
+            logWindow.ComponentLoaded.subscribe(s => {
+                logWindow.WindowClosed.subscribe(d => {
+                    if (s && d == "ok") {
+                        this.CopyTariffVersion();
+                    }
+                });
+            });
 
+            logWindow.Show('./TariffModule/Components/EditTabs/Tariff/TariffDatesValidationComponent');
+        }
+        else {
+            this.CopyTariffVersion();
+        }
+    }
+    CopyTariffVersion() {
+        this.isCopyButtonClicked = true;
         this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
         this.EntityPM.LastStartDate = this.VersionPM.StartDate;
         this.EntityPM.LastExpirationDate = this.VersionPM.ExpirationDate;
@@ -441,6 +464,28 @@ export class VersionHistoryTabComponent implements OnDestroy {
             copiedVersion.AddTariffLine(tariffLine);
         });
 
+        this.VersionPM.TariffAllInCharges.forEach(item => {
+            var allInCharge = new TariffVersionAllInChargePM(copiedVersion);
+            allInCharge.ChargesTypeId = item.ChargesTypeId;
+            allInCharge.TariffId = this.EntityPM.Id;
+            allInCharge.Tenant = SessionLocator.Tenant;
+            allInCharge.Version = copiedVersion.Version;
+            allInCharge.AddDate = DateTool.GetCurrentDateAsUtc();
+            allInCharge.AddedByUserId = SessionInfo.LoggedUserId;
+            copiedVersion.AddTariffVersionAllInCharge(allInCharge);
+        });
+
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
+    }
+    AllInChargesClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { TariffPM: this.EntityPM, VersionPM: this.VersionPM, IsEditingEnabled: false };
+        logWindow.Title = "All-In Charges";
+        logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditAllInChargesComponent");
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                
+            }
+        });
     }
 }

@@ -22,6 +22,7 @@ import {TariffPM} from '../../EntityPMs/TariffPM';
 import {TariffVersionPM} from '../../EntityPMs/TariffVersionPM';
 
 import {TariffLinePM} from '../../EntityPMs/TariffLinePM';
+import {TariffVersionAllInChargePM} from '../../EntityPMs/TariffVersionAllInChargePM';
 import {TariffPMInitService} from '../../EntityPMInitServices/TariffPMInitService';
 import {TariffValidator} from '../../Validators/TariffValidator';
 
@@ -248,6 +249,13 @@ export class TariffPMService {
                     newTariffVersionPM.TariffLines.push(newTariffLinePM);
 
 					                 }
+                newTariffVersionPM.TariffAllInCharges = [];
+                for (var k in myTariffVersionPM.TariffAllInCharges) {
+				    var myTariffVersionAllInChargePM =myTariffVersionPM.TariffAllInCharges[k];
+				    var newTariffVersionAllInChargePM=this.clone(myTariffVersionPM.TariffAllInCharges[k]);
+                    newTariffVersionPM.TariffAllInCharges.push(newTariffVersionAllInChargePM);
+
+					                 }
 							 
             entityPM.OldEntityPM.TariffVersions.push(newTariffVersionPM);
             }
@@ -262,6 +270,13 @@ export class TariffPMService {
 				    var myTariffLinePM =myTariffVersionPM.TariffLines[k];
 				    var newTariffLinePM=this.clone(myTariffVersionPM.TariffLines[k]);
                     newTariffVersionPM.TariffLines.push(newTariffLinePM);
+
+					                 }
+                newTariffVersionPM.TariffAllInCharges = [];
+                for (var k in myTariffVersionPM.TariffAllInCharges) {
+				    var myTariffVersionAllInChargePM =myTariffVersionPM.TariffAllInCharges[k];
+				    var newTariffVersionAllInChargePM=this.clone(myTariffVersionPM.TariffAllInCharges[k]);
+                    newTariffVersionPM.TariffAllInCharges.push(newTariffVersionAllInChargePM);
 
 					                 }
 							 
@@ -323,6 +338,14 @@ export class TariffPMService {
                     //var clonedInside = this.clone(newTariffVersionPM.TariffLines[k]);
                     newTariffVersionPM.OldEntityPM.TariffLines.push(newTariffVersionPM.TariffLines[k].OldEntityPM); // clone old TariffLines//
                 }
+ 
+
+                this.MapTariffAllInCharges(newTariffVersionPM, jItem, mapParent);
+                newTariffVersionPM.OldEntityPM.TariffAllInCharges = [];
+                for (var k in newTariffVersionPM.TariffAllInCharges) {
+                    //var clonedInside = this.clone(newTariffVersionPM.TariffAllInCharges[k]);
+                    newTariffVersionPM.OldEntityPM.TariffAllInCharges.push(newTariffVersionPM.TariffAllInCharges[k].OldEntityPM); // clone old TariffAllInCharges//
+                }
 
 				
             }
@@ -338,6 +361,9 @@ export class TariffPMService {
  
 
                 this.MapTariffLines(newTariffVersionPM, jItem, mapParent);
+ 
+
+                this.MapTariffAllInCharges(newTariffVersionPM, jItem, mapParent);
  
                 newTariffVersionPM.OldEntityPM = null;
                 newTariffVersionPM.EntityParentPM = null;
@@ -374,6 +400,9 @@ export class TariffPMService {
  
 
                         this.MapTariffLines(deletedPM, oldItemJson, mapParent);
+ 
+
+                        this.MapTariffAllInCharges(deletedPM, oldItemJson, mapParent);
                         deletedPM.OldEntityPM = null;
                         entityPM.TariffVersions.push(deletedPM);
                     }
@@ -476,6 +505,101 @@ export class TariffPMService {
             }
         }
     }
+    MapTariffAllInCharges(entityPM: TariffVersionPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldTariffAllInCharges: TariffVersionAllInChargePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldTariffAllInCharges = entityPM.OldEntityPM.TariffAllInCharges;
+        }
+
+        entityPM.TariffAllInCharges = new Array<TariffVersionAllInChargePM>();
+        for (var item in jsonPM.TariffAllInCharges) {
+            var jItem = jsonPM.TariffAllInCharges[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newTariffVersionAllInChargePM: TariffVersionAllInChargePM;
+	  
+            if (mapParent) {
+                newTariffVersionAllInChargePM = new TariffVersionAllInChargePM(entityPM);
+            }
+            else
+            {
+                newTariffVersionAllInChargePM = new TariffVersionAllInChargePM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newTariffVersionAllInChargePM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newTariffVersionAllInChargePM.UniqueKey = Guid.newGuid();
+                newTariffVersionAllInChargePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newTariffVersionAllInChargePM.OldEntityPM = this.clone(newTariffVersionAllInChargePM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newTariffVersionAllInChargePM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newTariffVersionAllInChargePM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newTariffVersionAllInChargePM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newTariffVersionAllInChargePM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newTariffVersionAllInChargePM.OldEntityPM = null;
+                newTariffVersionAllInChargePM.EntityParentPM = null;
+            }
+			
+			 newTariffVersionAllInChargePM.IsDirty = false;
+            entityPM.TariffAllInCharges.push(newTariffVersionAllInChargePM);
+        }
+        if (oldTariffAllInCharges) {
+            
+            for (var itemKey in oldTariffAllInCharges) {
+                if (entityPM.TariffAllInCharges.filter(p=> p.UniqueKey === oldTariffAllInCharges[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldTariffAllInCharges[itemKey]) {
+                        //oldTariffAllInCharges[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.TariffAllInCharges.push(oldTariffAllInCharges[itemKey]);
+						var oldItemJson = oldTariffAllInCharges[itemKey];
+                        var deletedPM: TariffVersionAllInChargePM = new TariffVersionAllInChargePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.TariffAllInCharges.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
  
     MapActiveVersions(entityPM: TariffPM, jsonPM: any, mapParent: boolean = true) {
 
@@ -523,6 +647,14 @@ export class TariffPMService {
                     //var clonedInside = this.clone(newTariffVersionPM.TariffLines[k]);
                     newTariffVersionPM.OldEntityPM.TariffLines.push(newTariffVersionPM.TariffLines[k].OldEntityPM); // clone old TariffLines//
                 }
+ 
+
+                this.MapTariffAllInCharges(newTariffVersionPM, jItem, mapParent);
+                newTariffVersionPM.OldEntityPM.TariffAllInCharges = [];
+                for (var k in newTariffVersionPM.TariffAllInCharges) {
+                    //var clonedInside = this.clone(newTariffVersionPM.TariffAllInCharges[k]);
+                    newTariffVersionPM.OldEntityPM.TariffAllInCharges.push(newTariffVersionPM.TariffAllInCharges[k].OldEntityPM); // clone old TariffAllInCharges//
+                }
 
 				
             }
@@ -538,6 +670,9 @@ export class TariffPMService {
  
 
                 this.MapTariffLines(newTariffVersionPM, jItem, mapParent);
+ 
+
+                this.MapTariffAllInCharges(newTariffVersionPM, jItem, mapParent);
  
                 newTariffVersionPM.OldEntityPM = null;
                 newTariffVersionPM.EntityParentPM = null;
@@ -574,6 +709,9 @@ export class TariffPMService {
  
 
                         this.MapTariffLines(deletedPM, oldItemJson, mapParent);
+ 
+
+                        this.MapTariffAllInCharges(deletedPM, oldItemJson, mapParent);
                         deletedPM.OldEntityPM = null;
                         entityPM.ActiveVersions.push(deletedPM);
                     }

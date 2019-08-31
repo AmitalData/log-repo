@@ -1277,7 +1277,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         }
         private string GetAWBNumber()
         {
-            if (string.IsNullOrEmpty(this.myLongMaster))
+            if (!string.IsNullOrEmpty(this.myLongMaster))
             {
                 return this.myLongMaster;
             }

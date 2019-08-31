@@ -77,9 +77,34 @@
             -webkit-transform: scaleY(1.0);
         }
     }
+    .DisbleBox{
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 8px;
+        background: #faf5c0;
+        padding: 4px 15px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+        width: fit-content;
+     }
 </style>
 
+
+
 <table>
+
+    <tr *ngIf="IsDisplayOnly" style="height:22px">
+        <td>
+            <div style="width:100%;text-align:center;margin:0 auto;">
+                <div class="DisbleBox">
+                    {{ 'ARPayment.O.PaymentInProcess-cantModified' | TextCodeTranslationPipe }}.
+                    <a (click)="checkLedgerCreated()"> {{ 'ARPayment.O.Refresh' | TextCodeTranslationPipe }}</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+
     <tr>
         <td>
             <div class="TabHolder">
@@ -364,12 +389,11 @@
                                                     <div></div>
                                                 </td>
 
-                                                <td *ngIf="FullAccounting  && IsCashBookValid">
+                                                <td *ngIf="isFullAccounting  && IsCashBookValid">
                                                     <div [style.text-align]="isRTL ? 'right' : 'left'" float-start
-                                                        style="display: block;">
-                                                        Cashbook: {{CashBookName}} (
-                                                        <span (click)="EditGLAccount('CB')" class="hyperlink">
-                                                            {{BranchGLAccountNumber}} </span>)
+                                                        style="display: block;padding-top: 5px;">
+                                                        {{ 'Cashbook.O.Name'|TextCodeTranslationPipe }}: {{CashBookName}}
+                                                        (<span (click)="EditGLAccount('CB')" class="hyperlink"> {{BranchGLAccountNumber}} </span>)
                                                     </div>
                                                 </td>
                                             </tr>
@@ -456,7 +480,7 @@
                                                     </LogLabel>
                                                 </td>
 
-                                                <td *ngIf="FullAccounting && AccountingPaymentMethodCode == 'CH'"
+                                                <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'"
                                                     style="width:150px; left: -10px;">
                                                     <LogLabel [ObjectFieldName]="'StatusCode'" [ObjectTableName]="'ARPaymentCheque'"
                                                         [DataContext]="DataContext"></LogLabel>
@@ -524,7 +548,7 @@
                                                         [DataContext]="DataContext"></LogTextBox>
                                                 </td>
 
-                                                <td *ngIf="FullAccounting && AccountingPaymentMethodCode == 'CH'"
+                                                <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'"
                                                     style="width:150px;text-align:center;">
                                                     <div class="MediaFill"
                                                         style="font-size:12px;vertical-align:central;font-weight:bolder;text-align:center;"
@@ -587,14 +611,14 @@
                         <td>
                             <div class="MediaFill">
                                 <logitude-edit-grid
-                                [IsReadOnly]="IsGridReadOnly"  GridWidth="100%" GridHeight="100%" [ItemSource]="TransactionsList"
+                                [IsReadOnly]="IsGridReadOnly || IsDisplayOnly"  GridWidth="100%" GridHeight="100%" [ItemSource]="TransactionsList"
                                     [UseVirtuallization]="true">
 
                                     <!-- Is Reconciled -->
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
                                         <log-cell-template template="let item" [IgnoreMods]="true">
                                             <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount > 0" (Checked)="item.IsChecked = $event"
-                                                [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !IsGridReadOnly"></CheckBox>
+                                                [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly)"></CheckBox>
                                         </log-cell-template>
                                     </log-column>
 
@@ -656,10 +680,16 @@
                                                 <!-- *ngIf="!item.IsReconciled"  -->
                                                 <LogTextBox #AmountToReconcileTextBox
                                                     [FocusOnMe]="'true'"
-                                                    [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"  [DebounceTime]="1"
-                                                    [InputType]="'decimal'" [DigitsAfterPoint]="2" [DataContext]="item"
-                                                    [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"
+                                                    [ObjectFieldName]="'AmountToReconcile'"
+                                                    [AlignTextToRight]="true"
+                                                    [DebounceTime]="1"
+                                                    [InputType]="'decimal'"
+                                                    [DigitsAfterPoint]="2"
+                                                    [DataContext]="item"
+                                                    [ObjectTableName]="item.ObjectTableName"
+                                                    [HideColumns]="true"
                                                     [Text]="item.AmountToReconcile"
+                                                    [ForceDisable]="IsDisplayOnly"
                                                     (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)"
                                                     >
                                                 </LogTextBox>

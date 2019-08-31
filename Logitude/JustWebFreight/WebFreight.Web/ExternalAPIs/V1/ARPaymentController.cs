@@ -11,6 +11,7 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,7 +22,7 @@ using System.Xml.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
-
+using Logitude.SystemLogs;
 namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class ARPaymentController : ApiController
@@ -30,12 +31,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         public HttpResponseMessage GetSingleARPayment(string id, string number)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
             try
             {
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
+                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 
 
@@ -55,7 +57,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
-            {
+              {
+                //ExceptionHandler.HandleException
+                ExceptionHandler.HandleException(ex, DateTime.Now, authToken.Tenant , authToken.Email , "", "AuthenticationController : PostLoginData", null);
+
                 var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }

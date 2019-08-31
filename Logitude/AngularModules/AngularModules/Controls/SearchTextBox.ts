@@ -76,6 +76,7 @@ export class SearchTextBox implements OnInit {
                 this.PlaceHolder = "Search ...";
             }
 
+            
             else {
                 var ObjectTable = this.GetObjectTableName(this.ObjectTableName);
                 var textCode = ObjectTable + ".F.SearchFields";
