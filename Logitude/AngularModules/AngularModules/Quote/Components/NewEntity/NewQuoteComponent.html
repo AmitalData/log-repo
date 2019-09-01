@@ -247,6 +247,10 @@
                                                     <!--<CheckBox [IsChecked]="CopySaleIsChecked" (Checked)="CopySaleIsChecked = $event" [Text]="'Sale'" [IsEnabled]="ChargesTypesCopyIsChecked"></CheckBox>-->
                                                     <LogCheckBox [ObjectFieldName]="'CopySaleIsChecked'" [Checked]="CopySaleIsChecked" [Text]="'Sale'" [IsDisabled]="!ChargesTypesCopyIsChecked" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogCheckBox>
                                                 </div>
+
+                                                <div style="height:22px;">
+                                                    <LogCheckBox [ObjectFieldName]="'CopyRatesIsChecked'" [Checked]="CopyRatesIsChecked" [Text]="'Rates'" [IsDisabled]="!ChargesTypesCopyIsChecked" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogCheckBox>
+                                                </div>
                                             </div>
 
                                         </div>
