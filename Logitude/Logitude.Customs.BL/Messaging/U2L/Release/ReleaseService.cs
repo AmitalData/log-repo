@@ -1369,6 +1369,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                         throw new BusinessErrorException("Error in parsing COMMERCE PRICE (" + invoiceItem.COMMERCE_PRICE + ") into decimal");
                     }
                 }
+                if (String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY)) invoiceItem.COMMERCE_PRICE_CURRENCY = invoice.CURRENCYCODE;
                 if (!String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY))
                 {
                     var wholesaleCurrency = new CurrencyTypeRepository(ResolvedTenant());
@@ -1409,6 +1410,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     }
                 }
                 SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.STATISTICAL_QUANTITY_TYPE);
+                if(SupplierInvoiceItemPM.WholeSaleItemPrice.HasValue || SupplierInvoiceItemPM.AdditionalQuantity.HasValue || SupplierInvoiceItemPM.StatisticQuantity.HasValue)
+                {
+                    SupplierInvoiceItemPM.ItemAdditionalStatus = true;
+                }
 
                 if (invoiceItem.CERTIFICATES != null && invoiceItem.CERTIFICATES.Count() > 0)
                 {
