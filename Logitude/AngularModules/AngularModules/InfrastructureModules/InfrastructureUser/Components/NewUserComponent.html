@@ -223,16 +223,6 @@
                                     </td>
                                 </tr>
 
-                                <tr *ngIf="IsAdditionalPackagesOnlyVisible" class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'AdditionalPackagesOnly'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <LogCheckBox [ObjectFieldName]="'AdditionalPackagesOnly'" [Checked]="AdditionalPackagesOnly" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogCheckBox>
-                                    </td>
-                                </tr>
-
                                 <tr *ngIf="DistributorCodeVisible" class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'DistributorCode'" [ObjectTableName]="'User'" [DataContext]="NewUserPM"></LogLabel>

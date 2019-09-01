@@ -118,14 +118,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             else
             {
-                canAddUser = this.ValidateTenantManagementPackagesMode(numberOfUsersArgs, mainAdditionalPackageApplied);                
+                canAddUser = this.ValidateTenantManagementPackagesMode(numberOfUsersArgs);                
             }
             
             if (canAddUser)
             {
                 if (!numberOfUsersArgs.IsNewUser)
                 {
-                    this.CreateUserLicense(numberOfUsersArgs.UserId, numberOfUsersArgs.UserPMAdditionalPackagesOnly);
+                    //this.CreateUserLicense(numberOfUsersArgs.UserId);
                 }
             }
 
@@ -134,13 +134,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 throw new Exception("Sorry You reached the maximum number of users!");
             }
         }
-        private bool ValidateTenantManagementPackagesMode(NumberOfUsersArgs numberOfUsersArgs, bool mainAdditionalPackageApplied)
+        private bool ValidateTenantManagementPackagesMode(NumberOfUsersArgs numberOfUsersArgs)
         {
             bool isVlalid = false;
 
             if(mainAdditionalPackageApplied)
             {
-                isVlalid = this.ValidateNewMode(numberOfUsersArgs);                
+                //isVlalid = this.ValidateNewMode(numberOfUsersArgs);  
+                isVlalid = true;
             }
 
             else
@@ -150,30 +151,22 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             return isVlalid;
         }
-        private bool ValidateNewMode(NumberOfUsersArgs numberOfUsersArgs)
-        {
-            bool isVlalid = false;
+        //private bool ValidateNewMode(NumberOfUsersArgs numberOfUsersArgs)
+        //{
+        //    bool isVlalid = false;
 
-            if (userLicensesCount < totalTenantManagementUsers)
-            {
-                isVlalid = true;
-            }
+        //    if (userLicensesCount < totalTenantManagementUsers)
+        //    {
+        //        isVlalid = true;
+        //    }
 
-            else
-            {
-                if (numberOfUsersArgs.UserPMAdditionalPackagesOnly)
-                {
-                    isVlalid = true;
-                }
+        //    else
+        //    {
+        //        throw new Exception("You reached maximum number of users, mark the user as AdditionalPackagesOnly!");
+        //    }
 
-                else
-                {
-                    throw new Exception("You reached maximum number of users, mark the user as AdditionalPackagesOnly!");
-                }
-            }
-
-            return isVlalid;
-        }
+        //    return isVlalid;
+        //}
         private bool ValidateOldMode(NumberOfUsersArgs numberOfUsersArgs)
         {
             bool isVlalid = false;
@@ -264,7 +257,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     if (numberOfUsersArgs.UserPOCOInactive && !numberOfUsersArgs.UserPMInactive)
                     {
-                        if (numberOfUsersArgs.UserPMAdditionalPackagesOnly)
+                        if (userLicensesCount < totalTenantManagementUsers)
                         {
                             isUsersCountAllowed = true;
                             eventNotes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated";
@@ -272,20 +265,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         else
                         {
-                            if (userLicensesCount < totalTenantManagementUsers)
-                            {
-                                isUsersCountAllowed = true;
-                                eventNotes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated";
-                            }
-
-                            else
-                            {
-                                throw new Exception("Sorry You can't activate this user since you reached the maximum number of licenses!");
-                            }
+                            throw new Exception("Sorry You can't activate this user since you reached the maximum number of licenses!");
                         }
                     }
 
-                    if (!numberOfUsersArgs.UserPOCOInactive && !numberOfUsersArgs.UserPMInactive && numberOfUsersArgs.UserPOCOAdditionalPackagesOnly && !numberOfUsersArgs.UserPMAdditionalPackagesOnly)
+                    if (!numberOfUsersArgs.UserPOCOInactive && !numberOfUsersArgs.UserPMInactive)
                     {
                         if (userLicensesCount < totalTenantManagementUsers)
                         {
@@ -301,37 +285,29 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                     if (isUsersCountAllowed)
                     {
-                        if (numberOfUsersArgs.UserPMAdditionalPackagesOnly)
+                        UserLicense userLicense = userLicenseRepository.GetSingleUserLicenseByUserAndPackage(numberOfUsersArgs.UserId, packageCode, tenant);
+                        if (userLicense == null)
                         {
+                            userLicense = new UserLicense()
+                            {
+                                Id = IdCounter.GetNumber("UserLicense", tenant).ToString(),
+                                UserId = numberOfUsersArgs.UserId,
+                                PackageCode = packageCode,
+                                Tenant = tenant,
+                            };
 
+                            userLicenseRepository.Add(userLicense);
                         }
 
-                        else
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
                         {
-                            UserLicense userLicense = userLicenseRepository.GetSingleUserLicenseByUserAndPackage(numberOfUsersArgs.UserId, packageCode, tenant);
-                            if (userLicense == null)
-                            {
-                                userLicense = new UserLicense()
-                                {
-                                    Id = IdCounter.GetNumber("UserLicense", tenant).ToString(),
-                                    UserId = numberOfUsersArgs.UserId,
-                                    PackageCode = packageCode,
-                                    Tenant = tenant,
-                                };
-
-                                userLicenseRepository.Add(userLicense);
-                            }
-
-                            EventTracer.CreateTraceEvent(new EventTracerArgs()
-                            {
-                                Tenant = 0,
-                                EventTypeCode = "UPMG",
-                                UserId = this.loggedContactId,
-                                EntityId = tenant.ToString(),
-                                ObjectTableName = "TenantManagement",
-                                Notes = eventNotes,
-                            });
-                        }
+                            Tenant = 0,
+                            EventTypeCode = "UPMG",
+                            UserId = this.loggedContactId,
+                            EntityId = tenant.ToString(),
+                            ObjectTableName = "TenantManagement",
+                            Notes = eventNotes,
+                        });
                     }
                 }
 
@@ -376,28 +352,28 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        public void CreateUserLicense(string userId, bool additionalPackagesOnly)
-        {
-            if (mainAdditionalPackageApplied && !additionalPackagesOnly)
-            {
-                UserLicense userLicense = new UserLicense()
-                {
-                    Id = IdCounter.GetNumber("UserLicense", this.tenant).ToString(),
-                    UserId = userId,
-                    PackageCode = this.packageCode,
-                    Tenant = this.tenant,
-                };
+        //public void CreateUserLicense(string userId)
+        //{
+        //    if (mainAdditionalPackageApplied)
+        //    {
+        //        UserLicense userLicense = new UserLicense()
+        //        {
+        //            Id = IdCounter.GetNumber("UserLicense", this.tenant).ToString(),
+        //            UserId = userId,
+        //            PackageCode = this.packageCode,
+        //            Tenant = this.tenant,
+        //        };
 
-                userLicenseRepository.Add(userLicense);
-                userLicenseRepository.SubmitChanges();
-            }
-        }
+        //        userLicenseRepository.Add(userLicense);
+        //        userLicenseRepository.SubmitChanges();
+        //    }
+        //}
 
         public void DeleteUserLicenses(NumberOfUsersArgs numberOfUsersArgs)
         {
             if (isMultiPackage || mainAdditionalPackageApplied)
             {
-                if ((numberOfUsersArgs.UserPMInactive && !numberOfUsersArgs.UserPOCOInactive) || (numberOfUsersArgs.UserPMAdditionalPackagesOnly && !numberOfUsersArgs.UserPOCOAdditionalPackagesOnly))
+                if (numberOfUsersArgs.UserPMInactive && !numberOfUsersArgs.UserPOCOInactive)
                 {
                     List<UserLicense> licenses = userLicenseRepository.GetUserLicensesByUserId(numberOfUsersArgs.UserId, tenant);
 
@@ -421,8 +397,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public bool UserPMInactive { get; set; }
         public bool UserPOCOLicencedUser { get; set; }
         public bool UserPMLicencedUser { get; set; }
-        public bool UserPOCOAdditionalPackagesOnly { get; set; }
-        public bool UserPMAdditionalPackagesOnly { get; set; }
         public bool UserPMIsDistributor { get; set; }
         public bool IsNewUser { get; set; }
     }
