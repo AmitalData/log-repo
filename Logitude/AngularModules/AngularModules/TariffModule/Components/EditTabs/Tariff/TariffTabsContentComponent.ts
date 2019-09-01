@@ -6,20 +6,93 @@ import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map'
+import { max } from 'rxjs/operator/max';
 @Component({
     moduleId: module.id,
     templateUrl: './TariffTabsContentComponent.html',
 })
 
 export class TariffTabsContentComponent implements OnDestroy {
+    
+    private allItems: any[];
+    pager: any = {};
+    private AllTabs: TariffDetailsTab[] = [];
+    public RightArrowDimmed: boolean = false;
+    public LeftArrowDimmed: boolean = false;
+    private pageService: PagerService;   
+
+
+
+
     public EntityPM: TariffPM;
     public Tabs: TariffDetailsTab[] = [];
     //private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private EditTabTariffType = "VR";
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs, private http: Http) {
         this.Listen();
+        this.pageService = new PagerService();
+    }
+
+
+
+    setPage(page: number, IsNext: boolean) {
+        if (this.SelectedTabItem != null) {           
+            this.SetUIPropereties();
+            var NewTab: TariffDetailsTab;
+            if (IsNext) {
+                if (this.SelectedTabItem.Index == this.pager.endIndex && this.pager.currentPage != this.pager.endPage) {
+                    this.pager = this.pageService.getPager(this.AllTabs.length, page);
+                    this.Tabs = this.AllTabs.slice(this.pager.startIndex, this.pager.endIndex + 1);
+                    this.Tabs.forEach(item => { item.IsTabLoaded = false; });
+                }
+                NewTab = this.Tabs.filter(p => p.Index == this.SelectedTabItem.Index + 1)[0];
+                if (NewTab) {
+                    this.SelectionChanged(NewTab);
+                }
+            }
+            else {        
+                if (this.SelectedTabItem.Index == this.pager.startIndex && this.pager.currentPage!=1) {
+                    this.pager = this.pageService.getPager(this.AllTabs.length, page);
+                    this.Tabs = this.AllTabs.slice(this.pager.startIndex, this.pager.endIndex + 1);
+                    this.Tabs.forEach(item => { item.IsTabLoaded = false; });
+                }
+                NewTab = this.Tabs.filter(p => p.Index == this.SelectedTabItem.Index + -1)[0];
+                if (NewTab) {
+                    this.SelectionChanged(NewTab,false);
+                }
+            }
+        }
+        else {
+            this.pager = this.pageService.getPager(this.AllTabs.length, page);
+            this.Tabs = this.AllTabs.slice(this.pager.startIndex, this.pager.endIndex + 1);
+        }
+
+      
+    }
+    private SetUIPropereties() {
+        if (this.SelectedTabItem) {
+            if (this.SelectedTabItem.Index == this.pager.endIndex) {
+                if (this.pager.currentPage == this.pager.endPage) {
+                    this.RightArrowDimmed = true;
+                }
+                else {
+                    this.RightArrowDimmed = false;
+                }
+            }
+            else {
+                this.RightArrowDimmed = false;
+            }
+            if (this.SelectedTabItem.Index == this.pager.startIndex && this.pager.currentPage == 1) {
+                this.LeftArrowDimmed = true;
+            }
+            else {
+                this.LeftArrowDimmed = false;
+            }
+        }
     }
 
     private CurrentSessionSelectedEvent: any = null;
@@ -107,7 +180,7 @@ export class TariffTabsContentComponent implements OnDestroy {
     
     BuildTabs() {
         this.Tabs = [];
-
+        this.AllTabs = [];
         var datePipe: DatePipe = new DatePipe("en-US");
         var from: string = "";
         var to: string = "";
@@ -143,7 +216,7 @@ export class TariffTabsContentComponent implements OnDestroy {
                 }
             }
 
-            this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, draftVersion));
+            this.AllTabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, draftVersion));
             index++;
         }
                 
@@ -173,22 +246,27 @@ export class TariffTabsContentComponent implements OnDestroy {
                 }
             }
 
-            this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, item));
+            this.AllTabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, item));
             index++;
         });
 
-        this.Tabs.push(new TariffDetailsTab(index + 1, "GN", "General"));
-        this.Tabs.push(new TariffDetailsTab(index + 2, "VH", "Version History"));
-        this.Tabs.push(new TariffDetailsTab(index + 3, "EV", "Events"));
+        this.AllTabs.push(new TariffDetailsTab(index , "GN", "General"));
+        this.AllTabs.push(new TariffDetailsTab(index + 1, "VH", "Version History"));
+        this.AllTabs.push(new TariffDetailsTab(index + 2, "EV", "Events"));
+        this.setPage(1, false);
     }
 
     private Retries: number = 0;
     private timerToken: any;
-    RunComponent() {
+    RunComponent(IsNext: boolean = true) {
+        var index = 0;
+        if (!IsNext) {
+            index = this.Tabs.length - 1;
+        }
         if (this.AllLocations) {
 
             if (this.AllLocations.length == 0) {
-                this.RunComponentTimer();
+                this.RunComponentTimer(IsNext);
             }
 
             else {
@@ -200,39 +278,41 @@ export class TariffTabsContentComponent implements OnDestroy {
                     }
 
                     else {
-                        this.SelectionChanged(this.Tabs[0]);
+                        this.SelectionChanged(this.Tabs[index]);
                     }
 
                     this.entityArgs.EditComponent.PreSelectedTabCode = null;
                 }
 
                 else {
-                    this.SelectionChanged(this.Tabs[0]);
+                    this.SelectionChanged(this.Tabs[index]);
                 }
             }
         }
 
         else {
-            this.RunComponentTimer();
+            this.RunComponentTimer(IsNext);
         }
     }
-    RunComponentTimer() {
+    RunComponentTimer(IsNext: boolean = true) {
         this.Retries++;
 
         if (this.timerToken) {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        if (this.Retries < 10) {
+            this.timerToken = setTimeout(() => this.RunComponent(IsNext), 1);
         }
     }
 
     public SelectedTabItem: TariffDetailsTab;
-    SelectionChanged(clickdTab: TariffDetailsTab) {
+    SelectionChanged(clickdTab: TariffDetailsTab, IsNext: boolean = true) {
         if (clickdTab != null) {
             if (this.SelectedTabItem != clickdTab) {
                 this.SelectedTabItem = clickdTab;
+
+                this.SetUIPropereties();
 
                 this.Tabs.forEach((item) => {
                     item.IsSelected = false;
@@ -247,7 +327,12 @@ export class TariffTabsContentComponent implements OnDestroy {
 
             else {
                 let locs = this.AllLocations.toArray().filter(f => f.Code == 'TariffTabLocation');
+               
                 let location: LocationDirective = locs.filter(f => f.Index == this.SelectedTabItem.Index)[0];
+                if (location == null) {
+                    this.Retries = 0;
+                    this.RunComponentTimer(IsNext);
+                }
 
                 if (location) {
 
@@ -258,7 +343,9 @@ export class TariffTabsContentComponent implements OnDestroy {
                     else if (this.SelectedTabItem.ComponentPath) {
                         SessionLocator.DynamicLoader.Load(this.SelectedTabItem.ComponentPath, location.viewContainerRef).then(cmpRef => {
                             this.SelectedTabItem.IsTabLoaded = true;
-
+                            if (this.Tabs.filter(p => p.Index == this.SelectedTabItem.Index)[0]) {
+                                this.Tabs.filter(p => p.Index == this.SelectedTabItem.Index)[0].IsTabLoaded = true;
+                            }
                             if (this.SelectedTabItem.VersionPM) {
                                 cmpRef.instance.Intialize({ CurrentVersion: this.SelectedTabItem.VersionPM, SelectedVersionNumber: this.SelectedTabItem.VersionPM.Version });
                             }
@@ -317,3 +404,45 @@ class TariffDetailsTab {
     }
 }
 
+
+
+export class PagerService {
+    getPager(totalItems: number, currentPage: number = 1, pageSize: number = 4) {
+        let totalPages = Math.ceil(totalItems / pageSize);
+        if (currentPage < 1) {
+            currentPage = 1;
+        } else if (currentPage > totalPages) {
+            currentPage = totalPages;
+        }
+        let startPage: number, endPage: number;
+        if (totalPages <= 10) {
+            startPage = 1;
+            endPage = totalPages;
+        } else {
+            if (currentPage <= 6) {
+                startPage = 1;
+                endPage = 10;
+            } else if (currentPage + 4 >= totalPages) {
+                startPage = totalPages - 9;
+                endPage = totalPages;
+            } else {
+                startPage = currentPage - 5;
+                endPage = currentPage + 4;
+            }
+        }
+        let startIndex = (currentPage - 1) * pageSize;
+        let endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+        let pages = Array.from(Array((endPage + 1) - startPage).keys()).map(i => startPage + i);
+        return {
+            totalItems: totalItems,
+            currentPage: currentPage,
+            pageSize: pageSize,
+            totalPages: totalPages,
+            startPage: startPage,
+            endPage: endPage,
+            startIndex: startIndex,
+            endIndex: endIndex,
+            pages: pages
+        };
+    }
+}

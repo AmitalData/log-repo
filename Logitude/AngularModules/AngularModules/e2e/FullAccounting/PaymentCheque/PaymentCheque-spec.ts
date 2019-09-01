@@ -1,23 +1,21 @@
 import { browser, by, element } from "protractor"
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
-import{NewGLAccount } from './NewGLAccount';
-import {NewBankAccount} from './NewBankAccount';
-import {EditBankAccount} from './EditBankAccount';
+import {NewPAymentCheque} from './NewPAymentCheque';
+import {EditPAymentCheque} from './EditPAymentCheque';
 describe('CRM Module', function () {
   var gn1 = new GeneralFunctions();
   var h = new FieldsHelper();
   browser.driver.manage().window().maximize();
-  var GLA = new NewGLAccount();
-  var BNk = new NewBankAccount();
- var edit = new EditBankAccount(); 
+  var NP = new NewPAymentCheque();
+  var EP = new EditPAymentCheque(); 
 
 
 
 
-  it(' New GLAccount Was Created And Updated', function () {
+  it(' New PAymentCheque Was Created And Updated', function () {
 
-      console.log('Khawlaaa check ')
+      //console.log('Khawlaaa check ')
     browser.ignoreSynchronization = true;
     gn1.GoToMainMenu('General.MH.FullAccounting');
     h.WaitByIdAndClick('FAGLAccouts');

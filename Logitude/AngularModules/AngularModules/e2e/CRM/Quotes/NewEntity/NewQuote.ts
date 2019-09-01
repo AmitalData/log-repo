@@ -49,7 +49,7 @@ export class NewQuote {
     this.EditQuoteTabs.EditTabs(QuoteNumber, ShipmentType, Direction, TransportMode, QuoteType);
     // this.Helper.WaitByIdAndClick('Quote-Save');
     // this.Helper.WaitEditComponentBusyIndicator();
-    this.QuoteActions.QuoteMenubuttonActions('copybuild');
+    this.QuoteActions.QuoteMenubuttonActions('copybuild',Direction,TransportMode,QuoteType);
     /* }
      else if ((TransportMode == 'O' || TransportMode == 'I') && QuoteType != '') {
        var QuoteNumber = this.Quotes.RandomNum();
