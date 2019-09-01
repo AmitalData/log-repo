@@ -61,7 +61,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
             var requestSection = GetRequestSection(requestParams, mainHeaderRange);
 
-            var resultHeader = SetSubHeader(requestSection, "תוצאות שאילתא לתצהיר יבואן");
+            var resultHeader = SetSubHeader(requestSection, "תוצאות שאילתא לתצהיר יבואן",1);
+            
             var responseSection = GetResponseSection(requestParams, responseData, resultHeader);
 
 
@@ -82,7 +83,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
          // CreateLabelEditboxLine(responseData, resultHeader, Get1lineMetaData());
          resultHeader;
 
-            var resultTitle1 = SetSubHeader(resultHeader, "רשימת תצהירים תקופתיים");
+            var resultTitle1 = SetSubHeader(resultHeader, "רשימת תצהירים תקופתיים",1);
 
             IRange myPeriodDeclarationList =
                 //BuildGuaranteeLettersList(responseData , GuaranteeLettersListHeader);
@@ -160,7 +161,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
 
 
-            var resultTitle2 = SetSubHeader(myPeriodDeclarationList, "רשימת תצהירים להצהרת יבוא");
+            var resultTitle2 = SetSubHeader(myPeriodDeclarationList, "רשימת תצהירים להצהרת יבוא",1);
 
             IRange myLoiDeclarationList =
                 //BuildGuaranteeLettersList(responseData , GuaranteeLettersListHeader);
@@ -215,7 +216,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
 
             //רשימת תצהירים בטחוניים
-            var resultTitle3 = SetSubHeader(myLoiDeclarationList, "רשימת תצהירים בטחוניים");
+            var resultTitle3 = SetSubHeader(myLoiDeclarationList, "רשימת תצהירים בטחוניים",1);
 
             IRange mySecurityDeclarationList =
                 //BuildGuaranteeLettersList(responseData , GuaranteeLettersListHeader);
@@ -338,21 +339,28 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
                     },
                 });
-            var myline2 = base.CreateLabelEditboxLine(
-                requestParams,
-                myline1,
-                new List<LabelEditBox>()
-                {
+            string textByHeader = "תצהירי יבואן לפי תוקף";
+            if (requestParams.IsByType)
+            {
+                textByHeader = "תצהירים לפי סוג";
+            }
+            var myline2 = this.SetSubHeaderTextByheader(textByHeader, myline1);
+            //SetAsLabelStyle(myline2);
+            //var myline2 = base.CreateLabelEditboxLine(
+            //    requestParams,
+            //    myline1,
+            //    new List<LabelEditBox>()
+            //    {
 
-                    new LabelEditBox()
-                    {
-                         Header="תצהירי יבואן לפי תוקף",LabelSize=12,length=13,PropName="IsByExpireDate" , GridColumnType = GridColumnTypeEnum.TrueFalse
-                    },
-                    new LabelEditBox()
-                    {
-                         Header="תצהירים לפי סוג",LabelSize=12,length=13,PropName="IsByType" , GridColumnType = GridColumnTypeEnum.TrueFalse
-                    },
-                });
+            //        new LabelEditBox()
+            //        {
+            //             Header="תצהירי יבואן לפי תוקף",LabelSize=12,length=13,PropName="IsByExpireDate" , GridColumnType = GridColumnTypeEnum.TrueFalse
+            //        },
+            //        new LabelEditBox()
+            //        {
+            //             Header="תצהירים לפי סוג",LabelSize=12,length=13,PropName="IsByType" , GridColumnType = GridColumnTypeEnum.TrueFalse
+            //        },
+            //    });
             IRange mylineLast=null;
             if (requestParams.IsByExpireDate)
             {
@@ -416,6 +424,21 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
 
             return requestSection;
         }
+
+        private IRange SetSubHeaderTextByheader(string textByHeader, IRange lastRange)
+        {
+            var currHeader = _MainWorksheet[lastRange.LastRow + 2, 1, lastRange.LastRow + 2, ReportWidth / 10 - 10];
+            currHeader.Merge();
+            currHeader[currHeader.Row, currHeader.Column].Text = textByHeader;// "תנועות אשראי";
+            currHeader[currHeader.Row, currHeader.Column].VerticalAlignment = ExcelVAlign.VAlignCenter;
+            currHeader[currHeader.Row, currHeader.Column].HorizontalAlignment = ExcelHAlign.HAlignRight;
+
+            currHeader[currHeader.Row, currHeader.Column].CellStyle.Font.RGBColor = //this.ResultHeaderColor;
+                this.SectionBorder;
+            currHeader[currHeader.Row, currHeader.Column].IndentLevel = 0;
+            return currHeader;
+        }
+
         private IRange SetRequestSection1LineB4And1LineAfter(int saveStartLine, int lastLine)
         {
             var requestSection =
