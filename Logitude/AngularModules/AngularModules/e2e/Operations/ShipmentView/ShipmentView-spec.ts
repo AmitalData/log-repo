@@ -5,42 +5,33 @@ import { ShipmentView } from './ShipmentView';
 
 describe('ShipmentView', () => {
 
-    let ShipmentScenario: ShipmentViewScenario = new ShipmentViewScenario();
-    let CreatView: ShipmentView = new ShipmentView();
+  let ShipmentScenario: ShipmentViewScenario = new ShipmentViewScenario();
+  let CreatView: ShipmentView = new ShipmentView();
 
 
-    beforeEach(() => {
+  beforeEach(() => {
 
-    });
-    browser.ignoreSynchronization = true;
-
-
-    it('OpenShipmentView', function () {
-
-        ShipmentScenario.OpenShipmentView();
-
-   });
+  });
+  browser.ignoreSynchronization = true;
 
 
+  it('OpenShipmentView', function () {
+    ShipmentScenario.OpenShipmentView();
 
-   it('CreatShipmentView', function () {
+  });
 
-      ShipmentScenario.CreatNewView();
+  it('CreatShipmentView', function () {
+    ShipmentScenario.CreatNewView();
+  });
 
-   });
 
- 
-it('EditNewView', function () {
-
+  it('EditNewView', function () {
     ShipmentScenario.EditNewView();
-});
+  });
 
- 
- 
- 
- it('DeleteNewView', function () {
+  it('DeleteNewView', function () {
 
     ShipmentScenario.DeleteNewView();
-});
+  });
 
 });
