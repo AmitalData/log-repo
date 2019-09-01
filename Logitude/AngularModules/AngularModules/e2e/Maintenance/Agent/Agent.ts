@@ -16,8 +16,8 @@ export class NewAgent {
 
     QuickSearch() {
 
-
-        this.helper.WaitBusyIndicator();
+       //   this.helper.WaitByIdAndClick('General.MH.Reports');
+     //   this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndClick('General.MH.Maintenance');
     }
 
