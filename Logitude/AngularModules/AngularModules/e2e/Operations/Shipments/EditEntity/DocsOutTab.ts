@@ -17,7 +17,7 @@ export class DocsOutTabComponent {
     }
 
     QuickSearchDocOut(docsOutId: string, docOutRow: string, searchTerm: string) {
-      //  this.Helper.WaitBusyIndicator();
+         this.Helper.WaitBusyIndicator();
         this.UseDocsOutSearchBox('SearchFieldsId_0_0', searchTerm, docsOutId, docOutRow);
     }
 
@@ -27,8 +27,4 @@ export class DocsOutTabComponent {
         this.Helper.WaitByIdAndClick(docOutRow);
         this.Helper.WaitByIdAndClick(docOutId);
     }
-
-
-
-
 }
