@@ -2153,7 +2153,7 @@ export class ShipmentPackageItem extends BaseComponent {
             this.EntityPM.NonActiveContainer = value;
 
             if (value) {
-                this.Temperature = 999;
+                this.Temperature = '999';
             }
 
             this.SetUIProperties_Container();
@@ -2439,9 +2439,9 @@ export class ShipmentPackageItem extends BaseComponent {
     }
 
     get Temperature() { return this.EntityPM.Temperature; }
-    set Temperature(newValue: number) {
+    set Temperature(newValue: string) {
         if (this.EntityPM.Temperature != newValue) {
-            this.EntityPM.Temperature = AppTool.Round(newValue, 3);
+            this.EntityPM.Temperature = newValue;
         }
     }
 
