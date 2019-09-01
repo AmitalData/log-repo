@@ -27,7 +27,6 @@ export class DocOutSenario {
   public SuccessfullyPrintingDocument() {
 
     this.NewDirectShipment.DoOperations();
-    this.helper.WaitBusyIndicator();
     this.docsOutTab.DocsOutTab();
     this.docsOutTab.QuickSearchDocOut('ETO-P-DocsOut', 'ETO-L-DocsOut', 'Export Trucking Order');
     this.printDocOut.isPrintingCompleted('BuildDocumentSucceededDiv', true);
@@ -36,7 +35,7 @@ export class DocOutSenario {
   }
 
   public FailingPrintingDocument() {
-    this.helper.WaitBusyIndicator
+    this.helper.WaitBusyIndicator();
     this.helper.WaitWindowClosed()
     this.docsOutTab.QuickSearchDocOut('FTDT-P-DocsOut', 'FTDT-L-DocsOut', 'Failure Test Document');
     this.printDocOut.isPrintingCompleted('BuildDocumentFailedDiv', false);
