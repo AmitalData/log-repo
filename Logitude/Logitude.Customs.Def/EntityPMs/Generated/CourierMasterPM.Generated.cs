@@ -986,6 +986,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isReadyForInvoice ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool isReadyForInvoice  
+	   {
+	    
+	     get
+		{
+		   return isReadyForInvoice;
+		 }
+		 set
+		 {
+		   if(isReadyForInvoice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="isReadyForInvoice",OldValue=isReadyForInvoice,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isReadyForInvoice=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
