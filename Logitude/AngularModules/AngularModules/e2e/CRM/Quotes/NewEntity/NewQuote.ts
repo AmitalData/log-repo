@@ -47,9 +47,9 @@ export class NewQuote {
 
     this.Quotes.UseSearchBox('Quote_Search', QuoteNumber, 'LogitudeQuickSearchItem');
     this.EditQuoteTabs.EditTabs(QuoteNumber, ShipmentType, Direction, TransportMode, QuoteType);
-    // this.Helper.WaitByIdAndClick('Quote-Save');
-    // this.Helper.WaitEditComponentBusyIndicator();
-    this.QuoteActions.QuoteMenubuttonActions('copybuild',Direction,TransportMode,QuoteType);
+    // // this.Helper.WaitByIdAndClick('Quote-Save');
+    // // this.Helper.WaitEditComponentBusyIndicator();
+    // this.QuoteActions.QuoteMenubuttonActions('copybuild', Direction, TransportMode, QuoteType);
     /* }
      else if ((TransportMode == 'O' || TransportMode == 'I') && QuoteType != '') {
        var QuoteNumber = this.Quotes.RandomNum();
@@ -84,16 +84,19 @@ export class NewQuote {
       }
       else {
         this.Helper.WaitByIdAndFill('Quote_FromPortId', 'eze');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_FromPortId');
+        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitByIdAndFill('Quote_ToPortId', 'eze');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_ToPortId');
+        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
       }
     }
     else {
       this.Helper.WaitByIdAndFill('Quote_FromPortId', 'eze');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_FromPortId');
       this.Helper.WaitByIdAndFill('Quote_ToPortId', 'mvd');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_ToPortId');
     }
 
     if (TransportMode == 'A') {
