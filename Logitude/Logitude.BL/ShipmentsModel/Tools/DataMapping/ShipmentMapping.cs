@@ -435,6 +435,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPM.PackagesDeleted = false;            
 
             ValidateMAWBStackField(entityPoco, entityMasterData);
+
+            if(myPackagesList.Count == 0)
+            {
+                entityPoco.HasContainerException = false;
+                entityPoco.INTTRALastStatusDate = null;
+            }
         }
 
         private static void ValidateMAWBStackField(Shipment entityPoco, ShipmentMasterData entityMasterData)

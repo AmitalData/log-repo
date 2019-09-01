@@ -1,4 +1,5 @@
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
+import { browser } from 'protractor';
 
 export class ShipmentView {
     private helper: FieldsHelper;
@@ -38,6 +39,7 @@ export class ShipmentView {
     }
 
     EditNewView() {
+        browser.sleep(1000)
         this.helper.WaitByIdAndClick('QueryList_0_0');
         this.helper.WaitActionButtonAndClick('ActionButtonsParent', true);
         this.helper.waitByCss('.ListBoxItem');
