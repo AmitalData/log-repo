@@ -73,7 +73,7 @@ export class TariffPriceStepsComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -87,7 +87,7 @@ export class TariffPriceStepsComponent extends BaseComponent {
         var isValidSort: boolean = true;
         var SortedItemStep: number = 0;
 
-        this.ItemsSource.filter(f => f.Step != null).sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 }).forEach(item => {
+        this.ItemsSource.filter(f => !AppTool.IsNullOrEmpty(f.Step)).sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 }).forEach(item => {
             if (SortedItemStep == 0) {
                 SortedItemStep = item.Step;
             }
@@ -124,7 +124,7 @@ class TariffSettingStep extends BaseComponent {
         this.Index = index;
 
         if (iStep) {
-            this.step = +iStep;
+            this.Step = +iStep;
         }
     }
 

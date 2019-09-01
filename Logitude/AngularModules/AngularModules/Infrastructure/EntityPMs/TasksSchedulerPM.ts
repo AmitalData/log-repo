@@ -205,15 +205,16 @@ export class TasksSchedulerPM {
     public set LastRunStartTime(newValue: Date) { if (this.lastRunStartTime != newValue) { this.lastRunStartTime = newValue; this.MarkAsDirty("LastRunStartTime"); } }
        
 	 
+    private averageRunTime: number;
+    public get AverageRunTime() { return this.averageRunTime; }
+    public set AverageRunTime(newValue: number) { if (this.averageRunTime != newValue) { this.averageRunTime = newValue; this.MarkAsDirty("AverageRunTime"); } }
+       
+	 
     private schedulerDetailsData: string;
     public get SchedulerDetailsData() { return this.schedulerDetailsData; }
     public set SchedulerDetailsData(newValue: string) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
        
-
-    private averageRunTime : string;
-    public get AverageRunTime() { return this.averageRunTime; }
-    public set AverageRunTime(newValue: string) { if (this.averageRunTime != newValue) { this.averageRunTime = newValue; this.MarkAsDirty("AverageRunTime"); } }
-
+	 
 
     public OldEntityPM: TasksSchedulerPM;
 		

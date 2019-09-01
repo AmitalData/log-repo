@@ -2027,7 +2027,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     if (paymentCurrency.Code == "MXN" || paymentCurrency.Code == "MX")
                     {
                         decimal tipoCambioDR = 1 / (decimal)paymentInvoice.ExchangeRate.Value;
-                        doctoItem.TipoCambioDR = GetDecimalWith6DigitsAfterPoint((tipoCambioDR));
+                        doctoItem.TipoCambioDR = GetDecimalWith6DigitsAfterPoint((tipoCambioDR)) + decimal.Parse("0.000001");
                     }
                     else
                         doctoItem.TipoCambioDR = (decimal)paymentInvoice.ExchangeRate.Value;

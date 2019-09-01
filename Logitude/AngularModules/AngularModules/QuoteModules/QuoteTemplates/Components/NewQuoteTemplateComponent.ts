@@ -26,6 +26,8 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     public DataContext: NewQuoteTemplateComponent = this;
     EntityPM: QuoteTemplatePM;
     QuoteTemplateLists: QuoteTemplateList[] = [];
+    AllQuoteTemplateLists: QuoteTemplateList[] = [];
+
     SelectedQuoteTemplate: QuoteTemplateList;
     VisibilityRadioFromTenant: boolean = false;
     IsNewEntityCall: boolean = true;
@@ -75,9 +77,33 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
         newEntity.CreatedByUserId = SessionLocator.LoggedUserId;
         newEntity.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         newEntity.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+        newEntity.TemplateTypeCode = "A";
         newEntity.IsTemplate = true;
         return newEntity;
     }
+
+
+
+    private templateTypeCode: string;
+    public get TemplateTypeCode() {
+        if (this.EntityPM) {
+             this.templateTypeCode = this.EntityPM.TemplateTypeCode;;
+        }
+        return this.templateTypeCode;
+    }
+    public set TemplateTypeCode(newValue: string) {
+        if (this.templateTypeCode != newValue) {
+            if (this.EntityPM) {
+                this.EntityPM.TemplateTypeCode = newValue;
+                if (this.AllQuoteTemplateLists) {
+                    this.QuoteTemplateLists = this.AllQuoteTemplateLists.filter(d => d.TemplateTypeCode == this.EntityPM.TemplateTypeCode);
+                }
+            }
+        }
+    }
+
+
+
 
     SetWindowArgs(args: any) {
 
@@ -125,8 +151,8 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
-       
-                this.QuoteTemplateLists = pmResponse.Result;
+                this.AllQuoteTemplateLists = pmResponse.Result;
+                this.QuoteTemplateLists = this.AllQuoteTemplateLists.filter(d => d.TemplateTypeCode == this.EntityPM.TemplateTypeCode);
             }
          
         });
@@ -142,7 +168,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
             this.ValidationErrorsList.push("Name field is required");
         }
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.TemplateTypeCode) && this.AddType == "New") {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.TemplateTypeCode)) {
             this.ValidationErrorsList.push("Please Select QuoteTemplate");
         }
 

@@ -496,6 +496,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 var shipmentPayable: ShipmentPayablePM = this.Generator.GeneratePayablesFromTariff(chargesType);
                 shipmentPayable.TariffId = newRecord.TariffId;
                 shipmentPayable.TariffNumber = newRecord.TariffNumber;
+                shipmentPayable.TariffVersion = newRecord.VersionId != null ? newRecord.VersionId.toString() : newRecord.VersionId;
                 shipmentPayable.CurrencyId = newRecord.CurrencyId;
                 this.Generator.GetCurrencyCode(shipmentPayable);
                 shipmentPayable.Rate = this.Generator.GetCurrencyRate(shipmentPayable.CurrencyId);

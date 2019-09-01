@@ -34,7 +34,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     private UOMProps: string[] = [];
     private myService: TariffPMService;
     public PriceSteps: string;
-
+    public PriceStepsText: string;
     constructor() {
         super();
         this.myService = new TariffPMService();
@@ -596,6 +596,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
             if (!myResponse.HasError) {
                 var entity: TariffSettingPM = myResponse.Result;
                 this.PriceSteps = entity.DefaultPriceSteps;
+                this.PriceStepsText = this.GetPriceSteps(entity.DefaultPriceSteps);
             }
         });
     }
@@ -607,10 +608,20 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
-                var steps = s.DefaultPriceSteps;
-                this.EntityPM.PriceSteps = steps;
-                this.PriceSteps = steps;
+                if (d != "cancel") {
+                    var steps = s.DefaultPriceSteps;
+                    this.EntityPM.PriceSteps = steps;
+                    this.PriceSteps = steps;
+                    this.PriceStepsText = this.GetPriceSteps(this.PriceSteps);
+                }
             });
         });
+    }
+
+    GetPriceSteps(steps: string) {
+        if (steps) {
+            var stpesWithSpaces = steps.split(',').join(', ');
+            return stpesWithSpaces;
+        }
     }
 }

@@ -76,7 +76,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             UserValidating.Validate(entityPM);
             
-            this.CheckNumberOfUsers(false);
+            this.CheckNumberOfUsers();
 
             if (CheckUserId(entityPM, this.Poco))
             {
@@ -131,9 +131,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             UserMapping.MapEntity(entityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-
-            this.numberOfUsersService.CreateUserLicense(this.entityPm.Id, this.entityPm.AdditionalPackagesOnly);
-
+            
             if (!entityPM.IsHybrid)
             {
                 UpdateRolePM(entityPM);
@@ -253,7 +251,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                this.CheckNumberOfUsers(true);
+                this.CheckNumberOfUsers();
                 
                 UserTracing.Trace(entityPM, Poco, isNewEntity);
             }
@@ -274,45 +272,31 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "User");
         }
 
-        private void CheckNumberOfUsers(bool deleteLicensesNedded)
+        private void CheckNumberOfUsers()
         {
+            NumberOfUsersArgs numberOfUsersArgs = new NumberOfUsersArgs()
+            {
+                UserId = this.entityPm.Id,
+                UserEnglishName = this.entityPm.EnglishName,
+                UserPMIsDistributor = this.entityPm.IsDistributor,
+                UserPMLicencedUser = this.entityPm.LicencedUser,
+            };
+
             if (this.isNewEntity)
             {
-                NumberOfUsersArgs numberOfUsersArgs = new NumberOfUsersArgs()
-                {
-                    UserId = this.entityPm.Id,
-                    UserEnglishName = this.entityPm.EnglishName,
-                    UserPMIsDistributor = this.entityPm.IsDistributor,
-                    UserPMAdditionalPackagesOnly = this.entityPm.AdditionalPackagesOnly,
-                    UserPMLicencedUser = this.entityPm.LicencedUser,
-                    IsNewUser = true,
-                };
-
+                numberOfUsersArgs.IsNewUser = true;
                 this.numberOfUsersService.CheckNumberOfUsersOnCreateUser(numberOfUsersArgs);
             }
 
             else
             {
-                NumberOfUsersArgs numberOfUsersArgs = new NumberOfUsersArgs()
-                {
-                    UserEnglishName = this.entityPm.EnglishName,
-                    UserPMIsDistributor = this.entityPm.IsDistributor,
-                    UserPOCOInactive = this.Poco.Contact.InActive,
-                    UserPMInactive = this.entityPm.InActive,
-                    UserPOCOLicencedUser = this.Poco.LicencedUser,
-                    UserPMLicencedUser = this.entityPm.LicencedUser,
-                    UserPOCOAdditionalPackagesOnly = Poco.AdditionalPackagesOnly,
-                    UserPMAdditionalPackagesOnly = entityPm.AdditionalPackagesOnly,
-                    UserId = this.entityPm.Id,
-                    IsNewUser = false,
-                };
+                numberOfUsersArgs.UserPOCOLicencedUser = this.Poco.LicencedUser;
+                numberOfUsersArgs.UserPOCOInactive = this.Poco.Contact.InActive;
+                numberOfUsersArgs.UserPMInactive = this.entityPm.InActive;
+                numberOfUsersArgs.IsNewUser = false;                
 
                 this.numberOfUsersService.CheckNumberOfUsersOnUpdateUser(numberOfUsersArgs);
-
-                if(deleteLicensesNedded)
-                {
-                    this.numberOfUsersService.DeleteUserLicenses(numberOfUsersArgs);
-                }
+                this.numberOfUsersService.DeleteUserLicenses(numberOfUsersArgs);
             }
         }
 
