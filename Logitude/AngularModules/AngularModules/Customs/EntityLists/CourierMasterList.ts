@@ -47,6 +47,7 @@ export class CourierMasterList {
 	IntegratorCode: string;
 	IntegratorName: string;
 	IntegratorNumber: string;
+	isReadyForInvoice: boolean;
 	
 }
  
