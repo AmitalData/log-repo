@@ -100,7 +100,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             {
                 List<string> lastLoginsUserIdsList = lastLoginsList.Select(s => s.Id).ToList();
 
-                List<UserLoginLog> allLoginLogs = (from d in userLoginLogRepository.context.UserLoginLogs
+                List<UserLoginLog> allLoginLogs = (from d in userLoginLogRepository.context.UserLoginLogs.Include("User")
                                                    where d.Tenant == tenant && lastLoginsUserIdsList.Contains(d.UserId)
                                                    select d).ToList();
 
@@ -111,6 +111,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                         Id = item.Id,
                         Username = item.User == null ? "" : (item.User.Contact == null ? "" : item.User.Contact.EnglishName),
                         BusinessUnit = item.User == null ? "" : (item.User.BusinessUnit == null ? "" : item.User.BusinessUnit.Name),
+                        IsCustomerCareUser = item.User != null ? (item.User.Tenant == 0 && tenant != 0) : false,
                     };
 
                     if (item.User.Tenant != tenant)
