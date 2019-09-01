@@ -130,7 +130,7 @@ namespace Logitude.XSD.INTTRA_Booking
                         string countryTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(myCountry.Code, "G-INTTRA", "Country");
                         if (string.IsNullOrEmpty(countryTranslatedCode))
                         {
-                            this.Errors.Add("Address Country Code is required");
+                            this.Errors.Add("Tenant Address Country Code is required");
                         }
                     }
                 }
