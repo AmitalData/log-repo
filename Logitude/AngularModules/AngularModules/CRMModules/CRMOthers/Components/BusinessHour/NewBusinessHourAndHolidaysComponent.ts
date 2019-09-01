@@ -32,6 +32,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         this.entityPM = new BusinessHourPM();
         this.HolidaysDataList = [];
         this.getBusinssHourEntityMethod();
+      
     }
 
     //Load Business Hour Entity
@@ -54,8 +55,9 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
                     this.entityPM.UpdateDate = todayDateTime;
                     this.entityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
                 }
-                this.SetEnabled();
+                
                 this.IsVisible = true;
+                this.SetEnabled();
             }
         });
     }
@@ -73,6 +75,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         if (this.entityPM.Is247) {
             this.DefinedHours = false;
         }
+        this.SetDateEnabled();
     }
 
     SetEnabled() {
@@ -83,24 +86,25 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         this.UIProperties.SetEnabled("IsFridayEnabeled", this.ObjectTableName, !this.Is247);
         this.UIProperties.SetEnabled("IsSaturdayEnabeled", this.ObjectTableName, !this.Is247);
         this.UIProperties.SetEnabled("IsSundayEnabeled", this.ObjectTableName, !this.Is247);
-        this.SetDateEnabled(!this.Is247);
+        this.SetDateEnabled();
+        
     }
 
-    SetDateEnabled(isEnable: boolean) {
-        this.UIProperties.SetEnabled("MondayToHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("MondayFromHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("SaturdayToHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("SaturdayFromHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("SundayToHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("SundayFromHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("FridayToHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("FridayFromHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("ThursdayToHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("ThursdayFromHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("WednesdayToHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("WednesdayFromHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("TuesdayToHourDate_timepicker", this.ObjectTableName, isEnable);
-        this.UIProperties.SetEnabled("TuesdayFromHourDate_timepicker", this.ObjectTableName, isEnable);
+    SetDateEnabled() {
+        this.UIProperties.SetEnabled("MondayToHourDate_timepicker", this.ObjectTableName, this.IsMondayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("MondayFromHourDate_timepicker", this.ObjectTableName, this.IsMondayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("SaturdayToHourDate_timepicker", this.ObjectTableName, this.IsSaturdayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("SaturdayFromHourDate_timepicker", this.ObjectTableName, this.IsSaturdayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("SundayToHourDate_timepicker", this.ObjectTableName, this.IsSundayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("SundayFromHourDate_timepicker", this.ObjectTableName, this.IsSundayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("FridayToHourDate_timepicker", this.ObjectTableName, this.IsFridayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("FridayFromHourDate_timepicker", this.ObjectTableName, this.IsFridayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("ThursdayToHourDate_timepicker", this.ObjectTableName, this.IsThursdayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("ThursdayFromHourDate_timepicker", this.ObjectTableName, this.IsThursdayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("WednesdayToHourDate_timepicker", this.ObjectTableName, this.IsWednesdayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("WednesdayFromHourDate_timepicker", this.ObjectTableName, this.IsWednesdayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("TuesdayToHourDate_timepicker", this.ObjectTableName, this.IsTuesdayEnabeled && !this.Is247);
+        this.UIProperties.SetEnabled("TuesdayFromHourDate_timepicker", this.ObjectTableName, this.IsTuesdayEnabeled && !this.Is247);
     }
 
 
@@ -460,23 +464,11 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
             this.SundayFromHourDate = DateTool.TruncateTime(this.SundayFromHourDate);
         }
 
-        this.UIProperties.SetEnabled("MondayToHourDate_timepicker", this.ObjectTableName, this.IsMondayEnabeled);
-        this.UIProperties.SetEnabled("MondayFromHourDate_timepicker", this.ObjectTableName, this.IsMondayEnabeled);
-        this.UIProperties.SetEnabled("SaturdayToHourDate_timepicker", this.ObjectTableName, this.IsSaturdayEnabeled);
-        this.UIProperties.SetEnabled("SaturdayFromHourDate_timepicker", this.ObjectTableName, this.IsSaturdayEnabeled);
-        this.UIProperties.SetEnabled("SundayToHourDate_timepicker", this.ObjectTableName, this.IsSundayEnabeled);
-        this.UIProperties.SetEnabled("SundayFromHourDate_timepicker", this.ObjectTableName, this.IsSundayEnabeled);
-        this.UIProperties.SetEnabled("FridayToHourDate_timepicker", this.ObjectTableName, this.IsFridayEnabeled);
-        this.UIProperties.SetEnabled("FridayFromHourDate_timepicker", this.ObjectTableName, this.IsFridayEnabeled);
-        this.UIProperties.SetEnabled("ThursdayToHourDate_timepicker", this.ObjectTableName, this.IsThursdayEnabeled);
-        this.UIProperties.SetEnabled("ThursdayFromHourDate_timepicker", this.ObjectTableName, this.IsThursdayEnabeled);
-        this.UIProperties.SetEnabled("WednesdayToHourDate_timepicker", this.ObjectTableName, this.IsWednesdayEnabeled);
-        this.UIProperties.SetEnabled("WednesdayFromHourDate_timepicker", this.ObjectTableName, this.IsWednesdayEnabeled);
-        this.UIProperties.SetEnabled("TuesdayToHourDate_timepicker", this.ObjectTableName, this.IsTuesdayEnabeled);
-        this.UIProperties.SetEnabled("TuesdayFromHourDate_timepicker", this.ObjectTableName, this.IsTuesdayEnabeled);
-
+        this.SetDateEnabled();
         this.getTotalWorkHours();
     }
+
+
 
     private timeDifferencecalCulationMethod(toHour: Date, fromHour: Date, isEnable: boolean) {
         var time = "0";
