@@ -98,8 +98,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string IntegratorCode { get; set; }
 	      
         public virtual Card Card { get; set; }
-        [Column("isReadyForInvoice")]
-	    public bool isReadyForInvoice { get; set; }
+        [Column("IsReadyForInvoice")]
+	    public bool IsReadyForInvoice { get; set; }
     }
 }
 	 

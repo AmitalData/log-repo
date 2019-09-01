@@ -2174,7 +2174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "isReadyForInvoice",
+					 						FieldName =  "IsReadyForInvoice",
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2191,8 +2191,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "isReadyForInvoice",
-					  						ListPropertyPath =  "isReadyForInvoice",
+					  						PMPropertyPath =  "IsReadyForInvoice",
+					  						ListPropertyPath =  "IsReadyForInvoice",
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2203,10 +2203,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInEntityVariables =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "isReadyForInvoice",
+					  						FullFieldLable =  "IsReadyForInvoice",
 					  						DefaultText =  "is Ready For Invoice",
 					  						FullLocalDefaultText =  "טיסה כמוכנה להפקת חשבונית",
-					  						ListFieldLable =  "isReadyForInvoiceListLable",
+					  						ListFieldLable =  "IsReadyForInvoiceListLable",
 					  						ListLableDefaultText =  "is Ready For Invoice",
 					  						ListLocalDefaultText =  "טיסה כמוכנה להפקת חשבונית",
 					  						IsMaxLength =  false,

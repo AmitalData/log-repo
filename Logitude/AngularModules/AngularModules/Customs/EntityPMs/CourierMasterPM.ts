@@ -235,8 +235,8 @@ export class CourierMasterPM {
        
 	 
     private isReadyForInvoice: boolean;
-    public get isReadyForInvoice() { return this.isReadyForInvoice; }
-    public set isReadyForInvoice(newValue: boolean) { if (this.isReadyForInvoice != newValue) { this.isReadyForInvoice = newValue; this.MarkAsDirty("isReadyForInvoice"); } }
+    public get IsReadyForInvoice() { return this.isReadyForInvoice; }
+    public set IsReadyForInvoice(newValue: boolean) { if (this.isReadyForInvoice != newValue) { this.isReadyForInvoice = newValue; this.MarkAsDirty("IsReadyForInvoice"); } }
        
 	 
 
