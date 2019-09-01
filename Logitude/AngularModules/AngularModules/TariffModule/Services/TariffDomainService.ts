@@ -335,6 +335,7 @@ export class SurchargeSummary {
     CurrencyId: string;
     UnitOfMesurmentCode: string;
     UnitOfMesurmentId: string;
+    VersionId: string;
 }
 
 export class ExcelTariffLines {

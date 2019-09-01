@@ -1409,6 +1409,14 @@
     <Compile Include="Migrations\201908220853250_AddTariffFieldsToShipmentPayableTable_Maheera.Designer.cs">
       <DependentUpon>201908220853250_AddTariffFieldsToShipmentPayableTable_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908290859320_AddTariffVersionToShipmentPayable_Maheera.cs" />
+    <Compile Include="Migrations\201908290859320_AddTariffVersionToShipmentPayable_Maheera.Designer.cs">
+      <DependentUpon>201908290859320_AddTariffVersionToShipmentPayable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.cs" />
+    <Compile Include="Migrations\201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.Designer.cs">
+      <DependentUpon>201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201908290928155_DropAdditionalPackagesOnlyFromUser_Samar.cs" />
     <Compile Include="Migrations\201908290928155_DropAdditionalPackagesOnlyFromUser_Samar.Designer.cs">
       <DependentUpon>201908290928155_DropAdditionalPackagesOnlyFromUser_Samar.cs</DependentUpon>
@@ -2411,6 +2419,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908220853250_AddTariffFieldsToShipmentPayableTable_Maheera.resx">
       <DependentUpon>201908220853250_AddTariffFieldsToShipmentPayableTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908290859320_AddTariffVersionToShipmentPayable_Maheera.resx">
+      <DependentUpon>201908290859320_AddTariffVersionToShipmentPayable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.resx">
+      <DependentUpon>201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908290928155_DropAdditionalPackagesOnlyFromUser_Samar.resx">
       <DependentUpon>201908290928155_DropAdditionalPackagesOnlyFromUser_Samar.cs</DependentUpon>

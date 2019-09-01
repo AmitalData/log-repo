@@ -1,3 +1,24 @@
+<style>
+    .disabled {
+        pointer-events: none;
+        opacity: 0.6;
+    }
+</style>
+
+<div>
+    <div class="container">
+        <div class="text-center">
+
+            <!-- items being paged -->
+            <div *ngFor="let item of pagedItems">{{item.name}}</div>
+
+
+        </div>
+    </div>
+    <hr />
+  
+</div>
+
 <table>
     <tr>
         <td>
@@ -6,10 +27,22 @@
                     <div class="TabControl">
                         <div class="TabControlHead">
                             <ul>
+                                <li *ngIf="pager.pages && pager.pages.length" [ngClass]="{disabled:LeftArrowDimmed}" (click)="setPage(pager.currentPage - 1,false)">
+                                    <div class="InnerChild">
+                                        <span style="color:green;">Previouse</span>
+                                    </div>
+                                </li>
+
                                 <li *ngFor="let item of Tabs" [class.Selected]="item.IsSelected" (click)="SelectionChanged(item)">
                                     <div class="InnerChild">
                                         <span *ngIf="(item.Code == 'VR' || item.Code == 'SVR') && item.IsDraft" style="color:orange;">[Draft]</span>
                                         {{item.Header}}
+                                    </div>
+                                </li>
+
+                                <li *ngIf="pager.pages && pager.pages.length" [ngClass]="{disabled:RightArrowDimmed}" (click)="setPage(pager.currentPage + 1,true)">
+                                    <div class="InnerChild">
+                                        <span style="color:green;">Next</span>
                                     </div>
                                 </li>
                             </ul>

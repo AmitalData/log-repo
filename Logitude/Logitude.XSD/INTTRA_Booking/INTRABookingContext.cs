@@ -811,7 +811,12 @@ namespace Logitude.XSD.INTTRA_Booking
             {
                 LineNumber = "1",
                 GoodDescription =this.ShipmentPM.DescriptionOfGoods,
+                PackageDetail = new PackageDetailType()
+                {
+                    OuterPack = new OuterPackType(),
+                }
             };
+
             this.GoodsDetails.Add(itemDetails);
         }
 

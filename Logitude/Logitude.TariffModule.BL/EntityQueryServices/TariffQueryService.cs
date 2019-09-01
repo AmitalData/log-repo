@@ -504,6 +504,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     SurchargeItem.TariffId =  CurrentSurcharge.Id;
                                                     SurchargeItem.CurrencyId = CurrentSurcharge.CurrencyId;
                                                     SurchargeItem.TariffNumber = CurrentSurcharge.TariffNumber;
+                                                    SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
                                                     tariffsSummary.Surcharges.Add(SurchargeItem);
                                                 }
 
@@ -529,14 +530,15 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.Name = airline.Card != null ? airline.Card.EnglishName : "";
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
                     tariffsSummary.Remarks = result.Description;
-                    tariffsSummary.decimalprice = (decimal?)Sum + CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId, tenant);
+                    var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId, tenant): 0;
+                    tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
                     tariffsSummary.VersionId = item.TariffVersion + "";
                     tariffsSummary.TariffId = item.tariffid;
                     tariffsSummary.TariffNumber = result.TariffNumber;
                     var airChrageType = chargesTypes.Where(p => p.Code == "AFT").Select(p => p).FirstOrDefault();
                     tariffsSummary.ChargeTypeId = airChrageType.Id;
                     tariffsSummary.TotalSurcharge = Sum + "";
-                    tariffsSummary.WholePrice = (decimal?)Sum + CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId, tenant) + "";
+                    tariffsSummary.WholePrice = (decimal?)Sum + calculatedLocalAmount + "";
                     tariffsSummary.UnitOfMesurmentId = airChrageType.MeasurementId;
                     tariffsSummary.UnitOfMesurmentCode = UsedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault(); 
 

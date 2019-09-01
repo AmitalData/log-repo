@@ -81,6 +81,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.IsBackToBack).HasColumnName("IsBackToBack");
             this.Property(t => t.TariffNumber).HasColumnName("TariffNumber");
             this.Property(t => t.TariffId).HasColumnName("TariffId");
+            this.Property(t => t.TariffVersion).HasColumnName("TariffVersion");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
