@@ -285,10 +285,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 }
             }
 
-            if (entityPoco.CutoffDate == null && entityPM.CutoffDate != null)
-            {
-                this.CreateTraceEvent("CUTO", entityPM.CutoffDate);                
-            }
+           
         }
         private void TraceMasterData()
         {
@@ -317,6 +314,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceMasterDataMain()
         {
+            if (entityPM.CutoffDate != null && entityMasterData.CutoffDate == null)
+            {
+                this.CreateTraceEvent("CUTO", entityPM.CutoffDate);
+            }
+
             if (entityPM.MainCarriageETD != null && entityMasterData.MainCarriageETD == null)
             {
                 this.CreateTraceEvent("ETD", entityPM.MainCarriageETD);

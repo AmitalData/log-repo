@@ -45,6 +45,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 declare var System: any;
 declare var window: any;
 declare var htmlComponentProparitiesTrue, GetPlainTextFromHtml, htmlComponentProparitiesFalse: any;
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     moduleId: module.id,
@@ -141,6 +142,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     From: string = "";
     ReplyTo: string = "";
     IsShowLinkDocsSharedWithAgents: boolean = false;
+    ShowImagesLibraryComponent: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _communicationLogExtendedPMService: CommunicationLogExtendedPMService, public _communicationAttachmentExtendedPMService: CommunicationAttachmentExtendedPMService, public _documentOutPMService: DocumentOutPMService, public _documentExtendedService: DocumentExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService, public _documentTypePMService: DocumentTypePMExtendedService, private cd: ChangeDetectorRef, public _documentTypeListService: DocumentTypeListService) {
 
@@ -163,7 +165,9 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         this.AttachmentListId = Guid.newGuid();
         this.AttachmentsLists = new Array<AttachmentsList>();
         this.DocumentTypeTemplatePMLists = [];
-
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "test2") {
+            this.ShowImagesLibraryComponent = true;
+        }
 
     }
 
@@ -979,7 +983,26 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     }
 
 
+    ShowImageLibrary() {
+        var windowArgs: any = {};
+        //windowArgs.DocumentsFilingList = this.documentInPMs;
+        //windowArgs.OnCloseAttachmentDocsInEvent = this.OnCloseAttachmentDocsInEvent;
 
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 800;
+        logitudeWindow.Height = 500;
+        logitudeWindow.Title = "Insert Image";
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.ShowCloseButton = true;
+        logitudeWindow.Show("./Infrastructure/Components/LogitudeComponents/ImageLibraryComponent");
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event)
+                this.froalaEditorSetting.froalaEditorComponent.InSertHtml(' <img  src=' + $event + ' class="rounded mb-3">');
+            //viewModel.InSertHtml("[PageBreak]");
+            //this.froalaEditorSetting.froalaEditorComponent.InSertHtml('');
+        });
+    }
+    
 
     ShowAttachDocsOut() {
         this.IsEnableLinkDocOout = false;

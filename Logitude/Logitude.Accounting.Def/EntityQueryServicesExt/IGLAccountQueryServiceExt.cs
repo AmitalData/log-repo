@@ -13,5 +13,6 @@ namespace Logitude.Accounting.Def.EntityQueryServicesExt
         GLAccountPM GetSingleGLAccountPM(string id, int tenant);
         GLAccountPM GetGLAccountByDisplayNumber(string id, int tenant);
         GLAccountPM GetGLAccountByInternalNumber(string id, int tenant);
+        GLAccountPM GetSplittedByCurrencyGLAccount(string accountId, int tenant, string currency);
     }
 }

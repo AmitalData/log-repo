@@ -87,26 +87,20 @@
                                     <td>
                                         <LogLabel [NoObjectField]="true" [Text]="'Price Steps'" [DataContext]="DataContext"></LogLabel>
                                     </td>
-                                    <td style="text-align:left;vertical-align:central;">
-                                        <table class="FixedTable">
+                                    <td colspan="2">
+                                        <table>
                                             <tr>
-                                                <td style="width:165px;">
-                                                    {{PriceSteps}}
+                                                <td style="width:1px; text-align:left;" title="{{PriceStepsText}}">
+                                                    {{PriceStepsText}}
                                                 </td>
-                                                <td style="width:2px;">
+                                                <td style="width:5px;">
                                                     <div></div>
                                                 </td>
                                                 <td style="text-align:left;">
                                                     <Hyperlink (click)="EditPriceSteps()" [Text]="'Edit'"></Hyperlink>
                                                 </td>
-                                                <td style="width:2px;">
-                                                    <div></div>
-                                                </td>
                                             </tr>
                                         </table>
-                                    </td>
-                                    <td>
-                                        <div></div>
                                     </td>
                                 </tr>
 
