@@ -103,7 +103,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                         mm = m.toString();
                     }
                     var to = dd + '/' + mm + '/' + yyyy;
-                    this.ValidationWarningsList = "גרסת הצהרה זו כבר אושרה על ידי " + this.AdditionalData.ApprovedByUserName + " בתאריך " + to + "";
+                    this.ValidationWarningsList = TextCodeTranslator.Translate("Shipment.O.VersionApprovedBy") + " " + this.AdditionalData.ApprovedByUserName + " " + TextCodeTranslator.Translate("Shipment.O.OnDate") + " " + to;//"גרסת הצהרה זו כבר אושרה על ידי " + this.AdditionalData.ApprovedByUserName + " בתאריך " + to + "";
 
                     this.DimApproveButton = true;
                 }
@@ -167,8 +167,8 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                 this.messageWindow.RTL = true;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
-                this.messageWindow.Title = "אזהרה!";
-                this.messageWindow.Message = "גרסה זו כבר אושרה על ידי משתמש אחר";
+                this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.warning");//"אזהרה!";
+                this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.VersionAlreadyApproved");//"גרסה זו כבר אושרה על ידי משתמש אחר";
                 this.messageWindow.Show(this.messageWindow.Message);
                 //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
                 this.CurrentSession.CurrentWindow.StopBusyIndicator(); 
@@ -200,8 +200,8 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                     this.messageWindow.RTL = true;
                     this.messageWindow.Width = 300;
                     this.messageWindow.Height = 150;
-                    this.messageWindow.Title = "הצהרה אושרה";
-                    this.messageWindow.Message = "אישור הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+                    this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.StatementWasApproved");//"הצהרה אושרה";
+                    this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.ConfirmationSentTo") + SessionLocator.PrivateLableSettings.PrivateLabelShortName;//"אישור הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
                     this.messageWindow.Show(this.messageWindow.Message);
                     //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -224,14 +224,14 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                 this.messageWindow.RTL = true;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
-                this.messageWindow.Title = "אזהרה!";
-                this.messageWindow.Message = "גרסה זו כבר נדחתה על ידי משתמש אחר";
+                this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.warning");//"אזהרה!";
+                this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.Thisversionhasalreadybeenrejected");//"גרסה זו כבר נדחתה על ידי משתמש אחר";
                 this.messageWindow.Show(this.messageWindow.Message);
                 //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
             else {
-                newWindow.Title = "הסבר לדחיית הצהרה";
+                newWindow.Title = TextCodeTranslator.Translate("Shipment.O.ExplanationForRejectingAStatement");//"הסבר לדחיית הצהרה";//Shipment.O.ExplanationForRejectingAStatement
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var windowArgs: any = {};
                 windowArgs.AdditionalData = entity;
@@ -246,8 +246,8 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                         this.messageWindow.RTL = true;
                         this.messageWindow.Width = 300;
                         this.messageWindow.Height = 150;
-                        this.messageWindow.Title = "הצהרה נדחתה";
-                        this.messageWindow.Message = "דחיית הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+                        this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.Astatementwasrejected");//"הצהרה נדחתה";
+                        this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.TheRejectionStatementWasSentTo") + SessionLocator.PrivateLableSettings.PrivateLabelShortName;//"דחיית הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
                         this.messageWindow.Show(this.messageWindow.Message);
                     }
                 });

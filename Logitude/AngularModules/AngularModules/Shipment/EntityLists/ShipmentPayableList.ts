@@ -31,5 +31,6 @@ export class ShipmentPayableList {
 		OpenAmountEditedByUser: boolean;
 		TariffId: string;
 		TariffNumber: string;
+		TariffVersion: number;
 	
 }

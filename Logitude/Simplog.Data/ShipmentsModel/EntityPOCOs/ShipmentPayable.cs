@@ -62,6 +62,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string TariffId { get; set; }
         public string TariffNumber { get; set; }
+        public int TariffVersion { get; set; }
 
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }

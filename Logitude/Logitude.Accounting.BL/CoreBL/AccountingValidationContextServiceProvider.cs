@@ -46,12 +46,13 @@ namespace Logitude.Accounting.BL.CoreBL
             
             var newExternalReconcileDataProvider = new ExternalReconcileDataProvider(_AccountingContext);
             var myFullAccountingSettingPM = FullAccountingSettingQueryService.Get(journalPM.Tenant);
-
+            var myAccountingSettingResolver = new AccountingSettingResolver();
 
 
             return NewJournalValidatorContext(journalPM, accountingPeriodsByTypeRegular, 
                 newJournalValidatorDataProvider,
                 newExternalReconcileDataProvider,
+                myAccountingSettingResolver,
                 myFullAccountingSettingPM,
                 SuppressCheckGLAccountIsMultiCurrencyWI40640
                 
@@ -63,15 +64,17 @@ namespace Logitude.Accounting.BL.CoreBL
             List<AccountingPeriodPM> accountingPeriodsByTypeRegular, 
             IJournalValidatorContextDataProvider newJournalValidatorDataProvider,
             IExternalReconcileDataProvider newExternalReconcileDataProvider,
+            IAccountingSettingResolver newAccountingSettingResolver,
             FullAccountingSettingPM myFullAccountingSettingPM,
             bool SuppressCheckGLAccountIsMultiCurrencyWI40640,
             
             DateTime? DateTimeUtcNow = null
             )
         {
-            
+            //var newAccountingSettingResolver = new AccountingSettingResolver();
             var contextServiceProvider = new AccountingValidationContextServiceProvider();
             contextServiceProvider.AddService<IJournalValidatorContextDataProvider>(newJournalValidatorDataProvider);
+            contextServiceProvider.AddService<IAccountingSettingResolver>(newAccountingSettingResolver);
             contextServiceProvider.AddService<IExternalReconcileDataProvider>(newExternalReconcileDataProvider);
             
 

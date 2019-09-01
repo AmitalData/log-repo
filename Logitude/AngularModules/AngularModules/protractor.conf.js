@@ -18,6 +18,7 @@ exports.config = {
             Direction: null,
             TransportMode: null,
             ShipmentType: null,
+            ShipmentEditTabs:null,
         },
         QuoteParams: {
             Direction: null,
