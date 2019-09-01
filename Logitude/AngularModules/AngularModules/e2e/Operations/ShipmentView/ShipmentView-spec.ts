@@ -1,9 +1,6 @@
-import { browser, by, element } from 'protractor';
+import { browser } from 'protractor';
 import { ShipmentViewScenario } from './ShipmentViewScenario';
 import { ShipmentView } from './ShipmentView';
-import { LoginComp } from '../../Login/Login.po';
-import { FieldsHelper } from '../../Helpers/FieldsHelper';
-
 
 
 describe('ShipmentView', () => {
@@ -20,8 +17,6 @@ describe('ShipmentView', () => {
 
     it('OpenShipmentView', function () {
 
-      //  CreatView.OpenShipmentView();
-
         ShipmentScenario.OpenShipmentView();
 
    });
@@ -30,7 +25,6 @@ describe('ShipmentView', () => {
 
    it('CreatShipmentView', function () {
 
-     // CreatView.CreatNewView();
       ShipmentScenario.CreatNewView();
 
    });
@@ -38,25 +32,15 @@ describe('ShipmentView', () => {
  
 it('EditNewView', function () {
 
-  //  CreatView.EditNewView();
     ShipmentScenario.EditNewView();
 });
 
  
  
  
- //it('DeleteNewView', function () {
+ it('DeleteNewView', function () {
 
- //   CreatView.DeleteNewView();
-    //ShipmentScenario.DeleteNewView();
-//});
-
-
-
- /* it('DisplayView', function () {
-
-    CreatView.DisplayView();
-});*/
-
+    ShipmentScenario.DeleteNewView();
+});
 
 });
