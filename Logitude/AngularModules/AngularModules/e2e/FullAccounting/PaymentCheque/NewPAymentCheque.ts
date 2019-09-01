@@ -5,7 +5,7 @@ import { browser, by, element } from 'protractor';
 
 
 
-export class NewBankAccount {
+export class NewPAymentCheque {
     private Helper = new FieldsHelper();
     private gn = new GeneralFunctions();
 
@@ -14,7 +14,7 @@ export class NewBankAccount {
 
     }
 
-    CreateNewBankAccount(Name: string , Name1: string,Name2: string ,Name3: string  ) {
+    CreateNewPAymentCheque(Name: string , Name1: string,Name2: string ,Name3: string  ) {
         browser.ignoreSynchronization = true;
         this.Helper.WaitByIdAndClick('FABNKS');
         this.Helper. WaitByIdAndClick('NEWBANK');
