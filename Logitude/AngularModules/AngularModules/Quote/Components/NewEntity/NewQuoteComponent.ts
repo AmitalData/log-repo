@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuotePM} from '../../EntityPMs/QuotePM';
-import {QuotePackagePM} from '../../EntityPMs/QuotePackagePM';
 import {QuotePMService} from '../../Services/StandardPMs/QuotePMService';
 import {NewQuoteComponentArgs} from '../../Args';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -2402,6 +2401,9 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         }  
     }
     private SetDataOnFinish() {
+
+        this.EntityPM.IsCopyExchangeRates = this.CopyRatesIsChecked;
+
         if (this.EntityPM.ExchangeRate == null) {
             this.EntityPM.ExchangeRate = 1;
         }
@@ -2600,9 +2602,11 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     ChargesTypesCopyIsEnabled: boolean = false;
     CopyCostIsChecked: boolean = false;
     CopySaleIsChecked: boolean = false;
+    CopyRatesIsChecked: boolean = false;
     InitializeCopy(myQuote: QuotePM) {
         if (myQuote != null) {
             if (this.IsCopyFromQuote) {
+                this.EntityPM.QuoteTemplateId = myQuote.QuoteTemplateId;
 
                 if (!AppTool.IsNullOrEmpty(this.sourceEntityPM.AgentId)) {
                     this.IsCopyOtherPartnersVisible = true;
@@ -2769,6 +2773,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 }
 
                 QuoteUtilities.CopyQuoteCharges(this.EntityPM, this.sourceEntityPM, this.CopySaleIsChecked, this.CopyCostIsChecked);
+
                 this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
 
                 if (this.EntityPM.ExchangeRate == null) {
@@ -2986,12 +2991,17 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                     if (this.QuoteSetting.CopyChargesSale) {
                         this.CopySaleIsChecked = true;
                     }
+
+                    if (this.QuoteSetting.CopyExchangeRates) {
+                        this.CopyRatesIsChecked = true;
+                    }                    
                 }
             }
 
             else {
                 this.CopyCostIsChecked = false;
                 this.CopySaleIsChecked = false;
+                this.CopyRatesIsChecked = false;
             }
         }
     }    

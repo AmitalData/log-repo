@@ -41,6 +41,7 @@
                             <tr>
                                 <td style="width: 90px; min-width: 90px; max-width: 90px;">Quote Number</td>
                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">Open Date</td>
+                                <td style="width: 100px; min-width: 100px; max-width: 100px;">Start Date</td>
                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">Expiration Date</td>
                                 <td style="width: 85px; min-width: 85px; max-width: 85px;">Stage</td>
                                 <td style="width: 90px; min-width: 90px; max-width: 90px;">Type</td>
@@ -70,6 +71,10 @@
 
                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
                                     {{item.OpenDate | DateTimeToDatePipe}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
+                                    {{item.StartDate | DateTimeToDatePipe}}
                                 </td>
 
                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;" [ngStyle]="{color: item.ExpirationDate | DateTimeToColorPipe}">

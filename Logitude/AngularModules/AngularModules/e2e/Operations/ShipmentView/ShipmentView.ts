@@ -1,4 +1,6 @@
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
+import { browser } from 'protractor';
+import { createThisTypeNode } from 'typescript';
 
 export class ShipmentView {
     private helper: FieldsHelper;
@@ -38,6 +40,7 @@ export class ShipmentView {
     }
 
     EditNewView() {
+        browser.sleep(1000)
         this.helper.WaitByIdAndClick('QueryList_0_0');
         this.helper.WaitActionButtonAndClick('ActionButtonsParent', true);
         this.helper.waitByCss('.ListBoxItem');
@@ -46,11 +49,12 @@ export class ShipmentView {
         this.helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
         this.helper.WaitByIdAndClick("NewButton.View.Add");
         this.helper.WaitByIdAndClick("NewButton.View.Create");
+        this.helper.WaitBusyIndicator();
         this.helper.WaitWindowClosed();
     }
 
     DeleteNewView() {
-        
+     
         this.helper.WaitByIdAndClick('QueryList_0_0');
         this.helper.WaitActionButtonAndClick('ActionButtonsParent', false);
         this.helper.waitByCss('.ConfirmWindow');

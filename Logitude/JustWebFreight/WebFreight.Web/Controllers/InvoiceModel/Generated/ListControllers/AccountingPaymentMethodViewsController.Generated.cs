@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 				AccountingPaymentMethodQuery accountingPaymentMethodQuery = new AccountingPaymentMethodQuery(accountingPaymentMethodRepository);
 			    IQueryable<AccountingPaymentMethodList> entityLists = accountingPaymentMethodQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Name);
+				entityLists = entityLists.OrderBy(d => d.LocalName);
 				List<AccountingPaymentMethodList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -288,7 +288,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Name);
+                                entityLists = entityLists.OrderBy(d => d.LocalName);
                                 break;
                             }
                     }
@@ -297,7 +297,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
             }
 		    else
             {
-                entityLists = entityLists.OrderBy(d => d.Name);
+                entityLists = entityLists.OrderBy(d => d.LocalName);
             }
 
 			ServiceResponse response = new ServiceResponse();
