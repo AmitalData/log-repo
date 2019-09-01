@@ -25,6 +25,8 @@
                                     <SectionBody>
                                         <table>
                                             <tr>
+
+                                                <!-- Partners -->
                                                 <td>
                                                     <div class="MediaFill">
                                                         <fieldset class="MediaFill GroupBox">
@@ -94,6 +96,7 @@
                                                     <div></div>
                                                 </td>
 
+                                                <!-- Routings -->
                                                 <td>
                                                     <div class="MediaFill">
                                                         <fieldset class="MediaFill GroupBox">
@@ -152,6 +155,7 @@
                                                     <div></div>
                                                 </td>
 
+                                                <!-- Charges -->
                                                 <td>
                                                     <div class="MediaFill">
                                                         <fieldset class="MediaFill GroupBox">
@@ -192,6 +196,17 @@
 
                                                                         <td>
                                                                             <LogCheckBox [ObjectFieldName]="'CopyChargesSale'" [Checked]="CopyChargesSale" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <!-- Rates -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CopyExchangeRates'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Rates'"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'CopyExchangeRates'" [Checked]="CopyExchangeRates" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
                                                                         </td>
                                                                     </tr>
 

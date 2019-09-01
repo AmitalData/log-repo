@@ -80,6 +80,11 @@ export class AccountingPaymentMethodPM {
     public set IsAP(newValue: boolean) { if (this.isAP != newValue) { this.isAP = newValue; this.MarkAsDirty("IsAP"); } }
        
 	 
+    private localName: string;
+    public get LocalName() { return this.localName; }
+    public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
+       
+	 
 
     public OldEntityPM: AccountingPaymentMethodPM;
 		

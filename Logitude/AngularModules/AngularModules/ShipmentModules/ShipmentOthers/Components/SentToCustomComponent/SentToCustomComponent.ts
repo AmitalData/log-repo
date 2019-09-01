@@ -170,17 +170,15 @@ export class SentToCustomComponent extends BaseComponent {
         }
     }
     CheckABMVisibility() {
-        if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
-            if (this.EntityPM.ShipmentLevelCode != "C") {
-                if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-                    if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "ABM") {
-                        this.IsABMVisible = true;
-                    }
+        if (this.EntityPM.ShipmentLevelCode != "C") {
+            if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
+                if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "ABM") {
+                    this.IsABMVisible = true;
                 }
             }
-            else {
-                this.IsABMVisible = false;
-            }
+        }
+        else {
+            this.IsABMVisible = false;
         }
     }
     CheckArtemusVisibility_BOL() {

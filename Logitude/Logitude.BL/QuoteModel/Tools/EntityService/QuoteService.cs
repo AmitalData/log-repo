@@ -55,6 +55,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private QuoteDocumentVersionRepository quoteDocumentVersionRepository;
         private ICommonDataContext myCommonContext;
         private AddressRepository addressRepository;
+        private QuoteSetting iQuoteSetting;
         private bool isAdhoc;
         private bool isLCLQuote;
         private bool isFCLQuote;
@@ -125,15 +126,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("Quote", tenant).ToString();
             this.entityPoco = new Quote() { Id = this.entityPM.Id };
 
-            if (!entityPM.IsCopy)
-            {
-                QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(objectContext);
-                QuoteSetting iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(tenant);
-                if (iQuoteSetting != null)
-                {
-                    this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;
-                }
-            }
+            this.GetQuoteSettings();
 
             this.InitializeComponent();
 
@@ -169,6 +162,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Quote", 0, true);
             ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "N", loggedContact.Id);
         }
+
         public void Update(QuotePM entityPM, bool mapComposition = false)
         {
             //if(entityPM.TotalPerContainer && entityPM.IsSaleCurrencySameAsCost)
@@ -257,6 +251,20 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 followUpRepository.SubmitChanges();
 
                 entityPM.FollowUps = new List<QuoteFollowUpPM>();
+            }
+        }
+
+        private void GetQuoteSettings()
+        {
+            QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(objectContext);
+            this.iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(tenant);
+
+            if (iQuoteSetting != null)
+            {
+                if (!entityPM.IsCopy)
+                {
+                    this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;                    
+                }
             }
         }
 
@@ -748,23 +756,26 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     entityPM.SaleCurrencyId = loggedTenant.QuoteSaleCurrencyId;
                 }
 
-                if (string.IsNullOrEmpty(entityPM.SaleCurrencyId))
+                if (!this.entityPM.IsCopyExchangeRates)
                 {
-                    entityPM.ExchangeRate = null;
-                }
-
-                else if (entityPM.SaleCurrencyId == loggedTenant.CurrencyId)
-                {
-                    entityPM.ExchangeRate = 1;
-                }
-
-                else
-                {
-                    RatesTableQuery myQuery = new RatesTableQuery(tenant);
-                    LastRate lastRate = myQuery.GetLastRecordByValueDate(tenant, entityPM.SaleCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
-                    if (lastRate != null)
+                    if (string.IsNullOrEmpty(entityPM.SaleCurrencyId))
                     {
-                        entityPM.ExchangeRate = MethodHelper.Round(lastRate.Rate, 5);
+                        entityPM.ExchangeRate = null;
+                    }
+
+                    else if (entityPM.SaleCurrencyId == loggedTenant.CurrencyId)
+                    {
+                        entityPM.ExchangeRate = 1;
+                    }
+
+                    else
+                    {
+                        RatesTableQuery myQuery = new RatesTableQuery(tenant);
+                        LastRate lastRate = myQuery.GetLastRecordByValueDate(tenant, entityPM.SaleCurrencyId, loggedTenant.CurrencyId, entityPM.OpenDate);
+                        if (lastRate != null)
+                        {
+                            entityPM.ExchangeRate = MethodHelper.Round(lastRate.Rate, 5);
+                        }
                     }
                 }
             }
