@@ -2606,6 +2606,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     InitializeCopy(myQuote: QuotePM) {
         if (myQuote != null) {
             if (this.IsCopyFromQuote) {
+                this.EntityPM.QuoteTemplateId = myQuote.QuoteTemplateId;
 
                 if (!AppTool.IsNullOrEmpty(this.sourceEntityPM.AgentId)) {
                     this.IsCopyOtherPartnersVisible = true;
