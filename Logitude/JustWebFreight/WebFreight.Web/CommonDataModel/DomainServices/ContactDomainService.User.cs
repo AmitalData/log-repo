@@ -636,5 +636,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         public string IP { get; set; }
         public string Countryname { get; set; }
         public bool BlockEditUser { get; set; }
+        public bool IsCustomerCareUser { get; set; }
     }
 }

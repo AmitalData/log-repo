@@ -322,7 +322,7 @@
 
                                                                                                                     </span>
 
-                                                                                                                    <span class="EditButton" (click)="EditUser(item)" style="display:inline;width:18px;margin-left:0px;float: right">
+                                                                                                                    <span class="EditButton" (click)="EditUser(item)" style="display:inline;width:18px;margin-left:0px;float: right" *ngIf="!item.IsCustomerCareUser">
                                                                                                                         <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: inline; float: right;margin-top:0px;"></IconButton>
                                                                                                                     </span>
 

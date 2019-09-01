@@ -29,6 +29,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.EditMainCarriage).HasColumnName("EditMainCarriage");
             this.Property(t => t.CopyAgent).HasColumnName("CopyAgent");
             this.Property(t => t.CopyNotify).HasColumnName("CopyNotify");
+            this.Property(t => t.CopyExchangeRates).HasColumnName("CopyExchangeRates");
+
         }
     }
 }

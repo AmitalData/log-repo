@@ -809,7 +809,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ARInvoiceQuery entityQuery = new ARInvoiceQuery(invoiceRepository);
                 ARInvoicePM oldEntityPM = entityQuery.GetSinglePM(this.entityPM.CreditedByARInvoiceId, tenant);
                 
-                this.AddARInvoiceJournalAndJournalLines(this.entityPM, true);
+                //this.AddARInvoiceJournalAndJournalLines(this.entityPM, true);
 
                 // Update Old Invoice
                 if (oldEntityPM.IsConsolidationInvoice)

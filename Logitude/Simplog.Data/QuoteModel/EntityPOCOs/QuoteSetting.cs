@@ -23,6 +23,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool EditMainCarriage { get; set; }
         public bool CopyAgent{ get; set; }
         public bool CopyNotify { get; set; }
+        public bool CopyExchangeRates { get; set; }
         public bool IsSaleAsCostCurrency { get; set; }
     }
 }

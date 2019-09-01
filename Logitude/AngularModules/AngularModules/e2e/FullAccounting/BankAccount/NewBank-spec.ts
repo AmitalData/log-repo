@@ -28,8 +28,8 @@ describe('CRM Module', function () {
       var bank = 'Bank'+GlaccountNumber;
     GLA.CreateNewGLAccount(Gl);
     GLA.CreateNewGLAccount(diff);
-    GLA.CreateNewGLAccountandmove(trans);
-    
+    GLA.CreateNewGLAccount(trans);
+    //GLA.CreateNewGLAccountandmove();  
     BNk.CreateNewBankAccount(bank,Gl,diff,trans);
     edit.EditBankAccount(bank);
   
