@@ -25,5 +25,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string LogFirstLine { get; set; }
         public int? Duration { get; set; }
 
+        public string LogDocumentId { get; set; }
     }
 }
