@@ -229,36 +229,36 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
 
         private void SwitchToMainAdditionalPackageMulti()
         {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{
+            //    ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
 
-                List<User> allUsers = (from myUser in iContext.Users.Include("Contact")
-                                       join db_UserLicenses in iContext.UserLicenses on myUser.Id equals db_UserLicenses.Id into UserLicenses
-                                       from iUserLicense in UserLicenses.DefaultIfEmpty()
-                                       where
-                                       myUser.Tenant == tenant
-                                       && myUser.AdditionalPackagesOnly == false
-                                       && myUser.Contact.UserType == "R"
-                                       && myUser.Contact.InActive == false
-                                       && !iContext.UserLicenses.Any(f => f.UserId == myUser.Id)
-                                       select myUser).ToList();
+            //    List<User> allUsers = (from myUser in iContext.Users.Include("Contact")
+            //                           join db_UserLicenses in iContext.UserLicenses on myUser.Id equals db_UserLicenses.Id into UserLicenses
+            //                           from iUserLicense in UserLicenses.DefaultIfEmpty()
+            //                           where
+            //                           myUser.Tenant == tenant
+            //                           && myUser.AdditionalPackagesOnly == false
+            //                           && myUser.Contact.UserType == "R"
+            //                           && myUser.Contact.InActive == false
+            //                           && !iContext.UserLicenses.Any(f => f.UserId == myUser.Id)
+            //                           select myUser).ToList();
 
-                if (allUsers.Count > 0)
-                {
-                    UserRepository userRepository = new UserRepository(iContext);
+            //    if (allUsers.Count > 0)
+            //    {
+            //        UserRepository userRepository = new UserRepository(iContext);
 
-                    foreach (User item in allUsers)
-                    {
-                        item.AdditionalPackagesOnly = true;
-                        userRepository.Update(item);
-                    }
+            //        foreach (User item in allUsers)
+            //        {
+            //            item.AdditionalPackagesOnly = true;
+            //            userRepository.Update(item);
+            //        }
 
-                    userRepository.SubmitChanges();
-                }
+            //        userRepository.SubmitChanges();
+            //    }
 
-                scope.Complete();
-            }
+            //    scope.Complete();
+            //}
         }
         private void SwitchToMainAdditionalPackageSingle()
         {

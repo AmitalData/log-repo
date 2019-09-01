@@ -13,4 +13,5 @@ export class QuoteSettingPM {
     public CopyAgent: boolean;
     public CopyNotify: boolean;
     public IsSaleAsCostCurrency: boolean;
+    public CopyExchangeRates: boolean;
 }

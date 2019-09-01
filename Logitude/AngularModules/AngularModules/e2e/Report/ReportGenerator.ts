@@ -35,9 +35,9 @@ export class ReportGenerator {
         this.helper.WaitByIdAndClick('RunReportButton');
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndClick('MessageWindow_Ok_0');
-        this.helper.ItemsPresent(expectedId);
+       // this.helper.ItemsPresent(expectedId);
        // this.helper.waitElementByIDPresence(expectedId);
-        this.helper.WaitBusyIndicator();
+  
 
 
 

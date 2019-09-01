@@ -395,6 +395,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         CopyAgent = myPOCO.CopyAgent,
                         CopyNotify = myPOCO.CopyNotify,
                         IsSaleAsCostCurrency = myPOCO.IsSaleAsCostCurrency,
+                        CopyExchangeRates = myPOCO.CopyExchangeRates,
                     };
                 }
 

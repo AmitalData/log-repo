@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote Price Steps",
-			      				    Code =  "e5bf",
+			      				    Code =  "d49d",
 			      				    Name =  "QuotePriceSteps",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Quote",

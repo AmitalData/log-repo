@@ -388,6 +388,18 @@ export class PartnerItem extends BaseComponent {
         }
     }
 
+
+    RefreshMyCustomerInfo() {
+        if (this.EntityPM.CustomerId != this.PartnerId) {
+            this.EntityPM.CustomerId = this.PartnerId;
+            this.EntityPM.CustomerName = this.PartnerName;
+            this.EntityPM.CustomerRef1 = this.Reference1;
+            this.EntityPM.CustomerRef2 = this.Reference2;
+        }
+    }
+
+
+
     get PartnerId() {
         switch (this.Code) {
             case "SHIPR": { return this.ShipperId; }
@@ -409,6 +421,7 @@ export class PartnerItem extends BaseComponent {
         if (this.EntityPM.ShipperId != newValue) {
             this.EntityPM.ShipperId = newValue;
             this.GetPartnerCard();
+          
         }
     }
 
@@ -419,6 +432,7 @@ export class PartnerItem extends BaseComponent {
         if (this.EntityPM.ConsigneeId != newValue) {
             this.EntityPM.ConsigneeId = newValue;
             this.GetPartnerCard();
+      
         }
     }
 
@@ -670,6 +684,7 @@ export class PartnerItem extends BaseComponent {
             this.PartnerAddressList = null;
             this.PartnerContactList = null;
             this.AddressId = null;
+            this.RefreshMyCustomerInfo();
         }
 
         else {
@@ -686,17 +701,9 @@ export class PartnerItem extends BaseComponent {
                             this.PartnerName = list.EnglishName;
                             this.AddressId = list.MainAddressId;
 
-                            switch (this.Code) {
-                                case "SHIPR": {
-                                  //  this.EntityPM.FromAddressId = list.PickAddressId;
-                                    break;
-                                }
+                            this.RefreshMyCustomerInfo();
 
-                                case "CONSI": {
-                                  //  this.EntityPM.ToAddressId = list.PickAddressId;
-                                    break;
-                                }
-                            }
+
                         }
                     }
                 }
