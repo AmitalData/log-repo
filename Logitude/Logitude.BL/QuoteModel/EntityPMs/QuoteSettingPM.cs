@@ -25,5 +25,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool CopyAgent { get; set; }
         public bool CopyNotify { get; set; }
         public bool IsSaleAsCostCurrency { get; set; }
+        public bool CopyExchangeRates { get; set; }
     }
 }

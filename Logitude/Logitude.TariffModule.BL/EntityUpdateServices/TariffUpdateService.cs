@@ -321,6 +321,9 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                             }
                         }
                     }
+
+                   
+
                 }
 
                 iDraftVersion.IsDraft = false;
@@ -390,6 +393,10 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             TariffVersion iPreviousVersion = tariffVersionRepository.GetAllVersions(entityPM.Id, entityPM.Tenant).Where(o => o.Version != iDraftVersion.Version).OrderByDescending(o => o.CreateDate).FirstOrDefault();
             if (iPreviousVersion != null)
             {
+                if(iPreviousVersion.StartDate.Value.Date>= iDraftVersion.StartDate.Value.Date)
+                {
+                    throw new ApplicationException("Start date is smaller than start date of the previous version");
+                }
                 if (iPreviousVersion.Version != iDraftVersion.Version)
                 {
                     List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);

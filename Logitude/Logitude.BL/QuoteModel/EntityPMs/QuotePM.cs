@@ -540,6 +540,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         }
 
         public bool MarkFollowUpsAsDone { get; set; }
+        public bool IsCopyExchangeRates { get; set; }
 
         private List<QuotePackagePM> quotePackagePM;
         [Include]

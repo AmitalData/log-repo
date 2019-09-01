@@ -408,6 +408,11 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                             where d.Tenant == this.tenant
                                             select d).ToList();
 
+                    if (!this.entityPM.IsCopyExchangeRates)
+                    {
+                        this.GetAllItemsExchangeRate();
+                    }
+
                     foreach (QuoteChargePM item in entityPM.QuoteCharges.Where(d => d.CostMeasurementCode != "PRFR" && d.SaleMeasurementCode != "PRFR"))
                     {
                         this.ComputeLineCostQuantity(item);
@@ -429,6 +434,44 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     }
 
                     this.ComputeQuoteEstimateProfit();
+                }
+            }
+        }
+
+        private void GetAllItemsExchangeRate()
+        {
+            RatesTableQuery myQuery = new RatesTableQuery(tenant);
+            List<CurrencyRate> AllRates = new List<CurrencyRate>();
+            foreach (QuoteChargePM item in entityPM.QuoteCharges)
+            {
+                if (item.CostCurrencyId != null)
+                {
+                    CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == item.CostCurrencyId).FirstOrDefault();
+                    if (iCurrencyRate == null)
+                    {
+                        iCurrencyRate = this.GetCurrencyRate(loggedTenant, item.CostCurrencyId, myQuery);
+                        AllRates.Add(iCurrencyRate);
+                    }
+
+                    if (iCurrencyRate != null)
+                    {
+                        item.CostExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
+                    }
+                }
+
+                if (item.SaleCurrencyId != null)
+                {
+                    CurrencyRate iCurrencyRate = AllRates.Where(d => d.Id == item.SaleCurrencyId).FirstOrDefault();
+                    if (iCurrencyRate == null)
+                    {
+                        iCurrencyRate = this.GetCurrencyRate(loggedTenant, item.SaleCurrencyId, myQuery);
+                        AllRates.Add(iCurrencyRate);
+                    }
+
+                    if (iCurrencyRate != null)
+                    {
+                        item.SaleExchangeRate = MethodHelper.Round(iCurrencyRate.Rate, 5);
+                    }
                 }
             }
         }
