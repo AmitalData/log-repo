@@ -41,12 +41,13 @@ export class DenyReasonComponent extends BaseComponent implements OnInit, AfterV
     AdditionalData: any;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     private CurrentSession = SessionLocator.SelectedSession;
+    DenyReasonWaterMark: string = 'Please fill out the explanation for rejecting the statement';//{ { 'Shipment.O.DenyReasonWaterMark' | TextCodeTranslationPipe } }
     constructor() {
         super();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
     }
     ngOnInit() {
-        
+        this.DenyReasonWaterMark = TextCodeTranslator.Translate('Shipment.O.DenyReasonWaterMark');
     }
     ngAfterViewInit() {
 
