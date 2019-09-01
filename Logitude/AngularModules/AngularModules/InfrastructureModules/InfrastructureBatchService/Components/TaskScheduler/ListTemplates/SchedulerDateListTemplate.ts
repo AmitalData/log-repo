@@ -88,4 +88,9 @@ export class SchedulerDateListTemplate {
         
     }
 
+
+    ViewLogFile() {
+
+    }
+
 }

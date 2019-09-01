@@ -49,6 +49,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LogFirstLine = a.LogFirstLine,
                         LogType = a.LogType,
                         Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
+                        LogDocumentId = a.LogDocumentId,
 
                     }).FirstOrDefault();
         }
@@ -69,7 +70,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         EndDateTimeUTC = a.EndDateTimeUTC,
                         LogFirstLine = a.LogFirstLine,
-                        LogType = a.LogType
+                        LogType = a.LogType,
+                        LogDocumentId = a.LogDocumentId,
+
                     }).FirstOrDefault();
         }
 
@@ -89,7 +92,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         EndDateTimeUTC = a.EndDateTimeUTC,
                         LogFirstLine = a.LogFirstLine,
-                        LogType = a.LogType
+                        LogType = a.LogType,
+                        LogDocumentId = a.LogDocumentId,
                     }).FirstOrDefault();
         }
 
@@ -110,7 +114,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         EndDateTimeUTC = a.EndDateTimeUTC,
                         LogFirstLine = a.LogFirstLine,
-                        LogType = a.LogType
+                        LogType = a.LogType,
+                        LogDocumentId = a.LogDocumentId,
                     }).ToList();
         }
 
@@ -130,7 +135,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                               StartDateTimeUTC = a.StartDateTimeUTC,
                                                               EndDateTimeUTC = a.EndDateTimeUTC,
                                                               LogFirstLine = a.LogFirstLine,
-                                                              LogType = a.LogType
+                                                              LogType = a.LogType,
+                                                              LogDocumentId = a.LogDocumentId,
                                                           };
             return result;
         }
@@ -153,6 +159,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          LogFirstLine = a.LogFirstLine,
                                          LogType = a.LogType,
                                          Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
+                                         LogDocumentId = a.LogDocumentId,
 
                                      }).OrderByDescending(x => x.StartDateTime).Take(10);
 
@@ -196,6 +203,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LogFirstLine = a.LogFirstLine,
                         LogType = a.LogType,
                         Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
+                        LogDocumentId = a.LogDocumentId,
 
                     }).OrderByDescending(a => a.StartDateTime).FirstOrDefault();
         }
