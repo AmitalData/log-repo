@@ -97,6 +97,8 @@ export class ShipmentWorkSpace {
       this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
     }
 
+    this.Helper.WaitByIdAndClick('Shipment-Save');
+
   }
 
   CreateWizard(LogitudeWizardType: string) {

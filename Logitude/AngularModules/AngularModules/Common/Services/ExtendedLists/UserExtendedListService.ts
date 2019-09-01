@@ -119,7 +119,6 @@ export class UserExtendedList {
     public Tenant: number;  
     public EnglishName: string; 
     public Email: string;
-    public AdditionalPackagesOnly: boolean;
     public SearchFields: string;
 
     public PackageCode0: string;
