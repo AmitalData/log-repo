@@ -1417,6 +1417,10 @@
     <Compile Include="Migrations\201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.Designer.cs">
       <DependentUpon>201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908302137553_PaymentMethodLocalNameMigration.cs" />
+    <Compile Include="Migrations\201908302137553_PaymentMethodLocalNameMigration.Designer.cs">
+      <DependentUpon>201908302137553_PaymentMethodLocalNameMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2421,6 +2425,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.resx">
       <DependentUpon>201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908302137553_PaymentMethodLocalNameMigration.resx">
+      <DependentUpon>201908302137553_PaymentMethodLocalNameMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

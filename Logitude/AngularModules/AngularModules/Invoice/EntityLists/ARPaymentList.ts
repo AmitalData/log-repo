@@ -84,5 +84,5 @@ export class ARPaymentList {
 		FirstApproveDate: Date;
 		IsFullAccounting: boolean;
 		FechaPago: Date;
-
-}
+	
+}
