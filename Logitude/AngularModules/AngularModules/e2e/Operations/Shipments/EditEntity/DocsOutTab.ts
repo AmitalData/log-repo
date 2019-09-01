@@ -22,8 +22,8 @@ export class DocsOutTabComponent {
     }
 
     UseDocsOutSearchBox(searchFeildId: string, searchByRef: string, docOutId: string, docOutRow: string) {
-        this.Helper.WaitBusyIndicator();
-        this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
+         this.Helper.WaitBusyIndicator();
+         this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
         this.Helper.WaitByIdAndClick(docOutRow);
         this.Helper.WaitByIdAndClick(docOutId);
     }
