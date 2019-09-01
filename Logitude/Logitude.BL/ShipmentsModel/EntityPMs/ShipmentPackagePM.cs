@@ -75,7 +75,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ClassNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? Temperature { get; set; }
+        public string Temperature { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? Ventilation { get; set; }
