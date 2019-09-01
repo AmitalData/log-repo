@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StorageSiteCode, 
 	         TruckerId, 
 	         IntegratorCode, 
-	         isReadyForInvoice,
+	         IsReadyForInvoice,
 	      }
 
 
@@ -97,7 +97,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IntegratorCode, 
 	         IntegratorName, 
 	         IntegratorNumber, 
-	         isReadyForInvoice,
+	         IsReadyForInvoice,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -231,9 +231,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.IntegratorCode = entityPM.IntegratorCode;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.isReadyForInvoice))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReadyForInvoice))
             {
-				entityPOCO.isReadyForInvoice = entityPM.isReadyForInvoice;
+				entityPOCO.IsReadyForInvoice = entityPM.IsReadyForInvoice;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -372,9 +372,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IntegratorCode = entityPOCO.IntegratorCode;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.isReadyForInvoice))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsReadyForInvoice))
             {
-					entityPM.isReadyForInvoice = entityPOCO.isReadyForInvoice;
+					entityPM.IsReadyForInvoice = entityPOCO.IsReadyForInvoice;
             }
 
 		}
@@ -508,9 +508,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.IntegratorCode = entityPM.IntegratorCode;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.isReadyForInvoice))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReadyForInvoice))
             {
-                oldEntityPM.isReadyForInvoice = entityPM.isReadyForInvoice;
+                oldEntityPM.IsReadyForInvoice = entityPM.IsReadyForInvoice;
             }
 			
 		}

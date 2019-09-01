@@ -30,6 +30,9 @@ import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsReq
 import { SendUnCorrectDocumentsRequestParams } from '../../../../Customs/DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
 import { CourierPendingReasonListService } from '../../../../Customs/Services/StandardLists/CourierPendingReasonListService';
 import { CourierPendingReasonList } from '../../../../Customs/EntityLists/CourierPendingReasonList';
+import { element } from 'protractor';
+import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     moduleId: module.id,
@@ -1615,6 +1618,40 @@ implements OnDestroy
             this.RefreshButtonClicked();
         });
     }
+    _CourierMasterPMService: CourierMasterPMService = new CourierMasterPMService();
+    IsReadyForInvoiceClick() {
+
+
+        if (this.entityPM.IsReadyForInvoice) {
+            let text = "האם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show(text);
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.UpdateIsReadyForInvoice();
+                }
+            });
+
+
+        } else {
+            this.UpdateIsReadyForInvoice();
+        }
+    }
+    UpdateIsReadyForInvoice() {
+        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+        this.entityPM.IsReadyForInvoice = !this.entityPM.IsReadyForInvoice;
+        this._CourierMasterPMService
+            .update(this.entityPM)
+            .subscribe((response: ServiceResponse) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                if (response.HasError) {
+                    var mess
+                } else {
+                    this.entityPM = response.Result;
+                }
+            });
+    }
+
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = false;

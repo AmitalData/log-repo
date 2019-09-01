@@ -75,7 +75,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.IntegratorCode).HasColumnName("IntegratorCode").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.isReadyForInvoice).HasColumnName("isReadyForInvoice");
+            this.Property(t => t.IsReadyForInvoice).HasColumnName("IsReadyForInvoice");
         }
     }
 }

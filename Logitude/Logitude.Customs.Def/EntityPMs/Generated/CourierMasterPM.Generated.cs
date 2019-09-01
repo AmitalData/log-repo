@@ -991,7 +991,7 @@ namespace Logitude.Customs.Def.EntityPMs
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool isReadyForInvoice  
+       public bool IsReadyForInvoice  
 	   {
 	    
 	     get
@@ -1002,7 +1002,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(isReadyForInvoice != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="isReadyForInvoice",OldValue=isReadyForInvoice,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsReadyForInvoice",OldValue=isReadyForInvoice,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   isReadyForInvoice=value;
 		   }
