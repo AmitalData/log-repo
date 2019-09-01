@@ -50,11 +50,7 @@ export class LicensesManagementComponent implements OnDestroy {
     SetWindowArgs(args: UserLicenseArgs) {
         this.AllPackages = args.AllPackages;
         this.dirtyItem = null;
-
-        //if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
-        //    this.HeaderColumnWidth = 240;
-        //}
-
+        
         this.InitColumns();
         this.LoadUserLicenses();
     }
@@ -266,11 +262,18 @@ export class LicensesManagementComponent implements OnDestroy {
         var errors: string[] = [];
 
         var userLicenses: UserLicensePM[] = this.AllUserLicenses.filter(d => d.PackageCode == myPackageCode);
-        var tenantLicenses: TenantManagementLicensePM = SessionLocator.TenantManagementJS.TenantManagementLicenses.filter(d => d.PackageCode == myPackageCode)[0];
-
         var usersCount: number = userLicenses.length;
-        var numberOfUsers: number = (AppTool.IsNullOrZero(tenantLicenses.NumberOfUsers) ? 0 : tenantLicenses.NumberOfUsers) + (AppTool.IsNullOrZero(tenantLicenses.FreeUsers) ? 0 : tenantLicenses.FreeUsers);;
 
+        var numberOfUsers: number = 0;
+        if (myPackageCode == SessionLocator.TenantManagementJS.PackageCode) {
+            numberOfUsers = (AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.NumberOfUsers) ? 0 : SessionLocator.TenantManagementJS.NumberOfUsers) + (AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.NumberOfFreeUsers) ? 0 : SessionLocator.TenantManagementJS.NumberOfFreeUsers);
+        }
+
+        else {
+            var tenantLicenses: TenantManagementLicensePM = SessionLocator.TenantManagementJS.TenantManagementLicenses.filter(d => d.PackageCode == myPackageCode)[0];
+            numberOfUsers = (AppTool.IsNullOrZero(tenantLicenses.NumberOfUsers) ? 0 : tenantLicenses.NumberOfUsers) + (AppTool.IsNullOrZero(tenantLicenses.FreeUsers) ? 0 : tenantLicenses.FreeUsers);
+        }
+        
         if (usersCount > numberOfUsers) {
             errors.push("Some Packages have exceeded the allowed number of users");
         }

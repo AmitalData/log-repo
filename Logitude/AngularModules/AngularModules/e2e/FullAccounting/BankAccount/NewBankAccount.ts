@@ -21,8 +21,6 @@ export class NewBankAccount {
         this.Helper.WaitByIdAndFill('BankAccount_BankId', 'Leumi');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitByIdAndFill('BankAccount_BranchNumber', '12544');
-        //this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-        //this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('BankAccount_AccountNumber', Name);
         this.Helper.WaitByIdAndFill('BankAccount_LocalName', Name);
         this.Helper.WaitByIdAndFill('BankAccount_EnglishName', Name+'English');
@@ -30,22 +28,22 @@ export class NewBankAccount {
         this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0),
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('BankAccount_GLAccountId', Name1);
-          browser.sleep(6000);
-        this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0),
-       // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownList', 0);
-        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0),
+
+        // this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('BankAccount_DeferredGLAccountId', Name2);
-        browser.sleep(2000);
-        this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0),
         //this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('BankAccount_TransferGLAcccountId', Name3);
-        browser.sleep(2000);
-        this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
-        //this.Helper.WaitBusyIndicator();
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0),
+        this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('OKBUTTON');
         this.Helper.WaitBusyIndicator();
-
-      //  browser.sleep(6000);
+        this.Helper.WaitWindowClosed();
+        
+       
+        
+       // browser.sleep(6000);
        // this.Helper.WaitByIdAndClick('EditBackbutton');
 
 

@@ -13,13 +13,13 @@ export class ReceivablesTabComponent {
 
     public RecievablesTab(ShipmentLevelCode: string, shipmentType: string) {
         this.Helper.WaitByIdAndClick('Shipment.TH.Receivables');
-        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitEditComponentBusyIndicator();
         // var EC = protractor.ExpectedConditions;
         // this.Helper.WaitByIdAndClick('Shipment_EstimateProfitInSelectedCurrency');
 
         if (ShipmentLevelCode == 'D' || ShipmentLevelCode == 'H') {
             // var InvoiceAmount: any;
-            this.Helper.WaitByIdAndClick('ATDS-Receivable');//Generate Receivables 
+            // this.Helper.WaitByIdAndClick('ATDS-Receivable');//Generate Receivables 
             if (shipmentType == '') {
                 this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD');
                 this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');

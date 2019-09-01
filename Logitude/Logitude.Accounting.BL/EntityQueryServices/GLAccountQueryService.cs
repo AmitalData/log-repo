@@ -1023,7 +1023,31 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return Accounts;
         }
 
-        
+        public GLAccountPM GetSplittedByCurrencyGLAccount(string accountId, int tenant, string currency)
+        {
+
+           return  (from a in context.GLAccounts
+                                   where a.CustomerGLAccountId == accountId && a.CurrencyId == currency && a.Tenant == tenant
+                                   select new GLAccountPM() {
+                                       Id = a.Id,
+                                       CurrencyId = a.CurrencyId,
+                                       DisplayNumber =a.DisplayNumber,
+                                       Inactive = a.Inactive,
+                                       CurrencyCode = a.Currency != null ?a.Currency.Code : null,
+                                       ChartOfAccountsId =a.ChartOfAccountsId ,
+                                       ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                                       LocalName = a.LocalName ,
+                                       ReconcileMethodCode = a.ReconcileMethodCode,
+                                       RevenueExpenseType = a.RevenueExpenseType ,
+                                       Tenant = tenant,
+                                       AccountTypeCode = a.AccountTypeCode,
+                                       AutomaticReconcileId =a.AutomaticReconcileId,
+                                       ControlAccountId = a.ControlAccountId,
+                                       CustomerGLAccountId = a.CustomerGLAccountId,
+                                       InternalNumber = a.InternalNumber
+
+                                   }).FirstOrDefault();
+        }
     }
     public class GLAccountCurrencyBalance
     {

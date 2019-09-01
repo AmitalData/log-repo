@@ -301,6 +301,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     if (invoicetype.Code == "CD")
                     {
+                        
                         invoicedataprovider.InvoiceType_labelHebrew = "הודעת זיכוי";
                         invoicedataprovider.InvoiceType_label_Spanish = "Nota de Credito";
                     }
@@ -2515,6 +2516,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoiceDataProvider.InvoiceSection2 = myTenant.InvoiceSection2;
                     invoiceDataProvider.BankDetails = myTenant.BankDetails;
                     invoiceDataProvider.Logo = DataProviders.General.GetLogo(myTenant.Id);
+                  
                 }
                 #endregion
 
@@ -2564,7 +2566,15 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     case "CD":
                         {
-                            invoiceDataProvider.InvoiceType_labelHebrew = "הודעת זיכוי";
+                            if (myTenant.AccountingActivated)
+                            {
+                                invoiceDataProvider.InvoiceType_labelHebrew = "חשבונית זיכוי";
+
+                            }
+                            else
+                            {
+                                invoiceDataProvider.InvoiceType_labelHebrew = "הודעת זיכוי";
+                            }
                             invoiceDataProvider.InvoiceType_label_Spanish = "Nota de Credito";
                             break;
                         }
