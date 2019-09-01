@@ -400,46 +400,15 @@ User/Pass",
 
         private void button6_Click(object sender, EventArgs e)
         {
-            
-            FileStream fs = new FileStream("BKMVDATA.txt.txt", FileMode.Open, FileAccess.Read);
+
+            DateTime date = DateTime.Now.AddDays(-180);
+            DateTime last180days = new DateTime(date.Year, date.Month, 1);
+            DateTime referenceDate = new DateTime(2019, 3, 1);
+            if (referenceDate <= last180days)
+            {
+               
+            }
           
-
-            const string Str = " מעמ תשומות              7                 חייבים ונושים";
-
-            ///Encoding latinEncoding = Encoding.GetEncoding("Windows-1252");
-            Encoding hebrewEncoding = Encoding.GetEncoding("Windows-1255");
-
-           byte[] Bytes = hebrewEncoding.GetBytes(Str);
-
-            string hebrewString = hebrewEncoding.GetString(Bytes);
-
-
-            //string value = "R01";
-            //string reference = null;
-            //string group = null;
-            //Regex isMatche = new Regex("([A-Za-z])");
-            //bool letters = isMatche.IsMatch(value);
-            //if (letters)
-            //{
-            //    for (int i = value.Length; i > 0; i--)
-            //    {
-            //        string d = value.Substring(i - 1, 1);
-            //        MatchCollection match = Regex.Matches(d, @"^[a-zA-Z]*$");
-            //        if (match.Count != 0)
-            //        {
-            //            group = value.Substring(0, i);
-            //            break;
-            //        }
-            //        else
-            //        {
-            //            reference = d + reference;
-            //        }
-            //        //var array = Regex.Matches("12s4rt", @"\D+|\d+")
-            //        //.Cast<Match>()
-            //        //.Select(m => m.Value)
-            //        //.ToArray();
-            //    }
-            //}
         }
 
         private void button7_Click(object sender, EventArgs e)
