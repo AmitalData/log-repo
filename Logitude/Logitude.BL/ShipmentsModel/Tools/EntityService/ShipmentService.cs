@@ -300,6 +300,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeFinalDestination();
                 ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext);
                 this.ComputeAgentComputed(entityPM, entityPoco);
+                this.ComputeETAAndETDHouseFields();
+
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
                 UpdateShipmentComputedFields();
@@ -961,6 +963,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             entityRepository.Remove(this.entityPoco);
             entityRepository.SubmitChanges();
+        }
+
+        private void ComputeETAAndETDHouseFields()
+        {
+            if (entityPM.ShipmentLevelCode == "H")
+            {
+                var shipment = (from d in objectContext.Shipments
+                                where d.Tenant == tenant
+                                && d.Id == entityPM.MasterShipmentDataId
+                                select d).FirstOrDefault();
+
+                entityPoco.NextETA = shipment.NextETA;
+                entityPM.NextETA = shipment.NextETA;
+                entityPoco.NextETD = shipment.NextETD;
+                entityPM.NextETD = shipment.NextETD;
+            }
         }
 
         private string OldCustomerId;
