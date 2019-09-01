@@ -1663,12 +1663,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 #endregion
             }
         }
+        Tenant tenantPOCO;
         private void InitializeGLAccountFields()
         {
             if (entityPM.SetApproved)
             {
                 TenantRepository tenantRepository = new TenantRepository(tenant);
-                Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+                 tenantPOCO = tenantRepository.GetSingleTenant(tenant);
 
                 if (tenantPOCO.AccountingActivated)
                 {
@@ -3512,8 +3513,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (this.isApprovingInvoice)
             {
                 // Journal Work
-                this.AddARInvoiceJournalAndJournalLines(entityPM, this.isApprovingInvoice);
-
+                if (tenantPOCO.AccountingActivated)
+                {
+                    this.AddARInvoiceJournalAndJournalLines(entityPM, this.isApprovingInvoice);
+                }
               
                 // DropBox
                 this.CreateARInvoiceMessage(this.isApprovingInvoice);
