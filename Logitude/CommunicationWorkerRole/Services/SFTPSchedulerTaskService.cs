@@ -191,7 +191,7 @@ namespace CommunicationWorkerRole.Services
                     Status = "W",
                     Retries = 0,
                     ConnectedToEntity = false,
-                    ConnectedToTenant = true,
+                    ConnectedToTenant = false,
                     Tenant = schedulerDetails.Tenant,
                     FileSize = fileData != null ? fileData.Length : 0,
                     FileName = fileName,

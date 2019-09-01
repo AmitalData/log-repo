@@ -64,6 +64,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? ETA_DateTime { get; set; }
         public string CuttOffDateTime { get; set; }
         public string CuttOffTime { get; set; }
+        public DateTime? CuttOffDateTime_Date { get; set; }
         public string ETD { get; set; }
         public string DeliveryAddress { get; set; }
         public string PickUpAddress { get; set; }
@@ -305,6 +306,7 @@ namespace WebFreight.Web.DataProviders
         public string DeliveryToContactName { get; set; }
         public string DeliveryToContactEmail { get; set; }
         public string DeliveryToContactPhone { get; set; }
+        public string FirstDeliveryToContactPhone { get; set; }
 
         public DateTime? FirstPickupETD { get; set; }
 

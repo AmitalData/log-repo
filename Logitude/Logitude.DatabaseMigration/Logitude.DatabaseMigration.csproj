@@ -1233,6 +1233,10 @@
     <Compile Include="Migrations\201907231226064_ObjectTable_CodeField_NameField_60.Designer.cs">
       <DependentUpon>201907231226064_ObjectTable_CodeField_NameField_60.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908200520232_ModifyInboundEmailAndTicketSubjectLength_Maheera.cs" />
+    <Compile Include="Migrations\201908200520232_ModifyInboundEmailAndTicketSubjectLength_Maheera.Designer.cs">
+      <DependentUpon>201908200520232_ModifyInboundEmailAndTicketSubjectLength_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201907031511508_NewTable_GLAccountCounters.cs" />
     <Compile Include="Migrations\201907031511508_NewTable_GLAccountCounters.Designer.cs">
       <DependentUpon>201907031511508_NewTable_GLAccountCounters.cs</DependentUpon>
@@ -1240,6 +1244,10 @@
     <Compile Include="Migrations\201907040926273_AddConstraints_GLAccountCounters.cs" />
     <Compile Include="Migrations\201907040926273_AddConstraints_GLAccountCounters.Designer.cs">
       <DependentUpon>201907040926273_AddConstraints_GLAccountCounters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908281125076_ChangeTemperatureFieldType.cs" />
+    <Compile Include="Migrations\201908281125076_ChangeTemperatureFieldType.Designer.cs">
+      <DependentUpon>201908281125076_ChangeTemperatureFieldType.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2113,6 +2121,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907040926273_AddConstraints_GLAccountCounters.resx">
       <DependentUpon>201907040926273_AddConstraints_GLAccountCounters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908200520232_ModifyInboundEmailAndTicketSubjectLength_Maheera.resx">
+      <DependentUpon>201908200520232_ModifyInboundEmailAndTicketSubjectLength_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908281125076_ChangeTemperatureFieldType.resx">
+      <DependentUpon>201908281125076_ChangeTemperatureFieldType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

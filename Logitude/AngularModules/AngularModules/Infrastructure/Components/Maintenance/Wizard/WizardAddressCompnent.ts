@@ -51,7 +51,7 @@ export class WizardAddressCompnent extends BaseComponent {
         if (AppTool.IsNullOrEmpty(addressPM.Description)) {
             this.EntityPM.Description = addressPM.Description = "Main Address";
         }
-        if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" || ObjectsLocator.GlobalSetting.DeploymentStage == "amitalstorage") {
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "test2" || ObjectsLocator.GlobalSetting.DeploymentStage == "amitalstorage") {
             this.ShowDayLightSettings = true;
         }
         else if (tenantPM.DayLightOffset != 0) {
@@ -95,6 +95,9 @@ export class WizardAddressCompnent extends BaseComponent {
         this.IsEditingEnabled = true;
         this.UIProperties.SetRequired("City", "Address", AppTool.IsNullOrEmpty(this.City) ? true : false);
         this.UIProperties.SetRequired("CountryId", "Address", AppTool.IsNullOrEmpty(this.CountryId) ? true : false);
+        this.UIProperties.SetRequired("DayLightStartDate", "Tenant", AppTool.IsNullOrEmpty(this.DayLightStartDate) ? true : false);
+        this.UIProperties.SetRequired("DayLightEndDate", "Tenant", AppTool.IsNullOrEmpty(this.DayLightEndDate) ? true : false);
+        //this.UIProperties.SetRequired("DayLightOffset", "Tenant", AppTool.IsNullOrEmpty(this.DayLightOffset) ? true : false);
         this.SetUIProperties_State();
         this.SetUIProperties_TimeZone();
     }

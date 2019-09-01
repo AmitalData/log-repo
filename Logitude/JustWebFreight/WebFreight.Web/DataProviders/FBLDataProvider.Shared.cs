@@ -151,7 +151,7 @@ namespace WebFreight.Web.DataProviders
         public string TransshipmentsVesselNameAndNumber { get; set; }
                
         public DateTime? MainCarriageFirstLegETD { get; set; } //(this should print the ETD date of the first main carriage leg)
-        public double? Temperature { get; set; } //(shows the temperature set on the first container package added on the shipment)
+        public string Temperature { get; set; } //(shows the temperature set on the first container package added on the shipment)
         public string AgentPrimaryContactDetails { get; set; } // Should print in the following way: ContactName, mail: Contact Email, Tel: Contact Tel
         public string FinalDestination { get; set; }
         public string VoyageNumber { get; set; }

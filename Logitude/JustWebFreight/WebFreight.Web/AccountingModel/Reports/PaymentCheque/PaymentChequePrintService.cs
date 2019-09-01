@@ -22,7 +22,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
 
         public void BuildPaymentChequeReport(string entityId, int tenant, string documentOutId)
         {
-           
+
             PaymentChequeDataProvider PaymentChequeDP = LoadDataProvider(entityId, tenant);
 
 
@@ -62,7 +62,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                 if (templatedata.Length != 0)
                 {
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                    report = exportDocumentHelper.LoadandRender( defaulttemplate, currentBusinessObject, tenant);
+                    report = exportDocumentHelper.LoadandRender(defaulttemplate, currentBusinessObject, tenant);
                 }
             }
 
@@ -77,22 +77,23 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             PaymentChequeDP.CompanyLogo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
             PaymentChequeQueryService PaymentChequeQuery = new PaymentChequeQueryService(tenant);
             BankAccountQueryService bankAccountQuery = new BankAccountQueryService(tenant);
-         //   CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
+            //   CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             TenantQuery tenantQuery = new TenantQuery(tenant);
-            TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant,false);
+            TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
             PaymentChequePM paymentChequePM = PaymentChequeQuery.GetSingle(entityId, true, false);
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSinglePM(tenantPM.AddressId, tenant);
-            InvoiceWebService invoiceWebService = new InvoiceWebService();
+            NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
+            PaymentChequeDP.APPaymentNumber = GetPaymentNumber(paymentChequePM);
             if (paymentChequePM.CurrencyCode == "NIS" || paymentChequePM.CurrencyCode == "ILS")
             {
                 string curr_name = "ש\"ח";
                 string subunit_name = "אגורות";
-                PaymentChequeDP.AmountInHebrew = invoiceWebService.NumbersToHebrew((double)paymentChequePM.ForeignAmount, curr_name, subunit_name, false);
+                PaymentChequeDP.AmountInHebrew = numbersConverterToWords.NumbersToHebrew((double)paymentChequePM.ForeignAmount, curr_name, subunit_name, false);
             }
             else
-            { 
-                PaymentChequeDP.AmountInHebrew = invoiceWebService.NumbersToHebrew((double)paymentChequePM.ForeignAmount, paymentChequePM.CurrencyCode, "", false);
+            {
+                PaymentChequeDP.AmountInHebrew = numbersConverterToWords.NumbersToHebrew((double)paymentChequePM.ForeignAmount, paymentChequePM.CurrencyCode, "", false);
             }
             if (paymentChequePM != null)
             {
@@ -101,7 +102,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                 PaymentChequeDP.PayToName = paymentChequePM.PayToName;
 
                 // BankAccount mapping
-                BankAccountPM bankAccount = bankAccountQuery.GetSingle(paymentChequePM.BankAccountId, false,false);
+                BankAccountPM bankAccount = bankAccountQuery.GetSingle(paymentChequePM.BankAccountId, false, false);
                 if (bankAccount != null)
                 {
                     PaymentChequeDP.BankAccountNumber = bankAccount.AccountNumber;
@@ -114,12 +115,13 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                     //no connected bank account
 
                 }
-                if(tenantPM != null)
+                if (tenantPM != null)
                 {
                     //PaymentChequeDP.AddressName = tenantPM.CompanyAddress;
                     PaymentChequeDP.VatNumber = tenantPM.VatNumber;
 
                     PaymentChequeDP.Signature = tenantPM.Signature;
+
                 }
 
                 if (address != null)
@@ -128,24 +130,34 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                     PaymentChequeDP.Address2 = address.Address2;
                     PaymentChequeDP.FAX = address.FaxNumber;
                     PaymentChequeDP.AddressName = address.Name;
+                    PaymentChequeDP.Telephone = address.PhoneNumber;
                 }
                 // map lines
                 List<PaymentChequeLine> lines = paymentChequePM.PaymentChequeLines.Select(d => new PaymentChequeLine()
                 {
-                  Amount = d.Amount,
-                  Note = d.Notes,
-                   
-                  
+                    Amount = d.Amount,
+                    Note = d.Notes,
+
+
                 }).ToList();
                 PaymentChequeDP.PaymentChequeLines = lines;
-                PaymentChequeDP.TotalAmount =(decimal) paymentChequePM.ForeignAmount;// (decimal) paymentChequePM.PaymentChequeLines.Sum(d => d.Amount);
-                
+                PaymentChequeDP.TotalAmount = (decimal)paymentChequePM.ForeignAmount;// (decimal) paymentChequePM.PaymentChequeLines.Sum(d => d.Amount);
+
 
             }
 
             return PaymentChequeDP;
         }
 
-   
+        public string GetPaymentNumber(PaymentChequePM paymentCheque)
+        {
+
+            if (paymentCheque.APPaymentId != null)
+            {
+                return paymentCheque.PaymentChequeLines.First().Notes;
+
+            }
+            else return null;
+        }
     }
 }

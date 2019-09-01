@@ -28,6 +28,8 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         public string BankCode { get; set; }
         public byte[] CompanyLogo { get; set; }
         public string AmountInHebrew { get; set; }
+        public string Telephone { get; set; }
+        public string APPaymentNumber { get; set; }
     }
 
     

@@ -18,7 +18,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.CommunicationLogId).HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Sender).HasMaxLength(100).IsUnicode(true);
-            this.Property(t => t.Subject).HasMaxLength(100).IsUnicode(true);
+            this.Property(t => t.Subject).HasMaxLength(256).IsUnicode(true);
             this.Property(t => t.Recepient).HasMaxLength(100).IsUnicode(true);
             this.Property(t => t.Body).IsMaxLength().IsUnicode(true);
             this.Property(t => t.FullBody).IsMaxLength().IsUnicode(true);

@@ -2302,6 +2302,7 @@
     <Compile Include="Helpers\APIHelpers\ConsolidationServiceBatch.cs" />
     <Compile Include="Helpers\APIHelpers\GenerateTariffsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
+    <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
@@ -2342,6 +2343,7 @@
     <Compile Include="Helpers\ImporterDepositionHelper.cs" />
     <Compile Include="Helpers\LogBox\LogBoxMailgunAnalyzer.cs" />
     <Compile Include="Helpers\LogitudeLeadHelper.cs" />
+    <Compile Include="Helpers\NumbersConverterToWords.cs" />
     <Compile Include="Helpers\PasswordChangeHelper.cs" />
     <Compile Include="Helpers\QueueMessagesWebHelper.cs" />
     <Compile Include="Helpers\ExportToExcelHelper.cs" />
@@ -2879,8 +2881,6 @@
     <Content Include="Integration Test\Reports\Reports.postman_collection.json" />
     <Content Include="Integration Test\Maintenance\Partners .postman_collection.json" />
     <Content Include="Integration Test\Shipment\CreateUpdateShipment.postman_collection.json" />
-    <Content Include="Integration Test\Shipment\EnvironmentVariables.json" />
-    <Content Include="Integration Test\Shipment\GlobalVariables.json" />
     <Content Include="Integration Test\Logbox\LogboxHeaders.postman_collection.json" />
     <Content Include="Integration Test\Security\DocumentDownloadTokenKey.postman_collection.json" />
     <Content Include="Integration Test\Security\ShipmentSecurityTest.postman_collection.json" />

@@ -2667,6 +2667,9 @@ namespace WebFreight.Web.ReportsWebServices
                 double? sum1_24 = 0;
                 double? sum25_30 = 0;
 
+                double? sum31_45 = 0;
+                double? sum46_60 = 0;
+
                 List<AgingStatemantDataItem> tempList = totalList.Where(d => d.CardId == cardId).ToList();
 
                 List<AgingStatemantDataItem> currentDueItems = tempList.Where(d => d.Date >= todayDate).ToList();
@@ -2681,6 +2684,9 @@ namespace WebFreight.Web.ReportsWebServices
 
                 List<AgingStatemantDataItem> Due1_24Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays >= 1 && (todayDate - d.Date.Value).TotalDays <= 24).ToList();
                 List<AgingStatemantDataItem> Due25_30Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 24) && (((todayDate - d.Date.Value).TotalDays) <= 30)).ToList();
+
+                List<AgingStatemantDataItem> Due31_45Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays >= 31 && (todayDate - d.Date.Value).TotalDays <= 45).ToList();
+                List<AgingStatemantDataItem> Due46_60Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 45) && (((todayDate - d.Date.Value).TotalDays) <= 60)).ToList();
 
                 if (currencyType == "profit")
                 {
@@ -2697,6 +2703,9 @@ namespace WebFreight.Web.ReportsWebServices
                         sum16_30 = (Due16_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                         sum1_24 = (Due1_24Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                         sum25_30 = (Due25_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+
+                        sum31_45 = (Due31_45Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum46_60 = (Due46_60Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                     }
                 }
 
@@ -2713,6 +2722,9 @@ namespace WebFreight.Web.ReportsWebServices
                     sum16_30 = Due16_30Items.Sum(d => d.Debit + d.Credit);
                     sum1_24 = Due1_24Items.Sum(d => d.Debit + d.Credit);
                     sum25_30 = Due25_30Items.Sum(d => d.Debit + d.Credit);
+
+                    sum31_45 = Due31_45Items.Sum(d => (d.Debit + d.Credit));
+                    sum46_60 = Due46_60Items.Sum(d => (d.Debit + d.Credit));
                 }
 
                 CardEntityClass cardEntity = allCardData.Where(d => d.Id == cardId).FirstOrDefault();
@@ -2735,6 +2747,9 @@ namespace WebFreight.Web.ReportsWebServices
                 acountsRecored.DaysPastDue16_30 = sum16_30;
                 acountsRecored.DaysPastDue1_24 = sum1_24;
                 acountsRecored.DaysPastDue25_30 = sum25_30;
+
+                acountsRecored.DaysPastDue31_45 = sum31_45;
+                acountsRecored.DaysPastDue46_60 = sum46_60;
                 dataProvider.AgedAccountsReceivableList.Add(acountsRecored);
             }
 
@@ -7611,8 +7626,9 @@ namespace WebFreight.Web.ReportsWebServices
                     flightBookingRecord.CustomAgentImport = a.CustomAgentImportName;
                     flightBookingRecord.MoveType = a.MoveTypeName;
                     flightBookingRecord.SCI = a.SCI;
-                    
-                    if(a.ShipmentLevelCode == "C")
+                    flightBookingRecord.InvoiceNumber = a.ARInvoices;
+
+                    if (a.ShipmentLevelCode == "C")
                     {
                         flightBookingRecord.HAWBsNumbers = shipmentRepository.GetHouseShipmentsCountForMaster(a.Id, tenant);
                     }
@@ -7636,10 +7652,12 @@ namespace WebFreight.Web.ReportsWebServices
                             flightBookingRecord.ConsigneeAddress = DataProviders.General.GetAddress(address);
                         }
                     }
+
                     flightBookingRecord.PC  = a.FreightPrepaidCollectId;
                     flightBookingRecord.DestinationPortCode= a.MainCarriageFinalDestinationPortCode != null ? a.MainCarriageFinalDestinationPortCode : "";
                     flightBookingRecord.ChargeableWeight = a.ChargeableWeight != null ? a.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", a.ChargeableWeight)) : "" : "";
                     totalWeight = totalWeight + (a.GrossWeight != null ? a.GrossWeight.Value : 0);
+
                     totalPackagesQuantity = totalPackagesQuantity + (a.NumberOfPackages != null ? a.NumberOfPackages.Value : 0);
 
                     if (a.TransportModeId != "A")
@@ -10781,8 +10799,8 @@ namespace WebFreight.Web.ReportsWebServices
                 AgingPeriod record = new AgingPeriod();
 
                 record.PeriodName = item.PeriodName;
-                record.AccountEnglishName = item.AccountEnglishName;
-                record.AccountLocalName = item.AccountLocalName;
+                record.AccountName = item.AccountLocalName != null ? item.AccountLocalName : item.AccountEnglishName;
+           
                 record.Total = item.Total;
 
                 totalData.AgingPeriods.Add(record);
@@ -10807,8 +10825,8 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance",
                     Total = sumValue.Value,
-                    AccountEnglishName = sumValue.Key.AccountEnglishName,
-                    AccountLocalName = sumValue.Key.AccountLocalName,
+                    AccountName = sumValue.Key.AccountLocalName != null? sumValue.Key.AccountLocalName  : sumValue.Key.AccountEnglishName,
+                  
                 });
             }
 
@@ -10936,7 +10954,7 @@ namespace WebFreight.Web.ReportsWebServices
             string accountTypeCode = GetQueryFilterItemValue<string>(filterItem_AccountTypeCode);
             string chartOfAccountsId = GetQueryFilterItemValue<string>(filterItem_ChartOfAccountsId);
             string currencyId = GetQueryFilterItemValue<string>(filterItem_CurrencyId);
-            bool isReconciled = GetQueryFilterItemValue<bool>(filterItem_IsReconciled);
+            bool? isReconciled = (bool?)filterItem_IsReconciled.FieldValue == null? null : (bool?)filterItem_IsReconciled.FieldValue;
             bool includeChildAccounts = GetQueryFilterItemValue<bool>(filterItem_IncludeChildAccounts);
             string searchFields = GetQueryFilterItemValue<string>(filterItem_SearchFields);
             string _dateTypeCode = GetQueryFilterItemValue<string>(filterItem_DateTypeCode);
@@ -12943,6 +12961,8 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.Openedby = Item.CreatedByUserName;
                     shipment.Direction = Item.DirectionName;
                     shipment.ShipmentId = Item.ShipmentNumber;
+                    shipment.ShipmentLevel = Item.ShipmentLevelName;
+
                     shipment.Shipper = Item.Shipper;
                     shipment.BUShipper = Item.ShipperNotExporterName;
                     shipment.ShipperRef1 = Item.ShipperReference1;
