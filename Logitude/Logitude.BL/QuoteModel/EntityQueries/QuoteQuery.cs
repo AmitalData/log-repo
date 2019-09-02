@@ -2455,7 +2455,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
         private string GetMarkUpText(double? value, string typeCode)
         {
-            string myResult = null;
+            string myResult = "0.00";
 
             if (value != null)
             {
