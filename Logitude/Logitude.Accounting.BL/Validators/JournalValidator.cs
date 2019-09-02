@@ -448,48 +448,7 @@ namespace Logitude.Accounting.BL.Validators
                 }
             }
 
-
-            if (myJournalPM.JournalReconciles.Count > 0)
-            {
-
-                bool tested = false;
-                if (tested)
-                {
-                    var journalApproveParser = new JournalApproveParser(myJournalPM, false,
-        accountingValidationContextServiceProvider
-        );
-                    journalApproveParser.CreateLedger_MapByJournalActionType();
-                    var newExpectedLedgerTransactions = journalApproveParser.LedgerTransactions;
-                    if (newExpectedLedgerTransactions == null || newExpectedLedgerTransactions.Count < 1)
-                    {
-                        errorsList.Add(TranslateMyTextCode("JournalReconciles-Check:newExpectedLedgerTransactions.Count < 1", myJournalPM.Tenant));
-                        
-                    }
-                    else
-                    {
-                        var theReconcileAgainstLTranIdList = myJournalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
-                        List<LedgerTransactionPM> myOldTransToReconcile = myIExternalReconcileDataProvider.GetLedgerTransactionList(theReconcileAgainstLTranIdList, myJournalPM.Tenant);
-
-
-                        try
-                        {
-
-                            var createAutoReconcileWhileStreamingService4JournalValidation = new CreateAutoReconcileWhileStreamingService4JournalValidation();
-                            createAutoReconcileWhileStreamingService4JournalValidation.MustInit(null, myJournalPM, newExpectedLedgerTransactions);
-                            createAutoReconcileWhileStreamingService4JournalValidation.InitMe(myOldTransToReconcile);
-                            createAutoReconcileWhileStreamingService4JournalValidation.CreateAutoReconcileWhileStreaming();
-
-                        }
-                        catch (Exception eeee)
-                        {
-
-                            errorsList.Add(TranslateMyTextCode("JournalReconciles-validate:" + eeee.Message, myJournalPM.Tenant));
-                        }
-                    }
-
-                }
-            }
-
+            ValidateJournalReconciles(myJournalPM, accountingValidationContextServiceProvider, errorsList, myIExternalReconcileDataProvider);
 
             ValidateJournalExternalReconciles(myJournalPM, errorsList, myIExternalReconcileDataProvider);
 
@@ -510,6 +469,54 @@ namespace Logitude.Accounting.BL.Validators
                 return new ValidationResult(TranslateMyTextCode("Accounting.General.O.JournalNotValid", 0) + ": " + errorString, errorsList);
             }
 
+
+
+
+        }
+
+        private static void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
+        {
+            if (myJournalPM.JournalReconciles.Count == 0)
+            {
+                return;
+            }
+
+            bool tested = true;
+            if (!tested)
+            {
+                return;
+            }
+            var journalApproveParser = new JournalApproveParser(myJournalPM, false,
+accountingValidationContextServiceProvider
+);
+            journalApproveParser.CreateLedger_MapByJournalActionType();
+            var newExpectedLedgerTransactions = journalApproveParser.LedgerTransactions;
+            if (newExpectedLedgerTransactions == null || newExpectedLedgerTransactions.Count < 1)
+            {
+                errorsList.Add(TranslateMyTextCode("JournalReconciles-Check:newExpectedLedgerTransactions.Count < 1", myJournalPM.Tenant));
+
+            }
+            else
+            {
+                var theReconcileAgainstLTranIdList = myJournalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
+                List<LedgerTransactionPM> myOldTransToReconcile = myIExternalReconcileDataProvider.GetLedgerTransactionList(theReconcileAgainstLTranIdList, myJournalPM.Tenant);
+
+
+                try
+                {
+
+                    var createAutoReconcileWhileStreamingService4JournalValidation = new CreateAutoReconcileWhileStreamingService4JournalValidation();
+                    createAutoReconcileWhileStreamingService4JournalValidation.MustInit(null, myJournalPM, newExpectedLedgerTransactions);
+                    createAutoReconcileWhileStreamingService4JournalValidation.InitMe(myOldTransToReconcile);
+                    createAutoReconcileWhileStreamingService4JournalValidation.CreateAutoReconcileWhileStreaming(false);
+
+                }
+                catch (Exception eeee)
+                {
+
+                    errorsList.Add(TranslateMyTextCode("JournalReconciles-validate:" + eeee.Message, myJournalPM.Tenant));
+                }
+            }
 
 
 
