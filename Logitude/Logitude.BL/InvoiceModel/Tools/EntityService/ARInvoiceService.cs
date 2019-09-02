@@ -3294,7 +3294,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             GLAccountPM debitGLAcount = getDebitGLAccount(invoice.BillToId, invoice.Tenant);
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
 
-            return glAccountQuery.GetSplittedByCurrencyGLAccount(debitGLAcount.Id, invoice.Tenant, invoice.InvoiceCurrencyId);
+            GLAccountPM splittedAccount = glAccountQuery.GetSplittedByCurrencyGLAccount(debitGLAcount.Id, invoice.Tenant, invoice.InvoiceCurrencyId);
+
+            if (splittedAccount == null)
+                return splittedAccount;
+            else
+                return debitGLAcount;
+
         }
 
         private GLAccountPM getDebitGLAccount(string billToId, int tenant)
