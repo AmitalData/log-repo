@@ -57,7 +57,7 @@
                                             <span *ngIf="!DataContext.OriginPortId">{{OriginPortText}}</span>
                                         </td>
                                     </tr>
-                                </table>                                
+                                </table>
                             </td>
                         </tr>
 
@@ -107,6 +107,29 @@
                                         </td>
                                     </tr>
                                 </table>
+                            </td>
+                        </tr>
+
+
+                        <!-- Currency -->
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC'">
+                            <td>
+                                <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td>
+                                <LogLov [ObjectFieldName]="'CurrencyId'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="DataContext.CurrencyId"
+                                        [DataContext]="DataContext"
+                                        [DisplayMemberPath]="'Code'"
+                                        (SelectedItemChanged)="DataContext.Currency = $event"
+                                        [LookUpTableName]="'Currency'">
+                                </LogLov>
+                            </td>
+
+                            <td>
+                                <div></div>
                             </td>
                         </tr>
 
