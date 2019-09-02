@@ -1413,6 +1413,10 @@
     <Compile Include="Migrations\201908290859320_AddTariffVersionToShipmentPayable_Maheera.Designer.cs">
       <DependentUpon>201908290859320_AddTariffVersionToShipmentPayable_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908281125076_ChangeTemperatureFieldType.cs" />
+    <Compile Include="Migrations\201908281125076_ChangeTemperatureFieldType.Designer.cs">
+      <DependentUpon>201908281125076_ChangeTemperatureFieldType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.cs" />
     <Compile Include="Migrations\201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.Designer.cs">
       <DependentUpon>201908291012597_DeleteCutOffDateFieldFromShipment_Maheera.cs</DependentUpon>
@@ -1432,6 +1436,18 @@
     <Compile Include="Migrations\201908291804183_AddCopyQuoteRatesSetting.cs" />
     <Compile Include="Migrations\201908291804183_AddCopyQuoteRatesSetting.Designer.cs">
       <DependentUpon>201908291804183_AddCopyQuoteRatesSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908302137553_PaymentMethodLocalNameMigration.cs" />
+    <Compile Include="Migrations\201908302137553_PaymentMethodLocalNameMigration.Designer.cs">
+      <DependentUpon>201908302137553_PaymentMethodLocalNameMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909011607312_Add_Currency_TariffLine_Khalid.cs" />
+    <Compile Include="Migrations\201909011607312_Add_Currency_TariffLine_Khalid.Designer.cs">
+      <DependentUpon>201909011607312_Add_Currency_TariffLine_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909020732047_AddSurchargeMinPricesToTariffLine_Samar.cs" />
+    <Compile Include="Migrations\201909020732047_AddSurchargeMinPricesToTariffLine_Samar.Designer.cs">
+      <DependentUpon>201909020732047_AddSurchargeMinPricesToTariffLine_Samar.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2429,6 +2445,9 @@
     <EmbeddedResource Include="Migrations\201908200520232_ModifyInboundEmailAndTicketSubjectLength_Maheera.resx">
       <DependentUpon>201908200520232_ModifyInboundEmailAndTicketSubjectLength_Maheera.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908281125076_ChangeTemperatureFieldType.resx">
+      <DependentUpon>201908281125076_ChangeTemperatureFieldType.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908220853250_AddTariffFieldsToShipmentPayableTable_Maheera.resx">
       <DependentUpon>201908220853250_AddTariffFieldsToShipmentPayableTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
@@ -2449,6 +2468,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908291804183_AddCopyQuoteRatesSetting.resx">
       <DependentUpon>201908291804183_AddCopyQuoteRatesSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908302137553_PaymentMethodLocalNameMigration.resx">
+      <DependentUpon>201908302137553_PaymentMethodLocalNameMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909011607312_Add_Currency_TariffLine_Khalid.resx">
+      <DependentUpon>201909011607312_Add_Currency_TariffLine_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909020732047_AddSurchargeMinPricesToTariffLine_Samar.resx">
+      <DependentUpon>201909020732047_AddSurchargeMinPricesToTariffLine_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

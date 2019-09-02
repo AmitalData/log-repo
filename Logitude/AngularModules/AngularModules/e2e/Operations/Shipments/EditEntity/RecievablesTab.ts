@@ -60,16 +60,16 @@ export class ReceivablesTabComponent {
         this.Helper.WaitByIdAndClick('AddReceivable');
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_ChargesTypeId', ChargeType);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentReceivable_ChargesTypeId', ChargeType);
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_MeasurementId', 'Gross');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentReceivable_MeasurementId', 'Gross');
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_Quantity', quantity);
         this.Helper.WaitByIdAndFill('ShipmentReceivable_UnitPrice', unitPrice);
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_CurrencyId', currency);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentReceivable_CurrencyId', currency);
 
         var EC = protractor.ExpectedConditions;
         // browser.wait(EC.elementToBeClickable(element(by.id('ShipmentReceivable_Rate'))), 20000).then(a => {

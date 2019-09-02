@@ -17,7 +17,7 @@ export class RoutingsTabComponent {
     this.Helper.WaitByIdAndFill('date_Quote_ETA','2');
     if(ShipmentType=='LTL'){
         this.Helper.WaitByIdAndFill('Quote_MainCarriageCarrierId','Trucker1London');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_MainCarriageCarrierId','Trucker1London');
 
     }
   }

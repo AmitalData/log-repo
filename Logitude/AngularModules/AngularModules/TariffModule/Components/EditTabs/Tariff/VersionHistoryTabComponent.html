@@ -194,6 +194,15 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- Currency -->
+                                    <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'120'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.CurrencyCode}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
                                     <!-- StartDate -->
                                     <log-column [header]="'TariffLine.F.StartDate' | TextCodeTranslationPipe" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">

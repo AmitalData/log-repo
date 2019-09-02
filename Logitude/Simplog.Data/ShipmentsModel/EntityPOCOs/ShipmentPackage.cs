@@ -27,7 +27,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? Length { get; set; }
         public string UnNumber { get; set; }
         public string ClassNumber { get; set; }
-        public double? Temperature { get; set; }
+        public string Temperature { get; set; }
         public double? Ventilation { get; set; }
         public int? SOC { get; set; }
         public string MarksAndNumbers { get; set; }

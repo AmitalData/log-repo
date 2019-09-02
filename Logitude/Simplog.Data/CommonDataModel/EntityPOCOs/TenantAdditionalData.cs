@@ -20,7 +20,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PaymentGatewayPartnerCode { get; set; }
         public string PaymentGatewayConnectionString { get; set; }
 
-        public PaymentGatewayPartners PaymentGatewayPartner { get; set; }
+        public PaymentGatewayPartner PaymentGatewayPartner { get; set; }
 
     }
 }
