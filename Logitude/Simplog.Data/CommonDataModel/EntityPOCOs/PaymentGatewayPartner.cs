@@ -5,7 +5,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
-    public class PaymentGatewayPartners
+    public class PaymentGatewayPartner
     {
         [Key]
         public string Code { get; set; }

@@ -1663,12 +1663,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 #endregion
             }
         }
+        Tenant tenantPOCO;
         private void InitializeGLAccountFields()
         {
             if (entityPM.SetApproved)
             {
                 TenantRepository tenantRepository = new TenantRepository(tenant);
-                Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+                 tenantPOCO = tenantRepository.GetSingleTenant(tenant);
 
                 if (tenantPOCO.AccountingActivated)
                 {
@@ -3293,7 +3294,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             GLAccountPM debitGLAcount = getDebitGLAccount(invoice.BillToId, invoice.Tenant);
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
 
-            return glAccountQuery.GetSplittedByCurrencyGLAccount(debitGLAcount.Id, invoice.Tenant, invoice.InvoiceCurrencyId);
+            GLAccountPM splittedAccount = glAccountQuery.GetSplittedByCurrencyGLAccount(debitGLAcount.Id, invoice.Tenant, invoice.InvoiceCurrencyId);
+
+            if (splittedAccount == null)
+                return splittedAccount;
+            else
+                return debitGLAcount;
+
         }
 
         private GLAccountPM getDebitGLAccount(string billToId, int tenant)
@@ -3512,8 +3519,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (this.isApprovingInvoice)
             {
                 // Journal Work
-                this.AddARInvoiceJournalAndJournalLines(entityPM, this.isApprovingInvoice);
-
+                if (tenantPOCO.AccountingActivated)
+                {
+                    this.AddARInvoiceJournalAndJournalLines(entityPM, this.isApprovingInvoice);
+                }
               
                 // DropBox
                 this.CreateARInvoiceMessage(this.isApprovingInvoice);

@@ -179,9 +179,9 @@ export class ShipmentPackagePM {
     public set ClassNumber(newValue: string) { if (this.classNumber != newValue) { this.classNumber = newValue; this.MarkAsDirty("ClassNumber"); } }
        
 	 
-    private temperature: number;
+    private temperature: string;
     public get Temperature() { return this.temperature; }
-    public set Temperature(newValue: number) { if (this.temperature != newValue) { this.temperature = newValue; this.MarkAsDirty("Temperature"); } }
+    public set Temperature(newValue: string) { if (this.temperature != newValue) { this.temperature = newValue; this.MarkAsDirty("Temperature"); } }
        
 	 
     private ventilation: number;
