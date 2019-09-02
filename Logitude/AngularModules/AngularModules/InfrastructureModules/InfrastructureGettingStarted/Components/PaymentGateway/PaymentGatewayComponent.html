@@ -12,13 +12,13 @@
         </td>
     </tr>
     <tr class="FormFieldRow">
-        <td style="width:15px;"[style.width.px]="LabelColumnWidth">
+        <td style="width:15px;">
             <LogLabel [ObjectFieldName]="'PaymentGatewayPartnerCode'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext" [Text]="'Partner'"></LogLabel>
            
         </td>
 
-        <td style="width:100px;" [style.width.px]="ControlColumnWidth">
+        <td style="width:100px;" >
             <LogLov [ObjectFieldName]="'PaymentGatewayPartnerCode'"
                     [SelectedValue]="PaymentGatewayPartnerCode"
                     [ObjectTableName]="ObjectTableName"
@@ -31,13 +31,13 @@
         
     </tr>
     <tr class="FormFieldRow">
-        <td [style.width.px]="LabelColumnWidth">
+        <td >
             <LogLabel [ObjectFieldName]="'PaymentGatewayConnectionString'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
           
         </td>
 
-        <td [style.width.px]="ControlColumnWidth">
+        <td >
             <LogTextBox  [ObjectFieldName]="'PaymentGatewayConnectionString'" [Text]="PaymentGatewayConnectionString" [DataContext]="DataContext"
                         [ObjectTableName]="ObjectTableName" [HideColumns]="true" [HideLastColumn]="true"></LogTextBox>
         </td>
