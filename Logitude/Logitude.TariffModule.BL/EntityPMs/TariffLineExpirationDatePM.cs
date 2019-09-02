@@ -8,7 +8,8 @@ namespace Logitude.TariffModule.BL.EntityPMs
 {
     public class TariffLineExpirationDatePM
     {
-        public string TariffLineId { get; set; }
+        public string OriginPortId { get; set; }
+        public string DestinationPortId { get; set; }
         public DateTime? ExpirationDate { get; set; }
     }
 }
