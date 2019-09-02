@@ -216,7 +216,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.OrderChargeableWeight = entityPM.OrderChargeableWeight;
             entityPoco.BookingNumberOfPackages = entityPM.BookingNumberOfPackages;
             entityPoco.OrderIsDangerouseGoods = entityPM.OrderIsDangerouseGoods;
-            entityPoco.CutoffDate = entityPM.CutoffDate;
             entityPoco.ShipmentLevelCode = entityPM.ShipmentLevelCode;
             entityPoco.IncotermId = entityPM.IncotermId;
             entityPoco.FreightPrepaidCollectId = entityPM.FreightPrepaidCollectId;
@@ -436,6 +435,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPM.PackagesDeleted = false;            
 
             ValidateMAWBStackField(entityPoco, entityMasterData);
+
+            if(myPackagesList.Count == 0)
+            {
+                entityPoco.HasContainerException = false;
+                entityPoco.INTTRALastStatusDate = null;
+            }
         }
 
         private static void ValidateMAWBStackField(Shipment entityPoco, ShipmentMasterData entityMasterData)

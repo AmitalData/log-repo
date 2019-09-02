@@ -1376,6 +1376,11 @@ export class QuotePM {
     public set MarkFollowUpsAsDone(newValue: boolean) { if (this.markFollowUpsAsDone != newValue) { this.markFollowUpsAsDone = newValue; this.MarkAsDirty("MarkFollowUpsAsDone"); } }
        
 	 
+    private isCopyExchangeRates: boolean;
+    public get IsCopyExchangeRates() { return this.isCopyExchangeRates; }
+    public set IsCopyExchangeRates(newValue: boolean) { if (this.isCopyExchangeRates != newValue) { this.isCopyExchangeRates = newValue; this.MarkAsDirty("IsCopyExchangeRates"); } }
+       
+	 
      
 	private quotePackages: QuotePackagePM[];
     get  QuotePackages() {

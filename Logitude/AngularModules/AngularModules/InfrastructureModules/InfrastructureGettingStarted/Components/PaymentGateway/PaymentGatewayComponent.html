@@ -1,47 +1,53 @@
 
-<!--<table>
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td>
+        <td colspan="3">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
 
     <tr style="height:10px;">
-        <td>
+        <td colspan="2" >
             <div></div>
         </td>
     </tr>
     <tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="PaymentGatewayPartner"
-                      [DataContext]="DataContext"></LogLabel>
+        <td style="width:15px;">
+            <LogLabel [ObjectFieldName]="'PaymentGatewayPartnerCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext" [Text]="'Partner'"></LogLabel>
+           
         </td>
 
-        <td>
+        <td style="width:100px;" >
             <LogLov [ObjectFieldName]="'PaymentGatewayPartnerCode'"
-                     [SelectedValue]="PaymentGatewayPartnerCode"
+                    [SelectedValue]="PaymentGatewayPartnerCode"
                     [ObjectTableName]="ObjectTableName"
                     [DataContext]="DataContext"
                     [LookUpTableName]="'PaymentGatewayPartner'"
                     [HideColumns]="true">
             </LogLov>
         </td>
-        <td><div></div></td>
+        <td style="width:120px;"><div></div></td>
+        
     </tr>
     <tr class="FormFieldRow">
-        <td>
+        <td >
             <LogLabel [ObjectFieldName]="'PaymentGatewayConnectionString'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
+          
         </td>
 
-        <td>
-            <LogTextBox [ObjectFieldName]="'PaymentGatewayConnectionString'" [InputType]="'string'" [DataContext]="DataContext"
-                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+        <td >
+            <LogTextBox  [ObjectFieldName]="'PaymentGatewayConnectionString'" [Text]="PaymentGatewayConnectionString" [DataContext]="DataContext"
+                        [ObjectTableName]="ObjectTableName" [HideColumns]="true" [HideLastColumn]="true"></LogTextBox>
         </td>
-        <td><div></div></td>
+        <td  style="width:100px;"><div></div></td>
+      
     </tr>
     <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
+        <td><div></div></td>
+        <td><div></div></td>
+        <td style="vertical-align: bottom;">
             <table style="height: 22px;">
                 <tr>
                     <td>
@@ -64,4 +70,6 @@
         </td>
     </tr>
 
-</table>-->
+</table>
+
+

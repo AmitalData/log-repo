@@ -18,6 +18,7 @@ export class NewUser {
 
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndClick('General.MH.Maintenance');
+        this.helper.waitByCss('#null_Search');
     }
 
     SearchUserTab() {
@@ -52,7 +53,7 @@ export class NewUser {
         this.helper.WaitByIdAndFill('User_Search', this.UserName);
         //TO CHOOSE WICH USER YOU WANT TO EDI 
      
-        this.helper.WaitByCssAndClick_FromTagInsideList('.QuickSearchDropDown', 0);
+        this.helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
         //click on row 
         this.helper.WaitByIdAndFill('User_LocalName', "Raghad");
         this.helper.WaitByIdAndFill('User_Notes', "This Is Test For Protractor")

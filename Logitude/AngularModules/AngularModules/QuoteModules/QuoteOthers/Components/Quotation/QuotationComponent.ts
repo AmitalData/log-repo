@@ -114,7 +114,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                     if (this.QuotePM.StageId == myDraftStage.Id || this.QuotePM.StageId == myCreateStage.Id) {
                         this.QuotePM.ActionType = "SetAsSentToCustomer";
                     }
-                    //this.CurrentSession.CurrentEditComponent.EntityPM.ActionType = "SetAsSentToCustomer";
+                 
 
                     this.quotePMService.update(this.QuotePM).subscribe(response => {
 
@@ -229,28 +229,38 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         }
     }
 
+    SetDefultQuoteTemplate() {
+
+        if (this.QuotePM && this.QuotationTemplates) {
+            if (!AppTool.IsNullOrEmpty(this.QuotePM.QuoteTemplateId)) {
+                this.SelectedQuoteTemplate = this.QuotationTemplates.filter(r => r.Id == this.QuotePM.QuoteTemplateId)[0];
+            }
+
+            if (this.SelectedQuoteTemplate == null) {
+                if (!AppTool.IsNullOrEmpty(this.QuotationDefaultTemplateId)) {
+                    this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.Id == this.QuotationDefaultTemplateId)[0];
+                }
+            }
+
+            if (this.SelectedQuoteTemplate == null) {
+                this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.IsDefault == true)[0];
+            }
+
+            if (this.SelectedQuoteTemplate == null) {
+                this.SelectedQuoteTemplate = this.QuotationTemplates[0];
+            }
+        }
+
+    }
+
+
     SelectedModeClicked(mode) {
         this.SelectedMode = mode;
 
         if (this.SelectedMode === "Generate" && this.currentDocumentVersion != null && this.currentDocumentVersion.VersionType == "U") {
             if (this.QuotationTemplates.length > 0) {
                 if (this.selectedQuoteTemplate == null) {
-                    if (!AppTool.IsNullOrEmpty(this.QuotePM.QuoteTemplateId)) {
-                        this.SelectedQuoteTemplate = this.QuotationTemplates.filter(r => r.Id == this.QuotePM.QuoteTemplateId)[0];
-                    }
-                    else {
-
-                        if (!AppTool.IsNullOrEmpty(this.QuotationDefaultTemplateId)) {
-                            this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.Id == this.QuotationDefaultTemplateId)[0];
-                        }
-                        else this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.IsDefault == true)[0];
-                       
-                    }
-
-                    if (this.SelectedQuoteTemplate == null) {
-                        this.SelectedQuoteTemplate = this.QuotationTemplates[0];
-
-                    }
+                    this.SetDefultQuoteTemplate();
                 }
 
 
@@ -324,7 +334,8 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         });
 
     }
-    LoadTemplates(templateId:string = null) {
+    LoadTemplates(templateId: string = null) {
+        this.SelectedQuoteTemplate = null;
         this.quoteTemplateExtendedPMService.GetQuoteTemplateListsByQuoteTemplateTypeAndTenant(this.QuotePM.QuoteTypeCode, SessionLocator.Tenant).subscribe(response => {
 
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -339,28 +350,9 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                     this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.Id == templateId)[0];
                 }
 
-
-              else  if (!AppTool.IsNullOrEmpty(this.QuotePM.QuoteTemplateId)) {
-                    this.SelectedQuoteTemplate = this.QuotationTemplates.filter(r => r.Id == this.QuotePM.QuoteTemplateId)[0];
-                }
-                else {
-                
-                    if (!AppTool.IsNullOrEmpty(this.QuotationDefaultTemplateId)) {
-                        this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.Id == this.QuotationDefaultTemplateId)[0];
-                    }
-                    else this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.IsDefault == true)[0];
-
-                    
-                }
-
-              
-                    
-
                 if (this.SelectedQuoteTemplate == null) {
-                    this.SelectedQuoteTemplate = this.QuotationTemplates[0];
-
+                    this.SetDefultQuoteTemplate();
                 }
-
 
 
                 if (this.QuotationTemplates.length == 0) {

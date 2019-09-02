@@ -187,7 +187,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Field40 { get; set; }
 
         public string SearchFields { get; set; }
-        public DateTime? CutoffDate { get; set; }
         public double? Volume { get; set; }
 
         public string AWBSpecialHandlingCodeId1 { get; set; }

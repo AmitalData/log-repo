@@ -169,8 +169,8 @@ namespace WebFreight.Web.MetaDataUpdate
             }
 
             CreateTableCounters();
-            CreateDomesticCounterDefinitions();
-            CreateDropDirectionCounterDefinitions();
+            //CreateDomesticCounterDefinitions();
+            //CreateDropDirectionCounterDefinitions();
             CreateAllTablesTips(tips, textCodes);
 
             if (updateMetadatafields)
@@ -65293,7 +65293,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature menuFeature20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "MENU", Packagable = true, Code = "General.Features.Automations", NameTextCodeCode = "General.Features.Automations", NameTextCodeDefaultText = "Automations" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, Code = "General.Features.DocumentsBackup", NameTextCodeCode = "General.Features.DocumentsBackup", NameTextCodeDefaultText = "Documents Backup", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralDepositionsfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEPOSITIONS", ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Deposition", NameTextCodeDefaultText = "Depositions", FeatureTypeCode = "MENU", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
+           
 
             Feature menuFeature025 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, Code = "SIGNATURESETTING", NameTextCodeCode = "General.Features.Signature", NameTextCodeDefaultText = "Signature", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature menuFeature026 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, Code = "CHANGEPASSWORDSETTING", NameTextCodeCode = "General.Features.ChangePassword", NameTextCodeDefaultText = "Change Password", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);

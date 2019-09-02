@@ -1,5 +1,5 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
-//const HtmlReporter = require('protractor-beautiful-reporter');
+const HtmlReporter = require('protractor-beautiful-reporter');
 
 exports.config = {
     allScriptsTimeout: 990000,
@@ -9,6 +9,7 @@ exports.config = {
     params: {
         Env: null,
         Link: null,
+        Team: null,
         Login: {
             Email: null,
             Password: null,
@@ -18,6 +19,7 @@ exports.config = {
             Direction: null,
             TransportMode: null,
             ShipmentType: null,
+            ShipmentEditTabs:null,
         },
         QuoteParams: {
             Direction: null,
@@ -126,9 +128,15 @@ exports.config = {
             browser.params.Login.Password = "Sg0592463934!";
         }
 
+        //------------------------------------- Reporter --------------------------------
+        if (browser.params.Team == "ayman") {
+            jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamAyman/screenshots' }).getJasmine2Reporter());
+        } else {
+            jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamIslam/screenshots' }).getJasmine2Reporter());
+        }
 
-        //   jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-        // jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'D:/Automation E2E reuslts/screenshots' }).getJasmine2Reporter());
     },
 
     suites: {
