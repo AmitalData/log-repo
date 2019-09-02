@@ -1308,19 +1308,20 @@ export class ShipmentPayableItem extends BaseComponent {
         this.IsOpenAmountEnabled = isOpenAmountEnabled;
         this.IsEditingEnabled = isEditingEnabled;
         this.IsLineAttachted = isLineAttachted;
-
-        this.UIProperties.SetEnabled("ExpectedAmount", this.ObjectTableName, this.IsTotalAmountEnabled);
+        var isFromTariff = this.EntityPM != null && this.EntityPM.TariffId != null;
+      
+        this.UIProperties.SetEnabled("ExpectedAmount", this.ObjectTableName, this.IsTotalAmountEnabled || isFromTariff);
         this.UIProperties.SetEnabled("ExpectedAmountLocal", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("Rate", this.ObjectTableName, isRateEnabled || isFromTariff);
+        this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, isChargeEnabled || isFromTariff);
+        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsQuantityEnabled || isFromTariff);
+        this.UIProperties.SetEnabled("UnitPrice", this.ObjectTableName, this.IsUnitPriceEnabled || isFromTariff);
+        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, this.IsEditingEnabled || isFromTariff);
+        this.UIProperties.SetEnabled("MeasurementId", this.ObjectTableName, this.IsEditingEnabled || isFromTariff);
+        this.UIProperties.SetEnabled("PrepaidCollectId", this.ObjectTableName, this.IsEditingEnabled || isFromTariff);
+        this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, this.IsEditingEnabled || isFromTariff);
+        this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled || isFromTariff);
 
-        this.UIProperties.SetEnabled("Rate", this.ObjectTableName, isRateEnabled);
-        this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, isChargeEnabled);
-        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, this.IsQuantityEnabled);
-        this.UIProperties.SetEnabled("UnitPrice", this.ObjectTableName, this.IsUnitPriceEnabled);
-        this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("MeasurementId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("PrepaidCollectId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
         this.SetUIProperties_AmountProfit();
         this.SetUIProperties_MeasurementId();
     }
@@ -1520,9 +1521,25 @@ export class ShipmentPayableItem extends BaseComponent {
     get ChargesTypeName() { return this.EntityPM.ChargesTypeName; }
     get ChargesGroupCode() { return this.EntityPM.ChargesGroupCode; }
     get TariffNumber() { return this.EntityPM.TariffNumber; }
-    get TariffId() { return this.EntityPM.TariffId; }
+    set TariffNumber(value: string) {
+        if (value != this.EntityPM.TariffNumber) {
+            this.EntityPM.TariffNumber = value;
+        }
+    }
+    get TariffId() {
+        return this.EntityPM.TariffId;
+    }
+    set TariffId(value: string) {
+        if (value != this.EntityPM.TariffId) {
+            this.EntityPM.TariffId = value;
+        }
+    }
     get TariffVersion() { return this.EntityPM.TariffVersion; }
-
+    set TariffVersion(value: number) {
+        if (value != this.EntityPM.TariffVersion) {
+            this.EntityPM.TariffVersion = value;
+        }
+    }
 
     get ChargesTypeId() { return this.EntityPM.ChargesTypeId; }
     set ChargesTypeId(value: string) {
