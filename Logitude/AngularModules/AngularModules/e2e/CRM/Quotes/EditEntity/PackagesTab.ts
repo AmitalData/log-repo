@@ -17,14 +17,14 @@ export class PackagesTabComponent {
  if(ShipmentType=='FCL'){
       this.Helper.WaitByIdAndFill('Quote_PackageType2Quantity','2');
       this.Helper.WaitByIdAndFill('Quote_PackageType2Id','20fr');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_PackageType2Id','20fr');
     }
     else if(ShipmentType=='' || ShipmentType=='LTL'){
       this.Helper.WaitByIdAndClick('AddPackage');
       this.Helper.WaitByIdAndFill('QuotePackage_Quantity','2');
         if(ShipmentType=='LTL'){
       this.Helper.WaitByIdAndFill('QuotePackage_PackageTypeId','A0');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'QuotePackage_PackageTypeId','A0');
     }
       this.Helper.WaitByIdAndFill('QuotePackage_Length','100');
       this.Helper.WaitByIdAndFill('QuotePackage_Width','100');
@@ -37,7 +37,7 @@ export class PackagesTabComponent {
   else{
     if(ShipmentType=='FTL' || ShipmentType=='FCL'){
       this.Helper.WaitByIdAndFill('Quote_PackageType2Id','20fr');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_PackageType2Id','20fr');
     }else{
     this.Helper.WaitByIdAndFill('Quote_GrossWeight','1000');
     this.Helper.WaitByIdAndFill('Quote_Volume','100');
