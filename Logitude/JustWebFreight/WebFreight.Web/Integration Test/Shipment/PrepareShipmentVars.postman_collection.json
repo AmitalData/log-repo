@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9afcbac9-adad-4239-8f3b-f06fa126855a",
+		"_postman_id": "ff794a61-e1db-49bf-a110-e8d20067a2a3",
 		"name": "PrepareShipmentVars.postman_collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -15,8 +15,6 @@
 						"exec": [
 							"pm.test(\"AuthSuccessfullOnTenant1\", function () {",
 							"    pm.response.to.have.status(200);",
-							"    ",
-							"   ",
 							"    var idvalue1 = (pm.response.json().Token);",
 							"    var idvalue2 = (pm.response.json().Tenant);",
 							"    var idvalue3 = (pm.response.json().UserId);",
@@ -78,9 +76,14 @@
 							"pm.test(\"GetLoogedUserData\",function(){",
 							"    pm.response.to.have.status(200);",
 							"    ",
-							"    var BranchId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].BranchId;",
-							"    var DepartmentId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].DepartmentId;",
-							"    var CreatedByUserId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].Id;",
+							"    // var BranchId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].BranchId;",
+							"    // var DepartmentId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].DepartmentId;",
+							"    // var CreatedByUserId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].Id;",
+							"    ",
+							"    ",
+							"    var BranchId=pm.response.json().Result[0].BranchId;",
+							"    var DepartmentId=pm.response.json().Result[0].DepartmentId;",
+							"    var CreatedByUserId=pm.response.json().Result[0].Id;",
 							"    ",
 							"    var test1 =BranchId !== null;",
 							"    var test2 =DepartmentId !== null;",
