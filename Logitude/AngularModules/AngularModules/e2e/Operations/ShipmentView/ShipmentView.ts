@@ -24,7 +24,6 @@ export class ShipmentView {
         this.helper.WaitByIdAndClick('QueryList_0_0');
         this.helper.WaitByIdAndClick('NewViewId_0_0');
         this.helper.WaitByIdAndClick('NewViewTabchoose');
-        //fill view name
         this.helper.WaitByIdAndFill("ViewNameId", 'Raghads View');
         this.helper.waitByCss('.ListBoxItem');
         this.helper.WaitByIdAndFill('NewViewSearchFields_0_0', "first");
