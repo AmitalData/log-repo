@@ -40,6 +40,25 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return entity;
         }
 
+        public TenantAdditionalData GetSingleTenantAdditionalDataByTenant(int tenant)
+        {
+            TenantAdditionalData entity = (from a in context.TenantAdditionalDatas where a.Tenant == tenant select a).FirstOrDefault();
+            return entity;
+        }
+
+        public IQueryable<TenantAdditionalData> GetTenantAdditionalDatas(int tenant)
+        {
+            TenantAdditionalData entity = (from a in context.TenantAdditionalDatas where a.Tenant == tenant select a).FirstOrDefault();
+            return this.context.TenantAdditionalDatas;
+        }
+
+        public TenantAdditionalData GetSingleTenantAdditionalData(int id , int tenant)
+        {
+            TenantAdditionalData entity = (from a in context.TenantAdditionalDatas where a.Tenant == tenant && a.Id== id select a).FirstOrDefault();
+            return entity;
+        }
+
+
         public TenantAdditionalData GetSingleTenantAdditionalDataByState(string state)
         {
             TenantAdditionalData entity = (from a in context.TenantAdditionalDatas where a.DropBoxState == state select a).FirstOrDefault();

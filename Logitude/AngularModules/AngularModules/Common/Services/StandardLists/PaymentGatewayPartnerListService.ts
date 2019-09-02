@@ -17,17 +17,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {NumberFormatList} from '../../EntityLists/NumberFormatList';
+import {PaymentGatewayPartnerList} from '../../EntityLists/PaymentGatewayPartnerList';
 
 @Injectable()
 
-export class NumberFormatListService {
+export class PaymentGatewayPartnerListService {
 	private _http: Http;
     private _apiUrl: string;   
-	public static CachedData: Array<NumberFormatList> = [];
+	public static CachedData: Array<PaymentGatewayPartnerList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/numberformatviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/paymentgatewaypartnerviews';  
     }
 
     getSingle(code: string) {
@@ -41,7 +41,7 @@ export class NumberFormatListService {
             }).map(response => {
                 var list = response.json();
                     
-                var entity: NumberFormatList;
+                var entity: PaymentGatewayPartnerList;
 				if(list)
 				{
                    entity = this.MapJsonToEntityList(list);
@@ -51,7 +51,7 @@ export class NumberFormatListService {
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "NumberFormat", "GetSingleList", 'code=' + code); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PaymentGatewayPartner", "GetSingleList", 'code=' + code); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -71,12 +71,12 @@ export class NumberFormatListService {
             }).map(response => {
 
               var allLists = response.json();
-              var _mappedListsArray: Array< NumberFormatList> = [];
+              var _mappedListsArray: Array< PaymentGatewayPartnerList> = [];
 		      if(allLists)
 			  {
 				for (var key in  allLists) {
 				
-				   var entity: NumberFormatList;
+				   var entity: PaymentGatewayPartnerList;
                    entity = this.MapJsonToEntityList(allLists[key]);
 				   _mappedListsArray.push(entity);
 
@@ -87,7 +87,7 @@ export class NumberFormatListService {
                 serviceResponse.Result = _mappedListsArray;  
 				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "NumberFormat", "GetAll", ""); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PaymentGatewayPartner", "GetAll", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -139,12 +139,12 @@ export class NumberFormatListService {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array< NumberFormatList> = [];
+                var _mappedListsArray: Array< PaymentGatewayPartnerList> = [];
 				if(serviceResponse.Result)
 				{
                 for (var key in serviceResponse.Result) {
 				
-				   var entity: NumberFormatList;
+				   var entity: PaymentGatewayPartnerList;
                    entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
 				   _mappedListsArray.push(entity);
 
@@ -154,7 +154,7 @@ export class NumberFormatListService {
                 serviceResponse.Result = _mappedListsArray;      
 		        serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "NumberFormat", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PaymentGatewayPartner", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  				
 				            
                 return serviceResponse;
@@ -172,11 +172,11 @@ export class NumberFormatListService {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
 
-        if (NumberFormatListService.CachedData.length > 0) {
+        if (PaymentGatewayPartnerListService.CachedData.length > 0) {
 
             return Observable.defer(() => {
 
-                var filteredData = NumberFormatListService.CachedData.filter(a => a.Code === code)[0];
+                var filteredData = PaymentGatewayPartnerListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return Observable.of(serviceResponse);
@@ -185,26 +185,26 @@ export class NumberFormatListService {
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("NumberFormat").map(cachedJson=> {
+            return CachedDataManager.GetClosedTableData("PaymentGatewayPartner").map(cachedJson=> {
 
-                var _mappedListsArray: Array<NumberFormatList> = [];
+                var _mappedListsArray: Array<PaymentGatewayPartnerList> = [];
                 if (cachedJson) {
                     for (var key in cachedJson) {
 
-                        var entity: NumberFormatList;
+                        var entity: PaymentGatewayPartnerList;
                         entity = this.MapJsonToEntityList(cachedJson[key]);
                         _mappedListsArray.push(entity);
 
                     }
                 }
 
-                NumberFormatListService.CachedData = _mappedListsArray;
+                PaymentGatewayPartnerListService.CachedData = _mappedListsArray;
 
-                var filteredData = NumberFormatListService.CachedData.filter(a => a.Code === code)[0];
+                var filteredData = PaymentGatewayPartnerListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.Result = filteredData; 
 				serviceResponse.CallTime = callTime;
 			     
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "NumberFormat", "GetSingleListFromCache", 'code=' + code); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "PaymentGatewayPartner", "GetSingleListFromCache", 'code=' + code); 
 
                 return serviceResponse;
 
@@ -233,16 +233,16 @@ export class NumberFormatListService {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
 
-        if (NumberFormatListService.CachedData.length > 0) {
+        if (PaymentGatewayPartnerListService.CachedData.length > 0) {
 
             return Observable.defer(() => {
                 if(filters.GetAll)
 				{
-					serviceResponse.Result = NumberFormatListService.CachedData; 
+					serviceResponse.Result = PaymentGatewayPartnerListService.CachedData; 
 				}
 				else
 				{
-					var filteredData = InfraGenericFilter.GetFilteredArray(NumberFormatListService.CachedData, filters);
+					var filteredData = InfraGenericFilter.GetFilteredArray(PaymentGatewayPartnerListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 				}
@@ -252,13 +252,13 @@ export class NumberFormatListService {
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("NumberFormat").map(cachedJson=> {
+            return CachedDataManager.GetClosedTableData("PaymentGatewayPartner").map(cachedJson=> {
 
-                var _mappedListsArray: Array<NumberFormatList> = [];
+                var _mappedListsArray: Array<PaymentGatewayPartnerList> = [];
                 if (cachedJson) {
                     for (var key in cachedJson) {
 
-                        var entity: NumberFormatList;
+                        var entity: PaymentGatewayPartnerList;
                         entity = this.MapJsonToEntityList(cachedJson[key]);
                         _mappedListsArray.push(entity);
 
@@ -267,7 +267,7 @@ export class NumberFormatListService {
 
 
 
-                NumberFormatListService.CachedData = _mappedListsArray;
+                PaymentGatewayPartnerListService.CachedData = _mappedListsArray;
                 if(filters.GetAll)
 				{
 					serviceResponse.Result = _mappedListsArray; 
@@ -279,7 +279,7 @@ export class NumberFormatListService {
 
 							      
 			   
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "NumberFormat", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "PaymentGatewayPartner", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 					serviceResponse.Result = _mappedListsArray; 
 					serviceResponse.CallTime = callTime;
@@ -293,8 +293,8 @@ export class NumberFormatListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: NumberFormatList;
-            entityList = new NumberFormatList();
+            var entityList: PaymentGatewayPartnerList;
+            entityList = new PaymentGatewayPartnerList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

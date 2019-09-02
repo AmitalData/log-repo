@@ -1,14 +1,10 @@
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ServiceModel.DomainServices;
-using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
-namespace Simplog.Data.CommonDataModel.EntityPOCOs
+namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class TenantAdditionalData
+    public class TenantAdditionalDataList
     {
         [Key]
         public int Id { get; set; }
@@ -20,7 +16,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PaymentGatewayPartnerCode { get; set; }
         public string PaymentGatewayConnectionString { get; set; }
 
-        public PaymentGatewayPartner PaymentGatewayPartner { get; set; }
-
+        //public PaymentGatewayPartner PaymentGatewayPartner { get; set; }
     }
 }

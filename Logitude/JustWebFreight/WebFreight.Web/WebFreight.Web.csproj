@@ -1084,6 +1084,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\ImporterDepositionController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplateExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplatesVersionExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\TenantAdditionalDataViewsExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\WarehouseExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AgentSharedDocumentViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AirlineMessagingRuleViewsController.Generated.cs" />
@@ -1098,10 +1099,12 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\FTPDetailViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HybridTenantThresholdViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\NumberFormatViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\PaymentGatewayPartnerViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\RegistryDateTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportsTemplatesVersionViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportsTemplateViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\TemperatureUnitViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\TenantAdditionalDataViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\UsoCFDIViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AgentSharedDocumentController.Generated.cs" />
@@ -1228,6 +1231,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplateController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplatesVersionController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TarrifChargeController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantAdditionalDataController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantLoginPolicyController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TwoFactorAuthenticationDeviceController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\PortViewsController.cs" />
@@ -2521,6 +2525,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ParticipantUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PartnerTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PasswordPolicyUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentGatewayPartnerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentTermDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentTermUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PortUpdateClass.cs" />
@@ -2547,6 +2552,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TarrifTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TemperatureUnitUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TemplateFormatUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TenantAdditionalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TenantLoginPolicyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TenantUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TermsofUseSignatureUpdateClass.cs" />

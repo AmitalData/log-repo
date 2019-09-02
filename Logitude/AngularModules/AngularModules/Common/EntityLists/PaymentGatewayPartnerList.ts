@@ -6,11 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class DistributorList {
-   		Id: string;
-		Code: string;
-		EnglishName: string;
-		LocalName: string;
+export class PaymentGatewayPartnerList {
+   		Code: string;
+		Name: string;
 		SearchFields: string;
 	
 }

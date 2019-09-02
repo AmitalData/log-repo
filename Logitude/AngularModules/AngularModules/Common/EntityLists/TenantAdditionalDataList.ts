@@ -6,11 +6,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class DistributorList {
-   		Id: string;
-		Code: string;
-		EnglishName: string;
-		LocalName: string;
-		SearchFields: string;
+export class TenantAdditionalDataList {
+   		Id: number;
+		Tenant: number;
+		DropBoxAccessToken: string;
+		DropBoxState: string;
+		DropBoxUID: string;
+		DropBoxUEmail: string;
+		PaymentGatewayPartnerCode: string;
+		PaymentGatewayConnectionString: string;
 	
 }
