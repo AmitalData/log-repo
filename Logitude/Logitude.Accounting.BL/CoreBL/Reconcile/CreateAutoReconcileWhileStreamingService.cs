@@ -247,4 +247,25 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
     }
+
+
+    public class CreateAutoReconcileWhileStreamingService4JournalValidation: CreateAutoReconcileWhileStreamingService
+    {
+        private List<LedgerTransactionPM> _OldTransToReconcile;
+
+        public void InitMe(List<LedgerTransactionPM> myOldTransToReconcile)
+        {
+            _OldTransToReconcile = myOldTransToReconcile;
+        }
+        public override ValidationResult ValidateReconcile(ReconciliationPM myReconciliationPM)
+        {
+            return ValidationResult.Success;
+        }
+
+        public override List<LedgerTransactionPM> GetLedgerTransactionToReconcile(List<string> theReconcileAgainstLTranIdList)
+        {
+            return _OldTransToReconcile;
+
+        }
+    }
 }

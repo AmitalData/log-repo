@@ -459,8 +459,33 @@ namespace Logitude.Accounting.BL.Validators
         accountingValidationContextServiceProvider
         );
                     journalApproveParser.CreateLedger_MapByJournalActionType();
-                    //journalApproveParser.LedgerTransactions
-                    ///to do CreateAutoReconcileWhileStreamingService
+                    var newExpectedLedgerTransactions = journalApproveParser.LedgerTransactions;
+                    if (newExpectedLedgerTransactions == null || newExpectedLedgerTransactions.Count < 1)
+                    {
+                        errorsList.Add(TranslateMyTextCode("JournalReconciles-Check:newExpectedLedgerTransactions.Count < 1", myJournalPM.Tenant));
+                        
+                    }
+                    else
+                    {
+                        var theReconcileAgainstLTranIdList = myJournalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
+                        List<LedgerTransactionPM> myOldTransToReconcile = myIExternalReconcileDataProvider.GetLedgerTransactionList(theReconcileAgainstLTranIdList, myJournalPM.Tenant);
+
+
+                        try
+                        {
+
+                            var createAutoReconcileWhileStreamingService4JournalValidation = new CreateAutoReconcileWhileStreamingService4JournalValidation();
+                            createAutoReconcileWhileStreamingService4JournalValidation.MustInit(null, myJournalPM, newExpectedLedgerTransactions);
+                            createAutoReconcileWhileStreamingService4JournalValidation.InitMe(myOldTransToReconcile);
+                            createAutoReconcileWhileStreamingService4JournalValidation.CreateAutoReconcileWhileStreaming();
+
+                        }
+                        catch (Exception eeee)
+                        {
+
+                            errorsList.Add(TranslateMyTextCode("JournalReconciles-validate:" + eeee.Message, myJournalPM.Tenant));
+                        }
+                    }
 
                 }
             }
