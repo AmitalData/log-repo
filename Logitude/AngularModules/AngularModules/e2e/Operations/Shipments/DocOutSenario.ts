@@ -30,8 +30,8 @@ export class DocOutSenario {
     this.docsOutTab.DocsOutTab();
     this.docsOutTab.QuickSearchDocOut('ETO-P-DocsOut', 'ETO-L-DocsOut', 'Export Trucking Order');
     this.printDocOut.isPrintingCompleted('BuildDocumentSucceededDiv', true);
+    this.helper.WaitWindowClosed()
     this.helper.WaitBusyIndicator();
-    this.helper.WaitWindowClosed();
 
 
   }

@@ -353,7 +353,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\VATTypesGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\NumberFormat.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\WarehouseType.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\PaymentGatewayPartners.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\PaymentGatewayPartner.cs" />
     <Compile Include="CommonDataModel\ICustomersDataViewContext.cs" />
     <Compile Include="CommonDataModel\IDocumentsFilingsViewContext.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentSharedDocumentMap.cs" />
@@ -453,7 +453,7 @@
     <Compile Include="CommonDataModel\Mapping\VATTypesGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\NumberFormatMap.cs" />
     <Compile Include="CommonDataModel\Mapping\WarehouseTypeMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnersMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnerMap.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedDocumentRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedManifestRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AirlineAreasPortRepository.cs" />
@@ -521,7 +521,7 @@
     <Compile Include="CommonDataModel\Repositories\ReportsTemplateRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ReportsTemplatesVersionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TemperatureUnitRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\PaymentGatewayPartnersRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\PaymentGatewayPartnerRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TenantLoginPolicyRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TwoFactorAuthenticationDeviceRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\LoginPolicyRepository.cs" />

@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="INTTRA_Booking\INTRABookingContext.cs" />
     <Compile Include="INTTRA_Booking\INTRABookingHelper.cs" />
+    <Compile Include="INTTRA_Booking\INTTRABooking2Confirm.cs" />
     <Compile Include="INTTRA_Booking\INTTRABooking2Request.cs" />
     <Compile Include="INTTRA_Booking\INTTRABookingDataBuilder.cs" />
     <Compile Include="INTTRA_Status\XML_Status_Message_OUT_v13.cs" />
@@ -316,6 +317,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="INTTRA\INTTRA_XML_SI_IG_v32.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="INTTRA_Booking\INTTRABooking2Confirm.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="INTTRA_Booking\INTTRABooking2Request.xsd">

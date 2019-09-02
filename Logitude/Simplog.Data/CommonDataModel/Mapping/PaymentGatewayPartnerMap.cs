@@ -4,9 +4,9 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
-    public class PaymentGatewayPartnersMap : EntityTypeConfiguration<PaymentGatewayPartners>
+    public class PaymentGatewayPartnerMap : EntityTypeConfiguration<PaymentGatewayPartner>
     {
-        public PaymentGatewayPartnersMap()
+        public PaymentGatewayPartnerMap()
         {
             // Primary Key
             this.HasKey(t => t.Code);
