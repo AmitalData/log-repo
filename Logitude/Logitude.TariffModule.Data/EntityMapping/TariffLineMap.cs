@@ -136,6 +136,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.IsFromAllOtherPorts).HasColumnName("IsFromAllOtherPorts");
 
             this.Property(t => t.IsToAllOtherPorts).HasColumnName("IsToAllOtherPorts");
+
+            this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }
