@@ -45,6 +45,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public IsUpdateSurchargesButtonVisible: boolean = false;
     public IsFirstDraft: boolean = false;
     public SelectedVersionNumber: number;
+    private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -56,6 +57,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
+        this.deletedLinesExpirationDates = [];
 
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
@@ -159,14 +161,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.isApproveButtonClicked = false;
         this.isTariffLinesDeleted = false;
     }
-    //private ResetDeletedLinesExpirationDates() {
-    //    this.CurrentVersion.TariffLines.forEach(item => {
-    //        item.ExpirationDate = null;
-    //    });
-
-    //    this.EntityPM.DeletedLinesExpirationDates = [];
-    //}
-
+    
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
@@ -515,7 +510,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         logWindow.Title = "Edit Tariff Line";
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
-
+        
     private isTariffLinesDeleted: boolean = false;
     DeleteTariffButtonClicked(item: AirSurchargeTariffLineData) {
         var confirmWindow = new ConfirmWindow();
@@ -532,10 +527,11 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                     logWindow.WindowClosed.subscribe(d => {
                         if (s && d == "ok") {
                             var deletedItem: TariffLineExpirationDatePM = new TariffLineExpirationDatePM();
-                            deletedItem.TariffLineId = item.EntityPM.Id;
+                            deletedItem.OriginPortId = item.EntityPM.OriginPortId;
+                            deletedItem.DestinationPortId = item.EntityPM.DestinationPortId;
                             deletedItem.ExpirationDate = item.EntityPM.ExpirationDate;
-
-                            this.EntityPM.DeletedLinesExpirationDates.push(deletedItem);
+                            
+                            this.deletedLinesExpirationDates.push(deletedItem);
                             this.CurrentVersion.RemoveTariffLine(item.EntityPM);
                             this.TariffsLinesSource.Remove(item);
                             this.FillTariffLines(this.CurrentVersion.TariffLines);
@@ -569,6 +565,13 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     ApproveVersionClicked() {
         if (!this.isApproveButtonClicked) {
             this.isApproveButtonClicked = true;
+
+            if (this.deletedLinesExpirationDates.length > 0) {
+                this.deletedLinesExpirationDates.forEach(item => {
+                    this.EntityPM.DeletedLinesExpirationDates.push(item);
+                });
+            }
+
             this.EntityPM.IsApprovingDraftVersion = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }        

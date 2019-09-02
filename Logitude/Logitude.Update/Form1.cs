@@ -3746,13 +3746,22 @@ User/Pass",
                 
                 foreach (TenantManagement tenantManagement in allTenants)
                 {
-                    if (!string.IsNullOrEmpty(tenantManagement.PackageCode))
+                    if (!tenantManagement.MainAdditionalPackageApplied && tenantManagement.IsMultiPackage)
                     {
-                        Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();
-                        if (tenantPackage != null)
+                        tenantManagement.PackageName = "Multi Package";
+                        tenantManagementRepository.Update(tenantManagement);
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(tenantManagement.PackageCode))
                         {
-                            tenantManagement.PackageName = tenantPackage.Name;
-                            tenantManagementRepository.Update(tenantManagement);
+                            Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();
+                            if (tenantPackage != null)
+                            {
+                                tenantManagement.PackageName = tenantPackage.Name;
+                                tenantManagementRepository.Update(tenantManagement);
+                            }
                         }
                     }
                 }

@@ -221,11 +221,13 @@
     </None>
     <None Include="EntityFiles\CommonDataModel\FilingInbox.lxml" />
     <None Include="EntityFiles\CommonDataModel\FilingInboxAttachmentLog.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PaymentGatewayPartner.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportsTemplate.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportsTemplatesVersion.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentFilingBackupSetting.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\CommonDataModel\TenantAdditionalData.lxml" />
     <None Include="EntityFiles\CommonDataModel\User.lxml">
       <SubType>Designer</SubType>
     </None>
