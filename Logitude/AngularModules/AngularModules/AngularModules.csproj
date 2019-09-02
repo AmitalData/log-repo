@@ -145,6 +145,7 @@
     <Content Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.html" />
+    <Content Include="Common\Components\Maintenance\TransmissionLogs\TransmissionLogAuditTabComponent.html" />
     <Content Include="Controls\All\SplitButtonComponent.html" />
     <Content Include="CRMModules\CRMEmployeeGroup\Components\NewEntity\NewEmployeeComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.html" />
@@ -443,6 +444,7 @@
     <TypeScriptCompile Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\Maintenance\TransmissionLogs\TransmissionLogAuditTabComponent.ts" />
     <TypeScriptCompile Include="Common\Components\MenuButtons\ContactMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />

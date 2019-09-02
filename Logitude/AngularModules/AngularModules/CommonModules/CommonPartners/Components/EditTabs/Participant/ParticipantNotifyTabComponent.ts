@@ -8,7 +8,7 @@ import {ContactPMService} from '../../../../../Common/Services/StandardPMs/Conta
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    selector: 'NewCurrencyComponent',
+    selector: 'ParticipantNotifyTabComponent',
     moduleId: module.id,
     templateUrl: './ParticipantNotifyTabComponent.html',
 })
