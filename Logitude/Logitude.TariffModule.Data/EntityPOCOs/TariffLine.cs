@@ -139,6 +139,26 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public bool IsFromAllOtherPorts { get; set; }
         [Column("IsToAllOtherPorts")]
 	    public bool IsToAllOtherPorts { get; set; }
+        [Column("Surcharge1MinPrice")]
+	    public decimal? Surcharge1MinPrice { get; set; }
+        [Column("Surcharge2MinPrice")]
+	    public decimal? Surcharge2MinPrice { get; set; }
+        [Column("Surcharge3MinPrice")]
+	    public decimal? Surcharge3MinPrice { get; set; }
+        [Column("Surcharge4MinPrice")]
+	    public decimal? Surcharge4MinPrice { get; set; }
+        [Column("Surcharge5MinPrice")]
+	    public decimal? Surcharge5MinPrice { get; set; }
+        [Column("Surcharge6MinPrice")]
+	    public decimal? Surcharge6MinPrice { get; set; }
+        [Column("Surcharge7MinPrice")]
+	    public decimal? Surcharge7MinPrice { get; set; }
+        [Column("Surcharge8MinPrice")]
+	    public decimal? Surcharge8MinPrice { get; set; }
+        [Column("Surcharge9MinPrice")]
+	    public decimal? Surcharge9MinPrice { get; set; }
+        [Column("Surcharge10MinPrice")]
+	    public decimal? Surcharge10MinPrice { get; set; }
     }
 }
 	 

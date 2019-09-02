@@ -337,6 +337,56 @@ export class TariffLinePM {
     public set IsToAllOtherPorts(newValue: boolean) { if (this.isToAllOtherPorts != newValue) { this.isToAllOtherPorts = newValue; this.MarkAsDirty("IsToAllOtherPorts"); } }
        
 	 
+    private surcharge1MinPrice: number;
+    public get Surcharge1MinPrice() { return this.surcharge1MinPrice; }
+    public set Surcharge1MinPrice(newValue: number) { if (this.surcharge1MinPrice != newValue) { this.surcharge1MinPrice = newValue; this.MarkAsDirty("Surcharge1MinPrice"); } }
+       
+	 
+    private surcharge2MinPrice: number;
+    public get Surcharge2MinPrice() { return this.surcharge2MinPrice; }
+    public set Surcharge2MinPrice(newValue: number) { if (this.surcharge2MinPrice != newValue) { this.surcharge2MinPrice = newValue; this.MarkAsDirty("Surcharge2MinPrice"); } }
+       
+	 
+    private surcharge3MinPrice: number;
+    public get Surcharge3MinPrice() { return this.surcharge3MinPrice; }
+    public set Surcharge3MinPrice(newValue: number) { if (this.surcharge3MinPrice != newValue) { this.surcharge3MinPrice = newValue; this.MarkAsDirty("Surcharge3MinPrice"); } }
+       
+	 
+    private surcharge4MinPrice: number;
+    public get Surcharge4MinPrice() { return this.surcharge4MinPrice; }
+    public set Surcharge4MinPrice(newValue: number) { if (this.surcharge4MinPrice != newValue) { this.surcharge4MinPrice = newValue; this.MarkAsDirty("Surcharge4MinPrice"); } }
+       
+	 
+    private surcharge5MinPrice: number;
+    public get Surcharge5MinPrice() { return this.surcharge5MinPrice; }
+    public set Surcharge5MinPrice(newValue: number) { if (this.surcharge5MinPrice != newValue) { this.surcharge5MinPrice = newValue; this.MarkAsDirty("Surcharge5MinPrice"); } }
+       
+	 
+    private surcharge6MinPrice: number;
+    public get Surcharge6MinPrice() { return this.surcharge6MinPrice; }
+    public set Surcharge6MinPrice(newValue: number) { if (this.surcharge6MinPrice != newValue) { this.surcharge6MinPrice = newValue; this.MarkAsDirty("Surcharge6MinPrice"); } }
+       
+	 
+    private surcharge7MinPrice: number;
+    public get Surcharge7MinPrice() { return this.surcharge7MinPrice; }
+    public set Surcharge7MinPrice(newValue: number) { if (this.surcharge7MinPrice != newValue) { this.surcharge7MinPrice = newValue; this.MarkAsDirty("Surcharge7MinPrice"); } }
+       
+	 
+    private surcharge8MinPrice: number;
+    public get Surcharge8MinPrice() { return this.surcharge8MinPrice; }
+    public set Surcharge8MinPrice(newValue: number) { if (this.surcharge8MinPrice != newValue) { this.surcharge8MinPrice = newValue; this.MarkAsDirty("Surcharge8MinPrice"); } }
+       
+	 
+    private surcharge9MinPrice: number;
+    public get Surcharge9MinPrice() { return this.surcharge9MinPrice; }
+    public set Surcharge9MinPrice(newValue: number) { if (this.surcharge9MinPrice != newValue) { this.surcharge9MinPrice = newValue; this.MarkAsDirty("Surcharge9MinPrice"); } }
+       
+	 
+    private surcharge10MinPrice: number;
+    public get Surcharge10MinPrice() { return this.surcharge10MinPrice; }
+    public set Surcharge10MinPrice(newValue: number) { if (this.surcharge10MinPrice != newValue) { this.surcharge10MinPrice = newValue; this.MarkAsDirty("Surcharge10MinPrice"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	

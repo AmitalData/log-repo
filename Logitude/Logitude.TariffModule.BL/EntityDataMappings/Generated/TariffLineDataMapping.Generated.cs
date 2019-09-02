@@ -78,7 +78,17 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Index, 
 	         Notes, 
 	         IsFromAllOtherPorts, 
-	         IsToAllOtherPorts,
+	         IsToAllOtherPorts, 
+	         Surcharge1MinPrice, 
+	         Surcharge2MinPrice, 
+	         Surcharge3MinPrice, 
+	         Surcharge4MinPrice, 
+	         Surcharge5MinPrice, 
+	         Surcharge6MinPrice, 
+	         Surcharge7MinPrice, 
+	         Surcharge8MinPrice, 
+	         Surcharge9MinPrice, 
+	         Surcharge10MinPrice,
 	      }
 
 
@@ -146,7 +156,17 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Notes, 
 	         AddedManually, 
 	         IsFromAllOtherPorts, 
-	         IsToAllOtherPorts,
+	         IsToAllOtherPorts, 
+	         Surcharge1MinPrice, 
+	         Surcharge2MinPrice, 
+	         Surcharge3MinPrice, 
+	         Surcharge4MinPrice, 
+	         Surcharge5MinPrice, 
+	         Surcharge6MinPrice, 
+	         Surcharge7MinPrice, 
+	         Surcharge8MinPrice, 
+	         Surcharge9MinPrice, 
+	         Surcharge10MinPrice,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -433,6 +453,56 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsToAllOtherPorts))
             {
 				entityPOCO.IsToAllOtherPorts = entityPM.IsToAllOtherPorts;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1MinPrice))
+            {
+				entityPOCO.Surcharge1MinPrice = entityPM.Surcharge1MinPrice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2MinPrice))
+            {
+				entityPOCO.Surcharge2MinPrice = entityPM.Surcharge2MinPrice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3MinPrice))
+            {
+				entityPOCO.Surcharge3MinPrice = entityPM.Surcharge3MinPrice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4MinPrice))
+            {
+				entityPOCO.Surcharge4MinPrice = entityPM.Surcharge4MinPrice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5MinPrice))
+            {
+				entityPOCO.Surcharge5MinPrice = entityPM.Surcharge5MinPrice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6MinPrice))
+            {
+				entityPOCO.Surcharge6MinPrice = entityPM.Surcharge6MinPrice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7MinPrice))
+            {
+				entityPOCO.Surcharge7MinPrice = entityPM.Surcharge7MinPrice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8MinPrice))
+            {
+				entityPOCO.Surcharge8MinPrice = entityPM.Surcharge8MinPrice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9MinPrice))
+            {
+				entityPOCO.Surcharge9MinPrice = entityPM.Surcharge9MinPrice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10MinPrice))
+            {
+				entityPOCO.Surcharge10MinPrice = entityPM.Surcharge10MinPrice;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -726,6 +796,56 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.IsToAllOtherPorts = entityPOCO.IsToAllOtherPorts;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge1MinPrice))
+            {
+					entityPM.Surcharge1MinPrice = entityPOCO.Surcharge1MinPrice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge2MinPrice))
+            {
+					entityPM.Surcharge2MinPrice = entityPOCO.Surcharge2MinPrice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge3MinPrice))
+            {
+					entityPM.Surcharge3MinPrice = entityPOCO.Surcharge3MinPrice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge4MinPrice))
+            {
+					entityPM.Surcharge4MinPrice = entityPOCO.Surcharge4MinPrice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge5MinPrice))
+            {
+					entityPM.Surcharge5MinPrice = entityPOCO.Surcharge5MinPrice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge6MinPrice))
+            {
+					entityPM.Surcharge6MinPrice = entityPOCO.Surcharge6MinPrice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge7MinPrice))
+            {
+					entityPM.Surcharge7MinPrice = entityPOCO.Surcharge7MinPrice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge8MinPrice))
+            {
+					entityPM.Surcharge8MinPrice = entityPOCO.Surcharge8MinPrice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge9MinPrice))
+            {
+					entityPM.Surcharge9MinPrice = entityPOCO.Surcharge9MinPrice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge10MinPrice))
+            {
+					entityPM.Surcharge10MinPrice = entityPOCO.Surcharge10MinPrice;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -1010,6 +1130,56 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsToAllOtherPorts))
             {
                 oldEntityPM.IsToAllOtherPorts = entityPM.IsToAllOtherPorts;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1MinPrice))
+            {
+                oldEntityPM.Surcharge1MinPrice = entityPM.Surcharge1MinPrice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2MinPrice))
+            {
+                oldEntityPM.Surcharge2MinPrice = entityPM.Surcharge2MinPrice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3MinPrice))
+            {
+                oldEntityPM.Surcharge3MinPrice = entityPM.Surcharge3MinPrice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4MinPrice))
+            {
+                oldEntityPM.Surcharge4MinPrice = entityPM.Surcharge4MinPrice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5MinPrice))
+            {
+                oldEntityPM.Surcharge5MinPrice = entityPM.Surcharge5MinPrice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6MinPrice))
+            {
+                oldEntityPM.Surcharge6MinPrice = entityPM.Surcharge6MinPrice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7MinPrice))
+            {
+                oldEntityPM.Surcharge7MinPrice = entityPM.Surcharge7MinPrice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8MinPrice))
+            {
+                oldEntityPM.Surcharge8MinPrice = entityPM.Surcharge8MinPrice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9MinPrice))
+            {
+                oldEntityPM.Surcharge9MinPrice = entityPM.Surcharge9MinPrice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10MinPrice))
+            {
+                oldEntityPM.Surcharge10MinPrice = entityPM.Surcharge10MinPrice;
             }
 			
 		}

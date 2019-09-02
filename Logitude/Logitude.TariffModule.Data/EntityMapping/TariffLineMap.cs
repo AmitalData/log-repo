@@ -136,6 +136,26 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.IsFromAllOtherPorts).HasColumnName("IsFromAllOtherPorts");
 
             this.Property(t => t.IsToAllOtherPorts).HasColumnName("IsToAllOtherPorts");
+
+            this.Property(t => t.Surcharge1MinPrice).HasColumnName("Surcharge1MinPrice").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge2MinPrice).HasColumnName("Surcharge2MinPrice").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge3MinPrice).HasColumnName("Surcharge3MinPrice").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge4MinPrice).HasColumnName("Surcharge4MinPrice").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge5MinPrice).HasColumnName("Surcharge5MinPrice").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge6MinPrice).HasColumnName("Surcharge6MinPrice").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge7MinPrice).HasColumnName("Surcharge7MinPrice").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge8MinPrice).HasColumnName("Surcharge8MinPrice").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge9MinPrice).HasColumnName("Surcharge9MinPrice").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge10MinPrice).HasColumnName("Surcharge10MinPrice").HasPrecision(18, 3);
         }
     }
 }
