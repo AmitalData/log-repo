@@ -24,22 +24,22 @@ export class MasterShipment {
   }
   FillMasterShipmentFields(ShipperRef: string,TransportMode:string, Direction: string) {
     this.Helper.WaitByIdAndFill('Master_AgentId', 'TestAgentExport1');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Master_AgentId', 'TestAgentExport1');
 
     this.Helper.WaitByIdAndFill('Master_AgentReference1_1', ShipperRef);
     if(Direction == 'Domestic'){
       this.Helper.WaitByIdAndFill('Master_MainCarriageFromPortId', 'eze');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Master_MainCarriageFromPortId', 'eze');
       
       this.Helper.WaitByIdAndFill('Master_MainCarriageToPortId', 'eze');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Master_MainCarriageToPortId', 'eze');
       }
       else{
     this.Helper.WaitByIdAndFill('Master_MainCarriageFromPortId', 'eze');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Master_MainCarriageFromPortId', 'eze');
 
     this.Helper.WaitByIdAndFill('Master_MainCarriageToPortId', 'mvd');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Master_MainCarriageToPortId', 'mvd');
 
       }
     // this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'TestAirlineL8');
@@ -50,20 +50,20 @@ export class MasterShipment {
     if(TransportMode=='A')
     {
       this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'BA');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Master_MainCarriageCarrierId', 'BA');
   
       this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierNumber', '115');  
     }
     else if(TransportMode=='O'){
       this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'MAEU');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Master_MainCarriageCarrierId', 'MAEU');
   
       this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierNumber', 'Voyage 1');  
 
     }
     else{
       this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'Trucker1London');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Master_MainCarriageCarrierId', 'Trucker1London');
   
       this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierNumber', 'Trucker # 1');  
     }

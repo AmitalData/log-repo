@@ -36,7 +36,7 @@ export class DirectShipment {
       this.Helper.WaitByIdAndFill('Shipment_ShipperReference1', ShipperRef);// test random number randomWholeNum
 
       this.Helper.WaitByIdAndFill('Shipment_ConsigneeId', 'TestShipper');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0);
     } else {
       this.Helper.WaitByIdAndFill('Shipment_ShipperId', 'TestShipper');
       this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_ShipperId','TestShipper');
@@ -44,40 +44,40 @@ export class DirectShipment {
       this.Helper.WaitByIdAndFill('Shipment_ShipperReference1', ShipperRef);// test random number randomWholeNum
 
       this.Helper.WaitByIdAndFill('Shipment_ConsigneeId', 'TestConsi');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_ConsigneeId', 'TestConsi');
 
       if (Direction == 'Domestic') {
         this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageFromPortId', 'eze');
 
         this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'eze');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageToPortId', 'eze');
       } else {
         this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageFromPortId', 'eze');
 
         this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'mvd');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageToPortId', 'mvd');
       }
     }
     if (TransportMode == 'A') {
       this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'LY');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageCarrierId', 'LY');
 
       this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierNumber', '115');
 
       this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveTypeIdAirMTA');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MoveTypeId', 'TestMoveTypeIdAirMTA');
 
     }
     else if (TransportMode == 'O') {
       this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'MAEU');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageCarrierId', 'MAEU');
 
       this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierNumber', 'Voyage 1');
 
       this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveTypeIDOceanMTO');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MoveTypeId', 'TestMoveTypeIDOceanMTO');
 
     }
     else {
@@ -86,12 +86,12 @@ export class DirectShipment {
       this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierNumber', 'Trucker # 1');
 
       this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveTypeIdInlandMTI');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MoveTypeId', 'TestMoveTypeIdInlandMTI');
     }
 
 
     this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'CIF');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_IncotermId', 'CIF');
 
 
     // this.Helper.WaitByIdAndClick('Shipment_OrderIsDangerouseGoods');
