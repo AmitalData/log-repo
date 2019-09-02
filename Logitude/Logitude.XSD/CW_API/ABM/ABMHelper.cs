@@ -99,6 +99,7 @@ namespace Logitude.XSD.CW_API.ABM
             GetLoggedContact();
         }
 
+
         public void Run()
         {
             if (this.IsValid)
