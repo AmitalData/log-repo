@@ -3296,7 +3296,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             GLAccountPM splittedAccount = glAccountQuery.GetSplittedByCurrencyGLAccount(debitGLAcount.Id, invoice.Tenant, invoice.InvoiceCurrencyId);
 
-            if (splittedAccount == null)
+            if (splittedAccount != null)
                 return splittedAccount;
             else
                 return debitGLAcount;
