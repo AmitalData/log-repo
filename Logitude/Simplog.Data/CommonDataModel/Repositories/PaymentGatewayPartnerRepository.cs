@@ -10,46 +10,50 @@ using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
-    public class PaymentGatewayPartnersRepository : IRepository<PaymentGatewayPartners>
+    public class PaymentGatewayPartnerRepository : IRepository<PaymentGatewayPartner>
     {
         ICommonDataContext commonDataContext;
 
-        public PaymentGatewayPartnersRepository(ICommonDataContext context)
+        public PaymentGatewayPartnerRepository(ICommonDataContext context)
         {
             commonDataContext = context;
         }
 
-        public PaymentGatewayPartnersRepository()
+        public PaymentGatewayPartnerRepository()
         {
             commonDataContext = new CommonDataContext();
         }
 
-        public PaymentGatewayPartnersRepository(int tenant)
+        public PaymentGatewayPartnerRepository(int tenant)
         {
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-        public IQueryable<PaymentGatewayPartners> GetPaymentGatewayPartners()
+        public IQueryable<PaymentGatewayPartner> GetPaymentGatewayPartners()
         {
             return this.context.PaymentGatewayPartners;
         }
          
-        public PaymentGatewayPartners GetSinglePaymentGatewayPartner(string id)
+        public PaymentGatewayPartner GetSinglePaymentGatewayPartner(string id)
         {
-            PaymentGatewayPartners entity = (from a in context.PaymentGatewayPartners where a.Code == id select a).FirstOrDefault();                      
+            PaymentGatewayPartner entity = (from a in context.PaymentGatewayPartners where a.Code == id select a).FirstOrDefault();                      
             return entity;
         }
 
-        
 
-        
+        public IQueryable<PaymentGatewayPartner> GetAll()
+        {
+            return commonDataContext.PaymentGatewayPartners;
+        }
 
-        public void Add(PaymentGatewayPartners entity)
+
+
+        public void Add(PaymentGatewayPartner entity)
         {
             this.context.PaymentGatewayPartners.Add(entity);
         }
 
-        public void Remove(PaymentGatewayPartners entity)
+        public void Remove(PaymentGatewayPartner entity)
         {
             try
             {
@@ -59,7 +63,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             this.context.PaymentGatewayPartners.Remove(entity);
         }
 
-        public void Update(PaymentGatewayPartners entity)
+        public void Update(PaymentGatewayPartner entity)
         {
             try
             {
@@ -69,9 +73,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
             this.context.SetAsModified(entity);
         }
 
-        public List<PaymentGatewayPartners> All()
+        public List<PaymentGatewayPartner> All()
         {
-            return this.context.PaymentGatewayPartners.ToList<PaymentGatewayPartners>();
+            return this.context.PaymentGatewayPartners.ToList<PaymentGatewayPartner>();
         }
 
         public ICommonDataContext context
@@ -85,17 +89,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
 
 
-        public List<PaymentGatewayPartners> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        public List<PaymentGatewayPartner> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
         }
 
-        public PaymentGatewayPartners GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        public PaymentGatewayPartner GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
         }
 
-        public List<PaymentGatewayPartners>  GetTenantListByListIds(List<string> ids)
+        public List<PaymentGatewayPartner>  GetTenantListByListIds(List<string> ids)
         {
 
             return (from d in this.context.PaymentGatewayPartners

@@ -1265,6 +1265,10 @@ export class ShipmentPayableItem extends BaseComponent {
                 isOpenAmountEnabled = false;
             }            
 
+            if (AppTool.IsNullOrEmpty(this.TariffId)) {
+                isOpenAmountEnabled = false;
+            }
+
             if (isLineAttachted) {
                 isEditingEnabled = false;
             }
@@ -1288,9 +1292,10 @@ export class ShipmentPayableItem extends BaseComponent {
                     }
                 }
             }
-
-            isQuantityEnabled = true;
-            if (!this.EntityPM.IsChargeBySteps) {
+            if (AppTool.IsNullOrEmpty(this.TariffId)) {
+                isQuantityEnabled = true;
+            }
+            if (!this.EntityPM.IsChargeBySteps && AppTool.IsNullOrEmpty(this.TariffId)) {
                 isUnitPriceEnabled = true;
                 isTotalAmountEnabled = true;
             }                       
@@ -1854,6 +1859,7 @@ export class ShipmentPayableItem extends BaseComponent {
         }
     }
 
+    public VendorCardEntity: CardList = null; 
     get VendorName() { return this.EntityPM.VendorName; }
     get VendorId() { return this.EntityPM.VendorId; }
     set VendorId(newValue: string) {
@@ -1869,9 +1875,9 @@ export class ShipmentPayableItem extends BaseComponent {
                 var myService: CardListService = new CardListService();
                 myService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        var list: CardList = myResponse.Result;
-                        if (list != null) {
-                            this.EntityPM.VendorName = list.EnglishName;
+                        this.VendorCardEntity = myResponse.Result;
+                        if (this.VendorCardEntity != null) {
+                            this.EntityPM.VendorName = this.VendorCardEntity.EnglishName;
                             this.UpdateInsideItemsSource_Vendor();
                         }
                     }

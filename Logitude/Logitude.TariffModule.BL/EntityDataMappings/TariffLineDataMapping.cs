@@ -33,6 +33,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
         public void CustomPOCOToPM(TariffLinePM entityPM, TariffLine entityPOCO)
         {
             PortRepository portRepository = new PortRepository(entityPOCO.Tenant);
+            CurrencyRepository currencyRepository = new CurrencyRepository(entityPOCO.Tenant);
+
             Port fromPort = portRepository.GetSinglePort(entityPOCO.OriginPortId, entityPOCO.Tenant);
             Port toPort = portRepository.GetSinglePort(entityPOCO.DestinationPortId, entityPOCO.Tenant);
 
@@ -46,8 +48,17 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
                 entityPM.DestinationPortCode = toPort.Code;
                 entityPM.DestinationPortName = toPort.EnglishName;
             }
+            if (!string.IsNullOrEmpty(entityPOCO.CurrencyId))
+            {
+                Currency currency = currencyRepository.GetSingleCurrency(entityPOCO.CurrencyId, entityPOCO.Tenant);
+                if (currency != null)
+                {
+                    entityPM.CurrencyCode = currency.Code;
+                }
+            }
+            
         }
-   }
+    }
 
 
 }

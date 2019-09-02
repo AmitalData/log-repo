@@ -337,6 +337,16 @@ export class TariffLinePM {
     public set IsToAllOtherPorts(newValue: boolean) { if (this.isToAllOtherPorts != newValue) { this.isToAllOtherPorts = newValue; this.MarkAsDirty("IsToAllOtherPorts"); } }
        
 	 
+    private currencyId: string;
+    public get CurrencyId() { return this.currencyId; }
+    public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
+       
+	 
+    private currencyCode: string;
+    public get CurrencyCode() { return this.currencyCode; }
+    public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	

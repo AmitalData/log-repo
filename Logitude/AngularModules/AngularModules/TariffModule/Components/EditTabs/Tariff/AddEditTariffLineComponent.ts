@@ -52,6 +52,8 @@ export class AddEditTariffLineComponent  {
     get Surcharge9PriceText() { return this.EntityPM.Surcharge9PriceText; }
     get Surcharge10PriceText() { return this.EntityPM.Surcharge10PriceText; }
 
+
+
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();

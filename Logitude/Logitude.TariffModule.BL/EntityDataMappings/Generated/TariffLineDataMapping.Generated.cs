@@ -78,7 +78,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Index, 
 	         Notes, 
 	         IsFromAllOtherPorts, 
-	         IsToAllOtherPorts,
+	         IsToAllOtherPorts, 
+	         CurrencyId,
 	      }
 
 
@@ -146,7 +147,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Notes, 
 	         AddedManually, 
 	         IsFromAllOtherPorts, 
-	         IsToAllOtherPorts,
+	         IsToAllOtherPorts, 
+	         CurrencyId, 
+	         CurrencyCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -433,6 +436,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsToAllOtherPorts))
             {
 				entityPOCO.IsToAllOtherPorts = entityPM.IsToAllOtherPorts;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+				entityPOCO.CurrencyId = entityPM.CurrencyId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -726,6 +734,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.IsToAllOtherPorts = entityPOCO.IsToAllOtherPorts;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
+            {
+					entityPM.CurrencyId = entityPOCO.CurrencyId;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -1010,6 +1023,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsToAllOtherPorts))
             {
                 oldEntityPM.IsToAllOtherPorts = entityPM.IsToAllOtherPorts;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+                oldEntityPM.CurrencyId = entityPM.CurrencyId;
             }
 			
 		}

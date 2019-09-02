@@ -25,7 +25,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return EntityPM;
         }
+        public BankAccountPM GetByAccountNumber(string number, int tenant)
+        {
+            BankAccount bankAccount = this.repository.GetBankAccountByNumber(number, tenant);
+            return this.GetEntityPM(bankAccount);
 
+            var EntityPM = new BankAccountPM();
+            if (bankAccount != null)
+            {
+
+                mapping.CustomPOCOToPM(EntityPM, bankAccount);
+                mapping.POCOToPM(EntityPM, bankAccount);
+            }
+
+            return EntityPM;
+        }
 
         public BankAccountPM GetBankAccountByTransferGLAcccountId(string transferGLAcccountId, int tenant)
         {
@@ -41,27 +55,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public BankAccountPM GetBankAccountByBankIdAccNumber(string BankId, string AccountNumber, int tenant)
         {
-            BankAccount bankAccount = this.repository.GetBankAccountByBankIdAccNumber(BankId, AccountNumber, tenant);
-            return this.GetEntityPM(bankAccount, false);
-        }
-        public BankAccountPM GetByAccountNumber(string number, int tenant)
-        {
-            BankAccount bankAccount = this.repository.GetBankAccountByNumber(number, tenant);
+            BankAccount poco = this.repository.GetBankAccountByBankIdAccNumber(BankId, AccountNumber, tenant);
 
-            var EntityPM = new BankAccountPM();
-            if (bankAccount != null)
-            {
-                
-                mapping.CustomPOCOToPM(EntityPM, bankAccount);
-                mapping.POCOToPM(EntityPM, bankAccount);
-            }
+            return this.GetEntityPM(poco);
 
-            return EntityPM;
         }
 
         public BankAccountPM GetByGLAccountId(string accountId, int tenant)
         {
             BankAccount bankAccount = this.repository.GetBankAccountByGLAccountId(accountId, tenant);
+            return this.GetEntityPM(bankAccount);
 
             var EntityPM = new BankAccountPM();
             if (bankAccount != null)

@@ -163,6 +163,10 @@
     <Compile Include="Migrations\201908070726506_Nawras_WaitingItems_FaildItems_BatchServicesLogs.Designer.cs">
       <DependentUpon>201908070726506_Nawras_WaitingItems_FaildItems_BatchServicesLogs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909020800025_Nawras_AddRelatedQueueMessageToBatchServicesLog.cs" />
+    <Compile Include="Migrations\201909020800025_Nawras_AddRelatedQueueMessageToBatchServicesLog.Designer.cs">
+      <DependentUpon>201909020800025_Nawras_AddRelatedQueueMessageToBatchServicesLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="POCOs\FailedLoginLog.cs" />
     <Compile Include="Migrations\201310221554351_InitialMigrations.cs" />
     <Compile Include="Migrations\201310221554351_InitialMigrations.Designer.cs">
@@ -241,6 +245,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908070726506_Nawras_WaitingItems_FaildItems_BatchServicesLogs.resx">
       <DependentUpon>201908070726506_Nawras_WaitingItems_FaildItems_BatchServicesLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909020800025_Nawras_AddRelatedQueueMessageToBatchServicesLog.resx">
+      <DependentUpon>201909020800025_Nawras_AddRelatedQueueMessageToBatchServicesLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
