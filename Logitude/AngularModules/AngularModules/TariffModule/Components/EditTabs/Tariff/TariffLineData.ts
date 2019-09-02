@@ -4,6 +4,7 @@ import { AppTool, FontTool, FormatTool } from '../../../../Infrastructure/Tools'
 import { PortPM } from '../../../../Common/EntityPMs/PortPM';
 import { VersionTabComponent } from './VersionTabComponent';
 import { SurchargeVersionTabComponent } from './SurchargeVersionTabComponent';
+import { CurrencyPM } from '../../../../Common/EntityPMs/CurrencyPM';
 
 export class AirCostTariffLineData extends BaseComponent {
     public EntityPM: TariffLinePM;
@@ -1272,6 +1273,40 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.DestinationPortCode = value.Code;
         } else {
             this.DestinationPortCode = null;
+        }
+    }
+
+
+    currency: CurrencyPM;
+
+    get Currency() { return this.currency; }
+    set Currency(value: CurrencyPM) {
+        if (this.currency != value) {
+            this.currency = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.CurrencyCode = value.Code;
+        } else {
+            this.CurrencyCode = null;
+        }
+    }
+
+    get CurrencyCode() {
+        return this.EntityPM.CurrencyCode;
+    }
+    set CurrencyCode(value: string) {
+        if (this.EntityPM.CurrencyCode != value) {
+            this.EntityPM.CurrencyCode = value;
+        }
+    }
+
+
+    get CurrencyId() {
+        return this.EntityPM.CurrencyId;
+    }
+    set CurrencyId(value: string) {
+        if (this.EntityPM.CurrencyId != value) {
+            this.EntityPM.CurrencyId = value;
         }
     }
 
