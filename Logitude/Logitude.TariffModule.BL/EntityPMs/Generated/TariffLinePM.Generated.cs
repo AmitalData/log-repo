@@ -1446,6 +1446,236 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private decimal? surcharge1MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge1MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge1MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge1MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge1MinPrice",OldValue=surcharge1MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge1MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge2MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge2MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge2MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge2MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge2MinPrice",OldValue=surcharge2MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge2MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge3MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge3MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge3MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge3MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge3MinPrice",OldValue=surcharge3MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge3MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge4MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge4MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge4MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge4MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge4MinPrice",OldValue=surcharge4MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge4MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge5MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge5MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge5MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge5MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge5MinPrice",OldValue=surcharge5MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge5MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge6MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge6MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge6MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge6MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge6MinPrice",OldValue=surcharge6MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge6MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge7MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge7MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge7MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge7MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge7MinPrice",OldValue=surcharge7MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge7MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge8MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge8MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge8MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge8MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge8MinPrice",OldValue=surcharge8MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge8MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge9MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge9MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge9MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge9MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge9MinPrice",OldValue=surcharge9MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge9MinPrice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? surcharge10MinPrice ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? Surcharge10MinPrice  
+	   {
+	    
+	     get
+		{
+		   return surcharge10MinPrice;
+		 }
+		 set
+		 {
+		   if(surcharge10MinPrice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge10MinPrice",OldValue=surcharge10MinPrice,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   surcharge10MinPrice=value;
+		   }
+			
+		 }
+	   }
 	  private string currencyId ;
 	  	  
        
