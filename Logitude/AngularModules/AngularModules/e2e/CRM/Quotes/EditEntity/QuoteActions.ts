@@ -7,9 +7,9 @@ export class QuoteActions {
     constructor() {
         this.Helper = new FieldsHelper();
     }
-    QuoteMenubuttonActions(ActionName: string) {
+    QuoteMenubuttonActions(ActionName: string, Direction: string, TransportMode: string, QuoteType: string) {
         if (ActionName == 'copy') {
-            this.CopyQuote();
+            this.CopyQuote(Direction, TransportMode);
         }
         else if (ActionName == 'accept') {
             this.QuoteAccepted();
@@ -18,51 +18,73 @@ export class QuoteActions {
             this.QuoteDeclined();
         }
         else if (ActionName == 'build') {
-            this.BuildShipmentFromQuote();
+            this.BuildShipmentFromQuote(QuoteType);
         }
         else if (ActionName == 'copybuild') {
-            this.CopyQuote();
+
+            this.CopyQuote(Direction, TransportMode);
             this.QuoteAccepted();
-            this.BuildShipmentFromQuote();
+            this.BuildShipmentFromQuote(QuoteType);
         }
     }
-    CopyQuote() {
+    CopyQuote(Direction: string, TransportMode: string) {
         this.Helper.WaitByIdAndClick('MenuButtons');
         this.Helper.WaitByIdAndClick('Quote.B.CopyQuote');
-
         this.Helper.WaitEditComponentBusyIndicator();
-        var includePickup = element(by.id('CheckBox_0_10'));
-        browser.executeScript("arguments[0].click();", includePickup.getWebElement());
+        // this.Helper.ItemsVisibility('Quote_CopyPickUpIsChecked');
+        // var EC = protractor.ExpectedConditions;
+        // browser.wait(EC.elementToBeClickable(element(by.id('Quote_CopyPickUpIsChecked'))), 100000).then(a => {
+        // });
 
-        var includeDelivery = element(by.id('CheckBox_0_11'));
-        browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
+        // var includePickup = element(by.id('Quote_CopyPickUpIsChecked'));
+        // browser.executeScript("arguments[0].click();", includePickup.getWebElement());
 
-        // this.Helper.WaitByIdAndFill('Quote_FromAddressCity_1', 'Ramallah');
-        // this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId_1', 'State Of Palestine');
-        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        // var includeDelivery = element(by.id('Quote_CopyDeliveryIsChecked'));
+        // browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
 
-        // this.Helper.WaitByIdAndFill('Quote_ToAddressCity_1', 'Ramallah');
-        // this.Helper.WaitByIdAndFill('Quote_ToAddressCountryId_1', 'State Of Palestine');
-        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        if (Direction == 'Domestic' && TransportMode == 'I') {
 
+        }
+        else {
+            this.Helper.WaitByIdAndFill('Quote_FromAddressCity_1', 'Ramallah');
+            this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId_1', 'State Of Palestine');
+            this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+            this.Helper.WaitByIdAndFill('Quote_ToAddressCity_1', 'Ramallah');
+            this.Helper.WaitByIdAndFill('Quote_ToAddressCountryId_1', 'State Of Palestine');
+            this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        }
         this.Helper.WaitByIdAndClick('CreateQuote');
     }
 
-    BuildShipmentFromQuote() {
-        this.Helper.WaitByIdAndClick('Quote.B.BuildShipment_1');
+    BuildShipmentFromQuote(QuoteType: string) {
+        if (QuoteType != 'RoutingRate') {
+            this.Helper.WaitByIdAndClick('Quote.B.BuildShipment_1');
 
-        this.Helper.ItemsVisibility('LogLov_Shipment_ShipperId');
-        this.Helper.ItemsPresent('LogLov_Shipment_ShipperId');
+            this.Helper.ItemsVisibility('LogLov_Shipment_ShipperId');
+            this.Helper.ItemsPresent('LogLov_Shipment_ShipperId');
 
-        var shipmentTypeBtn = element(by.id('ShipmentLevelRadio_0D'));
-        browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
-        this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
+            var shipmentTypeBtn = element(by.id('ShipmentLevelRadio_0D'));
+            browser.executeScript("arguments[0].click();", shipmentTypeBtn.getWebElement());
+            this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
+            this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
+        } else {
+            var EC = protractor.ExpectedConditions;
+            browser.wait(EC.visibilityOf(element(by.id('Quote.B.BuildShipment_1'))), 100000).then(a => {
+                console.log('no build shipments inside routing rate ...');
+            });
+        }
     }
     QuoteAccepted() {
         this.Helper.WaitByIdAndClick('Quote.B.Accept_1');
         this.Helper.WaitByIdAndFill('Quote_EventNote', 'Quote Accepted by protractor ... ');
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.visibilityOf(element(by.id('Quote_EventNote'))), 100000).then(a => {
+            console.log('inside accept quote ');
+        });
         this.Helper.WaitByIdAndClick('ConfrimApproved');
         this.Helper.WaitEditComponentBusyIndicator();
+       
     }
     QuoteDeclined() {
         this.Helper.WaitByIdAndClick('Quote.B.Decline');

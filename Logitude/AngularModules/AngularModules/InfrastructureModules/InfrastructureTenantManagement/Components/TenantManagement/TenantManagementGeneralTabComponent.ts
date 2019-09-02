@@ -36,9 +36,11 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     public BluesnapEAWBSContractIdFilterItems: ApiQueryFilters;
     public BluesnapCRMContractIdFilterItems: ApiQueryFilters;
     public BluesnapInttraStockContractIdFilterItems: ApiQueryFilters;
+    public IsMainAdditionalPackageApplied: boolean = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
+        this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
         this.iGlobalDomainService = new GlobalDomainService();
         this.LoadParentTenants();
         this.Listen();
@@ -70,6 +72,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
                     this.BuildPackagesList();
                     this.BuildAddOnsList();
                     this.SetUIProperties();
@@ -80,6 +83,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.IsMainAdditionalPackageApplied = this.EntityPM.MainAdditionalPackageApplied;
                     this.BuildPackagesList();
                     this.BuildAddOnsList();
                     this.SetUIProperties();
@@ -108,7 +112,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
         this.SetUIProperties_Distributor();
         this.SetUIProperties_NumberOfUsers();
-        this.SetUIProperties_ManageLicencesPerUser();
+        //this.SetUIProperties_ManageLicencesPerUser();
 
         if (this.isTenantManagementEditable) {
             this.SetUIProperties_PaymentFailure();
@@ -262,17 +266,17 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("PlimusAccount", "TenantManagement", false);
         }
     }
-    private SetUIProperties_ManageLicencesPerUser() {
-        var isFieldEnabled = false;
+    //private SetUIProperties_ManageLicencesPerUser() {
+    //    var isFieldEnabled = false;
 
-        if (this.isTenantManagementEditable) {
-            if (!this.IsMultiPackage) {
-                isFieldEnabled = true;
-            }
-        }
+    //    if (this.isTenantManagementEditable) {
+    //        if (!this.IsMultiPackage) {
+    //            isFieldEnabled = true;
+    //        }
+    //    }
 
-        this.UIProperties.SetEnabled("ManageLicencesPerUser", this.ObjectTableName, isFieldEnabled);
-    }
+    //    this.UIProperties.SetEnabled("ManageLicencesPerUser", this.ObjectTableName, isFieldEnabled);
+    //}
     private SetUIProperties_TenantType() {
         if (AppTool.IsNullOrEmpty(this.TenantTypeCode)) {
             this.UIProperties.SetEnabled("TenantConnectedToAirlineCode", this.ObjectTableName, false);
@@ -459,12 +463,12 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-    get ManageLicencesPerUser() { return this.EntityPM.ManageLicencesPerUser; }
-    set ManageLicencesPerUser(newValue: boolean) {
-        if (this.EntityPM.ManageLicencesPerUser != newValue) {
-            this.EntityPM.ManageLicencesPerUser = newValue;
-        }
-    }
+    //get ManageLicencesPerUser() { return this.EntityPM.ManageLicencesPerUser; }
+    //set ManageLicencesPerUser(newValue: boolean) {
+    //    if (this.EntityPM.ManageLicencesPerUser != newValue) {
+    //        this.EntityPM.ManageLicencesPerUser = newValue;
+    //    }
+    //}
 
     get ManagesRegisteredAgent() { return this.EntityPM.ManagesRegisteredAgent; }
     set ManagesRegisteredAgent(newValue: boolean) {
@@ -1141,7 +1145,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.EntityPM.IsMultiPackage = newValue;
 
             this.SetUIProperties_NumberOfUsers();
-            this.SetUIProperties_ManageLicencesPerUser();
+            //this.SetUIProperties_ManageLicencesPerUser();
         }
     }
 

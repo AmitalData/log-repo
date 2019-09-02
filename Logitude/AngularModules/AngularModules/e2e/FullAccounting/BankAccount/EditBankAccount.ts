@@ -11,12 +11,15 @@ export class EditBankAccount {
     }
 
     EditBankAccount(DisplayNumber: string) {
-        this.Helper.WaitByIdAndFill('SearchFieldsId', DisplayNumber);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
+       // browser.sleep(5000);
+        this.Helper.WaitByIdAndClick('BANKSQUIERY');
+        this.Helper.WaitByIdAndFill('SearchFieldsId_0_0', DisplayNumber);
+        this.Helper.ItemsPresent('ListDataLoaded');
+        this.Helper.WaitByIdAndClick('row0col0');
         this.Helper.WaitByIdAndClick('BankAccount.TH.General');
-        this.Helper.WaitByIdAndFill('BankAccount_LocalName', 'Updated Local Name')
-        this.Helper.WaitByIdAndClick('BankAccount-SaveClose');
-        browser.sleep(5000);
+        this.Helper.WaitByIdAndFill('BankAccount_LocalName', 'Updated Local Name');
+        this.Helper.WaitByIdAndClick('BankAccount-Save');
+       // browser.sleep(5000);
 
 
 

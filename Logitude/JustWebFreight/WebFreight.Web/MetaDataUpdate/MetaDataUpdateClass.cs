@@ -169,8 +169,8 @@ namespace WebFreight.Web.MetaDataUpdate
             }
 
             CreateTableCounters();
-            CreateDomesticCounterDefinitions();
-            CreateDropDirectionCounterDefinitions();
+            //CreateDomesticCounterDefinitions();
+            //CreateDropDirectionCounterDefinitions();
             CreateAllTablesTips(tips, textCodes);
 
             if (updateMetadatafields)

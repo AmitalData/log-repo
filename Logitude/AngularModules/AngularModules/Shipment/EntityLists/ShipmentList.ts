@@ -56,6 +56,7 @@ export class ShipmentList {
 		MainCarriageCarrierCode: string;
 		MainCarriageCarrierName: string;
 		AgentComputed: string;
+		AgentComputedName: string;
 		CustomFieldId: string;
 		FromPortId: string;
 		FromPort: string;

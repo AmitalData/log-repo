@@ -10,7 +10,7 @@ export class NewUser {
 
     constructor() {
         this.helper = new FieldsHelper();
-        this.UserName = 'Raghad Company-' + Math.random();
+        this.UserName = 'RaghadUser-' + Math.random();
     }
 
     QuickSearch() {
@@ -18,10 +18,11 @@ export class NewUser {
 
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndClick('General.MH.Maintenance');
+        this.helper.waitByCss('#null_Search');
     }
 
     SearchUserTab() {
-
+        browser.sleep(1000)
         this.helper.WaitByIdAndFill('null_Search', "User");
         this.helper.WaitByIdAndClick('MaintenanceItemMTUS');
 
@@ -29,8 +30,9 @@ export class NewUser {
 
     CreateNewUser() {
         this.helper.WaitByIdAndClick('NewUserId');
-        this.helper.WaitByIdAndFill('User_Email', "test2@mail.com");
-        // this.helper.WaitByIdAndFill('PasswordId', "123");
+        this.helper.WaitByIdAndFill('User_Email', this.UserName+"@mail.com");
+        this.helper.WaitByIdAndFill('PasswordId', "123");
+        this.helper.WaitByIdAndFill('retypePass',"123")
         //retypepassword
         //  this.helper.WaitByIdAndFill('', "Poland");
         this.helper.WaitByIdAndFill('User_EnglishName', this.UserName);
@@ -39,9 +41,8 @@ export class NewUser {
         this.helper.WaitByIdAndFill('User_BranchId', "main");
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.helper.WaitByIdAndFill('User_Notes', "This is Test ")
-        this.helper.waitByCss('.MessageText')
-        // this.helper.WaitBusyIndicator();
-        //   this.helper.WaitByIdAndClick('CheckBox_0_0');
+        this.helper.WaitByIdAndClick('row11');
+         this.helper.WaitByIdAndClick('CheckBox_0_0_LBL');
         this.helper.WaitByIdAndClick('OKIdButton');
     }
 
@@ -51,7 +52,8 @@ export class NewUser {
         this.helper.WaitWindowClosed();
         this.helper.WaitByIdAndFill('User_Search', this.UserName);
         //TO CHOOSE WICH USER YOU WANT TO EDI 
-        this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+     
+        this.helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
         //click on row 
         this.helper.WaitByIdAndFill('User_LocalName', "Raghad");
         this.helper.WaitByIdAndFill('User_Notes', "This Is Test For Protractor")

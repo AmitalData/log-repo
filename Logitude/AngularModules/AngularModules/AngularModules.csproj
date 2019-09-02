@@ -763,6 +763,18 @@
     <TypeScriptCompile Include="e2e\CRM\CRMModule.ts" />
     <TypeScriptCompile Include="e2e\CRM\Opportunities\NewOpportunity.ts" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\ListTemplates\SchedulerDateListTemplate.html" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\ChargesTab.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\DetailsTab.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\EditQuoteTabs.e2e-spec.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\EditQuoteTabs.po.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\OverviewTab.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\PackagesTab.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\PartnerTab.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\QuoteActions.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\RoutingsTab.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\NewEntity\NewQuote-Spec.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\NewEntity\NewQuote.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Quotes\QuoteHelper.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\APInvoice\APInvoice-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\APInvoice\NewAPInvoice.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\APPayment\APPayment-spec.ts" />
@@ -772,6 +784,10 @@
     <TypeScriptCompile Include="e2e\FullAccounting\ARInvoice\New\NewARInvoice.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ARPayment\ARPayment-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ARPayment\NewARPayment.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\BankAccount\EditBankAccount.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\BankAccount\NewBank-spec.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\BankAccount\NewBankAccount.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\BankAccount\NewGLAccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\ChartOfAccount-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\ChartOFAccountModule.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\EditEntity\EditChartOfAccount.ts" />
@@ -796,6 +812,8 @@
     <TypeScriptCompile Include="e2e\Maintenance\CompnayAddressSetting\CompanyAddressSetting-spec.ts" />
     <TypeScriptCompile Include="e2e\Maintenance\CompnayAddressSetting\CompanyAddressSetting.ts" />
     <TypeScriptCompile Include="e2e\Maintenance\CompnayAddressSetting\CompanyAddressSettingScenario.ts" />
+    <TypeScriptCompile Include="e2e\Operations\PrintDocOut\PrintDocOut.ts" />
+    <TypeScriptCompile Include="e2e\Operations\SendMailPopup\SendMailPopup.ts" />
     <TypeScriptCompile Include="e2e\Operations\ShipmentView\ShipmentView-spec.ts" />
     <TypeScriptCompile Include="e2e\Operations\ShipmentView\ShipmentView.ts" />
     <TypeScriptCompile Include="e2e\Operations\ShipmentView\ShipmentViewScenario.ts" />
@@ -7282,7 +7300,6 @@
     <Folder Include="Dashboard\Components\Graphs\" />
     <Folder Include="dist\" />
     <Folder Include="e2e\CRM\Customers\" />
-    <Folder Include="e2e\CRM\Quotes\" />
     <Folder Include="e2e\LogBox\Documents\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />

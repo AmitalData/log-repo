@@ -979,14 +979,14 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
         logWindow.WindowArgs = this;
         logWindow.Show('./ShipmentModules/ShipmentTabs/Components/Windows/Tariffs/TariffsComponent');
     }
-    EditTariffClicked(tariffId: string) {
-        if (tariffId != null) {
+    EditTariffClicked(item: ShipmentPayableItem) {
+        if (item != null) {
             var editWindow = new LogitudeWindow();
             editWindow.ShowHeaderButtons = true;
             editWindow.Title = "Price Check";
             editWindow.Height = 770;
             editWindow.Width = 1500;
-            editWindow.ShowEditComponent(tariffId, "Tariff");
+            editWindow.ShowEditComponent(item.TariffId, "Tariff", item.TariffVersion + "" );
         }
     }
 
@@ -1516,6 +1516,8 @@ export class ShipmentPayableItem extends BaseComponent {
     get ChargesGroupCode() { return this.EntityPM.ChargesGroupCode; }
     get TariffNumber() { return this.EntityPM.TariffNumber; }
     get TariffId() { return this.EntityPM.TariffId; }
+    get TariffVersion() { return this.EntityPM.TariffVersion; }
+
 
     get ChargesTypeId() { return this.EntityPM.ChargesTypeId; }
     set ChargesTypeId(value: string) {

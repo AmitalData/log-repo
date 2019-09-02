@@ -29,6 +29,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskSchedulerHistory.TaskId = TaskSchedulerHistoryPM.TaskId;
             TaskSchedulerHistory.LogFirstLine = TaskSchedulerHistoryPM.LogFirstLine;
             TaskSchedulerHistory.LogType = TaskSchedulerHistoryPM.LogType;
+
+            TaskSchedulerHistory.LogDocumentId = TaskSchedulerHistoryPM.LogDocumentId;
         }
     }
 }

@@ -17,7 +17,7 @@ describe('CRM Module', function () {
 
   it(' New GLAccount Was Created And Updated', function () {
 
-
+      console.log('Khawlaaa check ')
     browser.ignoreSynchronization = true;
     gn1.GoToMainMenu('General.MH.FullAccounting');
     h.WaitByIdAndClick('FAGLAccouts');
@@ -28,11 +28,10 @@ describe('CRM Module', function () {
       var bank = 'Bank'+GlaccountNumber;
     GLA.CreateNewGLAccount(Gl);
     GLA.CreateNewGLAccount(diff);
-    GLA.CreateNewGLAccountandmove(trans);
-     this.Helper. WaitByIdAndClick('NEWBANK');
-     BNk.CreateNewBankAccount(bank,Gl,diff,trans);
-     h.WaitByIdAndClick('BANKQUERY');
-     edit.EditBankAccount(bank);
+    GLA.CreateNewGLAccount(trans);
+    //GLA.CreateNewGLAccountandmove();  
+    BNk.CreateNewBankAccount(bank,Gl,diff,trans);
+    edit.EditBankAccount(bank);
   
   });
 });

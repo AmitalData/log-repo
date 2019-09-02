@@ -22,7 +22,7 @@
 							"    pm.expect(idexist);",
 							"    pm.environment.set(\"UserIdProtOwner\",idvalue);",
 							"    if (idexist)  {",
-							"      postman.setNextRequest(\"CreateTasks\"); ",
+							"      postman.setNextRequest(\"CreateCustomerIdActivity\"); ",
 							"     }",
 							"});",
 							"",
@@ -248,9 +248,9 @@
 							"    pm.environment.set(\"TaskCreateDate\", idvalue2);",
 							"    pm.environment.set(\"TaskUpdateDate\", idvalue3);",
 							"    pm.environment.set(\"ConcurrencyGUID\", idvalue4);",
-							"    if (idexist)  {",
-							"      postman.setNextRequest(\"Tasks\"); ",
-							"     }",
+							"    // if (idexist)  {",
+							"    //   postman.setNextRequest(\"Tasks\"); ",
+							"    //  }",
 							"});",
 							"",
 							"",
@@ -417,11 +417,107 @@
 			"response": []
 		},
 		{
-			"name": "Appointment ",
+			"name": "CreateAppointment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f4e59134-4878-48ce-a920-c45acba29697",
+						"exec": [
+							"pm.test(\"CreateAppointment\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"     \r",
+							"    var idvalue = (pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    \r",
+							"    \r",
+							"    var idvalue2 = (pm.response.json().CreateDate);\r",
+							"    var idexist2 = idvalue2 !== null;\r",
+							"    pm.expect(idexist2);\r",
+							"    \r",
+							"    var idvalue3 = (pm.response.json().UpdateDate);\r",
+							"    var idexist3 = idvalue3 !== null;\r",
+							"    pm.expect(idexist3)\r",
+							"    \r",
+							"    var idvalue4 = (pm.response.json().ConcurrencyGUID);\r",
+							"    var idexist4 = idvalue4 !== null;\r",
+							"    pm.expect(idexist4)\r",
+							"    \r",
+							"    pm.environment.set(\"AppointmentId\",idvalue);\r",
+							"    pm.environment.set(\"AppointmentCreateDate\", idvalue2);\r",
+							"    pm.environment.set(\"AppointmentUpdateDate\", idvalue3);\r",
+							"    pm.environment.set(\"ConcurrencyGUID\", idvalue4);\r",
+							"    // if (idexist)  {\r",
+							"    //   postman.setNextRequest(\"Tasks\"); \r",
+							"    //  }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
-				"header": [],
-				"url": ""
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"ActivityTypeCode\": \"AP\",\n  \"Subject\": \"Create Appointment - integration ... \",\n  \"PriorityCode\": \"02\",\n  \"OwnerId\": \"{{UserIdProtOwner}}\",\n  \"StartDateTime\": \"2019-08-28T15:30:56.67Z\",\n  \"EndDateTime\": \"2019-08-28T16:00:56.67Z\",\n  \"Description\": null,\n  \"CallTypeCode\": null,\n  \"CallPurpose\": null,\n  \"CallDetails\": null,\n  \"CallResult\": null,\n  \"PhoneNumber\": null,\n  \"Duration\": 30,\n  \"Notes\": null,\n  \"CreatedByUserId\": \"{{LoggedUserId}}\",\n  \"ActivityStatusCode\": \"N\",\n  \"UpdatedByUserId\": \"{{LoggedUserId}}\",\n  \"BranchId\": \"{{BranchId}}\",\n  \"AllDayEvent\": false,\n  \"ActivityTimeTypeCode\": \"BS\",\n  \"Location\": null,\n  \"ActivityTypeName\": \"Appointment\",\n  \"ActivityStatusName\": null,\n  \"OwnerName\": null,\n  \"PriorityName\": null,\n  \"IsLeftVoiceMail\": false,\n  \"OutlookId\": null,\n  \"NeedSynchronization\": true,\n  \"IsMarkedCompleted\": false,\n  \"IsOpen\": true,\n  \"MeetingSummary\": null,\n  \"CustomerId\": \"{{CustomerIdActivity}}\",\n  \"OpportunityId\": null,\n  \"Field1\": null,\n  \"Field2\": null,\n  \"Field3\": null,\n  \"Field4\": null,\n  \"Field5\": null,\n  \"Field6\": null,\n  \"Field7\": null,\n  \"Field8\": null,\n  \"Field9\": null,\n  \"Field10\": null,\n  \"CompleteDate\": null,\n  \"OpportunitySubject\": null,\n  \"ActivityInvitees\": [],\n  \"BusinessUnitId\": \"1102\",\n  \"SenderEmail\": null,\n  \"CommunicationLogId\": null,\n  \"ActivityEmailRecipients\": [],\n  \"ActivityNotes\": [],\n  \"CustomerName\": null,\n  \"SenderContactId\": null,\n  \"CallWithId\": null,\n  \"ConcurrencyGUID\": \"94be1b5b-c8e4-4cc9-b416-6eb9abdb9323\",\n  \"CreatedByUserName\": null,\n  \"QuoteId\": null,\n  \"QuoteNumber\": null,\n  \"TicketId\": null,\n  \"SortingDate\": \"2019-08-28T15:30:37.904Z\",\n  \"SortingBy\": \"Start Date\",\n  \"SendReceiveDate\": null,\n  \"ActivityWith\": null,\n  \"DescriptionRightToLeft\": false,\n  \"MeetingSummaryRightToLeft\": false,\n  \"SenderContactName\": null,\n  \"OriginalActivitySubject\": null,\n  \"IsHybrid\": false,\n  \"ActivityDocumentDatas\": [],\n  \"IsCustomerBlockedBusinessUnit\": false,\n  \"IsCopy\": false,\n  \"LastModified\": null,\n  \"DontSetNeedSynchronization\": false,\n  \"ActivityTypePathCode\": null,\n  \"ObjectTableName\": null,\n  \"From\": null,\n  \"To\": null,\n  \"Cc\": null,\n  \"ArchiveDate\": null,\n  \"DueDateOffset\": null,\n  \"DueDateDateField\": null,\n  \"BusinessProcessQueueId\": null,\n  \"TeamId\": null,\n  \"ShipmentId\": null,\n  \"ChangeSetOp\": 1,\n  \"EncodeBase64NVARCHARFieldsBy\": null\n}"
+				},
+				"url": "{{LogitudeURL}}/api/activities"
+			},
+			"response": []
+		},
+		{
+			"name": "EditAppointment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "80948e75-cfdd-4d43-a40b-d77f3411a667",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n \"Id\": \"{{AppointmentId}}\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"ActivityTypeCode\": \"AP\",\n  \"Subject\": \"Edit Appointment - integration ...\",\n  \"PriorityCode\": \"02\",\n  \"OwnerId\": \"{{UserIdProtOwner}}\",\n  \"StartDateTime\": \"2019-08-28T15:30:56.67\",\n  \"EndDateTime\": \"2019-08-28T16:15:56.067\",\n  \"Description\": \"Edit Appointment - description field : Integration ...\",\n  \"CallTypeCode\": null,\n  \"CallPurpose\": null,\n  \"CallDetails\": null,\n  \"CallResult\": null,\n  \"PhoneNumber\": null,\n  \"Duration\": null,\n  \"Notes\": null,\n  \"CreatedByUserId\": \"{{LoggedUserId}}\",\n  \"CreateDate\": \"{{CallCreateDate}}\",\n  \"ActivityStatusCode\": \"N\",\n  \"UpdatedByUserId\": \"{{LoggedUserId}}\",\n  \"UpdateDate\": \"{{CallUpdateDate}}\",\n  \"BranchId\": \"{{BranchId}}\",\n  \"AllDayEvent\": false,\n  \"ActivityTimeTypeCode\": \"BS\",\n  \"Location\": \"Edit Appointment - Location field : Integration .. \",\n  \"ActivityTypeName\": \"Appointment\",\n  \"ActivityStatusName\": \"Not Started\",\n  \"OwnerName\": \"Protractor user\",\n  \"PriorityName\": \"Normal\",\n  \"IsLeftVoiceMail\": false,\n  \"OutlookId\": null,\n  \"NeedSynchronization\": true,\n  \"IsMarkedCompleted\": false,\n  \"IsOpen\": true,\n  \"MeetingSummary\": null,\n  \"CustomerId\": \"{{CustomerIdActivity}}\",\n  \"OpportunityId\": null,\n  \"Field1\": {\n    \"$id\": \"2\",\n    \"Value\": null,\n    \"FieldName\": \"Field1\",\n    \"TableName\": \"Activity\"\n  },\n  \"Field2\": {\n    \"$id\": \"3\",\n    \"Value\": null,\n    \"FieldName\": \"Field2\",\n    \"TableName\": \"Activity\"\n  },\n  \"Field3\": {\n    \"$id\": \"4\",\n    \"Value\": null,\n    \"FieldName\": \"Field3\",\n    \"TableName\": \"Activity\"\n  },\n  \"Field4\": {\n    \"$id\": \"5\",\n    \"Value\": null,\n    \"FieldName\": \"Field4\",\n    \"TableName\": \"Activity\"\n  },\n  \"Field5\": {\n    \"$id\": \"6\",\n    \"Value\": null,\n    \"FieldName\": \"Field5\",\n    \"TableName\": \"Activity\"\n  },\n  \"Field6\": {\n    \"$id\": \"7\",\n    \"Value\": null,\n    \"FieldName\": \"Field6\",\n    \"TableName\": \"Activity\"\n  },\n  \"Field7\": {\n    \"$id\": \"8\",\n    \"Value\": null,\n    \"FieldName\": \"Field7\",\n    \"TableName\": \"Activity\"\n  },\n  \"Field8\": {\n    \"$id\": \"9\",\n    \"Value\": null,\n    \"FieldName\": \"Field8\",\n    \"TableName\": \"Activity\"\n  },\n  \"Field9\": {\n    \"$id\": \"10\",\n    \"Value\": null,\n    \"FieldName\": \"Field9\",\n    \"TableName\": \"Activity\"\n  },\n  \"Field10\": {\n    \"$id\": \"11\",\n    \"Value\": null,\n    \"FieldName\": \"Field10\",\n    \"TableName\": \"Activity\"\n  },\n  \"CompleteDate\": null,\n  \"OpportunitySubject\": null,\n  \"ActivityInvitees\": [],\n  \"BusinessUnitId\": \"1102\",\n  \"SenderEmail\": null,\n  \"CommunicationLogId\": null,\n  \"ActivityEmailRecipients\": [],\n  \"ActivityNotes\": [],\n  \"CustomerName\": \"Customer Activity\",\n  \"SenderContactId\": null,\n  \"CallWithId\": null,\n  \"ConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\n  \"CreatedByUserName\": null,\n  \"QuoteId\": null,\n  \"QuoteNumber\": null,\n  \"TicketId\": null,\n  \"SortingDate\": \"2019-08-28T15:30:56.67\",\n  \"SortingBy\": \"Start Date\",\n  \"SendReceiveDate\": null,\n  \"ActivityWith\": null,\n  \"DescriptionRightToLeft\": false,\n  \"MeetingSummaryRightToLeft\": false,\n  \"SenderContactName\": null,\n  \"OriginalActivitySubject\": null,\n  \"IsHybrid\": false,\n  \"ActivityDocumentDatas\": [],\n  \"IsCustomerBlockedBusinessUnit\": false,\n  \"IsCopy\": false,\n  \"LastModified\": null,\n  \"DontSetNeedSynchronization\": false,\n  \"ActivityTypePathCode\": \"AP\",\n  \"ObjectTableName\": null,\n  \"From\": null,\n  \"To\": null,\n  \"Cc\": null,\n  \"ArchiveDate\": \"2019-08-28T12:35:22.433\",\n  \"DueDateOffset\": null,\n  \"DueDateDateField\": null,\n  \"BusinessProcessQueueId\": null,\n  \"TeamId\": null,\n  \"ShipmentId\": null,\n  \"ChangeSetOp\": 2,\n  \"EncodeBase64NVARCHARFieldsBy\": null\n}"
+				},
+				"url": "{{LogitudeURL}}/api/activities"
 			},
 			"response": []
 		}

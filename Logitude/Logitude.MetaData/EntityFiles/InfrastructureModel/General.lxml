@@ -219,7 +219,7 @@
     <TextCode Code="&quot;General.O.DashBoard.Receivables&quot;" DefaultText="&quot;Receivables&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;General.O.DashBoard.Debtors&quot;" DefaultText="&quot;Debtors&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;General.O.DashBoard.Income&quot;" DefaultText="&quot;Income&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;General.MH.Customers&quot;" DefaultText="&quot;Customers&quot;" LocalDefaultText="&quot;לקוחות&quot;" TextCodeTypeCode="&quot;MH&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;General.MH.Customers&quot;" DefaultText="&quot;Customers&quot;" LocalDefaultText="&quot;Customers&quot;" TextCodeTypeCode="&quot;MH&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;General.B.SendRequest&quot;" DefaultText="&quot;Send&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;General.O.Communications&quot;" DefaultText="&quot;Communications&quot;" LocalDefaultText="&quot;תקשורת&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;General.O.ImportEntities&quot;" DefaultText="&quot;Add %Entity to your company&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />

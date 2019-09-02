@@ -1356,7 +1356,21 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         logWindow.Show(myPath);
     }
     DeletePackageClicked(itemComponent: ShipmentPackageItem) {
-        var message = this.IsLCLEntity ? TextCodeTranslator.Translate("Shipment.M.DeleteThisPackage") : "Delete This Container";
+        var message: string = "";
+
+        if (this.IsLCLEntity) {
+            message = TextCodeTranslator.Translate("Shipment.M.DeleteThisPackage");
+        }
+
+        else {
+            if (!AppTool.IsNullOrEmpty(itemComponent.EntityPM.LastStatusCode)) {
+                message = "Note that this will result in deleting container level statuses. Delete This Container?";
+            }
+
+            else {
+                message = "Delete This Container";
+            }
+        }
 
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show(message);
@@ -2159,7 +2173,7 @@ export class ShipmentPackageItem extends BaseComponent {
             this.EntityPM.NonActiveContainer = value;
 
             if (value) {
-                this.Temperature = 999;
+                this.Temperature = '999';
             }
 
             this.SetUIProperties_Container();
@@ -2445,9 +2459,9 @@ export class ShipmentPackageItem extends BaseComponent {
     }
 
     get Temperature() { return this.EntityPM.Temperature; }
-    set Temperature(newValue: number) {
+    set Temperature(newValue: string) {
         if (this.EntityPM.Temperature != newValue) {
-            this.EntityPM.Temperature = AppTool.Round(newValue, 3);
+            this.EntityPM.Temperature = newValue;
         }
     }
 

@@ -809,7 +809,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ARInvoiceQuery entityQuery = new ARInvoiceQuery(invoiceRepository);
                 ARInvoicePM oldEntityPM = entityQuery.GetSinglePM(this.entityPM.CreditedByARInvoiceId, tenant);
                 
-                this.AddARInvoiceJournalAndJournalLines(this.entityPM, true);
+                //this.AddARInvoiceJournalAndJournalLines(this.entityPM, true);
 
                 // Update Old Invoice
                 if (oldEntityPM.IsConsolidationInvoice)
@@ -1663,12 +1663,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 #endregion
             }
         }
+        Tenant tenantPOCO;
         private void InitializeGLAccountFields()
         {
             if (entityPM.SetApproved)
             {
                 TenantRepository tenantRepository = new TenantRepository(tenant);
-                Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+                 tenantPOCO = tenantRepository.GetSingleTenant(tenant);
 
                 if (tenantPOCO.AccountingActivated)
                 {
@@ -3162,6 +3163,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region Journal & Journal Lines
         private void AddARInvoiceJournalAndJournalLines(ARInvoicePM theEntityPm, bool setApproved)
         {
+            GLAccountPM splittedByCurrencyAccount = GetSplittedGLAccount(theEntityPm);
             int tenant = theEntityPm.Tenant;
             if (setApproved)
             {
@@ -3208,8 +3210,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.Reference2 = theEntityPm.MainEntityReference;
                     journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
                     journalLine.Notes = theEntityPm.InternalNotes;
-                    journalLine.DebitAccountId = glAccount == null ? "" : glAccount.Id;
-                    journalLine.DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
+                    journalLine.DebitAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.Id;
+                    journalLine.DebitControlAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.ControlAccountId;
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                     journal.JournalLines.Add(journalLine);
 
@@ -3286,6 +3288,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
             accountingSettings = query.GetFullAccountingSettingByTenant( tenant);
             return accountingSettings;
+        }
+        private GLAccountPM GetSplittedGLAccount(ARInvoicePM invoice)
+        {
+            GLAccountPM debitGLAcount = getDebitGLAccount(invoice.BillToId, invoice.Tenant);
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+
+            return glAccountQuery.GetSplittedByCurrencyGLAccount(debitGLAcount.Id, invoice.Tenant, invoice.InvoiceCurrencyId);
         }
 
         private GLAccountPM getDebitGLAccount(string billToId, int tenant)
@@ -3504,8 +3513,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (this.isApprovingInvoice)
             {
                 // Journal Work
-                this.AddARInvoiceJournalAndJournalLines(entityPM, this.isApprovingInvoice);
-
+                if (tenantPOCO.AccountingActivated)
+                {
+                    this.AddARInvoiceJournalAndJournalLines(entityPM, this.isApprovingInvoice);
+                }
               
                 // DropBox
                 this.CreateARInvoiceMessage(this.isApprovingInvoice);

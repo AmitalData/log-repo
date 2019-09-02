@@ -136,7 +136,7 @@
                                                                         </td>
                                                                     </tr>
 
-                                                                    <tr class="FormFieldRow">
+                                                                    <!--<tr class="FormFieldRow">
                                                                         <td>
                                                                             <LogLabel [ObjectFieldName]="'ManageLicencesPerUser'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
@@ -144,7 +144,7 @@
                                                                         <td>
                                                                             <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'ManageLicencesPerUser'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                         </td>
-                                                                    </tr>
+                                                                    </tr>-->
 
                                                                     <tr class="FormFieldRow">
                                                                         <td>
@@ -493,7 +493,7 @@
                                                                                         <table>
                                                                                             <tr>
                                                                                                 <td style="width: 1px;">
-                                                                                                    <RadioButton [Name]="'PackageRadio'" [IsChecked]="MainAdditionalPackageApplied == false" (Checked)="MainAdditionalPackageApplied = false" [Text]="'Single/Multi Package'"></RadioButton>
+                                                                                                    <RadioButton [Name]="'PackageRadio'" [IsChecked]="MainAdditionalPackageApplied == false" (Checked)="MainAdditionalPackageApplied = false" [Text]="'Single/Multi Package'" [IsEnabled]="!IsMainAdditionalPackageApplied"></RadioButton>
                                                                                                 </td>
 
                                                                                                 <td style="width: 15px;">
@@ -501,7 +501,7 @@
                                                                                                 </td>
 
                                                                                                 <td style="width: 1px;">
-                                                                                                    <RadioButton [Name]="'PackageRadio'" [IsChecked]="MainAdditionalPackageApplied == true" (Checked)="MainAdditionalPackageApplied = true" [Text]="'Main/Additional Package'"></RadioButton>
+                                                                                                    <RadioButton [Name]="'PackageRadio'" [IsChecked]="MainAdditionalPackageApplied == true" (Checked)="MainAdditionalPackageApplied = true" [Text]="'Main/Additional Package'" [IsEnabled]="!IsMainAdditionalPackageApplied"></RadioButton>
                                                                                                 </td>
 
                                                                                                 <td>
