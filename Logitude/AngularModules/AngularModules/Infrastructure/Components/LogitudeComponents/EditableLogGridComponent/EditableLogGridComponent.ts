@@ -21,7 +21,7 @@ declare var styleDisplay, EditgriditemStyling;
     selector: 'logitude-edit-grid',
     templateUrl: './EditableLogGridComponent.html',
     //directives: [CORE_DIRECTIVES, EditableListTemplateComponent],
-    inputs: ['columns:columns', 'GridWidth', 'GridHeight', 'groupby', 'ItemSource', 'EnableLines', 'DisableRowByFieldValue', 'DisableRowByFieldName', 'SelectedRow', 'Disabled', 'HeaderHeight', 'ShowCount', 'ReloadDetails', 'ReRenderGrid', 'IsReadOnly', 'IsDarkHeader', 'EnableMultiSelection', 'SelectedRows', 'FooterTop', 'UseVirtuallization', 'EnableGridViewRowBackground', 'ChangeScrollPosition','EnableExpandCollapseAll'],
+    inputs: ['columns:columns', 'GridWidth', 'GridHeight', 'groupby', 'ItemSource', 'EnableLines', 'DisableRowByFieldValue', 'DisableRowByFieldName', 'SelectedRow', 'Disabled', 'HeaderHeight', 'ShowCount', 'ReloadDetails', 'ReRenderGrid', 'IsReadOnly', 'IsDarkHeader', 'EnableMultiSelection', 'SelectedRows', 'FooterTop', 'UseVirtuallization', 'EnableGridViewRowBackground', 'ChangeScrollPosition', 'EnableExpandCollapseAll','LastDefaultSpace'],
 })
 
 export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterContentInit {
@@ -33,6 +33,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     HorizantalScrollStatus: string = 'auto';
     differ: any;
     ShowFooter: boolean = false;
+    LastDefaultSpace:number =22;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);//true;
     UseVirtuallization: boolean = false;
     ItemSourceLoaded: EventEmitter<any>;
@@ -758,7 +759,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                         if (value.IsGroupOpened) {
                             value.styles = {
                                 'top': top + "px",
-                                'min-width': this.TotalWidth + 22 + 'px',
+                                'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                                 'width:': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px',
                                 'max-width:': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px',
                             };
@@ -789,12 +790,12 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
 
                         value.styles = {
                             'top': top + "px",
-                            'min-width': this.TotalWidth + 22 + 'px',
+                            'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                             'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
                         };
                         value.Detailsstyles = {
                             'top': Bodytop + "px",
-                            'min-width': this.TotalWidth + 22 + 'px',
+                            'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                             'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
                         };
                         var DetailsDiv = document.getElementById(this.DetailsDivId + 'DetailsDiv' + (value.rowIndex));
@@ -983,7 +984,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     if (value.IsGroupOpened) {
                         value.styles = {
                             'top': top + "px",
-                            'min-width': this.TotalWidth + 22 + 'px',
+                            'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                             'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px',
                             'max-width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth - 18 : this.ViewWidth - 18) + 'px',
                         };
@@ -1016,12 +1017,12 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
 
                     value.styles = {
                         'top': top + "px",
-                        'min-width': this.TotalWidth + 22 + 'px',
+                        'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                         'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
                     };
                     value.Detailsstyles = {
                         'top': Bodytop + "px",
-                        'min-width': this.TotalWidth + 22 + 'px',
+                        'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                         'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
                     };
                     var DetailsDiv = document.getElementById(this.DetailsDivId + 'DetailsDiv' + (value.rowIndex));
@@ -1063,12 +1064,12 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 if (value.IsGroupOpened) {
                     value.styles = {
                         'top': top + "px",
-                        'min-width': this.TotalWidth + 22 + 'px',
+                        'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                         'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
                     };
                     value.Detailsstyles = {
                         'top': Bodytop + "px",
-                        'min-width': this.TotalWidth + 22 + 'px',
+                        'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                         'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
                     };
                     var DetailsDiv = document.getElementById(this.DetailsDivId + 'DetailsDiv' + (value.rowIndex));
@@ -1886,12 +1887,12 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     if (buffered) {
                         buffered.styles = {
                             'top': top + "px",
-                            'min-width': this.TotalWidth + 22 + 'px',
+                            'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                             'width': '100%'
                         };
                         buffered.Detailsstyles = {
                             'top': Bodytop + "px",
-                            'min-width': this.TotalWidth + 22 + 'px',
+                            'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                             'width': '100%'
                         };
                         if (buffered.IsDetailesOpened == true) {
@@ -1907,23 +1908,23 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                         row.rowData.rowIndex = (row.rowIndex);
                         row.styles = {
                             'top': top + "px",
-                            'min-width': this.TotalWidth + 22 + 'px',
+                            'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                             'width': '100%'
                         };
                         row.Detailsstyles = {
                             'top': Bodytop + "px",
-                            'min-width': this.TotalWidth + 22 + 'px',
+                            'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                             'width': '100%'
                         };
                         //row.styles = {
                         //    'top': (row.rowIndex * this.rowHeight) + "px",
-                        //    'min-width': this.TotalWidth + 22 + 'px',
+                        //    'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                         //    'width': '100%'
                         //};
                         //row.Detailsstyles = this.getRowDetailsStyles();
                         //    {
                         //    'top': (row.rowIndex * this.rowHeight) + "px",
-                        //    'min-width': this.TotalWidth + 22 + 'px',
+                        //    'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                         //    'width': '100%'
                         //};
                         if (row) {
@@ -1996,12 +1997,12 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
 
             value.styles = {
                 'top': top + "px",
-                'min-width': this.TotalWidth + 22 + 'px',
+                'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                 'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
             };
             value.Detailsstyles = {
                 'top': Bodytop + "px",
-                'min-width': this.TotalWidth + 22 + 'px',
+                'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                 'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
             };
             var DetailsDiv = document.getElementById(this.DetailsDivId + 'DetailsDiv' + (value.rowIndex));
@@ -2039,12 +2040,12 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
 
             //value.styles = {
             //    'top': top + "px",
-            //    'min-width': this.TotalWidth + 22 + 'px',
+            //    'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
             //    'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
             //};
             //value.Detailsstyles = {
             //    'top': Bodytop + "px",
-            //    'min-width': this.TotalWidth + 22 + 'px',
+            //    'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
             //    'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
             //};
             var DetailsDiv = document.getElementById(this.DetailsDivId + 'DetailsDiv' + (value.rowIndex));
@@ -2069,7 +2070,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         this.BodyTop = this.HeaderHeight;
         var styles = {
             'top': top + "px",
-            'min-width': this.TotalWidth + 22 + 'px',
+            'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
             'width': '100%'
         };
         return DetailsHeight;
@@ -2087,12 +2088,12 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
 
             //value.styles = {
             //    'top': top + "px",
-            //    'min-width': this.TotalWidth + 22 + 'px',
+            //    'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
             //    'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
             //};
             //value.Detailsstyles = {
             //    'top': Bodytop + "px",
-            //    'min-width': this.TotalWidth + 22 + 'px',
+            //    'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
             //    'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
             //};
             var DetailsDiv = document.getElementById(this.DetailsDivId + 'DetailsDiv' + (value.rowIndex));
@@ -2117,7 +2118,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         this.BodyTop = this.HeaderHeight;
         var styles = {
             'top': Bodytop + "px",
-            'min-width': this.TotalWidth + 22 + 'px',
+            'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
             'width': '100%'
         };
         return styles;
@@ -2130,7 +2131,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
 
         var styles = {
             'top': (index * this.rowHeight) + this.rowHeight + "px",
-            'min-width': this.TotalWidth + 22 + 'px',
+            'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
             'width': '100%'
         };
         return styles;
@@ -2177,14 +2178,14 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     /*
                row.styles = {
                    'top': (value.RowIndex * this.rowHeight) + "px",
-                   'min-width': this.TotalWidth + 22 + 'px',
+                   'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                    'width:': this.TotalWidth + 'px',
                    'max-width:': this.TotalWidth + 'px',
                };
                */
                     row.styles = {
                         'top': (row.rowIndex * this.rowHeight) + "px",
-                        'min-width': this.TotalWidth + 22 + 'px',
+                        'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                         'width': '100%'
                     };
 
