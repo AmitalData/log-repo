@@ -49,7 +49,7 @@ export class NewQuote {
     this.EditQuoteTabs.EditTabs(QuoteNumber, ShipmentType, Direction, TransportMode, QuoteType);
     // // this.Helper.WaitByIdAndClick('Quote-Save');
     // // this.Helper.WaitEditComponentBusyIndicator();
-    // this.QuoteActions.QuoteMenubuttonActions('copybuild', Direction, TransportMode, QuoteType);
+    this.QuoteActions.QuoteMenubuttonActions('copybuild', Direction, TransportMode, QuoteType);
     /* }
      else if ((TransportMode == 'O' || TransportMode == 'I') && QuoteType != '') {
        var QuoteNumber = this.Quotes.RandomNum();
@@ -66,9 +66,9 @@ export class NewQuote {
     var quotetypeBtn: any;
     var EC = protractor.ExpectedConditions;
     this.Helper.WaitByIdAndFill('Quote_ShipperId', 'TestShipper');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_ShipperId', 'TestShipper');
     this.Helper.WaitByIdAndFill('Quote_ConsigneeId', 'TestShipper');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_ConsigneeId', 'TestShipper');
 
     if (Direction == 'Export' || Direction == 'Domestic')
       this.Helper.WaitByIdAndFill('Quote_ShipperReference1', QuoteNumber);// test random number randomWholeNum
@@ -76,7 +76,7 @@ export class NewQuote {
       this.Helper.WaitByIdAndFill('Quote_ConsigneeReference1', QuoteNumber);// test random number randomWholeNum
 
     this.Helper.WaitByIdAndFill('Quote_IncotermId', 'CIF');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_IncotermId', 'CIF');
     this.QuoteHepler.SelectQuoteType(QuoteType);
 
     if (Direction == 'Domestic') {
@@ -84,24 +84,24 @@ export class NewQuote {
       }
       else {
         this.Helper.WaitByIdAndFill('Quote_FromPortId', 'eze');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_FromPortId');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_FromPortId','eze');
         // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitByIdAndFill('Quote_ToPortId', 'eze');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_ToPortId');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_ToPortId', 'eze');
         // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       }
     }
     else {
       this.Helper.WaitByIdAndFill('Quote_FromPortId', 'eze');
-      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_FromPortId');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_FromPortId', 'eze');
       this.Helper.WaitByIdAndFill('Quote_ToPortId', 'mvd');
-      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_ToPortId');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_ToPortId', 'mvd');
     }
 
     if (TransportMode == 'A') {
       this.Helper.WaitByIdAndFill('Quote_MoveTypeId', 'TestMoveTypeIdAirMTA');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_MoveTypeId', 'TestMoveTypeIdAirMTA');
 
       if (QuoteType == 'SpotRate') {
         this.Helper.WaitByIdAndFill('Quote_GrossWeight', '1000');
@@ -112,13 +112,13 @@ export class NewQuote {
 
     else if (TransportMode == 'O') {
       this.Helper.WaitByIdAndFill('Quote_MoveTypeId', 'TestMoveTypeIDOceanMTO');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_MoveTypeId', 'TestMoveTypeIDOceanMTO');
       if (ShipmentType == 'FCL') {
         if (QuoteType == 'SpotRate') {
           this.Helper.WaitByIdAndFill('Quote_PackageType1Quantity', '1');
         }
         this.Helper.WaitByIdAndFill('Quote_PackageType1Id', '20bu');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_PackageType1Id', '20bu');
 
       }
       else {
@@ -133,13 +133,13 @@ export class NewQuote {
 
     else if (TransportMode == 'I') {
       this.Helper.WaitByIdAndFill('Quote_MoveTypeId', 'TestMoveTypeIdInlandMTI');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_MoveTypeId', 'TestMoveTypeIdInlandMTI');
       if (ShipmentType == 'FTL') {
         if (QuoteType == 'SpotRate') {
           this.Helper.WaitByIdAndFill('Quote_PackageType1Quantity', '1');
         }
         this.Helper.WaitByIdAndFill('Quote_PackageType1Id', '20bu');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_PackageType1Id', '20bu');
       }
       else {
         if (QuoteType == 'SpotRate') {

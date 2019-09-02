@@ -232,7 +232,7 @@ import {DocumentFilingBackupBatchListService} from './Services/StandardLists/Doc
 import {DocumentFilingBackupSettingPMService} from './Services/StandardPMs/DocumentFilingBackupSettingPMService';
 import {DocumentFilingBackupBatchPMService} from './Services/StandardPMs/DocumentFilingBackupBatchPMService';
 import { CheckDigitControlAlgorithmListService } from './Services/StandardLists/CheckDigitControlAlgorithmListService';
-
+import { PaymentGatewayPartnerListService } from './Services/StandardLists/PaymentGatewayPartnerListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -477,7 +477,7 @@ export class ModuleProviders {
             case "TemperatureUnitListService": { myResult = new TemperatureUnitListService(); break; }//
             case "NumberFormatListService": { myResult = new NumberFormatListService(); break; }
             case "CheckDigitControlAlgorithmListService": { myResult = new CheckDigitControlAlgorithmListService(); break; }
-
+            case "PaymentGatewayPartnerListService": { myResult = new PaymentGatewayPartnerListService(); break; }
 
                 
         }

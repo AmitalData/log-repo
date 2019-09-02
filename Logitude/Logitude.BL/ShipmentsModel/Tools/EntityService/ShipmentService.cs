@@ -967,7 +967,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void ComputeETAAndETDHouseFields()
         {
-            if (entityPM.ShipmentLevelCode == "H")
+            if (entityPM.ShipmentLevelCode == "H" && !String.IsNullOrEmpty(entityPM.MasterShipmentDataId) && isNewEntity)
             {
                 var shipment = (from d in objectContext.Shipments
                                 where d.Tenant == tenant
