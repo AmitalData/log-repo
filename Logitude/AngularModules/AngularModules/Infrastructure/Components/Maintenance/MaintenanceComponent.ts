@@ -171,7 +171,7 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Company Address Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-            if (SessionLocator.Tenant == 0) {
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.TenantAdditionalData")) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
                 item.Icon = "Settings"
@@ -766,11 +766,14 @@ export class MaintenanceComponent {
                 case "PAGD": {
                     var windowTitle = "Payment Gateway Definition";
                     var logWindow = new LogitudeWindow();
-                    logWindow.Width = 750;
-                    logWindow.Height = 500;
+                    logWindow.Width = 600;
+                    logWindow.Height = 350;
                     logWindow.Title = windowTitle;
                     logWindow.IsShowCloseButton = true;
-                    logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/PaymentGateway/PaymentGatewayComponent');
+                    this._entityResourceService.getEntityResourceByTableName("TenantAdditionalData").subscribe(response => {
+                      
+                        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/PaymentGateway/PaymentGatewayComponent');
+                    });
                     break;
                 }
                 case "SYCR": {

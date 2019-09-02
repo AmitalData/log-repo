@@ -19,5 +19,6 @@ export class TaskSchedulerHistoryList {
 		LogType: string;
 		LogFirstLine: string;
 		Duration: number;
+		LogDocumentId: string;
 	
 }

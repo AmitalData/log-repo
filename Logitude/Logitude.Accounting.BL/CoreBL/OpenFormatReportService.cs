@@ -4173,7 +4173,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            byte[] bytearray = Encoding.Unicode.GetBytes(file);// memstream.ToArray(); 
+            byte[] bytearray = Encoding.GetEncoding("Windows-1255").GetBytes(file);//Encoding.Unicode.GetBytes(file);// memstream.ToArray(); 
+            //byte[] fromBytes = (Encoding.UTF8).GetBytes(file);
+            //string finalString = (Encoding.GetEncoding(1255)).GetString(fromBytes);
+            //byte[] bytearray = (Encoding.GetEncoding(1255)).GetBytes(finalString);
+            //Encoding.
+
             document.FileData = bytearray;
 
 

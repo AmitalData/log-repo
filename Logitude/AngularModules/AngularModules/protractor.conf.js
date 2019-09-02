@@ -9,6 +9,7 @@ exports.config = {
     params: {
         Env: null,
         Link: null,
+        Team: null,
         Login: {
             Email: null,
             Password: null,
@@ -127,9 +128,15 @@ exports.config = {
             browser.params.Login.Password = "Sg0592463934!";
         }
 
+        //------------------------------------- Reporter --------------------------------
+        if (browser.params.Team == "ayman") {
+            jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamAyman/screenshots' }).getJasmine2Reporter());
+        } else {
+            jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamIslam/screenshots' }).getJasmine2Reporter());
+        }
 
-         jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-         jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamAyman/screenshots' }).getJasmine2Reporter());
     },
 
     suites: {
