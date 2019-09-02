@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Package",
-			      				    Code =  "df82",
+			      				    Code =  "539c",
 			      				    Name =  "ShipmentPackage",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  true,
@@ -125,7 +125,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "ShipmentPackage,ShipmentPackages,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -2334,9 +2333,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Temperature",
 					  						OldFieldName =  "Temperature",
 					  						ObjectTableName =  "ShipmentPackage",
-					  						FieldsDataType =  "SigDouble",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  8,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
