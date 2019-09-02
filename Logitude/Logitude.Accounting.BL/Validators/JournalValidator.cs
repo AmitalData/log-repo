@@ -452,16 +452,17 @@ namespace Logitude.Accounting.BL.Validators
             if (myJournalPM.JournalReconciles.Count > 0)
             {
 
-                
-                var journalApproveParser = new JournalApproveParser(myJournalPM, false,
-    accountingValidationContextServiceProvider
-    );
-                journalApproveParser.CreateLedger_MapByJournalActionType();
-                //journalApproveParser.LedgerTransactions
-                ///to do CreateAutoReconcileWhileStreamingService
+                bool tested = false;
+                if (tested)
+                {
+                    var journalApproveParser = new JournalApproveParser(myJournalPM, false,
+        accountingValidationContextServiceProvider
+        );
+                    journalApproveParser.CreateLedger_MapByJournalActionType();
+                    //journalApproveParser.LedgerTransactions
+                    ///to do CreateAutoReconcileWhileStreamingService
 
-
-
+                }
             }
 
 
