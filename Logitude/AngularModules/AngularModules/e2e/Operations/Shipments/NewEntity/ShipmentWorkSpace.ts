@@ -52,7 +52,8 @@ export class ShipmentWorkSpace {
         var shipperRef1 = this.GeneralFunction.RandomNum();
         this.DirectShipment.CreateDirectShipment(shipperRef1, Direction, TransportMode, ShipmentType);
         this.Helper.WaitBusyIndicator();
-        this.Helper.WaitWindowClosed();
+          this.Helper.WaitWindowClosed();
+
         
         this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1,'ListBoxItem');
         this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
