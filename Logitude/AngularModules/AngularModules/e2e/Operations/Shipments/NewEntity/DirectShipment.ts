@@ -31,7 +31,7 @@ export class DirectShipment {
   FillDirectShipmentFields(ShipperRef: string, TransportMode: string, Direction: string) {
     if (Direction == 'Domestic' && TransportMode == 'I') {
       this.Helper.WaitByIdAndFill('Shipment_ShipperId', 'TestShipper');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_ShipperId','TestShipper');
 
       this.Helper.WaitByIdAndFill('Shipment_ShipperReference1', ShipperRef);// test random number randomWholeNum
 
@@ -39,7 +39,7 @@ export class DirectShipment {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     } else {
       this.Helper.WaitByIdAndFill('Shipment_ShipperId', 'TestShipper');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_ShipperId','TestShipper');
 
       this.Helper.WaitByIdAndFill('Shipment_ShipperReference1', ShipperRef);// test random number randomWholeNum
 

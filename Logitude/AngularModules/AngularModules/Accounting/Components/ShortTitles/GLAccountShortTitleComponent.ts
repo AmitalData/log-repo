@@ -52,43 +52,62 @@ export class GLAccountShortTitleComponent {
         }
     }
 
-    OpenCardScreen() {
+    OpenVendorScreen() {
+
+      
+
+
         if (AppTool.IsNullOrEmpty(this.EntityPM.CustomerGLAccountId)) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.CardId)) {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({ EntityId: this.EntityPM.CardId, ObjectTableName: 'Vendor' });
-                        cmpRef.instance.BackCompleted.subscribe(bk => {
-                        });
-                    });
-            }
+            this.OpenVendorScreenForNotSplittedGLAccount();
         }
         else {
-            this.CurrentSession.StartBusyIndicatorLoading();
-            this.GLAccountPMService.get(this.EntityPM.CustomerGLAccountId).subscribe((myResponse: ServiceResponse) => {
-
-                if (myResponse) {
-                    if (!myResponse.HasError) {
-                        var ParentAccount = myResponse.Result;
-                        if (!AppTool.IsNullOrEmpty(ParentAccount)) {
-                            if (!AppTool.IsNullOrEmpty(ParentAccount.CardId)) {
-                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                                    .then(cmpRef => {
-                                        this.CurrentSession.StopBusyIndicator();
-                                        cmpRef.instance.ComponentRef = cmpRef;
-                                        cmpRef.instance.Run({ EntityId: ParentAccount.CardId, ObjectTableName: 'Vendor' });
-                                        cmpRef.instance.BackCompleted.subscribe(bk => {
-                                        });
-                                    });
-                            }
-                        }
-                    }
-                }
-
-            });
-
+           
+            this.OpenVendorScreenForSplittedGLAccount();
+           
         }
     }
 
+    OpenVendorScreenForNotSplittedGLAccount() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.CardId)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: this.EntityPM.CardId, ObjectTableName: 'Vendor' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+
+
+
+
+    }
+
+    OpenVendorScreenForSplittedGLAccount() {
+
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.GLAccountPMService.get(this.EntityPM.CustomerGLAccountId).subscribe((myResponse: ServiceResponse) => {
+
+            if (myResponse) {
+                if (!myResponse.HasError) {
+                    var ParentAccount = myResponse.Result;
+                    if (!AppTool.IsNullOrEmpty(ParentAccount)) {
+                        if (!AppTool.IsNullOrEmpty(ParentAccount.CardId)) {
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.CurrentSession.StopBusyIndicator();
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run({ EntityId: ParentAccount.CardId, ObjectTableName: 'Vendor' });
+                                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                                    });
+                                });
+                        }
+                    }
+                }
+            }
+
+        });
+
+
+    }
 }
