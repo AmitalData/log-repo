@@ -42,6 +42,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         private MemoryStream myMemoryStream;
         private INTTRA.Message iMessage;
         private INTTRA_Status.MessageType iMessage_Status;
+        private INTTRABooking2Confirm.Message iMessage_Booking; 
         XmlDocument xmlDocument;
 
         public INTTRAAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
@@ -53,7 +54,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 this.analyzeQueueRepository = analyzeQueueRepository;
             }
         }
-
         private IShipmentsContext myShipmentContext;
         private ICommonDataContext myCommonContext;
         private IWebFreightContext myWebFreightContext;
@@ -79,7 +79,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             myObjectTabelRepository = new ObjectTableRepository(myWebFreightContext);
             iShipmentContainerStatusRepository = new ShipmentContainerStatusRepository(myShipmentContext);
         }
-
         public void Run()
         {
             if (myAnalyzeQueue != null)
@@ -158,7 +157,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
             GetXmlAcknowledgmentFromSubject();
         }
-
         private void GetXmlAcknowledgmentFromSubject()
         {
             switch (this.Subject)
@@ -171,7 +169,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     }
             }
         }
-
         private void GetXmlAcknowledgment()
         {
             XmlNodeList xnList = xmlDocument.GetElementsByTagName("ShipmentIdentifier");
@@ -194,7 +191,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 break;
             }
         }
-
         private void AnalyzeData()
         {
             switch (this.Subject)
@@ -321,16 +317,21 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     }
             }          
         }
-
         private void AnalyzeINTTRABooking()
         {
             try
             {
-                XmlNodeList xnList = this.xmlDocument.GetElementsByTagName("MessageProperties");
-                foreach (XmlNode xn in xnList)
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(INTTRABooking2Confirm.Message));
+                INTTRABooking2Confirm.Message iMessage = (INTTRABooking2Confirm.Message)xmlSerializer.Deserialize(myMemoryStream);
+                this.iMessage_Booking = iMessage;
+                if (this.iMessage_Booking != null)
                 {
-                    this.ShipmentNumber = xn["ShipmentID"].InnerText;
-                    break;
+                    INTTRABooking2Confirm.MessageBodyType iMessageBody = iMessage.MessageBody;
+                    if (iMessageBody != null)
+                    {
+                        INTTRABooking2Confirm.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
+                        this.ShipmentNumber = iMessageProperties.ShipmentID.Value;
+                    }
                 }
             }
             catch (Exception ex)
@@ -339,7 +340,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             }
             this.ConnectAnalyzeQueue();
         }
-
         private void ConnectAnalyzeQueue()
         {
             this.InitializeComponent();
@@ -582,7 +582,40 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                 case "Booking":
                     {
-                        iMessageTenant = this.ConnectINTTRABookingQueueToTenant();
+                        INTTRABooking2Confirm.MessageBodyType iMessageBody = this.iMessage_Booking.MessageBody;
+                        if (iMessageBody != null)
+                        {
+                            if (iMessageBody.MessageProperties != null)
+                            {
+                                if (iMessageBody.MessageProperties.Party != null)
+                                {
+                                    INTTRABooking2Confirm.PartiesType forwarder = iMessageBody.MessageProperties.Party.Where(d => d.Role == INTTRABooking2Confirm.PartyTypeValues.Forwarder).FirstOrDefault();
+                                    if (forwarder != null)
+                                    {
+                                        if (forwarder.Identifier != null)
+                                        {
+                                            if (forwarder.Identifier.Value != null)
+                                            {
+                                                Branch iBranch = this.myCommonContext.Branches.Where(d => d.INTTRAAlias == forwarder.Identifier.Value).FirstOrDefault();
+                                                if (iBranch != null)
+                                                {
+                                                    iMessageTenant = iBranch.Tenant;
+                                                }
+
+                                                else
+                                                {
+                                                    iMessageTenantError = "There is no Tenant for this Forwarder";
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        iMessageTenantError = "Unknown message Forwarder";
+                                    }
+                                }
+                            }
+                        }
                         break;
                     }
                 default:
@@ -628,33 +661,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 throw new Exception(iMessageTenantError);
             }
         }
-
-        private int? ConnectINTTRABookingQueueToTenant()
-        {
-            int? tenant = null;
-            XmlNodeList xnList = this.xmlDocument.GetElementsByTagName("Party");
-            var role = "";
-            var identifier = "";
-            foreach (XmlNode xn in xnList)
-            {
-                role = xn["Role"].InnerText;
-                if(role == "Forwarder")
-                {
-                    identifier = xn["Identifier"].InnerText;
-                    break;
-                }
-            }
-            if (!string.IsNullOrEmpty(identifier))
-            {
-                Branch iBranch = this.myCommonContext.Branches.Where(d => d.INTTRAAlias == identifier).FirstOrDefault();
-                if (iBranch != null)
-                {
-                    tenant = iBranch.Tenant;
-                }
-            }
-            return tenant;
-        }
-
         private void ConnectQueueToEntity()
         {
             if (!string.IsNullOrEmpty(this.ShipmentNumber))
@@ -754,7 +760,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 }
             }
         }
-
         private void Analyze_Booking()
         {
             this.shipmentPM.IsUpdatedByINTTRAAnalyzer = true;
@@ -764,78 +769,71 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             ShipmentService service = new ShipmentService(myShipmentContext, shipmentPM, systemEmail);
             service.Update();
         }
-
         private void SetINTTRABookingStatusCodeAndTransStatusCode()
         {
-            XmlNodeList xnList = this.xmlDocument.GetElementsByTagName("Header");
-            var status = ""; 
-            foreach (XmlNode xn in xnList)
+            INTTRABooking2Confirm.HeaderType iMessageHeader = this.iMessage_Booking.Header;
+            INTTRABooking2Confirm.HeaderTypeTransactionStatus status = new INTTRABooking2Confirm.HeaderTypeTransactionStatus();
+            if (iMessageHeader != null)
             {
-                status = xn["TransactionStatus"].InnerText;
-                break;
+                status = iMessageHeader.TransactionStatus;
             }
 
             var iNTTRABookingStatusCode = shipmentPM.INTTRABookingStatusCode;
             var iNTTRABookingTransStatusCode = shipmentPM.INTTRABookingTransStatusCode;
-
-            if (!string.IsNullOrEmpty(status))
+            switch (status)
             {
-                switch (status.ToLower())
-                {
-                    case "cancelled":
-                        {
-                            iNTTRABookingStatusCode = "CA";
-                            iNTTRABookingTransStatusCode = "CCD";
-                            break;
-                        }
-                    case "confirmed":
-                        {
-                            iNTTRABookingStatusCode = "CD";
-                            iNTTRABookingTransStatusCode = "BCD";
-                            break;
-                        }
-                    case "declined":
-                        {
-                            iNTTRABookingStatusCode = "DC";
-                            iNTTRABookingTransStatusCode = "BRR";
-                            break;
-                        }
-                    case "error":
-                        {
-                            iNTTRABookingStatusCode = "ER";
-                            break;
-                        }
-                    case "not sent":
-                        {
-                            iNTTRABookingStatusCode = "NS";
-                            iNTTRABookingTransStatusCode = "NST";
-                            break;
-                        }
-                    case "pending":
-                        {
-                            iNTTRABookingStatusCode = "PG";
-                            break;
-                        }
-                    case "replaced":
-                        {
-                            iNTTRABookingStatusCode = "RD";
-                            break;
-                        }
-                    case "sent":
-                        {
-                            iNTTRABookingStatusCode = "ST";
-                            iNTTRABookingTransStatusCode = "BRS";
-                            break;
-                        }
-                }
-
-                shipmentPM.INTTRABookingStatusCode = iNTTRABookingStatusCode;
-                shipmentPM.INTTRABookingTransStatusCode = iNTTRABookingTransStatusCode;
+                case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Confirmed:
+                    {
+                        iNTTRABookingStatusCode = "CD";
+                        iNTTRABookingTransStatusCode = "BCD";
+                        break;
+                    }
+                case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Declined:
+                    {
+                        iNTTRABookingStatusCode = "DC";
+                        iNTTRABookingTransStatusCode = "BRR";
+                        break;
+                    }
+                case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Pending:
+                    {
+                        iNTTRABookingStatusCode = "PG";
+                        break;
+                    }
+                case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Replaced:
+                    {
+                        iNTTRABookingStatusCode = "RD";
+                        break;
+                    }
+                default:
+                    {
+                        throw new ApplicationException("Transaction Status is not sent");
+                    }
+                    //case INTTRABooking2Confirm.HeaderTypeTransactionStatus."error":
+                    //    {
+                    //        iNTTRABookingStatusCode = "ER";
+                    //        break;
+                    //    }
+                    //case "not sent":
+                    //    {
+                    //        iNTTRABookingStatusCode = "NS";
+                    //        iNTTRABookingTransStatusCode = "NST";
+                    //        break;
+                    //    }
+                    //case INTTRABooking2Confirm.HeaderTypeTransactionStatus."sent":
+                    //    {
+                    //        iNTTRABookingStatusCode = "ST";
+                    //        iNTTRABookingTransStatusCode = "BRS";
+                    //        break;
+                    //    }
+                    //case INTTRABooking2Confirm.HeaderTypeTransactionStatus."cancelled":
+                    //    {
+                    //        iNTTRABookingStatusCode = "CA";
+                    //        iNTTRABookingTransStatusCode = "CCD";
+                    //        break;
+                    //    }
             }
-            else
-            {
-                throw new ApplicationException("Transaction Status is not sent");
-            }
+            shipmentPM.INTTRABookingStatusCode = iNTTRABookingStatusCode;
+            shipmentPM.INTTRABookingTransStatusCode = iNTTRABookingTransStatusCode;
         }
 
         private string CreateCommunicationLogForTenant(string from, int fileSize)
