@@ -37,6 +37,10 @@ namespace Logitude.SystemLogs.Mapping
             this.Property(t => t.NumberOfDoneItems);
             this.Property(t => t.WaitingItems);
             this.Property(t => t.FailedItems);
+            this.Property(t => t.RelatedQueueMessage)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+
             this.ToTable("BatchServicesLogs");
 
             this.Property(t => t.Id).HasColumnName("Id");
@@ -50,6 +54,7 @@ namespace Logitude.SystemLogs.Mapping
             this.Property(t => t.DoneItemsInFiveMinutes).HasColumnName("DoneItemsInFiveMinutes");
             this.Property(t => t.WaitingItems).HasColumnName("WaitingItems");
             this.Property(t => t.FailedItems).HasColumnName("FailedItems");
+            this.Property(t => t.RelatedQueueMessage).HasColumnName("RelatedQueueMessage");
 
 
 
