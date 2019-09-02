@@ -20,11 +20,10 @@ export class ReportGenerator {
     RunReportSuccessfully(expectedId) {
         this.helper.WaitByIdAndClick('CheckBox_0_0_LBL');
         this.helper.WaitByIdAndClick('RunReportButton');
-       // this.helper.waitElementByIDPresence(expectedId);
         this.helper.ItemsPresent(expectedId);
         this.helper.WaitBusyIndicator();
 
-       
+
 
     }
 
@@ -35,9 +34,8 @@ export class ReportGenerator {
         this.helper.WaitByIdAndClick('RunReportButton');
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndClick('MessageWindow_Ok_0');
-       // this.helper.ItemsPresent(expectedId);
-       // this.helper.waitElementByIDPresence(expectedId);
-  
+        // this.helper.ItemsPresent(expectedId);
+
 
 
 

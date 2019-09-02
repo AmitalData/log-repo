@@ -17,7 +17,6 @@ export class DocsOutTabComponent {
     }
 
     QuickSearchDocOut(docsOutId: string, docOutRow: string, searchTerm: string) {
-        this.Helper.WaitWindowClosed();
          this.Helper.WaitBusyIndicator();
         this.UseDocsOutSearchBox('SearchFieldsId_0_0', searchTerm, docsOutId, docOutRow);
     }
