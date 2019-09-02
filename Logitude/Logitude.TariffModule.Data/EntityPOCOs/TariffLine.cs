@@ -159,6 +159,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public decimal? Surcharge9MinPrice { get; set; }
         [Column("Surcharge10MinPrice")]
 	    public decimal? Surcharge10MinPrice { get; set; }
+        [Column("CurrencyId")]
+	    public string CurrencyId { get; set; }
     }
 }
 	 

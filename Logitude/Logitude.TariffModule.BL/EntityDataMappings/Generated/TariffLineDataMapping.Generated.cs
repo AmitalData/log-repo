@@ -87,8 +87,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge6MinPrice, 
 	         Surcharge7MinPrice, 
 	         Surcharge8MinPrice, 
-	         Surcharge9MinPrice, 
+	         Surcharge9MinPrice,
 	         Surcharge10MinPrice,
+	         CurrencyId,
 	      }
 
 
@@ -167,6 +168,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge8MinPrice, 
 	         Surcharge9MinPrice, 
 	         Surcharge10MinPrice,
+	         
+	         CurrencyId, 
+	         CurrencyCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -505,6 +509,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 				entityPOCO.Surcharge10MinPrice = entityPM.Surcharge10MinPrice;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+				entityPOCO.CurrencyId = entityPM.CurrencyId;
+			}
+			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -815,6 +824,12 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             {
 					entityPM.Surcharge4MinPrice = entityPOCO.Surcharge4MinPrice;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
+            {
+					entityPM.CurrencyId = entityPOCO.CurrencyId;
+            }
+
+		}
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge5MinPrice))
             {
@@ -1180,6 +1195,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10MinPrice))
             {
                 oldEntityPM.Surcharge10MinPrice = entityPM.Surcharge10MinPrice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
+            {
+                oldEntityPM.CurrencyId = entityPM.CurrencyId;
             }
 			
 		}

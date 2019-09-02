@@ -172,6 +172,32 @@
                             </log-cell-template>
                         </log-column>
 
+
+
+
+                        <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                    <span>{{item.CurrencyCode}}</span>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogLov [ObjectFieldName]="'CurrencyId'"
+                                            [ObjectTableName]="'TarifflLine'"
+                                            [SelectedValue]="item.CurrencyId"
+                                            [DataContext]="item"
+                                            [HideMaintenanceIcon]="true"
+                                            [FocusOnMe]="true"
+                                            [HideColumns]="true"
+                                            [DisplayMemberPath]="'Code'"
+                                            (SelectedItemChanged)="item.Currency = $event"
+                                            [LookUpTableName]="'Currency'">
+                                    </LogLov>
+
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
                         <!-- StartDate -->
                         <log-column [header]="'TariffLine.F.StartDate' | TextCodeTranslationPipe" [width]="'120'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
@@ -732,6 +758,9 @@
                                                     <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
                                                         <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
                                                     </div>
+                                                </td>
+                                                <td class="CellDisabled" style="width: 120px; text-align: left;">
+                                                    {{item.CurrencyCode }}
                                                 </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: left;">
                                                     {{item.StartDate | DateTimePipe:'SD'}}
