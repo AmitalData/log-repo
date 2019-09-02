@@ -808,29 +808,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     {
                         throw new ApplicationException("Transaction Status is not sent");
                     }
-                    //case INTTRABooking2Confirm.HeaderTypeTransactionStatus."error":
-                    //    {
-                    //        iNTTRABookingStatusCode = "ER";
-                    //        break;
-                    //    }
-                    //case "not sent":
-                    //    {
-                    //        iNTTRABookingStatusCode = "NS";
-                    //        iNTTRABookingTransStatusCode = "NST";
-                    //        break;
-                    //    }
-                    //case INTTRABooking2Confirm.HeaderTypeTransactionStatus."sent":
-                    //    {
-                    //        iNTTRABookingStatusCode = "ST";
-                    //        iNTTRABookingTransStatusCode = "BRS";
-                    //        break;
-                    //    }
-                    //case INTTRABooking2Confirm.HeaderTypeTransactionStatus."cancelled":
-                    //    {
-                    //        iNTTRABookingStatusCode = "CA";
-                    //        iNTTRABookingTransStatusCode = "CCD";
-                    //        break;
-                    //    }
             }
             shipmentPM.INTTRABookingStatusCode = iNTTRABookingStatusCode;
             shipmentPM.INTTRABookingTransStatusCode = iNTTRABookingTransStatusCode;
