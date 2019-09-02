@@ -23,11 +23,15 @@ export class DocOutSenario {
   constructor() {
 
   }
-
-  public SuccessfullyPrintingDocument() {
-
+  
+  public OpenDocOutTab(){
     this.NewDirectShipment.DoOperations();
     this.docsOutTab.DocsOutTab();
+    this.helper.WaitBusyIndicator();
+
+  }
+
+  public SuccessfullyPrintingDocument() {
     this.docsOutTab.QuickSearchDocOut('ETO-P-DocsOut', 'ETO-L-DocsOut', 'Export Trucking Order');
     this.printDocOut.isPrintingCompleted('BuildDocumentSucceededDiv', true);
     this.helper.WaitWindowClosed()
@@ -38,8 +42,7 @@ export class DocOutSenario {
 
   public FailingPrintingDocument() {
 
-   /// this.helper.WaitBusyIndicator();
-   // this.helper.WaitWindowClosed();
+    this.helper.WaitBusyIndicator();
     this.docsOutTab.QuickSearchDocOut('FTDT-P-DocsOut', 'FTDT-L-DocsOut', 'Failure Test Document');
     this.printDocOut.isPrintingCompleted('BuildDocumentFailedDiv', false);
 
