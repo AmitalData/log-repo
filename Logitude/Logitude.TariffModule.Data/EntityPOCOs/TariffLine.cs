@@ -139,6 +139,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public bool IsFromAllOtherPorts { get; set; }
         [Column("IsToAllOtherPorts")]
 	    public bool IsToAllOtherPorts { get; set; }
+        [Column("CurrencyId")]
+	    public string CurrencyId { get; set; }
     }
 }
 	 

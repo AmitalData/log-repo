@@ -85,6 +85,11 @@ export class TaskSchedulerHistoryPM {
     public set Duration(newValue: number) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
        
 	 
+    private logDocumentId: string;
+    public get LogDocumentId() { return this.logDocumentId; }
+    public set LogDocumentId(newValue: string) { if (this.logDocumentId != newValue) { this.logDocumentId = newValue; this.MarkAsDirty("LogDocumentId"); } }
+       
+	 
 
     public OldEntityPM: TaskSchedulerHistoryPM;
 		

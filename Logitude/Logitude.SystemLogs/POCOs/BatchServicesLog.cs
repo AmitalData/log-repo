@@ -22,5 +22,6 @@ namespace Logitude.SystemLogs.POCOs
        public int DoneItemsInOneHour { get; set; }
         public int WaitingItems { get; set; }
         public int FailedItems { get; set; }
+        public string RelatedQueueMessage { get; set; }
     }
 }
