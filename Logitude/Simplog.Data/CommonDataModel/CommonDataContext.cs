@@ -441,7 +441,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new TemperatureUnitMap());
             modelBuilder.Configurations.Add(new HybridPartnersPermissionMap());
             modelBuilder.Configurations.Add(new DWHSettingMap());
-            modelBuilder.Configurations.Add(new PaymentGatewayPartnersMap());
+            modelBuilder.Configurations.Add(new PaymentGatewayPartnerMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new CustomerDepositionMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
@@ -987,7 +987,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<DocumentFilingBackupBatch> DocumentFilingBackupBatches { get; set; }
         public IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings { get; set; }
         public IDbSet<HybridPartnersPermission> HybridPartnersPermissions { get; set; }
-        public IDbSet<PaymentGatewayPartners> PaymentGatewayPartners { get; set; }
+        public IDbSet<PaymentGatewayPartner> PaymentGatewayPartners { get; set; }
         public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
