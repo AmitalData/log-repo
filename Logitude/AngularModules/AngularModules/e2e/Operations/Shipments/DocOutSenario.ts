@@ -27,7 +27,7 @@ export class DocOutSenario {
   public OpenDocOutTab() {
     this.NewDirectShipment.DoOperations();
     this.docsOutTab.DocsOutTab();
-    this.helper.WaitBusyIndicator();
+  //  this.helper.WaitBusyIndicator();
 
   }
 

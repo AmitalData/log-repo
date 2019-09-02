@@ -483,6 +483,8 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Surcharge9Price = item.Surcharge9Price;
                 tariffLine.Surcharge10Price = item.Surcharge10Price;
                 tariffLine.StartDate = item.StartDate;
+                tariffLine.CurrencyId = item.CurrencyId;
+                tariffLine.CurrencyCode = item.CurrencyCode;
                 tariffLine.ExpirationDate = item.ExpirationDate;
             }
 
