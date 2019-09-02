@@ -87,8 +87,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge6MinPrice, 
 	         Surcharge7MinPrice, 
 	         Surcharge8MinPrice, 
-	         Surcharge9MinPrice,
-	         Surcharge10MinPrice,
+	         Surcharge9MinPrice, 
+	         Surcharge10MinPrice, 
 	         CurrencyId,
 	      }
 
@@ -167,8 +167,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge7MinPrice, 
 	         Surcharge8MinPrice, 
 	         Surcharge9MinPrice, 
-	         Surcharge10MinPrice,
-	         
+	         Surcharge10MinPrice, 
 	         CurrencyId, 
 	         CurrencyCode,
 	      }
@@ -824,12 +823,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             {
 					entityPM.Surcharge4MinPrice = entityPOCO.Surcharge4MinPrice;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
-            {
-					entityPM.CurrencyId = entityPOCO.CurrencyId;
-            }
-
-		}
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge5MinPrice))
             {
@@ -859,6 +852,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge10MinPrice))
             {
 					entityPM.Surcharge10MinPrice = entityPOCO.Surcharge10MinPrice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CurrencyId))
+            {
+					entityPM.CurrencyId = entityPOCO.CurrencyId;
             }
 
 		}

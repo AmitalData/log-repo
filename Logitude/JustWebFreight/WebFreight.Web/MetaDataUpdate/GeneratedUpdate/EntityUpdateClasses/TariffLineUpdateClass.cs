@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "",
 			      				    DefaultText =  "Tariff Lines",
-			      				    Code =  "4e6e",
+			      				    Code =  "d3d2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "TariffModule",
@@ -3567,6 +3567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge1MinPrice",
+					  						OldFieldName =  "Surcharge1MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3586,6 +3587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Surcharge1MinPrice",
 					  						ListPropertyPath =  "Surcharge1MinPrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3623,6 +3625,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge2MinPrice",
+					  						OldFieldName =  "Surcharge2MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3642,6 +3645,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Surcharge2MinPrice",
 					  						ListPropertyPath =  "Surcharge2MinPrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3679,6 +3683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge3MinPrice",
+					  						OldFieldName =  "Surcharge3MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3698,6 +3703,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Surcharge3MinPrice",
 					  						ListPropertyPath =  "Surcharge3MinPrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3735,6 +3741,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge4MinPrice",
+					  						OldFieldName =  "Surcharge4MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3754,6 +3761,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Surcharge4MinPrice",
 					  						ListPropertyPath =  "Surcharge4MinPrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3791,6 +3799,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge5MinPrice",
+					  						OldFieldName =  "Surcharge5MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3810,6 +3819,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Surcharge5MinPrice",
 					  						ListPropertyPath =  "Surcharge5MinPrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3847,6 +3857,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge6MinPrice",
+					  						OldFieldName =  "Surcharge6MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3866,6 +3877,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Surcharge6MinPrice",
 					  						ListPropertyPath =  "Surcharge6MinPrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3903,6 +3915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge7MinPrice",
+					  						OldFieldName =  "Surcharge7MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3922,6 +3935,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Surcharge7MinPrice",
 					  						ListPropertyPath =  "Surcharge7MinPrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3959,6 +3973,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge8MinPrice",
+					  						OldFieldName =  "Surcharge8MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3978,6 +3993,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Surcharge8MinPrice",
 					  						ListPropertyPath =  "Surcharge8MinPrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4015,6 +4031,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge9MinPrice",
+					  						OldFieldName =  "Surcharge9MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -4034,6 +4051,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Surcharge9MinPrice",
 					  						ListPropertyPath =  "Surcharge9MinPrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4071,6 +4089,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge10MinPrice",
+					  						OldFieldName =  "Surcharge10MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -4090,6 +4109,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Surcharge10MinPrice",
 					  						ListPropertyPath =  "Surcharge10MinPrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4185,6 +4205,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyCode",
+					  						OldFieldName =  "CurrencyCode",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4204,6 +4225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CurrencyCode",
 					  						ListPropertyPath =  "CurrencyCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
