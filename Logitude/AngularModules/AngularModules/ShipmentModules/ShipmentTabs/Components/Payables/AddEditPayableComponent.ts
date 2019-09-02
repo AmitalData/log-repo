@@ -7,6 +7,10 @@ import {ShipmentPayableItem} from './PayablesTabComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
+import {ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import {CardList } from '../../../../Common/EntityLists/CardList';
+import {CardListService } from '../../../../Common/Services/StandardLists/CardListService';
+import {ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     moduleId: module.id,
@@ -108,37 +112,69 @@ export class AddEditPayableComponent {
         }
 
         // Back To Back Check
-        
+
 
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-
-            if (this.DataContext.IsByContainerType) {
-                this.AddByContainerEntities();
-                this.DataContext.fatherComponent.BuildItemsSource();
-
-                if (this.DataContext.ChargesGroupCode == "FRT") {
-                    this.DataContext.fatherComponent.OnFreightAmountChanged();
-                }
-
-                this.DataContext.fatherComponent.ComputeShipmentFields();
+            if (this.DataContext.VendorId != null && this.DataContext.VendorCardEntity != null) {
+                var myService: CardListService = new CardListService();
+                myService.getSingle(this.DataContext.ShipmentPM.MainCarriageCarrierId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var vendorCardOfShipment = myResponse.Result;
+                        if (vendorCardOfShipment != null && this.DataContext.VendorCardEntity.PartnerTypeId == vendorCardOfShipment.PartnerTypeId) {
+                            if (this.DataContext.VendorId != this.DataContext.ShipmentPM.MainCarriageCarrierId) {
+                                var confirmWindow = new ConfirmWindow();
+                                confirmWindow.Show("Confirm adding a payable with a different vendor than the main carriage carrier.");
+                                confirmWindow.WindowClosed.subscribe((event: any) => {
+                                    if (confirmWindow.Yes) {
+                                        this.AddPayable();
+                                    }
+                                    if (confirmWindow.No) {
+                                        //nothing
+                                    }
+                                });
+                            }
+                            else {
+                                this.AddPayable();
+                            }
+                        }
+                        else {
+                            this.AddPayable();
+                        }
+                    }
+                });
             }
-
-            else if (this.DataContext.IsNewEntity) {
-                this.DataContext.ShipmentPM.AddPayable(this.EntityPM);
-                this.DataContext.fatherComponent.BuildItemsSource();
-
-                if (this.DataContext.ChargesGroupCode == "FRT") {
-                    this.DataContext.fatherComponent.OnFreightAmountChanged();
-                }
-
-                this.DataContext.fatherComponent.ComputeShipmentFields();
+            else {
+                this.AddPayable();
             }
-
-            this.DataContext.IsNewEntity = false;
-            this.CurrentSession.CloseCurrentWindowEmit("OK");            
         }
+    }
+    AddPayable() {
+        if (this.DataContext.IsByContainerType) {
+            this.AddByContainerEntities();
+            this.DataContext.fatherComponent.BuildItemsSource();
+
+            if (this.DataContext.ChargesGroupCode == "FRT") {
+                this.DataContext.fatherComponent.OnFreightAmountChanged();
+            }
+
+            this.DataContext.fatherComponent.ComputeShipmentFields();
+        }
+
+        else if (this.DataContext.IsNewEntity) {
+            this.DataContext.ShipmentPM.AddPayable(this.EntityPM);
+            this.DataContext.fatherComponent.BuildItemsSource();
+
+            if (this.DataContext.ChargesGroupCode == "FRT") {
+                this.DataContext.fatherComponent.OnFreightAmountChanged();
+            }
+
+            this.DataContext.fatherComponent.ComputeShipmentFields();
+        }
+
+        this.DataContext.IsNewEntity = false;
+        this.CurrentSession.CloseCurrentWindowEmit("OK");       
     }
 
     AddByContainerEntities() {

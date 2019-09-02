@@ -2100,8 +2100,6 @@ export class ShipmentGenerator {
         newRecord.MeasurementCode = myChargeType.MeasurementCode;
         newRecord.MeasurementShortName = myChargeType.MeasurementShortName;
         newRecord.IsBackToBack = myChargeType.IsBackToBack;
-       
-
         return newRecord;
     }
 
