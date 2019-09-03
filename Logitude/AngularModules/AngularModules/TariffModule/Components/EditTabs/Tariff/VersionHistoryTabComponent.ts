@@ -484,6 +484,16 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Surcharge10Price = item.Surcharge10Price;
                 tariffLine.StartDate = item.StartDate;
                 tariffLine.ExpirationDate = item.ExpirationDate;
+                tariffLine.Surcharge1MinPrice = item.Surcharge1MinPrice;
+                tariffLine.Surcharge2MinPrice = item.Surcharge2MinPrice;
+                tariffLine.Surcharge3MinPrice = item.Surcharge3MinPrice;
+                tariffLine.Surcharge4MinPrice = item.Surcharge4MinPrice;
+                tariffLine.Surcharge5MinPrice = item.Surcharge5MinPrice;
+                tariffLine.Surcharge6MinPrice = item.Surcharge6MinPrice;
+                tariffLine.Surcharge7MinPrice = item.Surcharge7MinPrice;
+                tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
+                tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
+                tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
             }
 
             copiedVersion.AddTariffLine(tariffLine);
