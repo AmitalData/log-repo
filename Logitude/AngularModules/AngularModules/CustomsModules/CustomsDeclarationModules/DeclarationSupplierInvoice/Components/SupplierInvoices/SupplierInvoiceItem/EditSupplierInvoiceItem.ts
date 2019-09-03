@@ -12,7 +12,7 @@ import {EntityResourceService} from '../../../../../../Infrastructure/Services/E
 import {ApiQueryFilters} from '../../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationValidator } from '../../../../../../Customs/Validators/DeclarationValidator';
 import {LogitudeWindow} from '../../../../../../Controls/Windows/LogitudeWindow';
-
+import { FeatureLocator } from '../../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SupplierInvoiceItemPM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
 import { SupplierInvoiceItemsModPM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsModPM';
 import { SupplierInvoiceItemProcesTypePM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemProcesTypePM';
@@ -178,7 +178,9 @@ export class EditSupplierInvoiceItem extends BaseComponent{
         this.TabsSource.push({ Name: "Declarations", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Declarations") });
         this.TabsSource.push({ Name: "SerialNumbers", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.SerialNumbers") });
         this.TabsSource.push({ Name: "Levies", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Levies") });
-        this.TabsSource.push({ Name: "Packages", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Packages") });
+        if (FeatureLocator.IsFeatureGrantedByCode("ItemPackageTab")) { 
+            this.TabsSource.push({ Name: "Packages", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Packages") });
+        }
     }
     SelectionChanged(tab: any) {
         

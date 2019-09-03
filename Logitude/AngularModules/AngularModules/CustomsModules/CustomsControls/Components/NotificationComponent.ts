@@ -1061,42 +1061,42 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                     }
                                 case "5101F":
                                     {
-                                        //this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                                        //    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
-                                        //        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe(response => {
-                                        //            this.customsCollateralPMService.get(selected.?????).subscribe((response: any) => {
+                                        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                                            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
+                                                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe(response => {
+                                                    this.customsCollateralPMService.get(selected.Reference2Number).subscribe((response: any) => {
 
-                                        //                var result = response.Result;
-                                        //                console.log("[response] customsCollateralPMService.get", result);
-                                        //                if (!AppTool.IsNullOrEmpty(result)) {
-                                        //                    control = './CustomsModules/CustomsCollateral/Components/CustomsCollateralComponent';
-                                        //                    logitudeWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditCustomsCollateral");
-                                        //                    logitudeWindow.WindowArgs = { CurrentEntity: result };
-                                        //                    logitudeWindow.Height = 730;
-                                        //                    logitudeWindow.Width = 660;
-                                        //                    //logitudeWindow.ZIndex = 5;
-                                        //                    this.cd.detach()
-                                        //                    logitudeWindow.Show(control);
-                                        //                    logitudeWindow.WindowClosed.subscribe(() => {
-                                        //                        this.cd.reattach();
-                                        //                        this.RefreshEntity();
-                                        //                    });
+                                                        var result = response.Result;
+                                                        console.log("[response] customsCollateralPMService.get", result);
+                                                        if (!AppTool.IsNullOrEmpty(result)) {
+                                                            control = './CustomsModules/CustomsCollateral/Components/CustomsCollateralComponent';
+                                                            logitudeWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditCustomsCollateral");
+                                                            logitudeWindow.WindowArgs = { CurrentEntity: result };
+                                                            logitudeWindow.Height = 730;
+                                                            logitudeWindow.Width = 660;
+                                                            //logitudeWindow.ZIndex = 5;
+                                                            this.cd.detach()
+                                                            logitudeWindow.Show(control);
+                                                            logitudeWindow.WindowClosed.subscribe(() => {
+                                                                this.cd.reattach();
+                                                                this.RefreshEntity();
+                                                            });
 
-                                        //                    var Ids: string[] = [];
-                                        //                    Ids.push(selected.Id);
-                                        //                    Ids.push(selected.Id);
-                                        //                    this.notificationWebService.SetNotificationsStatus(Ids, "Read").subscribe((res: any) => {
-                                        //                        this.SetStatusCompleted(selected.Id, event);
+                                                            var Ids: string[] = [];
+                                                            Ids.push(selected.Id);
+                                                            Ids.push(selected.Id);
+                                                            this.notificationWebService.SetNotificationsStatus(Ids, "Read").subscribe((res: any) => {
+                                                                this.SetStatusCompleted(selected.Id, event);
 
-                                        //                    });
-                                        //                } else {
-                                        //                    console.log("No collateral found!!!!!!");
-                                        //                    return;
-                                        //                }
-                                        //            });
-                                        //        });
-                                        //    });
-                                        //});
+                                                            });
+                                                        } else {
+                                                            console.log("No collateral found!!!!!!");
+                                                            return;
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        });
                                         break;
                                     }
 

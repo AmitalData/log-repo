@@ -478,6 +478,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             MyResponseData = new INF_MSG_GenericResponseData() { Succeeded = false, HasException = false, UserMessage = "Can not found declaration" + requestParams.AppicationId };
                             return;
                         }
+                        if (!string.IsNullOrWhiteSpace(customResponse.MessageToAgent.msgString))
+                        {
+                            notificationDescription = customResponse.MessageToAgent.msgString.Replace("00:00:00", "") + "\n" + _MyDeclarationPM.DeclarationNumber;
+                        }
                     }
                 }
             }
@@ -533,6 +537,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 newNotificationPM.DeclarationOfficeCode = this._MyDeclarationPM.DeclarationOfficeCode;
                 customerId = this._MyDeclarationPM.CustomerId;
                 referentUserId = this._MyDeclarationPM.ReferentUserId;
+                if (notificationDefinitionCode == "5101F" && MyRequestSheetParam.ObjectTableId2 == ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral"))
+                {
+                    newNotificationPM.Reference2Number = MyRequestSheetParam.EntityId2;
+                }
             }
             if (MyRequestSheetParam.ObjectTableId1 == ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral"))
             {
