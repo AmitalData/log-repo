@@ -107,8 +107,7 @@
       <ScreenField Column="0" Row="1" ObjectFieldName="&quot;CreateDate&quot;" ScreenName="TariffSurchagesHeaderScreen" />
       <ScreenField Column="1" Row="0" ObjectFieldName="&quot;SellerId&quot;" ScreenName="TariffSurchagesHeaderScreen" />
       <ScreenField Column="1" Row="1" ObjectFieldName="&quot;UpdateDate&quot;" ScreenName="TariffSurchagesHeaderScreen" />
-      <ScreenField Column="2" Row="0" ObjectFieldName="&quot;CurrencyId&quot;" ScreenName="TariffSurchagesHeaderScreen" />
-      <ScreenField Column="2" Row="1" ObjectFieldName="&quot;ContractNumber&quot;" ScreenName="TariffSurchagesHeaderScreen" />
+      <ScreenField Column="2" Row="0" ObjectFieldName="&quot;ContractNumber&quot;" ScreenName="TariffSurchagesHeaderScreen" />
       <ScreenField Column="3" Row="0" ObjectFieldName="&quot;TariffNumber&quot;" ScreenName="TariffSurchagesHeaderScreen" />
     </ScreenFields>
   </Screen>
@@ -128,9 +127,9 @@
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;TariffEdit&quot;" MenuButtonGroupName="&quot;TariffEditButtonsGroup&quot;">
-    <MenuButton EventCode="&quot;Actions&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;More&quot;" IsPackagable="false">
-      <MenuItem EventCode="&quot;Inactive&quot;" DefaultText="&quot;Inactive&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;Inactive&quot;" IsPackagable="false" />
-      <MenuItem EventCode="&quot;Reactivate&quot;" DefaultText="&quot;Reactivate&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="1" LocalDefaultText="&quot;Reactivate&quot;" IsPackagable="false" />
+    <MenuButton EventCode="&quot;Actions&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;More&quot;">
+      <MenuItem EventCode="&quot;Inactive&quot;" DefaultText="&quot;Inactive&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;Inactive&quot;" />
+      <MenuItem EventCode="&quot;Reactivate&quot;" DefaultText="&quot;Reactivate&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="1" LocalDefaultText="&quot;Reactivate&quot;" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />

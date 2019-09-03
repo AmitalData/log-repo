@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AppTool} from '../../../../../Infrastructure/Tools';
+import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
 import {QuotePM} from '../../../../../Quote/EntityPMs/QuotePM';
@@ -74,6 +74,10 @@ export class QuotesComponent {
         filters.PageSize = 100;
         filters.SortBy = "OpenDate";
         filters.SortDirection = "Descending";
+        var myToDate: Date = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
+        myToDate.setUTCHours(23);
+        myToDate.setUTCMinutes(59);
+        myToDate.setUTCSeconds(59);
 
         filters.addAdditionalFilter("DirectionId", this.EntityPM.DirectionId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("TransportModeId", this.EntityPM.TransportModeId, null, null, "StartsWith", false, false, false, "string");
@@ -82,6 +86,8 @@ export class QuotesComponent {
         filters.addAdditionalFilter("FromPortId", this.EntityPM.MainCarriageFromPortId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("ToPortId", this.EntityPM.MainCarriageFinalDestinationPortId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("IsShowingUsedSpotRateQuotes", this.IsShowingUsedSpotRateQuotes, null, null, "Equals", true, false, false, "Boolean");
+        filters.addAdditionalFilter("StartDate", myToDate, null, null, "LessThanOrEqual", false, false, false, "Date");
+
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.AgentId)) {
             filters.addAdditionalFilter("RoutingRatesAgentId", this.EntityPM.AgentId, null, null, "StartsWith", true, false, false, "string");
@@ -214,6 +220,7 @@ class QuoteItem {
     get OpenDate() { return this.Entity.OpenDate; }
     get ExpirationDate() { return this.Entity.ExpirationDate; }
     get StageName() { return this.Entity.StageName; }
+    get StartDate() { return this.Entity.StartDate; }
 
     get QuoteTypeName() { return this.Entity.QuoteTypeName; }
     get CarrierName() { return this.Entity.CarrierName; }

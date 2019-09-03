@@ -497,8 +497,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     {
                                                         CurrentSurchargePriceCalculation = (valueofSurcharge * myQuantity);
                                                     }
-
-                                                    SurchargeItem.Price = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrentSurcharge.CurrencyId, tenant);
+                                                    string CurrencyId = ChargesfilteredLines.CurrencyId != null ? ChargesfilteredLines.CurrencyId : CurrentSurcharge.CurrencyId;
+                                                    SurchargeItem.Price = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrencyId, tenant);
                                                     SurchargeItem.ActualPrice = CurrentSurchargePriceCalculation.Value;
                                                     Sum += SurchargeItem.Price;
                                                     SurchargeItem.TariffId =  CurrentSurcharge.Id;

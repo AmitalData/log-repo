@@ -4,6 +4,7 @@ import { AppTool, FontTool, FormatTool } from '../../../../Infrastructure/Tools'
 import { PortPM } from '../../../../Common/EntityPMs/PortPM';
 import { VersionTabComponent } from './VersionTabComponent';
 import { SurchargeVersionTabComponent } from './SurchargeVersionTabComponent';
+import { CurrencyPM } from '../../../../Common/EntityPMs/CurrencyPM';
 
 export class AirCostTariffLineData extends BaseComponent {
     public EntityPM: TariffLinePM;
@@ -963,6 +964,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     private SetUIProperties() {
         this.SetUIProperties_From();
         this.SetUIProperties_To();
+        this.SetUIProperties_MinPrices();
     }
     private SetUIProperties_From() {
         if (this.IsFromAllOtherPorts) {
@@ -987,6 +989,56 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.UIProperties.SetEnabled("DestinationPortId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("IsToAllOtherPorts", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
         }
+    }
+
+    public IsSurcharge1MinPriceEditEnabled: boolean = false;
+    public IsSurcharge2MinPriceEditEnabled: boolean = false;
+    public IsSurcharge3MinPriceEditEnabled: boolean = false;
+    public IsSurcharge4MinPriceEditEnabled: boolean = false;
+    public IsSurcharge5MinPriceEditEnabled: boolean = false;
+    public IsSurcharge6MinPriceEditEnabled: boolean = false;
+    public IsSurcharge7MinPriceEditEnabled: boolean = false;
+    public IsSurcharge8MinPriceEditEnabled: boolean = false;
+    public IsSurcharge9MinPriceEditEnabled: boolean = false;
+    public IsSurcharge10MinPriceEditEnabled: boolean = false;
+    private SetUIProperties_MinPrices() {
+        if (this.IsEditEnabled) {
+            this.IsSurcharge1MinPriceEditEnabled = !this.IsMeasurmentFixed(1);
+            this.IsSurcharge2MinPriceEditEnabled = !this.IsMeasurmentFixed(2);
+            this.IsSurcharge3MinPriceEditEnabled = !this.IsMeasurmentFixed(3);
+            this.IsSurcharge4MinPriceEditEnabled = !this.IsMeasurmentFixed(4);
+            this.IsSurcharge5MinPriceEditEnabled = !this.IsMeasurmentFixed(5);
+            this.IsSurcharge6MinPriceEditEnabled = !this.IsMeasurmentFixed(6);
+            this.IsSurcharge7MinPriceEditEnabled = !this.IsMeasurmentFixed(7);
+            this.IsSurcharge8MinPriceEditEnabled = !this.IsMeasurmentFixed(8);
+            this.IsSurcharge9MinPriceEditEnabled = !this.IsMeasurmentFixed(9);
+            this.IsSurcharge10MinPriceEditEnabled = !this.IsMeasurmentFixed(10);
+
+            this.UIProperties.SetEnabled("Surcharge1MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(1));
+            this.UIProperties.SetEnabled("Surcharge2MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(2));
+            this.UIProperties.SetEnabled("Surcharge3MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(3));
+            this.UIProperties.SetEnabled("Surcharge4MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(4));
+            this.UIProperties.SetEnabled("Surcharge5MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(5));
+            this.UIProperties.SetEnabled("Surcharge6MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(6));
+            this.UIProperties.SetEnabled("Surcharge7MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(7));
+            this.UIProperties.SetEnabled("Surcharge8MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(8));
+            this.UIProperties.SetEnabled("Surcharge9MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(9));
+            this.UIProperties.SetEnabled("Surcharge10MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(10));
+        }
+    }
+    private IsMeasurmentFixed(index: number): boolean {
+        var isFixed: boolean = false;
+
+        if (this.FatherComponent.AllMeasurements) {
+            var iMeasurement = this.FatherComponent.AllMeasurements.filter(f => f.Id == this.FatherComponent.EntityPM['Surcharge' + index + 'UOM'])[0];
+            if (iMeasurement) {
+                if (iMeasurement.Code == "FIXD") {
+                    isFixed = true;
+                }
+            }
+        }
+
+        return isFixed;
     }
 
     public Surcharge1ComparingPrice: number;
@@ -1275,6 +1327,40 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+
+    currency: CurrencyPM;
+
+    get Currency() { return this.currency; }
+    set Currency(value: CurrencyPM) {
+        if (this.currency != value) {
+            this.currency = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.CurrencyCode = value.Code;
+        } else {
+            this.CurrencyCode = null;
+        }
+    }
+
+    get CurrencyCode() {
+        return this.EntityPM.CurrencyCode;
+    }
+    set CurrencyCode(value: string) {
+        if (this.EntityPM.CurrencyCode != value) {
+            this.EntityPM.CurrencyCode = value;
+        }
+    }
+
+
+    get CurrencyId() {
+        return this.EntityPM.CurrencyId;
+    }
+    set CurrencyId(value: string) {
+        if (this.EntityPM.CurrencyId != value) {
+            this.EntityPM.CurrencyId = value;
+        }
+    }
+
     get DestinationPortValue() {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
             return this.EntityPM.DestinationPortCode;
@@ -1330,6 +1416,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge1MinPrice() {
+        return this.EntityPM.Surcharge1MinPrice;
+    }
+    set Surcharge1MinPrice(value: number) {
+        if (this.EntityPM.Surcharge1MinPrice != value) {
+            this.EntityPM.Surcharge1MinPrice = value;            
+        }
+    }
+
     get Surcharge1PriceValue() {
         if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
             return FormatTool.FormatNumber(this.EntityPM.Surcharge1Price, "N3");
@@ -1350,6 +1445,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge1MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge1MinPrice, "N3");
+    }
+
     // Surcharge 2
     get Surcharge2Price() {
         return this.EntityPM.Surcharge2Price;
@@ -1359,6 +1458,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge2Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge2Price();
+        }
+    }
+
+    get Surcharge2MinPrice() {
+        return this.EntityPM.Surcharge2MinPrice;
+    }
+    set Surcharge2MinPrice(value: number) {
+        if (this.EntityPM.Surcharge2MinPrice != value) {
+            this.EntityPM.Surcharge2MinPrice = value;
         }
     }
 
@@ -1382,6 +1490,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge2MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge2MinPrice, "N3");
+    }
+
     // Surcharge 3
     get Surcharge3Price() {
         return this.EntityPM.Surcharge3Price;
@@ -1391,6 +1503,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge3Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge3Price();
+        }
+    }
+
+    get Surcharge3MinPrice() {
+        return this.EntityPM.Surcharge3MinPrice;
+    }
+    set Surcharge3MinPrice(value: number) {
+        if (this.EntityPM.Surcharge3MinPrice != value) {
+            this.EntityPM.Surcharge3MinPrice = value;
         }
     }
 
@@ -1414,6 +1535,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge3MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge3MinPrice, "N3");
+    }
+
     // Surcharge 4
     get Surcharge4Price() {
         return this.EntityPM.Surcharge4Price;
@@ -1423,6 +1548,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge4Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge4Price();
+        }
+    }
+
+    get Surcharge4MinPrice() {
+        return this.EntityPM.Surcharge4MinPrice;
+    }
+    set Surcharge4MinPrice(value: number) {
+        if (this.EntityPM.Surcharge4MinPrice != value) {
+            this.EntityPM.Surcharge4MinPrice = value;
         }
     }
 
@@ -1446,6 +1580,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge4MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge4MinPrice, "N3");
+    }
+
     // Surcharge 5
     get Surcharge5Price() {
         return this.EntityPM.Surcharge5Price;
@@ -1455,6 +1593,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge5Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge5Price();
+        }
+    }
+
+    get Surcharge5MinPrice() {
+        return this.EntityPM.Surcharge5MinPrice;
+    }
+    set Surcharge5MinPrice(value: number) {
+        if (this.EntityPM.Surcharge5MinPrice != value) {
+            this.EntityPM.Surcharge5MinPrice = value;
         }
     }
 
@@ -1478,6 +1625,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge5MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge5MinPrice, "N3");
+    }
+
     // Surcharge 6
     get Surcharge6Price() {
         return this.EntityPM.Surcharge6Price;
@@ -1487,6 +1638,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge6Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge6Price();
+        }
+    }
+
+    get Surcharge6MinPrice() {
+        return this.EntityPM.Surcharge6MinPrice;
+    }
+    set Surcharge6MinPrice(value: number) {
+        if (this.EntityPM.Surcharge6MinPrice != value) {
+            this.EntityPM.Surcharge6MinPrice = value;
         }
     }
 
@@ -1510,6 +1670,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge6MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge6MinPrice, "N3");
+    }
+
     // Surcharge 7
     get Surcharge7Price() {
         return this.EntityPM.Surcharge7Price;
@@ -1519,6 +1683,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge7Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge7Price();
+        }
+    }
+
+    get Surcharge7MinPrice() {
+        return this.EntityPM.Surcharge7MinPrice;
+    }
+    set Surcharge7MinPrice(value: number) {
+        if (this.EntityPM.Surcharge7MinPrice != value) {
+            this.EntityPM.Surcharge7MinPrice = value;
         }
     }
 
@@ -1542,6 +1715,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge7MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge7MinPrice, "N3");
+    }
+
     // Surcharge 8
     get Surcharge8Price() {
         return this.EntityPM.Surcharge8Price;
@@ -1551,6 +1728,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge8Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge8Price();
+        }
+    }
+
+    get Surcharge8MinPrice() {
+        return this.EntityPM.Surcharge8MinPrice;
+    }
+    set Surcharge8MinPrice(value: number) {
+        if (this.EntityPM.Surcharge8MinPrice != value) {
+            this.EntityPM.Surcharge8MinPrice = value;
         }
     }
 
@@ -1574,6 +1760,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge8MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge8MinPrice, "N3");
+    }
+
     // Surcharge 9
     get Surcharge9Price() {
         return this.EntityPM.Surcharge9Price;
@@ -1583,6 +1773,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge9Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge9Price();
+        }
+    }
+
+    get Surcharge9MinPrice() {
+        return this.EntityPM.Surcharge9MinPrice;
+    }
+    set Surcharge9MinPrice(value: number) {
+        if (this.EntityPM.Surcharge9MinPrice != value) {
+            this.EntityPM.Surcharge9MinPrice = value;
         }
     }
 
@@ -1606,6 +1805,10 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge9MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge9MinPrice, "N3");
+    }
+
     // Surcharge 10
     get Surcharge10Price() {
         return this.EntityPM.Surcharge10Price;
@@ -1615,6 +1818,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.Surcharge10Price = value;
             this.CheckIfLineHasError();
             this.CompareSurcharge10Price();
+        }
+    }
+
+    get Surcharge10MinPrice() {
+        return this.EntityPM.Surcharge10MinPrice;
+    }
+    set Surcharge10MinPrice(value: number) {
+        if (this.EntityPM.Surcharge10MinPrice != value) {
+            this.EntityPM.Surcharge10MinPrice = value;
         }
     }
 
@@ -1638,6 +1850,11 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
+    get Surcharge10MinPriceValue() {
+        return FormatTool.FormatNumber(this.EntityPM.Surcharge10MinPrice, "N3");
+    }
+
+    ////////////////////////////
     get IsFromAllOtherPorts() { return this.EntityPM.IsFromAllOtherPorts; }
     set IsFromAllOtherPorts(value: boolean) {
         if (this.EntityPM.IsFromAllOtherPorts != value) {

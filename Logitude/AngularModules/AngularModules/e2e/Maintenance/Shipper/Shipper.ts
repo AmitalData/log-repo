@@ -19,6 +19,8 @@ export class NewShipper {
 
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndClick('General.MH.Maintenance');
+        this.helper.waitByCss('#null_Search');
+
     }
 
     SearchShippertTab() {
@@ -35,9 +37,10 @@ export class NewShipper {
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndFill('Address_City', "Florence");
+        browser.sleep(1000)
         this.helper.WaitByIdAndClick('CheckBox_0_111_LBL')
-        this.helper.WaitByIdAndFill('Address_ContactEmail', "Test@mail.com");
         this.helper.WaitByIdAndFill('Address_ContactName', "Test123");
+        this.helper.WaitByIdAndFill('Address_ContactEmail', "Test@mail.com");
         this.helper.WaitByIdAndClick('Ok-AddCustomer');
 
     }

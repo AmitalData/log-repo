@@ -345,6 +345,18 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     {
                         List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
 
+                        if (entityPM.DeletedLinesExpirationDates.Count > 0)
+                        {
+                            foreach (TariffLineExpirationDatePM tariffLineExpirationDateItem in entityPM.DeletedLinesExpirationDates)
+                            {
+                                TariffLine previousLine = iPreviousVersionLines.Where(d => d.OriginPortId == tariffLineExpirationDateItem.OriginPortId && d.DestinationPortId == tariffLineExpirationDateItem.DestinationPortId).FirstOrDefault();
+                                if (previousLine != null)
+                                {
+                                    this.UpdateVersionPreviousLineExpirationDate(tariffLineExpirationDateItem, previousLine);
+                                }
+                            }
+                        }
+
                         foreach (TariffLinePM tariffLinePM in iDraftVersionLines)
                         {
                             TariffLine previousLine = iPreviousVersionLines.Where(d => d.OriginPortId == tariffLinePM.OriginPortId && d.DestinationPortId == tariffLinePM.DestinationPortId).FirstOrDefault();
@@ -353,11 +365,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                             {
                                 if (tariffLinePM.ChangeSetOp == ChangeSetOperation.Delete)
                                 {
-                                    TariffLineExpirationDatePM tariffLineExpirationDateItem = entityPM.DeletedLinesExpirationDates.Where(d => d.TariffLineId == tariffLinePM.Id).FirstOrDefault();
-                                    if (tariffLineExpirationDateItem != null)
-                                    {
-                                        this.UpdateVersionPreviousLineExpirationDate(tariffLineExpirationDateItem, previousLine, tariffLinePM);
-                                    }
+                                   
                                 }
 
                                 else
@@ -376,9 +384,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                 else
                 {
-                    this.ComputeTariffLinesExpirationDates(iDraftVersion, entityPM);
-
-               
+                    this.ComputeTariffLinesExpirationDates(iDraftVersion, entityPM);               
                 }
             }
         }
@@ -390,6 +396,10 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             TariffVersion iPreviousVersion = tariffVersionRepository.GetAllVersions(entityPM.Id, entityPM.Tenant).Where(o => o.Version != iDraftVersion.Version).OrderByDescending(o => o.CreateDate).FirstOrDefault();
             if (iPreviousVersion != null)
             {
+                if(iPreviousVersion.StartDate.Value.Date>= iDraftVersion.StartDate.Value.Date)
+                {
+                    throw new ApplicationException("Start date is smaller than start date of the previous version");
+                }
                 if (iPreviousVersion.Version != iDraftVersion.Version)
                 {
                     List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
@@ -410,9 +420,9 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             }
         }
 
-        private void UpdateVersionPreviousLineExpirationDate(TariffLineExpirationDatePM tariffLineExpirationDateItem, TariffLine previousLine, TariffLinePM tariffLinePM)
+        private void UpdateVersionPreviousLineExpirationDate(TariffLineExpirationDatePM tariffLineExpirationDateItem, TariffLine previousLine)
         {
-            bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "expiration", TariffLinePM = tariffLinePM, TariffLineExpirationDateItem = tariffLineExpirationDateItem, PreviousLine = previousLine });
+            bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "expiration", TariffLineExpirationDateItem = tariffLineExpirationDateItem, PreviousLine = previousLine });
 
             if(isExpirationDateValid)
             {
@@ -422,7 +432,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             else
             {
-                tariffLinePM.ChangeSetOp = ChangeSetOperation.None;
                 throw new ApplicationException("Expiration date can't be less than start date in the previous version line");
             }
         }
@@ -448,8 +457,8 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             if (previousLineDatesArgs.DateField == "expiration")
             {
-                if (previousLineDatesArgs.TariffLineExpirationDateItem.ExpirationDate < previousLineDatesArgs.PreviousLine.StartDate)                {
-                    
+                if (previousLineDatesArgs.TariffLineExpirationDateItem.ExpirationDate < previousLineDatesArgs.PreviousLine.StartDate)
+                {                    
                     isExpirationDateValid = false;                    
                 }
             }
