@@ -456,8 +456,9 @@ s             b                   a
                 StartBalance = newPageOfBankAccount.MyBankAccountM.RealOpenBalance,
                 CloseBalance = newPageOfBankAccount.MyBankAccountM.RealCloseBalance,
 
-                FromDate = newBankPageLines.First().ReferenceDate,
-                ToDate = newBankPageLines.Last().ReferenceDate,
+                ///XXXXX - 
+                FromDate = newBankPageLines.OrderBy(r=>r.ReferenceDate).First().ReferenceDate,
+                ToDate = newBankPageLines.OrderBy(r => r.ReferenceDate).Last().ReferenceDate,
 
 
 

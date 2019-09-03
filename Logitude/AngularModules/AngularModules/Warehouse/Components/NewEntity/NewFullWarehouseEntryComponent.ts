@@ -981,7 +981,7 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
     FillMorePackagesDetails() {
 
         var logeWindow = new LogitudeWindow();
-        logeWindow.Width = 960;
+        logeWindow.Width =1000;
         logeWindow.Height = 500;
         logeWindow.Title = "Packages Details";
 

@@ -4,7 +4,7 @@
 
 
 
-update  ObjectFields set CopyToDW = 0 where ObjectTableId = (select id from ObjectTables where Name = 'Card')
+update  ObjectFields set CopyToDW = 0 
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'DWHSetting') and (FieldName = 'Tenant' or FieldName = 'ParentTenant')
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Direction') and (FieldName = 'Id' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'TransportMode')and (FieldName = 'Id' or FieldName = 'Name'  )
@@ -52,13 +52,13 @@ or  FieldName = 'OperationalCloseDate'or  FieldName = 'AccountingCloseDate'or  F
 or  FieldName = 'AccountedReceivablesInProfitCurrency'or  FieldName = 'OpenPayablesInLocalCurrency'or  FieldName = 'OpenPayablesInProfitCurrency' or  FieldName = 'AccountedPayablesInLocalCurrency'or  FieldName = 'AccountedPayablesInProfitCurrency' or    FieldName='TEU'or FieldName='ValueOfGoods'or FieldName='ValueOfGoodsCurrencyId' or FieldName='FirstPickupETA'or FieldName='FirstPickupETD'  
 or FieldName = 'ProjectNumber' or FieldName = 'CustomerReference1' or FieldName = 'CustomerReference2'  or FieldName = 'ShipperReference1' or FieldName = 'ShipperReference2'  or FieldName = 'ConsigneeReference1' or FieldName = 'ConsigneeReference2'  or FieldName = 'AgentReference1' or FieldName = 'AgentReference2'   or FieldName = 'AMSBL' or FieldName = 'FreightPrepaidCollectId'  or FieldName = 'OtherPrepaidCollectId'   or FieldName = 'MainHarmonize'
 or FieldName = 'ForwarderPartnerId' or FieldName = 'CreatedByUserId' or FieldName = 'CustomAgentExportId'  or FieldName = 'CustomAgentImportId'  or FieldName = 'CustomAgentExportId' or FieldName = 'WarehouseLegWarehouseId' or FieldName = 'IsCancelled' 
-or FieldName = 'StatusDate' or FieldName = 'CustomsDeclarationNumber' or  FieldName ='FirstOperationalCloseDate'   or FieldName ='EstimatedFinalArrivalDate' or FieldName = 'ActualFinalArrivalDate'  or FieldName = 'Routing' or FieldName = 'DescriptionOfGoods' or FieldName= 'PreCarriageETD' or FieldName='MoveTypeId' or FieldName='SpecialServicesTypeId'  or FieldName= 'AgentComputed' or FieldName= 'ARInvoices' or   FieldName= 'CutoffDate' or FieldName= 'ConsolidatorId' or FieldName = 'ConsolidatorReference' or FieldName = 'Notes'or FieldName = 'Notify1Id' or FieldName = 'Notify1Reference'or FieldName = 'Notify2Id' or FieldName = 'Notify2Reference'
+or FieldName = 'StatusDate' or FieldName = 'CustomsDeclarationNumber' or  FieldName ='FirstOperationalCloseDate'   or FieldName ='EstimatedFinalArrivalDate' or FieldName = 'ActualFinalArrivalDate'  or FieldName = 'Routing' or FieldName = 'DescriptionOfGoods' or FieldName= 'PreCarriageETD' or FieldName='MoveTypeId' or FieldName='SpecialServicesTypeId'  or FieldName= 'AgentComputed' or FieldName= 'ARInvoices' or FieldName= 'ConsolidatorId' or FieldName = 'ConsolidatorReference' or FieldName = 'Notes'or FieldName = 'Notify1Id' or FieldName = 'Notify1Reference'or FieldName = 'Notify2Id' or FieldName = 'Notify2Reference'
 or FieldName = 'ColoaderId' or FieldName = 'ColoaderReference1'or FieldName = 'ShipperNotExporterId' or FieldName = 'ShipperNotExporterReference' or FieldName = 'ReleasingAgentId' or FieldName = 'ReleasingAgentReference1'
 )
 
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Master') and (FieldName = 'MainCarriageATD' or FieldName = 'Master' or FieldName = 'MainCarriageToPortId' or FieldName = 'Transshipment1ToPortId' or FieldName = 'Transshipment2ToPortId' or FieldName = 'Transshipment3ToPortId' 
 or FieldName = 'MainCarriageETD' or FieldName = 'MainCarriageFinalDestinationATA' or FieldName = 'MainCarriageFinalDestinationETA' or FieldName = 'MainCarriageCarrierNumber'  or FieldName='MainCarriageCarrierId'  or FieldName = 'AirlinePrefix'
-or FieldName='BookingConfirmationNumber' or FieldName='MainCarriageATA' or FieldName='MAWBOBLDate'  or FieldName='MasterShipmentNumber' or FieldName='MainCarriageETA' or FieldName='MainCarriageVesselId'
+or FieldName='BookingConfirmationNumber' or FieldName='MainCarriageATA' or FieldName='MAWBOBLDate'  or FieldName='MasterShipmentNumber' or FieldName='MainCarriageETA' or FieldName='MainCarriageVesselId' or FieldName= 'CutoffDate' 
 
 )
 

@@ -493,76 +493,56 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.myChargesTypeListService.getSingleFromCache(newRecord.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
-                //var shipmentPayable: ShipmentPayablePM = this.Generator.GeneratePayablesFromTariff(chargesType);
-
-                var payablePM = new ShipmentPayablePM(this.EntityPM);
-                payablePM.Tenant = this.EntityPM.Tenant;
-                payablePM.ShipmentId = this.EntityPM.Id;
-                payablePM.ShipmentNumber = this.EntityPM.ShipmentNumber;
-                payablePM.ShipmentPayableLineStatusCode = "EMPT";
-                payablePM.ShipmentPayableAmountTypeCode = "ACCU";
-                payablePM.CreateDate = DateTool.GetCurrentDateAsUtc();
-                payablePM.CreatedByUserId = SessionLocator.LoggedUserId;
-                payablePM.UpdateDate = DateTool.GetCurrentDateAsUtc();
-                payablePM.UpdateByUserId = SessionLocator.LoggedUserId;
-                payablePM.ProfitCurrencyExchangeRate = this.FatherComponent.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
-                payablePM.TariffId = newRecord.TariffId;
-                payablePM.TariffNumber = newRecord.TariffNumber;
-                payablePM.TariffVersion = newRecord.VersionId != null ? newRecord.VersionId.toString() : newRecord.VersionId;
-                payablePM.Notes = notes;
-                this.ShipmentPM.AddPayable(payablePM);
-
-                var payableItem = new ShipmentPayableItem(payablePM, this.FatherComponent, false);
-                this.FatherComponent.ItemsSource.Insert(payableItem);
-
-                payableItem.ChargesTypeId = chargesType.Id;
-                payableItem.MeasurementId = newRecord.UnitOfMesurmentId;
-                payableItem.CurrencyId = newRecord.CurrencyId;
+                var shipmentPayable: ShipmentPayablePM = this.Generator.GeneratePayablesFromTariff(chargesType);
+                shipmentPayable.TariffId = newRecord.TariffId;
+                shipmentPayable.TariffNumber = newRecord.TariffNumber;
+                shipmentPayable.TariffVersion = newRecord.VersionId != null ? newRecord.VersionId.toString() : newRecord.VersionId;
+                shipmentPayable.CurrencyId = newRecord.CurrencyId;
+                this.Generator.GetCurrencyCode(shipmentPayable);
+                shipmentPayable.Rate = this.Generator.GetCurrencyRate(shipmentPayable.CurrencyId);
+                shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
+                shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
+                shipmentPayable.MeasurementCode = newRecord.UnitOfMesurmentCode;
                 var nweQuantity = this.GetQuantity(chargesType);
-                payableItem.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3) : null;
-                payableItem.Quantity = AppTool.Round(nweQuantity, 3);
+                var expectedAmount = newRecord.ActualPrice;
+                var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
+                var expectedAmountLocal = expectedAmount * rate;
 
-                //shipmentPayable.TariffId = newRecord.TariffId;
-                //shipmentPayable.TariffNumber = newRecord.TariffNumber;
-                //shipmentPayable.TariffVersion = newRecord.VersionId != null ? newRecord.VersionId.toString() : newRecord.VersionId;
-                //shipmentPayable.CurrencyId = newRecord.CurrencyId;
-                //this.Generator.GetCurrencyCode(shipmentPayable);
-                //shipmentPayable.Rate = this.Generator.GetCurrencyRate(shipmentPayable.CurrencyId);
-                //shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
-                //shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
-                //shipmentPayable.MeasurementCode = newRecord.UnitOfMesurmentCode;
-                //var nweQuantity = this.GetQuantity(chargesType);
-                //var expectedAmount = newRecord.ActualPrice;
-                //var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
-                //var expectedAmountLocal = expectedAmount * rate;
+                var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
+                var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
 
-                //var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
-                //var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
-
-                //shipmentPayable.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3): null;
-                //shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
-                //shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
-                //shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
-                //shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(expectedAmountProfit, 2);
-                //shipmentPayable.OpenAmount = shipmentPayable.ExpectedAmount;
-                //shipmentPayable.OpenAmountInLocalCurrency = shipmentPayable.ExpectedAmountLocal;
-                //shipmentPayable.OpenAmountInProfitCurrency = shipmentPayable.ExpectedAmountInProfitCurrency;
-                //shipmentPayable.AccountedAmount = 0;
-                //shipmentPayable.AccountedAmountInLocalCurrency = 0;
-                //shipmentPayable.AccountedAmountInProfitCurrency = 0;
-                //shipmentPayable.ShipmentPayableLineStatusCode = (shipmentPayable.Quantity != null && shipmentPayable.UnitPrice != null) ? "OAMT" : "EMPT";
-                //shipmentPayable.Notes = notes;
-                //this.TariffPayables.push(shipmentPayable);
+                shipmentPayable.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3) : null;
+                shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
+                shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
+                shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
+                shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(expectedAmountProfit, 2);
+                shipmentPayable.OpenAmount = shipmentPayable.ExpectedAmount;
+                shipmentPayable.OpenAmountInLocalCurrency = shipmentPayable.ExpectedAmountLocal;
+                shipmentPayable.OpenAmountInProfitCurrency = shipmentPayable.ExpectedAmountInProfitCurrency;
+                shipmentPayable.AccountedAmount = 0;
+                shipmentPayable.AccountedAmountInLocalCurrency = 0;
+                shipmentPayable.AccountedAmountInProfitCurrency = 0;
+                shipmentPayable.ShipmentPayableLineStatusCode = "EMPT";
+                shipmentPayable.ShipmentPayableAmountTypeCode = "ACCU";
+                shipmentPayable.ShipmentId = this.ShipmentPM.Id;
+                shipmentPayable.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
+                shipmentPayable.CreateDate = DateTool.GetCurrentDateAsUtc();
+                shipmentPayable.Tenant = this.ShipmentPM.Tenant;
+                shipmentPayable.CreatedByUserId = SessionLocator.LoggedUserId;
+                shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
+                shipmentPayable.Notes = notes;
+                this.TariffPayables.push(shipmentPayable);
             }
         });
     }
 
     ValidateExistConnectedTariff(item: TariffSearchSummary) {
         var isValid = true;
-        var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId == item.TariffId)[0];
+        var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null)[0];
         var existsPayableOnSurcharges: ShipmentPayablePM [] = []; 
         item.Surcharges.forEach(surcharge => {
-            var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId == surcharge.TariffId)[0];
+            var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null)[0];
             if (payable) {
                 existsPayableOnSurcharges.push(payable);
             }

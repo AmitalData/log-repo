@@ -1092,14 +1092,11 @@ namespace WarehouseData.Helper
 
                 }
 
-                string tableName = table.DBTableName;
-                if (table.TableName == "WaterMark" && isPrivateDB) tableName = "Private" + tableName;
-
-
-
+                string originTableName = table.TableName == "WaterMark" && isPrivateDB ? ("Private" + table.DBTableName): table.DBTableName;
+   
                 SqlCommand commandSourceData = new SqlCommand(
            "SELECT " + fieldName +
-           " FROM dbo." + tableName + condition + " ;", sourceConnection);
+           " FROM dbo." + originTableName + condition + " ;", sourceConnection);
 
 
 
@@ -1113,6 +1110,7 @@ namespace WarehouseData.Helper
                     using (SqlBulkCopy bulkCopy =
                                new SqlBulkCopy(destinationConnection))
                     {
+
                         bulkCopy.DestinationTableName =
                             "dbo." + table.Dw_TableName;
 
@@ -1531,77 +1529,80 @@ namespace WarehouseData.Helper
                " FROM dbo." + table.DBTableName + condition, sourceConnection);
 
                 SqlDataReader reader = commandSourceData.ExecuteReader();
-
-                var dataTable = new DataTable();
-                dataTable.Load(reader);
-
-                var columns = dataTable.Rows
-                                 .Cast<DataRow>()
-                                 .Select(r => (string)r[table.KeyName].ToString())
-                                 .ToList();
-
-                table.UpdatedCount = columns != null ? columns.Count() : 0;
-                table.RefreshIds = ProcessingeDataWarehousUpdatedRows(table, columns, destinationConnectionString);
-
-                if (!string.IsNullOrEmpty(table.RefreshIds))
+        
+                if (reader.HasRows)
                 {
-                    DateTime automaticLastUpdateDate = (DateTime)dataTable.Rows
-                                  .Cast<DataRow>()
-                                  .Max(d => d["AutomaticLastUpdateDate"]);
+                   
+                    var dataTable = new DataTable();
+                    dataTable.Load(reader);
 
+                    var columns = dataTable.Rows
+                                     .Cast<DataRow>()
+                                     .Select(r => (string)r[table.KeyName].ToString())
+                                     .ToList();
 
+                    table.UpdatedCount = columns != null ? columns.Count() : 0;
+                    table.RefreshIds = ProcessingeDataWarehousUpdatedRows(table, columns, destinationConnectionString);
 
-                    using (SqlConnection destinationConnection =
-                               new SqlConnection(destinationConnectionString))
+                    if (!string.IsNullOrEmpty(table.RefreshIds))
                     {
-                        destinationConnection.Open();
+                        DateTime automaticLastUpdateDate = (DateTime)dataTable.Rows
+                                      .Cast<DataRow>()
+                                      .Max(d => d["AutomaticLastUpdateDate"]);
 
-                        using (SqlBulkCopy bulkCopy =
-                                   new SqlBulkCopy(destinationConnection))
+
+
+                        using (SqlConnection destinationConnection =
+                                   new SqlConnection(destinationConnectionString))
                         {
-                            bulkCopy.DestinationTableName =
-                                "dbo." + table.Dw_TableName;
+                            destinationConnection.Open();
 
-                            bulkCopy.BulkCopyTimeout = (int)this.timeOut;
-
-                            try
+                            using (SqlBulkCopy bulkCopy =
+                                       new SqlBulkCopy(destinationConnection))
                             {
+                                bulkCopy.DestinationTableName =
+                                    "dbo." + table.Dw_TableName;
 
+                                bulkCopy.BulkCopyTimeout = (int)this.timeOut;
 
-                                bulkCopy.EnableStreaming = true;
-                                bulkCopy.BatchSize = 100000;
-                                bulkCopy.WriteToServer(dataTable);
-                            }
-
-                            finally
-                            {
-                                reader.Close();
-
-                                if (table.DBTableName != "WaterMarks")
+                                try
                                 {
-                                    var lastUpdateDate = string.Empty;
-                                    if (automaticLastUpdateDate != null) lastUpdateDate = automaticLastUpdateDate.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                                    else lastUpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                                    this.UpdateWareMarkTable(table, lastUpdateDate, sourceConnectionString);
 
-                                    table.IsUpdated = true;
 
+                                    bulkCopy.EnableStreaming = true;
+                                    bulkCopy.BatchSize = 100000;
+                                    bulkCopy.WriteToServer(dataTable);
                                 }
 
+                                finally
+                                {
+                                    reader.Close();
+
+                                    if (table.DBTableName != "WaterMarks")
+                                    {
+                                        var lastUpdateDate = string.Empty;
+                                        if (automaticLastUpdateDate != null) lastUpdateDate = automaticLastUpdateDate.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                                        else lastUpdateDate = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                                        this.UpdateWareMarkTable(table, lastUpdateDate, sourceConnectionString, privateTenant);
+
+                                        table.IsUpdated = true;
+
+                                    }
+
+                                }
                             }
+
                         }
+
+
 
                     }
 
-
-
+                    else
+                    {
+                        reader.Close();
+                    }
                 }
-
-                else
-                {
-                    reader.Close();
-                }
-
 
             }
 
