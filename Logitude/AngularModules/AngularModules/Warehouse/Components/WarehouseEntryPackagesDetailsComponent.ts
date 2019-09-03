@@ -416,7 +416,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
             //SetDefultPackage
 
-
+          
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
             this.warehouseEntryPM.WarehouseEntryPackages.forEach((item) => {
