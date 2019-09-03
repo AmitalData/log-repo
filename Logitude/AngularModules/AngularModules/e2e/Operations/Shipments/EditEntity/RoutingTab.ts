@@ -251,7 +251,7 @@ export class RoutingTabComponent {
     }
     else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
       var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'ocean');
-      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_PreCarriageTransportModeId', 'ocean');
 
 
       var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'eze');
@@ -296,7 +296,7 @@ export class RoutingTabComponent {
 
 
       var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'eze');
-      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_OnCarriageFromPortId', 'eze'));
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_OnCarriageFromPortId', 'eze');
 
       var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'eze');
       this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_OnCarriageToPortId', 'eze');
