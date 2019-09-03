@@ -140,11 +140,11 @@ namespace Logitude.Accounting.BL.Utils
 
             List<JournalLineReco> creditLines = journalLineRecoList.Where(line => line._journalLine.ActionCode == "1").ToList<JournalLineReco>();
             decimal credit_sum = 0m;
-            if (creditLines != null) credit_sum = creditLines.Sum(line => line._journalLine.LocalAmount);
+            if (creditLines != null) credit_sum = creditLines.Sum(line => line._journalLine.LocalAmount - (line._journalLine.ExternalOpenAmount ?? 0m));
 
             List<JournalLineReco> debitLines = journalLineRecoList.Where(line => line._journalLine.ActionCode == "2").ToList<JournalLineReco>();
             decimal debit_sum = 0m;
-            if (debitLines != null) debit_sum = debitLines.Sum(line => line._journalLine.LocalAmount);
+            if (debitLines != null) debit_sum = debitLines.Sum(line => line._journalLine.LocalAmount + (line._journalLine.ExternalOpenAmount ?? 0m));
 
 
             if (journalLineRecoList.Count == 0)
