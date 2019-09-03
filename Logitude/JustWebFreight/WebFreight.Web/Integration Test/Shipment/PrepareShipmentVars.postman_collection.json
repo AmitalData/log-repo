@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "63727b68-00f7-4f78-bb28-0af08c8d8e0a",
-		"name": "PrepareShipmentVars copy",
+		"_postman_id": "3bcf8d3d-7274-493a-9886-c4402f3c3b4d",
+		"name": "PrepareShipmentVars",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -98,9 +98,14 @@
 							"pm.test(\"GetLoogedUserData\",function(){",
 							"    pm.response.to.have.status(200);",
 							"    ",
-							"    var BranchId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].BranchId;",
-							"    var DepartmentId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].DepartmentId;",
-							"    var CreatedByUserId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].Id;",
+							"    // var BranchId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].BranchId;",
+							"    // var DepartmentId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].DepartmentId;",
+							"    // var CreatedByUserId=pm.response.json().Result.filter(a=>a.Email == pm.environment.get(\"MyEmail\"))[0].Id;",
+							"    ",
+							"    ",
+							"    var BranchId=pm.response.json().Result[0].BranchId;",
+							"    var DepartmentId=pm.response.json().Result[0].DepartmentId;",
+							"    var CreatedByUserId=pm.response.json().Result[0].Id;",
 							"    ",
 							"    var test1 =BranchId !== null;",
 							"    var test2 =DepartmentId !== null;",
@@ -110,7 +115,7 @@
 							"    pm.expect(test2);",
 							"    pm.expect(test3);",
 							"    ",
-							"    pm.environment.set(\"DepartmentId\",DepartmentId);",
+							"    pm.environment.set(\"DepId\",DepartmentId);",
 							"    pm.environment.set(\"BranchId\",BranchId);",
 							"    pm.environment.set(\"CreatedByUserId\",CreatedByUserId);",
 							"    ",
@@ -153,7 +158,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{LogitudeURL}}/api/userviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{MyEmail}}&GetCount=true&PageIndex=0&PageSize=23",
+					"raw": "{{LogitudeURL}}/api/userviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&Filter1Value={{Email}}",
 					"host": [
 						"{{LogitudeURL}}"
 					],
@@ -180,10 +185,6 @@
 							"value": "Contains"
 						},
 						{
-							"key": "Filter1Value",
-							"value": "{{MyEmail}}"
-						},
-						{
 							"key": "GetCount",
 							"value": "true"
 						},
@@ -202,6 +203,10 @@
 						{
 							"key": null,
 							"value": null
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{Email}}"
 						}
 					]
 				}
@@ -954,9 +959,16 @@
 							"     ",
 							"     ",
 							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idvalue2 = (pm.response.json().Result[0].CountryId);",
+							"     ",
 							"    var idexist = idvalue !== null;",
+							"    var idexist2 = idvalue2 !== null;",
+							"    ",
 							"    pm.expect(idexist);",
+							"    pm.expect(idexist2);",
+							"    ",
 							"    pm.environment.set(\"PortIdLHR\",idvalue);",
+							"    pm.environment.set(\"CountryIdForPortLHR\",idvalue2);",
 							"     //console.log(jsonData.Result[0].Code);",
 							"   ",
 							"    if (idexist)  {",
@@ -1818,9 +1830,16 @@
 							"     ",
 							"     ",
 							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idvalue2 = (pm.response.json().Result[0].CountryId);",
+							"    ",
 							"    var idexist = idvalue !== null;",
+							"    var idexist2 = idvalue2 !== null;",
+							"    ",
 							"    pm.expect(idexist);",
+							"    pm.expect(idexist2);",
+							"    ",
 							"    pm.environment.set(\"PortIdAirJFK\",idvalue);",
+							"    pm.environment.set(\"CountryIdForPortJFK\",idvalue2);",
 							"     //console.log(jsonData.Result[0].Code);",
 							"    if (idexist)  {",
 							"    postman.setNextRequest(\"GetPortIdOceanSOU\"); ",
@@ -3412,7 +3431,7 @@
 							"    pm.environment.set(\"StateIdAK\",idvalue);",
 							"    ",
 							"    if (idexist){",
-							"    postman.setNextRequest(\"GetAgentIdTest\"); ",
+							"    postman.setNextRequest(\"GetAgentIdTestExport1\"); ",
 							"    }",
 							"    ",
 							"});",
@@ -3506,9 +3525,9 @@
 							"    // pm.global.set(\"StateIdAK\",idvalue);\r",
 							"    pm.environment.set(\"StateIdAK\",idvalue);\r",
 							"    \r",
-							"    // if (idexist)  {\r",
-							"    // postman.setNextRequest(\"GetAgentIdTest\");\r",
-							"    // }\r",
+							"    if (idexist)  {\r",
+							"     postman.setNextRequest(\"GetAgentIdTestExport1\");\r",
+							"    }\r",
 							"});\r",
 							"    \r",
 							"\r",
@@ -3562,31 +3581,31 @@
 			"response": []
 		},
 		{
-			"name": "GetAgentIdTest",
+			"name": "GetAgentIdTestExport1",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
 						"exec": [
-							"pm.test(\"CreateAgentIdTestExport1\", function () {\r",
+							"pm.test(\"GetAgentIdTestExport1\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"\r",
 							"    var value1 = pm.response.json().Result.filter(a => a.EnglishName == 'TestAgentExport1')[0].Id;\r",
 							"    var value2 = pm.response.json().Result.filter(a => a.EnglishName == 'TestAgentExport1')[0].EnglishName;\r",
 							"\r",
-							"    var test = value1 !== null;\r",
-							"    var test2 = value2 !== null;\r",
+							"    var id1exist = value1 !== null;\r",
+							"    var id2exist = value2 !== null;\r",
 							"\r",
-							"    pm.expect(test);\r",
-							"    pm.expect(test2);\r",
+							"    pm.expect(id1exist);\r",
+							"    pm.expect(id2exist);\r",
 							"\r",
 							"    pm.environment.set(\"AgentIdTestExport1\", value1);\r",
 							"    pm.environment.set(\"AgentNameTestExport1\", value2);\r",
-							"    if (idexist) {\r",
+							"    if (id1exist) {\r",
 							"        postman.setNextRequest(\"GetShipperIdTestShipperExport1\");\r",
 							"    }\r",
-							"})\r",
+							"});\r",
 							"\r",
 							"\r",
 							""
@@ -3673,9 +3692,15 @@
 							"    var idvalue = (pm.response.json().Agent.Id);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
-							"    pm.environment.set(\"AgentIdTest\",idvalue);",
 							"    ",
-							"        if (idexist)  {",
+							"    var idvalue2 = (pm.response.json().Address.Id);",
+							"    var idexist2 = idvalue2 !== null;",
+							"    pm.expect(idexist2);",
+							"    ",
+							"    pm.environment.set(\"AgentIdTest\",idvalue);",
+							"    pm.environment.set(\"AgentAddressIdTestAgentExport1\",idvalue2);",
+							"    ",
+							"    if (idexist)  {",
 							"    postman.setNextRequest(\"GetShipperIdTestShipperExport1\"); ",
 							"    ",
 							"}});",
@@ -3738,15 +3763,16 @@
 							"pm.test(\"GetShipperIdTestShipperExport1\", function () {",
 							"   pm.response.to.have.status(200);",
 							"   ",
-							"    var idvalue = (pm.response.json().Result.filter(a => a.VatNumber == 'TestShipper1Unique')[0].Id);",
+							"    var idvalue=pm.response.json().Result.filter(a=>a.EnglishName == 'TstShipExport1')[0].Id;",
+							"",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
-							"    pm.environment.set(\"ShipperIdTestShipperExport1\",idvalue);",
+							"    pm.environment.set(\"ShipperIdTestShipExport1\",idvalue);",
 							"    ",
 							"        if (idexist)  {",
 							"    postman.setNextRequest(\"GetShipperIdTestShipperImport1\"); ",
 							"    ",
-							"}});",
+							"}}); ",
 							"     ",
 							"",
 							"",
@@ -3790,7 +3816,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{LogitudeURL}}/api/customerviews/getbyfilters?Filter1Name=VatNumber&Filter1Operator=equals&Filter1Value=TestShipper1Unique&PageSize=10",
+					"raw": "{{LogitudeURL}}/api/customerviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=TstShipExport1&PageSize=23",
 					"host": [
 						"{{LogitudeURL}}"
 					],
@@ -3802,19 +3828,19 @@
 					"query": [
 						{
 							"key": "Filter1Name",
-							"value": "VatNumber"
+							"value": "SearchFields"
 						},
 						{
 							"key": "Filter1Operator",
-							"value": "equals"
+							"value": "Contains"
 						},
 						{
 							"key": "Filter1Value",
-							"value": "TestShipper1Unique"
+							"value": "TstShipExport1"
 						},
 						{
 							"key": "PageSize",
-							"value": "10"
+							"value": "23"
 						}
 					]
 				}
@@ -3836,7 +3862,7 @@
 							"    var idvalue2 = (pm.response.json().Address.Id);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
-							"    pm.environment.set(\"ShipperIdTestShipperExport1\",idvalue);",
+							"    pm.environment.set(\"ShipperIdTestShipExport1\",idvalue);",
 							"    pm.environment.set(\"ShipperAddressIdTestShipperExport1\",idvalue2);",
 							"  ",
 							"    if (idexist)  {",
@@ -3878,7 +3904,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"PartnerTypeId\": \"CS\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"London\",\n    \"StateId\": null,\n    \"ZipCode\": \"+207\",\n    \"FaxNumber\": \"24564110\",\n    \"PhoneNumber\": \"0598137715\",\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": \"14 Tottenham Court Road\",\n    \"Address2\": \"A400\",\n    \"Name\": \"TestShipperExport1Address\",\n    \"CountryId\": \"1-396\",\n    \"CarrierId\": null,\n    \"CountryName\": \"United Kingdom\",\n    \"CountryEnglishName\": \"United Kingdom\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": \"2154787\",\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": \"ahmadb@fnarsoft.com\",\n    \"ContactName\": \"Ahmad\",\n    \"ContactPosition\": \"QA\",\n    \"ContactBusinessPhone\": \"+207598137715\",\n    \"ContactMobile\": \"+207598137715\",\n    \"ContactFax\": \"325236351\",\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": {\n    \"$id\": \"3\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"InActive\": false,\n    \"FacebookId\": null,\n    \"EnglishName\": \"Ahmad\",\n    \"ImageDetailId\": null,\n    \"LocalName\": \"Ahmad\",\n    \"ComputedLocalName\": null,\n    \"Email\": \"ahmadb@fnarsoft.com\",\n    \"HasPassword\": false,\n    \"Password\": null,\n    \"BusinessPhone\": \"236437347\",\n    \"Mobile\": \"754745747\",\n    \"Fax\": \"325236\",\n    \"Birthday\": null,\n    \"Anniversary\": null,\n    \"Notes\": null,\n    \"SearchFields\": \"Ahmad,Ahmad,ahmadb@fnarsoft.com,236437347,754745747,325236,Ahmad Comp.,asdasdasd,Ihab 2,new consignee r2,new potentilal,Test 2 Agent,Test Agent\",\n    \"CardId\": \"1-143765\",\n    \"IsUser\": false,\n    \"SignupRole\": false,\n    \"Signature\": null,\n    \"SignatureHtml\": null,\n    \"DisplayGettingStarted\": false,\n    \"ExternalId\": null,\n    \"IsHybrid\": false,\n    \"DontShowLocal\": false,\n    \"MustChangePassword\": false,\n    \"IsLocked\": false,\n    \"NumberOfRetries\": 0,\n    \"DisconectFromCard\": false,\n    \"FieldsChanged\": false,\n    \"SetAsPrimaryForCard\": true,\n    \"BirthdayReminder\": false,\n    \"AnniversaryReminder\": false,\n    \"DoneDate\": null,\n    \"BirthDayOfYear\": null,\n    \"ContactDoneMethodCode\": null,\n    \"ContactDoneMethodName\": null,\n    \"Position\": \"QA\",\n    \"IsAirExport\": false,\n    \"IsAirImport\": false,\n    \"IsOceanExport\": false,\n    \"IsOceanImport\": false,\n    \"IsInlandExport\": false,\n    \"IsInlandImport\": false,\n    \"IsAll\": false,\n    \"HasCardContact\": false,\n    \"IsCustomsImport\": false,\n    \"IsInlandDomestic\": false,\n    \"IndexColor\": null,\n    \"IsChangeSignatur\": false,\n    \"CustomerId\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CompanyName\": \"Ahmad Comp.,asdasdasd,Ihab 2,new consignee r2,new potentilal,Test 2 Agent,Test Agent\",\n    \"CreateDate\": null\n  },\n  \"Agent\": null,\n  \"Customer\": {\n    \"$id\": \"4\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"BankName\": null,\n    \"CompetitorFields\": \"\",\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"StartWorkingDate\": null,\n    \"Notes\": \"TestShipperExport1\",\n    \"SupportNotes\": null,\n    \"EnglishName\": \"TestShipperExport1\",\n    \"LocalName\": \"TestShipperExport1\",\n    \"AccountManagerUserId\": null,\n    \"SalesmanUserId\": null,\n    \"SalesmanUserEnglishName\": null,\n    \"SalesmanBusinessUnitId\": null,\n    \"Website\": null,\n    \"InActive\": false,\n    \"BillToId\": null,\n    \"BillToName\": null,\n    \"VatNumber\": \"TestShipper1Unique\",\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"RankId\": \"1-4\",\n    \"VatTypeId\": null,\n    \"ComputedLocalName\": null,\n    \"FieldsChanged\": false,\n    \"PartnerTypeId\": \"CS\",\n    \"CreatedByUserId\": \"1-40924\",\n    \"UpdatedByUserId\": null,\n    \"CardPMId\": null,\n    \"ExistedContactId\": \"1-40924\",\n    \"StartWorkingManuallySet\": false,\n    \"CityName\": \"London\",\n    \"CountryId\": \"1-396\",\n    \"CountryName\": \"United Kingdom\",\n    \"ATTN\": null,\n    \"AccountManagerUserEnglishName\": null,\n    \"RankName\": null,\n    \"RankCode\": null,\n    \"PhoneNumber\": null,\n    \"FaxNumber\": null,\n    \"CityWithCountry\": null,\n    \"ImageDetailId\": null,\n    \"Field1\": {\n      \"$id\": \"5\",\n      \"Value\": null,\n      \"FieldName\": \"Field1\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field2\": {\n      \"$id\": \"6\",\n      \"Value\": null,\n      \"FieldName\": \"Field2\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field3\": {\n      \"$id\": \"7\",\n      \"Value\": null,\n      \"FieldName\": \"Field3\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field4\": {\n      \"$id\": \"8\",\n      \"Value\": null,\n      \"FieldName\": \"Field4\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field5\": {\n      \"$id\": \"9\",\n      \"Value\": null,\n      \"FieldName\": \"Field5\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field6\": {\n      \"$id\": \"10\",\n      \"Value\": null,\n      \"FieldName\": \"Field6\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field7\": {\n      \"$id\": \"11\",\n      \"Value\": null,\n      \"FieldName\": \"Field7\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field8\": null,\n    \"Field9\": null,\n    \"Field10\": null,\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"IsActiveForMobile\": false,\n    \"LastLoginDate\": null,\n    \"InvitationDate\": null,\n    \"IsHybrid\": false,\n    \"FreelancerId\": null,\n    \"ForwarderId\": null,\n    \"CustomsAgentId\": null,\n    \"MediatorId\": null,\n    \"FreelancerName\": null,\n    \"ForwarderName\": null,\n    \"CustomsAgentName\": null,\n    \"MediatorName\": null,\n    \"GoogleAddressString\": null,\n    \"IsExternal\": false,\n    \"IsCustomer\": false,\n    \"CustomerStatusCode\": \"ACT\",\n    \"BeforeDeactiveStatusCode\": null,\n    \"ActivationDate\": null,\n    \"InactiveDate\": null,\n    \"ActivationRequestDate\": null,\n    \"ActivatedByUserId\": null,\n    \"SetAsInactiveByUserId\": null,\n    \"ActivationRequestedByUserId\": null,\n    \"SetReActivated\": false,\n    \"SetInActive\": false,\n    \"SetReady\": false,\n    \"SetActivated\": false,\n    \"EventNote\": null,\n    \"Address1_Potential\": null,\n    \"Address2_Potential\": null,\n    \"City_Potential\": null,\n    \"CountryId_Potential\": null,\n    \"ZipCode_Potential\": null,\n    \"StateId_Potential\": null,\n    \"PhoneNumber_Potential\": null,\n    \"FaxNumber_Potential\": null,\n    \"ATTN_Potential\": null,\n    \"IsLocalLanguage\": false,\n    \"CodeMyCustomer\": \"new\",\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CustomerStatusName\": null,\n    \"PrimaryContactId\": \"1-40924\",\n    \"ReadyForActivationDate\": null,\n    \"IsFirstContactToAdd\": false,\n    \"SavedForActivation\": false,\n    \"QueueMessageLockToken\": \"00000000-0000-0000-0000-000000000000\",\n    \"QuestionnaireAnsewrsHtmlString\": null,\n    \"SetAsPotential\": false,\n    \"UpdatedByUserCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"RequestedAirlines\": null,\n    \"RegisteredAirlines\": null,\n    \"PendingAirlines\": null,\n    \"IsCustomerAllowed\": false,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [\n      {\n        \"$ref\": \"3\"\n      }\n    ],\n    \"SharedLogisticContacts\": [],\n    \"IndustryId\": null,\n    \"LeadSourceId\": null,\n    \"CollectorId\": null,\n    \"ClassifierId\": null,\n    \"IndustryName\": null,\n    \"LeadSourceName\": null,\n    \"CollectorName\": null,\n    \"ClassifierName\": null,\n    \"CreditLimit\": null,\n    \"LeadDescription\": null,\n    \"RegionId\": null,\n    \"RegionName\": null,\n    \"CustomerSizeId\": null,\n    \"LastCallDate\": null,\n    \"LastMeetingDate\": null,\n    \"LastOpportunityDate\": null,\n    \"FirstInvoiceDate\": null,\n    \"FirstShipmentDate\": null,\n    \"LastShipmentDate\": null,\n    \"LastQuoteDate\": null,\n    \"LastInteractionDate\": null,\n    \"EnableConsolidationInvoices\": false,\n    \"ActivityWatch\": false,\n    \"KnownConsignor\": null,\n    \"KCExpirationDate\": null,\n    \"LogBoxActivated\": false,\n    \"CustomerProducts\": [],\n    \"CustomerCompetitors\": [],\n    \"CustomerAdditionalServices\": [],\n    \"SalesNotes\": [],\n    \"CustomerSalesmanByProducts\": [],\n    \"CustomerAccountManagerByProducts\": [],\n    \"CustomerCustomsAgentByProducts\": [],\n    \"CustomerForwarderByProducts\": [],\n    \"CustomerMediatorByProducts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"IsLogBox\": false,\n    \"IsPrivateLabelCustomer\": false,\n    \"IsCreditLimitEnabled\": false,\n    \"CreditLimitAmount\": null,\n    \"CreditLimitOpenBalance\": null,\n    \"CreditLimitWarningPercentage\": null,\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null,\n    \"CustomerTenant\": 0\n  },\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"PartnerTypeId\": \"CS\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"London\",\n    \"StateId\": null,\n    \"ZipCode\": \"+207\",\n    \"FaxNumber\": \"24564110\",\n    \"PhoneNumber\": \"0598137715\",\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": \"14 Tottenham Court Road\",\n    \"Address2\": \"A400\",\n    \"Name\": \"TestShipperExport1Address\",\n    \"CountryId\": \"1-396\",\n    \"CarrierId\": null,\n    \"CountryName\": \"United Kingdom\",\n    \"CountryEnglishName\": \"United Kingdom\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": \"2154787\",\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": \"ahmadb@fnarsoft.com\",\n    \"ContactName\": \"Ahmad\",\n    \"ContactPosition\": \"QA\",\n    \"ContactBusinessPhone\": \"+207598137715\",\n    \"ContactMobile\": \"+207598137715\",\n    \"ContactFax\": \"325236351\",\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": {\n    \"$id\": \"3\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"InActive\": false,\n    \"FacebookId\": null,\n    \"EnglishName\": \"Ahmad\",\n    \"ImageDetailId\": null,\n    \"LocalName\": \"Ahmad\",\n    \"ComputedLocalName\": null,\n    \"Email\": \"ahmadb@fnarsoft.com\",\n    \"HasPassword\": false,\n    \"Password\": null,\n    \"BusinessPhone\": \"236437347\",\n    \"Mobile\": \"754745747\",\n    \"Fax\": \"325236\",\n    \"Birthday\": null,\n    \"Anniversary\": null,\n    \"Notes\": null,\n    \"SearchFields\": \"Ahmad,Ahmad,ahmadb@fnarsoft.com,236437347,754745747,325236,Ahmad Comp.,asdasdasd,Ihab 2,new consignee r2,new potentilal,Test 2 Agent,Test Agent\",\n    \"CardId\": \"1-143765\",\n    \"IsUser\": false,\n    \"SignupRole\": false,\n    \"Signature\": null,\n    \"SignatureHtml\": null,\n    \"DisplayGettingStarted\": false,\n    \"ExternalId\": null,\n    \"IsHybrid\": false,\n    \"DontShowLocal\": false,\n    \"MustChangePassword\": false,\n    \"IsLocked\": false,\n    \"NumberOfRetries\": 0,\n    \"DisconectFromCard\": false,\n    \"FieldsChanged\": false,\n    \"SetAsPrimaryForCard\": true,\n    \"BirthdayReminder\": false,\n    \"AnniversaryReminder\": false,\n    \"DoneDate\": null,\n    \"BirthDayOfYear\": null,\n    \"ContactDoneMethodCode\": null,\n    \"ContactDoneMethodName\": null,\n    \"Position\": \"QA\",\n    \"IsAirExport\": false,\n    \"IsAirImport\": false,\n    \"IsOceanExport\": false,\n    \"IsOceanImport\": false,\n    \"IsInlandExport\": false,\n    \"IsInlandImport\": false,\n    \"IsAll\": false,\n    \"HasCardContact\": false,\n    \"IsCustomsImport\": false,\n    \"IsInlandDomestic\": false,\n    \"IndexColor\": null,\n    \"IsChangeSignatur\": false,\n    \"CustomerId\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CompanyName\": \"Ahmad Comp.,asdasdasd,Ihab 2,new consignee r2,new potentilal,Test 2 Agent,Test Agent\",\n    \"CreateDate\": null\n  },\n  \"Agent\": null,\n  \"Customer\": {\n    \"$id\": \"4\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"BankName\": null,\n    \"CompetitorFields\": \"\",\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"StartWorkingDate\": null,\n    \"Notes\": \"TestShipperExport1\",\n    \"SupportNotes\": null,\n    \"EnglishName\": \"TstShipExport1\",\n    \"LocalName\": \"TstShipExport1\",\n    \"AccountManagerUserId\": null,\n    \"SalesmanUserId\": null,\n    \"SalesmanUserEnglishName\": null,\n    \"SalesmanBusinessUnitId\": null,\n    \"Website\": null,\n    \"InActive\": false,\n    \"BillToId\": null,\n    \"BillToName\": null,\n    \"VatNumber\": \"TestShipper1Unique\",\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"RankId\": \"1-4\",\n    \"VatTypeId\": null,\n    \"ComputedLocalName\": null,\n    \"FieldsChanged\": false,\n    \"PartnerTypeId\": \"CS\",\n    \"CreatedByUserId\": \"1-40924\",\n    \"UpdatedByUserId\": null,\n    \"CardPMId\": null,\n    \"ExistedContactId\": \"1-40924\",\n    \"StartWorkingManuallySet\": false,\n    \"CityName\": \"London\",\n    \"CountryId\": \"1-396\",\n    \"CountryName\": \"United Kingdom\",\n    \"ATTN\": null,\n    \"AccountManagerUserEnglishName\": null,\n    \"RankName\": null,\n    \"RankCode\": null,\n    \"PhoneNumber\": null,\n    \"FaxNumber\": null,\n    \"CityWithCountry\": null,\n    \"ImageDetailId\": null,\n    \"Field1\": {\n      \"$id\": \"5\",\n      \"Value\": null,\n      \"FieldName\": \"Field1\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field2\": {\n      \"$id\": \"6\",\n      \"Value\": null,\n      \"FieldName\": \"Field2\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field3\": {\n      \"$id\": \"7\",\n      \"Value\": null,\n      \"FieldName\": \"Field3\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field4\": {\n      \"$id\": \"8\",\n      \"Value\": null,\n      \"FieldName\": \"Field4\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field5\": {\n      \"$id\": \"9\",\n      \"Value\": null,\n      \"FieldName\": \"Field5\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field6\": {\n      \"$id\": \"10\",\n      \"Value\": null,\n      \"FieldName\": \"Field6\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field7\": {\n      \"$id\": \"11\",\n      \"Value\": null,\n      \"FieldName\": \"Field7\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field8\": null,\n    \"Field9\": null,\n    \"Field10\": null,\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"IsActiveForMobile\": false,\n    \"LastLoginDate\": null,\n    \"InvitationDate\": null,\n    \"IsHybrid\": false,\n    \"FreelancerId\": null,\n    \"ForwarderId\": null,\n    \"CustomsAgentId\": null,\n    \"MediatorId\": null,\n    \"FreelancerName\": null,\n    \"ForwarderName\": null,\n    \"CustomsAgentName\": null,\n    \"MediatorName\": null,\n    \"GoogleAddressString\": null,\n    \"IsExternal\": false,\n    \"IsCustomer\": false,\n    \"CustomerStatusCode\": \"ACT\",\n    \"BeforeDeactiveStatusCode\": null,\n    \"ActivationDate\": null,\n    \"InactiveDate\": null,\n    \"ActivationRequestDate\": null,\n    \"ActivatedByUserId\": null,\n    \"SetAsInactiveByUserId\": null,\n    \"ActivationRequestedByUserId\": null,\n    \"SetReActivated\": false,\n    \"SetInActive\": false,\n    \"SetReady\": false,\n    \"SetActivated\": false,\n    \"EventNote\": null,\n    \"Address1_Potential\": null,\n    \"Address2_Potential\": null,\n    \"City_Potential\": null,\n    \"CountryId_Potential\": null,\n    \"ZipCode_Potential\": null,\n    \"StateId_Potential\": null,\n    \"PhoneNumber_Potential\": null,\n    \"FaxNumber_Potential\": null,\n    \"ATTN_Potential\": null,\n    \"IsLocalLanguage\": false,\n    \"CodeMyCustomer\": \"new\",\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CustomerStatusName\": null,\n    \"PrimaryContactId\": \"1-40924\",\n    \"ReadyForActivationDate\": null,\n    \"IsFirstContactToAdd\": false,\n    \"SavedForActivation\": false,\n    \"QueueMessageLockToken\": \"00000000-0000-0000-0000-000000000000\",\n    \"QuestionnaireAnsewrsHtmlString\": null,\n    \"SetAsPotential\": false,\n    \"UpdatedByUserCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"RequestedAirlines\": null,\n    \"RegisteredAirlines\": null,\n    \"PendingAirlines\": null,\n    \"IsCustomerAllowed\": false,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [\n      {\n        \"$ref\": \"3\"\n      }\n    ],\n    \"SharedLogisticContacts\": [],\n    \"IndustryId\": null,\n    \"LeadSourceId\": null,\n    \"CollectorId\": null,\n    \"ClassifierId\": null,\n    \"IndustryName\": null,\n    \"LeadSourceName\": null,\n    \"CollectorName\": null,\n    \"ClassifierName\": null,\n    \"CreditLimit\": null,\n    \"LeadDescription\": null,\n    \"RegionId\": null,\n    \"RegionName\": null,\n    \"CustomerSizeId\": null,\n    \"LastCallDate\": null,\n    \"LastMeetingDate\": null,\n    \"LastOpportunityDate\": null,\n    \"FirstInvoiceDate\": null,\n    \"FirstShipmentDate\": null,\n    \"LastShipmentDate\": null,\n    \"LastQuoteDate\": null,\n    \"LastInteractionDate\": null,\n    \"EnableConsolidationInvoices\": false,\n    \"ActivityWatch\": false,\n    \"KnownConsignor\": null,\n    \"KCExpirationDate\": null,\n    \"LogBoxActivated\": false,\n    \"CustomerProducts\": [],\n    \"CustomerCompetitors\": [],\n    \"CustomerAdditionalServices\": [],\n    \"SalesNotes\": [],\n    \"CustomerSalesmanByProducts\": [],\n    \"CustomerAccountManagerByProducts\": [],\n    \"CustomerCustomsAgentByProducts\": [],\n    \"CustomerForwarderByProducts\": [],\n    \"CustomerMediatorByProducts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"IsLogBox\": false,\n    \"IsPrivateLabelCustomer\": false,\n    \"IsCreditLimitEnabled\": false,\n    \"CreditLimitAmount\": null,\n    \"CreditLimitOpenBalance\": null,\n    \"CreditLimitWarningPercentage\": null,\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null,\n    \"CustomerTenant\": 0\n  },\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
 				},
 				"url": {
 					"raw": "{{LogitudeURL}}/api/PartnersDomain",
@@ -6810,6 +6836,31 @@
 		},
 		{
 			"name": "CreatePackageTypeIdPackagePP2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "23eff24e-9622-4b1e-a20b-69caca361fc3",
+						"exec": [
+							"pm.test(\"GetSystemInfoFromNotMyTenant Fail\", function () {",
+							"     pm.response.to.have.status(400);",
+							"     ",
+							"     var idvalue1 = pm.response.json().ErrorMessage;",
+							"   ",
+							"    ",
+							"         pm.test(\"This package type already exists\\r\\n\", function () {",
+							"          pm.expect(pm.response.json().ErrorMessage).to.include(\"This package type already exists\");",
+							"    ",
+							"         });",
+							"",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -6841,6 +6892,28 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "07c391f8-81a1-454b-bc67-f5fc6f4cb118",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b540d85f-6e51-44d2-be87-bd7f3c3ecced",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
