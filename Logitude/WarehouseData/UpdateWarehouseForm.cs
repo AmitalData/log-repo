@@ -165,7 +165,7 @@ namespace WarehouseData
 
                             foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
                             {
-
+                                stepName = table.IncrementalScriptName;
                                 Stopwatch stopWatchDFactTable = null;
                                 if (table.TableName == "Shipment")
                                 {
@@ -175,7 +175,7 @@ namespace WarehouseData
                                     SetControlPropertyValue("Text", "Updating...", table.DBTableName, "Fact");
                                 }
 
-                                warehouseHelper.RemoveDataFromFactShipment(table, destinationConnectionString);
+                                warehouseHelper.RemoveOldRowsFromFactTable(table, destinationConnectionString);
                                 warehouseHelper.BuildAndExecuteDataWarehouseScript( "IncrementalWarehouse", destinationConnectionString, table);
 
 

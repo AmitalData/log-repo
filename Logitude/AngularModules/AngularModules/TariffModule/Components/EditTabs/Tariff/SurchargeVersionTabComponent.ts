@@ -607,7 +607,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
         this.EntityPM.LastStartDate = this.StartDate;
         this.EntityPM.LastExpirationDate = this.ExpirationDate;
-
+        
         var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
         copiedVersion.TariffId = this.CurrentVersion.TariffId;
         copiedVersion.Version = this.EntityPM.LastVersion;
@@ -644,9 +644,18 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Notes = item.Notes;
             tariffLine.CurrencyId = item.CurrencyId;
             tariffLine.CurrencyCode = item.CurrencyCode;
-
             tariffLine.IsFromAllOtherPorts = item.IsFromAllOtherPorts;
             tariffLine.IsToAllOtherPorts = item.IsToAllOtherPorts;
+            tariffLine.Surcharge1MinPrice = item.Surcharge1MinPrice;
+            tariffLine.Surcharge2MinPrice = item.Surcharge2MinPrice;
+            tariffLine.Surcharge3MinPrice = item.Surcharge3MinPrice;
+            tariffLine.Surcharge4MinPrice = item.Surcharge4MinPrice;
+            tariffLine.Surcharge5MinPrice = item.Surcharge5MinPrice;
+            tariffLine.Surcharge6MinPrice = item.Surcharge6MinPrice;
+            tariffLine.Surcharge7MinPrice = item.Surcharge7MinPrice;
+            tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
+            tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
+            tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
             copiedVersion.AddTariffLine(tariffLine);
         });
 
