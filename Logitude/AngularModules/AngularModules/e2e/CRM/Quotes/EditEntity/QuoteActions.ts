@@ -46,12 +46,12 @@ export class QuoteActions {
 
         }
         else {
-            this.Helper.WaitByIdAndFill('Quote_FromAddressCity_1', 'Ramallah');
-            this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId_1', 'State Of Palestine');
+            this.Helper.WaitByIdAndFill('Quote_FromAddressCity', 'Ramallah');
+            this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId', 'State Of Palestine');
             this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-            this.Helper.WaitByIdAndFill('Quote_ToAddressCity_1', 'Ramallah');
-            this.Helper.WaitByIdAndFill('Quote_ToAddressCountryId_1', 'State Of Palestine');
+            this.Helper.WaitByIdAndFill('Quote_ToAddressCity', 'Ramallah');
+            this.Helper.WaitByIdAndFill('Quote_ToAddressCountryId', 'State Of Palestine');
             this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         }
         this.Helper.WaitByIdAndClick('CreateQuote');
