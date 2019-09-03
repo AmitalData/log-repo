@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "3bcf8d3d-7274-493a-9886-c4402f3c3b4d",
-		"name": "PrepareShipmentVars.postman_collection",
+		"name": "PrepareShipmentVars",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -115,7 +115,7 @@
 							"    pm.expect(test2);",
 							"    pm.expect(test3);",
 							"    ",
-							"    pm.environment.set(\"DepartmentId\",DepartmentId);",
+							"    pm.environment.set(\"DepId\",DepartmentId);",
 							"    pm.environment.set(\"BranchId\",BranchId);",
 							"    pm.environment.set(\"CreatedByUserId\",CreatedByUserId);",
 							"    ",
@@ -3431,7 +3431,7 @@
 							"    pm.environment.set(\"StateIdAK\",idvalue);",
 							"    ",
 							"    if (idexist){",
-							"    postman.setNextRequest(\"GetAgentIdTest\"); ",
+							"    postman.setNextRequest(\"GetAgentIdTestExport1\"); ",
 							"    }",
 							"    ",
 							"});",
@@ -3525,9 +3525,9 @@
 							"    // pm.global.set(\"StateIdAK\",idvalue);\r",
 							"    pm.environment.set(\"StateIdAK\",idvalue);\r",
 							"    \r",
-							"    // if (idexist)  {\r",
-							"    // postman.setNextRequest(\"GetAgentIdTest\");\r",
-							"    // }\r",
+							"    if (idexist)  {\r",
+							"     postman.setNextRequest(\"GetAgentIdTestExport1\");\r",
+							"    }\r",
 							"});\r",
 							"    \r",
 							"\r",
@@ -3581,14 +3581,14 @@
 			"response": []
 		},
 		{
-			"name": "GetAgentIdTest",
+			"name": "GetAgentIdTestExport1",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
 						"exec": [
-							"pm.test(\"CreateAgentIdTestExport1\", function () {\r",
+							"pm.test(\"GetAgentIdTestExport1\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"\r",
 							"    var value1 = pm.response.json().Result.filter(a => a.EnglishName == 'TestAgentExport1')[0].Id;\r",
@@ -3605,7 +3605,7 @@
 							"    if (id1exist) {\r",
 							"        postman.setNextRequest(\"GetShipperIdTestShipperExport1\");\r",
 							"    }\r",
-							"})\r",
+							"});\r",
 							"\r",
 							"\r",
 							""
@@ -6836,6 +6836,31 @@
 		},
 		{
 			"name": "CreatePackageTypeIdPackagePP2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "23eff24e-9622-4b1e-a20b-69caca361fc3",
+						"exec": [
+							"pm.test(\"GetSystemInfoFromNotMyTenant Fail\", function () {",
+							"     pm.response.to.have.status(400);",
+							"     ",
+							"     var idvalue1 = pm.response.json().ErrorMessage;",
+							"   ",
+							"    ",
+							"         pm.test(\"This package type already exists\\r\\n\", function () {",
+							"          pm.expect(pm.response.json().ErrorMessage).to.include(\"This package type already exists\");",
+							"    ",
+							"         });",
+							"",
+							"",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
