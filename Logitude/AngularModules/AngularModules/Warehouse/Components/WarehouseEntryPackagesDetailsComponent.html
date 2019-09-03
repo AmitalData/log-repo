@@ -108,7 +108,7 @@
 
                             <div style="width: 70px; display: block; float:left; margin-left: 15px;">
                                 <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [Text]="'Ratio'" [DataContext]="DataContext"></LogLabel>
-                                <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="warehouseEntryPM" ></RatioBox>
+                                <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="warehouseEntryPM"></RatioBox>
                             </div>
 
 
@@ -159,7 +159,266 @@
         </tr>
 
 
-        <tr style="height:100%">
+        <tr>
+            <td>
+                <div class="MediaFill">
+
+          
+                    <logitude-edit-grid [LastDefaultSpace]="0" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+
+                        <!-- Icon -->
+                        <log-column [width]="'25'">
+                            <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                <img *ngIf="!item.IsContainer" src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                <img *ngIf="item.IsContainer" src="./Images/CellIcons/Container.png" class="CenterCenter" />
+                            </log-cell-template>
+                        </log-column>
+
+
+                        <!-- PackageTypeName -->
+                        <log-column [width]="'120'" [header]="'Package Type'">
+
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'left'">
+                               <div [attr.title]="item.PackageTypeName">{{item.PackageTypeName }} </div>
+                            </log-cell-template>
+
+                        </log-column>
+
+                        <!-- Container Number -->
+                        <log-column  *ngIf="!IsLCLEntity" [width]="'120'" [header]="'Container Number'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'left'">
+
+                                <div>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 15px;" *ngIf="item.ContainerNumberWarning">
+                                                <img [attr.title]="item.ContainerNumberWarning" src="./Images/WarningIcon.png" style="vertical-align: middle; display: block; margin:auto;" />
+                                            </td>
+
+                                            <td style="width: 5px;" *ngIf="item.ContainerNumberWarning">
+                                                <div></div>
+                                            </td>
+
+                                            <td>{{item.ContainerNumber}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+
+                            </log-cell-template>
+                        </log-column>
+
+
+            <!-- Quantity -->
+            <log-column [width]="'80'" [header]="'Quantity'">
+                <log-cell-template template="let item" #logcelltemplate  [IsEnabled]="item.IsQuantityEnabled"> 
+
+                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                        {{item.Quantity}}
+                    </div>
+
+                    <div *ngIf="logcelltemplate.IsEditMode">
+                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="'WarehouseEntry'" [HideColumns]="true"></LogTextBox>
+                    </div>
+                </log-cell-template>
+            </log-column>
+
+
+            <!--Length-->
+            <log-column [width]="'85'" [header]="LengthLabel" >
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer">
+                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                        {{item.Length}}
+                    </div>
+
+                    <div *ngIf="logcelltemplate.IsEditMode">
+                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Length'" [Text]="item.Length" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                    </div>
+                </log-cell-template>
+            </log-column>
+
+
+              <!--Width-->
+            <log-column [width]="'80'" [header]="WidthLabel" >
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer">
+                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                        {{item.Width}}
+                    </div>
+
+                    <div *ngIf="logcelltemplate.IsEditMode">
+                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Width'" [Text]="item.Width" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                    </div>
+                </log-cell-template>
+            </log-column>
+
+
+             <!--Height-->
+            <log-column [width]="'85'" [header]="HeightLabel">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer">
+                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                        {{item.Height}}
+                    </div>
+
+                    <div *ngIf="logcelltemplate.IsEditMode">
+                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Height'" [Text]="item.Height" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                    </div>
+                </log-cell-template>
+            </log-column>
+
+
+            <!-- Volume -->
+            <log-column [width]="'95'" [header]="VolumeLabel">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsVolumeEnabled">
+                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                        {{item.Volume | NumbersPipe:'N3'}}
+                    </div>
+
+                    <div *ngIf="logcelltemplate.IsEditMode">
+                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                    </div>
+                </log-cell-template>
+            </log-column>
+
+            <!-- VolumetricWeight -->
+            <log-column [width]="'150'" [header]="VolumetricWeightLabel">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                    {{item.VolumetricWeight | NumbersPipe:'N3'}}
+                </log-cell-template>
+            </log-column>
+
+            <!-- Gross Weight -->
+            <log-column  [width]="'120'" [header]="GrossWeightLabel">
+                <log-cell-template  template="let item" #logcelltemplate [IsEnabled]="item.IsGrossWeightEnabled">
+
+                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                        {{item.Weight | NumbersPipe:'N3'}}
+                    </div>
+
+                    <div *ngIf="logcelltemplate.IsEditMode">
+                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Weight'" [Text]="item.Weight" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                    </div>
+                </log-cell-template>
+            </log-column>
+
+            <!-- Commodity No-->
+            <log-column [width]="'100'" [header]="'Commodity #'">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                    {{item.CommodityNumber}}
+                </log-cell-template>
+            </log-column>
+
+                        <!--Description-->
+                        <log-column [width]="'170'" [header]="'Description Of Goods'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+
+                                <div [attr.title]="item.Description" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;">
+                                    {{item.Description}}
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Description'" [Text]="item.Description" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+
+                        <!--Location-->
+                        <log-column [width]="'90'" [header]="'Location'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+
+                                <div [attr.title]="item.Location" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;">
+                                    {{item.Location}}
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Location'" [Text]="item.Location" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+
+                        <!-- In stock-->
+                        <log-column [width]="'70'" [header]="'In stock'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                
+                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                                    <table>
+                                        <tr>
+                                            <td>{{item.Instock}}</td>
+                                            <td style="width:5px"><div style="width:5px"></div></td>
+                                            <td style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
+                                                <CellTooltip *ngIf="item.ReleasesNumber" [IconWidth]="20" [IconHeight]="15" [IconPath]="'./Images/Help.png'" [Head]="'Instock'">
+                                                    <table>
+
+                                                        <tr style="height:20px"><td style="width:2px;"><div></div></td><td><div class="Label">Related Releases:</div></td><td style="width:2px;"><div></div></td></tr>
+
+                                                        <tr *ngFor="let releasesNumber of item.ReleasesNumber.split(',')" style="vertical-align:top;height:22px;">
+                                                            <td style="width:2px;"><div></div></td>
+
+                                                            <td style="width: 140px;max-width:140px;">
+                                                                <div style="width:140px;float:left" class="TextTrimming Label">
+                                                                    {{releasesNumber}}
+                                                                </div>
+                                                            </td>
+                                                            <td style="width:2px;"><div></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3"></td>
+                                                        </tr>
+                                                    </table>
+                                                </CellTooltip>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+
+                            </log-cell-template>
+                        </log-column>
+
+             
+
+
+                        <!-- Buttons -->
+                        <log-column [width]="'50'">
+                            <log-cell-template template="let item" [TabIndex]="-1">
+                                <div style="width: 100%; height: 100%; position: relative;">
+                                    <div class="LeftCenter" style="height: 20px;">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 23px; padding-left: 5px;">
+                                                    <IconButton [disabled]="item.Quantity != item.Instock" [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left;" (click)="EditPackage(item)"></IconButton>
+                                                </td>
+
+                                                <td style="width: 20px; padding-left: 2px;">
+                                                    <IconButton [disabled]="item.Quantity != item.Instock" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left;" (click)="DeletePackage(item)"></IconButton>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+
+
+
+
+
+
+
+            </logitude-edit-grid>
+
+</div>
+
+            </td>
+        </tr>
+
+        <!--<tr style="height:100%">
             <td>
                 <div class="MediaFill">
                     <div class="SimpleGridView">
@@ -170,7 +429,6 @@
                                     <td style="width: 120px; min-width: 120px;max-width: 120px;">Package Type</td>
                                     <td *ngIf="!IsLCLEntity" style="width: 110px; min-width: 110px;max-width: 110px;">Container Number</td>
                                     <td style="width: 65px; min-width: 65px;max-width: 65px;">Quantity</td>
-                                    <!--<td style="width: 115px; min-width: 115px;max-width: 115px;">{{DimensionsLabel}}</td>-->
 
                                     <td  style="width: 75px; min-width: 75px;max-width: 75px;">Length ({{warehouseEntryPM.DimensionsUnitCode}})</td>
                                     <td  style="width: 75px; min-width: 75px;max-width: 75px;">Width ({{warehouseEntryPM.DimensionsUnitCode}})</td>
@@ -181,7 +439,6 @@
                                     <td *ngIf="IsEditMode" style="width: 135px;min-width: 135px;max-width: 135px;">{{VolumetricWeightLabel}}</td>
                                     <td style="width: 110px;min-width: 110px;max-width: 110px;">{{GrossWeightLabel}}</td>
                                     <td style="width: 140px;min-width: 140px;max-width: 140px;">Commodity #</td>
-                                    <!--<td [style.width]="IsEditMode ? '170px':'100%'" [style.min-width]="IsEditMode ? '170px':'100%'">Description Of Goods</td>-->
                                     <td style="width: 170px;min-width: 170px;max-width: 170px;">Description Of Goods</td>
                                     <td style="width: 90px;min-width: 90px;max-width: 90px;">Location</td>
                                     <td *ngIf="IsEditMode" style="width: 100px;min-width:100px;">In stock</td>
@@ -230,9 +487,7 @@
                                                                 {{item.Quantity}}
                                                             </td>
 
-                                                            <!--<td class="GridViewCell" style="width: 115px; min-width: 115px; max-width: 115px;text-align:right">
-                                                                {{item.Dimensions}}
-                                                            </td>-->
+
 
                                                             <td class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
                                                                 {{item.Length}}
@@ -268,18 +523,14 @@
                                                                 {{item.Description}}
                                                             </td>
 
-                                                            <!--<td [attr.title]="item.Description"  [style.width]="IsEditMode ? '170px':'100%'" [style.min-width]="IsEditMode ? '170px':'100%'" [style.max-width]="IsEditMode ? '170px':'100%'" class="GridViewCell" style="position: relative;">
-                                                                <div *ngIf="!IsLCLEntity&&!IsEditMode" style="width:150px;max-width:150px">{{item.Description}}</div>
-                                                                <div *ngIf="IsLCLEntity&&!IsEditMode" style="width:240px;max-width:240px">{{item.Description}}</div>
-                                                                <div *ngIf="IsEditMode" style="width:170px;max-width:170px">{{item.Description}}</div>
-                                                            </td>-->
+
 
                                                             <td [attr.title]="item.Location" class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
                                                                 {{item.Location}}
                                                             </td>
 
                                                             <td *ngIf="IsEditMode" class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;text-align:right">
-                                                             
+
 
                                                                 <div>
                                                                     <table>
@@ -294,7 +545,7 @@
 
                                                                                         <tr *ngFor="let releasesNumber of item.ReleasesNumber.split(',')" style="vertical-align:top;height:22px;">
                                                                                             <td style="width:2px;"><div></div></td>
-                                                                                       
+
                                                                                             <td style="width: 140px;max-width:140px;">
                                                                                                 <div style="width:140px;float:left" class="TextTrimming Label">
                                                                                                     {{releasesNumber}}
@@ -304,14 +555,14 @@
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td colspan="3">
-                                                                                            
+
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>
                                                                                 </CellTooltip>
                                                                             </td>
                                                                         </tr>
-                                                                        
+
                                                                     </table>
                                                                 </div>
 
@@ -358,7 +609,7 @@
                     </div>
                 </div>
             </td>
-        </tr>
+        </tr>-->
 
 
         <tr [style.height]="IsEditMode ? '120px':'80px'" *ngIf="ShowPackageSummary" class="TabSummaryRounded" style="height: 120px;">

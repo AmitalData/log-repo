@@ -209,7 +209,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //CreateReconcileFromStorno(myLedgerTransactionsWithCounters);
                     ICreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService = new CreateAutoReconcileWhileStreamingService();
                     myCreateAutoReconcileWhileStreamingService.MustInit(_AccountingContext, _JournalPM, myLedgerTransactionsWithCounters);
-                    myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming();
+                    myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming(true);
                     if (myCreateAutoReconcileWhileStreamingService.ReconciliationList != null &&
                         myCreateAutoReconcileWhileStreamingService.ReconciliationList.Count > 0)
                     {

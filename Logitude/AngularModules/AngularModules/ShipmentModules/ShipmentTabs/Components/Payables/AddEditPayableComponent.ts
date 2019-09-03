@@ -36,7 +36,7 @@ export class AddEditPayableComponent {
         this.ShipmentLevelCode = dataContext.ShipmentPM.ShipmentLevelCode;
         this.IsOrangeInfoVisible = AppTool.IsNullOrEmpty(this.EntityPM.ShipmentPayableParentId) ? false : true;
         this.SetDependencies();
-        this.BuildQueryFilters(); 
+        this.BuildQueryFilters();
         this.Clone();
     }
 
@@ -89,7 +89,6 @@ export class AddEditPayableComponent {
     }
 
     OkButtonClicked() {
-
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
@@ -112,7 +111,6 @@ export class AddEditPayableComponent {
         }
 
         // Back To Back Check
-
 
         this.ValidationErrorsList = errors;
 
@@ -173,8 +171,27 @@ export class AddEditPayableComponent {
             this.DataContext.fatherComponent.ComputeShipmentFields();
         }
 
-        this.DataContext.IsNewEntity = false;
-        this.CurrentSession.CloseCurrentWindowEmit("OK");       
+        if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNewEntity) {
+
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Editing this line will unlink it from the tariff it was generated from.");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.DataContext.TariffId = null;
+                    this.DataContext.TariffNumber = null;
+                    this.DataContext.IsNewEntity = false;
+                    this.DataContext.SetUIProperties();
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");     
+                }
+                if (confirmWindow.No) {
+                    //nothing 
+                }
+            });
+        }
+        else {
+            this.DataContext.IsNewEntity = false;
+            this.CurrentSession.CloseCurrentWindowEmit("OK");       
+        }
     }
 
     AddByContainerEntities() {
@@ -270,6 +287,7 @@ export class AddEditPayableComponent {
         this.myCloner.AddField('PrepaidCollectId');
         this.myCloner.AddField('VendorId');
         this.myCloner.AddField('Notes');
+        this.myCloner.AddField('TariffId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
     }

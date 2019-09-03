@@ -1423,7 +1423,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 ShipmentsDomainService service = new ShipmentsDomainService();
-                IQueryable<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d => d.StockType == "Champ");
+                List<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d => d.StockType == "Champ").ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
