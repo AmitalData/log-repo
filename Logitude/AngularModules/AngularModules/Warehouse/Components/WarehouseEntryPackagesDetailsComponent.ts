@@ -416,22 +416,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
             //SetDefultPackage
 
-            if (this.warehouseEntryPM.WarehouseEntryPackages.length == 0) {
-                var i = 0;
-                while (i < 5) {
-                    var warehouseEntryPackageItem = new WarehouseEntryPackagePM(null);
-                    warehouseEntryPackageItem.Tenant = SessionLocator.TenantPM.Id;
-                    warehouseEntryPackageItem.CreatedByUserId = SessionLocator.LoggedUserId;
-                    warehouseEntryPackageItem.UpdatedByUserId = SessionLocator.LoggedUserId;
-                    warehouseEntryPackageItem.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
-                    warehouseEntryPackageItem.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-                    warehouseEntryPackageItem.WarehouseEntryId = this.warehouseEntryPM.Id;
-                    warehouseEntryPackageItem.IsContainer = false;
-                    this.warehouseEntryPM.WarehouseEntryPackages.push(warehouseEntryPackageItem);
-                    i += 1;
-                }
-            }
-
+          
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
             this.warehouseEntryPM.WarehouseEntryPackages.forEach((item) => {
