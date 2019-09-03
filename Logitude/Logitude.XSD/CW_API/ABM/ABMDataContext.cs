@@ -138,7 +138,7 @@ namespace Logitude.XSD.CW_API.ABM
 
                 else
                 {
-                    this.DescriptionOfGoods += Environment.NewLine + mainHarmonizeText;
+                    this.DescriptionOfGoods += " " + mainHarmonizeText;
                 }
             }
 
@@ -167,7 +167,21 @@ namespace Logitude.XSD.CW_API.ABM
 
                 case "O":
                     {
-                        this.TransportConveyance = this.Shipment.MainCarriageCarrierNumber;
+                        this.TransportConveyance = this.Shipment.MainCarriageVesselName;
+
+                        if (!string.IsNullOrEmpty(this.Shipment.MainCarriageCarrierNumber))
+                        {
+                            if (string.IsNullOrEmpty(this.TransportConveyance))
+                            {
+                                this.TransportConveyance= this.Shipment.MainCarriageCarrierNumber;
+                            }
+
+                            else
+                            {
+                                this.TransportConveyance = this.TransportConveyance + " " + this.Shipment.MainCarriageCarrierNumber;
+                            }
+                        }
+
                         break;
                     }
 
