@@ -1092,8 +1092,8 @@ namespace WarehouseData.Helper
 
                 }
 
-                string originTableName = table.TableName == "WaterMark" && isPrivateDB ? ("Private" + table.DBTableName): table.DBTableName;
-   
+                string originTableName = table.TableName == "WaterMark" && isPrivateDB ? ("Private" + table.DBTableName) : table.DBTableName;
+
                 SqlCommand commandSourceData = new SqlCommand(
            "SELECT " + fieldName +
            " FROM dbo." + originTableName + condition + " ;", sourceConnection);
@@ -1140,9 +1140,10 @@ namespace WarehouseData.Helper
                     }
 
                 }
+
+
+
             }
-
-
         }
 
 
@@ -1601,10 +1602,6 @@ namespace WarehouseData.Helper
                         reader.Close();
                     }
                 }
-
-            }
-
-
 
         }
         
