@@ -456,8 +456,9 @@ s             b                   a
                 StartBalance = newPageOfBankAccount.MyBankAccountM.RealOpenBalance,
                 CloseBalance = newPageOfBankAccount.MyBankAccountM.RealCloseBalance,
 
-                FromDate = newBankPageLines.First().ReferenceDate,
-                ToDate = newBankPageLines.Last().ReferenceDate,
+                ///XXXXX - 
+                FromDate = newBankPageLines.OrderBy(r=>r.ReferenceDate).First().ReferenceDate,
+                ToDate = newBankPageLines.OrderBy(r => r.ReferenceDate).Last().ReferenceDate,
 
 
 
@@ -477,7 +478,8 @@ s             b                   a
                 //    }
                 //    Notes += line.Bankdetails;
                 //}
-                Notes = line.Bankdetails;
+                //Notes = line.Bankdetails ?? "";
+                Notes = line.BankdetailsReverse;//FROM PAGE BANK "DOS-862" TO WN1255 + Reverse
                 entityPM.ReconcileExternalPageLines.Add(new ReconcileExternalPageLinePM()
                 {
                     Tenant = entityPM.Tenant,
@@ -498,6 +500,8 @@ s             b                   a
             });
             return entityPM;
         }
+
+        
         private BankCodeQueryService _BankCodeQueryService;
         private BankAccountQueryService _BankAccountQueryService;
         public ResultLoadBankPage MyResultLoadBankPage = new ResultLoadBankPage();
@@ -823,6 +827,7 @@ s             b                   a
         public string DEBIT0_CREDIT1 { get; private set; }
         public decimal RealAmount { get; internal set; }
         public string Bankdetails { get; set; }
+        public string BankdetailsReverse { get; set; }
 
         public const string RowType = "033";
         public static BankPageLineDTO Create(string rawLine)
@@ -838,8 +843,8 @@ s             b                   a
             rec.Reference = rawLine.Substring(4 - 1, 16).Trim();
 
             rec.Bankactioncode = rawLine.Substring(52 - 1, 10).Trim();
-            rec.Bankdetails = rawLine.Substring(62 - 1, 25).Trim();
-
+            rec.Bankdetails = rawLine.Substring(62 - 1, 25).Trim() ?? "";
+            rec.BankdetailsReverse = Reverse(rec.Bankdetails);//FROM PAGE BANK "DOS-862" TO WN1255 + Reverse
 
             string txtDateTime = rawLine.Substring(87 - 1, 8);
             string fieldname = "ReferenceDate";
@@ -867,6 +872,17 @@ s             b                   a
 
 
             return rec;
+        }
+
+        
+        public static string Reverse(string stringToReverse)
+        {
+            char[] stringArray = stringToReverse.ToCharArray();
+            string reverse = String.Empty;
+
+            Array.Reverse(stringArray);
+
+            return new string(stringArray);
         }
     }
     class TenantPagesOfAccountDTO
