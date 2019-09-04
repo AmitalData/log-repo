@@ -388,4 +388,33 @@ namespace CommunicationWorkerRole
             }
         }
     }
+
+
+
+    /// <summary>
+    /// Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('CustomsSchedularWR','CustomsSchedularWR');
+    //  Insert into BATCHSERVICESDEFINITIONMODS(CODE, INACTIVE, NUMBEROFTHREADS) values('CustomsSchedularWR',0,1);
+    /// </summary>
+    public class CustomsSchedularWR
+    : Logitude.Server.Tools.WorkerEntryPointDoneLog
+    {
+        SchedularWorkerRole _SchedularWorkerRole;
+        public override void StartMe()
+        {
+            _SchedularWorkerRole = new SchedularWorkerRole();
+        }
+
+        bool _Start = false;
+        public override void WorkOnce()
+        {
+            if (!_Start)
+            {
+                _SchedularWorkerRole.OnStart();
+                _Start = true;
+            }
+            _SchedularWorkerRole.Run();
+
+
+        }
+    }
 }
