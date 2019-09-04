@@ -98,9 +98,9 @@ export class BusinessHoursHolidayPM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
-    private businessHour: string;
+    private businessHour: any;
     public get BusinessHour() { return this.businessHour; }
-    public set BusinessHour(newValue: string) { if (this.businessHour != newValue) { this.businessHour = newValue; this.MarkAsDirty("BusinessHour"); } }
+    public set BusinessHour(newValue: any) { if (this.businessHour != newValue) { this.businessHour = newValue; this.MarkAsDirty("BusinessHour"); } }
        
 	 
 

@@ -295,3 +295,11 @@ IF not EXISTS(SELECT 1 FROM sys.columns
 
 
 
+		  		   --ShipmentComputingPartners
+IF not EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'AutomaticLastUpdateDate'
+          AND Object_ID = Object_ID(N'ShipmentComputedFields'))
+		  Begin
+		   ALTER TABLE ShipmentComputedFields ADD  AutomaticLastUpdateDate datetime NULL DEFAULT GETDATE(); 
+		  End
+

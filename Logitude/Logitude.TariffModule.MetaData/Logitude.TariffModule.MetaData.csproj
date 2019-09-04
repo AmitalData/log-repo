@@ -82,6 +82,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\TariffSetting.lxml" />
+    <None Include="EntityFiles\TariffSurchargesUpdate.lxml" />
+    <None Include="EntityFiles\TariffSurchargesUpdateMethod.lxml" />
     <None Include="EntityFiles\TariffVersion.lxml">
       <SubType>Designer</SubType>
     </None>

@@ -96,7 +96,7 @@ export class AddEditTaskSchedulerComponent  {
         if (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") {
             this.GeneralAreaHeight = "310px";
             if (this.EntityPM.SchedulerDetailsData) {
-                //this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
+                this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
             }
             else if (this.EntityPM.Id) {
                 this.LoadSchedulerDetailsData();

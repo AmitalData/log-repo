@@ -3562,6 +3562,21 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
 
         }
+
+
+        public IDbSet<TariffSurchargesUpdate> TariffSurchargesUpdates
+        {
+            get;
+            set;
+
+        }
+
+        public IDbSet<TariffSurchargesUpdateMethod> TariffSurchargesUpdateMethods
+        {
+            get;
+            set;
+
+        }
         #endregion
 
 
@@ -4365,6 +4380,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TariffVersionMap());
             modelBuilder.Configurations.Add(new TariffSettingMap());
             modelBuilder.Configurations.Add(new TariffVersionAllInChargeMap());
+            modelBuilder.Configurations.Add(new TariffSurchargesUpdateMap());
+            modelBuilder.Configurations.Add(new TariffSurchargesUpdateMethodMap());
             #endregion
 
             #region Infrastructure Generated

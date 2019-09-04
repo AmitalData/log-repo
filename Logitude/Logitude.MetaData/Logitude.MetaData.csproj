@@ -605,6 +605,7 @@
     <None Include="EntityFiles\ShipmentsModel\ShipmentCommodity.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ShipmentsModel\ShipmentComputedFields.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentCustomerType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentCustomsMessageType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentCustomsTransmission.lxml">

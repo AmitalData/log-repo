@@ -691,10 +691,12 @@ export class TaskSchedulerItemClass extends BaseComponent {
                 if (!schedulerDetailsData.FTPDetails) {
                     schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
                     schedulerDetailsData.FTPDetails.IsSFTP = (this.EntityPM.Type == "SFTP" ? true : false);
+
                     
                 }
                 this.FTPDetails = schedulerDetailsData.FTPDetails;
 
+                this.EntityPM.SchedulerDetailsData = schedulerDetailsData;
 
             }
         }

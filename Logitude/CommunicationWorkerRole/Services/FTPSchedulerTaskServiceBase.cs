@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools.QueueService;
+﻿using CommunicationWorkerRole.Tasks;
+using Logitude.Server.Tools.QueueService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,27 @@ namespace CommunicationWorkerRole.Services
         public int DownloadedFilesCount = 0;
         public int FailedFilesCount = 0;
         ConcurrentQueueService<LogQueueMessage> QueueService;
+        public bool EnableWriteLogToFile { get; set; }
         public FTPSchedulerTaskServiceBase()
         {
             this.WarningsList = new List<string>();
             this.MessagesList = new List<string>();
 
             QueueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
+        }
+
+        TaskManagerBase currentTask;
+        public FTPSchedulerTaskServiceBase(TaskManagerBase task) : this()
+        {
+            this.currentTask = task;
+        }
+
+        private void AddLogMessageToFile(string message)
+        {
+            if(this.currentTask != null && EnableWriteLogToFile)
+            {
+                currentTask.AppendLogMessageToFile(message);
+            }
         }
 
         public void AddWarning(string warningMessage)
@@ -31,6 +47,7 @@ namespace CommunicationWorkerRole.Services
                 this.WarningsList.Add(warningMessage);
             }
 
+            this.AddLogMessageToFile(warningMessage);
             //QueueService.Enqueue(new LogQueueMessage() { })
         }
 
@@ -40,6 +57,8 @@ namespace CommunicationWorkerRole.Services
             {
                 this.MessagesList.Add(message);
             }
+
+            this.AddLogMessageToFile(message);
         }
 
         public string GetFilesDownloadingSummery()

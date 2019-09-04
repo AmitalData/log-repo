@@ -290,3 +290,13 @@ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_
          EXEC (@SQLIndustries);
  end
 
+ 
+ 
+    --ShipmentComputedFields
+ IF not EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'Trigger_AutomaticLastUpdateDateShipmentComputedFields'))
+ Begin
+ declare @SQLShipmentComputedFields  as varchar(8000)
+         SET @SQLShipmentComputedFields ='CREATE TRIGGER Trigger_AutomaticLastUpdateDateShipmentComputedFields ON ShipmentComputedFields AFTER UPDATE  AS  BEGIN UPDATE ShipmentComputedFields SET AutomaticLastUpdateDate = GETDATE() WHERE Id IN (SELECT DISTINCT Id FROM Inserted)END;'
+         EXEC (@SQLShipmentComputedFields);
+ end
+

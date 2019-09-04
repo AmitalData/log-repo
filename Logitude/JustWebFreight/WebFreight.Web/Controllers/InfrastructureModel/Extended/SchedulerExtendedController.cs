@@ -97,6 +97,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                                 entityPM.SchedulerDetailsData.FTPDetails.Extension = entityPM.SchedulerDetailsData.FTPDetails.Extension.TrimStart('.');
                             }
 
+                            entityPM.SchedulerDetailsData.Tenant = entityPM.Tenant;
+
                             System.Type type1 = typeof(FTPSchedulerDetails);
                             System.Type type2 = "string".GetType();
                             System.Type[] types = new System.Type[2];
@@ -150,6 +152,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         {
                             entityPM.SchedulerDetailsData.FTPDetails.Extension = entityPM.SchedulerDetailsData.FTPDetails.Extension.TrimStart('.');
                         }
+
+                        entityPM.SchedulerDetailsData.Tenant = entityPM.Tenant;
                         System.Type type1 = typeof(FTPSchedulerDetails);
                         System.Type type2 = "string".GetType();
                         System.Type[] types = new System.Type[2];
