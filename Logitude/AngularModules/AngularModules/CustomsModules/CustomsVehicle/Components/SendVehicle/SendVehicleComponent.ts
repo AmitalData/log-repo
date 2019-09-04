@@ -36,6 +36,10 @@ export class SendVehicleComponent {
     _VehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();ehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();
     //------------------------------------------------------//
 
+    SaveCompletedEvent: any;
+    LoadCompletedEvent: any;
+    private _CurrentSession = SessionLocator.SelectedSession;
+
     ObjectTableName = "Customs.Vehicle";
     private static CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityPMService: EntityPMService) {
@@ -45,7 +49,29 @@ export class SendVehicleComponent {
     Run(args: any) {
         this.EntityPM = args.EntityPM;
         this.ObjectTable = args.ObjectTable;
-        
+
+        this.Listen();
+    }
+
+    Listen() {
+        if (this._CurrentSession.CurrentEditComponent) {
+
+            if (!this.SaveCompletedEvent) {
+                this.SaveCompletedEvent = this._CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EntityPM = this._CurrentSession.CurrentEditComponent.EntityPM;
+                    }
+                });
+            }
+
+            if (!this.LoadCompletedEvent) {
+                this.LoadCompletedEvent = this._CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = this._CurrentSession.CurrentEditComponent.EntityPM;
+                    }
+                });
+            }
+        }
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
