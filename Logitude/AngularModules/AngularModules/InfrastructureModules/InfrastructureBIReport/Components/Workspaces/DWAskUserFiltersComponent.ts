@@ -8,26 +8,32 @@ import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
 import { DWSubQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+
 
 @Component({
     selector: 'DWAskUserFiltersComponent',
     moduleId: module.id,
     templateUrl: './DWAskUserFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand','IsFirstTime']
+    inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand', 'IsFirstTime', 'IsStaticFilter', 'IsStaticDateFilter', 'SelectedDynamicFiltersDataSource', 'SelectedFixedFiltersDataSource','ShowFixedFilters']
 })
 
-export class DWAskUserFiltersComponent implements OnInit {
+export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
 
-    SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
+    selectedFiltersDataSource: DWObjectFieldsDetails[] = [];
+    SelectedDynamicFiltersDataSource: DWObjectFieldsDetails[] = [];
+    SelectedFixedFiltersDataSource: DWObjectFieldsDetails[] = [];
     AllFieldsWithChildrenDataSource: DWObjectFieldsDetails[];
     public AndOrOps = ["And", "Or"];
     public Types = ["Fixed Filter", "Ask User"];
     public BooleanValues = ["Yes", "No", "No Value"];
-    DataContext: any;
+    DataContext: any = this;
+    //@Output() myShowFixedFilters = new EventEmitter();
     ShowRunButton: boolean = false;
     public _DWObjectTablePMService: DWObjectTablePMService;
     public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
     public RunReportCommand: EventEmitter<any>;
+    public ShowFixedFilters: EventEmitter<any>; 
     @Output() RunReportComplete = new EventEmitter();
     @Output() ComputeFiltersComplete = new EventEmitter();
     public _DWQueryBuilderService: DWQueryBuilderService;
@@ -36,10 +42,31 @@ export class DWAskUserFiltersComponent implements OnInit {
     ValidationErrorsList: any[];
     public DWQueryData: DWQueryData;
     IsDateFilter: boolean = false;
+    IsStaticDateFilter: boolean = false;
+    IsStaticFilter: boolean = false;
     IsFirstTime: boolean = false;
+    //ShowStaticFilter: boolean = true;
+
+    get SelectedFiltersDataSource() {
+        return this.selectedFiltersDataSource;
+    }
+    set SelectedFiltersDataSource(value: DWObjectFieldsDetails[]) {
+          
+        this.selectedFiltersDataSource = value;
+        this.SelectedDynamicFiltersDataSource = this.selectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
+        this.SelectedFixedFiltersDataSource = this.selectedFiltersDataSource.filter(a => a.FilterType == "Fixed Filter");
+        //if (this.ShowStaticFilters == true) {
+        //    this.SelectedFixedFiltersDataSource = this.selectedFiltersDataSource.filter(a => a.FilterType == "Fixed Filter");
+        //}
+        //else {
+        //    this.SelectedFixedFiltersDataSource = [];
+        //}
+    }
+
     public ComputeFiltersCommand: EventEmitter<any>;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    constructor(private CD: ChangeDetectorRef) {
+        super();
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
     }
@@ -49,7 +76,7 @@ export class DWAskUserFiltersComponent implements OnInit {
         this._DWObjectTablePMService = new DWObjectTablePMService();
         this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
-
+        //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == 'Ask User');
         if (this.RunReportCommand) {
             this.RunReportCommand.subscribe((QueryId) => {
                 //this.SelectedFiltersDataSource = selectedFilters;
@@ -59,6 +86,12 @@ export class DWAskUserFiltersComponent implements OnInit {
         if (this.ComputeFiltersCommand) {
             this.ComputeFiltersCommand.subscribe((QueryId) => {
                 this.ComputeFilters();
+            });
+        }
+        if (this.ShowFixedFilters) {
+            this.ShowFixedFilters.subscribe((ShowFixed) => {
+                this.ShowStaticFilters = ShowFixed;
+                //this.CD.detectChanges();
             });
         }
     }
@@ -274,6 +307,12 @@ export class DWAskUserFiltersComponent implements OnInit {
     public get Operators() { return this.GetFieldOperators(); }
     public set Operators(newValue: ObjectFieldOperator[]) {
         this.operators = newValue;
+    }
+
+    private showStaticFilters: boolean = false;
+    public get ShowStaticFilters() { return this.showStaticFilters; }
+    public set ShowStaticFilters(newValue: boolean) {
+        this.showStaticFilters = newValue;
     }
 
     OperationValueChanged(event, Item) {

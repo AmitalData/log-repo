@@ -23,11 +23,11 @@ export class DocOutSenario {
   constructor() {
 
   }
-  
-  public OpenDocOutTab(){
+
+  public OpenDocOutTab() {
     this.NewDirectShipment.DoOperations();
     this.docsOutTab.DocsOutTab();
-    this.helper.WaitBusyIndicator();
+  //  this.helper.WaitBusyIndicator();
 
   }
 
@@ -44,6 +44,7 @@ export class DocOutSenario {
 
     this.helper.WaitBusyIndicator();
     this.docsOutTab.QuickSearchDocOut('FTDT-P-DocsOut', 'FTDT-L-DocsOut', 'Failure Test Document');
+    this.helper.WaitBusyIndicator();
     this.printDocOut.isPrintingCompleted('BuildDocumentFailedDiv', false);
 
   }

@@ -355,21 +355,28 @@ s             b                   a
             {
 
 
-
-                if (prevReconcileExternalPagePM.ToDate >= newBankPageLines.First().ReferenceDate)
+                bool avoidCheckReferenceDate = true;//ohad+ eyal
+                if (avoidCheckReferenceDate)
                 {
-                    //MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  prevReconcileExternalPagePM.ToDate {prevReconcileExternalPagePM.ToDate } >= newBankPageLines.First().ReferenceDate{newBankPageLines.First().ReferenceDate}");
-                    var ACCNUMBER = $"{ newPageOfBankAccount.BankCode}-{ newPageOfBankAccount.MyBankAccountM.AccountNumber}";
-                    MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
-                        new MyDTO()
-                        {
-                            Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} - מכיל תנעות ישנות ",
-                            RawLine = newBankPageLines.First().RawLine
 
-                        });
-                    return true;
                 }
+                else
+                {
+                    if (prevReconcileExternalPagePM.ToDate >= newBankPageLines.First().ReferenceDate)
+                    {
+                        //MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  prevReconcileExternalPagePM.ToDate {prevReconcileExternalPagePM.ToDate } >= newBankPageLines.First().ReferenceDate{newBankPageLines.First().ReferenceDate}");
+                        var ACCNUMBER = $"{ newPageOfBankAccount.BankCode}-{ newPageOfBankAccount.MyBankAccountM.AccountNumber}";
+                        MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
+                            new MyDTO()
+                            {
+                                Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} - מכיל תנועות ישנות ",
+                                RawLine = newBankPageLines.First().RawLine
 
+                            });
+                        return true;
+                    }
+
+                }
 
                 if (prevReconcileExternalPagePM.CloseBalance != newPageOfBankAccount.MyBankAccountM.OpenBalance)
                 {
@@ -456,8 +463,9 @@ s             b                   a
                 StartBalance = newPageOfBankAccount.MyBankAccountM.RealOpenBalance,
                 CloseBalance = newPageOfBankAccount.MyBankAccountM.RealCloseBalance,
 
-                FromDate = newBankPageLines.First().ReferenceDate,
-                ToDate = newBankPageLines.Last().ReferenceDate,
+                ///XXXXX - 
+                FromDate = newBankPageLines.OrderBy(r=>r.ReferenceDate).First().ReferenceDate,
+                ToDate = newBankPageLines.OrderBy(r => r.ReferenceDate).Last().ReferenceDate,
 
 
 

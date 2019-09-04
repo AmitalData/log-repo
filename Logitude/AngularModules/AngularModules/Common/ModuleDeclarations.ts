@@ -1,5 +1,6 @@
 import {NewStackComponent} from './Components/Partners/AWBStock/NewStackComponent';
-import {NewCurrencyComponent} from './Components/Maintenance/Currency/NewCurrencyComponent';
+import { NewCurrencyComponent } from './Components/Maintenance/Currency/NewCurrencyComponent';
+import { TransmissionLogAuditTabComponent } from './Components/Maintenance/TransmissionLogs/TransmissionLogAuditTabComponent';
 import {NewChargesTypeComponent} from './Components/Maintenance/ChargesType/NewChargesTypeComponent';
 import {NewVatTypePercentageComponent} from './Components/Maintenance/VatType/NewVatTypePercentageComponent';
 import {CustomerHelperComponent} from './Components/Helpers/CustomerHelperComponent';
@@ -108,6 +109,7 @@ export const Components =
         CountryCityGeneralTabComponent,
         DocumentFilingEmailSettingsComponent,
         CustomsShipperFiltersMenuComponent,
+        TransmissionLogAuditTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -172,6 +174,7 @@ export class ModuleDeclarations {
             case "CountryCityGeneralTabComponent": { myResult = CountryCityGeneralTabComponent; break; }
             case "DocumentFilingEmailSettingsComponent": { myResult = DocumentFilingEmailSettingsComponent; break; }
             case "CustomsShipperFiltersMenuComponent": { myResult = CustomsShipperFiltersMenuComponent; break; }
+            case "TransmissionLogAuditTabComponent": { myResult = TransmissionLogAuditTabComponent; break; }
 
                 
         }

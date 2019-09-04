@@ -172,6 +172,32 @@
                             </log-cell-template>
                         </log-column>
 
+
+
+
+                        <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                    <span>{{item.CurrencyCode}}</span>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogLov [ObjectFieldName]="'CurrencyId'"
+                                            [ObjectTableName]="'TarifflLine'"
+                                            [SelectedValue]="item.CurrencyId"
+                                            [DataContext]="item"
+                                            [HideMaintenanceIcon]="true"
+                                            [FocusOnMe]="true"
+                                            [HideColumns]="true"
+                                            [DisplayMemberPath]="'Code'"
+                                            (SelectedItemChanged)="item.Currency = $event"
+                                            [LookUpTableName]="'Currency'">
+                                    </LogLov>
+
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
                         <!-- StartDate -->
                         <log-column [header]="'TariffLine.F.StartDate' | TextCodeTranslationPipe" [width]="'120'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
@@ -181,6 +207,26 @@
 
                                 <div *ngIf="logcelltemplate.IsEditMode">
                                     <LogDatePicker [FocusOnMe]="true" [ObjectFieldName]="'StartDate'" [SelectedDateValue]="item.StartDate" [ObjectTableName]="'TarifflLine'" [DataContext]="item"></LogDatePicker>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- Surcharge1MinPrice -->
+                        <log-column *ngIf="Surcharge1PriceVisibility" [Alignment]="'center'" [header]="Surcharge1MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge1MinPriceEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;">
+                                                <span>{{item.Surcharge1MinPriceValue}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge1MinPrice'" [InputType]="'double'" [DataContext]="item"
+                                                [Text]="item.Surcharge1MinPrice" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
                                 </div>
                             </log-cell-template>
                         </log-column>
@@ -213,6 +259,26 @@
                             </log-cell-template>
                         </log-column>
 
+                        <!-- Surcharge2MinPrice -->
+                        <log-column *ngIf="Surcharge2PriceVisibility" [Alignment]="'center'" [header]="Surcharge2MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge2MinPriceEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;">
+                                                <span>{{item.Surcharge2MinPriceValue}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge2MinPrice'" [InputType]="'double'" [DataContext]="item"
+                                                [Text]="item.Surcharge2MinPrice" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
                         <!-- Surcharge2Price -->
                         <log-column *ngIf="Surcharge2PriceVisibility" [Alignment]="'center'" [header]="Surcharge2PriceLabel" [width]="'120'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
@@ -236,6 +302,26 @@
                                 <div *ngIf="logcelltemplate.IsEditMode">
                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge2Price'" [InputType]="'double'" [DataContext]="item"
                                                 [Text]="item.Surcharge2Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- Surcharge3MinPrice -->
+                        <log-column *ngIf="Surcharge3PriceVisibility" [Alignment]="'center'" [header]="Surcharge3MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge3MinPriceEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;">
+                                                <span>{{item.Surcharge3MinPriceValue}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge3MinPrice'" [InputType]="'double'" [DataContext]="item"
+                                                [Text]="item.Surcharge3MinPrice" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
                                 </div>
                             </log-cell-template>
                         </log-column>
@@ -267,6 +353,26 @@
                             </log-cell-template>
                         </log-column>
 
+                        <!-- Surcharge4MinPrice -->
+                        <log-column *ngIf="Surcharge4PriceVisibility" [Alignment]="'center'" [header]="Surcharge4MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge4MinPriceEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;">
+                                                <span>{{item.Surcharge4MinPriceValue}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge4MinPrice'" [InputType]="'double'" [DataContext]="item"
+                                                [Text]="item.Surcharge4MinPrice" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
                         <!-- Surcharge4Price -->
                         <log-column *ngIf="Surcharge4PriceVisibility" [Alignment]="'center'" [header]="Surcharge4PriceLabel" [width]="'120'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
@@ -290,6 +396,26 @@
                                 <div *ngIf="logcelltemplate.IsEditMode">
                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge4Price'" [InputType]="'double'" [DataContext]="item"
                                                 [Text]="item.Surcharge4Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- Surcharge5MinPrice -->
+                        <log-column *ngIf="Surcharge5PriceVisibility" [Alignment]="'center'" [header]="Surcharge5MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge5MinPriceEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;">
+                                                <span>{{item.Surcharge5MinPriceValue}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge5MinPrice'" [InputType]="'double'" [DataContext]="item"
+                                                [Text]="item.Surcharge5MinPrice" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
                                 </div>
                             </log-cell-template>
                         </log-column>
@@ -321,6 +447,26 @@
                             </log-cell-template>
                         </log-column>
 
+                        <!-- Surcharge6MinPrice -->
+                        <log-column *ngIf="Surcharge6PriceVisibility" [Alignment]="'center'" [header]="Surcharge6MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge6MinPriceEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;">
+                                                <span>{{item.Surcharge6MinPriceValue}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge6MinPrice'" [InputType]="'double'" [DataContext]="item"
+                                                [Text]="item.Surcharge6MinPrice" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
                         <!-- Surcharge6Price -->
                         <log-column *ngIf="Surcharge6PriceVisibility" [Alignment]="'center'" [header]="Surcharge6PriceLabel" [width]="'120'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
@@ -344,6 +490,26 @@
                                 <div *ngIf="logcelltemplate.IsEditMode">
                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge6Price'" [InputType]="'double'" [DataContext]="item"
                                                 [Text]="item.Surcharge6Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- Surcharge7MinPrice -->
+                        <log-column *ngIf="Surcharge7PriceVisibility" [Alignment]="'center'" [header]="Surcharge7MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge7MinPriceEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;">
+                                                <span>{{item.Surcharge7MinPriceValue}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge7MinPrice'" [InputType]="'double'" [DataContext]="item"
+                                                [Text]="item.Surcharge7MinPrice" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
                                 </div>
                             </log-cell-template>
                         </log-column>
@@ -375,6 +541,26 @@
                             </log-cell-template>
                         </log-column>
 
+                        <!-- Surcharge8MinPrice -->
+                        <log-column *ngIf="Surcharge8PriceVisibility" [Alignment]="'center'" [header]="Surcharge8MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge8MinPriceEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;">
+                                                <span>{{item.Surcharge8MinPriceValue}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge8MinPrice'" [InputType]="'double'" [DataContext]="item"
+                                                [Text]="item.Surcharge8MinPrice" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
                         <!-- Surcharge8Price -->
                         <log-column *ngIf="Surcharge8PriceVisibility" [Alignment]="'center'" [header]="Surcharge8PriceLabel" [width]="'120'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
@@ -402,6 +588,26 @@
                             </log-cell-template>
                         </log-column>
 
+                        <!-- Surcharge9MinPrice -->
+                        <log-column *ngIf="Surcharge9PriceVisibility" [Alignment]="'center'" [header]="Surcharge9MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge9MinPriceEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;">
+                                                <span>{{item.Surcharge9MinPriceValue}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge9MinPrice'" [InputType]="'double'" [DataContext]="item"
+                                                [Text]="item.Surcharge9MinPrice" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
                         <!-- Surcharge9Price -->
                         <log-column *ngIf="Surcharge9PriceVisibility" [Alignment]="'center'" [header]="Surcharge9PriceLabel" [width]="'120'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
@@ -425,6 +631,26 @@
                                 <div *ngIf="logcelltemplate.IsEditMode">
                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge9Price'" [InputType]="'double'" [DataContext]="item"
                                                 [Text]="item.Surcharge9Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+                        <!-- Surcharge10MinPrice -->
+                        <log-column *ngIf="Surcharge10PriceVisibility" [Alignment]="'center'" [header]="Surcharge10MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge10MinPriceEditEnabled">
+                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;">
+                                                <span>{{item.Surcharge10MinPriceValue}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge10MinPrice'" [InputType]="'double'" [DataContext]="item"
+                                                [Text]="item.Surcharge10MinPrice" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
                                 </div>
                             </log-cell-template>
                         </log-column>
@@ -508,7 +734,7 @@
                                     <div class="SimpleGridViewHeader">
                                         <table>
                                             <tr>
-                                                <td colspan="12">
+                                                <td colspan="25">
                                                     <div> Deleted Lines</div>
                                                 </td>
                                             </tr>
@@ -534,34 +760,67 @@
                                                     </div>
                                                 </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: left;">
+                                                    {{item.CurrencyCode }}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 120px; text-align: left;">
                                                     {{item.StartDate | DateTimePipe:'SD'}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                    {{item.Surcharge1MinPriceValue}}
                                                 </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Surcharge1PriceValue}}
                                                 </td>
+                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                    {{item.Surcharge2MinPriceValue}}
+                                                </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Surcharge2PriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                    {{item.Surcharge3MinPriceValue}}
                                                 </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Surcharge3PriceValue}}
                                                 </td>
+                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                    {{item.Surcharge4MinPriceValue}}
+                                                </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Surcharge4PriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                    {{item.Surcharge5MinPriceValue}}
                                                 </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Surcharge5PriceValue}}
                                                 </td>
+                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                    {{item.Surcharge6MinPriceValue}}
+                                                </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Surcharge6PriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                    {{item.Surcharge7MinPriceValue}}
                                                 </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Surcharge7PriceValue}}
                                                 </td>
+                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                    {{item.Surcharge8MinPriceValue}}
+                                                </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Surcharge8PriceValue}}
                                                 </td>
+                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                    {{item.Surcharge9MinPriceValue}}
+                                                </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Surcharge9PriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                    {{item.Surcharge10MinPriceValue}}
                                                 </td>
                                                 <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Surcharge10PriceValue}}

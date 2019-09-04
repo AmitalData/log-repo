@@ -1963,7 +1963,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LogitudeMessagesTransmissionLogGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, TabNameTextCodeId = LogitudeMessagesTransmissionLogGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LogitudeMessagesTransmissionLogAuditFeature_TH1.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TransmissionLog.TransmissionLogAuditTabControl", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, TabNameTextCodeId = LogitudeMessagesTransmissionLogAuditTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTAD",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/Maintenance/TransmissionLogs/TransmissionLogAuditTabComponent", FeatureId = LogitudeMessagesTransmissionLogAuditFeature_TH1.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TransmissionLog.TransmissionLogAuditTabControl", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, TabNameTextCodeId = LogitudeMessagesTransmissionLogAuditTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

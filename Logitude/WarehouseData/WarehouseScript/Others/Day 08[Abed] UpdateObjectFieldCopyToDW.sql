@@ -4,7 +4,7 @@
 
 
 
-update  ObjectFields set CopyToDW = 0 where ObjectTableId = (select id from ObjectTables where Name = 'Card')
+update  ObjectFields set CopyToDW = 0 
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'DWHSetting') and (FieldName = 'Tenant' or FieldName = 'ParentTenant')
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Direction') and (FieldName = 'Id' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'TransportMode')and (FieldName = 'Id' or FieldName = 'Name'  )
