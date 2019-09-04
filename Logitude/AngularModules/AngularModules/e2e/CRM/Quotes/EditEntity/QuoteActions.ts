@@ -46,13 +46,18 @@ export class QuoteActions {
 
         }
         else {
-            this.Helper.WaitByIdAndFill('Quote_FromAddressCity_1', 'Ramallah');
-            this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId_1', 'State Of Palestine');
-            this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+             var includePickup = element(by.id('Quote_CopyPickUpIsChecked'));
+        browser.executeScript("arguments[0].click();", includePickup.getWebElement());
 
-            this.Helper.WaitByIdAndFill('Quote_ToAddressCity_1', 'Ramallah');
-            this.Helper.WaitByIdAndFill('Quote_ToAddressCountryId_1', 'State Of Palestine');
-            this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        var includeDelivery = element(by.id('Quote_CopyDeliveryIsChecked'));
+        browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
+            // this.Helper.WaitByIdAndFill('textboxdiv_Quote_FromAddressCity_1', 'Ramallah');
+            // this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId_1', 'State Of Palestine');
+            // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+            // this.Helper.WaitByIdAndFill('Quote_ToAddressCity_1', 'Ramallah');
+            // this.Helper.WaitByIdAndFill('Quote_ToAddressCountryId_1', 'State Of Palestine');
+            // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         }
         this.Helper.WaitByIdAndClick('CreateQuote');
     }
@@ -69,10 +74,10 @@ export class QuoteActions {
             this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
             this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
         } else {
-            var EC = protractor.ExpectedConditions;
-            browser.wait(EC.visibilityOf(element(by.id('Quote.B.BuildShipment_1'))), 100000).then(a => {
-                console.log('no build shipments inside routing rate ...');
-            });
+            // var EC = protractor.ExpectedConditions;
+            // browser.wait(EC.visibilityOf(element(by.id('Quote.B.BuildShipment_1'))), 100000).then(a => {
+            //     console.log('no build shipments inside routing rate ...');
+            // });
         }
     }
     QuoteAccepted() {
