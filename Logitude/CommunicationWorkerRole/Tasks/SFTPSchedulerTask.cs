@@ -33,7 +33,12 @@ namespace CommunicationWorkerRole.Tasks
 
                 SchedulerDetails schedulerDetails = LogitudeXmlSerializer.DeserializeObject<SchedulerDetails>(ftpTask.SchedulerDetailsXML);
                 schedulerDetails.Tenant = ftpTask.Tenant;
-                SFTPSchedulerTaskService fTPSchedulerTaskService = new SFTPSchedulerTaskService();
+                SFTPSchedulerTaskService fTPSchedulerTaskService = new SFTPSchedulerTaskService(this);
+                if(ftpTask.Description == "test log to file")
+                {
+                    fTPSchedulerTaskService.EnableWriteLogToFile = true;
+                }
+               
                 fTPSchedulerTaskService.ReadSFTPFilesBySchedulerDetailsToAnalyzeQueue(schedulerDetails);
 
                 foreach(var warning in fTPSchedulerTaskService.WarningsList)

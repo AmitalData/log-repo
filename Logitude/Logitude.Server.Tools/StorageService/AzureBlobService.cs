@@ -20,18 +20,60 @@ namespace Logitude.Server.Tools.StorageService
 
         public byte[] Read(BlobFileInfo fileInfo)
         {
-            BlobServiceReference.Response response = new BlobServiceReference.Response();
-
             //tenant1/docsout/1-379.pdf
             //string containername = filepath.Split('/')[0];
             //string localPath = filepath.Replace(containername + "/", "");
-
             byte[] result = null;
+            if (fileInfo.FolderName != "SchedularLogs")
+            {
+                CloudBlob blobfile = GetCloudBlockBlob(fileInfo);
+
+                result = DownloadCloudBlob(blobfile);
+                if (fileInfo.FolderName != "logos" && !fileInfo.IsDecrypted)
+                {
+                    DocumentRepository documentRepository = new DocumentRepository(fileInfo.Tenant);
+                    Document document = documentRepository.GetSingleDocument(fileInfo.Tenant, fileInfo.FileName);
+                    if (document != null && document.IsEncrypted)
+                    {
+                        AesFunction aesFunction = new AesFunction();
+                        result = aesFunction.DecryptData(result, fileInfo.Tenant);
+                    }
+                }
+            }
+            else
+            {
+                CloudBlob blobfile = GetCloudAppendBlob(fileInfo);
+                result = DownloadCloudBlob(blobfile);
+            }
+
+            return result;
+        }
+
+        private byte[] DownloadCloudBlob(CloudBlob blobfile)
+        {
+            byte[] result = null;
+            if (blobfile.Exists())
+            {
+                using (MemoryStream memstream = new MemoryStream())
+                {
+                    blobfile.DownloadToStream(memstream);
+                    result = memstream.ToArray();
+                }
+            }
+
+            return result;
+        }
+
+        private CloudBlob GetCloudBlockBlob(BlobFileInfo fileInfo)
+        {
             string localPath = null;
             CloudBlobContainer blobContainer = null;
             GetFileBlobContainerInfo(fileInfo, out localPath, out blobContainer);
 
-            var blobfile = blobContainer.GetBlockBlobReference(localPath);
+
+            //blobfile = blobContainer.GetAppendBlobReference(localPath);
+            CloudBlob blobfile = blobContainer.GetBlockBlobReference(localPath);
+
             if (!blobfile.Exists())
             {
                 if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) && IsEnableAzureRootFolder(fileInfo.Tenant))
@@ -47,32 +89,62 @@ namespace Logitude.Server.Tools.StorageService
                     blobfile = blobContainer.GetBlockBlobReference(localPath.ToLower());
             }
 
-            if (blobfile.Exists())
-            {
-                using (MemoryStream memstream = new MemoryStream())
-                {
-                    blobfile.DownloadToStream(memstream);
-                    result = memstream.ToArray();
-                }
-            }
-            //else
-            // throw new Exception("File not found");
-
-
-            if (fileInfo.FolderName != "logos" && !fileInfo.IsDecrypted)
-            {
-                DocumentRepository documentRepository = new DocumentRepository(fileInfo.Tenant);
-                Document document = documentRepository.GetSingleDocument(fileInfo.Tenant, fileInfo.FileName);
-                if (document != null && document.IsEncrypted)
-                {
-                    AesFunction aesFunction = new AesFunction();
-                    result = aesFunction.DecryptData(result, fileInfo.Tenant);
-                }
-            }
-
-
-            return result;
+            return blobfile;
         }
+
+        private CloudBlob GetCloudAppendBlob(BlobFileInfo fileInfo)
+        {
+            string localPath = null;
+            CloudBlobContainer blobContainer = null;
+            GetFileBlobContainerInfo(fileInfo, out localPath, out blobContainer);
+            CloudBlob blobfile = blobContainer.GetAppendBlobReference(localPath);
+
+            if (!blobfile.Exists())
+            {
+                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) && IsEnableAzureRootFolder(fileInfo.Tenant))
+                {
+                    GetFileBlobContainerWithoutAzureFolder(fileInfo, out localPath, out blobContainer);
+                    blobfile = blobContainer.GetAppendBlobReference(localPath);
+                    if (!blobfile.Exists())
+                    {
+                        blobfile = blobContainer.GetAppendBlobReference(localPath.ToLower());
+                    }
+                }
+                else
+                    blobfile = blobContainer.GetAppendBlobReference(localPath.ToLower());
+            }
+
+            return blobfile;
+        }
+
+
+        //private static CloudBlob GetCloudBlob(string localPath, CloudBlobContainer blobContainer)
+        //{
+        //    CloudBlob blobfile = blobContainer.GetBlockBlobReference(localPath);
+        //    switch (blobfile.BlobType)
+        //    {
+        //        case BlobType.AppendBlob:
+        //            blobfile = blobContainer.GetAppendBlobReference(localPath);
+        //            break;
+
+        //        case BlobType.BlockBlob:
+        //            blobfile = blobContainer.GetBlockBlobReference(localPath);
+        //            break;
+
+        //        case BlobType.PageBlob:
+        //            blobfile = blobContainer.GetPageBlobReference(localPath);
+        //            break;
+
+        //        default:
+        //            blobfile = blobContainer.GetBlockBlobReference(localPath);
+        //            break;
+        //            //    throw new Exception(string.Format("Unexpected blob type: {0}.", blobType));
+        //    }
+
+        //    return blobfile;
+
+          
+        //}
 
         private  void GetFileBlobContainerWithoutAzureFolder(BlobFileInfo fileInfo, out string localPath, out CloudBlobContainer blobContainer)
         {
@@ -289,8 +361,30 @@ namespace Logitude.Server.Tools.StorageService
                 blobfile.CreateOrReplace();
             }
 
-         
             blobfile.AppendText(text);
+
+            //var blobfile = blobContainer.GetBlockBlobReference(localPath);
+            //var data = Encoding.UTF8.GetBytes(text);
+            //using (Stream blobstream = blobfile.OpenWrite())
+            //{
+            //    if (fileInfo.FolderName != "logos")
+            //    {
+            //        DocumentRepository documentRepository = new DocumentRepository(fileInfo.Tenant);
+            //        Document document = documentRepository.GetSingleDocument(fileInfo.Tenant, fileInfo.FileName);
+            //        if ((document != null && document.IsEncrypted) || fileInfo.IsEncrypted)
+            //        {
+            //            AesFunction aesFunction = new AesFunction();
+            //            data = aesFunction.EncryptData(data, fileInfo.Tenant, fileInfo.AesKey);
+            //        }
+
+            //    }
+
+            //    blobstream.Write(data, 0, (int)data.Length);
+
+            //}
+
+
+            //
 
           
         }

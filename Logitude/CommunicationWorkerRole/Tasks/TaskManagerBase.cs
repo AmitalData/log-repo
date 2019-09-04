@@ -30,6 +30,8 @@ namespace CommunicationWorkerRole.Tasks
         string TaskId;
         string TaskHistoryId;
         int Tenant;
+        TaskSchedulerHistoryPM TaskSchedulerHistory;
+        ConcurrentQueueService<LogQueueMessage> queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
         public TaskManagerBase(string Id, int tenant)
         {
             TaskId = Id;
@@ -37,6 +39,14 @@ namespace CommunicationWorkerRole.Tasks
             this.Infos = new StringBuilder();
             this.Warnings = new StringBuilder();
             this.Exceptions = new StringBuilder();
+        }
+
+        public void AppendLogMessageToFile(string message)
+        {
+            if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(TaskSchedulerHistory.LogDocumentId))
+            {
+                queueService.Enqueue(new LogQueueMessage() { FileName = TaskSchedulerHistory.LogDocumentId, FileExtension = "txt", FolderName = "taskmanagerlogs", Message = message, Tenant = Task.Tenant });
+            }
         }
         public void Run()
         {
@@ -48,7 +58,7 @@ namespace CommunicationWorkerRole.Tasks
                     IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
                     TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
 
-                    TaskSchedulerHistoryPM TaskSchedulerHistory = new TaskSchedulerHistoryPM() { Tenant = Tenant, TaskId = TaskId };
+                    TaskSchedulerHistory = new TaskSchedulerHistoryPM() { Tenant = Tenant, TaskId = TaskId };
                     TaskSchedulerHistoryService.Create(TaskSchedulerHistory);
                     TaskHistoryId = TaskSchedulerHistory.Id;
                     scope.Complete();
