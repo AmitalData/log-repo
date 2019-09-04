@@ -113,9 +113,9 @@ export class InboundEmailLinePM {
     public set EntityLineId(newValue: string) { if (this.entityLineId != newValue) { this.entityLineId = newValue; this.MarkAsDirty("EntityLineId"); } }
        
 	 
-    private inboundEmail: string;
+    private inboundEmail: any;
     public get InboundEmail() { return this.inboundEmail; }
-    public set InboundEmail(newValue: string) { if (this.inboundEmail != newValue) { this.inboundEmail = newValue; this.MarkAsDirty("InboundEmail"); } }
+    public set InboundEmail(newValue: any) { if (this.inboundEmail != newValue) { this.inboundEmail = newValue; this.MarkAsDirty("InboundEmail"); } }
        
 	 
 

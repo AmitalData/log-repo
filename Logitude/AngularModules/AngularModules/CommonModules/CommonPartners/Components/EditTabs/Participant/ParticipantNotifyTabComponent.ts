@@ -11,6 +11,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
     selector: 'ParticipantNotifyTabComponent',
     moduleId: module.id,
     templateUrl: './ParticipantNotifyTabComponent.html',
+
 })
 
 export class ParticipantNotifyTabComponent extends BaseComponent {
@@ -45,7 +46,7 @@ export class ParticipantNotifyTabComponent extends BaseComponent {
                     if (!AppTool.IsNullOrEmpty(s) && s !="cancel") {
                         var service: ContactPMService = new ContactPMService();
                         service.get(s).subscribe(p => {
-                            var email = p.Result.Email;
+                            var email = p.Result.EnglishName;
                             if (code == "FWB")
                                 this.FWBNotifyContacts = this.FWBNotifyContacts + ";" + email;
                             else if (code == "FHL")
