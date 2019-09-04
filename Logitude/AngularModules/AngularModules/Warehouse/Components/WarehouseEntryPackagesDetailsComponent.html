@@ -184,8 +184,38 @@
 
                         </log-column>
 
+
+
+                        <!-- Container# -->
+                        <log-column *ngIf="!IsLCLEntity" [width]="'120'" [header]="'Container Number'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
+
+                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.ContainerNumber">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 15px;" *ngIf="item.ContainerNumberWarning">
+                                                <img [attr.title]="item.ContainerNumberWarning" src="./Images/WarningIcon.png" style="vertical-align: middle; display: block; margin:auto;" />
+                                            </td>
+
+                                            <td style="width: 5px;" *ngIf="item.ContainerNumberWarning">
+                                                <div></div>
+                                            </td>
+
+                                            <td>{{item.ContainerNumber}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'"  (LostFocus)="item.ContainerNumberLostFocus($event)" [ObjectFieldName]="'ContainerNumber'" [Text]="item.ContainerNumber" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+
+
                         <!-- Container Number -->
-                        <log-column  *ngIf="!IsLCLEntity" [width]="'120'" [header]="'Container Number'">
+                        <!--<log-column  *ngIf="!IsLCLEntity" [width]="'120'" [header]="'Container Number'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'left'">
 
                                 <div>
@@ -206,7 +236,7 @@
 
 
                             </log-cell-template>
-                        </log-column>
+                        </log-column>-->
 
 
             <!-- Quantity -->
@@ -346,13 +376,13 @@
                                         <tr>
                                             <td>{{item.Instock}}</td>
                                             <td style="width:5px"><div style="width:5px"></div></td>
-                                            <td style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
+                                            <td style="width:25px;height:15px; padding-right:2px;vertical-align:middle;">
                                                 <CellTooltip *ngIf="item.ReleasesNumber" [IconWidth]="20" [IconHeight]="15" [IconPath]="'./Images/Help.png'" [Head]="'Instock'">
                                                     <table>
 
-                                                        <tr style="height:20px"><td style="width:2px;"><div></div></td><td><div class="Label">Related Releases:</div></td><td style="width:2px;"><div></div></td></tr>
+                                                        <tr style="height:15px"><td style="width:2px;"><div></div></td><td><div class="Label">Related Releases:</div></td><td style="width:2px;"><div></div></td></tr>
 
-                                                        <tr *ngFor="let releasesNumber of item.ReleasesNumber.split(',')" style="vertical-align:top;height:22px;">
+                                                        <tr *ngFor="let releasesNumber of item.ReleasesNumber.split(',')" style="vertical-align:top;height:15px;">
                                                             <td style="width:2px;"><div></div></td>
 
                                                             <td style="width: 140px;max-width:140px;">
