@@ -56,6 +56,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                SecurityUtility.CheckContactFeature("ShipmentComputedFields", "READ", authToken.Tenant);
                 ShipmentComputedFieldsQuery shipmentComputedFieldsQuery = new ShipmentComputedFieldsQuery(authToken.Tenant);
                 ShipmentComputedFieldsPM shipmentComputedFieldsPM = shipmentComputedFieldsQuery.GetSinglePM(id);
                 

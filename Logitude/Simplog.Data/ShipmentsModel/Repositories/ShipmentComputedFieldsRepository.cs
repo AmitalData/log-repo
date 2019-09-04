@@ -34,6 +34,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return context.ShipmentComputedFields.Where(s => s.Tenant == tenant);
         }
+        public IQueryable<ShipmentComputedFields> GetShipmentComputedFields()
+        {
+            return context.ShipmentComputedFields;
+        }
 
         public ShipmentComputedFields GetSingleShipmentComputedFields(string Id,int tenant)
         {
