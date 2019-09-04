@@ -44,6 +44,7 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("SendWEBAPIMessage2MamanWR");
             _CBWorkerRole.Items.Add("FTPToAnalyzeQueueWR");
             _CBWorkerRole.Items.Add("CustomsAnalyzeQueueWR");
+            _CBWorkerRole.Items.Add("SchedularWorkerRole");
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
@@ -498,6 +499,11 @@ namespace AmitalCustomsWindowsService.Tester
         {
             switch (_CBWorkerRole.Text)
             {
+                case "SchedularWorkerRole":
+                    {
+                        MessageBox.Show("Test:SchedularWorkerRole");
+                    }
+                    break;
                 case "CustomsAnalyzeQueueWR":
                     {
                         var customsAnalyzeQueueWR = new CustomsAnalyzeQueueWR();
