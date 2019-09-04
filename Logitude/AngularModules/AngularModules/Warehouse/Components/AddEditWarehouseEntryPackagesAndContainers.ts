@@ -672,7 +672,8 @@ export class WarehouseEntryPackageItem extends BaseComponent {
             this.EntityPM.IsDirty = value;
         }
     }
-    
+
+    get IsDisabled() { return this.EntityPM.Quantity != this.EntityPM.Instock ? true:false }
     
 
 }

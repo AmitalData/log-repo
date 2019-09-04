@@ -211,7 +211,7 @@
 
             <!-- Quantity -->
             <log-column [width]="'80'" [header]="'Quantity'">
-                <log-cell-template template="let item" #logcelltemplate  [IsEnabled]="item.IsQuantityEnabled"> 
+                <log-cell-template template="let item" #logcelltemplate  [IsEnabled]="item.IsQuantityEnabled && !item.IsDisabled"> 
 
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Quantity}}
@@ -226,7 +226,7 @@
 
             <!--Length-->
             <log-column [width]="'85'" [header]="LengthLabel" >
-                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer && !item.IsDisabled">
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Length}}
                     </div>
@@ -240,7 +240,7 @@
 
               <!--Width-->
             <log-column [width]="'80'" [header]="WidthLabel" >
-                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer && !item.IsDisabled">
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Width}}
                     </div>
@@ -254,7 +254,7 @@
 
              <!--Height-->
             <log-column [width]="'85'" [header]="HeightLabel">
-                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer && !item.IsDisabled">
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Height}}
                     </div>
@@ -268,7 +268,7 @@
 
             <!-- Volume -->
             <log-column [width]="'95'" [header]="VolumeLabel">
-                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsVolumeEnabled">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsVolumeEnabled && !item.IsDisabled">
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Volume | NumbersPipe:'N3'}}
                     </div>
@@ -288,7 +288,7 @@
 
             <!-- Gross Weight -->
             <log-column  [width]="'120'" [header]="GrossWeightLabel">
-                <log-cell-template  template="let item" #logcelltemplate [IsEnabled]="item.IsGrossWeightEnabled">
+                <log-cell-template  template="let item" #logcelltemplate [IsEnabled]="item.IsGrossWeightEnabled && !item.IsDisabled">
 
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Weight | NumbersPipe:'N3'}}
@@ -302,14 +302,14 @@
 
             <!-- Commodity No-->
             <log-column [width]="'100'" [header]="'Commodity #'">
-                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
                     {{item.CommodityNumber}}
                 </log-cell-template>
             </log-column>
 
                         <!--Description-->
                         <log-column [width]="'170'" [header]="'Description Of Goods'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
 
                                 <div [attr.title]="item.Description" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;">
                                     {{item.Description}}
@@ -324,7 +324,7 @@
 
                         <!--Location-->
                         <log-column [width]="'90'" [header]="'Location'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
 
                                 <div [attr.title]="item.Location" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;">
                                     {{item.Location}}
@@ -387,11 +387,11 @@
                                         <table>
                                             <tr>
                                                 <td style="width: 23px; padding-left: 5px;">
-                                                    <IconButton [disabled]="item.Quantity != item.Instock" [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left;" (click)="EditPackage(item)"></IconButton>
+                                                    <IconButton [disabled]="item.IsDisabled" [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left;" (click)="EditPackage(item)"></IconButton>
                                                 </td>
 
                                                 <td style="width: 20px; padding-left: 2px;">
-                                                    <IconButton [disabled]="item.Quantity != item.Instock" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left;" (click)="DeletePackage(item)"></IconButton>
+                                                    <IconButton [disabled]="item.IsDisabled" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left;" (click)="DeletePackage(item)"></IconButton>
                                                 </td>
 
                                                 <td>
