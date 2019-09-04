@@ -181,7 +181,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 PayToName = VendorGLAccount != null ? (VendorGLAccount.LocalName != null ? VendorGLAccount.LocalName : VendorGLAccount.EnglishName) : null,
                 BankAccountId = entityPM.BankAccountId,
                 BankAccountGLAccountId = GetTransferAccountIdByBankAccountId(entityPM),
-                LocalAmount = (decimal?)entityPM.AmountInLocalCurrency,
+                LocalAmount = (decimal?)entityPM.AmountInLocalCurrency- entityPM.TaxDeductionLocalAmount,
                 CurrencyId = entityPM.PaymentCurrencyId,
                 ExchangeRate = (decimal?)entityPM.PaymentCurrencyExchangeRate,
                 ForeignAmount = (decimal?)entityPM.AmountInPaymentCurrency,
@@ -198,7 +198,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             PaymentChequeLinePM paymentChequeLine = new PaymentChequeLinePM()
             {
                 Notes = entityPM.PaymentNo,
-                Amount = (decimal?)entityPM.AmountInLocalCurrency,
+                Amount = (decimal?)entityPM.AmountInLocalCurrency - entityPM.TaxDeductionLocalAmount,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 Line = 1,
                 Tenant = entityPM.Tenant
