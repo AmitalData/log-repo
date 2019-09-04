@@ -31,7 +31,8 @@ namespace WebFreight.Web
                     }
                 }
             }
-            if (enableHttps)
+
+            if (enableHttps && LogitudeSettings.ForceHttps)
             {
                 SecurityUtility.RedirectToHttps();
             }
