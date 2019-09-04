@@ -15,37 +15,35 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityLists;
 
 namespace Logitude.TariffModule.Data.EntityListQueryServices
-{ 
+{
 
     public partial class TariffSurchargesUpdateMethodListQueryService
     {
-	    private IQueryable<TariffSurchargesUpdateMethodList> GetIqueryableList(IQueryable<TariffSurchargesUpdateMethod> iQueryable)
+        private IQueryable<TariffSurchargesUpdateMethodList> GetIqueryableList(IQueryable<TariffSurchargesUpdateMethod> iQueryable)
         {
-		IQueryable<TariffSurchargesUpdateMethodList> query = (from a in iQueryable
-                                            select new TariffSurchargesUpdateMethodList()
-											{
-                     
-					                          Code = a.Code,
-					
-					                          Name = a.Name,
-					
-					                          SearchFields = a.SearchFields,
-					
-		                    	            });
+            IQueryable<TariffSurchargesUpdateMethodList> query = (from a in iQueryable
+                                                                  select new TariffSurchargesUpdateMethodList()
+                                                                  {
+
+                                                                      Code = a.Code,
+
+                                                                      Name = a.Name,
+
+                                                                      SearchFields = a.SearchFields,
+
+                                                                  });
             return query;
-		}
+        }
 
-		private IQueryable<TariffSurchargesUpdateMethod> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TariffSurchargesUpdateMethod> iQueryable)
+        private IQueryable<TariffSurchargesUpdateMethod> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<TariffSurchargesUpdateMethod> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<TariffSurchargesUpdateMethod> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<TariffSurchargesUpdateMethod> iQueryable)
+            return iQueryable;
+        }
+        private IQueryable<TariffSurchargesUpdateMethod> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<TariffSurchargesUpdateMethod> iQueryable)
         {
-			return iQueryable;
-		}
-		
-			}
+            return iQueryable;
+        }
 
-
+    }
 }
 	

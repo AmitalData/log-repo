@@ -15,38 +15,38 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityLists;
 
 namespace Logitude.TariffModule.Data.EntityListQueryServices
-{ 
+{
 
     public partial class TariffSurchargesUpdateListQueryService
     {
-	    private IQueryable<TariffSurchargesUpdateList> GetIqueryableList(IQueryable<TariffSurchargesUpdate> iQueryable)
+        private IQueryable<TariffSurchargesUpdateList> GetIqueryableList(IQueryable<TariffSurchargesUpdate> iQueryable)
         {
-		IQueryable<TariffSurchargesUpdateList> query = (from a in iQueryable
-                                            select new TariffSurchargesUpdateList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          CreateDate = a.CreateDate,
-					
-					                          CreatedByUserId = a.CreatedByUserId,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<TariffSurchargesUpdateList> query = (from a in iQueryable
+                                                            select new TariffSurchargesUpdateList()
+                                                            {
 
-		private IQueryable<TariffSurchargesUpdate> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TariffSurchargesUpdate> iQueryable, int tenant)
+                                                                Id = a.Id,
+
+                                                                Tenant = a.Tenant,
+
+                                                                CreateDate = a.CreateDate,
+
+                                                                CreatedByUserId = a.CreatedByUserId,
+
+                                                            });
+            return query;
+        }
+
+        private IQueryable<TariffSurchargesUpdate> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<TariffSurchargesUpdate> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<TariffSurchargesUpdate> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<TariffSurchargesUpdate> iQueryable, int tenant)
+            return iQueryable;
+        }
+        private IQueryable<TariffSurchargesUpdate> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<TariffSurchargesUpdate> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-		
-			}
+            return iQueryable;
+        }
+
+    }
 
 
 }
