@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tariff Types",
-			      				    Code =  "dde7",
+			      				    Code =  "beee",
 			      				    Name =  "TariffType Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",

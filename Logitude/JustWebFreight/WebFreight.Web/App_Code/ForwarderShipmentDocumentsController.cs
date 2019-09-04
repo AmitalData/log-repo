@@ -527,11 +527,13 @@ namespace WebFreight.Web.App_Code
             }
             if (!string.IsNullOrEmpty(newEntityPM.EntityId))
             {
+                EntityPM.EntityNumber = newEntityPM.EntityId;
                 ShipmentQuery shipmentQuery = new ShipmentQuery(newEntityPM.Tenant);
                 ShipmentPM Shipment = shipmentQuery.GetSingleShipmentPMByNumber(newEntityPM.EntityId, newEntityPM.Tenant);
                 if (Shipment != null)
                 {
-                    EntityPM.EntityId = Shipment.Id;
+                    EntityPM.EntityId = Shipment.Id; 
+
                 }
                 else
                 {

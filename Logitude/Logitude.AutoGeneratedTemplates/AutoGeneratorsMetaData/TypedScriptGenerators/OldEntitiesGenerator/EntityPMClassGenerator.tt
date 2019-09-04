@@ -622,10 +622,16 @@ private string GetPmListPropertyTableName(CodeProperty property)
             }
 
 			typecode = typecode.Replace("?","").ToLower();
+ 
 			string result = "string";
             if (typecode == "bool")
             {
                 result = "boolean";
+            }
+            
+        if (typecode == "string")
+            {
+                result = "string";
             }
             if (typecode == "int")
             {
@@ -653,6 +659,9 @@ private string GetPmListPropertyTableName(CodeProperty property)
 				result = "any";
             }
             
+        if(result == "string" && fullTypeName.Contains("Logitude.")){
+            result = "any";
+        }
 			
 			return result;
         }

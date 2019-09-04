@@ -448,6 +448,10 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                             if (UsedMesurment != null)
                                             {
                                                 decimal? valueofSurcharge = (decimal?)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
+                                                decimal? valueofSurchargeMin = (decimal?)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "MinPrice").GetValue(ChargesfilteredLines);
+                                                if (valueofSurcharge < valueofSurchargeMin)
+                                                    valueofSurcharge = valueofSurchargeMin;
+
                                                 ChargesType CurrentCharge = chargesTypes.Where(p => p.Id == chargeId).FirstOrDefault();
 
                                                 string surchargeName = "";
