@@ -83,33 +83,37 @@ namespace Logitude.XSD.CW_API.ABM
 
             myItem.ConsignmentHeader = new ConsignmentHeader();
 
-
-
             myItem.ConsignmentHeader.ConsignmentReference = this.Context.ShipmentNumber;
 
             #region ValueAmount
+            string[] iCurrencyText = new string[1];
+            if(this.Context.ValueOfGoodsCurrencyCode != null)
+            {
+                iCurrencyText[0] = this.Context.ValueOfGoodsCurrencyCode;
+            }
+
             if (this.Context.ValueOfGoods != null)
             {
                 List<ValueAmount> iValueAmounts = new List<ValueAmount>();
 
                 iValueAmounts.Add(new ValueAmount()
                 {
+                    ValueType = "DocumentValue",
                     AmountValue = this.Context.ValueOfGoods.Value,
                     AmountValueSpecified = true,
-
-                    //Currency = new Currency()
-                    //{
-                    //    CodeType = CurrencyCodeType.ISO,
-                    //    CurrencyType = this.Context.ValueOfGoodsCurrencyCode,
-                    //},
-
+                    
+                    Currency = new Currency()
+                    {                        
+                        CodeType = CurrencyCodeType.ISO,
+                        Text = iCurrencyText,
+                    },
                 });
 
                 myItem.ConsignmentHeader.ValueAmount = iValueAmounts.ToArray<ValueAmount>();
             }
             #endregion
 
-            myItem.ConsignmentHeader.ConsignmentBaseCurrency = this.Context.ValueOfGoodsCurrencyCode;
+            //myItem.ConsignmentHeader.ConsignmentBaseCurrency = this.Context.ValueOfGoodsCurrencyCode;
 
             #region Transport
             CWXSD.Transport iTransportItem = new Transport()
