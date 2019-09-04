@@ -1832,7 +1832,6 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerFollowUpController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\FBLStockController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\CustomsTransmissionsStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentComputedFieldController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentComputedFieldsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentCustomsTransmissionController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\ImporterApprovalReceivedController.cs" />
@@ -2681,6 +2680,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SprintUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSettingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSurchargesUpdateMethodUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSurchargesUpdateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionAllInChargeUpdateClass.cs" />

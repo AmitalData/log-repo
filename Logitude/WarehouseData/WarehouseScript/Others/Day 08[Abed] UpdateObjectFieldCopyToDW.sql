@@ -67,6 +67,9 @@ or FieldName='BookingConfirmationNumber' or FieldName='MainCarriageATA' or Field
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'MoveType') and (FieldName = 'Code' or FieldName = 'MoveTypeEnglishName' or FieldName = 'MoveTypeLocalName' or FieldName = 'TransportModeId' )
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'Vessel') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Notes' or FieldName = 'IMOCode' or FieldName='EnglishName')
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'SpecialServicesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' )
-Update ObjectFields  set CopyToDW = 0 where ObjectTableId = (select id from ObjectTables where Name = 'Shipment') and (FieldName = 'CancelledDate' or FieldName = 'GrossWeightPerTon')
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentComputedField') and (FieldName = 'FirstPickupATD' or FieldName = 'FirstPickupATA' or FieldName = 'FinalDeliveryETD' or FieldName = 'FinalDeliveryETA' or FieldName = 'FinalDeliveryATD' or FieldName = 'FinalDeliveryATA' or FieldName='ContainersNumbers' or FieldName ='FirstPickupLocation')
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentComputedFields') and (FieldName = 'FirstPickupATD' or FieldName = 'FirstPickupATA' or FieldName = 'FinalDeliveryETD' or FieldName = 'FinalDeliveryETA' or FieldName = 'FinalDeliveryATD' or FieldName = 'FinalDeliveryATA' or FieldName='ContainersNumbers' or FieldName ='FirstPickupLocation')
+
+
+select CopyToDW,* from  ObjectFields where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentComputedFields') and (FieldName = 'FirstPickupATD' or FieldName = 'FirstPickupATA' or FieldName = 'FinalDeliveryETD' or FieldName = 'FinalDeliveryETA' or FieldName = 'FinalDeliveryATD' or FieldName = 'FinalDeliveryATA' or FieldName='ContainersNumbers' or FieldName ='FirstPickupLocation')
+
 
