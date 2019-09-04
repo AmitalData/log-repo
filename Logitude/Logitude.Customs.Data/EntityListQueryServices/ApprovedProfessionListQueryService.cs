@@ -24,22 +24,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<ApprovedProfessionList> query = (from a in iQueryable
                                             select new ApprovedProfessionList()
 											{
-                     
-					                          Code = a.Code,
-					
-					                          LocalName = a.LocalName,
-					
-					                          SearchFields = a.SearchFields,
-					
-		                    	            });
+                                                Code = a.Code,
+                                                EnglishName = a.EnglishName,
+                                                LocalName = a.LocalName,
+                                                SearchFields = a.SearchFields,
+                                                Inactive = a.Inactive,
+
+                                            });
             return query;
 		}
 
 		private IQueryable<ApprovedProfession> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ApprovedProfession> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+        }
+	}
 
 
 }
