@@ -176,8 +176,8 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new CustomsSchedularWR());
 
 
-            bool testOnlySchedularWorkerRole = false;
-            if (testOnlySchedularWorkerRole)
+            bool testOnlyCustomsSchedularWR = false;
+            if (testOnlyCustomsSchedularWR)
             {
                 int removedRec = BatchServicesDefinitions.RemoveAll(r => r.ClassName != "CustomsSchedularWR");
             }

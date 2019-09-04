@@ -411,3 +411,4 @@ __pycache__/
 *.7z
 /Logitude/AngularModules/package.json
 /Logitude/AngularModules/AngularModules/CustomsModules/Workspaces
+/Logitude/AngularModules/AngularModules/CustomsModules/CustomsCourier/CustomsRequests
