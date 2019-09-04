@@ -194,6 +194,13 @@ namespace AmitalCustomsWindowsService.Tester
             dynamic d;
             switch (_CBWorkerRole.Text)
             {
+                case "CustomsSchedularWR":
+                    {
+                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsSchedularWR>(
+                                        10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                        { ServiceStarted = true, };
+                    }
+                    break;
                 case "CustomsCommandGetCustomRequestWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandGetCustomRequestWR>(
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
