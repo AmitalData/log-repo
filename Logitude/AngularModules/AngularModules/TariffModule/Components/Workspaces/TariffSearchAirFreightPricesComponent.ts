@@ -37,7 +37,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     private ShipmentPM: ShipmentPM;
     private FatherComponent: any;
     private myChargesTypeListService: ChargesTypeListService;
-
+    private dimenstionShipment: ShipmentPM;
+    public IsPickedFromWizard: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myDomainService = new TariffDomainService();
@@ -45,6 +46,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.SetUIProperties();
         this.Date = DateTool.GetCurrentDateAsUtc();
         this.CalculateDefaultCurrency();
+        this.dimenstionShipment = new ShipmentPM();
     }
 
     private CalculateDefaultCurrency() {
@@ -336,6 +338,39 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
         this.VolumeInCBM = volume_CBM;
     }
+
+    FillDimensionsClicked() {
+        this.entityResourceService.getEntityResourceByTableName("Shipment").subscribe((res1: any) => {
+            this.entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe((res2: any) => {
+                var logeWindow = new LogitudeWindow();
+                logeWindow.Width = 850;
+                logeWindow.Title = "Fill Dimensions";
+                this.dimenstionShipment.TransportModeId = "A";
+                this.dimenstionShipment.ChargeableWeightUnitCode = this.WeightCode;
+                this.dimenstionShipment.VolumeUnitCode = this.VolumeUnitCode;
+                this.dimenstionShipment.GrossWeightUnitCode = this.GrossWeightCode;
+                logeWindow.WindowArgs = this.dimenstionShipment;
+                logeWindow.Show("./TariffModule/Components/Workspaces/WizardDimensionsComponent");              
+                logeWindow.WindowClosed.subscribe(s => {
+                    if (s) {
+                        this.weight = this.dimenstionShipment.OrderChargeableWeight;
+                        this.grossWeight = this.dimenstionShipment.OrderGrossWeight;
+                        this.volume = this.dimenstionShipment.BookingVolume;
+                        if (!AppTool.IsNullOrZero(this.dimenstionShipment.OrderChargeableWeight) || !AppTool.IsNullOrZero(this.dimenstionShipment.OrderGrossWeight) || !AppTool.IsNullOrZero(this.dimenstionShipment.BookingVolume)) {
+                            this.IsPickedFromWizard = true;
+                        }
+                        else {
+                            this.IsPickedFromWizard = false;
+                        }
+                    }
+
+
+                    this.SetUIProperties();
+                });
+            });
+        });
+    }
+
     ComputeVolumetricWeight() {
         //this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
         this.weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
@@ -407,6 +442,28 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
         this.UIProperties.SetRequired("Date", null, AppTool.IsNullOrEmpty(this.Date));
         this.UIProperties.SetRequired("Weight", null, AppTool.IsNullOrEmpty(this.Weight));
+
+        if (this.IsPickedFromWizard) {
+            this.UIProperties.SetEnabled("Weight", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("Volume", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("GrossWeightCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("WeightCode", this.ObjectTableName, false);
+
+        }
+        else {
+            this.UIProperties.SetEnabled("Weight", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("GrossWeight", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("Volume", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("GrossWeightCode", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("WeightCode", this.ObjectTableName, true);
+            this.weight = null;
+            this.grossWeight = null;
+            this.volume = null;
+            this.chargeableWeight = null;
+        }
     }
 
     CloseButtonClicked() {
