@@ -812,6 +812,12 @@
     <TypeScriptCompile Include="e2e\Maintenance\CompnayAddressSetting\CompanyAddressSetting-spec.ts" />
     <TypeScriptCompile Include="e2e\Maintenance\CompnayAddressSetting\CompanyAddressSetting.ts" />
     <TypeScriptCompile Include="e2e\Maintenance\CompnayAddressSetting\CompanyAddressSettingScenario.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Shipper\Shipper-spec.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Shipper\Shipper.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Shipper\ShipperScenario.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Users\Users-spec.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Users\Users.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Users\UsersScenario.ts" />
     <TypeScriptCompile Include="e2e\Operations\PrintDocOut\PrintDocOut.ts" />
     <TypeScriptCompile Include="e2e\Operations\SendMailPopup\SendMailPopup.ts" />
     <TypeScriptCompile Include="e2e\Operations\ShipmentView\ShipmentView-spec.ts" />
