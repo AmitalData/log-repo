@@ -51,10 +51,11 @@ export class TenantManagementAWBStockTabComponent implements OnInit {
         var service: ShipmentDomainService = new ShipmentDomainService();
         service.GetMessagingStockListForTenantManagmentTab(this.EntityPM.Id).subscribe(result => {
             var allStocks: MessagingStockList[] = result.Result;
-
-            allStocks.sort((a, b) => { return (DateTool.GetDateFromDate(a.StartDate) === DateTool.GetDateFromDate(b.StartDate)) ? 0 : (DateTool.GetDateFromDate(a.StartDate) > DateTool.GetDateFromDate(b.StartDate)) ? -1 : 1 }).forEach(item => {
-                this.ItemsSource.push(item);
-            });
+            if (allStocks) {
+                allStocks.sort((a, b) => { return (DateTool.GetDateFromDate(a.StartDate) === DateTool.GetDateFromDate(b.StartDate)) ? 0 : (DateTool.GetDateFromDate(a.StartDate) > DateTool.GetDateFromDate(b.StartDate)) ? -1 : 1 }).forEach(item => {
+                    this.ItemsSource.push(item);
+                });
+            }
         });
     }
 

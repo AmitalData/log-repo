@@ -11,6 +11,10 @@ describe('DocsOut', () => {
   });
   browser.ignoreSynchronization = true;
 
+  it('Successfully Printing Document', function () {
+    DocOutSenarios.OpenDocOutTab();
+
+  });
 
   it('Successfully Printing Document', function () {
     DocOutSenarios.SuccessfullyPrintingDocument();

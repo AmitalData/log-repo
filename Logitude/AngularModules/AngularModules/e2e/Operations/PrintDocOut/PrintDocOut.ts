@@ -10,7 +10,6 @@ export class PrintDocOut {
     }
 
     isPrintingCompleted(expectedId, closePopup) {
-       // this.helper.waitElementByIDPresence(expectedId);
        this.helper.WaitBusyIndicator();
        this.helper.ItemsPresent(expectedId);
         if(closePopup) {

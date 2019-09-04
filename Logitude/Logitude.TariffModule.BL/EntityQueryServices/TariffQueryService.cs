@@ -448,6 +448,10 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                             if (UsedMesurment != null)
                                             {
                                                 decimal? valueofSurcharge = (decimal?)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
+                                                decimal? valueofSurchargeMin = (decimal?)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "MinPrice").GetValue(ChargesfilteredLines);
+                                                if (valueofSurcharge < valueofSurchargeMin)
+                                                    valueofSurcharge = valueofSurchargeMin;
+
                                                 ChargesType CurrentCharge = chargesTypes.Where(p => p.Id == chargeId).FirstOrDefault();
 
                                                 string surchargeName = "";
@@ -497,8 +501,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     {
                                                         CurrentSurchargePriceCalculation = (valueofSurcharge * myQuantity);
                                                     }
-
-                                                    SurchargeItem.Price = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrentSurcharge.CurrencyId, tenant);
+                                                    string CurrencyId = ChargesfilteredLines.CurrencyId != null ? ChargesfilteredLines.CurrencyId : CurrentSurcharge.CurrencyId;
+                                                    SurchargeItem.Price = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrencyId, tenant);
                                                     SurchargeItem.ActualPrice = CurrentSurchargePriceCalculation.Value;
                                                     Sum += SurchargeItem.Price;
                                                     SurchargeItem.TariffId =  CurrentSurcharge.Id;

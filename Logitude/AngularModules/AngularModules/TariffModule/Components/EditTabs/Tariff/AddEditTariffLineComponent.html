@@ -57,7 +57,7 @@
                                             <span *ngIf="!DataContext.OriginPortId">{{OriginPortText}}</span>
                                         </td>
                                     </tr>
-                                </table>                                
+                                </table>
                             </td>
                         </tr>
 
@@ -107,6 +107,29 @@
                                         </td>
                                     </tr>
                                 </table>
+                            </td>
+                        </tr>
+
+
+                        <!-- Currency -->
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC'">
+                            <td>
+                                <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td>
+                                <LogLov [ObjectFieldName]="'CurrencyId'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="DataContext.CurrencyId"
+                                        [DataContext]="DataContext"
+                                        [DisplayMemberPath]="'Code'"
+                                        (SelectedItemChanged)="DataContext.Currency = $event"
+                                        [LookUpTableName]="'Currency'">
+                                </LogLov>
+                            </td>
+
+                            <td>
+                                <div></div>
                             </td>
                         </tr>
 
@@ -285,12 +308,19 @@
                                         <td style="width:100px;">
                                             <LogLabel [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.FatherComponent.Surcharge1PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
                                         <td style="width:220px;">
                                             <LogTextBox [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.Surcharge1Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td *ngIf="!DataContext.Surcharge1Price" style="width:50px; color:red">
-                                            {{Surcharge1PriceText}}
+
+                                        <td style="width:100px;">
+                                            <LogLabel [ObjectFieldName]="'Surcharge1MinPrice'" [Text]="DataContext.FatherComponent.Surcharge1MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
+                                        <td style="width:220px;">
+                                            <LogTextBox [ObjectFieldName]="'Surcharge1MinPrice'" [Text]="DataContext.Surcharge1MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
                                         <td>
                                             <div></div>
                                         </td>
@@ -301,12 +331,19 @@
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.FatherComponent.Surcharge2PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.Surcharge2Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td *ngIf="!DataContext.Surcharge2Price" style="width:50px; color:red">
-                                            {{Surcharge2PriceText}}
+
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge2MinPrice'" [Text]="DataContext.FatherComponent.Surcharge2MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge2MinPrice'" [Text]="DataContext.Surcharge2MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
                                         <td>
                                             <div></div>
                                         </td>
@@ -317,12 +354,19 @@
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.FatherComponent.Surcharge3PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.Surcharge3Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td *ngIf="!DataContext.Surcharge3Price" style="width:50px; color:red">
-                                            {{Surcharge3PriceText}}
+
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge3MinPrice'" [Text]="DataContext.FatherComponent.Surcharge3MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge3MinPrice'" [Text]="DataContext.Surcharge3MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
                                         <td>
                                             <div></div>
                                         </td>
@@ -333,12 +377,19 @@
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.FatherComponent.Surcharge4PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.Surcharge4Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td *ngIf="!DataContext.Surcharge4Price" style="width:50px; color:red">
-                                            {{Surcharge4PriceText}}
+
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge4MinPrice'" [Text]="DataContext.FatherComponent.Surcharge4MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge4MinPrice'" [Text]="DataContext.Surcharge4MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
                                         <td>
                                             <div></div>
                                         </td>
@@ -349,12 +400,19 @@
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.FatherComponent.Surcharge5PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.Surcharge5Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td *ngIf="!DataContext.Surcharge5Price" style="width:50px; color:red">
-                                            {{Surcharge5PriceText}}
+
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge5MinPrice'" [Text]="DataContext.FatherComponent.Surcharge5MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge5MinPrice'" [Text]="DataContext.Surcharge5MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
                                         <td>
                                             <div></div>
                                         </td>
@@ -365,12 +423,19 @@
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge6Price'" [Text]="DataContext.FatherComponent.Surcharge6PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'Surcharge6Price'" [Text]="DataContext.Surcharge6Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td *ngIf="!DataContext.Surcharge6Price" style="width:50px; color:red">
-                                            {{Surcharge6PriceText}}
+
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge6MinPrice'" [Text]="DataContext.FatherComponent.Surcharge6MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge6MinPrice'" [Text]="DataContext.Surcharge6MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
                                         <td>
                                             <div></div>
                                         </td>
@@ -381,12 +446,19 @@
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge7Price'" [Text]="DataContext.FatherComponent.Surcharge7PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'Surcharge7Price'" [Text]="DataContext.Surcharge7Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td *ngIf="!DataContext.Surcharge7Price" style="width:50px; color:red">
-                                            {{Surcharge7PriceText}}
+
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge7MinPrice'" [Text]="DataContext.FatherComponent.Surcharge7MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge7MinPrice'" [Text]="DataContext.Surcharge7MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
                                         <td>
                                             <div></div>
                                         </td>
@@ -397,12 +469,19 @@
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge8Price'" [Text]="DataContext.FatherComponent.Surcharge8PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'Surcharge8Price'" [Text]="DataContext.Surcharge8Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td *ngIf="!DataContext.Surcharge8Price" style="width:50px; color:red">
-                                            {{Surcharge8PriceText}}
+
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge8MinPrice'" [Text]="DataContext.FatherComponent.Surcharge8MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge8MinPrice'" [Text]="DataContext.Surcharge8MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
                                         <td>
                                             <div></div>
                                         </td>
@@ -413,12 +492,19 @@
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge9Price'" [Text]="DataContext.FatherComponent.Surcharge9PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'Surcharge9Price'" [Text]="DataContext.Surcharge9Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td *ngIf="!DataContext.Surcharge9Price" style="width:50px; color:red">
-                                            {{Surcharge9PriceText}}
+
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge9MinPrice'" [Text]="DataContext.FatherComponent.Surcharge9MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge9MinPrice'" [Text]="DataContext.Surcharge9MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
                                         <td>
                                             <div></div>
                                         </td>
@@ -429,12 +515,19 @@
                                         <td>
                                             <LogLabel [ObjectFieldName]="'Surcharge10Price'" [Text]="DataContext.FatherComponent.Surcharge10PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'Surcharge10Price'" [Text]="DataContext.Surcharge10Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
-                                        <td *ngIf="!DataContext.Surcharge10Price" style="width:50px; color:red">
-                                            {{Surcharge10PriceText}}
+
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="DataContext.FatherComponent.Surcharge10MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="DataContext.Surcharge10MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
                                         <td>
                                             <div></div>
                                         </td>

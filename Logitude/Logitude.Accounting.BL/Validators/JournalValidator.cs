@@ -1,4 +1,5 @@
 ﻿
+using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
@@ -86,7 +87,7 @@ namespace Logitude.Accounting.BL.Validators
 
         public static ValidationResult IsJournalValid(
           JournalPM myJournalPM,
-          System.ComponentModel.DataAnnotations.ValidationContext context)
+          System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
         {
             decimal creditTotal = 0;
             decimal debitTotal = 0;
@@ -112,24 +113,24 @@ namespace Logitude.Accounting.BL.Validators
                 ;
                 errorsList.Add(msg);
             }
-            var myDataProvider = context.GetService(typeof(IJournalValidatorContextDataProvider)) as IJournalValidatorContextDataProvider;
-            var myIExternalReconcileDataProvider = context.GetService(typeof(IExternalReconcileDataProvider)) as IExternalReconcileDataProvider;
+            var myDataProvider = accountingValidationContextServiceProvider.GetService(typeof(IJournalValidatorContextDataProvider)) as IJournalValidatorContextDataProvider;
+            var myIExternalReconcileDataProvider = accountingValidationContextServiceProvider.GetService(typeof(IExternalReconcileDataProvider)) as IExternalReconcileDataProvider;
             FullAccountingSettingPM tenantFullAccountingSettingPM = null;
-            if (context.Items.ContainsKey(K_FullAccountingSettingPM))
+            if (accountingValidationContextServiceProvider.Items.ContainsKey(K_FullAccountingSettingPM))
             {
-                tenantFullAccountingSettingPM = context.Items[K_FullAccountingSettingPM] as FullAccountingSettingPM;
+                tenantFullAccountingSettingPM = accountingValidationContextServiceProvider.Items[K_FullAccountingSettingPM] as FullAccountingSettingPM;
             }
             DateTime? currDateTimeUtcNow = null; ;
 
-            if (context.Items.ContainsKey(K_DateTimeUtcNow))
+            if (accountingValidationContextServiceProvider.Items.ContainsKey(K_DateTimeUtcNow))
             {
-                currDateTimeUtcNow = (DateTime)context.Items[K_DateTimeUtcNow];
+                currDateTimeUtcNow = (DateTime)accountingValidationContextServiceProvider.Items[K_DateTimeUtcNow];
             }
             currDateTimeUtcNow = currDateTimeUtcNow ?? DateTime.UtcNow;
 
-            if (context.Items.ContainsKey(K_AccountingPeriodsByTypeRegular))
+            if (accountingValidationContextServiceProvider.Items.ContainsKey(K_AccountingPeriodsByTypeRegular))
             {
-                var accountingPeriodsByTypeRegular = context.Items[K_AccountingPeriodsByTypeRegular] as List<AccountingPeriodPM>;
+                var accountingPeriodsByTypeRegular = accountingValidationContextServiceProvider.Items[K_AccountingPeriodsByTypeRegular] as List<AccountingPeriodPM>;
                 if (accountingPeriodsByTypeRegular != null)
                 {
                     string transText = "";
@@ -401,9 +402,9 @@ namespace Logitude.Accounting.BL.Validators
 
 
                     bool? SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
-                    if (context.Items.ContainsKey(K_SuppressCheckGLAccountIsMultiCurrencyWI40640))
+                    if (accountingValidationContextServiceProvider.Items.ContainsKey(K_SuppressCheckGLAccountIsMultiCurrencyWI40640))
                     {
-                        SuppressCheckGLAccountIsMultiCurrencyWI40640 = context.Items[K_SuppressCheckGLAccountIsMultiCurrencyWI40640] as bool?;
+                        SuppressCheckGLAccountIsMultiCurrencyWI40640 = accountingValidationContextServiceProvider.Items[K_SuppressCheckGLAccountIsMultiCurrencyWI40640] as bool?;
                     }
                     else
                     {
@@ -447,6 +448,8 @@ namespace Logitude.Accounting.BL.Validators
                 }
             }
 
+            ValidateJournalReconciles(myJournalPM, accountingValidationContextServiceProvider, errorsList, myIExternalReconcileDataProvider);
+
             ValidateJournalExternalReconciles(myJournalPM, errorsList, myIExternalReconcileDataProvider);
 
             if (errorsList.Count == 0)
@@ -466,6 +469,54 @@ namespace Logitude.Accounting.BL.Validators
                 return new ValidationResult(TranslateMyTextCode("Accounting.General.O.JournalNotValid", 0) + ": " + errorString, errorsList);
             }
 
+
+
+
+        }
+
+        private static void ValidateJournalReconciles(JournalPM myJournalPM, ValidationContext accountingValidationContextServiceProvider, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
+        {
+            if (myJournalPM.JournalReconciles.Count == 0)
+            {
+                return;
+            }
+
+            bool tested = true;
+            if (!tested)
+            {
+                return;
+            }
+            var journalApproveParser = new JournalApproveParser(myJournalPM, false,
+accountingValidationContextServiceProvider
+);
+            journalApproveParser.CreateLedger_MapByJournalActionType();
+            var newExpectedLedgerTransactions = journalApproveParser.LedgerTransactions;
+            if (newExpectedLedgerTransactions == null || newExpectedLedgerTransactions.Count < 1)
+            {
+                errorsList.Add(TranslateMyTextCode("JournalReconciles-Check:newExpectedLedgerTransactions.Count < 1", myJournalPM.Tenant));
+
+            }
+            else
+            {
+                var theReconcileAgainstLTranIdList = myJournalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
+                List<LedgerTransactionPM> myOldTransToReconcile = myIExternalReconcileDataProvider.GetLedgerTransactionList(theReconcileAgainstLTranIdList, myJournalPM.Tenant);
+
+
+                try
+                {
+
+                    var createAutoReconcileWhileStreamingService4JournalValidation = new CreateAutoReconcileWhileStreamingService4JournalValidation();
+                    createAutoReconcileWhileStreamingService4JournalValidation.MustInit(null, myJournalPM, newExpectedLedgerTransactions);
+                    createAutoReconcileWhileStreamingService4JournalValidation.InitMe(myOldTransToReconcile);
+                    createAutoReconcileWhileStreamingService4JournalValidation.CreateAutoReconcileWhileStreaming(false);
+
+                }
+                catch (Exception eeee)
+                {
+
+                    errorsList.Add(TranslateMyTextCode("JournalReconciles-validate:" + eeee.Message, myJournalPM.Tenant));
+                }
+            }
 
 
 

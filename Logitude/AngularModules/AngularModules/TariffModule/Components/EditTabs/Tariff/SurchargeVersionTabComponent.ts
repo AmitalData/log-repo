@@ -45,6 +45,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public IsUpdateSurchargesButtonVisible: boolean = false;
     public IsFirstDraft: boolean = false;
     public SelectedVersionNumber: number;
+    private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -56,6 +57,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
+        this.deletedLinesExpirationDates = [];
 
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
@@ -159,14 +161,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.isApproveButtonClicked = false;
         this.isTariffLinesDeleted = false;
     }
-    //private ResetDeletedLinesExpirationDates() {
-    //    this.CurrentVersion.TariffLines.forEach(item => {
-    //        item.ExpirationDate = null;
-    //    });
-
-    //    this.EntityPM.DeletedLinesExpirationDates = [];
-    //}
-
+    
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
@@ -248,6 +243,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public Surcharge9PriceVisibility: boolean;
     public Surcharge10PriceVisibility: boolean;
 
+    public Surcharge1MinPriceLabel: string;
+    public Surcharge2MinPriceLabel: string;
+    public Surcharge3MinPriceLabel: string;
+    public Surcharge4MinPriceLabel: string;
+    public Surcharge5MinPriceLabel: string;
+    public Surcharge6MinPriceLabel: string;
+    public Surcharge7MinPriceLabel: string;
+    public Surcharge8MinPriceLabel: string;
+    public Surcharge9MinPriceLabel: string;
+    public Surcharge10MinPriceLabel: string;
+
     private tariffCharges: CodeNameClass[] = [];
     SetSurchargesLabelsAndVisibility() {
         this.tariffCharges = [];
@@ -283,6 +289,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
                 this['Surcharge' + index + 'PriceLabel'] = item.DisplyText;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
+                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;
             }
         }
     }
@@ -515,7 +522,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         logWindow.Title = "Edit Tariff Line";
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
-
+        
     private isTariffLinesDeleted: boolean = false;
     DeleteTariffButtonClicked(item: AirSurchargeTariffLineData) {
         var confirmWindow = new ConfirmWindow();
@@ -532,10 +539,11 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                     logWindow.WindowClosed.subscribe(d => {
                         if (s && d == "ok") {
                             var deletedItem: TariffLineExpirationDatePM = new TariffLineExpirationDatePM();
-                            deletedItem.TariffLineId = item.EntityPM.Id;
+                            deletedItem.OriginPortId = item.EntityPM.OriginPortId;
+                            deletedItem.DestinationPortId = item.EntityPM.DestinationPortId;
                             deletedItem.ExpirationDate = item.EntityPM.ExpirationDate;
-
-                            this.EntityPM.DeletedLinesExpirationDates.push(deletedItem);
+                            
+                            this.deletedLinesExpirationDates.push(deletedItem);
                             this.CurrentVersion.RemoveTariffLine(item.EntityPM);
                             this.TariffsLinesSource.Remove(item);
                             this.FillTariffLines(this.CurrentVersion.TariffLines);
@@ -569,6 +577,13 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     ApproveVersionClicked() {
         if (!this.isApproveButtonClicked) {
             this.isApproveButtonClicked = true;
+
+            if (this.deletedLinesExpirationDates.length > 0) {
+                this.deletedLinesExpirationDates.forEach(item => {
+                    this.EntityPM.DeletedLinesExpirationDates.push(item);
+                });
+            }
+
             this.EntityPM.IsApprovingDraftVersion = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }        
@@ -592,7 +607,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
         this.EntityPM.LastStartDate = this.StartDate;
         this.EntityPM.LastExpirationDate = this.ExpirationDate;
-
+        
         var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
         copiedVersion.TariffId = this.CurrentVersion.TariffId;
         copiedVersion.Version = this.EntityPM.LastVersion;
@@ -627,8 +642,20 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge10Price = item.Surcharge10Price;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
+            tariffLine.CurrencyId = item.CurrencyId;
+            tariffLine.CurrencyCode = item.CurrencyCode;
             tariffLine.IsFromAllOtherPorts = item.IsFromAllOtherPorts;
             tariffLine.IsToAllOtherPorts = item.IsToAllOtherPorts;
+            tariffLine.Surcharge1MinPrice = item.Surcharge1MinPrice;
+            tariffLine.Surcharge2MinPrice = item.Surcharge2MinPrice;
+            tariffLine.Surcharge3MinPrice = item.Surcharge3MinPrice;
+            tariffLine.Surcharge4MinPrice = item.Surcharge4MinPrice;
+            tariffLine.Surcharge5MinPrice = item.Surcharge5MinPrice;
+            tariffLine.Surcharge6MinPrice = item.Surcharge6MinPrice;
+            tariffLine.Surcharge7MinPrice = item.Surcharge7MinPrice;
+            tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
+            tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
+            tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
             copiedVersion.AddTariffLine(tariffLine);
         });
 
