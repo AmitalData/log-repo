@@ -18,7 +18,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import {  ShipmentGenerator } from '../../../Shipment/Tools';
 import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
 import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
-
+import { PayablesTabComponent, ShipmentPayableItem } from '../../../ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent';
 
 @Component({
     moduleId: module.id,
@@ -511,7 +511,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
                 var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
 
-                shipmentPayable.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3): null;
+                shipmentPayable.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3) : null;
                 shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
                 shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
                 shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
@@ -522,7 +522,15 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.AccountedAmount = 0;
                 shipmentPayable.AccountedAmountInLocalCurrency = 0;
                 shipmentPayable.AccountedAmountInProfitCurrency = 0;
-                shipmentPayable.ShipmentPayableLineStatusCode = (shipmentPayable.Quantity != null && shipmentPayable.UnitPrice != null) ? "OAMT" : "EMPT";
+                shipmentPayable.ShipmentPayableLineStatusCode = "EMPT";
+                shipmentPayable.ShipmentPayableAmountTypeCode = "ACCU";
+                shipmentPayable.ShipmentId = this.ShipmentPM.Id;
+                shipmentPayable.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
+                shipmentPayable.CreateDate = DateTool.GetCurrentDateAsUtc();
+                shipmentPayable.Tenant = this.ShipmentPM.Tenant;
+                shipmentPayable.CreatedByUserId = SessionLocator.LoggedUserId;
+                shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
+                shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
                 shipmentPayable.Notes = notes;
                 this.TariffPayables.push(shipmentPayable);
             }
@@ -531,10 +539,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     ValidateExistConnectedTariff(item: TariffSearchSummary) {
         var isValid = true;
-        var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId == item.TariffId)[0];
+        var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null)[0];
         var existsPayableOnSurcharges: ShipmentPayablePM [] = []; 
         item.Surcharges.forEach(surcharge => {
-            var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId == surcharge.TariffId)[0];
+            var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null)[0];
             if (payable) {
                 existsPayableOnSurcharges.push(payable);
             }

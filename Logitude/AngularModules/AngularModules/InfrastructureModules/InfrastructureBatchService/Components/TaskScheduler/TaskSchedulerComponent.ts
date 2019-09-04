@@ -269,7 +269,7 @@ export class TaskSchedulerComponent implements OnInit  {
             FieldName: "ViewLog",
             DataTypeCode: 'String',
             Display: '',
-            Styles: { width: '100px' },
+            Styles: { width: '200px' },
             HtmlListComponentName: 'SchedulerDateListTemplate',
             HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
             IsCustomTemplate: true,
@@ -691,10 +691,12 @@ export class TaskSchedulerItemClass extends BaseComponent {
                 if (!schedulerDetailsData.FTPDetails) {
                     schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
                     schedulerDetailsData.FTPDetails.IsSFTP = (this.EntityPM.Type == "SFTP" ? true : false);
+
                     
                 }
                 this.FTPDetails = schedulerDetailsData.FTPDetails;
 
+                this.EntityPM.SchedulerDetailsData = schedulerDetailsData;
 
             }
         }

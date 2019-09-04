@@ -345,7 +345,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             });
 
             this.TariffChargesObsList.filter(d => d.IsChargeChecked).forEach(item => {
-                args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.Index);
+                args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.NewMinPrice + "," + item.Index);
             });
 
             var myService: TariffDomainService = new TariffDomainService();
@@ -381,6 +381,7 @@ export class TariffCharge extends BaseComponent{
     public DisplayText: string;
     public DataContext = this;
     public Index: number;
+    public MeasurementCode: string;
     constructor(charge: CodeNameClass) {
         super();
 
@@ -388,6 +389,7 @@ export class TariffCharge extends BaseComponent{
         this.ChargeCode = charge.Name;
         this.DisplayText = charge.DisplyText;
         this.Index = charge.Code_Int;
+        this.MeasurementCode = charge.AdditionalField;
 
         this.SetUIProperties();
     }
@@ -400,8 +402,22 @@ export class TariffCharge extends BaseComponent{
             }
         }
 
-        this.UIProperties.SetEnabled("NewPrice", null, this.IsChargeChecked);
-        this.UIProperties.SetRequired("NewPrice", null, isPriceRequired);
+        this.UIProperties.SetEnabled("NewPrice", null, this.IsChargeChecked);       
+        this.UIProperties.SetRequired("NewPrice", null, isPriceRequired);        
+
+        this.SetUIProperties_MinPrice();
+    }
+
+    private SetUIProperties_MinPrice() {
+        var isMinPriceEnabled: boolean = false;
+
+        if (this.IsChargeChecked) {
+            if (this.MeasurementCode != "FIXD") {
+                isMinPriceEnabled = true
+            }
+        }
+
+        this.UIProperties.SetEnabled("NewMinPrice", null, isMinPriceEnabled);
     }
 
     private isChargeChecked: boolean;
@@ -424,7 +440,32 @@ export class TariffCharge extends BaseComponent{
         if (this.newPrice != value) {
             this.newPrice = value;
 
+            if (this.MeasurementCode != "FIXD") {
+                this.MinPricePlaceHolder = "";
+                this.NewMinPrice = null;
+            }
+
             this.SetUIProperties();
+        }
+    }
+
+    private newMinPrice: number;
+    get NewMinPrice() {
+        return this.newMinPrice;
+    }
+    set NewMinPrice(value: number) {
+        if (this.newMinPrice != value) {
+            this.newMinPrice = value;
+        }
+    }
+
+    private minPricePlaceHolder: string = "No Update";
+    get MinPricePlaceHolder() {
+        return this.minPricePlaceHolder;
+    }
+    set MinPricePlaceHolder(value: string) {
+        if (this.minPricePlaceHolder != value) {
+            this.minPricePlaceHolder = value;            
         }
     }
 }

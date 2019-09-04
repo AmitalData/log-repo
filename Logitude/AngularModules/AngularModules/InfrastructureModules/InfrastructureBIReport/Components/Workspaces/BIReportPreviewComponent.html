@@ -65,6 +65,13 @@
         cursor: pointer;
         animation: shake 0.5s;
     }
+    .Show {
+        display: contents;
+    }
+
+    .Hide {
+        display: none;
+    }
 </style>
 
 <div class="MediaFillAbsolute" style="background: white;">
@@ -134,10 +141,19 @@
                                                             <tr>
                                                                 <td>
                                                                     <div class="EmailBoxMultiLinesText" style="white-space: normal;">
-                                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" [RunReportCommand]="RunReportCommand" (RunReportComplete)="OnRunReportComplete($event)" [ComputeFiltersCommand]="ComputeFiltersCommand" (ComputeFiltersComplete)="OnComputeFiltersComplete($event)" [IsFirstTime]="true"></DWAskUserFiltersComponent>
+                                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" [RunReportCommand]="RunReportCommand" (RunReportComplete)="OnRunReportComplete($event)" [ShowFixedFilters]="ShowFixedFilters" [ComputeFiltersCommand]="ComputeFiltersCommand" (ComputeFiltersComplete)="OnComputeFiltersComplete($event)" [IsFirstTime]="true"></DWAskUserFiltersComponent>
                                                                     </div>
                                                                 </td>
                                                             </tr>
+                                                            <!--<tr>
+                                                                <td>
+                                                                    <div style="float:right;width:150px;margin-right: -12px;">
+                                                                        <LogCheckBox [ObjectFieldName]="'ShowStaticFilters'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
+                                                                        <label style="margin-right:-10px;">Show Fixed Filters</label>
+                                                                        
+                                                                    </div>
+                                                                </td>
+                                                            </tr>-->
                                                         </table>
                                                     </div>
                                                 </div>
@@ -199,6 +215,10 @@
                                             <td style="float:right;width:240px; ">
                                                 <table>
                                                     <tr>
+                                                        <td style="width: 25px;">
+                                                            <button *ngIf="ShowStaticFilters == true" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = false"><img style="width:23px;" class="CenterCenter" title="Hide static filters" src="./Images/ShowFilters.png" /></button>
+                                                            <button *ngIf="ShowStaticFilters == false" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = true"><img style="width:23px;" class="CenterCenter" title="Show static filters" src="./Images/HideFilters.png" /></button>
+                                                        </td>
                                                         <td style="width: 25px;">
                                                             <button class="Button" style="width:25px;float:left;" (click)="onBIReportColumnsClick()"><img style="width:18px;" class="CenterCenter" title="Show/Hide/Reorder Column(s)" src="./Images/Columns.png" /></button>
                                                             <!--<img src="./Images/Columns.png" (click)="onBIReportColumnsClick()" title="Show/Hide/Reorder Column(s)" style="cursor: pointer; height:18px;" [className]="'LeftCenter'" />-->

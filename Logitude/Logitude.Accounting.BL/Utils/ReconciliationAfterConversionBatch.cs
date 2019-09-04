@@ -137,6 +137,16 @@ namespace Logitude.Accounting.BL.Utils
         private bool IsGroupReconciable(List<JournalLineReco> journalLineRecoList, string groupKey)
         {
             bool rv = true;
+
+            List<JournalLineReco> creditLines = journalLineRecoList.Where(line => line._journalLine.ActionCode == "1").ToList<JournalLineReco>();
+            decimal credit_sum = 0m;
+            if (creditLines != null) credit_sum = creditLines.Sum(line => line._journalLine.LocalAmount - (line._journalLine.ExternalOpenAmount ?? 0m));
+
+            List<JournalLineReco> debitLines = journalLineRecoList.Where(line => line._journalLine.ActionCode == "2").ToList<JournalLineReco>();
+            decimal debit_sum = 0m;
+            if (debitLines != null) debit_sum = debitLines.Sum(line => line._journalLine.LocalAmount + (line._journalLine.ExternalOpenAmount ?? 0m));
+
+
             if (journalLineRecoList.Count == 0)
             {
                 _NoLines.Add(groupKey);
@@ -148,9 +158,9 @@ namespace Logitude.Accounting.BL.Utils
                 rv = false;
             }
             //           else if (!journalLineRecoList.Exists(line => line._journalLine.ActionCode == "1") ||  !journalLineRecoList.Exists(line => line._journalLine.ActionCode == "2"))
-            else if ((journalLineRecoList.Sum(line => line._journalLine.LocalAmount) != 0m))
+            //  else if ((journalLineRecoList.Sum(line => line._journalLine.LocalAmount) != 0m))
+            else if (credit_sum - debit_sum != 0m)
             {
-
                 _WrongSum.Add(groupKey);
                 rv = false;
             }

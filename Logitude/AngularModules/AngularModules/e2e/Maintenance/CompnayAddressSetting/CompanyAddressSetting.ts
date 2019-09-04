@@ -18,6 +18,7 @@ export class CompanyAddressSetting {
       
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndClick('General.MH.Maintenance');
+        this.helper.waitByCss('#null_Search');
     }
 
 

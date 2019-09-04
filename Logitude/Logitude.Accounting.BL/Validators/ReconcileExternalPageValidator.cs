@@ -31,11 +31,22 @@ namespace Logitude.Accounting.BL.Validators
                 ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(entityPM.PageNo, entityPM.BankAccountId, entityPM.Tenant);
                 if (prevPage != null)
                 {
-                    //1
-                    if (entityPM.FromDate.Date <= prevPage.ToDate.Date)
+
+                    bool avoidCheckReferenceDate = true;//ohad+ eyal
+
+                    if (avoidCheckReferenceDate)
                     {
-                        errorsList.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.FromDateShouldBiggerPrevToDate", entityPM.Tenant, useLocal));
+
                     }
+                    else
+                    {
+                        //1
+                        if (entityPM.FromDate.Date <= prevPage.ToDate.Date)
+                        {
+                            errorsList.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.FromDateShouldBiggerPrevToDate", entityPM.Tenant, useLocal));
+                        }
+                    }
+                    
 
                     //2
                     if (entityPM.ToDate.Date < entityPM.FromDate.Date)
@@ -73,6 +84,8 @@ namespace Logitude.Accounting.BL.Validators
                         {
                             sum -= line.DebitAmount;
                             sum += line.CreditAmount;
+                            //sum += line.DebitAmount;
+                            //sum -= line.CreditAmount;
                         }
                     }
                     if (sum != entityPM.CloseBalance)

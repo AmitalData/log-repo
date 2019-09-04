@@ -38,7 +38,7 @@ export class FieldsHelper {
         });
 
     }
-    
+
     WaitByIdAndClickRabaia(Id: string) {
         var EC = protractor.ExpectedConditions;
         return browser.wait(EC.elementToBeClickable(element(by.id(Id))), 1000000);
@@ -64,11 +64,11 @@ export class FieldsHelper {
 
     WaitBusyIndicator() {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.invisibilityOf(element(by.id("BusyIndicator_0"))),100000).then(a => { });
+        browser.wait(EC.invisibilityOf(element(by.id("BusyIndicator_0"))), 100000).then(a => { });
     }
     WaitEditComponentBusyIndicator() {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.invisibilityOf(element(by.id("EditComponentBusyIndicator_0"))),100000).then(a => { });
+        browser.wait(EC.invisibilityOf(element(by.id("EditComponentBusyIndicator_0"))), 100000).then(a => { });
     }
     WaitBusyIndicatorToShow() {
         var EC = protractor.ExpectedConditions;
@@ -80,45 +80,11 @@ export class FieldsHelper {
         browser.wait(EC.invisibilityOf(element(by.css(".LogitudeWindow"))), 100000).then(a => { });
     }
     waitByCss(className: string) {
-      var EC = protractor.ExpectedConditions;
-      browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000000).then(a => {
-        return true;
-      });
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000000).then(a => {
+            return true;
+        });
     }
-
-    //WaitWindowClosedRabaia() {
-    //    var EC = protractor.ExpectedConditions;
-    //    return browser.wait(
-    //        EC.invisibilityOf(element(by.css(".LogitudeWindow"))));
-    //}
-
-    //RabaiaWait(Text: string, Id: string) {
-    //    var temp = "";
-    //    var Text1 = element(by.id(Id)).getAttribute('textContent').then(function (OrigionalText) {
-    //        temp = OrigionalText;
-    //        if (Text == OrigionalText) {
-    //            expect(Text).toBe(OrigionalText);
-    //            this.Retries = 6;
-    //        }
-    //    });
-
-    //}
-
-    //private timerToken: any;
-    //Retries = 0;
-    //private RunComponentTimer(Id: string, Text: string) {
-    //    this.Retries++;
-
-    //    if (this.timerToken) {
-    //        clearTimeout(this.timerToken);
-    //    }
-
-    //    if (this.Retries < 6) {
-    //        this.timerToken = setTimeout(() => this.RabaiaWait(Text, Id), 1);
-    //      //  console.log("Rabaia " + this.Retries);
-    //    }
-    //}
-
     CheckIfChanged(Id: string, Text1: string) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.textToBePresentInElement($(Id), ('Text')), 5000);
@@ -133,67 +99,9 @@ export class FieldsHelper {
         browser.wait(EC.textToBePresentInElementValue($('#ARInvoiceHeaderStatusName'), 'Unpaid'), 10000).then(a => { console.log("this is inside the wait for unpaid " + a); });
 
     }
-
-    // this.RunComponentTimer(Id, Text);
-    //return browser.wait();
-    // var RefreshTimer : any;
-    // var Text1=element(by.id(Id)).getAttribute('textContent').then(function (OrigionalText) {            
-    //   console.log("Rabaia in promise" + Id + " " + OrigionalText.trim()); 
-    //   expect(Text).toBe(OrigionalText);
-    // RefreshTimer : any;
-    //   if (RefreshTimer) {
-    //     clearTimeout(RefreshTimer);
-    // }
-    // RefreshTimer = setInterval(() => expect(Text).toBe(OrigionalText), 200);
-    //expect(OrigionalText).toBe(Text);
-    // return receivableCurrency;
-    // });
-
-
-
-    // browser.wait(
-
-
-    // console.log("Rabaia out" + Id + " " + Text);
-    // console.log( Id + " " + Text);
-    // element(by.id(Id)).getAttribute('textContent').then(function (text) {
-
-
-    // });
-    //if (t=='Text')
-
-
-
-    //var EC = protractor.ExpectedConditions;
-    //String foo1 = element(by.id(Id)).getText();
-    //if (foo1=='Text'){
-
-
-    // var foo= browser.wait(EC.textToBePresentInElement($(Id),('Text')),500000);
-    //   if (foo)
-    //   {
-    //     console.log(Text);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-    //   }
-    //   else{
-    //     console.log('Not'+' '+Text);
-    //   }  
-
-
-
-
-
-    // WaitByIdAndFill(Id: string, Value: string) {
-    //   var EC = protractor.ExpectedConditions;
-    //   browser.wait(EC.elementToBeClickable(element(by.id(Id))), 10000000).then(a => {
-    //     var input = element(by.id(Id));
-    //     input.clear();
-    //     input.sendKeys(Value);
-    //   });
-    // }
-
     WaitByIdAndFill(Id: string, Value: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.id(Id))),10000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.id(Id))), 10000).then(a => {
             console.log("this is inside the wait for " + Id);
             var input = element(by.id(Id));
             input.clear().then(() => {
@@ -209,17 +117,11 @@ export class FieldsHelper {
 
                         }
                     });
-                    
-                  
                     //});
                 });
             });
-
-
         });
     }
-
-
     WaitByCssAndClick_SelectItemFromList(className: string, index: number) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.visibilityOf(element(by.css(className))), 100000).then(a => {
@@ -227,11 +129,22 @@ export class FieldsHelper {
             shipment.get(index).click();
         });
     }
-
     WaitByCssAndClick_FromTagInsideList(className: string, index: number) {// the item exists in a tag inside li
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000).then(a => {
             element.all(by.css(className)).get(index).click();
+        });
+    }
+    WaitByCssAndClick_FromTagInsideListWithCheck(className: string, index: number, Id: string = null, input: string = null) {
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000).then(a => {
+            element.all(by.css(className)).get(index).click();
+            var Newinput = element(by.id(Id)).getAttribute('value');
+            Newinput.then(p => {
+                if (p == "") {
+                    this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
+                }
+            });
         });
     }
 
@@ -255,18 +168,18 @@ export class FieldsHelper {
             var temp = "";
             var Text1 = element(by.id(Id)).getAttribute('textContent').then(function (OrigionalText) {
                 temp = OrigionalText;
-                
+
                 if (Text == OrigionalText) {
                     var EC = protractor.ExpectedConditions;
-                    
+
                     console.log("smart wait trueeeeeeeee");
                     expect(Text).toBe(OrigionalText);
-                    
+
                 }
                 else {
                     console.log("smart wait falseseeeeeeeee");
                     return false;
-                    
+
                 }
             });
         }, 100000);
@@ -285,8 +198,6 @@ export class FieldsHelper {
         //return element(by.id(Id)).getText().then(function (actualTextResultedFromAPromise) {
         //    return actualTextResultedFromAPromise;
         //});
-
-
     }
 }
 

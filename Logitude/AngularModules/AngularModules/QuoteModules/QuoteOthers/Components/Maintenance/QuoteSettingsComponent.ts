@@ -127,6 +127,13 @@ export class QuoteSettingsComponent extends BaseComponent {
         }
     }
 
+    get CopyExchangeRates() { return this.EntityPM.CopyExchangeRates; }
+    set CopyExchangeRates(value: boolean) {
+        if (this.EntityPM.CopyExchangeRates != value) {
+            this.EntityPM.CopyExchangeRates = value;
+        }
+    }
+
     get EditMainCarriage() { return this.EntityPM.EditMainCarriage; }
     set EditMainCarriage(value: boolean) {
         if (this.EntityPM.EditMainCarriage != value) {

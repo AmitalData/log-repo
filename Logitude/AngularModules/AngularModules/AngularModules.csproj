@@ -270,6 +270,10 @@
     <Content Include="CRMModules\CRMActivity\Components\NewEntity\NewTaskComponent.html" />
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
+    <Content Include="dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js" />
+    <Content Include="dist\out-tsc\Shipment\Services\StandardLists\ShipmentComputedFieldListService.js" />
+    <Content Include="dist\out-tsc\Shipment\Services\StandardPMs\ShipmentComputedFieldPMService.js" />
+    <Content Include="e2e\dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js" />
     <Content Include="Images\Buttons\downarrow.png" />
     <Content Include="Images\Buttons\uparrow.png" />
     <Content Include="Images\Error.png" />
@@ -277,6 +281,7 @@
     <Content Include="Images\ArrowLeft.png" />
     <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
+    <Content Include="Images\HideFilters.png" />
     <Content Include="Images\Icons\BlueChecked.png" />
     <Content Include="Images\Icons\Folder_B.png" />
     <Content Include="Images\Icons\Folder_L.png" />
@@ -298,6 +303,7 @@
     <Content Include="Images\Menu\Documents.Selected.png" />
     <Content Include="Images\Menu\Shared.png" />
     <Content Include="Images\numberIcon.png" />
+    <Content Include="Images\ShowFilters.png" />
     <Content Include="Images\train.png" />
     <Content Include="Images\truck.png" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\MainSchedulerComponent.html" />
@@ -6405,6 +6411,7 @@
     <TypeScriptCompile Include="Shipment\EntityLists\MessagingStockUsageHistoryList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\OBLTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\PickUpDeliveryTransportModeList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\ShipmentComputedFieldList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsMessageTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsTransmissionList.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerFollowUpPM.ts" />
@@ -6431,9 +6438,11 @@
     <TypeScriptCompile Include="Shipment\Services\StandardLists\MessagingStockListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\OBLTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\PickUpDeliveryTransportModeListService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentComputedFieldListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentCustomsMessageTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentCustomsTransmissionListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ContainerFollowUpPMService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentComputedFieldPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentCustomsTransmissionPMService.ts" />
     <TypeScriptCompile Include="Social\Components\AddSocialMessageParticipantsComponent.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransmissionsStatusListService.ts" />
@@ -6694,6 +6703,9 @@
     <Content Include="e2e\LogBox\tsconfig.e2e.json" />
     <Content Include="e2e\.vscode\launch.json" />
     <Content Include="InfrastructureModules.zip" />
+    <Content Include="dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js.map" />
+    <Content Include="dist\out-tsc\Shipment\Services\StandardLists\ShipmentComputedFieldListService.js.map" />
+    <Content Include="dist\out-tsc\Shipment\Services\StandardPMs\ShipmentComputedFieldPMService.js.map" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />
@@ -7298,7 +7310,6 @@
     <Folder Include="Customs\CustomFilters\" />
     <Folder Include="Customs\EntityPMInitServices\" />
     <Folder Include="Dashboard\Components\Graphs\" />
-    <Folder Include="dist\" />
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\LogBox\Documents\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />

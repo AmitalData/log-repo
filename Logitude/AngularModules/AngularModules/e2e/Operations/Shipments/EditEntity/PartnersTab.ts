@@ -52,7 +52,7 @@ export class PartnersTabComponent {
 
     this.Helper.WaitByIdAndClick(partnerType);
     this.Helper.WaitByIdAndFill(partnerID, PartnerText);
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,partnerID, PartnerText);
     this.Helper.WaitByIdAndClick('PartnerOKbtn');
 
 
@@ -61,7 +61,7 @@ export class PartnersTabComponent {
     this.Helper.WaitByIdAndClick(partnerTypeID);
     element(by.id(partnerNameID)).clear();
     this.Helper.WaitByIdAndFill(partnerNameID, 'age');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0),partnerNameID, 'age';
     this.Helper.WaitByIdAndClick('PartnerOKbtn');
   }
   DeletePartner(partnerTypeID: string) {

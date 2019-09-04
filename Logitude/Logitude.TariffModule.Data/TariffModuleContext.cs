@@ -74,6 +74,10 @@ namespace Logitude.TariffModule.Data
 	
             modelBuilder.Configurations.Add(new TariffSettingMap());
 	
+            modelBuilder.Configurations.Add(new TariffSurchargesUpdateMap());
+	
+            modelBuilder.Configurations.Add(new TariffSurchargesUpdateMethodMap());
+	
             modelBuilder.Configurations.Add(new TariffTypeMap());
 	
             modelBuilder.Configurations.Add(new TariffVersionMap());
@@ -118,6 +122,26 @@ namespace Logitude.TariffModule.Data
 			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge9Price).HasPrecision(18, 3);
 				
 			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge10Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge1MinPrice).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge2MinPrice).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge3MinPrice).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge4MinPrice).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge5MinPrice).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge6MinPrice).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge7MinPrice).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge8MinPrice).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge9MinPrice).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge10MinPrice).HasPrecision(18, 3);
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
@@ -410,6 +434,18 @@ namespace Logitude.TariffModule.Data
 	 }
 	
 	 public IDbSet<TariffSetting> TariffSettings 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TariffSurchargesUpdate> TariffSurchargesUpdates 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TariffSurchargesUpdateMethod> TariffSurchargesUpdateMethods 
 	 {
 	      get; set;
 	 

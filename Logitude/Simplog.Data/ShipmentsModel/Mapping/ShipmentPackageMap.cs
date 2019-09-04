@@ -21,6 +21,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PackagingGroup).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.IMDGCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.FlashPoint).HasMaxLength(8).IsUnicode(false);
+            this.Property(t => t.Temperature).HasMaxLength(8).IsUnicode(false);
             this.Property(t => t.Harmonize).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.ShipmentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.MaterialDescription).HasMaxLength(30).IsUnicode(false);

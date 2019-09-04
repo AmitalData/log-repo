@@ -1084,6 +1084,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\ImporterDepositionController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplateExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplatesVersionExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\TenantAdditionalDataViewsExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\WarehouseExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AgentSharedDocumentViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AirlineMessagingRuleViewsController.Generated.cs" />
@@ -1098,10 +1099,12 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\FTPDetailViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HybridTenantThresholdViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\NumberFormatViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\PaymentGatewayPartnerViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\RegistryDateTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportsTemplatesVersionViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportsTemplateViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\TemperatureUnitViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\TenantAdditionalDataViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\UsoCFDIViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AgentSharedDocumentController.Generated.cs" />
@@ -1228,6 +1231,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplateController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplatesVersionController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TarrifChargeController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantAdditionalDataController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantLoginPolicyController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TwoFactorAuthenticationDeviceController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\PortViewsController.cs" />
@@ -1821,12 +1825,14 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\MessagingStockViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\OBLTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\PickUpDeliveryTransportModeViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentComputedFieldsViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentCustomsMessageTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentCustomsTransmissionViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBSpecialHandlingCodeController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerFollowUpController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\FBLStockController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\CustomsTransmissionsStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentComputedFieldsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentCustomsTransmissionController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\ImporterApprovalReceivedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\PrivateLabelDenialController.cs" />
@@ -2521,6 +2527,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ParticipantUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PartnerTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PasswordPolicyUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentGatewayPartnerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentTermDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentTermUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PortUpdateClass.cs" />
@@ -2547,6 +2554,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TarrifTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TemperatureUnitUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TemplateFormatUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TenantAdditionalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TenantLoginPolicyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TenantUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\TermsofUseSignatureUpdateClass.cs" />
@@ -2672,6 +2680,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SprintUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSettingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSurchargesUpdateMethodUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSurchargesUpdateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionAllInChargeUpdateClass.cs" />
@@ -2838,6 +2848,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentAssemblyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentAWBPrintOnlyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCommodityUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentComputedFieldsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCustomerTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCustomsMessageTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentCustomsTransmissionUpdateClass.cs" />
@@ -2901,6 +2912,7 @@
     <Content Include="Integration Test\DocsOut\DocumentsOut.postman_collection.json" />
     <Content Include="Integration Test\Security\SecurityTests.postman_collection.json" />
     <Content Include="Integration Test\Maintenance\SystemSettings.postman_collection.json" />
+    <Content Include="Integration Test\Quotes\Quotes.postman_collection.json" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />

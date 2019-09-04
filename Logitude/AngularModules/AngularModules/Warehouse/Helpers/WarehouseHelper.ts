@@ -207,6 +207,9 @@ export class WarehouseHelper {
                 });
             }
 
+
+            entityPM.WarehouseEntryPackages = entityPM.WarehouseEntryPackages.filter(d => d.Quantity > 0);
+
             if (entityPM.WarehouseEntryPackages.length == 0) {
                 viewModel.ValidationErrorsList.push("You should at least add one package");
             }

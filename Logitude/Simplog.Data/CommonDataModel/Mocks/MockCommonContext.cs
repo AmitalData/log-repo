@@ -2524,7 +2524,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
 
 
 
-        public IDbSet<PaymentGatewayPartners> PaymentGatewayPartners
+        public IDbSet<PaymentGatewayPartner> PaymentGatewayPartners
         {
             get
             {
