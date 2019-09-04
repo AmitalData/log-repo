@@ -278,11 +278,12 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 item.Code = iChargeType.Id;
                 item.Name = iChargeType.Code;
                 item.DisplyText = iChargeType.Code;
-                item.Code_Int = index;
+                item.Code_Int = index;                
 
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
                     item.DisplyText = iChargeType.Code + " (" + iMeasurement.Code + ")";
+                    item.AdditionalField = iMeasurement.Code;
                 }
 
                 this.tariffCharges.push(item);
