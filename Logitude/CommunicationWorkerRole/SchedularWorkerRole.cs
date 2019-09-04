@@ -399,9 +399,13 @@ namespace CommunicationWorkerRole
     : Logitude.Server.Tools.WorkerEntryPointDoneLog
     {
         SchedularWorkerRole _SchedularWorkerRole;
-        public override void StartMe()
+        public CustomsSchedularWR()
         {
             _SchedularWorkerRole = new SchedularWorkerRole();
+        }
+        public override void StartMe()
+        {
+            
         }
 
         bool _Start = false;
