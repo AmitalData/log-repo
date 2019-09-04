@@ -60,7 +60,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 .MustInit(fakeIAccountingContext,
                newJournal,
                 myNewLedgerTransactionPM);
-            myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming();
+            myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming(true);
 
             var reconciliationList = myCreateAutoReconcileWhileStreamingService.ReconciliationList;
             Assert.IsNotNull(reconciliationList);
@@ -158,7 +158,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming();
+                myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming(true);
             }, "eyal said only 1 oldTRans Against 1 newTrans");
 
         }
@@ -217,7 +217,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     }
                 },
                 myNewLedgerTransactionPM);
-            myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming();
+            myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming(true);
 
             var reconciliationList = myCreateAutoReconcileWhileStreamingService.ReconciliationList;
             Assert.IsNotNull(reconciliationList);
@@ -306,7 +306,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                    
                 },
                 myNewLedgerTransactionPM);
-            myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming();
+            myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming(true);
 
             var reconciliationList = myCreateAutoReconcileWhileStreamingService.ReconciliationList;
             Assert.IsNotNull(reconciliationList);
@@ -371,7 +371,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             TestsUtil.AssertThrows<Exception>(delegate
             {
                 // Arrange
-                myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming();
+                myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming(true);
             },
                 // Assert: Verify the result:
                 "_JournalPM.JournalReconciles have  myOldTransToReconcile.Any( r=> !r.InReconcileProgress)");
@@ -427,7 +427,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             TestsUtil.AssertThrows<Exception>(delegate
             {
                 // Arrange
-                myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming();
+                myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming(true);
             },
                 // Assert: Verify the result:
                 "(totNew != totReconciliationAmount) ");

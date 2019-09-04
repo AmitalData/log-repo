@@ -22,6 +22,15 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         }
 
 
+        public List<LedgerTransactionPM> GetLedgerTransactionToReconcile(List<string> theReconcileAgainstLTranIdList, int tenant)
+        {
+            var qs = new LedgerTransactionQueryService(_AccountingContext);
+
+            var myOldTransToReconcile = qs.GetLedgerTransactionPMsByIdList(theReconcileAgainstLTranIdList, tenant);
+            return myOldTransToReconcile;
+
+        }
+
         public BankAccountPM GetBankAccountFromTransferAccount(string myLedgerTransactionTransferInCreditAccountId,int tenant)
         {
             var bankAccountQS = new BankAccountQueryService(this._AccountingContext);

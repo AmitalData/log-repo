@@ -74,6 +74,10 @@ namespace Logitude.TariffModule.Data
 	
             modelBuilder.Configurations.Add(new TariffSettingMap());
 	
+            modelBuilder.Configurations.Add(new TariffSurchargesUpdateMap());
+	
+            modelBuilder.Configurations.Add(new TariffSurchargesUpdateMethodMap());
+	
             modelBuilder.Configurations.Add(new TariffTypeMap());
 	
             modelBuilder.Configurations.Add(new TariffVersionMap());
@@ -430,6 +434,18 @@ namespace Logitude.TariffModule.Data
 	 }
 	
 	 public IDbSet<TariffSetting> TariffSettings 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TariffSurchargesUpdate> TariffSurchargesUpdates 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TariffSurchargesUpdateMethod> TariffSurchargesUpdateMethods 
 	 {
 	      get; set;
 	 

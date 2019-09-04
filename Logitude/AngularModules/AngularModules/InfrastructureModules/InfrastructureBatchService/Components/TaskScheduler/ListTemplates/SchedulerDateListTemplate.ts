@@ -3,6 +3,8 @@ import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { SchedulerExtendedPMService } from '../../../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { DownloadManager } from '../../../../../Infrastructure/Utilities/DownloadManager';
+import { AppTool } from '../../../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -17,6 +19,7 @@ export class SchedulerDateListTemplate {
     public fieldName: any;
     public dateValue: any;
     public Type: string;
+     
     schedulerExtendedPMService: SchedulerExtendedPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
@@ -90,7 +93,11 @@ export class SchedulerDateListTemplate {
 
 
     ViewLogFile() {
+        let logDocumentId = this.rowData["LogDocumentId"];
+        if (!AppTool.IsNullOrEmpty(logDocumentId)) {
 
+            DownloadManager.DownloadPage(logDocumentId);
+        }
     }
 
 }

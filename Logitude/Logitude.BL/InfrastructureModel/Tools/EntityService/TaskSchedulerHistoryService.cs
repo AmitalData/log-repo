@@ -15,6 +15,9 @@ using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -48,7 +51,21 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("TaskSchedulerHistory", tenant).ToString();
             this.Poco = new TaskSchedulerHistory();
             this.Poco.Id = this.entityPM.Id;
-             
+
+            DocumentRepository documentrepository = new DocumentRepository(entityPM.Tenant);
+            Document document = new Document()
+            {
+                CreateDate = DateTime.Now,
+                Extension = "txt",
+                Tenant = Convert.ToInt32(entityPM.Tenant),
+                Id = IdCounter.GetNumber("Document", entityPM.Tenant),
+                Folder = "SchedularLogs",
+            };
+            documentrepository.Add(document);
+            documentrepository.SubmitChanges();
+
+            this.Poco.LogDocumentId= this.entityPM.LogDocumentId = document.Id;
+
             TaskSchedulerHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
