@@ -145,7 +145,6 @@
     <Content Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.html" />
     <Content Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.html" />
-    <Content Include="Common\Components\Maintenance\TransmissionLogs\TransmissionLogAuditTabComponent.html" />
     <Content Include="Controls\All\SplitButtonComponent.html" />
     <Content Include="CRMModules\CRMEmployeeGroup\Components\NewEntity\NewEmployeeComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.html" />
@@ -278,6 +277,7 @@
     <Content Include="Images\ArrowLeft.png" />
     <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
+    <Content Include="Images\HideFilters.png" />
     <Content Include="Images\Icons\BlueChecked.png" />
     <Content Include="Images\Icons\Folder_B.png" />
     <Content Include="Images\Icons\Folder_L.png" />
@@ -299,6 +299,7 @@
     <Content Include="Images\Menu\Documents.Selected.png" />
     <Content Include="Images\Menu\Shared.png" />
     <Content Include="Images\numberIcon.png" />
+    <Content Include="Images\ShowFilters.png" />
     <Content Include="Images\train.png" />
     <Content Include="Images\truck.png" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\MainSchedulerComponent.html" />
@@ -444,7 +445,6 @@
     <TypeScriptCompile Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.ts" />
-    <TypeScriptCompile Include="Common\Components\Maintenance\TransmissionLogs\TransmissionLogAuditTabComponent.ts" />
     <TypeScriptCompile Include="Common\Components\MenuButtons\ContactMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
