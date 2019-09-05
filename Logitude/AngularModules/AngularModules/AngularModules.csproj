@@ -818,6 +818,12 @@
     <TypeScriptCompile Include="e2e\Maintenance\CompnayAddressSetting\CompanyAddressSetting-spec.ts" />
     <TypeScriptCompile Include="e2e\Maintenance\CompnayAddressSetting\CompanyAddressSetting.ts" />
     <TypeScriptCompile Include="e2e\Maintenance\CompnayAddressSetting\CompanyAddressSettingScenario.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Shipper\Shipper-spec.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Shipper\Shipper.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Shipper\ShipperScenario.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Users\Users-spec.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Users\Users.ts" />
+    <TypeScriptCompile Include="e2e\Maintenance\Users\UsersScenario.ts" />
     <TypeScriptCompile Include="e2e\Operations\PrintDocOut\PrintDocOut.ts" />
     <TypeScriptCompile Include="e2e\Operations\SendMailPopup\SendMailPopup.ts" />
     <TypeScriptCompile Include="e2e\Operations\ShipmentView\ShipmentView-spec.ts" />
@@ -6412,7 +6418,6 @@
     <TypeScriptCompile Include="Shipment\EntityLists\MessagingStockUsageHistoryList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\OBLTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\PickUpDeliveryTransportModeList.ts" />
-    <TypeScriptCompile Include="Shipment\EntityLists\ShipmentComputedFieldList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsMessageTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsTransmissionList.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerFollowUpPM.ts" />
@@ -6440,6 +6445,7 @@
     <TypeScriptCompile Include="Shipment\Services\StandardLists\OBLTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\PickUpDeliveryTransportModeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentComputedFieldListService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentComputedFieldsListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentCustomsMessageTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentCustomsTransmissionListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ContainerFollowUpPMService.ts" />
