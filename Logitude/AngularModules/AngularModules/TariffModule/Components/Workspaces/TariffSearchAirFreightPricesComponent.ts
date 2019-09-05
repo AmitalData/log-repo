@@ -596,10 +596,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     ValidateExistConnectedTariff(item: TariffSearchSummary) {
         var isValid = true;
-        var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null)[0];
+        var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.ChargesTypeId != item.ChargeTypeId)[0];
         var existsPayableOnSurcharges: ShipmentPayablePM [] = []; 
         item.Surcharges.forEach(surcharge => {
-            var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null)[0];
+            var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.ChargesTypeCode != surcharge.ChargeTypeId)[0];
             if (payable) {
                 existsPayableOnSurcharges.push(payable);
             }
