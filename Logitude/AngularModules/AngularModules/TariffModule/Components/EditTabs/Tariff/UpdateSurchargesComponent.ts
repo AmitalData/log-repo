@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
+import { TariffSurchargesUpdatePM } from '../../../EntityPMs/TariffSurchargesUpdatePM';
 import { UpdateTariffArgs } from '../../../Args';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
@@ -33,30 +34,24 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public ToSearchAreaId: string = "ToSearchAreaId";
     constructor() {
         super();
-
         this.FromTariffAreaDropButton += this.CurrentSession.GetNewId("FromTariffAreaDropButton_1");
         this.FromSearchAreaId += this.CurrentSession.GetNewId("FromSearchAreaId_1");
         this.ToTariffAreaDropButton += this.CurrentSession.GetNewId("ToTariffAreaDropButton_1");
         this.ToSearchAreaId += this.CurrentSession.GetNewId("ToSearchAreaId_1");
-
         this.SetUIProperties();
     }
     
     SetWindowArgs(arg: UpdateTariffArgs) {
         this.EntityPM = arg.Version;
-
-        
         this.FillTariffCharges(arg.TariffCharges);
         this.LoadAirlineAreas(arg.AirlineId);
     }
 
     SetUIProperties() {
         var isStartDateRequired: boolean = false;
-
         if (this.StartDate == null || this.StartDate == undefined) {
             isStartDateRequired = true;
         }
-
         this.UIProperties.SetRequired("StartDate", null, isStartDateRequired);
     }
 
@@ -516,4 +511,19 @@ export class AirlineAreaClass {
             this.isChecked = value;            
         }
     }
+}
+
+export class TariffSurchargesUpdateItem {
+    public entity: TariffSurchargesUpdatePM;
+
+    constructor() {
+
+    }
+
+    public get To() { return this.entity.To; }
+    public get From() { return this.entity.From; }
+    public get CreateDate() { return this.entity.CreateDate; }
+    public get StartDate() { return this.entity.StartDate; }
+    public get LinesUpdated() { return this.entity.LinesUpdated; }
+    public get Surcharges() { return this.entity.Surcharges; }
 }
