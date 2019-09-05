@@ -236,6 +236,7 @@ namespace Logitude.Accounting.BL.Utils
                     this._valueToMatch = -(journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m));
                 }
                 this._oneLineLedger = ledgerTransaction; // ledgerTransactionQueryService.GetByJournalLineIdAndLine(journalLine.JournalId, journalLine.Line, journalLine.Tenant);
+                this._oneLineLedger.AmountToReconcile = _valueToMatch;
             }
         }
     }
