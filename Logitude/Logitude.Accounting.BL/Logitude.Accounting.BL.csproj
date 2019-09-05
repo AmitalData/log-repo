@@ -485,6 +485,7 @@
     <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
+    <Compile Include="EntityQueryServices\JournalLineLedgerTransactionAccDTO.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionDTO.cs" />
     <Compile Include="EntityQueryServices\JournalMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalStatusTypeQueryService.cs" />
@@ -578,6 +579,7 @@
     <Compile Include="Utils\FutureOpenChequesBatch.cs" />
     <Compile Include="Utils\PostDatedChequesRedemptionBatch.cs" />
     <Compile Include="Utils\ReconciliationAfterConversionBatch.cs" />
+    <Compile Include="Utils\ReconciliationStageBBatch.cs" />
     <Compile Include="Validators\AccountingPeriodValidator.cs" />
     <Compile Include="Validators\AutomaticReconcileMethodValidator.cs" />
     <Compile Include="Validators\ChartOfAccountValidator.cs" />
