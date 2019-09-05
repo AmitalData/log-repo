@@ -23,6 +23,7 @@ using Logitude.Customs.BL.Messaging.Maman;
 using System.Threading;
 using Logitude.Customs.BL.Messaging;
 using System.Net;
+using CommunicationWorkerRole;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -44,7 +45,7 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("SendWEBAPIMessage2MamanWR");
             _CBWorkerRole.Items.Add("FTPToAnalyzeQueueWR");
             _CBWorkerRole.Items.Add("CustomsAnalyzeQueueWR");
-            _CBWorkerRole.Items.Add("SchedularWorkerRole");
+            _CBWorkerRole.Items.Add("CustomsSchedularWR");
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
@@ -193,6 +194,13 @@ namespace AmitalCustomsWindowsService.Tester
             dynamic d;
             switch (_CBWorkerRole.Text)
             {
+                case "CustomsSchedularWR":
+                    {
+                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsSchedularWR>(
+                                        10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                        { ServiceStarted = true, };
+                    }
+                    break;
                 case "CustomsCommandGetCustomRequestWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandGetCustomRequestWR>(
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
@@ -499,9 +507,10 @@ namespace AmitalCustomsWindowsService.Tester
         {
             switch (_CBWorkerRole.Text)
             {
-                case "SchedularWorkerRole":
+                case "CustomsSchedularWR":
                     {
-                        MessageBox.Show("Test:SchedularWorkerRole");
+                        var customsSchedularWR = new CustomsSchedularWR();
+                        customsSchedularWR.WorkOnce();
                     }
                     break;
                 case "CustomsAnalyzeQueueWR":
