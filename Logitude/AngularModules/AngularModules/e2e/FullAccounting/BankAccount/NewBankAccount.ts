@@ -19,6 +19,8 @@ export class NewBankAccount {
         browser.ignoreSynchronization = true;
         this.Helper.WaitByIdAndClick('FABNKS');
         this.Helper.WaitByIdAndClick('NEWBANK');
+        this.Helper.ItemsPresent('BankAccount_BankId');
+        this.Helper.ItemsVisibility('BankAccount_BankId');
         this.Helper.WaitByIdAndFill('BankAccount_BankId', 'Leumi');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitByIdAndFill('BankAccount_BranchNumber', '12544');
