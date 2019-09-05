@@ -248,7 +248,7 @@
                     </div>
 
                     <div *ngIf="logcelltemplate.IsEditMode">
-                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="'WarehouseEntry'" [HideColumns]="true"></LogTextBox>
+                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'Integer'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="'WarehouseEntry'" [HideColumns]="true"></LogTextBox>
                     </div>
                 </log-cell-template>
             </log-column>
@@ -262,7 +262,7 @@
                     </div>
 
                     <div *ngIf="logcelltemplate.IsEditMode">
-                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Length'" [Text]="item.Length" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'Integer'" [ObjectFieldName]="'Length'" [Text]="item.Length" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                     </div>
                 </log-cell-template>
             </log-column>
@@ -276,12 +276,12 @@
                     </div>
 
                     <div *ngIf="logcelltemplate.IsEditMode">
-                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Width'" [Text]="item.Width" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'Integer'" [ObjectFieldName]="'Width'" [Text]="item.Width" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                     </div>
                 </log-cell-template>
             </log-column>
-
-
+                        
+                        
              <!--Height-->
             <log-column [width]="'85'" [header]="HeightLabel">
                 <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer && !item.IsDisabled">
@@ -290,7 +290,7 @@
                     </div>
 
                     <div *ngIf="logcelltemplate.IsEditMode">
-                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Height'" [Text]="item.Height" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'Integer'" [ObjectFieldName]="'Height'" [Text]="item.Height" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                     </div>
                 </log-cell-template>
             </log-column>
@@ -304,7 +304,7 @@
                     </div>
 
                     <div *ngIf="logcelltemplate.IsEditMode">
-                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'Decimal'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                     </div>
                 </log-cell-template>
             </log-column>
@@ -325,7 +325,7 @@
                     </div>
 
                     <div *ngIf="logcelltemplate.IsEditMode">
-                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Weight'" [Text]="item.Weight" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        <LogTextBox [FocusOnMe]="'true'" [InputType]="'Decimal'" [ObjectFieldName]="'Weight'" [Text]="item.Weight" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                     </div>
                 </log-cell-template>
             </log-column>

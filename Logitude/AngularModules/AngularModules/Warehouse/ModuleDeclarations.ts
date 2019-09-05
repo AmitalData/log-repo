@@ -27,6 +27,9 @@ import {WarehouseConnectionsTabComponent} from './Components/EditTabs/Connection
 import {WarehouseEntryPackagesTabComponent} from './Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent'; 
 import {WarehouseReleaseFiltersMenuComponent} from './Components/FiltersMenu/WarehouseReleaseFiltersMenuComponent';
 
+import {WarehouseReleasePackagesDetailsComponent} from './Components/WarehouseReleasePackagesDetailsComponent';
+
+
 export const Components =
     [
         NewWarehouseEntryComponent,
@@ -51,6 +54,7 @@ export const Components =
         WarehouseEntryPackagesTabComponent,
         WarehouseReleaseFiltersMenuComponent,
         WarehouseConnectionsTabComponent,
+        WarehouseReleasePackagesDetailsComponent,
     ];
 
 export class ModuleDeclarations {
@@ -82,6 +86,9 @@ export class ModuleDeclarations {
             case "WarehouseEntryPackagesTabComponent": { myResult = WarehouseEntryPackagesTabComponent; break; } 
             case "WarehouseReleaseFiltersMenuComponent": { myResult = WarehouseReleaseFiltersMenuComponent; break; }
             case "WarehouseConnectionsTabComponent": { myResult = WarehouseConnectionsTabComponent; break; }
+            case "WarehouseReleasePackagesDetailsComponent": { myResult = WarehouseReleasePackagesDetailsComponent; break; }
+
+                
       
         }
 
