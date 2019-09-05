@@ -178,12 +178,13 @@
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
+            this.FilePathTextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.FilePathTextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.UpdateLogosLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1711,6 +1712,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.UpdateLogosLabel);
             this.tabPage3.Controls.Add(this.label6);
             this.tabPage3.Controls.Add(this.FilePathTextBox);
             this.tabPage3.Controls.Add(this.label5);
@@ -1723,6 +1725,31 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Airline Logos";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(389, 30);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(223, 13);
+            this.label6.TabIndex = 104;
+            this.label6.Text = "ex: C:\\Users\\SAMARA\\Desktop\\AirlineLogos";
+            // 
+            // FilePathTextBox
+            // 
+            this.FilePathTextBox.Location = new System.Drawing.Point(73, 27);
+            this.FilePathTextBox.Name = "FilePathTextBox";
+            this.FilePathTextBox.Size = new System.Drawing.Size(298, 20);
+            this.FilePathTextBox.TabIndex = 103;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 30);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.TabIndex = 102;
+            this.label5.Text = "File path";
             // 
             // label4
             // 
@@ -1750,30 +1777,14 @@
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
             // 
-            // label5
+            // UpdateLogosLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 30);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 13);
-            this.label5.TabIndex = 102;
-            this.label5.Text = "File path";
-            // 
-            // FilePathTextBox
-            // 
-            this.FilePathTextBox.Location = new System.Drawing.Point(73, 27);
-            this.FilePathTextBox.Name = "FilePathTextBox";
-            this.FilePathTextBox.Size = new System.Drawing.Size(298, 20);
-            this.FilePathTextBox.TabIndex = 103;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(389, 30);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(223, 13);
-            this.label6.TabIndex = 104;
-            this.label6.Text = "ex: C:\\Users\\SAMARA\\Desktop\\AirlineLogos";
+            this.UpdateLogosLabel.AutoSize = true;
+            this.UpdateLogosLabel.Location = new System.Drawing.Point(129, 101);
+            this.UpdateLogosLabel.Name = "UpdateLogosLabel";
+            this.UpdateLogosLabel.Size = new System.Drawing.Size(19, 13);
+            this.UpdateLogosLabel.TabIndex = 105;
+            this.UpdateLogosLabel.Text = "....";
             // 
             // Form1
             // 
@@ -1977,6 +1988,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox FilePathTextBox;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label UpdateLogosLabel;
     }
 }
 

@@ -116,6 +116,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
                                         var newItem = new ContactList();
                                         newItem.Email = email;
                                         newItem.EnglishName = email;
+                                        if (!AppTool.IsNullOrEmpty(email) && email != "undefined" && email !="null")
                                         this.SelectedItems.push(newItem);
                                     }
                                 }
