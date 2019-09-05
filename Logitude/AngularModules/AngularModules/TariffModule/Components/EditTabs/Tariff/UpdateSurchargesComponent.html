@@ -310,7 +310,7 @@
                                                                 <label>Surcharges</label>
                                                             </td>
                                                         </tr>
-                                                        
+
                                                         <tr style="height:28px;">
                                                             <td>
                                                                 <table>
@@ -326,7 +326,7 @@
                                                                         <td style="width:1px;">
                                                                             <div></div>
                                                                         </td>
-                                                                        
+
                                                                         <td style="width:90px; text-align:center" class="Label">
                                                                             Min Price
                                                                         </td>
@@ -336,7 +336,7 @@
                                                                         </td>
                                                                     </tr>
                                                                 </table>
-                                                            </td>                                                            
+                                                            </td>
                                                         </tr>
 
                                                         <tr>
@@ -442,18 +442,48 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width: 30px; max-width:30px; min-width:30px;">#</td>
+                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Create Date</td>
                                                                         <td style="width: 80px; max-width:80px; min-width:80px;">From</td>
                                                                         <td style="width: 80px; max-width:80px; min-width:80px;">To</td>
                                                                         <td style="width: 100px; max-width:100px; min-width:100px;">Start Date</td>
                                                                         <td style="width: 100px; max-width:100px; min-width:100px;">Surcharges</td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Lines Updated</td>
+                                                                        <td style="width: 40px; max-width:40px; min-width:40px;">Lines Updated</td>
+                                                                        <td><div></div></td>
                                                                     </tr>
                                                                 </table>
                                                             </div>
 
                                                             <div class="SimpleGridViewBody">
                                                                 <table>
-                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of Logs"></tr>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of Logs">
+                                                                        <td class="CellStretched" style="width: 30px; max-width:30px; min-width:30px;">
+                                                                            {{item.ChequeNumber }}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 100px; max-width:100px; min-width:100px;">
+                                                                            {{item.CreateDate}}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 80px; max-width:80px; min-width:80px;">
+                                                                            {{item.From}}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 80px; max-width:80px; min-width:80px;">
+                                                                            {{item.To}}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 100px; max-width:100px; min-width:100px;">
+                                                                            {{item.StartDate}}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 100px; max-width:100px; min-width:100px;">
+                                                                            {{item.Surcharges}}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 40px; max-width:40px; min-width:40px;">
+                                                                            {{item.LinesUpdated}}
+                                                                        </td>
+                                                                        <td><div></div></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="8">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
                                                                 </table>
                                                             </div>
                                                         </div>

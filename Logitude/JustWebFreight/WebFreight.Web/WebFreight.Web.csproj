@@ -1826,14 +1826,12 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\MessagingStockViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\OBLTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\PickUpDeliveryTransportModeViewsController.Generated.cs" />
-    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentComputedFieldsViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentCustomsMessageTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentCustomsTransmissionViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBSpecialHandlingCodeController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerFollowUpController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\FBLStockController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\CustomsTransmissionsStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentComputedFieldsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentCustomsTransmissionController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\ImporterApprovalReceivedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\PrivateLabelDenialController.cs" />

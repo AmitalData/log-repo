@@ -2591,6 +2591,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             foreach (FromToClass rout in routs)
                             {
                                 TariffLinePM myLine = iDraftVersion.TariffLines.Where(d => d.OriginPortId == rout.FromCode && d.DestinationPortId == rout.ToCode).FirstOrDefault();
+                                // Update
                                 if (myLine != null)
                                 {
                                     myLine.ChangeSetOp = ChangeSetOperation.Update;
@@ -2619,7 +2620,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         valuePropInfo2.SetValue(myLine, minPrice, null);
                                     }
                                 }
-
+                                // New 
                                 else
                                 {
                                     TariffLinePM tariffLine = new TariffLinePM()

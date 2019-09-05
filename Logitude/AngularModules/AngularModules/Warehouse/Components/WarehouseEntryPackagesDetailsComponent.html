@@ -184,8 +184,38 @@
 
                         </log-column>
 
+
+
+                        <!-- Container# -->
+                        <log-column *ngIf="!IsLCLEntity" [width]="'120'" [header]="'Container Number'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
+
+                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.ContainerNumber">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 15px;" *ngIf="item.ContainerNumberWarning">
+                                                <img [attr.title]="item.ContainerNumberWarning" src="./Images/WarningIcon.png" style="vertical-align: middle; display: block; margin:auto;" />
+                                            </td>
+
+                                            <td style="width: 5px;" *ngIf="item.ContainerNumberWarning">
+                                                <div></div>
+                                            </td>
+
+                                            <td>{{item.ContainerNumber}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [FocusOnMe]="'true'"  (LostFocus)="item.ContainerNumberLostFocus($event)" [ObjectFieldName]="'ContainerNumber'" [Text]="item.ContainerNumber" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </div>
+                            </log-cell-template>
+                        </log-column>
+
+
+
                         <!-- Container Number -->
-                        <log-column  *ngIf="!IsLCLEntity" [width]="'120'" [header]="'Container Number'">
+                        <!--<log-column  *ngIf="!IsLCLEntity" [width]="'120'" [header]="'Container Number'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'left'">
 
                                 <div>
@@ -206,12 +236,12 @@
 
 
                             </log-cell-template>
-                        </log-column>
+                        </log-column>-->
 
 
             <!-- Quantity -->
             <log-column [width]="'80'" [header]="'Quantity'">
-                <log-cell-template template="let item" #logcelltemplate  [IsEnabled]="item.IsQuantityEnabled"> 
+                <log-cell-template template="let item" #logcelltemplate  [IsEnabled]="item.IsQuantityEnabled && !item.IsDisabled"> 
 
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Quantity}}
@@ -226,7 +256,7 @@
 
             <!--Length-->
             <log-column [width]="'85'" [header]="LengthLabel" >
-                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer && !item.IsDisabled">
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Length}}
                     </div>
@@ -240,7 +270,7 @@
 
               <!--Width-->
             <log-column [width]="'80'" [header]="WidthLabel" >
-                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer && !item.IsDisabled">
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Width}}
                     </div>
@@ -254,7 +284,7 @@
 
              <!--Height-->
             <log-column [width]="'85'" [header]="HeightLabel">
-                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer && !item.IsDisabled">
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Height}}
                     </div>
@@ -268,7 +298,7 @@
 
             <!-- Volume -->
             <log-column [width]="'95'" [header]="VolumeLabel">
-                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsVolumeEnabled">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsVolumeEnabled && !item.IsDisabled">
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Volume | NumbersPipe:'N3'}}
                     </div>
@@ -288,7 +318,7 @@
 
             <!-- Gross Weight -->
             <log-column  [width]="'120'" [header]="GrossWeightLabel">
-                <log-cell-template  template="let item" #logcelltemplate [IsEnabled]="item.IsGrossWeightEnabled">
+                <log-cell-template  template="let item" #logcelltemplate [IsEnabled]="item.IsGrossWeightEnabled && !item.IsDisabled">
 
                     <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Weight | NumbersPipe:'N3'}}
@@ -302,14 +332,14 @@
 
             <!-- Commodity No-->
             <log-column [width]="'100'" [header]="'Commodity #'">
-                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
                     {{item.CommodityNumber}}
                 </log-cell-template>
             </log-column>
 
                         <!--Description-->
                         <log-column [width]="'170'" [header]="'Description Of Goods'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
 
                                 <div [attr.title]="item.Description" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;">
                                     {{item.Description}}
@@ -324,7 +354,7 @@
 
                         <!--Location-->
                         <log-column [width]="'90'" [header]="'Location'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
 
                                 <div [attr.title]="item.Location" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;">
                                     {{item.Location}}
@@ -346,13 +376,13 @@
                                         <tr>
                                             <td>{{item.Instock}}</td>
                                             <td style="width:5px"><div style="width:5px"></div></td>
-                                            <td style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
+                                            <td style="width:25px;height:15px; padding-right:2px;vertical-align:middle;">
                                                 <CellTooltip *ngIf="item.ReleasesNumber" [IconWidth]="20" [IconHeight]="15" [IconPath]="'./Images/Help.png'" [Head]="'Instock'">
                                                     <table>
 
-                                                        <tr style="height:20px"><td style="width:2px;"><div></div></td><td><div class="Label">Related Releases:</div></td><td style="width:2px;"><div></div></td></tr>
+                                                        <tr style="height:15px"><td style="width:2px;"><div></div></td><td><div class="Label">Related Releases:</div></td><td style="width:2px;"><div></div></td></tr>
 
-                                                        <tr *ngFor="let releasesNumber of item.ReleasesNumber.split(',')" style="vertical-align:top;height:22px;">
+                                                        <tr *ngFor="let releasesNumber of item.ReleasesNumber.split(',')" style="vertical-align:top;height:15px;">
                                                             <td style="width:2px;"><div></div></td>
 
                                                             <td style="width: 140px;max-width:140px;">
@@ -387,11 +417,11 @@
                                         <table>
                                             <tr>
                                                 <td style="width: 23px; padding-left: 5px;">
-                                                    <IconButton [disabled]="item.Quantity != item.Instock" [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left;" (click)="EditPackage(item)"></IconButton>
+                                                    <IconButton [disabled]="item.IsDisabled" [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left;" (click)="EditPackage(item)"></IconButton>
                                                 </td>
 
                                                 <td style="width: 20px; padding-left: 2px;">
-                                                    <IconButton [disabled]="item.Quantity != item.Instock" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left;" (click)="DeletePackage(item)"></IconButton>
+                                                    <IconButton [disabled]="item.IsDisabled" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: left;" (click)="DeletePackage(item)"></IconButton>
                                                 </td>
 
                                                 <td>
