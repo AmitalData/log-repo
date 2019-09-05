@@ -32,11 +32,10 @@ export class NewBankAccount {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('BankAccount_GLAccountId', Name1);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0),
-
-            // this.Helper.WaitBusyIndicator();
+         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('BankAccount_DeferredGLAccountId', Name2);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0),
-            //this.Helper.WaitBusyIndicator();
+        this.Helper.WaitBusyIndicator();
         this.Helper.ItemsPresent('BankAccount_TransferGLAcccountId');
 
         this.Helper.WaitByIdAndFill('BankAccount_TransferGLAcccountId', Name3);
