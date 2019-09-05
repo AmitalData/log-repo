@@ -1096,6 +1096,7 @@ namespace WarehouseData.Helper
 
                 string originTableName = table.TableName == "WaterMark" && isPrivateDB ? ("Private" + table.DBTableName) : table.DBTableName;
 
+
                 SqlCommand commandSourceData = new SqlCommand(
            "SELECT " + fieldName +
            " FROM dbo." + originTableName + condition + " ;", sourceConnection);
@@ -1681,6 +1682,29 @@ namespace WarehouseData.Helper
 
         }
 
+        private string DeleteRowsFromDataWarehouse(DeleteRowsArgs deleteRowsArgs)
+        {
+            int rowsCount = 0;
+            StringBuilder allDeletedRows = new StringBuilder();
+            StringBuilder deletedRows = new StringBuilder();
+            foreach (string id in deleteRowsArgs.IdsList)
+            {
+                rowsCount += 1;
+                deletedRows.Append("'" + id + "'" + ",");
+                if (rowsCount == 1000 || (deleteRowsArgs.IdsList.IndexOf(id) == deleteRowsArgs.IdsList.IndexOf(deleteRowsArgs.IdsList.Last())))
+                {
+                    if (deleteRowsArgs.ReturnDeleteIdsAsString) allDeletedRows.Append(deletedRows.ToString());
+                    string cmd = "delete " + deleteRowsArgs.TableName + " where " + deleteRowsArgs.KeyName + " in " + ("(" + deletedRows.ToString() + ")").Replace(",)", ")");
+                    ExecuteSql(cmd, deleteRowsArgs.ConnectionString);
+                    rowsCount = 0;
+                    deletedRows.Clear();
+                }
+            }
+
+            return !string.IsNullOrEmpty(allDeletedRows.ToString()) ? ("(" + allDeletedRows.ToString() + ")").Replace(",)", ")") : null;
+
+        }
+
 
         #endregion
 
@@ -1784,6 +1808,15 @@ namespace WarehouseData.Helper
         #endregion
 
 
+    }
+
+    public class DeleteRowsArgs
+    {
+        public string TableName { get; set; }
+        public string KeyName { get; set; }
+        public string ConnectionString { get; set; }
+        public List<string> IdsList { get; set; }
+        public bool ReturnDeleteIdsAsString { get; set; }
     }
 
     public class DeleteRowsArgs
