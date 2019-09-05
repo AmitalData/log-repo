@@ -18,6 +18,11 @@ import {PackageTypeList} from '../../Common/EntityLists/PackageTypeList';
 import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
 import {PackageTypeListService} from '../../Common/Services/StandardLists/PackageTypeListService';
 import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
+import {ObservableCollection} from '../../Infrastructure/Utilities/ObservableCollection';
+import {WarehouseEntryPackageItem} from '../../Warehouse/Components/AddEditWarehouseEntryPackagesAndContainers';
+
+
+
 @Component({
     moduleId: module.id,
     selector: 'WarehouseEntryPackagesDetailsComponent',
@@ -40,9 +45,15 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     VolumeLabel: string;
     GrossWeightLabel: string;
     DimensionsLabel: string;
+
+
+    HeightLabel: string;
+    WidthLabel: string;
+    LengthLabel: string;
+
     VolumetricWeightLabel: string;
-
-
+    IsNewEntity: boolean = false;
+    public ItemsSource: ObservableCollection;
     IsEditMode: boolean = false;
     IsFromFullWarehouseEntryComponent: boolean = false;
 
@@ -55,6 +66,8 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     constructor() {
         super();
         this.myPackageTypeService = new PackageTypeListService();
+        this.ItemsSource = new ObservableCollection([]);
+
     }
 
     ngOnInit(
@@ -86,6 +99,25 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
      
 
     }
+
+
+
+    BuildItemsSource() {
+
+ 
+
+        var itemsCollection: WarehouseEntryPackageItem[] = [];
+
+        this.WarehouseEntryPackagesLists.forEach((item) => {
+            itemsCollection.push(new WarehouseEntryPackageItem(item,this));
+        })
+
+        this.ItemsSource.InsertCollection(itemsCollection);
+        
+    }
+
+
+
 
 
     // Measurments
@@ -232,40 +264,17 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         this.DimensionsLabel = "Dim(L-W-H) (" + this.warehouseEntryPM.DimensionsUnitCode + ")";
         this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseEntryPM.ChargeableWeightUnitCode + ")";
         this.ChargeableWeightUnitCodeLabel = "Chargeable Weight (" + this.warehouseEntryPM.ChargeableWeightUnitCode + ")";
-        this.DimensionsUnitLable = " ("+ this.warehouseEntryPM.DimensionsUnitCode + ")";
+        this.DimensionsUnitLable = " (" + this.warehouseEntryPM.DimensionsUnitCode + ")";
+        this.WidthLabel = "Width (" + this.DimensionsUnitCode + ")";
+        this.HeightLabel = "Height (" + this.DimensionsUnitCode + ")";
+        this.LengthLabel = "Length (" + this.DimensionsUnitCode + ")";
+
+
     }
 
 
     private ComputeGrossWeigh_Kg_Ton() {
-        //var weigh_Kg: number = null;
-        //var weigh_Ton: number = null;
 
-        //if (this.GrossWeight != null) {
-        //    var factorOfConvert: number = 1;
-
-        //    if (!AppTool.IsNullOrEmpty(this.GrossWeightUnitCode)) {
-        //        switch (this.GrossWeightUnitCode.toUpperCase()) {
-        //            case "KG": { factorOfConvert = 1; break; }
-        //            case "LB": { factorOfConvert = 0.45359237; break; }
-        //            case "MT": { factorOfConvert = 1000; break; }
-        //        }
-        //    }
-
-        //    weigh_Kg = this.GrossWeight * factorOfConvert;
-        //}
-
-        //if (weigh_Kg != null) {
-        //    weigh_Kg = AppTool.Round(weigh_Kg, 3);
-
-        //    weigh_Ton = weigh_Kg / 1000;
-        //}
-
-        //if (weigh_Ton != null) {
-        //    weigh_Ton = AppTool.Round(weigh_Ton, 3);
-        //}
-
-        //this.EntityPM.GrossWeightInKG = weigh_Kg;
-        //this.EntityPM.GrossWeightPerTon = weigh_Ton;
     }
 
     public RecalculateShipmentFields(warehouseEntryPM: WarehouseEntryPM) {
@@ -400,18 +409,31 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
                 if (!isDirty) this.warehouseEntryPM.IsDirty = false;
             }
 
-            this.VolumeLabel = "Volume (" + this.warehouseEntryPM.VolumeUnitCode + ")";
-            this.GrossWeightLabel = "Gross Weight (" + this.warehouseEntryPM.GrossWeightUnitCode + ")";
-            this.DimensionsLabel = "Dim(L-W-H) (" + this.warehouseEntryPM.DimensionsUnitCode + ")";
+
 
             this.SetAttachedLabels();
 
 
+            //SetDefultPackage
+
+            if (this.warehouseEntryPM.WarehouseEntryPackages.length == 0) {
+                var i = 0;
+                while (i < 5) {
+                    var warehouseEntryPackagePM = new WarehouseEntryPackagePM(null);
+                    warehouseEntryPackagePM.Tenant = SessionLocator.TenantPM.Id;
+                    warehouseEntryPackagePM.CreatedByUserId = SessionLocator.LoggedUserId;
+                    warehouseEntryPackagePM.UpdatedByUserId = SessionLocator.LoggedUserId;
+                    warehouseEntryPackagePM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+                    warehouseEntryPackagePM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+                    warehouseEntryPackagePM.WarehouseEntryId = this.warehouseEntryPM.Id;
+                    warehouseEntryPackagePM.IsContainer = false;
+                    this.warehouseEntryPM.WarehouseEntryPackages.push(warehouseEntryPackagePM);
+                    i += 1;
+                }
+            }
+          
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
-            //this.TotalPieces = this.warehouseEntryPM.TotalPieces ? this.warehouseEntryPM.TotalPieces : 0;
-            //this.TotalGrossWeight = this.warehouseEntryPM.TotalGrossWeight ? this.warehouseEntryPM.TotalGrossWeight : 0;
-            //this.TotalVolume = this.warehouseEntryPM.TotalVolume ? this.warehouseEntryPM.TotalVolume : 0;
             this.warehouseEntryPM.WarehouseEntryPackages.forEach((item) => {
                 var savedItem = new WarehouseEntryPackagePM(null);
                 savedItem.PackageTypeId = item.PackageTypeId;
@@ -452,34 +474,46 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         }
 
   
-
+        this.BuildItemsSource();
         this.ComputeAndFullTotalPackage(true);
     }
-  
+
+
+
+
+
+    public SelectedRow: WarehouseEntryPackageItem = null;
+    OnRowSelected(itemComponent: WarehouseEntryPackageItem) {
+        this.SelectedRow = itemComponent;
+
+    }
+
+
+
 
     AddPackage(isContainer: boolean) {
 
-        var newWarehouseEntryPackagePM: WarehouseEntryPackagePM = new WarehouseEntryPackagePM(null);
-        newWarehouseEntryPackagePM.Tenant = SessionLocator.TenantPM.Id;
-        newWarehouseEntryPackagePM.CreatedByUserId = SessionLocator.LoggedUserId;
-        newWarehouseEntryPackagePM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        newWarehouseEntryPackagePM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
-        newWarehouseEntryPackagePM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
 
-        newWarehouseEntryPackagePM.WarehouseEntryId = this.warehouseEntryPM.Id;
-        newWarehouseEntryPackagePM.Id = "1-1";
-        newWarehouseEntryPackagePM.IsContainer = isContainer;
+        var warehouseEntryPackagePM = new WarehouseEntryPackagePM(null)
+        warehouseEntryPackagePM.Tenant = SessionLocator.TenantPM.Id;
+        warehouseEntryPackagePM.CreatedByUserId = SessionLocator.LoggedUserId;
+        warehouseEntryPackagePM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        warehouseEntryPackagePM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+        warehouseEntryPackagePM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+        warehouseEntryPackagePM.WarehouseEntryId = this.warehouseEntryPM.Id;
+        warehouseEntryPackagePM.IsContainer = isContainer;
+        var warehouseEntryPackageItem: WarehouseEntryPackageItem = new WarehouseEntryPackageItem(warehouseEntryPackagePM, this);
 
         var title: string = isContainer ? "Add Container" : "Add Package";
-        this.ShowAddPackageWindow(newWarehouseEntryPackagePM, true, title);
+        this.ShowAddPackageWindow(warehouseEntryPackageItem, true, title);
 
     }
 
-    ShowAddPackageWindow(warehouseEntryPackagePM: WarehouseEntryPackagePM,  isNewEntity: boolean, title: string) {
+    ShowAddPackageWindow(warehouseEntryPackageItem: WarehouseEntryPackageItem,  isNewEntity: boolean, title: string) {
 
         var windowArgs: any = {};
         windowArgs.IsNewEntity = isNewEntity;
-        windowArgs.WarehouseEntryPackagePM = warehouseEntryPackagePM;
+        windowArgs.WarehouseEntryPackageItem = warehouseEntryPackageItem;
         windowArgs.WarehouseEntryPM = this.warehouseEntryPM;
         windowArgs.ViewModelTrigger = this;
         var logWindow = new LogitudeWindow();
@@ -492,6 +526,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
                 this.ComputeAndFullTotalPackage();
+                this.BuildItemsSource();
             }
         });
 
@@ -499,25 +534,26 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     }
 
 
-    EditPackage(warehouseEntryPackagePM: WarehouseEntryPackagePM) {
+    EditPackage(WarehouseEntryPackageItem: WarehouseEntryPackageItem) {
 
-        if (warehouseEntryPackagePM.Quantity == warehouseEntryPackagePM.Instock) {
-            var title: string = !warehouseEntryPackagePM.IsContainer ? "Edit Package" : "Edit Container";
+        if (WarehouseEntryPackageItem.Quantity == WarehouseEntryPackageItem.Instock) {
+            var title: string = !WarehouseEntryPackageItem.IsContainer ? "Edit Package" : "Edit Container";
 
-            this.ShowAddPackageWindow(warehouseEntryPackagePM, false, title);
+            this.ShowAddPackageWindow(WarehouseEntryPackageItem, false, title);
         }
     }
 
 
-    DeletePackage(item: WarehouseEntryPackagePM) {
+    DeletePackage(item: WarehouseEntryPackageItem) {
         if(item.Quantity== item.Instock) {
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Show("Delete this package");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
-                    var index = this.WarehouseEntryPackagesLists.indexOf(item);
+                    var index = this.WarehouseEntryPackagesLists.indexOf(item.EntityPM);
                     if (index != -1) this.WarehouseEntryPackagesLists.splice(index, 1);
                     this.ComputeAndFullTotalPackage();
+                    this.BuildItemsSource();
                 }
             });
         }
@@ -576,7 +612,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
     SaveOnWarewarehouseEntryPM() {
         if (this.warehouseEntryPM != null) {
-            this.warehouseEntryPM.WarehouseEntryPackages = this.WarehouseEntryPackagesLists;
+            //this.warehouseEntryPM.WarehouseEntryPackages = this.WarehouseEntryPackagesLists.filter(d => d.Quantity>0);
 
             if (this.WarehouseEntryPackagesLists.length == 0) {
                 this.warehouseEntryPM.TotalVolume = 0;

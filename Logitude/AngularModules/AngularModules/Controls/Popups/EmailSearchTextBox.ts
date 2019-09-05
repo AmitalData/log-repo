@@ -14,6 +14,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
     templateUrl: './EmailSearchTextBox.html',
     selector: "EmailSearchTextBox",
     inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult', 'DontInCludeInactive'],
+
 })
 
 export class EmailSearchTextBox implements OnInit, AfterViewInit {
@@ -25,7 +26,12 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
     public Watermark: string = null;
     private emailText: string = null;
     public get EmailsText() { return this.emailText; }
-    public set EmailsText(value: string) { if (this.emailText != value) this.emailText = value; }
+    public set EmailsText(value: string) {
+        if (this.emailText != value) {
+            this.emailText = value;
+            this.FillEmailSearch();
+        }
+    }
     public IsUsersList: boolean = false;
     public DropDownHeight: number = 200;
     public DropDownWidth: number = 300;
@@ -59,7 +65,10 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
 
     IsShowRedUserInActiveNote: boolean = false;
     ngOnInit() {
+        this.FillEmailSearch();        
+    }
 
+    FillEmailSearch() {
         this.Placeholder = this.Watermark;
         if (!AppTool.IsNullOrEmpty(this.EmailsText)) {
             var myDomainService = new CommonDomainService();
@@ -74,7 +83,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
                                 this.IsShowRedUserInActiveNote = true;
                             }
                         });
-                        
+
 
                     }
 
@@ -107,6 +116,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
                                         var newItem = new ContactList();
                                         newItem.Email = email;
                                         newItem.EnglishName = email;
+                                        if (!AppTool.IsNullOrEmpty(email) && email != "undefined" && email !="null")
                                         this.SelectedItems.push(newItem);
                                     }
                                 }

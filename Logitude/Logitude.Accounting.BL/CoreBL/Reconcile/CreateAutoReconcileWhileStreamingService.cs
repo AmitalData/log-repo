@@ -31,7 +31,7 @@ namespace Logitude.Accounting.BL.CoreBL
             ReconciliationList = new List<ReconciliationPM>();
         }
         public List<ReconciliationPM> ReconciliationList { get; private set; }
-        public void CreateAutoReconcileWhileStreaming()
+        public void CreateAutoReconcileWhileStreaming(bool CheckINprogress)
         {
             
             if (_JournalPM.JournalReconciles.Count == 0)
@@ -40,7 +40,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             var theReconcileAgainstLTranIdList = _JournalPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
             List<LedgerTransactionPM> myOldTransToReconcile = GetLedgerTransactionToReconcile(theReconcileAgainstLTranIdList);
-            if (myOldTransToReconcile.Any(r => !r.InReconcileProgress))
+            if (CheckINprogress && myOldTransToReconcile.Any(r => !r.InReconcileProgress))
             {
                 throw new Exception("_JournalPM.JournalReconciles have  myOldTransToReconcile.Any( r=> !r.InReconcileProgress) ");
             }
@@ -246,5 +246,26 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
+    }
+
+
+    public class CreateAutoReconcileWhileStreamingService4JournalValidation: CreateAutoReconcileWhileStreamingService
+    {
+        private List<LedgerTransactionPM> _OldTransToReconcile;
+
+        public void InitMe(List<LedgerTransactionPM> myOldTransToReconcile)
+        {
+            _OldTransToReconcile = myOldTransToReconcile;
+        }
+        public override ValidationResult ValidateReconcile(ReconciliationPM myReconciliationPM)
+        {
+            return ValidationResult.Success;
+        }
+
+        public override List<LedgerTransactionPM> GetLedgerTransactionToReconcile(List<string> theReconcileAgainstLTranIdList)
+        {
+            return _OldTransToReconcile;
+
+        }
     }
 }

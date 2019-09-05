@@ -20,13 +20,14 @@ import { DWObjectFieldsDetails } from '../../../../Infrastructure/Helpers/DWQuer
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { EditShipmentLinkRendererComponent } from "../TemplateRenderer/EditShipmentLinkRendererComponent";
 import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 
 @Component({
     moduleId: module.id,
     templateUrl: 'BIReportPreviewComponent.html',
 })
 
-export class BIReportPreviewComponent implements OnInit {
+export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     @ViewChild('agGrid') agGrid: AgGridNg2;
     public ComponentRef: ComponentRef<BIReportPreviewComponent>;
     public EntityPM: BIReportPM = null;
@@ -35,16 +36,19 @@ export class BIReportPreviewComponent implements OnInit {
     public FolderId: string;
     public DWQueryData: DWQueryData;
     SelectedFiltersDataSource: any[] = [];
+    //SelectedDynamicFiltersDataSource: any[] = [];
     public _DWSubQueryPMService: DWSubQueryPMService;
     public _DWQueryBuilderService: DWQueryBuilderService;
     public _DWQueryBuilderHelper: DWQueryBuilderHelper
     public _BIReportPMService: BIReportPMService;
+    DataContext: any = this;
     public _InfrastructureDomainService: InfrastructureDomainService;
     public _ShipmentPMService: ShipmentPMService;
     public columnDefs: any[] = [];
     public rowData: any[] = [];
     public BIReportName = "";
     @Output() RunReportCommand = new EventEmitter();
+    @Output() ShowFixedFilters = new EventEmitter();
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     private _EntityPMService: EntityPMService = new EntityPMService();
     private timerToken: any;
@@ -56,6 +60,7 @@ export class BIReportPreviewComponent implements OnInit {
     public IsFilterValueChanged: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
+        super();
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
             this.IsFilterValueChanged = true;
@@ -71,7 +76,9 @@ export class BIReportPreviewComponent implements OnInit {
                     var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
                     var temp = [];
                     temp.push(MyFilter);
+                    //temp[0].FilterType = 'Ask User';
                     this.SelectedFiltersDataSource = temp;
+                    //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
                 }
             }
         });
@@ -96,6 +103,15 @@ export class BIReportPreviewComponent implements OnInit {
     private IsResizing = false;
     private ReportXML: any;
     private isParentTenant: false;
+
+    private showStaticFilters: boolean = false;
+    public get ShowStaticFilters() { return this.showStaticFilters; }
+    public set ShowStaticFilters(newValue: boolean) {
+        this.showStaticFilters = newValue;
+        //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
+        this.ShowFixedFilters.emit(this.showStaticFilters);
+    }
+
     public LoadBIReportData() {
         if (this.DWQueryId != null) {
             this._InfrastructureDomainService.GetByBIReportId(this.EntityId, this.DWQueryId).subscribe(myResult => {
@@ -610,7 +626,9 @@ export class BIReportPreviewComponent implements OnInit {
                         var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
                         var temp = [];
                         temp.push(MyFilter);
+                        //temp[0].FilterType = 'Ask User';
                         this.SelectedFiltersDataSource = temp;
+                        //this.SelectedDynamicFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a.FilterType == "Ask User");
                     }
                     this.LoadBIReportData();
                 }

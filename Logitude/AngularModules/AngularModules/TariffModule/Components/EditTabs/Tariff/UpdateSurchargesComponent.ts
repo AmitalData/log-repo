@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
+import { TariffSurchargesUpdatePM } from '../../../EntityPMs/TariffSurchargesUpdatePM';
 import { UpdateTariffArgs } from '../../../Args';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
@@ -33,30 +34,24 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public ToSearchAreaId: string = "ToSearchAreaId";
     constructor() {
         super();
-
         this.FromTariffAreaDropButton += this.CurrentSession.GetNewId("FromTariffAreaDropButton_1");
         this.FromSearchAreaId += this.CurrentSession.GetNewId("FromSearchAreaId_1");
         this.ToTariffAreaDropButton += this.CurrentSession.GetNewId("ToTariffAreaDropButton_1");
         this.ToSearchAreaId += this.CurrentSession.GetNewId("ToSearchAreaId_1");
-
         this.SetUIProperties();
     }
     
     SetWindowArgs(arg: UpdateTariffArgs) {
         this.EntityPM = arg.Version;
-
-        
         this.FillTariffCharges(arg.TariffCharges);
         this.LoadAirlineAreas(arg.AirlineId);
     }
 
     SetUIProperties() {
         var isStartDateRequired: boolean = false;
-
         if (this.StartDate == null || this.StartDate == undefined) {
             isStartDateRequired = true;
         }
-
         this.UIProperties.SetRequired("StartDate", null, isStartDateRequired);
     }
 
@@ -345,7 +340,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             });
 
             this.TariffChargesObsList.filter(d => d.IsChargeChecked).forEach(item => {
-                args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.Index);
+                args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.NewMinPrice + "," + item.Index);
             });
 
             var myService: TariffDomainService = new TariffDomainService();
@@ -381,6 +376,7 @@ export class TariffCharge extends BaseComponent{
     public DisplayText: string;
     public DataContext = this;
     public Index: number;
+    public MeasurementCode: string;
     constructor(charge: CodeNameClass) {
         super();
 
@@ -388,6 +384,7 @@ export class TariffCharge extends BaseComponent{
         this.ChargeCode = charge.Name;
         this.DisplayText = charge.DisplyText;
         this.Index = charge.Code_Int;
+        this.MeasurementCode = charge.AdditionalField;
 
         this.SetUIProperties();
     }
@@ -400,8 +397,22 @@ export class TariffCharge extends BaseComponent{
             }
         }
 
-        this.UIProperties.SetEnabled("NewPrice", null, this.IsChargeChecked);
-        this.UIProperties.SetRequired("NewPrice", null, isPriceRequired);
+        this.UIProperties.SetEnabled("NewPrice", null, this.IsChargeChecked);       
+        this.UIProperties.SetRequired("NewPrice", null, isPriceRequired);        
+
+        this.SetUIProperties_MinPrice();
+    }
+
+    private SetUIProperties_MinPrice() {
+        var isMinPriceEnabled: boolean = false;
+
+        if (this.IsChargeChecked) {
+            if (this.MeasurementCode != "FIXD") {
+                isMinPriceEnabled = true
+            }
+        }
+
+        this.UIProperties.SetEnabled("NewMinPrice", null, isMinPriceEnabled);
     }
 
     private isChargeChecked: boolean;
@@ -424,7 +435,32 @@ export class TariffCharge extends BaseComponent{
         if (this.newPrice != value) {
             this.newPrice = value;
 
+            if (this.MeasurementCode != "FIXD") {
+                this.MinPricePlaceHolder = "";
+                this.NewMinPrice = null;
+            }
+
             this.SetUIProperties();
+        }
+    }
+
+    private newMinPrice: number;
+    get NewMinPrice() {
+        return this.newMinPrice;
+    }
+    set NewMinPrice(value: number) {
+        if (this.newMinPrice != value) {
+            this.newMinPrice = value;
+        }
+    }
+
+    private minPricePlaceHolder: string = "No Update";
+    get MinPricePlaceHolder() {
+        return this.minPricePlaceHolder;
+    }
+    set MinPricePlaceHolder(value: string) {
+        if (this.minPricePlaceHolder != value) {
+            this.minPricePlaceHolder = value;            
         }
     }
 }
@@ -475,4 +511,19 @@ export class AirlineAreaClass {
             this.isChecked = value;            
         }
     }
+}
+
+export class TariffSurchargesUpdateItem {
+    public entity: TariffSurchargesUpdatePM;
+
+    constructor() {
+
+    }
+
+    public get To() { return this.entity.To; }
+    public get From() { return this.entity.From; }
+    public get CreateDate() { return this.entity.CreateDate; }
+    public get StartDate() { return this.entity.StartDate; }
+    public get LinesUpdated() { return this.entity.LinesUpdated; }
+    public get Surcharges() { return this.entity.Surcharges; }
 }

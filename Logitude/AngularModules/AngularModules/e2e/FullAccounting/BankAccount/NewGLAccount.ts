@@ -26,12 +26,15 @@ export class NewGLAccount {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitBusyIndicator();
       this.Helper.WaitByIdAndFill('GLAccount_LocalName', LocalName);
+      this.Helper.ItemsPresent('GLAccount_CurrencyId');
+      this.Helper.ItemsVisibility('GLAccount_CurrencyId');
       this.Helper.WaitByIdAndFill('GLAccount_CurrencyId', 'NIS');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0); 
     //this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
     this.Helper.WaitBusyIndicator();
     this.Helper.WaitByIdAndFill('GLAccount_RevenueExpenseType', 'other');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0); 
+    this.Helper.WaitBusyIndicator();
     this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
     this.Helper.WaitBusyIndicator();
     this.Helper.WaitWindowClosed();
@@ -53,6 +56,7 @@ export class NewGLAccount {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0); 
     //this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
     this.Helper.WaitBusyIndicator();
+
     this.Helper.WaitByIdAndFill('GLAccount_RevenueExpenseType', 'other');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0); 
     this.Helper.WaitByIdAndClick('Ok-AddGLAccount');

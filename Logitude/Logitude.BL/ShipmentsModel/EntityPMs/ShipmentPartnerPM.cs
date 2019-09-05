@@ -31,5 +31,13 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ReferentName { get; set; }
         public string Telephone { get; set; }
         public bool IsCountManager { get; set; }
+        public ShipmentPartnerPM()
+        {
+            this.FlagSRC = "";
+            this.Email = "";
+            this.ContactName = "";
+            this.ReferenceVisibility = "visible";
+            this.Reference2Visibility = "collapse";
+        }
     }
 }

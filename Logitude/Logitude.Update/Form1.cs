@@ -73,6 +73,10 @@ using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using System.Collections;
+using WebFreight.Web.WebServices;
+using Logitude.Server.Tools.StorageService;
+using System.Web;
 
 namespace Logitude.Update
 {
@@ -124,7 +128,7 @@ namespace Logitude.Update
                 string storageServiceMode = "fs";
                 string queueServiceMode = "azure";
                 Logitude.Server.Tools.ContainerAccessor.InitContainer();
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil,null, null);
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null);
 
                 CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
             }
@@ -406,9 +410,9 @@ User/Pass",
             DateTime referenceDate = new DateTime(2019, 3, 1);
             if (referenceDate <= last180days)
             {
-               
+
             }
-          
+
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -3620,7 +3624,7 @@ User/Pass",
                 SqlDataReader reader = cmd.ExecuteReader();
                 sqlConnection1.Close();
 
-                MessageBox.Show(string.Format("Tenant {0}: {1}",tenant, dir));
+                MessageBox.Show(string.Format("Tenant {0}: {1}", tenant, dir));
             }
             catch (Exception ex)
             {
@@ -3632,7 +3636,7 @@ User/Pass",
         private void ltrBtn_Click(object sender, EventArgs e)
         {
             ChangeTenantLayoutDirection("ltr");
-            
+
         }
 
         private void button42_Click_FixingDouplicated(object sender, EventArgs e)
@@ -3709,7 +3713,7 @@ User/Pass",
         {
             IInvoiceContext context = InvoiceContext.GetContext(1);
             APInvoiceQuery service = new APInvoiceQuery(1);
-                APInvoicePM invoice = service.GetSinglePM("1-18", 1);
+            APInvoicePM invoice = service.GetSinglePM("1-18", 1);
             byte[] serialized = LogitudeXmlSerializer.SerializeObject(invoice);
             using (MemoryStream ms = new MemoryStream(serialized))
             {
@@ -3742,8 +3746,8 @@ User/Pass",
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
-                IQueryable<TenantManagement> allTenants = tenantManagementRepository.GetAllTenants();                
-                
+                IQueryable<TenantManagement> allTenants = tenantManagementRepository.GetAllTenants();
+
                 foreach (TenantManagement tenantManagement in allTenants)
                 {
                     if (!tenantManagement.MainAdditionalPackageApplied && tenantManagement.IsMultiPackage)
@@ -3772,6 +3776,123 @@ User/Pass",
 
             SetControlPropertyValue(label3, "ForeColor", Color.Green);
             SetControlPropertyValue(label3, "Text", "Done");
+        }
+
+        private void button46_Click_1(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(FilePathTextBox.Text) && !string.IsNullOrEmpty(this.AirlineLogoTenantTextBox.Text))
+            {
+                Thread thread = new Thread(() => UpdateLogos());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+
+        private void UpdateLogos()
+        {
+            SetControlPropertyValue(UpdateLogosLabel, "Text", "Updating...");
+            SetControlPropertyValue(UpdateLogosLabel, "ForeColor", Color.Black);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            
+            timer1.Enabled = true;
+            timer1.Start();
+
+            int tenant = Convert.ToInt32(this.AirlineLogoTenantTextBox.Text);
+            CardRepository cardRepository = new CardRepository(tenant);
+            List<Card> airlines = cardRepository.GetAirlineCards(tenant).ToList();
+
+            if (airlines.Count > 0)
+            {
+                Uploader uploaderService = new Uploader();
+                DirectoryInfo di = new DirectoryInfo(@FilePathTextBox.Text);
+                FileInfo[] images = di.GetFiles("*.png");
+
+                foreach (Card airline in airlines)
+                {
+                    string result = "";
+                    FileInfo image = images.Where(d => d.Name == airline.Code + ".png").FirstOrDefault();
+
+                    if (image != null)
+                    {
+                        byte[] bytesData = File.ReadAllBytes(FilePathTextBox.Text + "\\" + airline.Code + ".png");
+
+                        if (bytesData != null)
+                        {
+                            string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
+                            result = this.UploadImage(image.Name, bytesData, image.Length, image.Length, blockIdlist, 0, tenant, image.Extension, airline.Id, null);
+
+                            if (!string.IsNullOrEmpty(result))
+                            {
+                                airline.ImageDetailId = result;
+                                cardRepository.Update(airline);
+                            }
+                        }
+                    }
+                }
+
+                cardRepository.SubmitChanges();
+            }
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            
+            SetControlPropertyValue(UpdateLogosLabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(UpdateLogosLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss")); 
+        }
+
+        private static string fileName;
+        private string fileNameAndExtension;
+        private long ReceivedBytes;
+        private string documentIdAndExtension;
+        public string UploadImage(string filename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string extension, string cardId, string imageDetalId)
+        {
+            string filelocation = "images";
+            fileName = filename.ToLower();
+            string filePath = "tenant" + tenant.ToString() + "/";
+            string imagedetailid = null;
+
+            try
+            {
+                ImageDetailRepository imageDetailRep = new ImageDetailRepository(tenant);
+                ImageDetail imagedetail = new ImageDetail() { Id = IdCounter.GetNumber("ImageDetail", tenant), Tenant = tenant, Extension = extension, Size = fileSize };
+                imageDetailRep.Add(imagedetail);
+                imageDetailRep.SubmitChanges();
+                imagedetailid = imagedetail.Id;
+                fileName = imagedetailid;
+
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
+                ReceivedBytes += buffer.Length;
+                fileNameAndExtension = fileName + "." + extension;
+
+                MemoryStream memorystream = new MemoryStream(buffer);
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = fileName,
+                    FolderName = filelocation,
+                    Extension = extension,
+                    Tenant = tenant,
+                    FileSize = fileSize,
+                };
+
+                storageservice.WriteBlock(buffer, sentBytes, blockIdsList, bufferNumber, fileInfo);
+
+                if (sentBytes == fileSize)
+                {
+                    fileNameAndExtension = fileName + "." + extension;
+                }
+
+                documentIdAndExtension = fileNameAndExtension;
+            }
+
+            catch (Exception e)
+            {
+
+            }
+
+            return imagedetailid;
         }
     }
 

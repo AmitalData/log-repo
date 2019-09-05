@@ -79,7 +79,7 @@
     </ScreenFields>
   </Screen>
   <Tab Code="&quot;MTGC&quot;" ObjectTableName="&quot;LogitudeMessagesTransmissionLog&quot;" IndexOrder="0" TextCode="&quot;LogitudeMessagesTransmissionLog.TH.General&quot;" ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;" TabName="&quot;General&quot;" IsSpellChecked="false" IsPackagable="False" FeatureCode="&quot;GENERAL&quot;" FeatureTextCodeCode="&quot;LogitudeMessagesTransmissionLog.Features.General&quot;" FeatureDefaultText="&quot;General&quot;" />
-  <Tab Code="&quot;MTAD&quot;" ObjectTableName="&quot;LogitudeMessagesTransmissionLog&quot;" IndexOrder="1" TextCode="&quot;LogitudeMessagesTransmissionLog.TH.Audit&quot;" ControlPath="&quot;Simplog.InfrastructureExt.Views.Maintenance.TransmissionLog.TransmissionLogAuditTabControl&quot;" TabName="&quot;Audit&quot;" IsSpellChecked="false" IsPackagable="False" FeatureCode="&quot;AUDIT&quot;" FeatureTextCodeCode="&quot;LogitudeMessagesTransmissionLog.Features.Audit&quot;" FeatureDefaultText="&quot;Audit&quot;" />
+  <Tab Code="&quot;MTAD&quot;" ObjectTableName="&quot;LogitudeMessagesTransmissionLog&quot;" IndexOrder="1" TextCode="&quot;LogitudeMessagesTransmissionLog.TH.Audit&quot;" ControlPath="&quot;Simplog.InfrastructureExt.Views.Maintenance.TransmissionLog.TransmissionLogAuditTabControl&quot;" TabName="&quot;Audit&quot;" IsSpellChecked="false" IsPackagable="False" FeatureCode="&quot;AUDIT&quot;" FeatureTextCodeCode="&quot;LogitudeMessagesTransmissionLog.Features.Audit&quot;" FeatureDefaultText="&quot;Audit&quot;" HtmlComponentURL="&quot;./Common/Components/Maintenance/TransmissionLogs/TransmissionLogAuditTabComponent&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
   </AdditionalTextCodes>
