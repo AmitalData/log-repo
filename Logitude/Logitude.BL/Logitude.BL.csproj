@@ -2420,6 +2420,7 @@
     <Compile Include="ShipmentsModel\EntityLists\ShipmentCustomsTransmissionList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentJoinPackageList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentLevelList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ShipmentComputedFieldsList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentPackageItemList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentPayableAmountTypeList.cs" />
@@ -2450,6 +2451,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\InsideShipmentPackagePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\MappedShipmentDirectionsPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\NextLegPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ShipmentComputedFieldsPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OBLTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsRequestsCountPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsRequestPM.cs" />
@@ -2526,6 +2528,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCustomerTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCustomsMessageTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCustomsTransmissionQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentComputedFieldsQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentLevelQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentOrderPackageQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPackageHarmonizeQuery.cs" />

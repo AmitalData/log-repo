@@ -26,7 +26,7 @@ import { PackageTypeListService } from '../../Common/Services/StandardLists/Pack
 
 export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    public WarningErrorsList: string[] = [];
+   
     public ValidationErrorsList: string[];
     warehouseEntryPM: any;
     warehouseEntryPackageItem: WarehouseEntryPackageItem;
@@ -84,12 +84,12 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
             else {
                 if (this.warehouseEntryPackageItem.IsContainer) {
                     if (this.warehouseEntryPackageItem.ContainerNumber) {
-                        this.ValidateContainerNumber(this.warehouseEntryPackageItem.ContainerNumber);
+                        this.warehouseEntryPackageItem.ValidateContainerNumber(this.warehouseEntryPackageItem.ContainerNumber);
                     }
                 }
 
                 if (this.warehouseEntryPackageItem) {
-                    this.ContainerNumberLostFocus(this.warehouseEntryPackageItem.ContainerNumber);
+                    this.warehouseEntryPackageItem.ContainerNumberLostFocus(this.warehouseEntryPackageItem.ContainerNumber);
                     this.IsParentDirty = this.warehouseEntryPM.IsDirty;
                     this.IsChildDirty = this.warehouseEntryPackageItem.IsDirty;
 
@@ -222,30 +222,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
     }
 
     IsEnable: boolean = false;
-    ContainerNumberLostFocus(input: string) {
-        this.ValidateContainerNumber(input);
-    }
 
-    ValidateContainerNumber(input: string) {
-        var warnings: string[] = [];
-        var error = FormatTool.ValidateContainerNumber(input);
-
-        if (!AppTool.IsNullOrEmpty(error)) {
-            warnings.push(error);
-
-            if (AppTool.IsNullOrEmpty(this.warehouseEntryPackageItem.ContainerNumberWarning)) {
-                this.warehouseEntryPackageItem.ContainerNumberWarning = error;
-            }
-        }
-
-        else {
-            if (!AppTool.IsNullOrEmpty(this.warehouseEntryPackageItem.ContainerNumberWarning)) {
-                this.warehouseEntryPackageItem.ContainerNumberWarning = null;
-            }
-        }
-
-        this.WarningErrorsList = warnings;
-    }
 }
 
 export class WarehouseEntryPackageItem extends BaseComponent {
@@ -254,7 +231,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     VolumetricWeightLabel: string;
     GrossWeightLabel: string;
     DimensionsLabel: string;
-
+    ReleasesNumber: string;
 
 
 
@@ -279,6 +256,9 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.ChargeableWeightUnitCode = this.WarehouseEntryPM.ChargeableWeightUnitCode;
         this.DimensionsUnitCode = this.WarehouseEntryPM.DimensionsUnitCode;
         this.IsDependencyFilter2Value = this.EntityPM.IsContainer;
+        this.ReleasesNumber = this.EntityPM.ReleasesNumber;
+
+
         this.SetLabel();
         this.SetUIProperties();
         this.SetUIPropertiesOfCars(false);
@@ -305,7 +285,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     SetUIProperties() {
 
         if (this.EntityPM.IsContainer) {
-            if (this.FatherComponent.IsNewEntity) {
+            if (!this.EntityPM.Id) {
                 this.EntityPM.Quantity = 1;
             }
             this.UIProperties.SetEnabled("Quantity", "WarehouseEntryPackage", false)
@@ -369,6 +349,10 @@ export class WarehouseEntryPackageItem extends BaseComponent {
 
         this.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(this.Quantity, this.Width, this.Height, this.Length, this.Volume, this.Weight, this.WarehouseEntryPM.Ratio, this.DimensionsUnitCode, this.VolumeUnitCode, this.GrossWeightUnitCode, this.ChargeableWeightUnitCode);
     }
+
+    WarningErrorsList: string[] = [];
+
+ 
 
 
     // Dimensions
@@ -665,6 +649,8 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         }
     }
 
+    
+
 
     get IsDirty() { return this.EntityPM.IsDirty; }
     set IsDirty(value: boolean) {
@@ -672,7 +658,41 @@ export class WarehouseEntryPackageItem extends BaseComponent {
             this.EntityPM.IsDirty = value;
         }
     }
-    
-    
+
+
+    get IsDisabled() { return this.EntityPM.Quantity != this.EntityPM.Instock ? true:false }
+
+
+
+    ContainerNumberLostFocus(input: string) {
+        this.ValidateContainerNumber(input);
+    }
+
+    ValidateContainerNumber(input: string) {
+        var warnings: string[] = [];
+        var error = FormatTool.ValidateContainerNumber(input);
+
+        if (!AppTool.IsNullOrEmpty(error)) {
+            warnings.push(error);
+
+            if (AppTool.IsNullOrEmpty(this.ContainerNumberWarning)) {
+                this.ContainerNumberWarning = error;
+            }
+        }
+
+        else {
+            if (!AppTool.IsNullOrEmpty(this.ContainerNumberWarning)) {
+                this.ContainerNumberWarning = null;
+            }
+        }
+
+   
+        this.WarningErrorsList = warnings;
+        
+
+    }
+
+
+
 
 }

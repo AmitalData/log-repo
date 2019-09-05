@@ -38,7 +38,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 mapping.POCOToPM(EntityPM, bankAccount);
             }
 
-            return EntityPM;
         }
 
         public BankAccountPM GetBankAccountByTransferGLAcccountId(string transferGLAcccountId, int tenant)

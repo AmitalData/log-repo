@@ -3175,6 +3175,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.MainCarriageATD = masterData.MainCarriageATD;
                 shipmentPM.MainCarriageATA = masterData.MainCarriageATA;
                 shipmentPM.FinalDistenationPortId = masterData.Transshipment3ToPortId != null ? masterData.Transshipment3ToPortId : masterData.Transshipment2ToPortId != null ? masterData.Transshipment2ToPortId : masterData.Transshipment1ToPortId != null ? masterData.Transshipment1ToPortId : masterData.MainCarriageToPortId;
+                shipmentPM.CutoffDate = masterData.CutoffDate;
             }
 
             shipmentPM.Field1 = new CustomFieldClass("Field1", "Shipment", shipment.Field1);
@@ -4073,6 +4074,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageATA = m.MainCarriageATA;
                         shipmentPM.MainCarriageCarrierId = m.MainCarriageCarrierId;
                         shipmentPM.FinalDistenationPortId = m.Transshipment3ToPortId != null ? m.Transshipment3ToPortId : m.Transshipment2ToPortId != null ? m.Transshipment2ToPortId : m.Transshipment1ToPortId != null ? m.Transshipment1ToPortId : m.MainCarriageToPortId;
+                        shipmentPM.CutoffDate = m.CutoffDate;
+ 
                     }
 
 

@@ -2591,6 +2591,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             foreach (FromToClass rout in routs)
                             {
                                 TariffLinePM myLine = iDraftVersion.TariffLines.Where(d => d.OriginPortId == rout.FromCode && d.DestinationPortId == rout.ToCode).FirstOrDefault();
+                                // Update
                                 if (myLine != null)
                                 {
                                     myLine.ChangeSetOp = ChangeSetOperation.Update;
@@ -2599,13 +2600,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     foreach (string charge in args.Surcharge)
                                     {
                                         string[] charge_array = charge.Split(',');
-                                        decimal value = Convert.ToDecimal(charge_array[1]);
+                                        decimal? price = null;
+                                        decimal? minPrice = null;
 
-                                        PropertyInfo valuePropInfo = myLine.GetType().GetProperty("Surcharge" + charge_array[2] + "Price");
-                                        valuePropInfo.SetValue(myLine, value, null);
+                                        if (this.FixFilter(charge_array[1]) != null)
+                                        {
+                                            price = Convert.ToDecimal(charge_array[1]);
+                                        }
+
+                                        if (this.FixFilter(charge_array[2]) != null)
+                                        {
+                                            minPrice = Convert.ToDecimal(charge_array[2]);
+                                        }
+
+                                        PropertyInfo valuePropInfo1 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
+                                        PropertyInfo valuePropInfo2 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
+
+                                        valuePropInfo1.SetValue(myLine, price, null);
+                                        valuePropInfo2.SetValue(myLine, minPrice, null);
                                     }
                                 }
-
+                                // New 
                                 else
                                 {
                                     TariffLinePM tariffLine = new TariffLinePM()
@@ -2622,10 +2637,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     foreach (string charge in args.Surcharge)
                                     {
                                         string[] charge_array = charge.Split(',');
+                                        decimal? price = null;
+                                        decimal? minPrice = null;
 
-                                        decimal value1 = Convert.ToDecimal(charge_array[1]);
-                                        PropertyInfo valuePropInfo1 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[2] + "Price");
-                                        valuePropInfo1.SetValue(tariffLine, value1, null);
+                                        if (this.FixFilter(charge_array[1]) != null)
+                                        {
+                                            price = Convert.ToDecimal(charge_array[1]);
+                                        }
+
+                                        if (this.FixFilter(charge_array[2]) != null)
+                                        {
+                                            minPrice = Convert.ToDecimal(charge_array[2]);
+                                        }
+
+                                        PropertyInfo valuePropInfo1 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
+                                        PropertyInfo valuePropInfo2 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
+
+                                        valuePropInfo1.SetValue(tariffLine, price, null);
+                                        valuePropInfo2.SetValue(tariffLine, minPrice, null);
                                     }
 
                                     iDraftVersion.TariffLines.Add(tariffLine);
@@ -2765,6 +2794,25 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             }
                         }
                     }
+                }
+            }
+
+            return myResult;
+        }
+        private string FixFilter(string filter)
+        {
+            string myResult = filter;
+
+            if (myResult != null)
+            {
+                switch (myResult.ToLower())
+                {
+                    case "null":
+                    case "undefined":
+                        {
+                            myResult = null;
+                            break;
+                        }
                 }
             }
 

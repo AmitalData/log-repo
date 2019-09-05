@@ -16,16 +16,17 @@ export class NewAgent {
 
     QuickSearch() {
 
-       //   this.helper.WaitByIdAndClick('General.MH.Reports');
-     //   this.helper.WaitBusyIndicator();
+        this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndClick('General.MH.Maintenance');
         this.helper.waitByCss('#null_Search');
+        this.helper.WaitBusyIndicator();
     }
 
     SearchAgentTab() {
         browser.sleep(1000)
         this.helper.WaitByIdAndFill('null_Search', "Agent");
         this.helper.WaitByIdAndClick('MaintenanceItemMTAG');
+
 
     }
 

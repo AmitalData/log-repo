@@ -494,8 +494,8 @@ s             b                   a
                     LineNumber = lineCounterNumber++,
 
                     //Amount = line.RealAmount,
-                    DebitAmount = line.DEBIT0_CREDIT1 == "1" ? line.Amount : 0,
-                    CreditAmount = line.DEBIT0_CREDIT1 == "0" ? line.Amount : 0,
+                    DebitAmount = line.DEBIT0_CREDIT1 == "0" ? line.Amount : 0,
+                    CreditAmount = line.DEBIT0_CREDIT1 == "1" ? line.Amount : 0,
 
                     ReferenceDate = line.ReferenceDate,
                     Reference = line.Reference,
