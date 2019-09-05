@@ -32,6 +32,7 @@ namespace CommunicationWorkerRole.Tasks
         int Tenant;
         TaskSchedulerHistoryPM TaskSchedulerHistory;
         ConcurrentQueueService<LogQueueMessage> queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
+        public bool EnableWriteLogToFile { get; set; }
         public TaskManagerBase(string Id, int tenant)
         {
             TaskId = Id;
@@ -272,6 +273,8 @@ namespace CommunicationWorkerRole.Tasks
         {
             if (!string.IsNullOrEmpty(Message))
                 this.Exceptions.AppendLine(Message);
+            if (this.EnableWriteLogToFile)
+                this.AppendLogMessageToFile(Message);
         }
 
         private void AddSchedulerQueue(TasksSchedulerPM task)
