@@ -3782,49 +3782,71 @@ User/Pass",
         {
             if (!string.IsNullOrEmpty(FilePathTextBox.Text) && !string.IsNullOrEmpty(this.AirlineLogoTenantTextBox.Text))
             {
-                int tenant = Convert.ToInt32(this.AirlineLogoTenantTextBox.Text);
-                CardRepository cardRepository = new CardRepository(tenant);
-                List<Card> airlines = cardRepository.GetAirlineCards(tenant).ToList();
+                Thread thread = new Thread(() => UpdateLogos());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
 
-                if(airlines.Count > 0)
+        private void UpdateLogos()
+        {
+            SetControlPropertyValue(UpdateLogosLabel, "Text", "Updating...");
+            SetControlPropertyValue(UpdateLogosLabel, "ForeColor", Color.Black);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            
+            timer1.Enabled = true;
+            timer1.Start();
+
+            int tenant = Convert.ToInt32(this.AirlineLogoTenantTextBox.Text);
+            CardRepository cardRepository = new CardRepository(tenant);
+            List<Card> airlines = cardRepository.GetAirlineCards(tenant).ToList();
+
+            if (airlines.Count > 0)
+            {
+                Uploader uploaderService = new Uploader();
+                DirectoryInfo di = new DirectoryInfo(@FilePathTextBox.Text);
+                FileInfo[] images = di.GetFiles("*.png");
+
+                foreach (Card airline in airlines)
                 {
-                    Uploader uploaderService = new Uploader();
-                    DirectoryInfo di = new DirectoryInfo(@FilePathTextBox.Text);
-                    FileInfo[] images = di.GetFiles("*.png");
+                    string result = "";
+                    FileInfo image = images.Where(d => d.Name == airline.Code + ".png").FirstOrDefault();
 
-                    foreach (Card airline in airlines)
+                    if (image != null)
                     {
-                        string result = "";
-                        FileInfo image = images.Where(d => d.Name == airline.Code + ".png").FirstOrDefault();
+                        byte[] bytesData = File.ReadAllBytes(FilePathTextBox.Text + "\\" + airline.Code + ".png");
 
-                        if (image != null)
+                        if (bytesData != null)
                         {
-                            byte[] bytesData = File.ReadAllBytes(FilePathTextBox.Text + "\\" + airline.Code + ".png");
+                            string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
+                            result = this.UploadImage(image.Name, bytesData, image.Length, image.Length, blockIdlist, 0, tenant, image.Extension, airline.Id, null);
 
-                            if (bytesData != null)
+                            if (!string.IsNullOrEmpty(result))
                             {
-                                string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
-                                result = this.UploadImage(image.Name, bytesData, image.Length, image.Length, blockIdlist, 0, tenant, image.Extension, airline.Id, null, null);
-
-                                if(!string.IsNullOrEmpty(result))
-                                {
-                                    airline.ImageDetailId = result;
-                                    cardRepository.Update(airline);
-                                }
+                                airline.ImageDetailId = result;
+                                cardRepository.Update(airline);
                             }
                         }
                     }
-
-                    cardRepository.SubmitChanges();
                 }
+
+                cardRepository.SubmitChanges();
             }
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            
+            SetControlPropertyValue(UpdateLogosLabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(UpdateLogosLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss")); 
         }
 
         private static string fileName;
         private string fileNameAndExtension;
         private long ReceivedBytes;
         private string documentIdAndExtension;
-        public string UploadImage(string filename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string extension, string cardId, string contactId, string imageDetalId)
+        public string UploadImage(string filename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string extension, string cardId, string imageDetalId)
         {
             string filelocation = "images";
             fileName = filename.ToLower();
@@ -3834,35 +3856,18 @@ User/Pass",
             try
             {
                 ImageDetailRepository imageDetailRep = new ImageDetailRepository(tenant);
-
-                if (!string.IsNullOrEmpty(cardId))
-                {
-                    CardRepository cardRep = new CardRepository(tenant);
-                    Card card = cardRep.GetSingleCard(cardId, tenant);
-                    if (string.IsNullOrEmpty(card.ImageDetailId))
-                    {
-                        ImageDetail imagedetail = new ImageDetail() { Id = IdCounter.GetNumber("ImageDetail", tenant), Tenant = tenant, Extension = extension, Size = fileSize };
-                        imageDetailRep.Add(imagedetail);
-                        imageDetailRep.SubmitChanges();
-                        imagedetailid = imagedetail.Id;
-                        card.ImageDetailId = imagedetail.Id;
-                        cardRep.Update(card);
-                        cardRep.SubmitChanges();
-                    }
-                    else
-                    {
-                        imagedetailid = card.ImageDetailId;
-                    }
-                }
-
+                ImageDetail imagedetail = new ImageDetail() { Id = IdCounter.GetNumber("ImageDetail", tenant), Tenant = tenant, Extension = extension, Size = fileSize };
+                imageDetailRep.Add(imagedetail);
+                imageDetailRep.SubmitChanges();
+                imagedetailid = imagedetail.Id;
                 fileName = imagedetailid;
 
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                
+
                 ReceivedBytes += buffer.Length;
                 fileNameAndExtension = fileName + "." + extension;
-               
-                MemoryStream memorystream = new MemoryStream(buffer);               
+
+                MemoryStream memorystream = new MemoryStream(buffer);
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
                     FileName = fileName,
@@ -3870,22 +3875,21 @@ User/Pass",
                     Extension = extension,
                     Tenant = tenant,
                     FileSize = fileSize,
-
                 };
-               
+
                 storageservice.WriteBlock(buffer, sentBytes, blockIdsList, bufferNumber, fileInfo);
 
                 if (sentBytes == fileSize)
                 {
                     fileNameAndExtension = fileName + "." + extension;
                 }
-              
+
                 documentIdAndExtension = fileNameAndExtension;
             }
-            
+
             catch (Exception e)
             {
-                
+
             }
 
             return imagedetailid;
