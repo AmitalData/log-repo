@@ -416,6 +416,21 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
             //SetDefultPackage
 
+            if (this.warehouseEntryPM.WarehouseEntryPackages.length == 0) {
+                var i = 0;
+                while (i < 5) {
+                    var warehouseEntryPackagePM = new WarehouseEntryPackagePM(null);
+                    warehouseEntryPackagePM.Tenant = SessionLocator.TenantPM.Id;
+                    warehouseEntryPackagePM.CreatedByUserId = SessionLocator.LoggedUserId;
+                    warehouseEntryPackagePM.UpdatedByUserId = SessionLocator.LoggedUserId;
+                    warehouseEntryPackagePM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+                    warehouseEntryPackagePM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+                    warehouseEntryPackagePM.WarehouseEntryId = this.warehouseEntryPM.Id;
+                    warehouseEntryPackagePM.IsContainer = false;
+                    this.warehouseEntryPM.WarehouseEntryPackages.push(warehouseEntryPackagePM);
+                    i += 1;
+                }
+            }
           
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
@@ -478,16 +493,16 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
     AddPackage(isContainer: boolean) {
 
-        var warehouseEntryPackageItem: WarehouseEntryPackageItem = new WarehouseEntryPackageItem(new WarehouseEntryPackagePM(null),this);
-        warehouseEntryPackageItem.EntityPM.Tenant = SessionLocator.TenantPM.Id;
-        warehouseEntryPackageItem.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
-        warehouseEntryPackageItem.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        warehouseEntryPackageItem.EntityPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
-        warehouseEntryPackageItem.EntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-        warehouseEntryPackageItem.EntityPM.WarehouseEntryId = this.warehouseEntryPM.Id;
-        warehouseEntryPackageItem.EntityPM.Id = "1-1";
 
-        warehouseEntryPackageItem.IsContainer = isContainer;
+        var warehouseEntryPackagePM = new WarehouseEntryPackagePM(null)
+        warehouseEntryPackagePM.Tenant = SessionLocator.TenantPM.Id;
+        warehouseEntryPackagePM.CreatedByUserId = SessionLocator.LoggedUserId;
+        warehouseEntryPackagePM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        warehouseEntryPackagePM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+        warehouseEntryPackagePM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+        warehouseEntryPackagePM.WarehouseEntryId = this.warehouseEntryPM.Id;
+        warehouseEntryPackagePM.IsContainer = isContainer;
+        var warehouseEntryPackageItem: WarehouseEntryPackageItem = new WarehouseEntryPackageItem(warehouseEntryPackagePM, this);
 
         var title: string = isContainer ? "Add Container" : "Add Package";
         this.ShowAddPackageWindow(warehouseEntryPackageItem, true, title);
