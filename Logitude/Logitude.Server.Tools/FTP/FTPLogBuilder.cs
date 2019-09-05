@@ -22,7 +22,7 @@ namespace Logitude.Server.Tools.FTP
         {
             string newLogMessage = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:FFF") + " " + message;
 
-            return newLogMessage;
+            return Environment.NewLine + newLogMessage;
 
         }
 

@@ -447,7 +447,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             else
             {
-                string msg = "Line (" + tariffLinePM.OriginPortCode + " > " + tariffLinePM.DestinationPortCode + ") Start Date is less than the previous version line";
+                string msg = "Line (" + tariffLinePM.OriginPortCode + " > " + tariffLinePM.DestinationPortCode + ") Start Date is less than or equal the previous version line";
                 throw new ApplicationException(msg);
             }
         }
@@ -465,7 +465,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             else if (previousLineDatesArgs.DateField == "start")
             {
-                if (previousLineDatesArgs.TariffLinePM.StartDate < previousLineDatesArgs.PreviousLine.StartDate)
+                if (previousLineDatesArgs.TariffLinePM.StartDate <= previousLineDatesArgs.PreviousLine.StartDate)
                 {
                     isExpirationDateValid = false;                    
                 }

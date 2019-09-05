@@ -2,6 +2,7 @@
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
+using Microsoft.Practices.Unity;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace CommunicationWorkerRole
                         LogQueueMessage message = queueService.TryDequeue();
                         if (message != null)
                         {
-                            IBlobService storageservice = new AzureBlobService();
+                            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                             BlobFileInfo blobFileinfo = new Logitude.Server.Tools.BlobFileInfo()
                             {
                                 FileName = message.FileName,
