@@ -32,7 +32,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         From, 
 	         To, 
 	         Version, 
-	         Surcharges,
+	         Surcharges, 
+	         UpdateMethodCode,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         From, 
 	         To, 
 	         Version, 
-	         Surcharges,
+	         Surcharges, 
+	         UpdateMethodCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -106,6 +108,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharges))
             {
 				entityPOCO.Surcharges = entityPM.Surcharges;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateMethodCode))
+            {
+				entityPOCO.UpdateMethodCode = entityPM.UpdateMethodCode;
 			}
 			}
 
@@ -167,6 +174,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.Surcharges = entityPOCO.Surcharges;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdateMethodCode))
+            {
+					entityPM.UpdateMethodCode = entityPOCO.UpdateMethodCode;
+            }
+
 		}
 
 		public void PMToOldPM(TariffSurchargesUpdatePM entityPM, TariffSurchargesUpdatePM oldEntityPM)
@@ -221,6 +233,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharges))
             {
                 oldEntityPM.Surcharges = entityPM.Surcharges;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateMethodCode))
+            {
+                oldEntityPM.UpdateMethodCode = entityPM.UpdateMethodCode;
             }
 			
 		}
