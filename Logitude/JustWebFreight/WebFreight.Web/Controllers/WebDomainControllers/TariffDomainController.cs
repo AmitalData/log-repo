@@ -2616,6 +2616,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                             minPrice = Convert.ToDecimal(charge_array[2]);
                                         }
 
+                                        if (this.FixFilter(charge_array[4]) != null)
+                                        {
+                                            mySurchargesText = charge_array[4];
+                                        }
+
+                                        mySurchargesText = mySurchargesText + ",";
+
                                         PropertyInfo valuePropInfo1 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
                                         PropertyInfo valuePropInfo2 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
 
