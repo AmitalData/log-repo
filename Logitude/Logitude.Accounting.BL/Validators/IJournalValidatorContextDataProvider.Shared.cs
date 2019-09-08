@@ -1,4 +1,5 @@
 ﻿
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System;
@@ -28,5 +29,7 @@ namespace Logitude.Accounting.BL.Validators
 
         //GLAccountPM GetGLAccount(string GLAccountId, int tenant);//DO NOT USE OBJECT FROM DIFF TENANT
         List<LedgerTransactionPM> GetLedgerTransactionPMsByIdList(List<string> transactionIdList, int tenant);
+        List<JournalLine> GetJournalLineByLedgerTransactionIdList(List<string> transactionIdList, int tenant);
+        
     }
 }

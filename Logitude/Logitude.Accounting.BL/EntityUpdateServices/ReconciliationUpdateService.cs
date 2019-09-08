@@ -38,6 +38,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.CloseTables;
+using System.Diagnostics;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -317,8 +318,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             if (item.Line == 0) item.Line = ++i;
                         }
                     }
-                    UpdateLedgerTransaction(entityPM);
 
+
+
+                    UpdateLedgerTransaction(entityPM);
+                    
                     ReconciliationLineUpdateService reconciliationLineUpdateService = new ReconciliationLineUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                     reconciliationLineUpdateService.UpdateMulti(entityPM.ReconciliationLines, entityPM.DeletedReconciliationLines, entityPM, false);
                 }
@@ -350,12 +354,31 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else
                 {
-                    ledgerTransactionPM.OpenAmount = ledgerTransactionPM.OpenAmount - reconciliationLine.ReconciliationAmount;
+                    
+                    if (entityPM.CreatedByReconciliationAfterConversion)
+                    {
+                        //var transactionIdList = entityPM.ReconciliationLines.Select(rec => rec.TransactionId).ToList();
+                        var repo = new JournalLineRepository(entityPM.Tenant);
+                        var jlList = repo.GetJournalLineByLedgerTransactionIdList(transactionIdList, entityPM.Tenant);
+                        List<string> errorsList = new List<string>();
+                        ReconciliationValidator.Validate_CreatedByReconciliationAfterConversion(errorsList, jlList);
+                        if (errorsList.Count > 0)
+                        {
+                            var errLines = string.Join(Environment.NewLine, errorsList);
+                            throw new Exception(errLines);
+                        }
+                        Debug.WriteLine("due CreatedByReconciliationAfterConversion do not   UpdateLedgerTransaction - dont change open Amount ");
+                    }
+                    else
+                    {
+                        ledgerTransactionPM.OpenAmount = ledgerTransactionPM.OpenAmount - reconciliationLine.ReconciliationAmount;
+                    }
                     reconciliationLine.IsPartial = true;
                     if (ledgerTransactionPM.OpenAmount == 0)
                     {
                         reconciliationLine.IsPartial = false;
                     }
+
                     ledgerTransactionPM.IsReconciled = !reconciliationLine.IsPartial;
                 }
 
