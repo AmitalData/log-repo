@@ -2592,6 +2592,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             string mySurchargesText = "";
                             foreach (FromToClass rout in routs)
                             {
+                                mySurchargesText = "";
                                 TariffLinePM myLine = iDraftVersion.TariffLines.Where(d => d.OriginPortId == rout.FromCode && d.DestinationPortId == rout.ToCode).FirstOrDefault();
                                 // Update
                                 if (myLine != null)
@@ -2616,12 +2617,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                             minPrice = Convert.ToDecimal(charge_array[2]);
                                         }
 
+                                        var arrayChargeType = "";
                                         if (this.FixFilter(charge_array[4]) != null)
                                         {
-                                            mySurchargesText = charge_array[4];
+                                            arrayChargeType = charge_array[4];
                                         }
 
-                                        mySurchargesText = mySurchargesText + ",";
+                                        mySurchargesText += arrayChargeType + ",";
 
                                         PropertyInfo valuePropInfo1 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
                                         PropertyInfo valuePropInfo2 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
@@ -2659,13 +2661,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         {
                                             minPrice = Convert.ToDecimal(charge_array[2]);
                                         }
-
+                                        var arrayChargeType = "";
                                         if (this.FixFilter(charge_array[4]) != null)
                                         {
-                                            mySurchargesText = charge_array[4];
+                                            arrayChargeType = charge_array[4];
                                         }
 
-                                        mySurchargesText = mySurchargesText + ",";
+                                        mySurchargesText += arrayChargeType + ",";
                                         PropertyInfo valuePropInfo1 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
                                         PropertyInfo valuePropInfo2 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
                                         valuePropInfo1.SetValue(tariffLine, price, null);
