@@ -2576,11 +2576,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TariffQueryService tariffQueryService = new TariffQueryService(tariffContext);
                 TariffPM tariff = tariffQueryService.GetSingle(args.TariffId, true, false);
                 TariffUpdateService tariffUpdateService = new TariffUpdateService(tariffContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                TariffSurchargesUpdateUpdateService tariffSurchargeUpdateService = new TariffSurchargesUpdateUpdateService(tariffContext, new Dictionary<string, IContext>(), authToken.Tenant);
 
                 if (tariff != null)
                 {
                     TariffVersionPM iDraftVersion = tariff.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
-
+                    TariffSurchargesUpdatePM tariffSurchageLog;  
                     if (iDraftVersion != null)
                     {
                         List<FromToClass> routs = this.ComputeRoutsList(args.From, args.To, authToken.Tenant);
@@ -2590,7 +2591,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             foreach (FromToClass rout in routs)
                             {
+                                tariffSurchageLog = new TariffSurchargesUpdatePM();
                                 TariffLinePM myLine = iDraftVersion.TariffLines.Where(d => d.OriginPortId == rout.FromCode && d.DestinationPortId == rout.ToCode).FirstOrDefault();
+                                // Update
+                                var surchargesText = ""; 
                                 if (myLine != null)
                                 {
                                     myLine.ChangeSetOp = ChangeSetOperation.Update;
@@ -2598,6 +2602,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                     foreach (string charge in args.Surcharge)
                                     {
+                                        
                                         string[] charge_array = charge.Split(',');
                                         decimal? price = null;
                                         decimal? minPrice = null;
@@ -2619,7 +2624,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         valuePropInfo2.SetValue(myLine, minPrice, null);
                                     }
                                 }
-
+                                // New 
                                 else
                                 {
                                     TariffLinePM tariffLine = new TariffLinePM()
@@ -2658,12 +2663,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                     iDraftVersion.TariffLines.Add(tariffLine);
                                 }
+
+                                tariffSurchageLog.TariffId = tariff.Id;
+                                tariffSurchageLog.StartDate = args.StartDate;
+                                tariffSurchageLog.LinesUpdated = routs.Count;
+                                tariffSurchageLog.UpdateMethodCode = "BA";
+                                tariffSurchageLog.ChangeSetOp = ChangeSetOperation.Update;
+                                tariffSurchargeUpdateService.Update(tariffSurchageLog, true);
                             }
 
                             tariff.IsSurchargeUpdate = true;
                             tariff.ChangeSetOp = ChangeSetOperation.Update;
                             iDraftVersion.ChangeSetOp = ChangeSetOperation.Update;
                             tariffUpdateService.Update(tariff, true);
+                         
                         }
                     }
                 }

@@ -157,6 +157,7 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
             this.button45 = new System.Windows.Forms.Button();
             this.lblUTariffModule = new System.Windows.Forms.Label();
             this.button41 = new System.Windows.Forms.Button();
@@ -176,7 +177,14 @@
             this.HarmonizeCodesButton = new System.Windows.Forms.Button();
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
+            this.FilePathTextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
+            this.button46 = new System.Windows.Forms.Button();
+            this.UpdateLogosLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -184,6 +192,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -1378,6 +1387,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
@@ -1447,6 +1457,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(437, 28);
+            this.label3.MinimumSize = new System.Drawing.Size(100, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(100, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "...";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // button45
             // 
@@ -1690,15 +1710,81 @@
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
             // 
-            // label3
+            // tabPage3
             // 
-            this.label3.Location = new System.Drawing.Point(437, 28);
-            this.label3.MinimumSize = new System.Drawing.Size(100, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "...";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tabPage3.Controls.Add(this.UpdateLogosLabel);
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.FilePathTextBox);
+            this.tabPage3.Controls.Add(this.label5);
+            this.tabPage3.Controls.Add(this.label4);
+            this.tabPage3.Controls.Add(this.AirlineLogoTenantTextBox);
+            this.tabPage3.Controls.Add(this.button46);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(743, 558);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Airline Logos";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(389, 30);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(223, 13);
+            this.label6.TabIndex = 104;
+            this.label6.Text = "ex: C:\\Users\\SAMARA\\Desktop\\AirlineLogos";
+            // 
+            // FilePathTextBox
+            // 
+            this.FilePathTextBox.Location = new System.Drawing.Point(73, 27);
+            this.FilePathTextBox.Name = "FilePathTextBox";
+            this.FilePathTextBox.Size = new System.Drawing.Size(298, 20);
+            this.FilePathTextBox.TabIndex = 103;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 30);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.TabIndex = 102;
+            this.label5.Text = "File path";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(20, 61);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 13);
+            this.label4.TabIndex = 101;
+            this.label4.Text = "Tenant";
+            // 
+            // AirlineLogoTenantTextBox
+            // 
+            this.AirlineLogoTenantTextBox.Location = new System.Drawing.Point(73, 57);
+            this.AirlineLogoTenantTextBox.Name = "AirlineLogoTenantTextBox";
+            this.AirlineLogoTenantTextBox.Size = new System.Drawing.Size(66, 20);
+            this.AirlineLogoTenantTextBox.TabIndex = 100;
+            // 
+            // button46
+            // 
+            this.button46.Location = new System.Drawing.Point(23, 97);
+            this.button46.Name = "button46";
+            this.button46.Size = new System.Drawing.Size(100, 23);
+            this.button46.TabIndex = 99;
+            this.button46.Text = "Update Logos";
+            this.button46.UseVisualStyleBackColor = true;
+            this.button46.Click += new System.EventHandler(this.button46_Click_1);
+            // 
+            // UpdateLogosLabel
+            // 
+            this.UpdateLogosLabel.AutoSize = true;
+            this.UpdateLogosLabel.Location = new System.Drawing.Point(129, 101);
+            this.UpdateLogosLabel.Name = "UpdateLogosLabel";
+            this.UpdateLogosLabel.Size = new System.Drawing.Size(19, 13);
+            this.UpdateLogosLabel.TabIndex = 105;
+            this.UpdateLogosLabel.Text = "....";
             // 
             // Form1
             // 
@@ -1727,6 +1813,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1893,6 +1981,14 @@
         private System.Windows.Forms.Button button44;
         private System.Windows.Forms.Button button45;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox AirlineLogoTenantTextBox;
+        private System.Windows.Forms.Button button46;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox FilePathTextBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label UpdateLogosLabel;
     }
 }
 

@@ -117,12 +117,12 @@ export class AddEditTaskSchedulerComponent  {
         this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
-
                 this.SetSchedulerDetailsData(myResponse.Result);
             }
 
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
+                this.Clone();
             }
 
             this.CurrentSession.StopBusyIndicator();
@@ -133,6 +133,9 @@ export class AddEditTaskSchedulerComponent  {
 
     SetSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
         this.DataContext.SetSchedulerDetailsData(schedulerDetailsData);
+        this.Clone();
+
+
     }
 
     StartTimeTabTitle: string = "One Time";

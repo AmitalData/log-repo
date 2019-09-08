@@ -65,15 +65,16 @@ export class NewQuote {
   FillQuoteFields(QuoteNumber: string, TransportMode: string, Direction: string, ShipmentType: string, QuoteType: string) {
     var quotetypeBtn: any;
     var EC = protractor.ExpectedConditions;
+
+
     this.Helper.WaitByIdAndFill('Quote_ShipperId', 'TestShipper');
     this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_ShipperId', 'TestShipper');
+      this.Helper.WaitByIdAndFill('Quote_ShipperReference1', QuoteNumber);// test random number randomWholeNum
+   
     this.Helper.WaitByIdAndFill('Quote_ConsigneeId', 'TestShipper');
     this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_ConsigneeId', 'TestShipper');
-
-    if (Direction == 'Export' || Direction == 'Domestic')
-      this.Helper.WaitByIdAndFill('Quote_ShipperReference1', QuoteNumber);// test random number randomWholeNum
-    else
       this.Helper.WaitByIdAndFill('Quote_ConsigneeReference1', QuoteNumber);// test random number randomWholeNum
+
 
     this.Helper.WaitByIdAndFill('Quote_IncotermId', 'CIF');
     this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_IncotermId', 'CIF');

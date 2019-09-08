@@ -250,7 +250,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
                 }
              
             });
-            this.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CurrentWindow.Close("Refresh");
         }
 
        
