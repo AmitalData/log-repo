@@ -565,7 +565,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     UserEnglishName = this.entityPM.EnglishName,
                     UserPMIsDistributor = user.IsDistributor,
                     UserPOCOInactive = this.Poco.InActive,
-                    UserPMInactive = this.entityPM.InActive,                        
+                    UserPMInactive = this.entityPM.InActive,
+                    UserPMAdditionalPackagesOnly = user.AdditionalPackagesOnly,
                     UserId = this.entityPM.Id,
                 };
 

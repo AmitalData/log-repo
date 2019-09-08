@@ -283,14 +283,14 @@ export class UserPM {
     public set PersonalId(newValue: string) { if (this.personalId != newValue) { this.personalId = newValue; this.MarkAsDirty("PersonalId"); } }
        
 	 
-    private contact: string;
+    private contact: any;
     public get Contact() { return this.contact; }
-    public set Contact(newValue: string) { if (this.contact != newValue) { this.contact = newValue; this.MarkAsDirty("Contact"); } }
+    public set Contact(newValue: any) { if (this.contact != newValue) { this.contact = newValue; this.MarkAsDirty("Contact"); } }
        
 	 
-    private userLastLogin: string;
+    private userLastLogin: any;
     public get UserLastLogin() { return this.userLastLogin; }
-    public set UserLastLogin(newValue: string) { if (this.userLastLogin != newValue) { this.userLastLogin = newValue; this.MarkAsDirty("UserLastLogin"); } }
+    public set UserLastLogin(newValue: any) { if (this.userLastLogin != newValue) { this.userLastLogin = newValue; this.MarkAsDirty("UserLastLogin"); } }
        
 	 
      
@@ -469,6 +469,11 @@ export class UserPM {
     private userRoles: string;
     public get UserRoles() { return this.userRoles; }
     public set UserRoles(newValue: string) { if (this.userRoles != newValue) { this.userRoles = newValue; this.MarkAsDirty("UserRoles"); } }
+       
+	 
+    private additionalPackagesOnly: boolean;
+    public get AdditionalPackagesOnly() { return this.additionalPackagesOnly; }
+    public set AdditionalPackagesOnly(newValue: boolean) { if (this.additionalPackagesOnly != newValue) { this.additionalPackagesOnly = newValue; this.MarkAsDirty("AdditionalPackagesOnly"); } }
        
 	 
 
