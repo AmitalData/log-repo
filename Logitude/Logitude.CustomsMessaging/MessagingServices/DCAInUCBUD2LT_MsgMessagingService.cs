@@ -258,6 +258,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 var decQS = new DeclarationQueryService(tenant);
                 declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
 
+                if (declarationPM.PaymentDate.HasValue)
+                {
+                    shouldCreateDCAComm = false;
+                    Debug.WriteLine("Declaration has already been payed");
+                    return;
+                }
                 if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
                 {
                     Debug.WriteLine("CourierENV");
@@ -294,6 +300,33 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     return;
 
                 }
+
+
+                CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
+                List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(_DocumentsFilingPM.Id, declarationPM.Tenant);
+                if (myCustomsDocumentsTicketPMList != null && myCustomsDocumentsTicketPMList.Count() > 0)
+                {
+                    List<string> ticketdIds = myCustomsDocumentsTicketPMList.Select(r => r.Id).ToList();
+                    if (ticketdIds != null && ticketdIds.Count() > 0)
+                    {
+                        CustomsDocumentPointerQueryService myCustomsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(_DocumentsFilingPM.Tenant);
+                        List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMList = myCustomsDocumentPointerQueryService.GetPointersForMultipleTickets(ticketdIds, _DocumentsFilingPM.Tenant);
+                        if (myCustomsDocumentPointerPMList != null && myCustomsDocumentPointerPMList.Count() > 0)
+                        {
+                            var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == declarationPM.Id);
+                            if (myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
+                            {
+                                
+                                Debug.WriteLine("Ticket already Exist for this Document");
+                                return;
+
+                            }
+                        }
+                    }
+                }
+
+
+
                 Debug.WriteLine("CreateCRS");
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
