@@ -30,7 +30,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
     public class APInvoiceController : ApiController
     {
 
-        public HttpResponseMessage GetSingleAPInvoice(string id, string number)
+        public HttpResponseMessage GetSingleAPInvoice(string id, string number, string externalId)
         {
             try
             {
@@ -48,10 +48,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     Result = Service.GetAPInvoiceById(id, tenant);
                 }
-                else
+                else if(!string.IsNullOrEmpty(number))
                 {
                     Result = Service.GetAPInvoiceByInvoiceNumber(number, tenant);
 
+                }
+                else if (!string.IsNullOrEmpty(externalId))
+                {
+                    Result = Service.GetSingleInvoiceByExternalEntityId(externalId, tenant);
                 }
 
 

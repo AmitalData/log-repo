@@ -6,19 +6,19 @@
         </td>
     </tr>
 
-    <tr style="height:10px;">
-        <td colspan="2" >
+   <tr style="height: 30px;">
+        <td colspan="3" >
             <div></div>
         </td>
     </tr>
-    <tr class="FormFieldRow">
+    <tr class="FormFieldRow" style="height: 50px;">
         <td style="width:15px;">
             <LogLabel [ObjectFieldName]="'PaymentGatewayPartnerCode'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext" [Text]="'Partner'"></LogLabel>
-           
+
         </td>
 
-        <td style="width:100px;" >
+        <td style="width:100px;">
             <LogLov [ObjectFieldName]="'PaymentGatewayPartnerCode'"
                     [SelectedValue]="PaymentGatewayPartnerCode"
                     [ObjectTableName]="ObjectTableName"
@@ -28,23 +28,29 @@
             </LogLov>
         </td>
         <td style="width:120px;"><div></div></td>
-        
+
     </tr>
-    <tr class="FormFieldRow">
-        <td >
+    <tr class="FormFieldRow" style="height: 20px;">
+        <td>
             <LogLabel [ObjectFieldName]="'PaymentGatewayConnectionString'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
-          
+
         </td>
 
-        <td >
-            <LogTextBox  [ObjectFieldName]="'PaymentGatewayConnectionString'" [Text]="PaymentGatewayConnectionString" [DataContext]="DataContext"
+        <td>
+            <LogTextBox [ObjectFieldName]="'PaymentGatewayConnectionString'" [Text]="PaymentGatewayConnectionString" [DataContext]="DataContext"
                         [ObjectTableName]="ObjectTableName" [HideColumns]="true" [HideLastColumn]="true"></LogTextBox>
         </td>
-        <td  style="width:100px;"><div></div></td>
-      
+        <td style="width:100px;"><div></div></td>
+
     </tr>
-    <tr style="height: 32px;">
+    <tr>
+        <td colspan="3">
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height: 20px;">
         <td><div></div></td>
         <td><div></div></td>
         <td style="vertical-align: bottom;">

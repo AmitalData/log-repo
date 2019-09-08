@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
@@ -31,6 +32,21 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 var temp = query.GetSinglePM(null, tenant, number);
                 if (temp == null)
                     throw new ApplicationException("APInvoice with number " + number + " doesn't exist");
+
+                return APInvoiceDataMapping(temp, tenant);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public APInvoice GetSingleInvoiceByExternalEntityId(string externalId, int tenant)
+        {
+            try { 
+            var temp = query.GetSingleInvoiceByExternlaEntityId(externalId, tenant);
+                if (temp == null)
+                    throw new ApplicationException("APInvoice with external ID " + externalId + " doesn't exist");
 
                 return APInvoiceDataMapping(temp, tenant);
             }
@@ -195,6 +211,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
             }
 
+            APInvoicePM invoice = query.GetSingleInvoiceByExternlaEntityId(apinvoice.ExternalAccountingEntityId, apinvoice.Tenant);
+            if(invoice != null)
+            {
+                throw new Exception("invoice with the same externla id already exist!"); 
+            }
             // validate totals
             double SubTotalInLocalCurrency =    Math.Round(apinvoice.InvoiceLines.Sum(d => d.LocalCurrencyAmount).Value, 2);
             double linesInvoiceAmount =  Math.Round(apinvoice.InvoiceLines.Sum(d => d.InvoiceCurrencyAmount.Value), 2);

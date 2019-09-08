@@ -15,7 +15,6 @@ import {PackageListService} from '../../../../Common/Services/StandardLists/Pack
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {TenantManagementList} from '../../../../Infrastructure/EntityLists/TenantManagementList';
@@ -61,7 +60,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         this.BluesnapInttraStockContractIdFilterItems = new ApiQueryFilters();
         this.BluesnapInttraStockContractIdFilterItems.addAdditionalFilter("BluesnapContractTypeCode", "INTS", null, null, "Equals", false, false, false, "string", false, true);
 
-
+        this.InitializePackageSetting();
     }
 
     private SaveCompletedEvent: any = null;
@@ -112,7 +111,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
         this.SetUIProperties_Distributor();
         this.SetUIProperties_NumberOfUsers();
-        //this.SetUIProperties_ManageLicencesPerUser();
+        this.SetUIProperties_ManageLicencesPerUser();
 
         if (this.isTenantManagementEditable) {
             this.SetUIProperties_PaymentFailure();
@@ -266,17 +265,17 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("PlimusAccount", "TenantManagement", false);
         }
     }
-    //private SetUIProperties_ManageLicencesPerUser() {
-    //    var isFieldEnabled = false;
+    private SetUIProperties_ManageLicencesPerUser() {
+        var isFieldEnabled = false;
 
-    //    if (this.isTenantManagementEditable) {
-    //        if (!this.IsMultiPackage) {
-    //            isFieldEnabled = true;
-    //        }
-    //    }
+        if (this.isTenantManagementEditable) {
+            if (!this.IsMultiPackage) {
+                isFieldEnabled = true;
+            }
+        }
 
-    //    this.UIProperties.SetEnabled("ManageLicencesPerUser", this.ObjectTableName, isFieldEnabled);
-    //}
+        this.UIProperties.SetEnabled("ManageLicencesPerUser", this.ObjectTableName, isFieldEnabled);
+    }
     private SetUIProperties_TenantType() {
         if (AppTool.IsNullOrEmpty(this.TenantTypeCode)) {
             this.UIProperties.SetEnabled("TenantConnectedToAirlineCode", this.ObjectTableName, false);
@@ -463,12 +462,12 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-    //get ManageLicencesPerUser() { return this.EntityPM.ManageLicencesPerUser; }
-    //set ManageLicencesPerUser(newValue: boolean) {
-    //    if (this.EntityPM.ManageLicencesPerUser != newValue) {
-    //        this.EntityPM.ManageLicencesPerUser = newValue;
-    //    }
-    //}
+    get ManageLicencesPerUser() { return this.EntityPM.ManageLicencesPerUser; }
+    set ManageLicencesPerUser(newValue: boolean) {
+        if (this.EntityPM.ManageLicencesPerUser != newValue) {
+            this.EntityPM.ManageLicencesPerUser = newValue;
+        }
+    }
 
     get ManagesRegisteredAgent() { return this.EntityPM.ManagesRegisteredAgent; }
     set ManagesRegisteredAgent(newValue: boolean) {
@@ -1139,13 +1138,71 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
+    InitializePackageSetting() {
+        if (this.MainAdditionalPackageApplied) {
+            this.IsSingleMultiPackage = false;
+            this.IsMainAdditionalPackage = true;
+        }
+
+        else {
+            this.isSingleMultiPackage = true;
+            this.IsMainAdditionalPackage = false;
+        }
+    }
+
     get IsMultiPackage() { return this.EntityPM.IsMultiPackage; }
     set IsMultiPackage(newValue: boolean) {
         if (this.EntityPM.IsMultiPackage != newValue) {
             this.EntityPM.IsMultiPackage = newValue;
 
             this.SetUIProperties_NumberOfUsers();
-            //this.SetUIProperties_ManageLicencesPerUser();
+            this.SetUIProperties_ManageLicencesPerUser();
+        }
+    }
+
+    private isSingleMultiPackage: boolean = false;
+    get IsSingleMultiPackage() { return this.isSingleMultiPackage; }
+    set IsSingleMultiPackage(value: boolean) {
+        if (this.isSingleMultiPackage != value) {
+            this.isSingleMultiPackage = value;
+        }
+    }
+
+    private isMainAdditionalPackage: boolean = false;
+    get IsMainAdditionalPackage() { return this.isMainAdditionalPackage; }
+    set IsMainAdditionalPackage(value: boolean) {
+        if (this.isMainAdditionalPackage != value) {
+            this.isMainAdditionalPackage = value;
+        }
+    }
+
+    SetMainAdditionalPackageApplied(value: boolean) {
+
+        this.IsSingleMultiPackage = null;
+        this.IsMainAdditionalPackage = null;
+
+        if (value == true) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("After saving with Main/Additional mode can't go back to Single/Multi mode");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.IsSingleMultiPackage = false;
+                    this.IsMainAdditionalPackage = true;
+                    this.MainAdditionalPackageApplied = true;
+                }
+
+                else {
+                    this.IsSingleMultiPackage = true;
+                    this.IsMainAdditionalPackage = false;
+                    this.MainAdditionalPackageApplied = false;
+                }
+            });
+        }
+
+        else {
+            this.IsSingleMultiPackage = true;
+            this.IsMainAdditionalPackage = false;
+            this.MainAdditionalPackageApplied = false;
         }
     }
 
