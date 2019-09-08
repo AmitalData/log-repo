@@ -1314,7 +1314,30 @@ namespace Logitude.TariffModule.BL.EntityPMs
               }
              set {  deletedDeletedLinesExpirationDates = value; }
 	    }
-	     }
+	  	  private bool isFromUpdateScreen ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFromUpdateScreen  
+	   {
+	    
+	     get
+		{
+		   return isFromUpdateScreen;
+		 }
+		 set
+		 {
+		   if(isFromUpdateScreen != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromUpdateScreen",OldValue=isFromUpdateScreen,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFromUpdateScreen=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

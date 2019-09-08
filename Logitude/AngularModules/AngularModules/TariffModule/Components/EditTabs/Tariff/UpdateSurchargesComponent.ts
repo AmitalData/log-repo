@@ -332,15 +332,15 @@ export class UpdateSurchargesComponent extends BaseComponent {
             args.StartDate = this.StartDate;
 
             this.FromObsList.forEach(item => {
-                args.From.push(item.Indication + "," + item.Id);
+                args.From.push(item.Indication + "," + item.Id + "," + item.Code);
             });
 
             this.ToObsList.forEach(item => {
-                args.To.push(item.Indication + "," + item.Id);
+                args.To.push(item.Indication + "," + item.Id + "," + item.Code);
             });
 
             this.TariffChargesObsList.filter(d => d.IsChargeChecked).forEach(item => {
-                args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.NewMinPrice + "," + item.Index);
+                args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.NewMinPrice + "," + item.Index + "," + item.ChargeCode);
             });
 
             var myService: TariffDomainService = new TariffDomainService();

@@ -31,6 +31,7 @@ export class TariffList {
 	SellerName: string;
 	UpdatedByUserName: string;
 	TariffNumber: string;
+	IsFromUpdateScreen: boolean;
 	
 }
  
