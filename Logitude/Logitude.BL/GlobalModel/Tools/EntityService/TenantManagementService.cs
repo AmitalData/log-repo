@@ -201,15 +201,15 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 {
                     if (entityPM.IsMultiPackage)
                     {
-                        //if (!entityPM.TenantManagementLicenses.Where(d => d.PackageCode == entityPM.PackageCode).Any())
-                        //{
-                        //    throw new ApplicationException("Main package should be one of the additional packages");
-                        //}
+                        if (!entityPM.TenantManagementLicenses.Where(d => d.PackageCode == entityPM.PackageCode).Any())
+                        {
+                            throw new ApplicationException("Main package should be one of the additional packages");
+                        }
 
-                        //if (entityPM.TenantManagementLicenses.Where(d => d.PackageCode == entityPM.PackageCode && d.ChangeSetOp != ChangeSetOperation.Delete).Any())
-                        //{
-                        //    throw new ApplicationException("Main package should be deleted from the additional packages");
-                        //}
+                        if (entityPM.TenantManagementLicenses.Where(d => d.PackageCode == entityPM.PackageCode && d.ChangeSetOp != ChangeSetOperation.Delete).Any())
+                        {
+                            throw new ApplicationException("Main package should be deleted from the additional packages");
+                        }
 
                         this.SwitchToMainAdditionalPackageMulti();
                     }
@@ -222,7 +222,8 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
 
                 else
                 {
-                    this.SwitchToSingleMultiPackage();
+                    throw new ApplicationException("Switching to Single/Multi Package is not allowed");
+                    //this.SwitchToSingleMultiPackage();
                 }
             }
         }
@@ -262,6 +263,26 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         }
         private void SwitchToMainAdditionalPackageSingle()
         {
+            /*
+                select * from Users
+                join Contacts on Users.Id = Contacts.Id
+                where Users.Tenant = 1
+                and Contacts.InActive = 0
+                and Contacts.UserType = 'R'
+             * */
+
+            /*                          
+                select * from UserLicenses
+                where UserId in
+                (
+                select Users.Id from Users
+                join Contacts on Users.Id = Contacts.Id
+                where Users.Tenant = 1
+                and Contacts.InActive = 0
+                and Contacts.UserType = 'R'
+                )             
+             * */
+
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
@@ -272,7 +293,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                                             where iUser.Tenant == tenant
                                             && iUser.Contact.UserType == "R"
                                             && iUser.Contact.InActive == false
-                                            && !iContext.UserLicenses.Any(f => f.UserId == iUser.Id)
+                                            && !iContext.UserLicenses.Any(f => f.UserId == iUser.Id && f.PackageCode == entityPM.PackageCode)
                                             select iUser.Id).ToList();
 
                 if (allUsersIds.Count > 0)

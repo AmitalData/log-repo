@@ -109,7 +109,7 @@
 <table>
     <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
         <td>
-           <div class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
+           <div [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'" class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
         </td>
     </tr>
     <tr>

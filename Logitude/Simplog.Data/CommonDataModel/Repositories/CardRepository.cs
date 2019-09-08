@@ -599,5 +599,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return englishName;
         }
 
+        public IQueryable<Card> GetAirlineCards(int tenant)
+        {
+            return (from record in context.Cards
+                    where record.Tenant == tenant && record.PartnerTypeId == "AL"
+                    select record);
+        }
     }
 }

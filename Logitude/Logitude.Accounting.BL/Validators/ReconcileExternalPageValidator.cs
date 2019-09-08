@@ -82,10 +82,10 @@ namespace Logitude.Accounting.BL.Validators
                     {
                         foreach (ReconcileExternalPageLinePM line in entityPM.ReconcileExternalPageLines)
                         {
-                            //sum -= line.DebitAmount;
-                            //sum += line.CreditAmount;
-                            sum += line.DebitAmount;
-                            sum -= line.CreditAmount;
+                            sum -= line.DebitAmount;
+                            sum += line.CreditAmount;
+                            //sum += line.DebitAmount;
+                            //sum -= line.CreditAmount;
                         }
                     }
                     if (sum != entityPM.CloseBalance)

@@ -85,7 +85,7 @@
                                                                                                 <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of FromAirlineAreas; let i = index">
                                                                                                     <td style="width:22px">
                                                                                                         <div style="width:22px">
-                                                                                                           <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i,'From')"></CheckBox>                                                                                                            
+                                                                                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i,'From')"></CheckBox>
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td style="width:5px"></td>
@@ -311,21 +311,61 @@
                                                             </td>
                                                         </tr>
 
+                                                        <tr style="height:28px;">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:120px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:90px; text-align:center" class="Label">
+                                                                            Price
+                                                                        </td>
+
+                                                                        <td style="width:1px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width:90px; text-align:center" class="Label">
+                                                                            Min Price
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
                                                         <tr>
                                                             <td>
-                                                                <ScrollViewer>
-                                                                    <table style="margin:5px;">
+                                                                <table class="FixedTable">
+                                                                    <ScrollViewer>
                                                                         <tr class="FormFieldRow" *ngFor="let item of TariffChargesObsList">
-                                                                            <td style="width:30px;">
+                                                                            <td style="width:5px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="width:20px;">
                                                                                 <CheckBox [IsChecked]="item.IsChargeChecked" (Checked)="item.IsChargeChecked = $event"></CheckBox>
                                                                             </td>
 
-                                                                            <td style="width:100px;">
+                                                                            <td style="width:95px;">
                                                                                 <LogLabel [ObjectFieldName]="'NewPrice'" [DataContext]="item.DataContext" [Text]="item.DisplayText"></LogLabel>
                                                                             </td>
 
-                                                                            <td style="width:180px;">
+                                                                            <td style="width:90px;">
                                                                                 <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewPrice'" [Text]="item.NewPrice" [DataContext]="item.DataContext"></LogTextBox>
+                                                                            </td>
+
+                                                                            <td style="width:1px;">
+                                                                                <div></div>
+                                                                            </td>
+
+                                                                            <td style="width:90px;">
+                                                                                <LogTextBox [InputType]="'double'" [Placeholder]="item.MinPricePlaceHolder" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewMinPrice'" [Text]="item.NewMinPrice" [DataContext]="item.DataContext"></LogTextBox>
                                                                             </td>
 
                                                                             <td>
@@ -338,8 +378,8 @@
                                                                                 <div></div>
                                                                             </td>
                                                                         </tr>
-                                                                    </table>
-                                                                </ScrollViewer>
+                                                                    </ScrollViewer>
+                                                                </table>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -402,18 +442,48 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width: 30px; max-width:30px; min-width:30px;">#</td>
+                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Create Date</td>
                                                                         <td style="width: 80px; max-width:80px; min-width:80px;">From</td>
                                                                         <td style="width: 80px; max-width:80px; min-width:80px;">To</td>
                                                                         <td style="width: 100px; max-width:100px; min-width:100px;">Start Date</td>
                                                                         <td style="width: 100px; max-width:100px; min-width:100px;">Surcharges</td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Lines Updated</td>
+                                                                        <td style="width: 40px; max-width:40px; min-width:40px;">Lines Updated</td>
+                                                                        <td><div></div></td>
                                                                     </tr>
                                                                 </table>
                                                             </div>
 
                                                             <div class="SimpleGridViewBody">
                                                                 <table>
-                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of Logs"></tr>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of Logs">
+                                                                        <td class="CellStretched" style="width: 30px; max-width:30px; min-width:30px;">
+                                                                            {{item.ChequeNumber }}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 100px; max-width:100px; min-width:100px;">
+                                                                            {{item.CreateDate}}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 80px; max-width:80px; min-width:80px;">
+                                                                            {{item.From}}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 80px; max-width:80px; min-width:80px;">
+                                                                            {{item.To}}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 100px; max-width:100px; min-width:100px;">
+                                                                            {{item.StartDate}}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 100px; max-width:100px; min-width:100px;">
+                                                                            {{item.Surcharges}}
+                                                                        </td>
+                                                                        <td class="CellStretched" style="width: 40px; max-width:40px; min-width:40px;">
+                                                                            {{item.LinesUpdated}}
+                                                                        </td>
+                                                                        <td><div></div></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="8">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
                                                                 </table>
                                                             </div>
                                                         </div>

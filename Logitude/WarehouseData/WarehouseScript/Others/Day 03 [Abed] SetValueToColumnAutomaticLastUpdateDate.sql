@@ -32,3 +32,4 @@ update  CustomPickLists set AutomaticLastUpdateDate =GETDATE() where AutomaticLa
 update  Regions set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  CustomerSizes set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
 update  Industries set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null
+update  ShipmentComputedFields set AutomaticLastUpdateDate =GETDATE() where AutomaticLastUpdateDate is null

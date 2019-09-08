@@ -55,6 +55,31 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+        public IQueryable<JournalLineLedgerTransactionAccDTO>
+            GetQJournalLinesByExternalNo_NotReconciled(int tenant)
+        {
+            IQueryable<JournalLine> q1 = (from jline in this.repository.GetAll(tenant)
+                     join journals in (context as AccountingContext).Journals.Where(r => r.Tenant == tenant && r.ExternalNo != null)
+                     on jline.JournalId equals journals.Id
+                     select jline);
+
+            IQueryable<JournalLineLedgerTransactionAccDTO> q = (from jl in q1
+                         .Where(rec => rec.ExternalReconcileNumber != null )
+                     join trans in (context as AccountingContext).LedgerTransactions.Where(r => r.Tenant == tenant && r.IsReconciled == false)
+                     on new { jl.JournalId, jl.Line }
+                     equals new { trans.JournalId, Line = trans.JournalLineNumber }
+                     into joinT
+                     from joinr in joinT
+                     select new JournalLineLedgerTransactionAccDTO
+                     {
+                         JournalLine = jl,
+                         LedgerTransaction = joinr,
+                         AccId = jl.ActionCode == "1" ? jl.CreditAccountId : jl.DebitAccountId,
+                     });
+            return q;
+        }
+
+
 
         public IQueryable<JournalLineLedgerDTO> GetJournalLineAsLedgerTransaction(DateTime fromTruncateTime, DateTime toTruncateTime, int tenant
             //, JournalLineQueryService qsJournalLine

@@ -56,6 +56,8 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "CustomerSize", DBTableName = "CustomerSizes", Dw_TableName = "dw_CustomerSizes", KeyName = "Id" });
             tableNameLists.Add(new TableClass() { TableName = "Industry", DBTableName = "Industries", Dw_TableName = "dw_Industries", KeyName = "Id"});
 
+            tableNameLists.Add(new TableClass() { TableName = "ShipmentComputedFields", DBTableName = "ShipmentComputedFields", Dw_TableName = "dw_ShipmentComputedFields", KeyName = "Id" });
+
 
 
             tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant", DWObjectTableCode = "Fact_Shipments", FieldsDBName = "ToPortId,FromPortId", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
@@ -1094,6 +1096,7 @@ namespace WarehouseData.Helper
 
                 string originTableName = table.TableName == "WaterMark" && isPrivateDB ? ("Private" + table.DBTableName) : table.DBTableName;
 
+
                 SqlCommand commandSourceData = new SqlCommand(
            "SELECT " + fieldName +
            " FROM dbo." + originTableName + condition + " ;", sourceConnection);
@@ -1305,8 +1308,9 @@ namespace WarehouseData.Helper
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Notify2Id DEFAULT '-1' FOR Notify2Id"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ColoaderId DEFAULT '-1' FOR ColoaderId"
                         + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ShipperNotExporterId DEFAULT '-1' FOR ShipperNotExporterId"
-                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ReleasingAgentId DEFAULT '-1' FOR ReleasingAgentId";
-
+                        + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ReleasingAgentId DEFAULT '-1' FOR ReleasingAgentId"
+                        ;
+                        
                     break;
                 case "Cards":
 
@@ -1335,7 +1339,10 @@ namespace WarehouseData.Helper
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment2ToPortId DEFAULT '-1' FOR Transshipment2ToPortId;"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment3ToPortId DEFAULT '-1' FOR Transshipment3ToPortId;"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageCarrierId DEFAULT '-1' FOR MainCarriageCarrierId;"
-                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageVesselId DEFAULT '-1' FOR MainCarriageVesselId;";
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainCarriageVesselId DEFAULT '-1' FOR MainCarriageVesselId;"
+                    +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1VesselId DEFAULT '-1' FOR Transshipment1VesselId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "Transshipment1CarrierId DEFAULT '-1' FOR Transshipment1CarrierId"
+                        ;
 
                     break;
 
@@ -1675,6 +1682,29 @@ namespace WarehouseData.Helper
 
         }
 
+        private string DeleteRowsFromDataWarehouse(DeleteRowsArgs deleteRowsArgs)
+        {
+            int rowsCount = 0;
+            StringBuilder allDeletedRows = new StringBuilder();
+            StringBuilder deletedRows = new StringBuilder();
+            foreach (string id in deleteRowsArgs.IdsList)
+            {
+                rowsCount += 1;
+                deletedRows.Append("'" + id + "'" + ",");
+                if (rowsCount == 1000 || (deleteRowsArgs.IdsList.IndexOf(id) == deleteRowsArgs.IdsList.IndexOf(deleteRowsArgs.IdsList.Last())))
+                {
+                    if (deleteRowsArgs.ReturnDeleteIdsAsString) allDeletedRows.Append(deletedRows.ToString());
+                    string cmd = "delete " + deleteRowsArgs.TableName + " where " + deleteRowsArgs.KeyName + " in " + ("(" + deletedRows.ToString() + ")").Replace(",)", ")");
+                    ExecuteSql(cmd, deleteRowsArgs.ConnectionString);
+                    rowsCount = 0;
+                    deletedRows.Clear();
+                }
+            }
+
+            return !string.IsNullOrEmpty(allDeletedRows.ToString()) ? ("(" + allDeletedRows.ToString() + ")").Replace(",)", ")") : null;
+
+        }
+
 
         #endregion
 
@@ -1778,6 +1808,15 @@ namespace WarehouseData.Helper
         #endregion
 
 
+    }
+
+    public class DeleteRowsArgs
+    {
+        public string TableName { get; set; }
+        public string KeyName { get; set; }
+        public string ConnectionString { get; set; }
+        public List<string> IdsList { get; set; }
+        public bool ReturnDeleteIdsAsString { get; set; }
     }
 
     public class DeleteRowsArgs
