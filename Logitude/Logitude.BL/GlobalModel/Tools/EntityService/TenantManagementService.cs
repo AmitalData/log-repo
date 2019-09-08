@@ -198,18 +198,18 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             {
                 if (entityPM.MainAdditionalPackageApplied)
                 {
+                    if (!entityPM.TenantManagementLicenses.Where(d => d.PackageCode == entityPM.PackageCode).Any())
+                    {
+                        throw new ApplicationException("Main package should be one of the additional packages");
+                    }
+
+                    if (entityPM.TenantManagementLicenses.Where(d => d.PackageCode == entityPM.PackageCode && d.ChangeSetOp != ChangeSetOperation.Delete).Any())
+                    {
+                        throw new ApplicationException("Main package should be deleted from the additional packages");
+                    }
+
                     if (entityPM.IsMultiPackage)
                     {
-                        if (!entityPM.TenantManagementLicenses.Where(d => d.PackageCode == entityPM.PackageCode).Any())
-                        {
-                            throw new ApplicationException("Main package should be one of the additional packages");
-                        }
-
-                        if (entityPM.TenantManagementLicenses.Where(d => d.PackageCode == entityPM.PackageCode && d.ChangeSetOp != ChangeSetOperation.Delete).Any())
-                        {
-                            throw new ApplicationException("Main package should be deleted from the additional packages");
-                        }
-
                         this.SwitchToMainAdditionalPackageMulti();                        
                     }
 
