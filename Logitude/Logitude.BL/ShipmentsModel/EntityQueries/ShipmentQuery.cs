@@ -9719,7 +9719,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
         #endregion
 
-        public ShipmentsSummary GetShipmentsDashBoardSummary(int tenant, string directionId, string transportModeId, string loggedContactId, bool hasETDFeature, bool hasFollowupsFeature, bool hasExpDepNotTransmittedFeature, bool hasShippingInstructionsLast7DaysFeature, bool hasContainerStatusLast7DaysFeature)
+        public ShipmentsSummary GetShipmentsDashBoardSummary(int tenant, string directionId, string transportModeId, string loggedContactId, bool hasETDFeature, bool hasFollowupsFeature, bool hasExpDepNotTransmittedFeature, bool hasShippingInstructionsLast7DaysFeature, bool hasContainerStatusLast7DaysFeature, bool hasEBookingInProgress)
         {
             ShipmentsSummary myResult = new ShipmentsSummary() { Id = 1 };
 
@@ -9813,6 +9813,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 myResult.ContainerStatusLast7DaysCount = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRALastStatusDate >= lastWeekDate)).Take(1001).Count();
             }
 
+            if (hasEBookingInProgress)
+            {
+                myResult.EBookingInProgressCount = (from myShipment in iQueryable_Shipments
+                                                    join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                                    from myMasterData in ShipmentsMasters
+                                                    where myShipment.Tenant == tenant
+                                                    && (myShipment.ShipmentLevelCode == "H" || myShipment.ShipmentLevelCode == "D")
+                                                    && myShipment.DirectionId == "E"
+                                                    && myShipment.TransportModeId == "O"
+                                                    && myShipment.INTTRABookingTransStatusCode != "NST"
+                                                    && myMasterData.Tenant == tenant
+                                                    && myMasterData.MainCarriageATD == null
+                                                    select myShipment).Take(1001).Count();
+
+            }
             // Others
             myResult.CreditLimitBlockedCount = iQueryable_Shipments.Where(d => d.IsNewARInvoiceBlocked == true).Take(1001).Count();
 

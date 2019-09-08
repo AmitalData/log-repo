@@ -2721,18 +2721,22 @@ namespace WebFreight.Web
             List<ShipmentPartnerPM> result = new List<ShipmentPartnerPM>();
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             Shipment shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+
             if (shipment != null && shipment.SecurityKey == securitykey)
             {
                 SharedLogisticsSettingRepository settingRepository = new SharedLogisticsSettingRepository(shipment.Tenant);
                 SharedLogisticsSetting setting = settingRepository.GetSingle(shipment.Tenant.ToString(), shipment.Tenant);
+
                 if (!string.IsNullOrEmpty(shipment.ShipperId) && setting.IsShipperShared)
                 {
                     CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
                 }
+
                 SharedLogisticService service = new SharedLogisticService(shipment, setting);
                 service.BuildPartners();
                 result = service.Partners;                                              
             }
+
             return result;
         }
 
