@@ -52,7 +52,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
             List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();
             IQueryable<TariffLine> iQueryable = this.repository.GetAllTariffLines(tenant);
-            iQueryable = iQueryable.Where(p => p.OriginPortId == fromport && p.DestinationPortId == toport && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate);
+            iQueryable = iQueryable.Where(p => p.OriginPortId == fromport && p.DestinationPortId == toport && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate):true);
             List<string> tariffids = iQueryable.Select(p => p.TariffId).Distinct().ToList();//.ToDictionary(p=>p.Key,p=>p);
             TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
             List<TariffSetting> setting = tariffSettingRepository.GetAll(tenant).ToList();
