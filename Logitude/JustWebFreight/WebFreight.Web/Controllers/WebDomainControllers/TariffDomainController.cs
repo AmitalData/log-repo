@@ -2589,12 +2589,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         if (isValid)
                         {
+                            string mySurchargesText = "";
                             foreach (FromToClass rout in routs)
                             {
-                                tariffSurchageLog = new TariffSurchargesUpdatePM();
                                 TariffLinePM myLine = iDraftVersion.TariffLines.Where(d => d.OriginPortId == rout.FromCode && d.DestinationPortId == rout.ToCode).FirstOrDefault();
                                 // Update
-                                var surchargesText = ""; 
                                 if (myLine != null)
                                 {
                                     myLine.ChangeSetOp = ChangeSetOperation.Update;
@@ -2643,7 +2642,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         string[] charge_array = charge.Split(',');
                                         decimal? price = null;
                                         decimal? minPrice = null;
-
+       
                                         if (this.FixFilter(charge_array[1]) != null)
                                         {
                                             price = Convert.ToDecimal(charge_array[1]);
@@ -2654,33 +2653,46 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                             minPrice = Convert.ToDecimal(charge_array[2]);
                                         }
 
+                                        if (this.FixFilter(charge_array[4]) != null)
+                                        {
+                                            mySurchargesText = charge_array[4];
+                                        }
+
+                                        mySurchargesText = mySurchargesText + ",";
                                         PropertyInfo valuePropInfo1 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
                                         PropertyInfo valuePropInfo2 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
-
                                         valuePropInfo1.SetValue(tariffLine, price, null);
                                         valuePropInfo2.SetValue(tariffLine, minPrice, null);
                                     }
 
                                     iDraftVersion.TariffLines.Add(tariffLine);
                                 }
+                            }
 
+                            foreach (var item in SurchargeLog)
+                            {
+                                tariffSurchageLog = new TariffSurchargesUpdatePM();
                                 tariffSurchageLog.TariffId = tariff.Id;
+                                tariffSurchageLog.Version = tariff.LastVersion;
+                                tariffSurchageLog.Surcharges = mySurchargesText != null ? mySurchargesText.TrimEnd(',') : mySurchargesText;
                                 tariffSurchageLog.StartDate = args.StartDate;
-                                tariffSurchageLog.LinesUpdated = routs.Count;
+                                tariffSurchageLog.LinesUpdated = item.Count;
                                 tariffSurchageLog.UpdateMethodCode = "BA";
-                                tariffSurchageLog.ChangeSetOp = ChangeSetOperation.Update;
+                                tariffSurchageLog.ChangeSetOp = ChangeSetOperation.Insert;
+                                tariffSurchageLog.Tenant = authToken.Tenant;
+                                tariffSurchageLog.To = SurchargeLog != null ? string.Join(",", item.ToPorts.ToArray()) : null;
+                                tariffSurchageLog.From = item.FromPort;
                                 tariffSurchargeUpdateService.Update(tariffSurchageLog, true);
                             }
 
                             tariff.IsSurchargeUpdate = true;
+                            tariff.IsFromUpdateScreen = true;
                             tariff.ChangeSetOp = ChangeSetOperation.Update;
                             iDraftVersion.ChangeSetOp = ChangeSetOperation.Update;
                             tariffUpdateService.Update(tariff, true);
-                         
                         }
                     }
                 }
-
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }
 
@@ -2718,6 +2730,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return isValid;
         }
+
+        List<SurchargeLog> SurchargeLog = new List<SurchargeLog>();
         private List<FromToClass> ComputeRoutsList(List<string> fromList, List<string> toList, int tenant)
         {
             List<FromToClass> myResult = new List<FromToClass>();
@@ -2726,9 +2740,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             foreach (string item_from in fromList)
             {
                 string[] from = item_from.Split(',');
-
+                var surchargeLogItem = new SurchargeLog();
+                List<string> areasToPorts = new List<string>();
+                
                 if (from[0] == "Port")
                 {
+                    surchargeLogItem.FromPort = from[2];
                     foreach (string item_to in toList)
                     {
                         string[] to = item_to.Split(',');
@@ -2742,10 +2759,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             };
 
                             myResult.Add(routItem);
+                            areasToPorts.Add(to[2]);
                         }
 
                         else if (to[0] == "Area")
-                        {                           
+                        {
                             List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
                             if (areasPorts != null && areasPorts.Count > 0)
                             {
@@ -2758,10 +2776,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     };
 
                                     myResult.Add(routItem);
+                                    if(port.Port != null)
+                                    {
+                                        areasToPorts.Add(port.Port.Code);
+                                    }
                                 }
                             }
                         }
                     }
+                    surchargeLogItem.ToPorts = areasToPorts;
+                    surchargeLogItem.Count = areasToPorts != null ? areasToPorts.Count() : 0;
+                    SurchargeLog.Add(surchargeLogItem);
                 }
 
                 else if (from[0] == "Area")
@@ -2769,8 +2794,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(from[1], tenant);
                     if (areasPorts != null && areasPorts.Count > 0)
                     {
+                      
                         foreach(AirlineAreasPort port in areasPorts)
                         {
+                            surchargeLogItem = new SurchargeLog();
+                            surchargeLogItem.FromPort = port.Port != null ? port.Port.Code : null;
                             foreach (string item_to in toList)
                             {
                                 string[] to = item_to.Split(',');
@@ -2784,6 +2812,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     };
 
                                     myResult.Add(routItem);
+                                    areasToPorts.Add(to[2]);
                                 }
 
                                 else if (to[0] == "Area")
@@ -2800,15 +2829,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                             };
 
                                             myResult.Add(routItem);
+                                            if (port.Port != null)
+                                            {
+                                                areasToPorts.Add(port.Port.Code);
+                                            }
                                         }
+                                    
                                     }
                                 }
                             }
+
+                            surchargeLogItem.ToPorts = areasToPorts;
+                            surchargeLogItem.Count = areasToPorts != null ? areasToPorts.Count() : 0;
+                            areasToPorts = new List<string>();
+                            SurchargeLog.Add(surchargeLogItem);
                         }
                     }
                 }
             }
-
             return myResult;
         }
         private string FixFilter(string filter)
@@ -2830,6 +2868,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return myResult;
         }
+    }
+
+    public class SurchargeLog
+    {
+        public string FromPort { get; set; }
+        public List<string> ToPorts { get; set; }
+        public int Count { get; set; }
     }
 
     public class TariffFilterParameter

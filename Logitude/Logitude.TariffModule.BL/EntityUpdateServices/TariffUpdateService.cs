@@ -102,6 +102,33 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 this.ApproveDraftVersion(entityPM);
                 entityPM.IsApprovingDraftVersion = false;
             }
+
+            this.InsertTariffSurchargeLog(entityPM);
+        }
+
+        private void InsertTariffSurchargeLog(TariffPM tariff)
+        {
+            if (tariff.TypeCode == "ASC" && !tariff.IsFromUpdateScreen)
+            {
+                TariffSurchargesUpdateUpdateService tariffSurchargeUpdateService = new TariffSurchargesUpdateUpdateService(TariffModuleContext.GetContext(tariff.Tenant), new Dictionary<string, IContext>(), tariff.Tenant);
+                TariffVersionPM version = tariff.TariffVersions.Where(prop => prop.IsDraft == true).FirstOrDefault();
+                List<TariffLinePM> tariffpdatedLines = version.TariffLines.Where(p => p.ChangeSetOp == ChangeSetOperation.Update || p.ChangeSetOp == ChangeSetOperation.Insert).ToList();
+                foreach (var item in tariffpdatedLines)
+                {
+                    TariffSurchargesUpdatePM tariffSurchageLog = new TariffSurchargesUpdatePM();
+                    tariffSurchageLog.TariffId = tariff.Id;
+                    tariffSurchageLog.Version = item.Version;
+                    tariffSurchageLog.Surcharges = "";
+                    tariffSurchageLog.LinesUpdated = 1;
+                    tariffSurchageLog.StartDate = tariff.StartDate;
+                    tariffSurchageLog.UpdateMethodCode = "MA";
+                    tariffSurchageLog.ChangeSetOp = ChangeSetOperation.Insert;
+                    tariffSurchageLog.Tenant = item.Tenant;
+                    tariffSurchageLog.To = item.DestinationPortCode;
+                    tariffSurchageLog.From = item.OriginPortCode;
+                    tariffSurchargeUpdateService.Update(tariffSurchageLog, true);
+                }
+            }
         }
 
         protected override void UpdateComposition(TariffPM entityPM)
