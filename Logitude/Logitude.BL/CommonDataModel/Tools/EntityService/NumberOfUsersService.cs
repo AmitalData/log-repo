@@ -36,7 +36,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.GetTenantManagementProperties();
             this.GetTenantUsersCount();
-            this.GetTenantUserLicensesCount();
             this.GetLoggedContactId();
         }
 
@@ -81,15 +80,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 allTenantUsers = allTenantUsers.Where(d => d.LicencedUser);
             }
 
+            if (mainAdditionalPackageApplied)
+            {
+                allTenantUsers = allTenantUsers.Where(d => !d.AdditionalPackagesOnly);
+            }
+
             tenantUsersCount = allTenantUsers.Count();
         }
-
-        private int? userLicensesCount = 0;
-        private void GetTenantUserLicensesCount()
-        {
-            this.userLicensesCount = userLicenseRepository.GetUserLicensesCountByPackageCode(packageCode, tenant);
-        }
-
+        
         private string loggedContactId = null;
         private void GetLoggedContactId()
         {
@@ -111,184 +109,66 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             bool canAddUser = false;
 
-            if (mainAdditionalPackageApplied)
+            if (this.tenant == 0 && !numberOfUsersArgs.UserPMIsDistributor)
             {
                 canAddUser = true;
             }
 
             else
             {
-                canAddUser = this.ValidateSingleMultiMode(numberOfUsersArgs);
-
-                if (!canAddUser)
-                {
-                    throw new Exception("Sorry You reached the maximum number of users!");
-                }
-            }  
-        }
-        public void CheckNumberOfUsersOnUpdateUser_New(NumberOfUsersArgs numberOfUsersArgs)
-        {
-            bool canUpdateUser = false;
-
-            if (mainAdditionalPackageApplied)
-            {
-                canUpdateUser = true;
+                canAddUser = this.ValidateTenantManagementPackagesMode(numberOfUsersArgs);
             }
 
-            else
+            if (!canAddUser)
             {
-                canUpdateUser = this.ValidateSingleMultiMode(numberOfUsersArgs);
-
-                if (!canUpdateUser)
-                {
-                    
-                }
-            }
-
-            /////////////////////////////
-
-            bool isUsersCountAllowed = false;
-
-            if (isManageLicencesPerUser)
-            {
-                if (!numberOfUsersArgs.UserPOCOLicencedUser && numberOfUsersArgs.UserPMLicencedUser)
-                {
-                    if (isMultiPackage)
-                    {
-                        isUsersCountAllowed = true;
-                    }
-
-                    else if (tenantUsersCount < totalTenantManagementUsers)
-                    {
-                        isUsersCountAllowed = true;
-                    }
-
-                    else if (tenant == 0 && !numberOfUsersArgs.UserPMIsDistributor)
-                    {
-                        isUsersCountAllowed = true;
-                    }
-
-                    if (isUsersCountAllowed)
-                    {
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                        {
-                            Tenant = 0,
-                            EventTypeCode = "UPMG",
-                            UserId = this.loggedContactId,
-                            EntityId = tenant.ToString(),
-                            ObjectTableName = "TenantManagement",
-                            Notes = "The user " + numberOfUsersArgs.UserEnglishName + " is Licenced!",
-                        });
-                    }
-
-                    else
-                    {
-                        throw new ApplicationException("Sorry You can't Licence this user since you reached the maximum number of users!");
-                    }
-                }
-            }
-
-            else
-            {
-                string eventNotes = null;
-
-                if (mainAdditionalPackageApplied)
-                {
-                    if (numberOfUsersArgs.UserPOCOInactive && !numberOfUsersArgs.UserPMInactive)
-                    {
-                        if (userLicensesCount < totalTenantManagementUsers)
-                        {
-                            isUsersCountAllowed = true;
-                            eventNotes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated";
-                        }
-
-                        else
-                        {
-                            throw new Exception("Sorry You can't activate this user since you reached the maximum number of licenses!");
-                        }
-                    }
-
-                    if (isUsersCountAllowed)
-                    {
-                        UserLicense userLicense = userLicenseRepository.GetSingleUserLicenseByUserAndPackage(numberOfUsersArgs.UserId, packageCode, tenant);
-                        if (userLicense == null)
-                        {
-                            userLicense = new UserLicense()
-                            {
-                                Id = IdCounter.GetNumber("UserLicense", tenant).ToString(),
-                                UserId = numberOfUsersArgs.UserId,
-                                PackageCode = packageCode,
-                                Tenant = tenant,
-                            };
-
-                            userLicenseRepository.Add(userLicense);
-                        }
-
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                        {
-                            Tenant = 0,
-                            EventTypeCode = "UPMG",
-                            UserId = this.loggedContactId,
-                            EntityId = tenant.ToString(),
-                            ObjectTableName = "TenantManagement",
-                            Notes = eventNotes,
-                        });
-                    }
-                }
-
-                else
-                {
-                    if (numberOfUsersArgs.UserPOCOInactive && !numberOfUsersArgs.UserPMInactive)
-                    {
-                        if (isMultiPackage)
-                        {
-                            isUsersCountAllowed = true;
-                        }
-
-                        else if (tenantUsersCount < totalTenantManagementUsers)
-                        {
-                            isUsersCountAllowed = true;
-                        }
-
-                        else if (tenant == 0 && !numberOfUsersArgs.UserPMIsDistributor)
-                        {
-                            isUsersCountAllowed = true;
-                        }
-
-                        if (isUsersCountAllowed)
-                        {
-                            EventTracer.CreateTraceEvent(new EventTracerArgs()
-                            {
-                                Tenant = 0,
-                                EventTypeCode = "UPMG",
-                                UserId = this.loggedContactId,
-                                EntityId = tenant.ToString(),
-                                ObjectTableName = "TenantManagement",
-                                Notes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated",
-                            });
-                        }
-
-                        else
-                        {
-                            throw new Exception("Sorry You can't activate this user since you reached the maximum number of users!");
-                        }
-                    }
-                }
+                throw new Exception("Sorry You reached the maximum number of users!");
             }
         }
-
-
-
-        private bool ValidateSingleMultiMode(NumberOfUsersArgs numberOfUsersArgs)
+        private bool ValidateTenantManagementPackagesMode(NumberOfUsersArgs numberOfUsersArgs)
         {
             bool isVlalid = false;
 
-            if (isMultiPackage)
+            if (mainAdditionalPackageApplied)
+            {
+                isVlalid = this.ValidateNewMode(numberOfUsersArgs);
+            }
+
+            else
+            {
+                isVlalid = this.ValidateOldMode(numberOfUsersArgs);
+            }
+
+            return isVlalid;
+        }
+        private bool ValidateNewMode(NumberOfUsersArgs numberOfUsersArgs)
+        {
+            bool isVlalid = false;
+
+            if (tenantUsersCount < totalTenantManagementUsers)
             {
                 isVlalid = true;
             }
 
-            else if (this.tenant == 0 && !numberOfUsersArgs.UserPMIsDistributor)
+            else
+            {
+                if (numberOfUsersArgs.UserPMAdditionalPackagesOnly)
+                {
+                    isVlalid = true;
+                }
+
+                else
+                {
+                    throw new Exception("You reached maximum number of users, mark the user as AdditionalPackagesOnly!");
+                }
+            }
+
+            return isVlalid;
+        }
+        private bool ValidateOldMode(NumberOfUsersArgs numberOfUsersArgs)
+        {
+            bool isVlalid = false;
+
+            if (isMultiPackage)
             {
                 isVlalid = true;
             }
@@ -322,7 +202,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             return isVlalid;
         }
-
+        
         public void CheckNumberOfUsersOnUpdateUser(NumberOfUsersArgs numberOfUsersArgs)
         {
             bool isUsersCountAllowed = false;
@@ -374,18 +254,41 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     if (numberOfUsersArgs.UserPOCOInactive && !numberOfUsersArgs.UserPMInactive)
                     {
-                        if (userLicensesCount < totalTenantManagementUsers)
+                        if (!numberOfUsersArgs.UserPOCOAdditionalPackagesOnly && numberOfUsersArgs.UserPMAdditionalPackagesOnly)
                         {
                             isUsersCountAllowed = true;
-                            eventNotes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated";
+                            eventNotes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated and Additional Packages Only!";
                         }
 
                         else
                         {
-                            throw new Exception("Sorry You can't activate this user since you reached the maximum number of licenses!");
+                            if (tenantUsersCount < totalTenantManagementUsers)
+                            {
+                                isUsersCountAllowed = true;
+                                eventNotes = "The user " + numberOfUsersArgs.UserEnglishName + " has been activated";
+                            }
+
+                            else
+                            {
+                                throw new Exception("Sorry You can't activate this user since you reached the maximum number of users!");
+                            }
+                        }                       
+                    }
+
+                    if (numberOfUsersArgs.UserPOCOAdditionalPackagesOnly && !numberOfUsersArgs.UserPMAdditionalPackagesOnly)
+                    {
+                        if (tenantUsersCount < totalTenantManagementUsers)
+                        {
+                            isUsersCountAllowed = true;
+                            eventNotes = "The user " + numberOfUsersArgs.UserEnglishName + " is Additional Packages Only";
+                        }
+
+                        else
+                        {
+                            throw new Exception("Sorry You can't activate this user since you reached the maximum number of users!");
                         }
                     }
-                    
+
                     if (isUsersCountAllowed)
                     {
                         UserLicense userLicense = userLicenseRepository.GetSingleUserLicenseByUserAndPackage(numberOfUsersArgs.UserId, packageCode, tenant);
@@ -483,6 +386,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public bool UserPMInactive { get; set; }
         public bool UserPOCOLicencedUser { get; set; }
         public bool UserPMLicencedUser { get; set; }
+        public bool UserPOCOAdditionalPackagesOnly { get; set; }
+        public bool UserPMAdditionalPackagesOnly { get; set; }
         public bool UserPMIsDistributor { get; set; }
         public bool IsNewUser { get; set; }
     }
