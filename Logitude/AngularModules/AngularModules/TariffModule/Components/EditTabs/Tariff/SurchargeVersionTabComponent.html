@@ -172,9 +172,6 @@
                             </log-cell-template>
                         </log-column>
 
-
-
-
                         <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
@@ -193,7 +190,6 @@
                                             (SelectedItemChanged)="item.Currency = $event"
                                             [LookUpTableName]="'Currency'">
                                     </LogLov>
-
                                 </div>
                             </log-cell-template>
                         </log-column>
@@ -744,85 +740,85 @@
                                     <div class="SimpleGridViewBody">
                                         <table>
                                             <tr class="SimpleGridViewRow" *ngFor="let item of DeletedTariffsLines">
-                                                <td class="GridViewCell" style="width: 60px;">
+                                                <td class="GridViewCell" style="width: 60px; min-width:60px; max-width:60px;">
                                                     <img class="CenterCenter" src="./Images/RedX.png" [title]="item.ErrorText" />
                                                 </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: left;">
+                                                <td class="CellDisabled" style="width: 70px; min-width:70px; max-width:70px; text-align: left;">
                                                     {{item.OriginPortValue}}
                                                     <div style="height: 100%; width: 100%;" *ngIf="item.IsFromAllOtherPorts">
                                                         <img src="./Images/Icons/A-icon.png" width="16" height="16" title="From All Other Ports" />
                                                     </div>
                                                 </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: left;">
+                                                <td class="CellDisabled" style="width: 70px; min-width:70px; max-width:70px; text-align: left;">
                                                     {{item.DestinationPortValue}}
                                                     <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
                                                         <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
                                                     </div>
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: left;">
+                                                <td class="CellDisabled" style="width: 70px; min-width:70px; max-width:70px; text-align: left;">
                                                     {{item.CurrencyCode }}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: left;">
+                                                <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: left;">
                                                     {{item.StartDate | DateTimePipe:'SD'}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge1MinPriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge1PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge2MinPriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge2PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge3MinPriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge3PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge4MinPriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge4PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge5MinPriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge5PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge6MinPriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge6PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge7MinPriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge7PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge8MinPriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge8PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge9MinPriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge9PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge10MinPriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge10PriceValue}}
                                                 </td>
                                                 <td>
