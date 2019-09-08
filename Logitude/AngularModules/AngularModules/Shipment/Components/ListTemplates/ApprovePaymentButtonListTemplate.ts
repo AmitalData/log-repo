@@ -94,7 +94,7 @@ export class ApprovePaymentButtonListTemplate {
                     //this.CurrentSession.StopBusyIndicator();
                     this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response1 => {
                         var newWindow = new LogitudeWindow();
-                        newWindow.Width = 665;
+                        newWindow.Width = 705;
                         newWindow.Height = 700;
                         if (this.Language == 'HB') {
                             newWindow.RTL = true;
