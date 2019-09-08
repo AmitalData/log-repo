@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {AppTool, DateTool, ArrayTool} from '../../Infrastructure/Tools';
 import {BaseComponent} from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -58,6 +58,8 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
     ShowAddPackageButton: boolean = false;
     SelectedWarehouseReleasePackage: WarehouseReleasePackagePM;
     private CurrentSession = SessionLocator.SelectedSession;
+    IsEditMode: boolean = false;
+    IsFromFullWarehouseEntryComponent: boolean = false;
     constructor(private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         super();
 

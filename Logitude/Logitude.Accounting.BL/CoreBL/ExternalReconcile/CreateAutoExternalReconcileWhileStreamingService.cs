@@ -20,11 +20,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         IExternalReconcileDataProvider _ExternalReconcileDataProvider;
         public List<ExternalReconciliationPM> ExternalReconciliationList { get; private set; }
 
-        internal void MustInit(ExternalReconcileDataProvider externalReconcileDataProvider, JournalPM journalPM, List<LedgerTransactionPM> myLedgerTransactionsWithCounters)
+        internal void MustInit(ExternalReconcileDataProvider externalReconcileDataProvider, JournalPM journalPM, List<LedgerTransactionPM> myNewLedgerTransactionsWithCounters)
         {
             _ExternalReconcileDataProvider =externalReconcileDataProvider;
             this._JournalPM = journalPM;
-            this._NewLedgerTransactionsWithCounters =myLedgerTransactionsWithCounters;
+            this._NewLedgerTransactionsWithCounters =myNewLedgerTransactionsWithCounters;
         }
         /// <summary>
         /// יוצר 2 התאמות כנגד הפק יומן
