@@ -39,12 +39,16 @@ export class DenyReasonComponent extends BaseComponent implements OnInit, AfterV
     DataContext: DenyReasonComponent = this;
     ValidationErrorsList: any[];
     AdditionalData: any;
+    public RTL: boolean = true;
+    Language: string = 'HB';
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     private CurrentSession = SessionLocator.SelectedSession;
     DenyReasonWaterMark: string = 'Please fill out the explanation for rejecting the statement';//{ { 'Shipment.O.DenyReasonWaterMark' | TextCodeTranslationPipe } }
     constructor() {
         super();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
+        this.Language = SessionLocator.TenantPM.Language;
+        this.RTL = (this.Language == 'HB');
     }
     ngOnInit() {
         this.DenyReasonWaterMark = TextCodeTranslator.Translate('Shipment.O.DenyReasonWaterMark');
