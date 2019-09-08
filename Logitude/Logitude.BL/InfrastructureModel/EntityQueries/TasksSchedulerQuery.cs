@@ -214,10 +214,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              LastRunEndTimeUTC = a.LastRunEndTimeUTC
                          }).ToList().OrderByDescending(x => x.CreateDateTime);
 
-            foreach (var Task in Tasks)
-            {
-                Task.Duration = GetTaskAvarageDuration(Task.Id);
-            }
+            //foreach (var Task in Tasks)
+            //{
+            //    Task.Duration = GetTaskAvarageDuration(Task.Id);
+            //}
 
             return Tasks.ToList();
         }

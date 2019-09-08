@@ -50,6 +50,15 @@ namespace CommunicationWorkerRole.Tasks
                 queueService.Enqueue(new LogQueueMessage() { FileName = TaskSchedulerHistory.LogDocumentId, FileExtension = "txt", FolderName = "taskmanagerlogs", Message = message, Tenant = Task.Tenant });
             }
         }
+
+        public static void AppendLogMessageToFile(TaskSchedulerHistoryPM taskSchedulerHistory, string message)
+        {
+            ConcurrentQueueService<LogQueueMessage> queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
+            if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(taskSchedulerHistory.LogDocumentId))
+            {
+                queueService.Enqueue(new LogQueueMessage() { FileName = taskSchedulerHistory.LogDocumentId, FileExtension = "txt", FolderName = "taskmanagerlogs", Message = message, Tenant = taskSchedulerHistory.Tenant });
+            }
+        }
         public void Run()
         {
             try
@@ -270,6 +279,7 @@ namespace CommunicationWorkerRole.Tasks
         {
             if (!string.IsNullOrEmpty(Message))
                 this.Warnings.AppendLine(Message);
+
         }
 
         public void LogException(string Message)

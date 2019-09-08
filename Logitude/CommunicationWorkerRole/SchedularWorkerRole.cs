@@ -128,6 +128,8 @@ namespace CommunicationWorkerRole
                 }
 
 
+                TaskManagerBase.AppendLogMessageToFile(TaskSchedulerHistory, Message);
+
                 //}
             }
         }

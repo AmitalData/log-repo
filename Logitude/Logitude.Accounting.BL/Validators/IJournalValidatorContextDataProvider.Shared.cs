@@ -26,7 +26,8 @@ namespace Logitude.Accounting.BL.Validators
 
         ReconcileExternalPageLinePM GetReconcileExternalPageLinePM(int tenant, string reconcileExternalPageLineId);
         List<LedgerTransactionPM> GetLedgerTransactionList(List<string> theReconcileAgainstLTranIdList, int tenant);
-        
+        DateTime GetCurrentDateTime(int tenant);
+        string ResolveUserId(int tenant);
     }
     public interface IGLAccountDataProvider
     {
