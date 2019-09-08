@@ -1,9 +1,26 @@
 
-
+<style>
+    .WarningSummary {
+        height: 100%;
+        width: 100%;
+        border: 1px solid Orange;
+        border-radius: 5px;
+        background: #FFFBDA;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        overflow: hidden;
+    }
+</style>
 <table>
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+    <!--<tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>-->
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList != ''" style="height:1px;">
+        <td>
+            <div [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'" class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
         </td>
     </tr>
     <tr>

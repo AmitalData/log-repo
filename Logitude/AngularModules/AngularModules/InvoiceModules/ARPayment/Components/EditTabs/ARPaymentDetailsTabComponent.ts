@@ -56,6 +56,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public ARPaymentChequeStatus = "";
     public ARPaymentChequeStatusColor = "black";
     private CurrentSession = SessionLocator.SelectedSession;
+    public EntityWarningsList: string[] = [];
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
 
@@ -64,6 +65,11 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         this.EntityPM = entityArgs.EntityPM;
+        if (this.EntityPM && !AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
+            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
+            
+        }
+
         this.FullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
