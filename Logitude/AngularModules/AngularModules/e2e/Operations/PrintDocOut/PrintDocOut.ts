@@ -10,12 +10,15 @@ export class PrintDocOut {
     }
 
     isPrintingCompleted(expectedId, closePopup) {
-       this.helper.WaitBusyIndicator();
-       this.helper.ItemsPresent(expectedId);
-        if(closePopup) {
+        this.helper.WaitBusyIndicator();
+        this.helper.ItemsPresent(expectedId);
+        if (closePopup) {
             this.helper.WaitByCssStringAndClick('.Button', 'Close');
             this.helper.WaitBusyIndicator();
             this.helper.WaitWindowClosed();
-        }   
+        } else {
+            // browser.driver.sleep(5000)
+            this.helper.WaitByIdAndClick('MessageWindow_Ok_0');
+        }
     }
 }

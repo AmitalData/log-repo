@@ -361,6 +361,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                         }
                         else {
                             this.IsPickedFromWizard = false;
+                            this.weight = null;
+                            this.grossWeight = null;
+                            this.volume = null;
+                            this.chargeableWeight = null;
                         }
                     }
 
@@ -459,10 +463,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.UIProperties.SetEnabled("GrossWeightCode", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("WeightCode", this.ObjectTableName, true);
-            this.weight = null;
-            this.grossWeight = null;
-            this.volume = null;
-            this.chargeableWeight = null;
+           
         }
     }
 

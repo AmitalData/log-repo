@@ -19,6 +19,8 @@ export class NewBankAccount {
         browser.ignoreSynchronization = true;
         this.Helper.WaitByIdAndClick('FABNKS');
         this.Helper.WaitByIdAndClick('NEWBANK');
+        this.Helper.ItemsPresent('BankAccount_BankId');
+        this.Helper.ItemsVisibility('BankAccount_BankId');
         this.Helper.WaitByIdAndFill('BankAccount_BankId', 'Leumi');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitByIdAndFill('BankAccount_BranchNumber', '12544');
@@ -30,11 +32,10 @@ export class NewBankAccount {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('BankAccount_GLAccountId', Name1);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0),
-
-            // this.Helper.WaitBusyIndicator();
+         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('BankAccount_DeferredGLAccountId', Name2);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0),
-            //this.Helper.WaitBusyIndicator();
+        this.Helper.WaitBusyIndicator();
         this.Helper.ItemsPresent('BankAccount_TransferGLAcccountId');
 
         this.Helper.WaitByIdAndFill('BankAccount_TransferGLAcccountId', Name3);

@@ -255,7 +255,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.Validate(entityPM);
         }
 
-        void Validate_Move2_ReconcileExternalPageValidator(ReconcileExternalPagePM entityPM) {
+        void Validate_Move2_ReconcileExternalPageValidator(ReconcileExternalPagePM entityPM)
+        {
 
             List<string> errors = new List<string>();
             if (entityPM.StatusCode != "1") // 1- Draft
@@ -266,7 +267,32 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (entityPM.StatusCode == "2") // 2- Approved
                     CheckPageBalance(entityPM, errors);
-               
+
+            }
+
+            ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(entityPM.Tenant);
+            ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(entityPM.PageNo, entityPM.BankAccountId, entityPM.Tenant);
+            if (prevPage != null)
+            {
+                bool avoidCheckReferenceDate = true;//ohad+ eyal
+
+                if (avoidCheckReferenceDate)
+                {
+
+                }
+                //else
+                //{
+                //    //1
+                //    if (entityPM.FromDate.Date <= prevPage.ToDate.Date)
+                //    {
+                //        errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.FromDateShouldBiggerPrevToDate", entityPM.Tenant, useLocal));
+                //    }
+                //}
+                ////2
+                //if (entityPM.ToDate.Date < entityPM.FromDate.Date)
+                //{
+                //    errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.ToDateShouldBiggerFromDate", entityPM.Tenant, useLocal));
+                //}
             }
 
             CheckCreditAndDebitFieldForLines(entityPM);

@@ -2,6 +2,8 @@
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
@@ -113,7 +115,16 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSinglePM(tenantPM.AddressId, tenant);
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
-        //    PaymentChequeDP.APPaymentNumber = GetPaymentNumber(paymentChequePM);
+            //  PaymentChequeDP.APPaymentNumber = GetRelatedPayment(paymentChequePM);
+            APPaymentPM appayment = GetRelatedPayment(paymentChequePM);
+            if(appayment != null)
+            {
+                PaymentChequeDP.APPaymentNumber = appayment.PaymentNo;
+                PaymentChequeDP.TaxDeductionLocalAmount = appayment.TaxDeductionLocalAmount;
+                PaymentChequeDP.TaxDeductionPercentage = appayment.TaxDeductionPercentage;
+                PaymentChequeDP.AmountInLocalCurrency = appayment.AmountInLocalCurrency;
+
+            }
             if (paymentChequePM.CurrencyCode == "NIS" || paymentChequePM.CurrencyCode == "ILS")
             {
                 string curr_name = "ש\"ח";
@@ -258,6 +269,14 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         {
             FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
             return fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+        }
+
+
+        public APPaymentPM GetRelatedPayment(PaymentChequePM paymentCheque)
+        {
+            APPaymentQuery paymentQuery = new APPaymentQuery(paymentCheque.Tenant);
+            APPaymentPM payment = paymentQuery.GetSingleAPPaymentPM(paymentCheque.APPaymentId, paymentCheque.Tenant);
+            return payment;
         }
 
 
