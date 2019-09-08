@@ -97,7 +97,9 @@
     <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountCustomDataMappingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountTraceEventServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankDeposit\BankDepositOnCreatingServiceUnitTest.cs" />
+    <Compile Include="Accounting\UniTests\CreateAutoExternalReconcileWhileStreamingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\EntityMapping\ChartOfAccountDataMappingUnderTest.cs" />
+    <Compile Include="Accounting\UniTests\ExternalReconcileJournalServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalDataMappingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalStornoReconcileServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalStornoServiceUnitTest.cs" />
