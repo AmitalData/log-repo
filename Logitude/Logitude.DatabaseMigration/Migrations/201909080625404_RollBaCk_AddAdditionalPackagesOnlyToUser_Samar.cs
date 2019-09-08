@@ -3,16 +3,16 @@ namespace Logitude.DatabaseMigration.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class PaymentMethodLocalNameMigration : DbMigration
+    public partial class RollBaCk_AddAdditionalPackagesOnlyToUser_Samar : DbMigration
     {
         public override void Up()
         {
-            //AddColumn("dbo.AccountingPaymentMethods", "LocalName", c => c.String(maxLength: 100));
+            AddColumn("dbo.Users", "AdditionalPackagesOnly", c => c.Boolean(nullable: false));
         }
         
         public override void Down()
         {
-            //DropColumn("dbo.AccountingPaymentMethods", "LocalName");
+            DropColumn("dbo.Users", "AdditionalPackagesOnly");
         }
     }
 }

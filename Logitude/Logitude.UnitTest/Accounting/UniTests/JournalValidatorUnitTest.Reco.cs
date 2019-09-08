@@ -11,7 +11,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 {
     public partial class JournalValidatorUnitTest
     {
-
+        
 
         [TestMethod]
         public void journalApproveParser_CreateLedger_MapByJournalActionType_ok()

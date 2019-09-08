@@ -12,6 +12,7 @@ import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {CommonDomainService, UserLicenseUpdateHelper} from '../../../Common/Services/CommonDomainService';
 import {UserExtendedPMService} from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import {TenantManagementLicensePM} from '../../../Infrastructure/EntityPMs/TenantManagementLicensePM';
+import { filter } from 'rxjs/operator/filter';
 
 @Component({
     moduleId: module.id,
@@ -47,8 +48,10 @@ export class LicensesManagementComponent implements OnDestroy {
 
     public AllUserLicenses: UserLicensePM[];
     public AllPackages: PackageList[];
+    private ActiveNotAdditionalUsersCount: number = 0;
     SetWindowArgs(args: UserLicenseArgs) {
         this.AllPackages = args.AllPackages;
+        this.ActiveNotAdditionalUsersCount = args.ActiveNotAdditionalUsersCount;
         this.dirtyItem = null;
         
         this.InitColumns();
@@ -98,6 +101,7 @@ export class LicensesManagementComponent implements OnDestroy {
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         filters.Tenant = SessionLocator.Tenant;
+        filters.GetCount = getCount;
 
         if (!AppTool.IsNullOrEmpty(this.SearchFields)) {
             filters.Filter1Name = "SearchFields";
@@ -134,18 +138,17 @@ export class LicensesManagementComponent implements OnDestroy {
         this.LicensesManagmentsList = [];
 
         if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
-            var usersCount: number = this.AllUserLicenses.filter(d => d.PackageCode == SessionLocator.TenantManagementJS.PackageCode).length;
             var numberOfUsers: number = SessionLocator.TenantManagementJS.NumberOfFreeUsers + SessionLocator.TenantManagementJS.NumberOfUsers;
 
             var foreground = FontTool.Black;
-            if (usersCount > numberOfUsers) {
+            if (this.ActiveNotAdditionalUsersCount > numberOfUsers) {
                 foreground = FontTool.Red;
             }
 
             var mainItem: LicensesManagementDataItem = new LicensesManagementDataItem();
-            mainItem.Header = usersCount + "/" + numberOfUsers;
+            mainItem.Header = this.ActiveNotAdditionalUsersCount + "/" + numberOfUsers;
             mainItem.Color = foreground;
-            mainItem.UsersCount = usersCount;
+            mainItem.UsersCount = this.ActiveNotAdditionalUsersCount;
             mainItem.NumberOfUsers = numberOfUsers;
             this.LicensesManagmentsList.push(mainItem);
         }
@@ -262,18 +265,11 @@ export class LicensesManagementComponent implements OnDestroy {
         var errors: string[] = [];
 
         var userLicenses: UserLicensePM[] = this.AllUserLicenses.filter(d => d.PackageCode == myPackageCode);
+        var tenantLicenses: TenantManagementLicensePM = SessionLocator.TenantManagementJS.TenantManagementLicenses.filter(d => d.PackageCode == myPackageCode)[0];
+
         var usersCount: number = userLicenses.length;
+        var numberOfUsers: number = (AppTool.IsNullOrZero(tenantLicenses.NumberOfUsers) ? 0 : tenantLicenses.NumberOfUsers) + (AppTool.IsNullOrZero(tenantLicenses.FreeUsers) ? 0 : tenantLicenses.FreeUsers);;
 
-        var numberOfUsers: number = 0;
-        if (myPackageCode == SessionLocator.TenantManagementJS.PackageCode) {
-            numberOfUsers = (AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.NumberOfUsers) ? 0 : SessionLocator.TenantManagementJS.NumberOfUsers) + (AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.NumberOfFreeUsers) ? 0 : SessionLocator.TenantManagementJS.NumberOfFreeUsers);
-        }
-
-        else {
-            var tenantLicenses: TenantManagementLicensePM = SessionLocator.TenantManagementJS.TenantManagementLicenses.filter(d => d.PackageCode == myPackageCode)[0];
-            numberOfUsers = (AppTool.IsNullOrZero(tenantLicenses.NumberOfUsers) ? 0 : tenantLicenses.NumberOfUsers) + (AppTool.IsNullOrZero(tenantLicenses.FreeUsers) ? 0 : tenantLicenses.FreeUsers);
-        }
-        
         if (usersCount > numberOfUsers) {
             errors.push("Some Packages have exceeded the allowed number of users");
         }
