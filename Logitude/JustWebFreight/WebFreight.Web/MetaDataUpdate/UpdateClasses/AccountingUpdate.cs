@@ -1307,6 +1307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             LoadTextCodes_YearTransfer(textcodes);
             LoadTextCodes_AutomaticReconcileMethod(textcodes);
             LoadTextCodes_ReconcileExternalPage(textcodes);
+            LoadTextCodes_System1000(textcodes);
             #region ObjectTable
             ObjectTable ChartOfAccountTable = objectContext.ObjectTables.Where(f => f.Name == "ChartOfAccount" && f.Tenant == 0).FirstOrDefault();
             ObjectTable JournalTable = objectContext.ObjectTables.Where(f => f.Name == "Journal" && f.Tenant == 0).FirstOrDefault();
@@ -4111,14 +4112,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         public void FillWithholdingTaxDeductionTypes()
         {
 
-          
-                var repo = new WithholdingTaxDeductionTypeRepository(0);
-                var dic = repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
-                new FillCloseTables().FillCloseTable<
-                                    WithholdingTaxDeductionType,
-                                    WithholdingTaxDeductionTypeDetails,
-                                    WithholdingTaxDeductionTypeRepository>(repo, dic);
-            
+
+            List<WithholdingTaxDeductionTypeDetails> withholdingTaxDeductionTypes = (new WithholdingTaxDeductionTypeDetails()).GetAll();
+            WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository = new WithholdingTaxDeductionTypeRepository(0);
+            foreach (WithholdingTaxDeductionTypeDetails item in withholdingTaxDeductionTypes)
+            {
+                AddClosedTables.AddWithholdingTaxDeductionType(item, withholdingTaxDeductionTypeRepository);
+            }
+
 
             //WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository = new WithholdingTaxDeductionTypeRepository(0);
             //Dictionary<string, WithholdingTaxDeductionType> TenantWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
@@ -4146,7 +4147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
 
 
-            //withholdingTaxDeductionTypeRepository.SubmitChanges();
+           withholdingTaxDeductionTypeRepository.SubmitChanges();
 
         }
 

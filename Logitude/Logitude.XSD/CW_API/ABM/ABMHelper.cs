@@ -99,11 +99,12 @@ namespace Logitude.XSD.CW_API.ABM
             GetLoggedContact();
         }
 
+
         public void Run()
         {
             if (this.IsValid)
             {
-                ABMDataContext dataContext = new ABMDataContext(this.ShipmentId, this.Tenant);
+                ABMDataContext dataContext = new ABMDataContext(this.ShipmentId, this.Tenant, this.commonContext);
                 ABMDataBuilder dataBuilder = new ABMDataBuilder(dataContext);
 
                 CustomsForceServiceRequest request = new CustomsForceServiceRequest()

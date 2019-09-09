@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Utils;
@@ -68,10 +69,22 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
                 {
                     _BankAccountQueryService = new BankAccountQueryService(tenant);
                     var accurateBankAccount = _BankAccountQueryService.GetSingle(validBankAccountDTO.DBBankaccountPM.Id, false, false);
-                    using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                    try
                     {
-                        AnalyzeNewPage(tenant, accurateBankAccount, newPageOfBankAccountDTO);
-                        scope.Complete();
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                        {
+                            var successCommit=AnalyzeNewPage(tenant, accurateBankAccount, newPageOfBankAccountDTO);
+                            if (successCommit)
+                            {
+                                scope.Complete();
+                            }
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
                     }
 
                 }
@@ -308,7 +321,7 @@ s             b                   a
 
 
 
-        private void AnalyzeNewPage(int tenant, BankAccountPM dbBankaccountPM, BankPageDTO newPageOfBankAccount)
+        private bool AnalyzeNewPage(int tenant, BankAccountPM dbBankaccountPM, BankPageDTO newPageOfBankAccount)
         {
             string errorPageValidation = PageValidationClientSide(newPageOfBankAccount);
             if (!string.IsNullOrWhiteSpace(errorPageValidation))
@@ -319,7 +332,7 @@ s             b                   a
                           Message = $"PageValidationClientSide():BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  {errorPageValidation}  "
                       })
                          ;
-                return;
+                return true;
             }
             //if (dbBankaccountPM.LastPageCloseBalance != newPageOfBankAccount.MyBankAccountM.OpenBalance)
             //{
@@ -342,21 +355,28 @@ s             b                   a
             {
 
 
-
-                if (prevReconcileExternalPagePM.ToDate >= newBankPageLines.First().ReferenceDate)
+                bool avoidCheckReferenceDate = true;//ohad+ eyal
+                if (avoidCheckReferenceDate)
                 {
-                    //MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  prevReconcileExternalPagePM.ToDate {prevReconcileExternalPagePM.ToDate } >= newBankPageLines.First().ReferenceDate{newBankPageLines.First().ReferenceDate}");
-                    var ACCNUMBER = $"{ newPageOfBankAccount.BankCode}-{ newPageOfBankAccount.MyBankAccountM.AccountNumber}";
-                    MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
-                        new MyDTO()
-                        {
-                            Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} - מכיל תנעות ישנות ",
-                            RawLine = newBankPageLines.First().RawLine
 
-                        });
-                    return;
                 }
+                else
+                {
+                    if (prevReconcileExternalPagePM.ToDate >= newBankPageLines.First().ReferenceDate)
+                    {
+                        //MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add($"BankCode {newPageOfBankAccount.BankCode}  ,AccountNumber {newPageOfBankAccount.MyBankAccountM.AccountNumber} pageNo {newPageOfBankAccount.MyBankAccountM.PageNo} >  prevReconcileExternalPagePM.ToDate {prevReconcileExternalPagePM.ToDate } >= newBankPageLines.First().ReferenceDate{newBankPageLines.First().ReferenceDate}");
+                        var ACCNUMBER = $"{ newPageOfBankAccount.BankCode}-{ newPageOfBankAccount.MyBankAccountM.AccountNumber}";
+                        MyResultLoadBankPage.ValidateBankPageAgaintDBErrors.Add(
+                            new MyDTO()
+                            {
+                                Message = $"חשבון בנק {ACCNUMBER} דף  {newPageOfBankAccount.PageNo()} - מכיל תנועות ישנות ",
+                                RawLine = newBankPageLines.First().RawLine
 
+                            });
+                        return true;
+                    }
+
+                }
 
                 if (prevReconcileExternalPagePM.CloseBalance != newPageOfBankAccount.MyBankAccountM.OpenBalance)
                 {
@@ -370,25 +390,30 @@ s             b                   a
                         });
 
 
-                    return;
+                    return true;
                 }
             }
 
 
             ReconcileExternalPagePM entityPM = MapReconcileExternalPagePM(tenant, newPageOfBankAccount, dbBankaccountPM);
 
-            InsertBankPage(tenant, newPageOfBankAccount, entityPM);
+            bool successCommit= InsertBankPage(tenant, newPageOfBankAccount, entityPM);
+            return successCommit;
 
         }
 
-        private void InsertBankPage(int tenant, BankPageDTO newPageOfBankAccount, ReconcileExternalPagePM entityPM)
+        private bool InsertBankPage(int tenant, BankPageDTO newPageOfBankAccount, ReconcileExternalPagePM entityPM)
         {
             try
             {
 
 
 
-
+                var result = ReconcileExternalPageValidator.IsReconciliationValid(entityPM, null);
+                if (result != null)
+                {
+                    throw new ApplicationException(result.ErrorMessage);
+                }
 
                 var MyContext = AccountingContext.GetContext(entityPM.Tenant);
                 ReconcileExternalPageUpdateService service = new ReconcileExternalPageUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
@@ -397,12 +422,14 @@ s             b                   a
 
                 //scope.Complete();
                 this.AddSuccessInsertBankPage(entityPM, newPageOfBankAccount);
+                return true;
 
             }
 
             catch (Exception ex)
             {
                 this.AddExceptionInsertBankPage(entityPM, newPageOfBankAccount, ex);
+                return false;
             }
         }
 
@@ -436,8 +463,9 @@ s             b                   a
                 StartBalance = newPageOfBankAccount.MyBankAccountM.RealOpenBalance,
                 CloseBalance = newPageOfBankAccount.MyBankAccountM.RealCloseBalance,
 
-                FromDate = newBankPageLines.First().ReferenceDate,
-                ToDate = newBankPageLines.Last().ReferenceDate,
+                ///XXXXX - 
+                FromDate = newBankPageLines.OrderBy(r=>r.ReferenceDate).First().ReferenceDate,
+                ToDate = newBankPageLines.OrderBy(r => r.ReferenceDate).Last().ReferenceDate,
 
 
 
@@ -457,7 +485,8 @@ s             b                   a
                 //    }
                 //    Notes += line.Bankdetails;
                 //}
-                Notes = line.Bankdetails;
+                //Notes = line.Bankdetails ?? "";
+                Notes = line.BankdetailsReverse;//FROM PAGE BANK "DOS-862" TO WN1255 + Reverse
                 entityPM.ReconcileExternalPageLines.Add(new ReconcileExternalPageLinePM()
                 {
                     Tenant = entityPM.Tenant,
@@ -465,8 +494,8 @@ s             b                   a
                     LineNumber = lineCounterNumber++,
 
                     //Amount = line.RealAmount,
-                    DebitAmount = line.DEBIT0_CREDIT1 == "1" ? line.Amount : 0,
-                    CreditAmount = line.DEBIT0_CREDIT1 == "0" ? line.Amount : 0,
+                    DebitAmount = line.DEBIT0_CREDIT1 == "0" ? line.Amount : 0,
+                    CreditAmount = line.DEBIT0_CREDIT1 == "1" ? line.Amount : 0,
 
                     ReferenceDate = line.ReferenceDate,
                     Reference = line.Reference,
@@ -478,6 +507,8 @@ s             b                   a
             });
             return entityPM;
         }
+
+        
         private BankCodeQueryService _BankCodeQueryService;
         private BankAccountQueryService _BankAccountQueryService;
         public ResultLoadBankPage MyResultLoadBankPage = new ResultLoadBankPage();
@@ -803,6 +834,7 @@ s             b                   a
         public string DEBIT0_CREDIT1 { get; private set; }
         public decimal RealAmount { get; internal set; }
         public string Bankdetails { get; set; }
+        public string BankdetailsReverse { get; set; }
 
         public const string RowType = "033";
         public static BankPageLineDTO Create(string rawLine)
@@ -818,8 +850,8 @@ s             b                   a
             rec.Reference = rawLine.Substring(4 - 1, 16).Trim();
 
             rec.Bankactioncode = rawLine.Substring(52 - 1, 10).Trim();
-            rec.Bankdetails = rawLine.Substring(62 - 1, 25).Trim();
-
+            rec.Bankdetails = rawLine.Substring(62 - 1, 25).Trim() ?? "";
+            rec.BankdetailsReverse = Reverse(rec.Bankdetails);//FROM PAGE BANK "DOS-862" TO WN1255 + Reverse
 
             string txtDateTime = rawLine.Substring(87 - 1, 8);
             string fieldname = "ReferenceDate";
@@ -847,6 +879,17 @@ s             b                   a
 
 
             return rec;
+        }
+
+        
+        public static string Reverse(string stringToReverse)
+        {
+            char[] stringArray = stringToReverse.ToCharArray();
+            string reverse = String.Empty;
+
+            Array.Reverse(stringArray);
+
+            return new string(stringArray);
         }
     }
     class TenantPagesOfAccountDTO
