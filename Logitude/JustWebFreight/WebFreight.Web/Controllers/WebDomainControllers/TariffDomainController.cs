@@ -2809,6 +2809,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         var tempFromArea = areasPorts.FirstOrDefault();
                         areasFromPorts.Add(tempFromArea.Name);
+                        var isFirstTimeAreaLoop = true;
                         foreach (AirlineAreasPort port in areasPorts)
                         {
                             surchargeLogItem = new SurchargeLog();
@@ -2825,11 +2826,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     };
 
                                     myResult.Add(routItem);
-                                    if (isFirstTime)
+                                    if (isFirstTime && isFirstTimeAreaLoop)
                                     {
                                         areasToPorts.Add(to[2]);
                                     }
                                     surchargeLogItem.Count += 1;
+                                   
                                 }
                                 else if (to[0] == "Area")
                                 {
@@ -2838,7 +2840,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     if (toAreasPorts != null && toAreasPorts.Count > 0)
                                     {
                                         var tempAreaPort = toAreasPorts.FirstOrDefault();
-                                        if (isFirstTime)
+                                        if (isFirstTime && isFirstTimeAreaLoop)
                                         {
                                             areasToPorts.Add(tempAreaPort.Name);
                                         }
@@ -2854,10 +2856,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         }                                       
                                         surchargeLogItem.Count += toAreasPorts.Count();
                                     }
-                                }
+                                } 
                             }
+                            isFirstTimeAreaLoop = false;
                         }
-                      
                     }
                 }
 
