@@ -146,43 +146,43 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             var itemPOCO = tariffUpdatedLines_POCO.Where(a=>a.Id == itemPM.Id).FirstOrDefault();
             if(itemPM.Surcharge1Price != itemPOCO.Surcharge1Price || itemPM.Surcharge1MinPrice != itemPOCO.Surcharge1MinPrice)
             {
-                surcharges += ChargeTypes.Where(a=>a.Id == tariff.Surcharge1UOM).Select(d=>d.Code).FirstOrDefault()  + ",";
+                surcharges += ChargeTypes.Where(a=>a.Id == tariff.Surcharge1Id).Select(d=>d.Code).FirstOrDefault()  + ",";
             }
             if (itemPM.Surcharge2Price != itemPOCO.Surcharge2Price || itemPM.Surcharge2MinPrice != itemPOCO.Surcharge2MinPrice)
             {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge2UOM).Select(d=>d.Code).FirstOrDefault() + ",";
+                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge2Id).Select(d=>d.Code).FirstOrDefault() + ",";
             }
             if (itemPM.Surcharge3Price != itemPOCO.Surcharge3Price || itemPM.Surcharge3MinPrice != itemPOCO.Surcharge3MinPrice)
             {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge3UOM).Select(d=>d.Code).FirstOrDefault() + ",";
+                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge3Id).Select(d=>d.Code).FirstOrDefault() + ",";
             }
             if (itemPM.Surcharge4Price != itemPOCO.Surcharge4Price || itemPM.Surcharge4MinPrice != itemPOCO.Surcharge4MinPrice)
             {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge4UOM).Select(d=>d.Code).FirstOrDefault() + ",";
+                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge4Id).Select(d=>d.Code).FirstOrDefault() + ",";
             }
             if (itemPM.Surcharge5Price != itemPOCO.Surcharge5Price || itemPM.Surcharge5MinPrice != itemPOCO.Surcharge5MinPrice)
             {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge5UOM).Select(d=>d.Code).FirstOrDefault() + ",";
+                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge5Id).Select(d=>d.Code).FirstOrDefault() + ",";
             }
             if (itemPM.Surcharge6Price != itemPOCO.Surcharge6Price || itemPM.Surcharge6MinPrice != itemPOCO.Surcharge6MinPrice)
             {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge6UOM).Select(d=>d.Code).FirstOrDefault() + ",";
+                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge6Id).Select(d=>d.Code).FirstOrDefault() + ",";
             }
             if (itemPM.Surcharge7Price != itemPOCO.Surcharge7Price || itemPM.Surcharge7MinPrice != itemPOCO.Surcharge7MinPrice)
             {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge7UOM).Select(d=>d.Code).FirstOrDefault() + ",";
+                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge7Id).Select(d=>d.Code).FirstOrDefault() + ",";
             }
             if (itemPM.Surcharge8Price != itemPOCO.Surcharge8Price || itemPM.Surcharge8MinPrice != itemPOCO.Surcharge8MinPrice)
             {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge8UOM).Select(d=>d.Code).FirstOrDefault() + ",";
+                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge8Id).Select(d=>d.Code).FirstOrDefault() + ",";
             }
             if (itemPM.Surcharge9Price != itemPOCO.Surcharge9Price || itemPM.Surcharge9MinPrice != itemPOCO.Surcharge9MinPrice)
             {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge9UOM).Select(d=>d.Code).FirstOrDefault() + ",";
+                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge9Id).Select(d=>d.Code).FirstOrDefault() + ",";
             }
             if (itemPM.Surcharge10Price != itemPOCO.Surcharge10Price || itemPM.Surcharge10MinPrice != itemPOCO.Surcharge10MinPrice)
             {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge10UOM).Select(d=>d.Code).FirstOrDefault() + ",";
+                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge10Id).Select(d=>d.Code).FirstOrDefault() + ",";
             }
             return surcharges.TrimEnd(',');
         }
