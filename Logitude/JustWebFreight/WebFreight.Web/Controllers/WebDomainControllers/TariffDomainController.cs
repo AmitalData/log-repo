@@ -2812,7 +2812,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         var isFirstTimeAreaLoop = true;
                         foreach (AirlineAreasPort port in areasPorts)
                         {
-                            surchargeLogItem = new SurchargeLog();
                             foreach (string item_to in toList)
                             {
                                 string[] to = item_to.Split(',');
@@ -2868,7 +2867,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             surchargeLogItem.ToPorts = areasToPorts;
             surchargeLogItem.FromPorts = areasFromPorts;
-            surchargeLogItem.Count = surchargeLogItem.Count * fromList.Count();
             SurchargeLog.Add(surchargeLogItem);
             return myResult;
         }
