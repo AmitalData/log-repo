@@ -670,7 +670,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         args.AirlineId = this.EntityPM.SellerId;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
+        logWindow.Width = 1200;
         logWindow.Height = 600;
         logWindow.WindowArgs = args;
         logWindow.Title = "Tariff Surchage Update";

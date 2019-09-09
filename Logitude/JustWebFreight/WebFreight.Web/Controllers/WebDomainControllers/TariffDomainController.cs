@@ -2877,6 +2877,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return myResult;
         }
+
+
+        public HttpResponseMessage GetTariffsLogsByTariffId(string tariffId)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+            string loggedUserEmail = authToken.Email;
+            List<TariffSurchargesUpdatePM> logs = new List<TariffSurchargesUpdatePM>();
+
+            TariffSurchargesUpdateQueryService query = new TariffSurchargesUpdateQueryService(tenant);
+            logs = query.GetTariffsLogsByTariffId(tariffId, tenant);
+
+            return Request.CreateResponse(HttpStatusCode.OK, logs);
+        }
     }
 
     public class SurchargeLog
