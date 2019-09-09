@@ -2748,10 +2748,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             var surchargeLogItem = new SurchargeLog();
             List<string> areasFromPorts = new List<string>();
             List<string> areasToPorts = new List<string>();
+            var isFirstTime = true;
             foreach (string item_from in fromList)
             {
                 string[] from = item_from.Split(',');
-                 
+               
                 if (from[0] == "Port")
                 {
                     areasFromPorts.Add(from[2]);
@@ -2768,7 +2769,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             };
 
                             myResult.Add(routItem);
-                            areasToPorts.Add(to[2]);
+                            if (isFirstTime)
+                            {
+                                areasToPorts.Add(to[2]);
+                            }
+                            
                             surchargeLogItem.Count += 1;
                         }
 
@@ -2778,7 +2783,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             if (areasPorts != null && areasPorts.Count > 0)
                             {
                                 var tempAreaPort = areasPorts.FirstOrDefault();
-                                areasToPorts.Add(tempAreaPort.Name);
+                                if (isFirstTime)
+                                {
+                                    areasToPorts.Add(tempAreaPort.Name);
+                                }
                                 foreach (AirlineAreasPort port in areasPorts)
                                 {
                                     FromToClass routItem = new FromToClass()
@@ -2817,7 +2825,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     };
 
                                     myResult.Add(routItem);
-                                    areasToPorts.Add(to[2]);
+                                    if (isFirstTime)
+                                    {
+                                        areasToPorts.Add(to[2]);
+                                    }
                                     surchargeLogItem.Count += 1;
                                 }
                                 else if (to[0] == "Area")
@@ -2827,7 +2838,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     if (toAreasPorts != null && toAreasPorts.Count > 0)
                                     {
                                         var tempAreaPort = toAreasPorts.FirstOrDefault();
-                                        areasToPorts.Add(tempAreaPort.Name);
+                                        if (isFirstTime)
+                                        {
+                                            areasToPorts.Add(tempAreaPort.Name);
+                                        }
                                         foreach (AirlineAreasPort toPort in toAreasPorts)
                                         {
                                             FromToClass routItem = new FromToClass()
@@ -2838,7 +2852,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                             myResult.Add(routItem);
                                         }                                       
-                                        surchargeLogItem.Count += areasPorts.Count();
+                                        surchargeLogItem.Count += toAreasPorts.Count();
                                     }
                                 }
                             }
@@ -2846,6 +2860,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                       
                     }
                 }
+
+                isFirstTime = false;
             }
 
             surchargeLogItem.ToPorts = areasToPorts;
