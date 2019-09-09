@@ -540,7 +540,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     CheckTariffPayablesDuplicate(): any {
         var isDuplicate = false;
         this.TariffPayables.forEach(payable => {
-            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId && d.TariffId == payable.TariffId)[0];
+            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId && (d.TariffId == payable.TariffId || d.TariffId == null))[0];
             if (existsPayable != null) {
                 isDuplicate = true;
             }
