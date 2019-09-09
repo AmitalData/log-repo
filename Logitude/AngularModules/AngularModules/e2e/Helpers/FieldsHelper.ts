@@ -142,11 +142,39 @@ export class FieldsHelper {
             var Newinput = element(by.id(Id)).getAttribute('value');
             Newinput.then(p => {
                 if (p == "") {
+                    this.WaitByIdAndFill(Id, input);
                     this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
+                } else {
+                    this.WaitDropDownToBeClosed(className);
+                    // if(EC.visibilityOf(element(by.css(className)))){
+                    //     this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
+                    // }
+                    // browser.wait(EC.invisibilityOf(element(by.css(className))), 100000).then(a => {
+                    // });
+                    // if(EC.invisibilityOf(element(by.cs(className))).){
+                    //     console.log('element is selected ');
+
+                    // }else{
+                    //     this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
+
+                    // }
                 }
             });
         });
     }
+    WaitDropDownToBeClosed(className: string) {
+        var EC = protractor.ExpectedConditions;
+        try {
+            browser.wait(EC.invisibilityOf(element(by.css(className))), 100000).then(a => {
+            });
+        }
+        catch (Exception) {
+            console.log("Ayman Catch");
+            console.log(Exception);
+            this.WaitDropDownToBeClosed(className);
+        }
+    }
+
 
     WaitByCssButtonClick(className: string, Text: string) {
         var EC = protractor.ExpectedConditions;

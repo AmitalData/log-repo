@@ -348,6 +348,11 @@ export class TariffPM {
             this.deletedLinesExpirationDates = newValue;
         }
     }
+    private isFromUpdateScreen: boolean;
+    public get IsFromUpdateScreen() { return this.isFromUpdateScreen; }
+    public set IsFromUpdateScreen(newValue: boolean) { if (this.isFromUpdateScreen != newValue) { this.isFromUpdateScreen = newValue; this.MarkAsDirty("IsFromUpdateScreen"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

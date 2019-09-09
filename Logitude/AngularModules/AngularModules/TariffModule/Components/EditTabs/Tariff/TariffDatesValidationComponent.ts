@@ -52,12 +52,13 @@ export class TariffDatesValidationComponent extends BaseComponent {
         }
     }
 
+    private lineExpirationDate: Date;
     get LineExpirationDate() {
-        return this.EntityLinePM.ExpirationDate;
+        return this.lineExpirationDate;
     }
     set LineExpirationDate(value: Date) {
-        if (this.EntityLinePM.ExpirationDate != value) {
-            this.EntityLinePM.ExpirationDate = value;
+        if (this.lineExpirationDate != value) {
+            this.lineExpirationDate = value;
         }
     }
 
@@ -86,28 +87,24 @@ export class TariffDatesValidationComponent extends BaseComponent {
             }
 
             else {
-                if (this.TariffType == "ASC") {
-                    var service: TariffDomainService = new TariffDomainService();
-                    service.GetCheckDatesValidty(this.EntityLinePM.OriginPortId, this.EntityLinePM.DestinationPortId, this.LineExpirationDate, this.EntityLinePM.TariffId).subscribe(result => {
-                        if (result.HasError) {
-                            this.ValidationErrorsList = this.ValidationErrorsList.concat(result.ErrorsArray);
-                        }
+                this.EntityLinePM.ExpirationDate = this.LineExpirationDate;
 
-                        if (this.ValidationErrorsList.length == 0) {
-                            this.CurrentSession.CloseCurrentWindowEmit("ok");
-                        }
-                    });
-                }
-         
+                var service: TariffDomainService = new TariffDomainService();
+                service.GetCheckDatesValidty(this.EntityLinePM.OriginPortId, this.EntityLinePM.DestinationPortId, this.LineExpirationDate, this.EntityLinePM.TariffId).subscribe(result => {
+                    if (result.HasError) {
+                        this.ValidationErrorsList = this.ValidationErrorsList.concat(result.ErrorsArray);
+                    }
+
+                    if (this.ValidationErrorsList.length == 0) {
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    }
+                });
             }
         }
 
         if (this.ValidationErrorsList.length == 0 && this.TariffType != "ASC") {
             this.CurrentSession.CloseCurrentWindowEmit("ok");
-        }
-
-
-      
+        }      
     }
 
     private myCloner: Cloner;
@@ -121,8 +118,8 @@ export class TariffDatesValidationComponent extends BaseComponent {
         }
 
         else if (this.TariffType == "ASC") {
-            this.myCloner.AddField('LineExpirationDate');
-            this.myCloner.AddEntity(this.EntityLinePM);
+            //this.myCloner.AddField('LineExpirationDate');
+            //this.myCloner.AddEntity(this.EntityLinePM);
         }
     }
     private RejectChanges() {
