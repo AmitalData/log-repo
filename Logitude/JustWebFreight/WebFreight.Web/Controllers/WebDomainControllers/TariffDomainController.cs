@@ -2745,6 +2745,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             List<FromToClass> myResult = new List<FromToClass>();
             AirlineAreasPortRepository airlineAreasPortRepository = new AirlineAreasPortRepository(tenant);
+            AirlineAreaRepository airlineAreasRepository = new AirlineAreaRepository(tenant);
             var surchargeLogItem = new SurchargeLog();
             List<string> areasFromPorts = new List<string>();
             List<string> areasToPorts = new List<string>();
@@ -2780,13 +2781,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         else if (to[0] == "Area")
                         {
                             List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
+                            var area = airlineAreasRepository.GetSingleAirlineArea(to[1], tenant);
+                            if (isFirstTime && area != null)
+                            {
+                                areasToPorts.Add(area.Name);
+                            }
                             if (areasPorts != null && areasPorts.Count > 0)
                             {
-                                var tempAreaPort = areasPorts.FirstOrDefault();
-                                if (isFirstTime)
-                                {
-                                    areasToPorts.Add(tempAreaPort.Name);
-                                }
                                 foreach (AirlineAreasPort port in areasPorts)
                                 {
                                     FromToClass routItem = new FromToClass()
@@ -2807,8 +2808,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(from[1], tenant);
                     if (areasPorts != null && areasPorts.Count > 0)
                     {
-                        var tempFromArea = areasPorts.FirstOrDefault();
-                        areasFromPorts.Add(tempFromArea.Name);
+                        var area = airlineAreasRepository.GetSingleAirlineArea(from[1], tenant);
+                        areasFromPorts.Add(area.Name);
                         var isFirstTimeAreaLoop = true;
                         foreach (AirlineAreasPort port in areasPorts)
                         {
@@ -2835,14 +2836,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 else if (to[0] == "Area")
                                 {
                                     List<AirlineAreasPort> toAreasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
-                                   
-                                    if (toAreasPorts != null && toAreasPorts.Count > 0)
+                                    var toarea = airlineAreasRepository.GetSingleAirlineArea(to[1], tenant);
+                                    if (isFirstTime && isFirstTimeAreaLoop && toarea != null)
                                     {
-                                        var tempAreaPort = toAreasPorts.FirstOrDefault();
-                                        if (isFirstTime && isFirstTimeAreaLoop)
-                                        {
-                                            areasToPorts.Add(tempAreaPort.Name);
-                                        }
+                                        areasToPorts.Add(toarea.Name);
+                                    }
+                                    if (toAreasPorts != null && toAreasPorts.Count > 0)
+                                    {   
                                         foreach (AirlineAreasPort toPort in toAreasPorts)
                                         {
                                             FromToClass routItem = new FromToClass()
