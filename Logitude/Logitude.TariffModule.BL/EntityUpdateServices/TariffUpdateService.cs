@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -146,53 +147,30 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             if (tariffUpdatedLines_POCO != null && tariffUpdatedLines_POCO.Count > 0 )
             {
                 var itemPOCO = tariffUpdatedLines_POCO.Where(a => a.Id == itemPM.Id).FirstOrDefault();
-                if (itemPM.Surcharge1Price != itemPOCO.Surcharge1Price || itemPM.Surcharge1MinPrice != itemPOCO.Surcharge1MinPrice)
+                for(int i=1;  i <= 10; i++)
                 {
-                    surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge1Id).Select(d => d.Code).FirstOrDefault() + ",";
-                }
-                if (itemPM.Surcharge2Price != itemPOCO.Surcharge2Price || itemPM.Surcharge2MinPrice != itemPOCO.Surcharge2MinPrice)
-                {
-                    surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge2Id).Select(d => d.Code).FirstOrDefault() + ",";
-                }
-                if (itemPM.Surcharge3Price != itemPOCO.Surcharge3Price || itemPM.Surcharge3MinPrice != itemPOCO.Surcharge3MinPrice)
-                {
-                    surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge3Id).Select(d => d.Code).FirstOrDefault() + ",";
-                }
-                if (itemPM.Surcharge4Price != itemPOCO.Surcharge4Price || itemPM.Surcharge4MinPrice != itemPOCO.Surcharge4MinPrice)
-                {
-                    surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge4Id).Select(d => d.Code).FirstOrDefault() + ",";
-                }
-                if (itemPM.Surcharge5Price != itemPOCO.Surcharge5Price || itemPM.Surcharge5MinPrice != itemPOCO.Surcharge5MinPrice)
-                {
-                    surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge5Id).Select(d => d.Code).FirstOrDefault() + ",";
-                }
-                if (itemPM.Surcharge6Price != itemPOCO.Surcharge6Price || itemPM.Surcharge6MinPrice != itemPOCO.Surcharge6MinPrice)
-                {
-                    surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge6Id).Select(d => d.Code).FirstOrDefault() + ",";
-                }
-                if (itemPM.Surcharge7Price != itemPOCO.Surcharge7Price || itemPM.Surcharge7MinPrice != itemPOCO.Surcharge7MinPrice)
-                {
-                    surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge7Id).Select(d => d.Code).FirstOrDefault() + ",";
-                }
-                if (itemPM.Surcharge8Price != itemPOCO.Surcharge8Price || itemPM.Surcharge8MinPrice != itemPOCO.Surcharge8MinPrice)
-                {
-                    surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge8Id).Select(d => d.Code).FirstOrDefault() + ",";
-                }
-                if (itemPM.Surcharge9Price != itemPOCO.Surcharge9Price || itemPM.Surcharge9MinPrice != itemPOCO.Surcharge9MinPrice)
-                {
-                    surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge9Id).Select(d => d.Code).FirstOrDefault() + ",";
-                }
-                if (itemPM.Surcharge10Price != itemPOCO.Surcharge10Price || itemPM.Surcharge10MinPrice != itemPOCO.Surcharge10MinPrice)
-                {
-                    surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge10Id).Select(d => d.Code).FirstOrDefault() + ",";
-                }
+                    PropertyInfo pMPricePropInfoPM = itemPM.GetType().GetProperty("Surcharge" + i + "Price");
+                    PropertyInfo pMMinPricePropInfoPM = itemPM.GetType().GetProperty("Surcharge" + i + "MinPrice");
+                    PropertyInfo pMPricePropInfoPOCO = itemPOCO.GetType().GetProperty("Surcharge" + i + "Price");
+                    PropertyInfo pMMinPricePropInfoPOCO = itemPOCO.GetType().GetProperty("Surcharge" + i + "MinPrice");
 
+                    var pMPricevalue = (decimal?)pMPricePropInfoPM.GetValue(itemPM);
+                    var pMMinPricevalue = (decimal?)pMMinPricePropInfoPM.GetValue(itemPM);
+                    var pOCOPricevalue = (decimal?)pMPricePropInfoPOCO.GetValue(itemPOCO);
+                    var pOCOMinPricevalue = (decimal?)pMMinPricePropInfoPOCO.GetValue(itemPOCO);
+
+                    if (pMPricevalue != pOCOPricevalue || pMMinPricevalue != pOCOMinPricevalue)
+                    {
+                        PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
+                        string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
+                        surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ",";
+                    }
+                }
                 surcharges = surcharges.TrimEnd(',');
             }
             else
             {
                 surcharges = GetUpdatedSurchargesInNew(tariff, itemPM);
-
             }
             return surcharges;
         }
@@ -200,47 +178,21 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         private string GetUpdatedSurchargesInNew(TariffPM tariff, TariffLinePM itemPM)
         {
             var surcharges = "";
-            if (itemPM.Surcharge1Price != null || itemPM.Surcharge1MinPrice != null)
+            for (int i = 1; i <= 10; i++)
             {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge1Id).Select(d => d.Code).FirstOrDefault() + ",";
+                PropertyInfo pMPricePropInfoPM = itemPM.GetType().GetProperty("Surcharge" + i + "Price");
+                PropertyInfo pMMinPricePropInfoPM = itemPM.GetType().GetProperty("Surcharge" + i + "MinPrice");
+                var pMPricevalue = (decimal?)pMPricePropInfoPM.GetValue(itemPM);
+                var pMMinPricevalue = (decimal?)pMMinPricePropInfoPM.GetValue(itemPM);
+
+                if (pMPricevalue != null || pMMinPricevalue != null)
+                {
+                    PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
+                    string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
+                    surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ",";
+                }
             }
-            if (itemPM.Surcharge2Price != null || itemPM.Surcharge2MinPrice != null)
-            {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge2Id).Select(d => d.Code).FirstOrDefault() + ",";
-            }
-            if (itemPM.Surcharge3Price != null || itemPM.Surcharge3MinPrice != null)
-            {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge3Id).Select(d => d.Code).FirstOrDefault() + ",";
-            }
-            if (itemPM.Surcharge4Price != null || itemPM.Surcharge4MinPrice != null)
-            {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge4Id).Select(d => d.Code).FirstOrDefault() + ",";
-            }
-            if (itemPM.Surcharge5Price != null || itemPM.Surcharge5MinPrice != null)
-            {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge5Id).Select(d => d.Code).FirstOrDefault() + ",";
-            }
-            if (itemPM.Surcharge6Price != null || itemPM.Surcharge6MinPrice != null)
-            {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge6Id).Select(d => d.Code).FirstOrDefault() + ",";
-            }
-            if (itemPM.Surcharge7Price != null || itemPM.Surcharge7MinPrice != null)
-            {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge7Id).Select(d => d.Code).FirstOrDefault() + ",";
-            }
-            if (itemPM.Surcharge8Price != null || itemPM.Surcharge8MinPrice != null)
-            {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge8Id).Select(d => d.Code).FirstOrDefault() + ",";
-            }
-            if (itemPM.Surcharge9Price != null || itemPM.Surcharge9MinPrice != null)
-            {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge9Id).Select(d => d.Code).FirstOrDefault() + ",";
-            }
-            if (itemPM.Surcharge10Price != null || itemPM.Surcharge10MinPrice != null)
-            {
-                surcharges += ChargeTypes.Where(a => a.Id == tariff.Surcharge10Id).Select(d => d.Code).FirstOrDefault() + ",";
-            }
-            return surcharges;
+            return surcharges.TrimEnd(',');
         }
 
         protected override void UpdateComposition(TariffPM entityPM)
