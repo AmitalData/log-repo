@@ -418,6 +418,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
+                DcaPrefixName2 = "SendDF_MSG8251__DeclarationStatus_Response_Out.",
                 //    NeedSignature = false
             });
 

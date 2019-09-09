@@ -227,6 +227,9 @@ export class PaymentOrderDeficitComponent extends BaseComponent {
 
         if (item.deficitPM != null && item.deficitPM.DeficitDecisions != null && item.deficitPM.DeficitDecisions.length > 0) {
             windowArgs.DeficitDecisionItem = item.deficitPM.DeficitDecisions.filter(d => d.DeclarationId == item.entityPM.Id);
+            if (windowArgs.DeficitDecisionItem != null) {
+                windowArgs.DeficitDecisionItem = windowArgs.DeficitDecisionItem[0];
+            }
         }
 
         if (windowArgs.DeficitDecisionItem == null) {
