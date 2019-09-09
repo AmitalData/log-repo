@@ -515,11 +515,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     this.AssignTariffPayablesToShipment();
                 }
             }
-        }
+        } 
     }
     OverrideTariffPayablesOfShipment(): any {
         this.TariffPayables.forEach(payable => {
-            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId)[0];
+            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId && d.TariffId == payable.TariffId)[0];
             if (existsPayable != null) {
                 this.ShipmentPM.RemovePayable(existsPayable);
             }
@@ -540,7 +540,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     CheckTariffPayablesDuplicate(): any {
         var isDuplicate = false;
         this.TariffPayables.forEach(payable => {
-            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId)[0];
+            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId && d.TariffId == payable.TariffId)[0];
             if (existsPayable != null) {
                 isDuplicate = true;
             }
@@ -597,10 +597,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     ValidateExistConnectedTariff(item: TariffSearchSummary) {
         var isValid = true;
-        var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.ChargesTypeId == item.ChargeTypeId)[0];
+        var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != item.TariffId && d.ChargesTypeId == item.ChargeTypeId)[0];
         var existsPayableOnSurcharges: ShipmentPayablePM [] = []; 
         item.Surcharges.forEach(surcharge => {
-            var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.ChargesTypeCode == surcharge.ChargeTypeId)[0];
+            var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != surcharge.TariffId && d.ChargesTypeId == surcharge.ChargeTypeId)[0];
             if (payable) {
                 existsPayableOnSurcharges.push(payable);
             }

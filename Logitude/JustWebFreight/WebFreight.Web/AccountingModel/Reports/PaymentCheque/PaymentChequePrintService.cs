@@ -2,6 +2,8 @@
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
@@ -267,6 +269,14 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         {
             FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
             return fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+        }
+
+
+        public APPaymentPM GetRelatedPayment(PaymentChequePM paymentCheque)
+        {
+            APPaymentQuery paymentQuery = new APPaymentQuery(paymentCheque.Tenant);
+            APPaymentPM payment = paymentQuery.GetSingleAPPaymentPM(paymentCheque.APPaymentId, paymentCheque.Tenant);
+            return payment;
         }
 
 

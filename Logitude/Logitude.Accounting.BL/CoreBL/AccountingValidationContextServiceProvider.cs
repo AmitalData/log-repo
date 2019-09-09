@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL.Validators;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -133,12 +134,18 @@ namespace Logitude.Accounting.BL.CoreBL
             var a = new GLAccountQueryService(_AccountingContext);
             return a.GetSinglePM(GLAccountId, tenant);
         }
-
+        public List<JournalLine> GetJournalLineByLedgerTransactionIdList(List<string> transactionIdList, int tenant)
+        {
+            var a = new JournalLineRepository(_AccountingContext);
+            return a.GetJournalLineByLedgerTransactionIdList(transactionIdList, tenant);
+        }
         public List<LedgerTransactionPM> GetLedgerTransactionPMsByIdList(List<string> transactionIdList, int tenant)
         {
             var a = new LedgerTransactionQueryService(_AccountingContext);
             return a.GetLedgerTransactionPMsByIdList(transactionIdList, tenant);
         }
+
+        
     }
     public class JournalValidatorDataProvider : IJournalValidatorContextDataProvider
     {

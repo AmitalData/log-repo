@@ -217,7 +217,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         this.CurrentSession.CurrentWindow.StartBusyIndicator("...");
         var newWindow = new LogitudeWindow();
         newWindow.Width = 350;
-        newWindow.Height = 220;
+        newWindow.Height = 250;
         newWindow.RTL = true;
         
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {

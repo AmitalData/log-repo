@@ -128,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  true,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Shipment,Shipments,Simplog.ShipmentLib.NewShipmentCommand,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -38475,6 +38476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CutoffDate",
+					  						OldFieldName =  "CutoffDate",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -38494,6 +38496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CutoffDate",
 					  						ListPropertyPath =  "CutoffDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -38516,6 +38519,65 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "EBookingInProgress",
+					  						OldFieldName =  "EBookingInProgress",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Constant",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "EBookingInProgress",
+					  						ListPropertyPath =  "EBookingInProgress",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "EBookingInProgress",
+					  						DefaultText =  "E Booking In Progress",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
@@ -38608,6 +38670,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			   TextCode ShipmentTextCode_17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ContainerStatusLast7Days", DefaultText = @"Container Status - last 7 days",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ShipmentFeature_17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainerStatusLast7Days", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ContainerStatusLast7Days", NameTextCodeDefaultText = "Container Status - last 7 days", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode ShipmentTextCode_18 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.EBookingInProgress", DefaultText = @"E-Booking - In Progress",LocalDefaultText = "E-Booking - In Progress", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ShipmentFeature_18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Q.EBookingInProgress", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShipmentFeatures.EBookingInProgress", NameTextCodeDefaultText = "EBookingInProgress", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -39168,6 +39234,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 QueryColumn ContainerStatusLast7DaysQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 9, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRASIError" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 500 }, queryColumnsRepository, tenantQueryColumns);
 
              AdvancedQueryFilter ContainerStatusLast7DaysQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ContainerStatusLast7Days" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "True",PredefinedValue2 = null, QueryId = ContainerStatusLast7DaysQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query EBookingInProgressQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_18.Id, Code = "EBookingInProgress",  QueryGroupCode = "SHIP", IndexOrder = 18, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_18.Id, DefaultSortName = "ShipmentNumber", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn EBookingInProgressQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRABookingTransStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EBookingInProgressQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRABookingStatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EBookingInProgressQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EBookingInProgressQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EBookingInProgressQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 4, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MainCarriageETD" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EBookingInProgressQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 5, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "BookingConfirmationNumber" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EBookingInProgressQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 6, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EBookingInProgressQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 7, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EBookingInProgressQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 8, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MainCarriageCarrierName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EBookingInProgressQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 9, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn EBookingInProgressQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EBookingInProgressQuery.Id, IndexOrder = 10, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter EBookingInProgressQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "EBookingInProgress" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "True",PredefinedValue2 = null, QueryId = EBookingInProgressQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -41591,9 +41686,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              			   Feature ShipmentFeature_MB03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGREOPEN", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AccoutingReopen", NameTextCodeDefaultText = "Shipment Accounting Reopen", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTHOUSETODIRECT", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertHouseToDirect", NameTextCodeDefaultText = "Convert From House To Direct", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTDIRECTTOHOUSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertDirectToHouse", NameTextCodeDefaultText = "Convert From Direct To House", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertShipmentToLCL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConverttoLCL", NameTextCodeDefaultText = "Convert to LCL", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertShipmentToFCL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConverttoFCL", NameTextCodeDefaultText = "Convert to FCL", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertShipmentDirection", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertShipmentDirection", NameTextCodeDefaultText = "Convert Shipment Direction", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertShipmentToLCL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConverttoLCL", NameTextCodeDefaultText = "Convert to LCL", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertShipmentToFCL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConverttoFCL", NameTextCodeDefaultText = "Convert to FCL", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConvertShipmentDirection", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertShipmentDirection", NameTextCodeDefaultText = "Convert Shipment Direction", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPY", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Copy", NameTextCodeDefaultText = "Copy Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB010 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDRESPONSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendResponse", NameTextCodeDefaultText = "Send Response", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB011 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCEL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Cancel", NameTextCodeDefaultText = "Cancel Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -41601,7 +41696,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              			   Feature ShipmentFeature_MB013 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCEPTIONRESOLVED", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ExceptionResolved", NameTextCodeDefaultText = "Exception Resolved", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB014 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTTOCUSTOMFILE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConvertToCustomFile", NameTextCodeDefaultText = "Convert To Custom File", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB015 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SplitShipment", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SplitShipment", NameTextCodeDefaultText = "Split Shipment", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ShipmentFeature_MB016 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToAMANAC", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendtoAMANAC", NameTextCodeDefaultText = "Send to AMANAC", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ShipmentFeature_MB016 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToAMANAC", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendtoAMANAC", NameTextCodeDefaultText = "Send to AMANAC", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();

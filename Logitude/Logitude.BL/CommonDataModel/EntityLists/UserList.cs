@@ -51,6 +51,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string EmployeeGroupCustomFilter { get; set; }
         public bool ShowLocalNameInLOV { get; set; }
         public string UserRoles { get; set; }
+        public bool AdditionalPackagesOnly { get; set; }
 
         private List<string> groupId = new List<string>();
         public List<string> GroupId 

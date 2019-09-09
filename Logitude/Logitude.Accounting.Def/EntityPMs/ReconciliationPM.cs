@@ -12,6 +12,9 @@ namespace Logitude.Accounting.Def.EntityPMs
     {
         [DataMember]
         public object LedgerTransactionPMsUpdated { get; set; }
-        
+
+        [DataMember]
+        public bool CreatedByReconciliationAfterConversion { get; set; }
+
     }
 }
