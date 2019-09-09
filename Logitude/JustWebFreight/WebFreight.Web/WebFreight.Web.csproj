@@ -1972,6 +1972,8 @@
     <Compile Include="CustomWebServices\BL\XLSExport\ExchangeRateExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\GuaranteeExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\GuaranteeRequestProvider.cs" />
+    <Compile Include="CustomWebServices\BL\XLSExport\ImporterDeclarationDetailProvider.cs" />
+    <Compile Include="CustomWebServices\BL\XLSExport\ImporterDeclarationExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\IRequestProvider.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\MasavPaymentsToAgentExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\MasavPaymentsToAgentProvider.cs" />

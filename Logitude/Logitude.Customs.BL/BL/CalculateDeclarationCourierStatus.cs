@@ -132,6 +132,7 @@ namespace Logitude.Customs.BL.BL
                 CalcDocumentStatusCode(myDeclarationCourierStatusPM);
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
+                CalcDeclarationPendings(myDeclarationCourierStatusPM);
 
                 return myDeclarationCourierStatusPM;
 
@@ -397,6 +398,41 @@ namespace Logitude.Customs.BL.BL
                 }
             }
 
+        }
+
+        public void CalcDeclarationPendings(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
+
+            DeclarationPendingPM declarationPendingPM_902 = null;
+            if (myDeclarationCourierStatusPM.DeclarationPendings != null && myDeclarationCourierStatusPM.DeclarationPendings.Count() > 0)
+            {
+                declarationPendingPM_902 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == myDeclarationCourierStatusPM.DeclarationId && r.CourierPendingReasonCode == "902").FirstOrDefault();
+            }
+            if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 150 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
+            { 
+                // Set Pending 902- Missing ID
+                // LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900");
+                if (declarationPendingPM_902 == null)
+                {
+                    declarationPendingPM_902 = new DeclarationPendingPM();
+                    declarationPendingPM_902.CourierPendingReasonCode = "900";
+                    declarationPendingPM_902.Status = "A";
+                    declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Insert;
+                    myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_902);
+                }
+                else if (declarationPendingPM_902.Status != "A")
+                {
+                    declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationPendingPM_902.Status = "A";
+                }
+            }
+            else if (declarationPendingPM_902 != null)
+            {
+                declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Update;
+                declarationPendingPM_902.Status = "S";
+                //LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
+            }
         }
     }
 }

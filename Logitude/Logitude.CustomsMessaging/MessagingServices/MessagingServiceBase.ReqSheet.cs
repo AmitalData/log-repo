@@ -886,6 +886,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 //ResponseData = new TResponseData() { HasException = true, Succeeded = false, UserMessage = "Look at Request Sheet for more details !" }  
 
             };
+            if (this.MainInterfaceCode == "8302")// due delay in UROUTER !!
+            {
+                stepRequest.TimeOutInMin = 5;
+            }
+
             if (this.MainInterfaceCode == "9000")
             {
                 stepRequest.TimeOutInMin = 5;

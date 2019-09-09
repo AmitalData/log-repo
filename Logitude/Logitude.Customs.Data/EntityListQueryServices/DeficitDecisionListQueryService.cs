@@ -41,7 +41,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                 TotalFinancialPenaltyAmount = a.TotalFinancialPenaltyAmount,
                                                 TotalInterestAmount = a.TotalInterestAmount,
                                                 TotalLinkingAmount = a.TotalLinkingAmount,
-
+                                                
                                                  });
             return query;
 		}

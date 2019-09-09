@@ -1044,6 +1044,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "2000N":
                                 case "2753A":
                                 case "5110N":
+                                case "5108N":
                                     {
                                         currentScreenCode = "DCTP";
                                         break;
@@ -1058,6 +1059,46 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                         this.ShowCustomsDeclarationCargoSplit(selected.Reference2Number);
                                         break;
 
+                                    }
+                                case "5101F":
+                                    {
+                                        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                                            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
+                                                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe(response => {
+                                                    this.customsCollateralPMService.get(selected.Reference2Number).subscribe((response: any) => {
+
+                                                        var result = response.Result;
+                                                        console.log("[response] customsCollateralPMService.get", result);
+                                                        if (!AppTool.IsNullOrEmpty(result)) {
+                                                            control = './CustomsModules/CustomsCollateral/Components/CustomsCollateralComponent';
+                                                            logitudeWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditCustomsCollateral");
+                                                            logitudeWindow.WindowArgs = { CurrentEntity: result };
+                                                            logitudeWindow.Height = 730;
+                                                            logitudeWindow.Width = 660;
+                                                            //logitudeWindow.ZIndex = 5;
+                                                            this.cd.detach()
+                                                            logitudeWindow.Show(control);
+                                                            logitudeWindow.WindowClosed.subscribe(() => {
+                                                                this.cd.reattach();
+                                                                this.RefreshEntity();
+                                                            });
+
+                                                            var Ids: string[] = [];
+                                                            Ids.push(selected.Id);
+                                                            Ids.push(selected.Id);
+                                                            this.notificationWebService.SetNotificationsStatus(Ids, "Read").subscribe((res: any) => {
+                                                                this.SetStatusCompleted(selected.Id, event);
+
+                                                            });
+                                                        } else {
+                                                            console.log("No collateral found!!!!!!");
+                                                            return;
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        });
+                                        break;
                                     }
 
                                 default:
@@ -1186,6 +1227,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "5101R":
                                 case "5101A":
                                 case "5101E":
+                                case "5101F":
                                     {
                                         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                                             this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
