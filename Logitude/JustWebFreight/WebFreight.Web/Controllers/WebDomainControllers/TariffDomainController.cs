@@ -2868,7 +2868,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             surchargeLogItem.ToPorts = areasToPorts;
             surchargeLogItem.FromPorts = areasFromPorts;
-            areasToPorts = new List<string>();
+            surchargeLogItem.Count = surchargeLogItem.Count * fromList.Count();
             SurchargeLog.Add(surchargeLogItem);
             return myResult;
         }
