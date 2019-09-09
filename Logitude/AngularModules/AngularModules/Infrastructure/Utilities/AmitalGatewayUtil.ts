@@ -373,6 +373,12 @@ export class AmitalGatewayUtil {
 
                 }
                 break;
+
+            case "ShowCourierMasterByIdReturnCloseSave": {
+                this.ShowCourierMasterByIdReturnCloseSaveMethod(
+                    myParam, myEditTab, change2EditTab, change2CA23Tab);
+                break;
+            }
                  
             default: {
                 //throw new Error("UnifaceRequest get bad  unifreightMessage (LogitudeCommandId is unknown ) " + unifreightMessage.LogitudeCommandId);
@@ -428,6 +434,20 @@ export class AmitalGatewayUtil {
     }
 
     ShowDeclarationByIdReturnCloseSaveMethod(
+        myParam,
+        myEditTab,
+        change2EditTab: () => void,
+        change2CA23Tab: () => void) {
+        change2EditTab();
+        if (AppTool.IsNullOrEmpty(myEditTab.SessionComponent)) {
+            setTimeout(() => { AmitalGatewayUtil.Instance.ShowDeclarationByIdReturnCloseSave.StartDoIt(this._LastUnifreightMessageM, myEditTab, change2CA23Tab); }, 500);
+        } else {
+
+            AmitalGatewayUtil.Instance.ShowDeclarationByIdReturnCloseSave.StartDoIt(this._LastUnifreightMessageM, myEditTab, change2CA23Tab);
+        }
+    }
+
+    ShowCourierMasterByIdReturnCloseSaveMethod(
         myParam,
         myEditTab,
         change2EditTab: () => void,
@@ -659,6 +679,51 @@ export class AmitalGatewayUtil {
 
             AmitalGatewayUtil.Instance.SendRequestJSONToUnifreightAsync(myRequestWrapperM);
         }
+
+        static StartDoItForCourier(unifreightMessage: UnifreightMessageM, myEditTab, callback2TabZero: () => void) {
+            //BackButtonLabel: "הצהרות ללא התרה"EntityId :"1-103991" ,ObjectTableName:"Customs.Declaration"
+            let isSaved: boolean = false;
+            let BackButtonLabel = "תיק עמילות"
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', myEditTab.SessionComponent.viewContainerRef)
+                .then(cmpRef => {
+                    //this.SelectionChanged(myDeclarationEditTab);
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({
+                        EntityId: unifreightMessage.LogitudeEntityNumber,
+                        ObjectTableName: unifreightMessage.LogitudeEntity,
+                        BackButtonLabel: BackButtonLabel
+                    });
+
+                    let lockMess = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.LockedMessage");
+                    //let unifreightJumpTo = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.JumpTo");
+                    console.log(lockMess);
+                    let myEditComponent: EditComponent = cmpRef.instance;
+                    if (!AppTool.IsNullOrEmpty(lockMess)) {
+
+                        let sub = myEditComponent.OnFirstTimeAfterSingleDataLoaded.subscribe(
+                            (token1) => {
+                                sub.unsubscribe();
+                                let myDeclarationEditComponentController: DeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
+                                if (AppTool.IsNullOrEmpty(myDeclarationEditComponentController)) {
+                                    console.log("myDeclarationEditComponentController is null");
+                                } else {
+                                    myDeclarationEditComponentController.UnifaceStartAsLock(lockMess);
+                                }
+                            }
+                        );
+
+                    }
+
+                    cmpRef.instance.SaveCompleted.subscribe(saveIt => {
+                        isSaved = true;
+                    });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        this.ShowDeclarationByIdUnifreightCallBack(isSaved);
+                        callback2TabZero();
+
+                    });
+                });
+        }
     }
     GeneralMessaging = class {
         public static get ResponseEntityAlreadyLockKey() { return "Response.EntityAlreadyLock"; }
@@ -875,6 +940,7 @@ export class AmitalGatewayUtil {
                 unifreightMessageM,
                 " שיתוף מסמכים");
         }
+
     }
 }
 export class RequestWrapperM {

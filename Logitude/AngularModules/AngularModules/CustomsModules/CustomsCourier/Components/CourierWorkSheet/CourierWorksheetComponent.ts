@@ -735,7 +735,7 @@ implements OnDestroy
             FieldName: 'ImporterName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-            Styles: { width: '200px' },
+            Styles: { width: '160px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -744,7 +744,7 @@ implements OnDestroy
             FieldName: 'ImporterCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
-            Styles: { width: '100px' },
+            Styles: { width: '90px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
