@@ -296,6 +296,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string updateMethodName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdateMethodName  
+	   {
+	    
+	     get
+		{
+		   return updateMethodName;
+		 }
+		 set
+		 {
+		   if(updateMethodName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateMethodName",OldValue=updateMethodName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updateMethodName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
