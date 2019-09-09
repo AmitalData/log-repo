@@ -18,7 +18,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.ExternalVATCard).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.ExternalTAXItemId).HasMaxLength(25).IsUnicode(false);
-
             // Table & Column Mappings
             this.ToTable("VatTypes");
             this.Property(t => t.Code).HasColumnName("Code");
@@ -34,6 +33,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ExternalVATCard).HasColumnName("ExternalVATCard");
             this.Property(t => t.ExternalTAXItemId).HasColumnName("ExternalTAXItemId");
             this.Property(t => t.IsMultiPercentage).HasColumnName("IsMultiPercentage");
+            this.Property(t => t.RecognizedPercentage).HasColumnName("RecognizedPercentage");
+
         }
     }
 }

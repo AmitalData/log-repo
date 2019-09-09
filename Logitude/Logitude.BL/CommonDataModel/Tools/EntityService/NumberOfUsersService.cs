@@ -291,19 +291,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                     if (isUsersCountAllowed)
                     {
-                        UserLicense userLicense = userLicenseRepository.GetSingleUserLicenseByUserAndPackage(numberOfUsersArgs.UserId, packageCode, tenant);
-                        if (userLicense == null)
-                        {
-                            userLicense = new UserLicense()
-                            {
-                                Id = IdCounter.GetNumber("UserLicense", tenant).ToString(),
-                                UserId = numberOfUsersArgs.UserId,
-                                PackageCode = packageCode,
-                                Tenant = tenant,
-                            };
+                        //UserLicense userLicense = userLicenseRepository.GetSingleUserLicenseByUserAndPackage(numberOfUsersArgs.UserId, packageCode, tenant);
+                        //if (userLicense == null)
+                        //{
+                        //    userLicense = new UserLicense()
+                        //    {
+                        //        Id = IdCounter.GetNumber("UserLicense", tenant).ToString(),
+                        //        UserId = numberOfUsersArgs.UserId,
+                        //        PackageCode = packageCode,
+                        //        Tenant = tenant,
+                        //    };
 
-                            userLicenseRepository.Add(userLicense);
-                        }
+                        //    userLicenseRepository.Add(userLicense);
+                        //}
 
                         EventTracer.CreateTraceEvent(new EventTracerArgs()
                         {
