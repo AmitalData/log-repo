@@ -1,12 +1,12 @@
 ﻿using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.Data.EntityPOCOs;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Logitude.TariffModule.BL.EntityUpdateServices
 {
@@ -16,17 +16,42 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
-                entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.Id = IdCounter.GetNumber("TariffSurchargesUpdate", entityPM.Tenant);
             }
         }
 
         protected override void OnUpdating(TariffSurchargesUpdatePM entityPM, TariffSurchargesUpdate entityPOCO)
         {
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
+            var myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
-
+                entityPM.CreateDate = myDate;
+                var myLoggedUser = GentUserInfo(entityPM);
+                if(myLoggedUser != null)
+                {
+                    if (entityPM.CreatedByUserId == null)
+                    {
+                        entityPM.CreatedByUserId = myLoggedUser.Id;
+                    }
+                }
             }
+        }
+
+        private Contact GentUserInfo(TariffSurchargesUpdatePM entityPM)
+        {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
+            ContactRepository contactRep = new ContactRepository(commonContext);
+            string email = "";
+            if (AuthenticationUtil.IsAuthenticatedUserExists())
+            {
+                email = AuthenticationUtil.GetAuthenticatedUser();
+            }
+            else
+            {
+                email = "system@tenant" + entityPM.Tenant + ".com";
+            }
+            Contact contact = contactRep.GetSingleContactByEmail(email, entityPM.Tenant);
+            return contact;
         }
     }
 }

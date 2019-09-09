@@ -60,6 +60,8 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string UpdatedByUserName  { get; set; }
        [DataMember]
        public string TariffNumber  { get; set; }
+       [DataMember]
+       public bool IsFromUpdateScreen  { get; set; }
    }
 
 }
