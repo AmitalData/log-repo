@@ -25,6 +25,8 @@ import { DeclarationPM } from '../../Customs/EntityPMs/DeclarationPM';
 import { ConsignmentPM } from '../../Customs/EntityPMs/ConsignmentPM';
 import { EntityResourceService } from '../Services/EntityResourceService';
 import { EntityPMService } from '../Services/EntityPMService';
+import { CourierMasterService } from '../../Customs/Services/Others/CourierMasterService';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
 
 
 
@@ -445,20 +447,6 @@ export class AmitalGatewayUtil {
             AmitalGatewayUtil.Instance.ShowDeclarationByIdReturnCloseSave.StartDoIt(this._LastUnifreightMessageM, myEditTab, change2CA23Tab);
         }
     }
-
-    ShowCourierMasterByIdReturnCloseSaveMethod(
-        myParam,
-        myEditTab,
-        change2EditTab: () => void,
-        change2CA23Tab: () => void) {
-        change2EditTab();
-        if (AppTool.IsNullOrEmpty(myEditTab.SessionComponent)) {
-            setTimeout(() => { AmitalGatewayUtil.Instance.ShowCourierMasterById.StartDoItForCourier(this._LastUnifreightMessageM, myEditTab, change2CA23Tab); }, 500);
-        } else {
-
-            AmitalGatewayUtil.Instance.ShowCourierMasterById.StartDoItForCourier(this._LastUnifreightMessageM, myEditTab, change2CA23Tab);
-        }
-    }
     
     ShowDeclarationByIdReturnCloseSave = class {
         static StartDoIt(unifreightMessage: UnifreightMessageM, myEditTab, callback2TabZero: () => void) {
@@ -675,23 +663,34 @@ export class AmitalGatewayUtil {
             AmitalGatewayUtil.Instance.SendRequestJSONToUnifreightAsync(myRequestWrapperM);
         }
     }
+
+    ShowCourierMasterByIdReturnCloseSaveMethod(
+        myParam,
+        myEditTab,
+        change2EditTab: () => void,
+        change2CA23Tab: () => void) {
+        change2EditTab();
+        if (AppTool.IsNullOrEmpty(myEditTab.SessionComponent)) {
+            setTimeout(() => { AmitalGatewayUtil.Instance.ShowCourierMasterById.StartDoItForCourier(this._LastUnifreightMessageM, myEditTab, change2CA23Tab); }, 500);
+        } else {
+
+            AmitalGatewayUtil.Instance.ShowCourierMasterById.StartDoItForCourier(this._LastUnifreightMessageM, myEditTab, change2CA23Tab);
+        }
+    }
+
     ShowCourierMasterById = class {
         static _entityResourceService: EntityResourceService = new EntityResourceService();
         static StartDoItForCourier(unifreightMessage: UnifreightMessageM, myEditTab, callback2TabZero: () => void) {
-            //BackButtonLabel: "הצהרות ללא התרה"EntityId :"1-103991" ,ObjectTableName:"Customs.Declaration"
             let isSaved: boolean = false;
             let BackButtonLabel = "תיק עמילות"
             var windowArgs: any = {};
-            let selectedCourierMasterId: string;
-            selectedCourierMasterId = "1-512";
-            let ObjectTableName = "Customs.CourierMaster";
-            let entityPMService: EntityPMService = new EntityPMService();
+            let courierMasterService: CourierMasterService = new CourierMasterService();
+
             this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
                 this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
                     this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                        entityPMService.getSingle(ObjectTableName, selectedCourierMasterId).then((res: any) => {
-                            res.subscribe((myResponse: any) => {
-
+                        //entityPMService.getSingle("Customs.CourierMaster", selectedCourierMasterId).then((res: any) => {
+                        courierMasterService.getCourierMasterByDeclarationId(unifreightMessage.LogitudeEntityNumber).subscribe((myResponse: ServiceResponse) => {
                                 if (myResponse.HasError) {
                                     console.log("Error while getting EntityPM", myResponse);
                                 }
@@ -718,9 +717,8 @@ export class AmitalGatewayUtil {
                         });
                     });
                 });
-            });
+            }
 
-        }
         private static ShowCourierMasterByIdReturnCloseSaveCallBack(save: boolean) {
             if (AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.filter((item) => item[0] == "ShowCourierMasterByIdReturnCloseSaveCallBack").length == 0) {
                 AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.push(["ShowCourierMasterByIdReturnCloseSaveCallBack", save.toString()]);
