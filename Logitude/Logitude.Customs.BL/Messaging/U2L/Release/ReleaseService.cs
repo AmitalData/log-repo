@@ -1369,7 +1369,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                         throw new BusinessErrorException("Error in parsing COMMERCE PRICE (" + invoiceItem.COMMERCE_PRICE + ") into decimal");
                     }
                 }
-                if (String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY)) invoiceItem.COMMERCE_PRICE_CURRENCY = invoice.CURRENCYCODE;
+                if (String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY)) invoiceItem.COMMERCE_PRICE_CURRENCY = "ILS";
                 if (!String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY))
                 {
                     var wholesaleCurrency = new CurrencyTypeRepository(ResolvedTenant());
