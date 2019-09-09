@@ -12,10 +12,10 @@ export class PartnerTabComponent {
   PartnerTab(ShipmentType: string) {
     this.Helper.WaitBusyIndicator();
     this.Helper.WaitByIdAndClick('Quote.TH.Partners');
-    this.AddPartner('AGENT', 'Quote_AgentId', 'TestAgent');
-    this.AddPartner('NOTFY', 'Quote_NotifyId', 'TestAgent');
-  
-
+      this.AddPartner('AGENT', 'Quote_AgentId', 'TestAgent');
+      this.Helper.WaitBusyIndicator();
+      this.AddPartner('NOTFY', 'Quote_NotifyId', 'TestAgent');
+      this.Helper.WaitBusyIndicator();
   }
 
   AddPartner(partnerType: string, partnerID: string, PartnerText: string) {
@@ -24,7 +24,7 @@ export class PartnerTabComponent {
 
     this.Helper.WaitByIdAndClick(partnerType);
     this.Helper.WaitByIdAndFill(partnerID, PartnerText);
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, partnerID, PartnerText);
     this.Helper.WaitByIdAndClick('PartnerOKbtn');
 
 
