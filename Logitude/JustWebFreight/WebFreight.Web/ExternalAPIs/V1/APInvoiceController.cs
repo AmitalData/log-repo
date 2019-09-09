@@ -248,7 +248,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         APInvoiceQueryService Service = new APInvoiceQueryService(tenant);
                         APInvoice apinvoice = Service.GetSingleInvoiceByExternalEntityId(externalId, tenant);
                         APInvoicePM apinvoicePM = null;
-                        IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
                         if (apinvoice != null)
                         {
@@ -256,10 +255,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         apinvoicePM = SetAPInvoicePMVoided(apinvoicePM);
                         
                         }
-                       
-                        APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
-                        apinvoiceService.Update(apinvoicePM, true);                    
-                        scope.Complete();
+                    SubmitChanges(apinvoicePM);
+                     scope.Complete();
 
 
                     return Request.CreateResponse(HttpStatusCode.OK, "apinvoice has been voided");
@@ -283,6 +280,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
             apinvoicePM.SetCancelApproval = false;
             apinvoicePM.SetReSendQBO = false;
             return apinvoicePM;
+        }
+
+        private void SubmitChanges(APInvoicePM apinvoice)
+        {
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(apinvoice.Tenant);
+
+            APInvoiceService apinvoiceService = new APInvoiceService(invoiceContext, apinvoice.Tenant);
+            apinvoiceService.Update(apinvoice, true);
         }
     }
 }
