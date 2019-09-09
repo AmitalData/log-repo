@@ -171,7 +171,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         var isEditable = false;
 
         if (this.isTenantManagementEditable) {
-            if (!this.IsMultiPackage) {
+            if (!this.IsMultiPackage || this.MainAdditionalPackageApplied) {
                 isEditable = true;
             }
         }
@@ -1196,6 +1196,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
                     this.IsMainAdditionalPackage = false;
                     this.MainAdditionalPackageApplied = false;
                 }
+
+                this.SetUIProperties_NumberOfUsers();
             });
         }
 
@@ -1203,6 +1205,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.IsSingleMultiPackage = true;
             this.IsMainAdditionalPackage = false;
             this.MainAdditionalPackageApplied = false;
+            this.SetUIProperties_TotalPrice();
+            this.SetUIProperties_NumberOfUsers();
         }
     }
 
@@ -1211,6 +1215,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         if (this.EntityPM.MainAdditionalPackageApplied != newValue) {
             this.EntityPM.MainAdditionalPackageApplied = newValue;
             this.SetUIProperties_TotalPrice();
+            this.SetUIProperties_NumberOfUsers();
         }
     }
 

@@ -38,6 +38,8 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string Surcharges  { get; set; }
        [DataMember]
        public string UpdateMethodCode  { get; set; }
+       [DataMember]
+       public string UpdateMethodName  { get; set; }
    }
 
 }

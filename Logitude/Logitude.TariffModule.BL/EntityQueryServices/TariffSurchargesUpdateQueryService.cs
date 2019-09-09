@@ -10,10 +10,10 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 {
     public partial class TariffSurchargesUpdateQueryService
     {
-        public List<TariffSurchargesUpdatePM> GetTariffsLogsByTariffId(string tariffId,  int tenant)
+        public List<TariffSurchargesUpdatePM> GetTariffsLogsByTariffId(string tariffId,int version,  int tenant)
         {
             List<TariffSurchargesUpdate> logs = (from a in context.TariffSurchargesUpdates
-                                            where a.TariffId == tariffId  && a.Tenant == tenant
+                                            where a.TariffId == tariffId  && a.Tenant == tenant && a.Version == version
                                             select a).ToList();
 
             List<TariffSurchargesUpdatePM> logsPMs = new List<TariffSurchargesUpdatePM>();

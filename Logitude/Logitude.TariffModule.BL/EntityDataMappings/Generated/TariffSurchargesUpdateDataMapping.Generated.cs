@@ -51,7 +51,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         To, 
 	         Version, 
 	         Surcharges, 
-	         UpdateMethodCode,
+	         UpdateMethodCode, 
+	         UpdateMethodName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

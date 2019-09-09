@@ -2879,7 +2879,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
 
-        public HttpResponseMessage GetTariffsLogsByTariffId(string tariffId)
+        public HttpResponseMessage GetTariffsLogsByTariffId(string tariffId, int version)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -2888,7 +2888,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             List<TariffSurchargesUpdatePM> logs = new List<TariffSurchargesUpdatePM>();
 
             TariffSurchargesUpdateQueryService query = new TariffSurchargesUpdateQueryService(tenant);
-            logs = query.GetTariffsLogsByTariffId(tariffId, tenant);
+            logs = query.GetTariffsLogsByTariffId(tariffId, version, tenant);
 
             return Request.CreateResponse(HttpStatusCode.OK, logs);
         }
