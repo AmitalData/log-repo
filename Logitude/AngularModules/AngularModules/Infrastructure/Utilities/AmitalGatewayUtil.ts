@@ -23,6 +23,10 @@ import { ClientPM } from '../../Customs/Entitypms/ClientPM';
 //import { DeclarationPMService } from '../../Customs/Services/StandardPMs/DeclarationPMService';                                       
 import { DeclarationPM } from '../../Customs/EntityPMs/DeclarationPM';
 import { ConsignmentPM } from '../../Customs/EntityPMs/ConsignmentPM';
+import { EntityResourceService } from '../Services/EntityResourceService';
+import { EntityPMService } from '../Services/EntityPMService';
+import { CourierMasterService } from '../../Customs/Services/Others/CourierMasterService';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
 
 
 
@@ -446,20 +450,6 @@ export class AmitalGatewayUtil {
             AmitalGatewayUtil.Instance.ShowDeclarationByIdReturnCloseSave.StartDoIt(this._LastUnifreightMessageM, myEditTab, change2CA23Tab);
         }
     }
-
-    ShowCourierMasterByIdReturnCloseSaveMethod(
-        myParam,
-        myEditTab,
-        change2EditTab: () => void,
-        change2CA23Tab: () => void) {
-        change2EditTab();
-        if (AppTool.IsNullOrEmpty(myEditTab.SessionComponent)) {
-            setTimeout(() => { AmitalGatewayUtil.Instance.ShowDeclarationByIdReturnCloseSave.StartDoIt(this._LastUnifreightMessageM, myEditTab, change2CA23Tab); }, 500);
-        } else {
-
-            AmitalGatewayUtil.Instance.ShowDeclarationByIdReturnCloseSave.StartDoIt(this._LastUnifreightMessageM, myEditTab, change2CA23Tab);
-        }
-    }
     
     ShowDeclarationByIdReturnCloseSave = class {
         static StartDoIt(unifreightMessage: UnifreightMessageM, myEditTab, callback2TabZero: () => void) {
@@ -679,38 +669,53 @@ export class AmitalGatewayUtil {
 
             AmitalGatewayUtil.Instance.SendRequestJSONToUnifreightAsync(myRequestWrapperM);
         }
+    }
 
+    ShowCourierMasterByIdReturnCloseSaveMethod(
+        myParam,
+        myEditTab,
+        change2EditTab: () => void,
+        change2CA23Tab: () => void) {
+        change2EditTab();
+        if (AppTool.IsNullOrEmpty(myEditTab.SessionComponent)) {
+            setTimeout(() => { AmitalGatewayUtil.Instance.ShowCourierMasterById.StartDoItForCourier(this._LastUnifreightMessageM, myEditTab, change2CA23Tab); }, 500);
+        } else {
+
+            AmitalGatewayUtil.Instance.ShowCourierMasterById.StartDoItForCourier(this._LastUnifreightMessageM, myEditTab, change2CA23Tab);
+        }
+    }
+
+    ShowCourierMasterById = class {
+        static _entityResourceService: EntityResourceService = new EntityResourceService();
         static StartDoItForCourier(unifreightMessage: UnifreightMessageM, myEditTab, callback2TabZero: () => void) {
-            //BackButtonLabel: "הצהרות ללא התרה"EntityId :"1-103991" ,ObjectTableName:"Customs.Declaration"
             let isSaved: boolean = false;
             let BackButtonLabel = "תיק עמילות"
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', myEditTab.SessionComponent.viewContainerRef)
-                .then(cmpRef => {
-                    //this.SelectionChanged(myDeclarationEditTab);
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({
-                        EntityId: unifreightMessage.LogitudeEntityNumber,
-                        ObjectTableName: unifreightMessage.LogitudeEntity,
-                        BackButtonLabel: BackButtonLabel
-                    });
+            var windowArgs: any = {};
+            let courierMasterService: CourierMasterService = new CourierMasterService();
 
-                    let lockMess = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.LockedMessage");
-                    //let unifreightJumpTo = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.JumpTo");
-                    console.log(lockMess);
-                    let myEditComponent: EditComponent = cmpRef.instance;
-                    if (!AppTool.IsNullOrEmpty(lockMess)) {
-
-                        let sub = myEditComponent.OnFirstTimeAfterSingleDataLoaded.subscribe(
-                            (token1) => {
-                                sub.unsubscribe();
-                                let myDeclarationEditComponentController: DeclarationEditComponentController = myEditComponent.EditComponentController as DeclarationEditComponentController;
-                                if (AppTool.IsNullOrEmpty(myDeclarationEditComponentController)) {
-                                    console.log("myDeclarationEditComponentController is null");
-                                } else {
-                                    myDeclarationEditComponentController.UnifaceStartAsLock(lockMess);
+            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
+                    this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                        //entityPMService.getSingle("Customs.CourierMaster", selectedCourierMasterId).then((res: any) => {
+                        courierMasterService.getCourierMasterByDeclarationId(unifreightMessage.LogitudeEntityNumber).subscribe((myResponse: ServiceResponse) => {
+                                if (myResponse.HasError) {
+                                    console.log("Error while getting EntityPM", myResponse);
                                 }
-                            }
-                        );
+                                else {
+                                    windowArgs.CurrentEntity = myResponse.Result;
+                                    var logWindow = new LogitudeWindow();
+                                    logWindow.Width = 1500;
+                                    logWindow.Height = 1000;
+                                    logWindow.WindowArgs = windowArgs;
+                                    logWindow.ShowCloseButton = true;
+                                    //logWindow.IsHideHeader = true;
+                                    logWindow.IsFillScreen = true;
+                                    AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
+                                    logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
+                                    logWindow.WindowClosed.subscribe(($event1: any) => {
+                                        //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
+                                        this.ShowCourierMasterByIdReturnCloseSaveCallBack(isSaved);
+                                        callback2TabZero();
 
                     }
 
@@ -721,8 +726,28 @@ export class AmitalGatewayUtil {
                         this.ShowDeclarationByIdUnifreightCallBack(isSaved);
                         callback2TabZero();
 
+                        });
                     });
                 });
+            }
+
+        private static ShowCourierMasterByIdReturnCloseSaveCallBack(save: boolean) {
+            if (AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.filter((item) => item[0] == "ShowCourierMasterByIdReturnCloseSaveCallBack").length == 0) {
+                AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.push(["ShowCourierMasterByIdReturnCloseSaveCallBack", save.toString()]);
+            }
+            let tuple = AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.filter((item) => item[0] == "ShowCourierMasterByIdReturnCloseSaveCallBack")[0];
+            tuple[1] = save.toString();
+
+
+            var myRequestWrapperM = new RequestWrapperM();
+
+
+            myRequestWrapperM.SenderID = "UnifreightMassageHandler.ShowCourierMasterByIdReturnCloseSaveCallBack";
+            myRequestWrapperM.ReceiverID = "CFIHMAIN.LogitudeTask";
+            myRequestWrapperM.MessageID = "ShowCourierMasterByIdReturnCloseSaveCallBack";
+            myRequestWrapperM.UnifreightMessage = AmitalGatewayUtil.Instance._LastUnifreightMessageM;
+
+            AmitalGatewayUtil.Instance.SendRequestJSONToUnifreightAsync(myRequestWrapperM);
         }
     }
     GeneralMessaging = class {
