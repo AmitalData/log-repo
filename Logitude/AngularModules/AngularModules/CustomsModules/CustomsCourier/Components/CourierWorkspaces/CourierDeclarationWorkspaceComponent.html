@@ -49,7 +49,7 @@
         <td>
             <table *ngIf="isScreenLoaded">
                 <tr>
-                    <td style="width:265px;">
+                    <td style="width:15%;">
                         <table>
                             <tr class="SectionHeader">
                                 <td>
@@ -111,50 +111,7 @@
 
                                             <div style="height: 15px;"></div>
 
-                                            <!-- ShipmentsAndMasters -->
-                                            <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{'Accounting.O.ShipmentsAndMasters' | TextCodeTranslationPipe}}</div>
-                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <!-- <button class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button> -->
-                                                </div>
-                                                <div>
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <!-- ({{glAccountSummary.OpenFilesCount}}) -->
-                                                                            <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenFiles')"> {{'GLAccounts.Q.OpenFiles' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="ClosedFilesVisibility" (click)="ViewAccountingQuery('ClosedFiles')"> {{'GLAccounts.Q.ClosedFiles' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="AllFilesVisibility" (click)="ViewAccountingQuery('AllFiles')"> {{'GLAccounts.Q.AllFiles' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="AllJobsVisibility" (click)="ViewAccountingQuery('AllJobs')"> {{'GLAccounts.Q.AllJobs' | TextCodeTranslationPipe}} </p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><div></div></td>
-                                                                    </tr>
-                                                                </table>
-
-
-                                                            </td>
-                                                        </tr>
-
-                                                    </table>
-                                                </div>
-                                            </div>
+                                            
 
                                             <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
                                                 <div>My Views</div>
@@ -186,7 +143,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td>
-                                                <label  float-start style="margin-right: 10px;" >{{ RecentGLAccountsCount }} {{'Accounting.General.O.RecentGLAccounts' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{ RecentGLAccountsCount }} {{'Customs.Declaration.Q.DeclarationWithoutReleaseQuery' | TextCodeTranslationPipe}}</label>
                                             </td>
                                         </tr>
 

@@ -53,7 +53,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     constructor() {
         this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._entityResourceService.getEntityResourceByTableName("Declaration").subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
             {
                 this.isScreenLoaded = true;
                 this.CurrentSession.StopBusyIndicator();
@@ -65,7 +65,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     ngAfterViewInit() {
         this.LoadAllScreenData();
     }
-    public IsQueryVisible_MyViewsGroup: boolean = false;
+    public IsQueryVisible_MyViewsGroup: boolean = true;
 
     InitComponent() {
         this.LoadAllScreenData();
