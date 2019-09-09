@@ -1096,6 +1096,8 @@ namespace WarehouseData.Helper
 
                 string originTableName = table.TableName == "WaterMark" && isPrivateDB ? ("Private" + table.DBTableName) : table.DBTableName;
 
+
+
                 SqlCommand commandSourceData = new SqlCommand(
            "SELECT " + fieldName +
            " FROM dbo." + originTableName + condition + " ;", sourceConnection);
@@ -1610,9 +1612,47 @@ namespace WarehouseData.Helper
                 }
 
         }
-        
-        public void RemoveOldRowsFromFactTable(TableClass table, string connectionString)
+
+        private string ProcessingeDataWarehousUpdatedRows(TableClass table,  List<string> rows , string destinationConnectionString)
         {
+            int rowsCount = 0;
+            string deletedRowIds = string.Empty;
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (string id in rows)
+            {
+                stringBuilder.Append("'" + id + "'" + ",");
+                rowsCount += 1;
+                if (rowsCount == 1000 || (rows.IndexOf(id) == rows.IndexOf(rows.Last())))
+                { 
+                    deletedRowIds += stringBuilder.ToString();
+                    DataWarehousDeletedRows(table, ("(" + stringBuilder.ToString() + ")").Replace(",)", ")"), destinationConnectionString);
+                    rowsCount = 0;
+                    stringBuilder.Clear();
+                }
+            }
+
+            return !string.IsNullOrEmpty(deletedRowIds) ? ("(" + deletedRowIds + ")").Replace(",)", ")"):null;
+        }
+
+
+
+        private void DataWarehousDeletedRows(TableClass table, string ids, string connectionString)
+        {
+            if (!string.IsNullOrEmpty(ids))
+            {
+                string cmd = "delete " + table.Dw_TableName + " where " + table.KeyName + " in " + ids;
+                ExecuteSql(cmd, connectionString);
+
+            }
+        }
+
+        public string RemoveDataFromFactShipment(TableClass table, string connectionString)
+        {
+            string ids = String.Empty;
+
+
+            string factTableName = "Fact_" + table.DBTableName;
+
             using (SqlConnection sourceConnection =
                        new SqlConnection(connectionString))
             {
@@ -1644,6 +1684,14 @@ namespace WarehouseData.Helper
             }
 
 
+            if (!string.IsNullOrEmpty(ids))
+            {
+                string cmd = "delete " + factTableName + " where " + table.KeyName + " in " + ids;
+                ExecuteSql(cmd, connectionString);
+
+            }
+
+            return ids;
         }
 
         private void UpdateWareMarkTable(TableClass table, string date, string connectionString, int? privateTenant = null)
@@ -1655,6 +1703,29 @@ namespace WarehouseData.Helper
                 cmd += (" and PrivateTenant = " + privateTenant);
             }
             ExecuteSql(cmd, connectionString);
+
+        }
+
+        private string DeleteRowsFromDataWarehouse(DeleteRowsArgs deleteRowsArgs)
+        {
+            int rowsCount = 0;
+            StringBuilder allDeletedRows = new StringBuilder();
+            StringBuilder deletedRows = new StringBuilder();
+            foreach (string id in deleteRowsArgs.IdsList)
+            {
+                rowsCount += 1;
+                deletedRows.Append("'" + id + "'" + ",");
+                if (rowsCount == 1000 || (deleteRowsArgs.IdsList.IndexOf(id) == deleteRowsArgs.IdsList.IndexOf(deleteRowsArgs.IdsList.Last())))
+                {
+                    if (deleteRowsArgs.ReturnDeleteIdsAsString) allDeletedRows.Append(deletedRows.ToString());
+                    string cmd = "delete " + deleteRowsArgs.TableName + " where " + deleteRowsArgs.KeyName + " in " + ("(" + deletedRows.ToString() + ")").Replace(",)", ")");
+                    ExecuteSql(cmd, deleteRowsArgs.ConnectionString);
+                    rowsCount = 0;
+                    deletedRows.Clear();
+                }
+            }
+
+            return !string.IsNullOrEmpty(allDeletedRows.ToString()) ? ("(" + allDeletedRows.ToString() + ")").Replace(",)", ")") : null;
 
         }
 
@@ -1794,5 +1865,4 @@ namespace WarehouseData.Helper
         public List<string> IdsList { get; set; }
         public bool ReturnDeleteIdsAsString { get; set; }
     }
-        
 }

@@ -110,8 +110,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     PackageCode = packageCode,
                     NumberOfUsers = 1,
                     SearchFields = globalTenant.Id + "," + globalTenant.CompanyName + ",1",
-                    AWBMessagesCCSTypeCode = "CHAMP",    
-                    MainAdditionalPackageApplied = true,
+                    AWBMessagesCCSTypeCode = "CHAMP",                        
                 };
 
                 Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();

@@ -922,15 +922,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             List<string> allCodes = new List<string>();
 
             allCodes.AddRange(this.AdditionalPackagesCodes);
+            
+            if (!this.IsCustomerCare)
+            {
+                allCodes = this.FilterPackagesUserLicenses(allCodes);
+            }
 
             if (!allCodes.Contains(this.MainPackageCode))
             {
                 allCodes.Add(this.MainPackageCode);
-            }
-
-            if (!this.IsCustomerCare)
-            {
-                allCodes = this.FilterPackagesUserLicenses(allCodes);
             }
 
             this.FillBasePackages(this.GetConnectedPackages(allCodes));

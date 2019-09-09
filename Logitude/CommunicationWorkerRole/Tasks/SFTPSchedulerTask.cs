@@ -36,10 +36,15 @@ namespace CommunicationWorkerRole.Tasks
                 SFTPSchedulerTaskService fTPSchedulerTaskService = new SFTPSchedulerTaskService(this);
                 if(ftpTask.Description == "test log to file")
                 {
-                    fTPSchedulerTaskService.EnableWriteLogToFile = true;
+                    this.EnableWriteLogToFile = true;
                 }
                
                 fTPSchedulerTaskService.ReadSFTPFilesBySchedulerDetailsToAnalyzeQueue(schedulerDetails);
+
+                if(schedulerDetails.FTPDetails.Subject == "test exception")
+                {
+                    throw new Exception("test exception log is thrown!!");
+                }
 
                 foreach(var warning in fTPSchedulerTaskService.WarningsList)
                 {

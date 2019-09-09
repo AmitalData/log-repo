@@ -48,6 +48,7 @@ export class UserList {
 		EmployeeGroupCustomFilter: string;
 		ShowLocalNameInLOV: boolean;
 		UserRoles: string;
+		AdditionalPackagesOnly: boolean;
 		GroupId: Array<string>;
 	
 }

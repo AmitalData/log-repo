@@ -156,43 +156,44 @@ namespace Logitude.Server.Tools.StorageService
         public void AppendText(string text, BlobFileInfo fileInfo)
         {
           
-            BlobFileRepository blobFileRepository = new BlobFileRepository(0);
-            BlobFile file = blobFileRepository.GetSingleBlobFile(fileInfo.FileName);
-
-            if (file != null)
+            if (!string.IsNullOrEmpty(text))
             {
-                if (file.Blob == null || !string.IsNullOrEmpty(text))
+
+                BlobFileRepository blobFileRepository = new BlobFileRepository(0);
+                BlobFile file = blobFileRepository.GetSingleBlobFile(fileInfo.FileName);
+
+                if (file != null)
                 {
-                    var txtBytes = Encoding.UTF8.GetBytes(text);
-                    file.Blob = txtBytes;
+
+                    if (file.Blob == null)
+                    {
+                        var txtBytes = Encoding.UTF8.GetBytes(text);
+                        file.Blob = txtBytes;
+                    }
+                    else
+                    {
+                        var fileText = Encoding.UTF8.GetString(file.Blob);
+                        fileText += text;
+                        var txtBytes = Encoding.UTF8.GetBytes(fileText);
+                        file.Blob = txtBytes;
+                        blobFileRepository.Update(file);
+                    }
                 }
                 else
                 {
-                   var fileText =  Encoding.UTF8.GetString(file.Blob);
-                    fileText += text;
+                    var txtBytes = Encoding.UTF8.GetBytes(text);
+                    file = new BlobFile()
+                    {
+                        Id = fileInfo.FileName,
+                        Blob = txtBytes,
+                    };
 
-                    var txtBytes = Encoding.UTF8.GetBytes(fileText);
-
-                    file.Blob = txtBytes;
+                    blobFileRepository.Add(file);
 
                 }
 
-                blobFileRepository.Update(file);
+                blobFileRepository.SubmitChanges();
             }
-            else
-            {
-                var txtBytes = Encoding.UTF8.GetBytes(text);
-                file = new BlobFile()
-                {
-                    Id = fileInfo.FileName,
-                    Blob = txtBytes,
-                };
-
-                blobFileRepository.Add(file);
-
-            }
-
-            blobFileRepository.SubmitChanges();
         }
     }
 }

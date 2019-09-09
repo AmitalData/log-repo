@@ -600,7 +600,15 @@ namespace WebFreight.Web
             return true;
         }
 
+        public HttpResponseMessage getLoggedDomain()
+        {
+            HttpContext context = HttpContext.Current;
+            string Url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
 
+            Url = Url.Split(':')[0];
+
+            return Request.CreateResponse(HttpStatusCode.OK, Url);
+        }
         public UserData PostUserValidation(LoginParameters loginParameters)
         {
 
@@ -610,6 +618,10 @@ namespace WebFreight.Web
 
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = SecurityUtility.getLoggedDomain();
+                //if (LogitudeSettings.DeploymentStage.ToLower() == "test2")
+                //{
+                    url = url.Split(':')[0];
+                //}
                 if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                 {
                     TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(0);

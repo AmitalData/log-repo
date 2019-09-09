@@ -123,16 +123,6 @@ namespace Logitude.XSD.INTTRA_Booking
                     {
                         this.Errors.Add("Tenant Address 1 or Address 2 is required");
                     }
-
-                    Country myCountry = (from d in CommonContext.Countries where d.Id == this.TenantAddress.CountryId select d).FirstOrDefault();
-                    if (myCountry != null)
-                    {
-                        string countryTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(myCountry.Code, "G-INTTRA", "Country");
-                        if (string.IsNullOrEmpty(countryTranslatedCode))
-                        {
-                            this.Errors.Add("Tenant Address Country Code is required");
-                        }
-                    }
                 }
             }
         }
@@ -222,12 +212,6 @@ namespace Logitude.XSD.INTTRA_Booking
                                           && d.ShipmentId == this.ShipmentId
                                           select d).ToList();
 
-
-            if (string.IsNullOrEmpty(this.ShipmentPM.BookingConfirmationNumber))
-            {
-                this.Errors.Add("Booking Confirmation Number is required");
-            }
-
             if (string.IsNullOrEmpty(this.ShipmentPM.DescriptionOfGoods))
             {
                 this.Errors.Add("Shipment Description  of Goods is required");
@@ -264,8 +248,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 }
             }
         }
-        private string FromPortCountryTranslatedCode = null;
-        private string FinalPortCountryTranslatedCode = null; 
+
         private void GetObjects_ShipmentPorts()
         {
             if (this.MasterData.MainCarriageFromPortId == null)
@@ -277,12 +260,6 @@ namespace Logitude.XSD.INTTRA_Booking
             {
                 this.FromPort = (from d in CommonContext.Ports where d.Id == this.MasterData.MainCarriageFromPortId select d).FirstOrDefault();
                 this.FromPortCountry = (from d in CommonContext.Countries where d.Id == this.FromPort.CountryId select d).FirstOrDefault();
-
-                FromPortCountryTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(this.FromPortCountry.Code, "G-INTTRA", "Country");
-                if (string.IsNullOrEmpty(FromPortCountryTranslatedCode))
-                {
-                    this.Errors.Add("From Port Country Code is required");
-                }
             }
 
             if (this.MasterData.MainCarriageFinalDestinationPortId == null)
@@ -294,12 +271,6 @@ namespace Logitude.XSD.INTTRA_Booking
             {
                 this.FinalPort = (from d in CommonContext.Ports where d.Id == this.MasterData.MainCarriageFinalDestinationPortId select d).FirstOrDefault();
                 this.FinalPortCountry = (from d in CommonContext.Countries where d.Id == this.FinalPort.CountryId select d).FirstOrDefault();
-
-               FinalPortCountryTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(this.FinalPortCountry.Code, "G-INTTRA", "Country");
-                if (string.IsNullOrEmpty(FinalPortCountryTranslatedCode))
-                {
-                    this.Errors.Add("Final Port Country Code is required");
-                }
             }
         }
  
@@ -451,7 +422,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     Value = this.FromPort.CombinedCode,
                 },
                 Name = this.FormatString(this.FromPort.EnglishName, 256),
-                CountryCode = this.FromPortCountryTranslatedCode.ToUpper(),
+                CountryCode = this.FromPortCountry.Code.ToUpper(),
             };
 
             if (this.ShipmentPM.MainCarriageETD != null)
@@ -475,7 +446,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     Value = this.FinalPort.CombinedCode,
                 },
                 Name = this.FormatString(this.FinalPort.EnglishName, 256),
-                CountryCode = this.FinalPortCountryTranslatedCode.ToUpper(),
+                CountryCode = this.FinalPortCountry.Code.ToUpper(),
             };
             this.Locations.Add(item_PlaceOfDelivery);
         }
@@ -534,7 +505,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     Value = this.FromPort.CombinedCode,
                 },
                 Name = this.FormatString(this.FromPort.EnglishName, 256),
-                CountryCode = this.FromPortCountryTranslatedCode.ToUpper(),
+                CountryCode = this.FromPortCountry.Code.ToUpper(),
             };
             
             if (this.ShipmentPM.MainCarriageETD != null)
@@ -774,16 +745,10 @@ namespace Logitude.XSD.INTTRA_Booking
 
                     if (myCountry != null)
                     {
-                        string countryTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(myCountry.Code, "G-INTTRA", "Country");
-                        if (string.IsNullOrEmpty(countryTranslatedCode))
-                        {
-                            this.Errors.Add("Final Port Country Code is required");
-                        }
-                        else
-                        {
-                            myResult.CountryCode = countryTranslatedCode;
-                            iCountryName = myCountry.EnglishName;
-                        }
+
+                        myResult.CountryCode = myCountry.Code;
+                        iCountryName = myCountry.EnglishName;
+
                     }
                 }
             }

@@ -198,6 +198,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 foreach (TaxReportData a in ledgerTransactons)
                 {
+                    VatNumber = null;
                     Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
 
                    
@@ -212,21 +213,27 @@ namespace Logitude.Accounting.BL.CoreBL
                             InputInvoiceAmount = (decimal?)aPInvoice.SubTotalInLocalCurrency ?? 0;
                         }
                     }
+
+                    else if (card != null && card.PartnerTypeId == PartnerTypeValues.Customer)
+                    {
+                        if(card.VatNumber == tenantPM.VatNumber)
+                        {
+                            VatNumber = card.VatNumber;
+                        }
+                    }
                     else
                     {
                         InputVatAmount = a.LocalAmountDebit;
 
                         if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
                             VatNumber = card.VatNumber;
-                        else
-                            VatNumber = "000000000";
-
+                      
                         IQueryable<LedgerTransaction> transactionsByJournal = ledgerTransactionRepository.GetByJournalAndReference1(a.JournalId, a.Reference, tenant);
                         decimal transactionSum = transactionsByJournal.Sum(d => d.LocalAmountCredit);
                         //var transactionSum = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
                         InputInvoiceAmount = transactionSum - InputVatAmount;
                     }
-
+                    
                     if (VatNumber == null)
                         VatNumber = "000000000";
 
@@ -387,18 +394,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 bool letters = isMatche.IsMatch(Reference);
                 if (letters)
                 {
-                    for (int i = Reference.Length; i > 0; i--)
+                    for (int i = 0; i < Reference.Length; i++)
                     {
-                        string d = Reference.Substring(i - 1, 1);
+                        string d = Reference.Substring(i, 1);
                         MatchCollection match = Regex.Matches(d, @"^[a-zA-Z]*$");
                         if (match.Count != 0)
                         {
-                            referenceGroup = Reference.Substring(0, i);
-                            break;
+                            referenceGroup = referenceGroup + d;// Reference.Substring(0, i);
+
                         }
                         else
                         {
-                            reference = d + reference;
+                            reference = Reference.Substring(i, Reference.Length - i);
+                            break;
                         }
                         //var array = Regex.Matches("12s4rt", @"\D+|\d+")
                         //.Cast<Match>()

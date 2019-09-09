@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -102,6 +103,103 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 this.ApproveDraftVersion(entityPM);
                 entityPM.IsApprovingDraftVersion = false;
             }
+
+            this.InsertTariffSurchargeLog(entityPM);
+        }
+
+
+        List<ChargesType> ChargeTypes; 
+        private void InsertTariffSurchargeLog(TariffPM tariff)
+        {
+            if (tariff.TypeCode == "ASC" && !tariff.IsFromUpdateScreen)
+            {
+                TariffSurchargesUpdateUpdateService tariffSurchargeUpdateService = new TariffSurchargesUpdateUpdateService(TariffModuleContext.GetContext(tariff.Tenant), new Dictionary<string, IContext>(), tariff.Tenant);
+                TariffVersionPM version = tariff.TariffVersions.Where(prop => prop.IsDraft == true).FirstOrDefault();
+                if (version != null && version.TariffLines != null)
+                {
+                    ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tariff.Tenant);
+                    ChargeTypes = chargesTypeRepository.GetChargesTypes(tariff.Tenant).ToList();
+                    List<TariffLinePM> tariffUpdatedLines = version.TariffLines.Where(p => p.ChangeSetOp == ChangeSetOperation.Update || p.ChangeSetOp == ChangeSetOperation.Insert).ToList();
+                    TariffLineRepository tariffLineRepository = new TariffLineRepository(tariff.Tenant);
+                    List<TariffLine> tariffUpdatedLines_POCO = tariffLineRepository.GetTariffLinesByTariff(tariff.Id, tariff.Tenant);
+                    foreach (var item in tariffUpdatedLines)
+                    {
+                        TariffSurchargesUpdatePM tariffSurchageLog = new TariffSurchargesUpdatePM();
+                        tariffSurchageLog.TariffId = tariff.Id;
+                        tariffSurchageLog.Version = item.Version;
+                        tariffSurchageLog.Surcharges = this.GetUpdatedSurcharges(tariff, item, tariffUpdatedLines_POCO);
+                        tariffSurchageLog.LinesUpdated = 1;
+                        tariffSurchageLog.StartDate = tariff.StartDate;
+                        tariffSurchageLog.UpdateMethodCode = "MA";
+                        tariffSurchageLog.ChangeSetOp = ChangeSetOperation.Insert;
+                        tariffSurchageLog.Tenant = item.Tenant;
+                        tariffSurchageLog.To = item.DestinationPortCode;
+                        tariffSurchageLog.From = item.OriginPortCode;
+                        tariffSurchargeUpdateService.Update(tariffSurchageLog, true);
+                    }
+                }
+            }
+        }
+
+        private string GetUpdatedSurcharges(TariffPM tariff, TariffLinePM itemPM, List<TariffLine> tariffUpdatedLines_POCO)
+        {
+            var surcharges = "";
+            if (tariffUpdatedLines_POCO != null && tariffUpdatedLines_POCO.Count > 0 )
+            {
+                var itemPOCO = tariffUpdatedLines_POCO.Where(a => a.Id == itemPM.Id).FirstOrDefault();
+                if (itemPOCO != null)
+                {
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        PropertyInfo pMPricePropInfoPM = itemPM.GetType().GetProperty("Surcharge" + i + "Price");
+                        PropertyInfo pMMinPricePropInfoPM = itemPM.GetType().GetProperty("Surcharge" + i + "MinPrice");
+                        PropertyInfo pMPricePropInfoPOCO = itemPOCO.GetType().GetProperty("Surcharge" + i + "Price");
+                        PropertyInfo pMMinPricePropInfoPOCO = itemPOCO.GetType().GetProperty("Surcharge" + i + "MinPrice");
+
+                        var pMPricevalue = (decimal?)pMPricePropInfoPM.GetValue(itemPM);
+                        var pMMinPricevalue = (decimal?)pMMinPricePropInfoPM.GetValue(itemPM);
+                        var pOCOPricevalue = (decimal?)pMPricePropInfoPOCO.GetValue(itemPOCO);
+                        var pOCOMinPricevalue = (decimal?)pMMinPricePropInfoPOCO.GetValue(itemPOCO);
+
+                        if (pMPricevalue != pOCOPricevalue || pMMinPricevalue != pOCOMinPricevalue)
+                        {
+                            PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
+                            string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
+                            surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ",";
+                        }
+                    }
+                    surcharges = surcharges.TrimEnd(',');
+                }
+                else
+                {
+                    surcharges = GetUpdatedSurchargesInNew(tariff, itemPM);
+                }
+            }
+            else
+            {
+                surcharges = GetUpdatedSurchargesInNew(tariff, itemPM);
+            }
+            return surcharges;
+        }
+
+        private string GetUpdatedSurchargesInNew(TariffPM tariff, TariffLinePM itemPM)
+        {
+            var surcharges = "";
+            for (int i = 1; i <= 10; i++)
+            {
+                PropertyInfo pMPricePropInfoPM = itemPM.GetType().GetProperty("Surcharge" + i + "Price");
+                PropertyInfo pMMinPricePropInfoPM = itemPM.GetType().GetProperty("Surcharge" + i + "MinPrice");
+                var pMPricevalue = (decimal?)pMPricePropInfoPM.GetValue(itemPM);
+                var pMMinPricevalue = (decimal?)pMMinPricePropInfoPM.GetValue(itemPM);
+
+                if (pMPricevalue != null || pMMinPricevalue != null)
+                {
+                    PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
+                    string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
+                    surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ",";
+                }
+            }
+            return surcharges.TrimEnd(',');
         }
 
         protected override void UpdateComposition(TariffPM entityPM)

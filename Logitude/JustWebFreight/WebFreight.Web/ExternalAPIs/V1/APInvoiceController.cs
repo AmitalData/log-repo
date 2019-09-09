@@ -30,7 +30,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
     public class APInvoiceController : ApiController
     {
 
-        public HttpResponseMessage GetSingleAPInvoice(string id, string number)
+        public HttpResponseMessage GetSingleAPInvoice(string id, string number, string externalId)
         {
             try
             {
@@ -48,10 +48,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     Result = Service.GetAPInvoiceById(id, tenant);
                 }
-                else
+                else if(!string.IsNullOrEmpty(number))
                 {
                     Result = Service.GetAPInvoiceByInvoiceNumber(number, tenant);
 
+                }
+                else if (!string.IsNullOrEmpty(externalId))
+                {
+                    Result = Service.GetSingleInvoiceByExternalEntityId(externalId, tenant);
                 }
 
 
@@ -227,5 +231,63 @@ namespace WebFreight.Web.ExternalAPIs.V1
             return rate;
         }
 
+        public HttpResponseMessage GetCancel(string externalId)
+        {
+          
+                try
+                {
+
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        int tenant = authToken.Tenant;
+
+                        SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                        APInvoiceQueryService Service = new APInvoiceQueryService(tenant);
+                        APInvoice apinvoice = Service.GetSingleInvoiceByExternalEntityId(externalId, tenant);
+                        APInvoicePM apinvoicePM = null;
+                        APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
+                        if (apinvoice != null)
+                        {
+                        apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
+                        apinvoicePM = SetAPInvoicePMVoided(apinvoicePM);
+                        
+                        }
+                    SubmitChanges(apinvoicePM);
+                     scope.Complete();
+
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "apinvoice has been voided");
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                }
+            
+            
+        }
+        private APInvoicePM SetAPInvoicePMVoided(APInvoicePM apinvoicePM)
+        {
+          
+            apinvoicePM.SetVoided = true;
+            apinvoicePM.SetApproved = false;
+            apinvoicePM.SetReTransfer = false;
+            apinvoicePM.SetCancelApproval = false;
+            apinvoicePM.SetReSendQBO = false;
+            return apinvoicePM;
+        }
+
+        private void SubmitChanges(APInvoicePM apinvoice)
+        {
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(apinvoice.Tenant);
+
+            APInvoiceService apinvoiceService = new APInvoiceService(invoiceContext, apinvoice.Tenant);
+            apinvoiceService.Update(apinvoice, true);
+        }
     }
 }

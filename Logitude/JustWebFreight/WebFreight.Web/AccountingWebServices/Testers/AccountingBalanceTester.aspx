@@ -267,6 +267,7 @@
         
         var _ReconciliationUrl = urlBase + '/api/ReconciliationOp';
         var _ReconciliationAfterConversionUrl = urlBase + '/api/ReconciliationAfterConversion';
+        var _ReconciliationStageBUrl = urlBase + '/api/ReconciliationStageB';
         var _RevaluationUrl = urlBase + '/api/RevaluationOp';
 
         var _ARPaymentChequeUrl = urlBase + '/api/ARPaymentChequeOp';
@@ -519,6 +520,68 @@
 
 
             $(".class_LabelLog").val("OnClickButtonReconcileAfterConversion ..." + _ResponseToken);
+            $.ajax({
+                url: myUrl,
+                type: 'GET',
+                dataType: 'json',
+                headers: { 'Token': _ResponseToken },
+                contentType: 'application/json; charset=UTF-8', // This is the money shot
+                data: myJson,
+                success: function (response, textStatus, xhr) {
+                    //handle success 
+                    //alert("success ");;
+                    $(".class_LabelLog").val(JSON.stringify(response));
+                    DrawTableReconciliation(response,arryColumns);
+                    
+                    var obj = JSON.parse(myJson);
+                    obj.CallBack = response;
+                    var str = JSON.stringify(obj);
+                    $(".classTextBoxParam").val(str);
+                    //response.Token = response.Token;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (textStatus != 'abort') {
+                        //handle error
+
+                        alert("error" + textStatus + errorThrown);
+
+                        $(".class_LabelLog").val(xhr.responseText);
+                    }
+                }
+            });
+
+
+            return false;
+        }
+  
+      
+        function OnClickButtonReconcileStageB() {
+
+            var defaultParam = new Object();
+            defaultParam.Tenant = 1;
+
+            if (!_ResponseToken) {
+                getToken();
+            }
+            try {
+                var myJson = $(".classTextBoxParam").val();
+
+                var objToCheck = JSON.parse(myJson);
+            } catch (e) {
+
+                var str = JSON.stringify(defaultParam);
+                $(".classTextBoxParam").val(str);
+                return false;
+            }
+            var objToCheck1 = JSON.parse(myJson);
+
+            var myUrl;
+            myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant;
+            
+            //alert(myUrl);
+
+
+            $(".class_LabelLog").val("OnClickButtonReconcileStageB ..." + _ResponseToken);
             $.ajax({
                 url: myUrl,
                 type: 'GET',
@@ -1003,6 +1066,7 @@ div#two {
                     <a href="Reconcile.aspx">Reconcile.aspx</a>
                     <a href="TrailReport.aspx">TrailReport.aspx</a>
                     <button id="ButtonReconcileAfterConversion"  onclick="javascript:return OnClickButtonReconcileAfterConversion();">Reconcile After Conversion</button>        
+                    <button id="ButtonReconcileStageB"  onclick="javascript:return OnClickButtonReconcileStageB();">Reconcile Stage B</button>        
                     <asp:Button id="_ButtonExternalReconcile" runat="server" onclick="_ButtonExternalReconcile_click"   Text="ExternalReconcile" />
                 </li>
                 <li>
