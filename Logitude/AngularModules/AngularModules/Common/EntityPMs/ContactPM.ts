@@ -190,9 +190,9 @@ export class ContactPM {
     public set SetAsPrimaryForCard(newValue: boolean) { if (this.setAsPrimaryForCard != newValue) { this.setAsPrimaryForCard = newValue; this.MarkAsDirty("SetAsPrimaryForCard"); } }
        
 	 
-    private shippingAgent: string;
+    private shippingAgent: any;
     public get ShippingAgent() { return this.shippingAgent; }
-    public set ShippingAgent(newValue: string) { if (this.shippingAgent != newValue) { this.shippingAgent = newValue; this.MarkAsDirty("ShippingAgent"); } }
+    public set ShippingAgent(newValue: any) { if (this.shippingAgent != newValue) { this.shippingAgent = newValue; this.MarkAsDirty("ShippingAgent"); } }
        
 	 
     private birthdayReminder: boolean;

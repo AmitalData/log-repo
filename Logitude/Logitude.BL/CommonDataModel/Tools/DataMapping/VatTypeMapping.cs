@@ -33,6 +33,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ExternalVATCard = entityPM.ExternalVATCard;
             poco.ExternalTAXItemId = entityPM.ExternalTAXItemId;
             poco.IsMultiPercentage = entityPM.IsMultiPercentage;
+            poco.RecognizedPercentage = entityPM.RecognizedPercentage;
         }
     }
 }

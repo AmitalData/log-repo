@@ -32,6 +32,7 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
             this.IsNewEntity = true;
             this.NewEntityPercentageDate = DateTool.GetCurrentDateAsUtc();
+          //  this.EntityPM.RecognizedPercentage = 100;
         }
 
         else{
@@ -150,6 +151,12 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
         }
     }
 
+    get RecognizedPercentage() { return this.EntityPM.RecognizedPercentage;}
+    set RecognizedPercentage(value: number) {
+        if (this.EntityPM.RecognizedPercentage != value) {
+            this.EntityPM.RecognizedPercentage = value;
+        }
+    }
     get Code() { return this.EntityPM.Code; }
     set Code(value: string) {
         if (this.EntityPM.Code != value) {
