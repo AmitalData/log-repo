@@ -67,11 +67,11 @@
                         <table>
                             <tr>
                                 <td style="width:120px;">
-                                    <LogLabel [ObjectFieldName]="'LineExpirationDate'" [ObjectTableName]="'TariffLine'" [DataContext]="DataContext" [Text]="'Expiration Date'"></LogLabel>
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'LineExpirationDate'" [DataContext]="DataContext" [Text]="'Expiration Date'"></LogLabel>
                                 </td>
 
                                 <td style="width:180px;">
-                                    <LogDatePicker [ObjectFieldName]="'LineExpirationDate'" [SelectedDateValue]="LineExpirationDate" [ObjectTableName]="'TariffLine'" [DataContext]="DataContext"></LogDatePicker>
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'LineExpirationDate'" [SelectedDateValue]="LineExpirationDate" [DataContext]="DataContext"></LogDatePicker>
                                 </td>
 
                                 <td>
