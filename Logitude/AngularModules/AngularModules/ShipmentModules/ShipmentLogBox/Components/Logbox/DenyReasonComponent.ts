@@ -37,7 +37,7 @@ import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper'
 export class DenyReasonComponent extends BaseComponent implements OnInit, AfterViewInit {
 
     DataContext: DenyReasonComponent = this;
-    ValidationErrorsList: any[];
+    ValidationErrorsList: string = null;
     AdditionalData: any;
     public RTL: boolean = true;
     Language: string = 'HB';
@@ -65,12 +65,12 @@ export class DenyReasonComponent extends BaseComponent implements OnInit, AfterV
     }
 
     SendButtonClicked() {
-        this.ValidationErrorsList = [];
+        this.ValidationErrorsList = null;
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         if (AppTool.IsNullOrEmpty(this.DenyReason)) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "DenyReason"));
+            this.ValidationErrorsList = msg.replace("%FieldName", "DenyReason");
         }
-        if (this.ValidationErrorsList.length == 0) {
+        if (AppTool.IsNullOrEmpty(this.ValidationErrorsList)) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.AdditionalData.IsImporterApprovalRequried = false;
             this.DenyReason = SessionLocator.LoggedUserPM.EnglishName + ", " + SessionLocator.LoggedUserPM.LocalName + ", " + SessionLocator.LoggedUserPM.Email + ", " + this.DenyReason + ", " + this.AdditionalData.VersionApproved;
