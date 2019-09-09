@@ -12,31 +12,31 @@
             <div class="MediaFill">
                 <div class="MarginAbsolute5">
                     <div class="TabControl">
-                        <div class="TabControlHead">
+                        <div class="TabControlHead" style="white-space: nowrap;float:none;overflow-x:auto;min-height:48px">
                             <ul>
-                                <li *ngIf="pager.pages && pager.pages.length" [ngClass]="{disabled:LeftArrowDimmed}" (click)="setPage(pager.currentPage - 1,false)">
+                                <li *ngIf="pager.pages && pager.pages.length" [ngClass]="{disabled:LeftArrowDimmed}" (click)="setPage(pager.currentPage - 1,false)" style="float:none;overflow-x:visible">
                                     <div class="InnerChild">
-                                        <span style="color:green;">Previouse</span>
+                                        <span style="color:green;display: inline-block;">Previouse</span>
                                     </div>
                                 </li>
 
-                                <li *ngFor="let item of Tabs" [class.Selected]="item.IsSelected" (click)="SelectionChanged(item)">
+                                <li *ngFor="let item of Tabs" [class.Selected]="item.IsSelected" (click)="SelectionChanged(item)"  style="float:none;overflow-x:visible">
                                     <div class="InnerChild">
-                                        <span *ngIf="(item.Code == 'VR' || item.Code == 'SVR') && item.IsDraft" style="color:orange;">[Draft]</span>
+                                        <span *ngIf="(item.Code == 'VR' || item.Code == 'SVR') && item.IsDraft" style="color:orange;display: inline-block;">[Draft]</span>
                                         {{item.Header}}
                                     </div>
                                 </li>
 
-                                <li *ngIf="pager.pages && pager.pages.length" [ngClass]="{disabled:RightArrowDimmed}" (click)="setPage(pager.currentPage + 1,true)">
+                                <li *ngIf="pager.pages && pager.pages.length" [ngClass]="{disabled:RightArrowDimmed}" (click)="setPage(pager.currentPage + 1,true)"  style="float:none;overflow-x:visible">
                                     <div class="InnerChild">
-                                        <span style="color:green;">Next</span>
+                                        <span style="color:green;display: inline-block;">Next</span>
                                     </div>
                                 </li>
                             </ul>
                         </div>
 
-                        <div class="TabControlBody">
-                            <div class="MediaFillAbsolute" *ngFor="let item of Tabs;" [hidden]="!item.IsSelected">
+                        <div class="TabControlBody" style="top:66px">
+                            <div class="MediaFillAbsolute" *ngFor="let item of Tabs;" [hidden]="!item.IsSelected" >
                                 <div LocationDirective Code="TariffTabLocation" Index="{{item.Index}}"></div>
                             </div>
                         </div>
