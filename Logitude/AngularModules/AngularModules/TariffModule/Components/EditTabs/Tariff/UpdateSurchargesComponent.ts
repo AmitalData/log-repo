@@ -70,7 +70,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
 
     private FillLogs() {
         var service: TariffDomainService = new TariffDomainService();
-        service.GetTariffsLogsByTariffId(this.EntityPM.TariffId).subscribe((myResponse: ServiceResponse) => {
+        service.GetTariffsLogsByTariffId(this.EntityPM.TariffId, this.EntityPM.Version).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.Logs = myResponse.Result;
             }
@@ -356,6 +356,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             myService.PostUpdateSurcharge(args).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     this.isUpdateDone = true;
+                    this.FillLogs();
                 }
 
                 else {
