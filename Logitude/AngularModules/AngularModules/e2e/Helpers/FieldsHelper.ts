@@ -146,6 +146,7 @@ export class FieldsHelper {
                     this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
                 } else {
                     this.WaitDropDownToBeClosed(className);
+                    this.WaitBusyIndicator();
                     // if(EC.visibilityOf(element(by.css(className)))){
                     //     this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
                     // }

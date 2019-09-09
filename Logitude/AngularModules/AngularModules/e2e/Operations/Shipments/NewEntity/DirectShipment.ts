@@ -36,7 +36,7 @@ export class DirectShipment {
       this.Helper.WaitByIdAndFill('Shipment_ShipperReference1', ShipperRef);// test random number randomWholeNum
 
       this.Helper.WaitByIdAndFill('Shipment_ConsigneeId', 'TestShipper');
-      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_ConsigneeId', 'TestShipper');
     } else {
       this.Helper.WaitByIdAndFill('Shipment_ShipperId', 'TestShipper');
       this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_ShipperId','TestShipper');
