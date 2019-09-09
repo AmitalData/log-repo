@@ -2769,6 +2769,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                             myResult.Add(routItem);
                             areasToPorts.Add(to[2]);
+                            surchargeLogItem.Count += 1;
                         }
 
                         else if (to[0] == "Area")
@@ -2776,6 +2777,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
                             if (areasPorts != null && areasPorts.Count > 0)
                             {
+                                AirlineAreasPort tempAreaPort = null;
                                 foreach (AirlineAreasPort port in areasPorts)
                                 {
                                     FromToClass routItem = new FromToClass()
@@ -2785,16 +2787,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     };
 
                                     myResult.Add(routItem);
-                                    if(port.Port != null)
-                                    {
-                                        areasToPorts.Add(port.Port.Code);
-                                    }
+                                    tempAreaPort = port;
+
                                 }
+                                if (tempAreaPort != null)
+                                {
+                                    areasToPorts.Add(tempAreaPort.Name);
+                                }
+                                surchargeLogItem.Count += areasPorts.Count();
                             }
                         }
                     }
                     surchargeLogItem.ToPorts = areasToPorts;
-                    surchargeLogItem.Count = areasToPorts != null ? areasToPorts.Count() : 0;
                     SurchargeLog.Add(surchargeLogItem);
                 }
 
@@ -2822,34 +2826,36 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                     myResult.Add(routItem);
                                     areasToPorts.Add(to[2]);
+                                    surchargeLogItem.Count += 1;
                                 }
 
                                 else if (to[0] == "Area")
                                 {
                                     List<AirlineAreasPort> toAreasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
+                                    AirlineAreasPort tempAreaPort = null;
                                     if (toAreasPorts != null && toAreasPorts.Count > 0)
                                     {
-                                        foreach (AirlineAreasPort toTort in toAreasPorts)
+                                        foreach (AirlineAreasPort toPort in toAreasPorts)
                                         {
                                             FromToClass routItem = new FromToClass()
                                             {
                                                 FromCode = port.PortId,
-                                                ToCode = toTort.PortId,
+                                                ToCode = toPort.PortId,
                                             };
 
                                             myResult.Add(routItem);
-                                            if (port.Port != null)
-                                            {
-                                                areasToPorts.Add(port.Port.Code);
-                                            }
+                                            tempAreaPort = toPort;
                                         }
-                                    
+                                        if (tempAreaPort != null)
+                                        {
+                                            areasToPorts.Add(tempAreaPort.Name);
+                                        }
+                                        surchargeLogItem.Count += areasPorts.Count();
                                     }
                                 }
                             }
 
                             surchargeLogItem.ToPorts = areasToPorts;
-                            surchargeLogItem.Count = areasToPorts != null ? areasToPorts.Count() : 0;
                             areasToPorts = new List<string>();
                             SurchargeLog.Add(surchargeLogItem);
                         }
