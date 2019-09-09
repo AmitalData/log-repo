@@ -52,10 +52,12 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     public DisplaySATPaymentMethod: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
+    IsAccountingActivated:boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
+         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.InitializeServices();
