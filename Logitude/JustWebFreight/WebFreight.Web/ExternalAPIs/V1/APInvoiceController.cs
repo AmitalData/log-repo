@@ -231,5 +231,58 @@ namespace WebFreight.Web.ExternalAPIs.V1
             return rate;
         }
 
+        public HttpResponseMessage GetCancel(string externalId)
+        {
+          
+                try
+                {
+
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        int tenant = authToken.Tenant;
+
+                        SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                        APInvoiceQueryService Service = new APInvoiceQueryService(tenant);
+                        APInvoice apinvoice = Service.GetSingleInvoiceByExternalEntityId(externalId, tenant);
+                        APInvoicePM apinvoicePM = null;
+                        IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+                        APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
+                        if (apinvoice != null)
+                        {
+                        apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
+                        apinvoicePM = SetAPInvoicePMVoided(apinvoicePM);
+                        
+                        }
+                       
+                        APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
+                        apinvoiceService.Update(apinvoicePM, true);                    
+                        scope.Complete();
+
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "apinvoice has been voided");
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                }
+            
+            
+        }
+        private APInvoicePM SetAPInvoicePMVoided(APInvoicePM apinvoicePM)
+        {
+          
+            apinvoicePM.SetVoided = true;
+            apinvoicePM.SetApproved = false;
+            apinvoicePM.SetReTransfer = false;
+            apinvoicePM.SetCancelApproval = false;
+            apinvoicePM.SetReSendQBO = false;
+            return apinvoicePM;
+        }
     }
 }
