@@ -88,6 +88,7 @@ implements OnDestroy
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
     _SelectedACCValue: string = 'A'; // Wrong/WrongSpecial
+    _SelectedPAYValue: string = 'C'; // Correct/InProgress/ReadyToSend
     //_SelectedHOLDValue: string = 'A'; //All/Pending Codes List
 
     public columns: any[] = null;
@@ -151,6 +152,7 @@ implements OnDestroy
         this._SelectedDECValue = 'A';
         this._SelectedDOCValue = 'A';
         this._SelectedACCValue = 'A';
+        this._SelectedPAYValue = 'C';
         if (this.SelectedPendingCodeFilter == null && this._PendingCodes != null && this._PendingCodes.length > 0) this.SelectedPendingCodeFilter = this._PendingCodes[0];
 
         switch (item.Code) {
@@ -521,6 +523,9 @@ implements OnDestroy
     _HOLD_Total = 0;
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
+    _PAY_C_Total = 0;
+    _PAY_R_Total = 0;
+    _PAY_I_Total = 0;
     _PendingCodes: KeyValuePair[] = [];
 
     private _SelectedDECToBatchSendButtonText: string = "";
@@ -648,6 +653,21 @@ implements OnDestroy
                             this._ACC_WS_Total = item.Value;
                             break;
                         }
+                        case "PAY_C": {
+                            //statements; 
+                            this._PAY_C_Total = item.Value;
+                            break;
+                        }
+                        case "PAY_R": {
+                            //statements; 
+                            this._PAY_R_Total = item.Value;
+                            break;
+                        }
+                        case "PAY_I": {
+                            //statements; 
+                            this._PAY_I_Total = item.Value;
+                            break;
+                        }
                         case "HOLD": {
                             //statements; 
                             this._HOLD_Total = item.Value;
@@ -705,7 +725,7 @@ implements OnDestroy
             FieldName: 'ProcedureCurrentName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ProcedureCurrentName"),
-            Styles: { width: '150px' },
+            Styles: { width: '130px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -1043,6 +1063,24 @@ implements OnDestroy
             case "WS": {
                 filters.addAdditionalFilter("SpecialActionStatus", "X", null, null, "Equals", false, false, false, "string");
                 break;
+            }
+        }
+
+        switch (this._SelectedPAYValue) {
+            case "C": {
+                filters.addAdditionalFilter("CourierPaymentStatusCode", "R,O", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "R": {
+                filters.addAdditionalFilter("CourierPaymentStatusCode", "R", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "I": {
+                filters.addAdditionalFilter("CourierPaymentStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
             }
         }
         if (this.SelectedPendingCodeFilter != null) {

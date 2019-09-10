@@ -314,9 +314,9 @@
                                                 <td>
                                                     <table>
                                                         <tr>
-                                                            <td style="width:450px">
+                                                            <td>
                                                                 <!--All-->
-                                                                <table *ngIf="_SelectedTabFilter.Code=='ALL' ">
+                                                                <table *ngIf="_SelectedTabFilter.Code=='ALL' " style="width:430px;">
                                                                     <tr>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
@@ -503,6 +503,22 @@
                                                                         <td style="width:5px"></td>
                                                                         <td style="width:100px"></td>
                                                                         <td></td>
+                                                                        <td style="width: 250px;">
+                                                                            <ul class="FiltersMenu" style="float:left; padding-left: 5px;">
+                                                                                <li (click)="PAYFilterClicked('I')" style="width:80px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'I'">
+                                                                                    {{'Customs.CourierMaster.O.InProgress' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_I_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="PAYFilterClicked('R')" style="width:80px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'R'">
+                                                                                    {{'Customs.CourierMaster.O.ReadyToSend' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_R_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="PAYFilterClicked('C')" style="width:70px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'C'">
+                                                                                    {{'Customs.CourierMaster.O.Correct' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_C_Total + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
                                                                 <!--ACC-->
@@ -541,7 +557,7 @@
                                                                 </table>
                                                             </td>
 
-                                                            <td></td>
+                                                            <td style="width:5px; float:left;"></td>
                                                             <td style="width:150px;">
                                                                 <SearchTextBox [ObjectTableName]="'Customs.CourierMaster'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [SearchText]="SearchFilter" [PlaceHolder]="'תיק/הצהרה/ש.מ.ב/לקוח'"></SearchTextBox>
                                                             </td>
