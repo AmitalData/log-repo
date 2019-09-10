@@ -15,11 +15,12 @@ export class ShipmentsTabComponent {
     public ShipmentsTab() {
         this.Helper.WaitByIdAndClick('Shipment.TH.Consolidation');
         this.Helper.WaitBusyIndicator();
+        this.Helper.WaitEditComponentBusyIndicator();
 
         this.Helper.WaitByIdAndClick('NewHouseBtn')
         this.Helper.WaitBusyIndicator();
 
-      //  this.CreateHouseShipment.FillHouseShipmentFields('CreatedFromMaster','');
+        this.CreateHouseShipment.FillHouseShipmentFields('CreatedFromMaster','','');
         this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
         this.Helper.WaitWindowClosed();
         this.Helper.WaitBusyIndicator();
