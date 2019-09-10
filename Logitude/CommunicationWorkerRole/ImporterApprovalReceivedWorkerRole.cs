@@ -237,8 +237,8 @@ namespace CommunicationWorkerRole
                                                 ShipmentNumber = ForwarderShipment.ForwarderShipmentNumber,
                                                 Tenant = (int)Partner.PartnerTenant,
                                                 Code = "VDK",
-                                                Date = TenantServerConfigration.GetCurrentDateTime(tenant).ToShortDateString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
-                                                Time = TenantServerConfigration.GetCurrentDateTime(tenant).ToShortTimeString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
+                                                Date = DateTime.Now.ToShortDateString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
+                                                Time = DateTime.Now.ToShortTimeString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
                                                 Remarks = "Approval Task Received",
                                                 Direction = ForwarderShipment.DirectionId
                                             };
