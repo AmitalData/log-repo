@@ -45,7 +45,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
     WarehouseReleasePackagesLists: WarehouseReleasePackagePM[] = [];
     warehouseReleasePM: WarehouseReleasePM;
     ObjectTableName: string = "WarehouseRelease";
-
+    VolumetricWeightLabel: string;
     VolumeLabel: string;
     GrossWeightLabel: string;
     DimensionsLabel: string;
@@ -121,12 +121,15 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.DimensionsColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Dimensions").replace("%UnitCode", this.warehouseReleasePM.DimensionsUnitCode);
         this.VolumetricWeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.VolWeight").replace("%UnitCode", this.warehouseReleasePM.ChargeableWeightUnitCode);
         this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.PackageTypeId");
+        this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
     }
 
-
+    IsEditMode: boolean = false;
     Start(args) {
         this.warehouseReleasePM = args.WarehouseEntryPM;
         this.ViewModelTrigger = args.ViewModelTrigger;
+        this.IsEditMode = args.IsEditMode;
+        
         this.ShipmentPM = args.ShipmentPM;
         
         if (this.warehouseReleasePM) {
