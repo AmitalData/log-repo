@@ -45,8 +45,12 @@ namespace Logitude.Accounting.BL.Utils
             {
                 IAccountingContext context = AccountingContext.GetContext(tenant);
                 JournalLineQueryService journalLineQueryService = new JournalLineQueryService(context);
+                //  IQueryable<JournalLineLedgerTransactionDTO> journalLine_LT_DTOs = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
+                IEnumerable<JournalLineLedgerTransactionDTO> journalLine_LT_DTOs = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
+                List<JournalLineLedgerTransactionDTO> journalLine_LT_DTOsList = journalLine_LT_DTOs.ToList().OrderBy(rec => rec.JournalLine.ExternalReconcileNumber).ToList();
+                var journalLineGroups = journalLine_LT_DTOsList.GroupBy(rec => rec.JournalLine.ExternalReconcileNumber);
 
-                IQueryable<IGrouping<String, JournalLineLedgerTransactionDTO>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
+                //IQueryable<IGrouping<String, JournalLineLedgerTransactionDTO>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
                 LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(context);
                 List<ReconciableGroup> reconciableGroupList = new List<ReconciableGroup>();
                 List<string> badList = new List<string>();
