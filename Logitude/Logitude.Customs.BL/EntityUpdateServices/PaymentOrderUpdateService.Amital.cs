@@ -84,6 +84,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     UpdateUnifreightPaymentOrderBLD(dirtyEntityPM, connectedDeclarationPM, loggingUserId);
                 }
+                LogMessagingUtil.Instance.AppendLine("eventContextTagModel.UnifreighTaskCode = " + eventContextTagModel.UnifreighTaskCode ?? "NULL");
+                if (eventContextTagModel.UnifreighTaskCode == "LE2U")
+                {
+                    SendPPT(connectedDeclarationPM.Tenant,connectedDeclarationPM.CustomFileNo, loggingUserId);
+                }
             }
 
             toLoadDeclarationPM = (toSendStatusPOP);           
@@ -649,5 +654,36 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
         // moran 4.6.15 - Task 12424 <--
+
+        private static void SendPPT(int Tenant, string CustomFileNo, string loggedContactId)
+        {
+            if (string.IsNullOrWhiteSpace(loggedContactId))
+            {
+                ContactRepository contactRepository = new ContactRepository(Tenant);
+                var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
+                if (loggedContact != null)
+                {
+                    loggedContactId = loggedContact.Id;
+                }
+            }
+            string unifrieghtEvent = "PPT";
+            string eventRemarks = "";
+            var MyUnifreightEventParam = new UnifreightEventParam()
+            {
+                Code = unifrieghtEvent,
+                Mode = UnifreightEventMode.@new,
+                EventDateTime = DateTime.Now,
+                Entname = "CFIFILEM",
+                PrimaryNum = CustomFileNo,
+                EventRemarks = eventRemarks,
+            };
+            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+            var myOpenUnifreighTask = new UnifreightEventTaskService();
+            myOpenUnifreighTask.UpsertEventLE2U(
+                Tenant,
+                loggedContactId,
+                MyUnifreightEventParam);
+        }
+
     }
 }
