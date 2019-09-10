@@ -87,6 +87,7 @@ implements OnDestroy
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
     _SelectedACCValue: string = 'A'; // Wrong/WrongSpecial
+    _SelectedPAYValue: string = 'C'; // Correct/InProgress/ReadyToSend
 
     public columns: any[] = null;
 
@@ -149,6 +150,7 @@ implements OnDestroy
         this._SelectedDECValue = 'A';
         this._SelectedDOCValue = 'A';
         this._SelectedACCValue = 'A';
+        this._SelectedPAYValue = 'C';
 
         switch (item.Code) {
             case "DECR": 
@@ -516,6 +518,9 @@ implements OnDestroy
     _ACC_WS_Total = 0;
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
+    _PAY_C_Total = 0;
+    _PAY_R_Total = 0;
+    _PAY_I_Total = 0;
 
     private _SelectedDECToBatchSendButtonText: string = "";
     public get SelectedDECToBatchSendButtonText(): string {
@@ -633,6 +638,21 @@ implements OnDestroy
                             this._ACC_WS_Total = item.Value;
                             break;
                         }
+                        case "PAY_C": {
+                            //statements; 
+                            this._PAY_C_Total = item.Value;
+                            break;
+                        }
+                        case "PAY_R": {
+                            //statements; 
+                            this._PAY_R_Total = item.Value;
+                            break;
+                        }
+                        case "PAY_I": {
+                            //statements; 
+                            this._PAY_I_Total = item.Value;
+                            break;
+                        }
                         default: {
                             //statements; 
                             var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
@@ -680,7 +700,7 @@ implements OnDestroy
             FieldName: 'ProcedureCurrentName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ProcedureCurrentName"),
-            Styles: { width: '150px' },
+            Styles: { width: '130px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -1021,6 +1041,21 @@ implements OnDestroy
             }
         }
 
+        switch (this._SelectedPAYValue) {
+            case "C": {
+                filters.addAdditionalFilter("CourierPaymentStatusCode", "R,O", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "R": {
+                filters.addAdditionalFilter("CourierPaymentStatusCode", "R", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "I": {
+                filters.addAdditionalFilter("CourierPaymentStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
         }
@@ -1087,6 +1122,14 @@ implements OnDestroy
 
         if (this._SelectedACCValue != value) {
             this._SelectedACCValue = value;
+            this.RefreshList();
+        }
+    }
+
+    PAYFilterClicked(value: string) {
+
+        if (this._SelectedPAYValue != value) {
+            this._SelectedPAYValue = value;
             this.RefreshList();
         }
     }

@@ -139,6 +139,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int ACC_WS = 0;
             int MNFR_RV = 0;
             int DECR_RV = 0;
+            int PAY_C = 0;
+            int PAY_R = 0;
+            int PAY_I = 0;
 
             var totQ =
             (from dStatus in q
