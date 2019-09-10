@@ -1,5 +1,6 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
 const HtmlReporter = require('protractor-beautiful-reporter');
+const { JUnitXmlReporter } = require('jasmine-reporters');
 
 exports.config = {
     allScriptsTimeout: 990000,
@@ -56,6 +57,10 @@ exports.config = {
     onPrepare() {
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
+        });
+        const junitReporter = new JUnitXmlReporter({
+            savePath: 'C:/Program Files (x86)/Jenkins/workspace/E2ETestResults',
+            consolidateAll: false
         });
         if (browser.params.Env == "prod") {
             browser.params.Link = "https://system.logitudeworld.com";
