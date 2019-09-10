@@ -38,7 +38,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public List<AirlineAreasPort> GetAirlineAreasPortByAreaId(string areaId, int tenant)
         {
-            return (from record in context.AirlineAreasPorts where record.AirlineAreaId == areaId && record.Tenant == tenant select record).ToList();
+            return (from record in context.AirlineAreasPorts.Include("Port") where record.AirlineAreaId == areaId && record.Tenant == tenant select record).ToList();
         }
 
 

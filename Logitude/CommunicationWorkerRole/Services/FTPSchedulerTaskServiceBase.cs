@@ -17,7 +17,7 @@ namespace CommunicationWorkerRole.Services
         public int DownloadedFilesCount = 0;
         public int FailedFilesCount = 0;
         ConcurrentQueueService<LogQueueMessage> QueueService;
-        public bool EnableWriteLogToFile { get; set; }
+        
         public FTPSchedulerTaskServiceBase()
         {
             this.WarningsList = new List<string>();
@@ -34,7 +34,7 @@ namespace CommunicationWorkerRole.Services
 
         private void AddLogMessageToFile(string message)
         {
-            if(this.currentTask != null && EnableWriteLogToFile)
+            if(this.currentTask != null && this.currentTask.EnableWriteLogToFile)
             {
                 currentTask.AppendLogMessageToFile(message);
             }

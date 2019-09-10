@@ -21,5 +21,14 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 entityPM.Id = IdCounter.GetNumber("TariffLine", entityPM.Tenant);                
             }
         }
+
+        protected override void OnUpdating(TariffLinePM entityPM, TariffLine entityPOCO)
+        {
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
+            {
+
+
+            }
+        }
     }
 }

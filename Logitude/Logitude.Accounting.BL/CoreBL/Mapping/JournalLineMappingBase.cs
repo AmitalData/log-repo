@@ -266,7 +266,10 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 //    MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
                 //}
                 MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
-
+                if (_JournalLine.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit)
+                {
+                    MyLedgerTransaction.OpenAmount = -1 * _JournalLine.ExternalOpenAmount.GetValueOrDefault();
+                }
             }
             MyLedgerTransaction.IsExternalReconcile = _JournalLine.IsExternalReconcile;
         }
