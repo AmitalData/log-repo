@@ -126,7 +126,6 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
     }
 
-    IsEditMode: boolean = false;
     Start(args) {
         this.warehouseReleasePM = args.WarehouseEntryPM;
         this.ViewModelTrigger = args.ViewModelTrigger;
