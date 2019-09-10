@@ -17,7 +17,7 @@ export class PartnerTabComponent {
     this.AddPartner('NOTFY', 'Quote_NotifyId', 'TestAgent');
     this.Helper.WaitBusyIndicator();
 
-    this.DeletePartner('Delete_2');
+    //this.DeletePartner('Delete_2');
   }
 
   AddPartner(partnerType: string, partnerID: string, PartnerText: string) {
