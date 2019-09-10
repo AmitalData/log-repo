@@ -387,13 +387,16 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public ShowBusyIndicator: boolean = false;
     WidthBusyIndicator: number;
     public StartBusyIndicator(message: string = "Generating...", width: number = 200) {
-        this.BusyIndicatorText = message;
-        this.ShowBusyIndicator = true;
-        this.WidthBusyIndicator = width;
+       // this.BusyIndicatorText = message;
+        //this.ShowBusyIndicator = true;
+        // this.WidthBusyIndicator = width;
+        this.CurrentSession.StartBusyIndicator(message);
+
     }
     public StopBusyIndicator() {
-        this.BusyIndicatorText = null;
-        this.ShowBusyIndicator = false;
+       // this.BusyIndicatorText = null;
+        //this.ShowBusyIndicator = false;
+        this.CurrentSession.StopBusyIndicator();
     }
 
     //#region ag-grid Events 

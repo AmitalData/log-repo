@@ -789,9 +789,10 @@ export class DWQueryBuilderComponent extends BaseComponent {
             this.StartBusyIndicator("Loading ..");
             this.IsPreview = !StopPreview;
             this._DWQueryBuilderService.GetNewDWQueryData(this.DWQueryData).subscribe(myResult => {
+                this.StopBusyIndicator();
                 if (!myResult.HasError) {
                     //this.SampleData = myResult.Result.SQLDataResult;
-                    this.StopBusyIndicator();
+
                     if (StopPreview == true) {
                         this.SampleData = [];
                         var MySql = myResult.Result.SQLString.split("ORDER BY")[0];
@@ -800,6 +801,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     }
                     else {
                         this.PreviewData(StopPreview, myResult.Result.SQLDataResult);
+                    }
+
+                } else {
+                    if (myResult.ErrorsArray && myResult.ErrorsArray.length > 0) {
+                        var messageWindow: MessageWindow = new MessageWindow();
+                        messageWindow.Show(myResult.ErrorsArray[0]);
                     }
 
                 }
