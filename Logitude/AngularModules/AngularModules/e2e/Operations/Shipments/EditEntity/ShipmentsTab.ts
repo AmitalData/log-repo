@@ -24,5 +24,7 @@ export class ShipmentsTabComponent {
         this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
         this.Helper.WaitWindowClosed();
         this.Helper.WaitBusyIndicator();
+        this.Helper.WaitEditComponentBusyIndicator();
+
     }
 }  
