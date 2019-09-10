@@ -280,6 +280,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 UserEnglishName = this.entityPm.EnglishName,
                 UserPMIsDistributor = this.entityPm.IsDistributor,
                 UserPMLicencedUser = this.entityPm.LicencedUser,
+                UserPMAdditionalPackagesOnly = this.entityPm.AdditionalPackagesOnly,
             };
 
             if (this.isNewEntity)
@@ -293,6 +294,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 numberOfUsersArgs.UserPOCOLicencedUser = this.Poco.LicencedUser;
                 numberOfUsersArgs.UserPOCOInactive = this.Poco.Contact.InActive;
                 numberOfUsersArgs.UserPMInactive = this.entityPm.InActive;
+                numberOfUsersArgs.UserPOCOAdditionalPackagesOnly = this.Poco.AdditionalPackagesOnly;
                 numberOfUsersArgs.IsNewUser = false;                
 
                 this.numberOfUsersService.CheckNumberOfUsersOnUpdateUser(numberOfUsersArgs);

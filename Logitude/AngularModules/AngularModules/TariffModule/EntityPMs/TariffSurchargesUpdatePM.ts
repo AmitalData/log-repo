@@ -79,6 +79,16 @@ export class TariffSurchargesUpdatePM {
     public set Surcharges(newValue: string) { if (this.surcharges != newValue) { this.surcharges = newValue; this.MarkAsDirty("Surcharges"); } }
        
 	 
+    private updateMethodCode: string;
+    public get UpdateMethodCode() { return this.updateMethodCode; }
+    public set UpdateMethodCode(newValue: string) { if (this.updateMethodCode != newValue) { this.updateMethodCode = newValue; this.MarkAsDirty("UpdateMethodCode"); } }
+       
+	 
+    private updateMethodName: string;
+    public get UpdateMethodName() { return this.updateMethodName; }
+    public set UpdateMethodName(newValue: string) { if (this.updateMethodName != newValue) { this.updateMethodName = newValue; this.MarkAsDirty("UpdateMethodName"); } }
+       
+	 
 
     public OldEntityPM: TariffSurchargesUpdatePM;
 		

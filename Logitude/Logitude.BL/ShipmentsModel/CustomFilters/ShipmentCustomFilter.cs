@@ -259,6 +259,19 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                         select d;
                     }
 
+                    if (item.FieldName == "EBookingInProgress")
+                    {
+                        queryableData = from d in queryableData
+                                        where 
+                                        ( d.ShipmentLevelCode == "H" || d.ShipmentLevelCode == "D")
+                                        && d.DirectionId == "E"
+                                        && d.TransportModeId == "O"
+                                        && d.INTTRABookingTransStatusCode != "NST"
+                                        && d.MainCarriageATD == null
+                                        select d;
+                    }
+
+
                     if (item.FieldName == "SentFSR")
                     {
                         DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;

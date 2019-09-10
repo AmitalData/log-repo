@@ -112,6 +112,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public IsSalesmanVisible: boolean = false;
     public IsLicencedUserVisible: boolean = false;
     public IsShowContactInMobileVisiable: boolean = false;
+    public IsAdditionalPackagesOnlyVisible: boolean = false;
     SetUIProperties() {
         if (FeatureLocator.HasFeaturePermession("User", "PERSONALID")) {
             this.IsPersonalIdVisible = true;
@@ -132,7 +133,11 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         if (FeatureLocator.HasFeaturePermession("General", "MOBILE")) {
             this.IsShowContactInMobileVisiable = true;
         }
-        
+
+        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+            this.IsAdditionalPackagesOnlyVisible = true;
+        }
+
         var isEditingEnabled = true;
         if (SessionLocator.Tenant == 65) {
             if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
@@ -243,7 +248,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
             var isDirty: boolean = this.EntityPM.IsDirty;
             this.EntityPM.InActive = value;
 
-            if (SessionLocator.TenantManagementJS.IsMultiPackage) {
+            if (SessionLocator.TenantManagementJS.IsMultiPackage || SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
                 var service: UserExtendedListService = new UserExtendedListService();
                 service.GetUserLicensesCountForUser(this.EntityPM.Id).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
@@ -309,6 +314,13 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public set ShowLocalNameInLOV (value: boolean) {
         if (this.EntityPM.ShowLocalNameInLOV  != value) {
             this.EntityPM.ShowLocalNameInLOV  = value;
+        }
+    }
+
+    public get AdditionalPackagesOnly() { return this.EntityPM.AdditionalPackagesOnly; }
+    public set AdditionalPackagesOnly(value: boolean) {
+        if (this.EntityPM.AdditionalPackagesOnly != value) {
+            this.EntityPM.AdditionalPackagesOnly = value;
         }
     }
 }

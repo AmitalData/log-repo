@@ -44,6 +44,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.Version).HasColumnName("Version");
 
             this.Property(t => t.Surcharges).HasColumnName("Surcharges").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.UpdateMethodCode).HasColumnName("UpdateMethodCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
             List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();
             IQueryable<TariffLine> iQueryable = this.repository.GetAllTariffLines(tenant);
-            iQueryable = iQueryable.Where(p => p.OriginPortId == fromport && p.DestinationPortId == toport && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate);
+            iQueryable = iQueryable.Where(p => p.OriginPortId == fromport && p.DestinationPortId == toport && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate):true));
             List<string> tariffids = iQueryable.Select(p => p.TariffId).Distinct().ToList();//.ToDictionary(p=>p.Key,p=>p);
             TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
             List<TariffSetting> setting = tariffSettingRepository.GetAll(tenant).ToList();
@@ -449,8 +449,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                             {
                                                 decimal? valueofSurcharge = (decimal?)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "Price").GetValue(ChargesfilteredLines);
                                                 decimal? valueofSurchargeMin = (decimal?)ChargesfilteredLines.GetType().GetProperty("Surcharge" + i + "MinPrice").GetValue(ChargesfilteredLines);
-                                                if (valueofSurcharge < valueofSurchargeMin)
-                                                    valueofSurcharge = valueofSurchargeMin;
+                                                
 
                                                 ChargesType CurrentCharge = chargesTypes.Where(p => p.Id == chargeId).FirstOrDefault();
 
@@ -501,8 +500,21 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     {
                                                         CurrentSurchargePriceCalculation = (valueofSurcharge * myQuantity);
                                                     }
+
+
+
                                                     string CurrencyId = ChargesfilteredLines.CurrencyId != null ? ChargesfilteredLines.CurrencyId : CurrentSurcharge.CurrencyId;
-                                                    SurchargeItem.Price = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrencyId, tenant);
+                                                    var LinePrice = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrencyId, tenant);
+
+                                                    if (valueofSurchargeMin != null)
+                                                    {
+                                                        decimal minimumPrice = (decimal)valueofSurchargeMin;
+                                                        var minPrice = CalculateLocalAmount(minimumPrice, currencyId, CurrencyId, tenant);
+                                                        if (minPrice > LinePrice)
+                                                            LinePrice = minPrice;
+                                                    }
+
+                                                    SurchargeItem.Price = LinePrice;
                                                     SurchargeItem.ActualPrice = CurrentSurchargePriceCalculation.Value;
                                                     Sum += SurchargeItem.Price;
                                                     SurchargeItem.TariffId =  CurrentSurcharge.Id;

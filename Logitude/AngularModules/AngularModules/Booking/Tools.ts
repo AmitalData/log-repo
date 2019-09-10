@@ -299,8 +299,7 @@ export class BookingTool {
             newItem.Tare = item.Tare;
             newItem.VolumetricWeight = item.VolumetricWeight;
             newItem.UnNumber = item.UnNumber;
-            newItem.ClassNumber = item.ClassNumber;
-            newItem.Temperature = "" + item.Temperature;
+            newItem.ClassNumber = item.ClassNumber;            
             newItem.Ventilation = item.Ventilation;
             newItem.SOC = item.SOC;
             newItem.MarksAndNumbers = item.MarksAndNumbers;
@@ -315,6 +314,10 @@ export class BookingTool {
             //    PackageTypeList list = PackageTypeDataProvider.GetCachedList<PackageTypeList>().Where(r => r.Id == item.PackageTypeId).FirstOrDefault();
             //if (list != null) {
             //    newPackagePM.PackageTypeName = list.EnglishName;
+
+            if (item.Temperature) {
+                newItem.Temperature = "" + item.Temperature;
+            }
 
             shipmentPM.ShipmentPackages.push(newItem);
         });

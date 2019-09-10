@@ -44,6 +44,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public int Version { get; set; }
         [Column("Surcharges")]
 	    public string Surcharges { get; set; }
+        [ForeignKey("UpdateMethod")]
+        [Column("UpdateMethodCode")]
+	    public string UpdateMethodCode { get; set; }
+	      
+        public virtual TariffSurchargesUpdateMethod UpdateMethod { get; set; }
     }
 }
 	 

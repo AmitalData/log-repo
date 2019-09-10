@@ -442,42 +442,65 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width: 30px; max-width:30px; min-width:30px;">#</td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Create Date</td>
-                                                                        <td style="width: 80px; max-width:80px; min-width:80px;">From</td>
-                                                                        <td style="width: 80px; max-width:80px; min-width:80px;">To</td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Start Date</td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Surcharges</td>
-                                                                        <td style="width: 40px; max-width:40px; min-width:40px;">Lines Updated</td>
-                                                                        <td><div></div></td>
+                                                                        <td style="width: 120px; max-width:120px; min-width:120px;">Create Date</td>
+                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">From</td>
+                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">To</td>
+                                                                        <td style="width: 120px; max-width:120px; min-width:120px;">Start Date</td>
+                                                                        <td style="width: 120px; max-width:120px; min-width:120px;">Surcharges</td>
+                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">
+                                                                            Change Type
+                                                                        </td>
+                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Lines Updated</td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
                                                             </div>
 
                                                             <div class="SimpleGridViewBody">
                                                                 <table>
-                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of Logs">
-                                                                        <td class="CellStretched" style="width: 30px; max-width:30px; min-width:30px;">
-                                                                            {{item.ChequeNumber }}
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of Logs;let i = index">
+                                                                        <td class="GridViewCell" style="width: 30px; max-width:30px; min-width:30px;">
+                                                                            {{i+1}}
                                                                         </td>
-                                                                        <td class="CellStretched" style="width: 100px; max-width:100px; min-width:100px;">
-                                                                            {{item.CreateDate}}
+                                                                        <td class="GridViewCell" style="width: 120px; max-width:120px; min-width:120px;">
+                                                                            {{item.CreateDate| DateTimeToDatePipe}}
                                                                         </td>
-                                                                        <td class="CellStretched" style="width: 80px; max-width:80px; min-width:80px;">
-                                                                            {{item.From}}
+                                                                        <td class="GridViewCell" style="width: 100px; max-width:100px; min-width:100px;">
+                                                                            <div class="TextTrimming" style="width: 120px;">
+                                                                                {{item.From}}
+                                                                            </div>
+
                                                                         </td>
-                                                                        <td class="CellStretched" style="width: 80px; max-width:80px; min-width:80px;">
-                                                                            {{item.To}}
+                                                                        <td class="GridViewCell" style="width: 100px; max-width:100px; min-width:100px;">
+                                                                            <div class="TextTrimming" style="width: 120px;">
+                                                                                {{item.To}}
+                                                                            </div>
                                                                         </td>
-                                                                        <td class="CellStretched" style="width: 100px; max-width:100px; min-width:100px;">
-                                                                            {{item.StartDate}}
+                                                                        <td class="GridViewCell" style="width: 120px; max-width:120px; min-width:120px;">
+                                                                            {{item.StartDate| DateTimeToDatePipe}}
                                                                         </td>
-                                                                        <td class="CellStretched" style="width: 100px; max-width:100px; min-width:100px;">
-                                                                            {{item.Surcharges}}
+                                                                        <td class="GridViewCell" style="width: 120px; max-width:120px; min-width:120px;">
+                                                                            <div class="TextTrimming" style="width: 120px;">
+                                                                                {{item.Surcharges}}
+                                                                            </div>
                                                                         </td>
-                                                                        <td class="CellStretched" style="width: 40px; max-width:40px; min-width:40px;">
-                                                                            {{item.LinesUpdated}}
+
+                                                                        <td class="GridViewCell" style="width: 100px; max-width:100px; min-width:100px;">
+                                                                            <div class="TextTrimming" style="width: 120px;">
+                                                                                {{item.UpdateMethodName}}
+                                                                            </div>
                                                                         </td>
-                                                                        <td><div></div></td>
+                                
+                                                                        <td class="GridViewCell" style="width: 100px; max-width:100px; min-width:100px;">
+                                                                            <div  class="TextTrimming" style="width: 120px;text-align:center;">
+                                                                                {{item.LinesUpdated}}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td colspan="8">

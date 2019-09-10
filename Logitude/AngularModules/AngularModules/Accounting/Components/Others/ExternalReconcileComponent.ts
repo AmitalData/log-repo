@@ -536,7 +536,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         }
         this.accountTransactionsTotal = total;
-        var def = (this.bankTransactionsTotal - this.accountTransactionsTotal)
+        var def = (this.bankTransactionsTotal + this.accountTransactionsTotal)
         this.totalDifference = def < 0 ? def * -1 : def;
     }
 
@@ -748,7 +748,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         }
         this.bankTransactionsTotal = total;
-        var def = (this.bankTransactionsTotal - this.accountTransactionsTotal)
+        var def = (this.bankTransactionsTotal + this.accountTransactionsTotal)
         this.totalDifference = def < 0 ? def * -1 : def;
     }
     //#endregion

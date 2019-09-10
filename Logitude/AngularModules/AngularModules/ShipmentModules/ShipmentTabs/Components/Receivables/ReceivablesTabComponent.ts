@@ -761,7 +761,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
             case "QTLS": {
                 // FromQuoteList
                 var logWindow = new LogitudeWindow();
-                logWindow.Width = 950;
+                logWindow.IsFillScreen_115 = true;
                 logWindow.Title = TextCodeTranslator.Translate("Shipment.O.Receivables.GenerateFromQuotesList")
                 logWindow.WindowArgs = { EntityPM: this.EntityPM, AllRates: this.AllRates };
                 logWindow.Show('./ShipmentModules/ShipmentTabs/Components/Windows/Quotes/QuotesComponent');
