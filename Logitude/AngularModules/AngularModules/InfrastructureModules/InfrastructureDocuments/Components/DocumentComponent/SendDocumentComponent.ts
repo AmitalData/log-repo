@@ -165,7 +165,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         this.AttachmentListId = Guid.newGuid();
         this.AttachmentsLists = new Array<AttachmentsList>();
         this.DocumentTypeTemplatePMLists = [];
-        if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "test2") {
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") {
             this.ShowImagesLibraryComponent = true;
         }
 
