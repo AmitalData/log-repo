@@ -1,8 +1,9 @@
 declare var System: any;
 declare var window: any;
 
+
 import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
-import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit, ViewChildren, QueryList}  from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
 import {EntityArgs} from '../../Infrastructure/DataContracts/EntityArgs';
@@ -14,6 +15,7 @@ import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
 
 import {ShipmentPMService } from '../../Shipment/Services/StandardPMs/ShipmentPMService';
 import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
+import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
 
 @Component({
     moduleId: module.id,
@@ -162,7 +164,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
       
             this.ActualReleaseDateOldValue = this.warehouseReleasePM.ActualReleaseDate;
             this.ExpectedReleaseDateOldValue = this.warehouseReleasePM.ExpectedReleaseDate;
-
+            this.RunComponent();
           
             this.SetLabel();
             this.SetUIProperties();
@@ -258,6 +260,57 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
     }
 
 
-  
+    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private timerToken: any;
+    private Retries: number = 0;
+    private GeneratedComponent: any;
+
+    RunComponent() {
+        if (this.AllLocations) {
+
+            if (this.AllLocations.length == 0) {
+                this.RunComponentTimer();
+            }
+
+            else {
+                this.LoadChildComponent();
+            }
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+
+    RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+    LoadChildComponent() {
+
+        let warehouseEntryPackagesDetailsComponenttLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "WRPD")[0];
+        if (warehouseEntryPackagesDetailsComponenttLocation != null) {
+            SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseReleasePackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
+                .then(cmpRef => {
+                    var windowArgs: any = { WarehouseEntryPM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM, IsEditMode: true };
+                    cmpRef.instance.SetWindowArgs(windowArgs);
+
+                });
+
+        }
+
+
+
+    }
+
 
 }

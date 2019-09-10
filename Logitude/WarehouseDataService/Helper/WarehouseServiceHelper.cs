@@ -169,10 +169,6 @@ namespace WarehouseDataService.Helper
                     if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString()))
                     {
                         result = dbConnectionString.ToString();
-                        if(result == "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com")
-                        {
-                            result = "LogitudeMain-Test2,sa,Saas256,.";
-                        }
                     }
                     else
                     {

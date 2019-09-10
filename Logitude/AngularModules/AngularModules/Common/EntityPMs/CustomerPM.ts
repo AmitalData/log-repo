@@ -664,9 +664,9 @@ export class CustomerPM {
     public set IsCustomerAllowed(newValue: boolean) { if (this.isCustomerAllowed != newValue) { this.isCustomerAllowed = newValue; this.MarkAsDirty("IsCustomerAllowed"); } }
        
 	 
-    private card: string;
+    private card: any;
     public get Card() { return this.card; }
-    public set Card(newValue: string) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
+    public set Card(newValue: any) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
        
 	 
      

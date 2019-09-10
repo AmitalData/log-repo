@@ -171,11 +171,13 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             {
                 entityPM.PackageName = "Multi Package";
             }
+
             else
             {
-                entityPOCO.PackageName = entityPM.PackageName = packageName;
-            }            
+                entityPM.PackageName = packageName;
+            }
 
+            entityPOCO.PackageName = entityPM.PackageName;
             BuildPackageCodeSearchFields(entityPM, entityPOCO);
         }
 

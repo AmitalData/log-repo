@@ -129,7 +129,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         tariffSurchageLog.Version = item.Version;
                         tariffSurchageLog.Surcharges = this.GetUpdatedSurcharges(tariff, item, tariffUpdatedLines_POCO);
                         tariffSurchageLog.LinesUpdated = 1;
-                        tariffSurchageLog.StartDate = tariff.StartDate;
+                        tariffSurchageLog.StartDate = item.StartDate;
                         tariffSurchageLog.UpdateMethodCode = "MA";
                         tariffSurchageLog.ChangeSetOp = ChangeSetOperation.Insert;
                         tariffSurchageLog.Tenant = item.Tenant;

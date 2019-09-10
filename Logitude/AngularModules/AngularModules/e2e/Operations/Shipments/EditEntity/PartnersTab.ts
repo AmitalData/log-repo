@@ -28,7 +28,7 @@ export class PartnersTabComponent {
 
       this.AddPartner('COLOD', 'Shipment_ColoaderId', 'TestColoaderExport1');
       this.AddPartner('CLERN', 'Shipment_CustomClearancePointId', 'TestCustomClearancePointExport1');
-      this.AddPartner('CONSL', 'Shipment_ConsolidatorId','TestConsolidatorExport1');
+      this.AddPartner('CONSL', 'Shipment_ConsolidatorId', 'TestConsolidatorExport1');
 
 
       // browser.driver.sleep(1000);
@@ -52,7 +52,7 @@ export class PartnersTabComponent {
 
     this.Helper.WaitByIdAndClick(partnerType);
     this.Helper.WaitByIdAndFill(partnerID, PartnerText);
-    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,partnerID, PartnerText);
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, partnerID, PartnerText);
     this.Helper.WaitByIdAndClick('PartnerOKbtn');
 
 
@@ -61,7 +61,7 @@ export class PartnersTabComponent {
     this.Helper.WaitByIdAndClick(partnerTypeID);
     element(by.id(partnerNameID)).clear();
     this.Helper.WaitByIdAndFill(partnerNameID, 'age');
-    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0),partnerNameID, 'age';
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0), partnerNameID, 'age';
     this.Helper.WaitByIdAndClick('PartnerOKbtn');
   }
   DeletePartner(partnerTypeID: string) {

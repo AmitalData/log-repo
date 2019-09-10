@@ -132,6 +132,12 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     showLocal: boolean = false;
     IdentityKey: string;
     public isRTL: boolean = false;
+    private isRTLNumberTxt: boolean = false;
+    public get IsRTLNumberText(){
+        this.isRTLNumberTxt= this.isRTL && (this.InputType.toLowerCase()!="text" && this.InputType.toLowerCase()!="ntext");
+        return this.isRTLNumberTxt;
+    }
+    
     private CurrentSession = SessionLocator.SelectedSession;
     keydown: boolean;
     isCtrlKeyDown: boolean = false;
