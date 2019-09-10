@@ -119,7 +119,15 @@ namespace Logitude.Server.Tools.QueueService
             }
             if (!safcomplete)
             {
-                this.Delay(TimeSpan.FromMinutes(10));
+                if (CurrentCustomQueueResponse.Retries < 8)
+                {
+                    this.Delay(TimeSpan.FromMinutes(1));
+                }
+                else
+                {
+                    this.Delay(TimeSpan.FromMinutes(10));
+                }
+                
             }
             
             //else if (CurrentCustomQueueResponse.Retries > 10)
