@@ -17,7 +17,7 @@ export class TariffList {
 	ExpirationDate: Date;
 	Name: string;
 	InActive: boolean;
-	Description: string;
+	Notes: string;
 	SellerId: string;
 	CurrencyId: string;
 	CreateDate: Date;

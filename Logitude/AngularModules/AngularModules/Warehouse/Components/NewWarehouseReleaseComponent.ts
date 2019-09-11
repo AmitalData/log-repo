@@ -592,7 +592,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         if (warehouseEntryPackagesDetailsComponenttLocation != null) {
             SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseReleasePackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
                 .then(cmpRef => {
-                    var windowArgs: any = { WarehouseEntryPM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM };
+                    var windowArgs: any = { WarehouseEntryPM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM};
                     cmpRef.instance.SetWindowArgs(windowArgs);
 
                 });
