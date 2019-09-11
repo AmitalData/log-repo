@@ -1,16 +1,16 @@
 import { browser, by, element } from "protractor"
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
-import{NewGLAccount } from './NewGLAccount';
-import {NewBankAccount} from './NewBankAccount';
-import {EditBankAccount} from './EditBankAccount';
+//import{NewGLAccount } from './NewGLAccount';
+import {NewBankAccount} from './NewPaymentCheque';
+//import {EditBankAccount} from './EditBankAccount';
 describe('CRM Module', function () {
   var gn1 = new GeneralFunctions();
   var h = new FieldsHelper();
   browser.driver.manage().window().maximize();
-  var GLA = new NewGLAccount();
+  //var GLA = new NewGLAccount();
   var BNk = new NewBankAccount();
- var edit = new EditBankAccount(); 
+ //var edit = new EditBankAccount(); 
 
 
 
@@ -26,12 +26,12 @@ describe('CRM Module', function () {
       var diff ='Diff'+GlaccountNumber;
       var trans='trans'+GlaccountNumber;
       var bank = 'Bank'+GlaccountNumber;
-    GLA.CreateNewGLAccount(Gl);
-    GLA.CreateNewGLAccount(diff);
-    GLA.CreateNewGLAccount(trans);
+    //GLA.CreateNewGLAccount(Gl);
+    //GLA.CreateNewGLAccount(diff);
+    //GLA.CreateNewGLAccount(trans);
     //GLA.CreateNewGLAccountandmove();  
     BNk.CreateNewBankAccount(bank,Gl,diff,trans);
-    edit.EditBankAccount(bank);
+    //edit.EditBankAccount(bank);
   
   });
 });
