@@ -2913,6 +2913,10 @@
     <Content Include="Integration Test\Security\SecurityTests.postman_collection.json" />
     <Content Include="Integration Test\Maintenance\SystemSettings.postman_collection.json" />
     <Content Include="Integration Test\Quotes\Quotes.postman_collection.json" />
+    <Content Include="Integration Test\FullAccounting\FullAccountingTesting.postman_collection.json" />
+    <Content Include="Integration Test\FullAccounting\PrepareFullAccountingVars.postman_collection.json" />
+    <Content Include="Integration Test\FullAccounting\Ahmad.csv" />
+    <Content Include="Integration Test\FullAccounting\AhmadCloud.csv" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
@@ -6295,7 +6299,6 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
-    <Folder Include="Integration Test\FullAccounting\" />
     <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
