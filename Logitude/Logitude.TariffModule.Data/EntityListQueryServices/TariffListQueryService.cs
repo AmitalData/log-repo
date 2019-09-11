@@ -15,11 +15,11 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityLists;
 
 namespace Logitude.TariffModule.Data.EntityListQueryServices
-{ 
+{
 
     public partial class TariffListQueryService
     {
-	    private IQueryable<TariffList> GetIqueryableList(IQueryable<Tariff> iQueryable)
+        private IQueryable<TariffList> GetIqueryableList(IQueryable<Tariff> iQueryable)
         {
             IQueryable<TariffList> query = (from a in iQueryable
                                             select new TariffList()
@@ -33,26 +33,24 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                                                 ExpirationDate = a.ExpirationDate,
                                                 Name = a.Name,
                                                 InActive = a.InActive,
-                                                Description = a.Description,
+                                                Notes = a.Notes,
                                                 SellerName = a.Seller != null ? a.Seller.EnglishName : "",
                                                 UpdateDate = a.UpdateDate,
                                                 UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : "" : "",
                                                 TariffNumber = a.TariffNumber,
                                             });
             return query;
-		}
+        }
 
-		private IQueryable<Tariff> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<Tariff> iQueryable, int tenant)
+        private IQueryable<Tariff> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Tariff> iQueryable, int tenant)
         {
             return iQueryable;
         }
-				private IQueryable<Tariff> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Tariff> iQueryable, int tenant)
+
+        private IQueryable<Tariff> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<Tariff> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-		
-			}
-
-
+            return iQueryable;
+        }
+    }
 }
 	
