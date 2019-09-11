@@ -1337,6 +1337,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isFromCopy ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFromCopy  
+	   {
+	    
+	     get
+		{
+		   return isFromCopy;
+		 }
+		 set
+		 {
+		   if(isFromCopy != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromCopy",OldValue=isFromCopy,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFromCopy=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
