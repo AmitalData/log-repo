@@ -394,18 +394,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 bool letters = isMatche.IsMatch(Reference);
                 if (letters)
                 {
-                    for (int i = Reference.Length; i > 0; i--)
+                    for (int i = 0; i < Reference.Length; i++)
                     {
-                        string d = Reference.Substring(i - 1, 1);
+                        string d = Reference.Substring(i, 1);
                         MatchCollection match = Regex.Matches(d, @"^[a-zA-Z]*$");
                         if (match.Count != 0)
                         {
-                            referenceGroup = Reference.Substring(0, i);
-                            break;
+                            referenceGroup = referenceGroup + d;// Reference.Substring(0, i);
+
                         }
                         else
                         {
-                            reference = d + reference;
+                            reference = Reference.Substring(i, Reference.Length - i);
+                            break;
                         }
                         //var array = Regex.Matches("12s4rt", @"\D+|\d+")
                         //.Cast<Match>()

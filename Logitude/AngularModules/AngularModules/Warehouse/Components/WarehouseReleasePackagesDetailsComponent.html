@@ -7,7 +7,7 @@
             <td>
                 <table>
                     <tr>
-
+                        
 
                         <td style="height:20px"><div style="height:20px"></div></td>
                         <td>
@@ -15,14 +15,14 @@
                         </td>
 
 
-                        <td style="width: 70px;">
+                        <td *ngIf="!IsEditMode" style="width: 70px;">
                             <button [disabled]="!warehouseReleasePM.WarehouseId || !warehouseReleasePM.CustomerId" class="Button" (click)="ChoosePackage('Package')">Choose Package</button>
                         </td>
                         <td style="width: 5px;">
                             <span style="width:5px"></span>
                         </td>
 
-                        <td *ngIf="!IsLCLEntity" style="width: 70px;">
+                        <td *ngIf="!IsLCLEntity && !IsEditMode" style="width: 70px;">
                             <button [disabled]="!warehouseReleasePM.WarehouseId || !warehouseReleasePM.CustomerId" class="Button" (click)="ChoosePackage('Container')">Choose Container</button>
                         </td>
 
@@ -55,9 +55,10 @@
                                     <td style="width: 75px; min-width: 75px;max-width: 75px;">Height ({{warehouseReleasePM.DimensionsUnitCode}})</td>
                                     <td style="width: 65px; min-width: 65px;max-width: 65px;">Quantity</td>
                                     <td style="width: 90px; min-width: 90px;max-width: 90px;">{{VolumeLabel}}</td>
+                                    <td *ngIf="IsEditMode" style="width: 135px;min-width: 135px;max-width: 135px;">{{VolumetricWeightLabel}}</td>
                                     <td style="width: 110px;min-width: 110px;max-width: 110px;">{{GrossWeightLabel}}</td>
                                     <td style="width: 100%;min-width:100%;">Description Of Goods</td>
-                                    <td style="width: 50px;min-width :50px;max-width: 50px;"></td>
+                                    <td *ngIf="!IsEditMode" style="width: 50px;min-width :50px;max-width: 50px;"></td>
 
                                 </tr>
                             </table>
@@ -132,6 +133,10 @@
 
                                                             </td>
 
+                                                            <td *ngIf="IsEditMode" class="GridViewCell" style="width: 135px; min-width: 135px; max-width: 135px;text-align:right">
+                                                                {{item.VolumetricWeight | NumbersPipe:'N3'}}
+
+                                                            </td>
 
 
                                                             <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;text-align:right">
@@ -143,10 +148,10 @@
 
                                                             <td class="GridViewCell" style="width:100%; min-width: 100%; max-width: 100%; position: relative;">
                                                                 <div *ngIf="!IsLCLEntity" style="width:135px;max-width:135px">{{item.Description}}</div>
-                                                                <div *ngIf="IsLCLEntity" style="width:240px;max-width:240px">{{item.Description}}</div>
+                                                                <div  *ngIf="IsLCLEntity" style="width:240px;max-width:240px">{{item.Description}}</div>
                                                             </td>
 
-                                                            <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;vertical-align:central">
+                                                            <td *ngIf="!IsEditMode" class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;vertical-align:central">
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width: 20px; padding-left: 2px;">

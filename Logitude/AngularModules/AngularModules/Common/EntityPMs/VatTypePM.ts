@@ -124,6 +124,11 @@ export class VatTypePM {
     public set IsMultiPercentage(newValue: boolean) { if (this.isMultiPercentage != newValue) { this.isMultiPercentage = newValue; this.MarkAsDirty("IsMultiPercentage"); } }
        
 	 
+    private recognizedPercentage: number;
+    public get RecognizedPercentage() { return this.recognizedPercentage; }
+    public set RecognizedPercentage(newValue: number) { if (this.recognizedPercentage != newValue) { this.recognizedPercentage = newValue; this.MarkAsDirty("RecognizedPercentage"); } }
+       
+	 
      
 	private vatTypePercentages: VatTypePercentagePM[];
     get  VatTypePercentages() {

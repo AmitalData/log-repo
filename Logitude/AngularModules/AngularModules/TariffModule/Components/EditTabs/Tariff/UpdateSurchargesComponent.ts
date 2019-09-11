@@ -43,6 +43,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
     
     SetWindowArgs(arg: UpdateTariffArgs) {
         this.EntityPM = arg.Version;
+        this.FillLogs();
         this.FillTariffCharges(arg.TariffCharges);
         this.LoadAirlineAreas(arg.AirlineId);
     }
@@ -67,6 +68,14 @@ export class UpdateSurchargesComponent extends BaseComponent {
         });
     }
 
+    private FillLogs() {
+        var service: TariffDomainService = new TariffDomainService();
+        service.GetTariffsLogsByTariffId(this.EntityPM.TariffId, this.EntityPM.Version).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.Logs = myResponse.Result;
+            }
+        });
+    }
     FillAirlineAreas(type: string) {
         if (type == "From") {
             var data: AirlineAreaList[] = [];
@@ -347,6 +356,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             myService.PostUpdateSurcharge(args).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     this.isUpdateDone = true;
+                    this.FillLogs();
                 }
 
                 else {

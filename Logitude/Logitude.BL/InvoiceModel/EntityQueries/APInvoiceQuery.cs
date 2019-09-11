@@ -578,11 +578,21 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                                         FirstApproveDate = a.FirstApproveDate,
                                     }).FirstOrDefault();
+           
+            if(entityPM != null)
+            {
 
-
+                entityPM.InvoiceLines = GetAPInvoiceLineByInvoiceId(entityPM); 
+                
+            }
             return entityPM;
         }
-
+        private List<APInvoiceLinePM> GetAPInvoiceLineByInvoiceId(APInvoicePM invoice)
+        {
+            APInvoiceLineRepository invoiceLineRepository = new APInvoiceLineRepository(invoice.Tenant);
+            APInvoiceLineQuery apInvoiceLineQuery = new APInvoiceLineQuery(invoiceLineRepository);
+            return apInvoiceLineQuery.GetInvoiceLinesByInvoiceId(invoice.Id, invoice.Tenant);
+        }
         private List<APTransferLinePM> GetAPInvoiceTransferLines(APInvoicePM entityPM, List<APInvoiceLine> allInvoiceLines, List<APInvoiceLinePM> allInvoiceLinesPM)
         {
             List<APTransferLinePM> myTransferLines = new List<APTransferLinePM>();

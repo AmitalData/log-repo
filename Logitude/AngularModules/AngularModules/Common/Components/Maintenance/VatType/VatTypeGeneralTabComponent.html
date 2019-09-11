@@ -11,7 +11,7 @@
 
                     <!-- Code -->
                     <tr class="FormFieldRow">
-                        <td style="width: 120px;">
+                        <td style="width: 150px;">
                             <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
@@ -52,7 +52,16 @@
                             <LogTextBox [ObjectFieldName]="'NewEntityPercentage'" [Text]="NewEntityPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </td>
                     </tr>
+                    <!-- RecognizedPercentage -->
+                    <tr class="FormFieldRow" >
+                        <td>
+                            <LogLabel [ObjectFieldName]="'RecognizedPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
 
+                        <td>
+                            <LogTextBox [ObjectFieldName]="'RecognizedPercentage'" [Text]="RecognizedPercentage" [InputType]="'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                    </tr>
                     <!-- Percentage Date -->
                     <tr class="FormFieldRow" *ngIf="IsNewEntity && !IsMultiPercentage">
                         <td>

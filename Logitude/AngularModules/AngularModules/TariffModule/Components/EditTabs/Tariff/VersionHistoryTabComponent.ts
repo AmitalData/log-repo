@@ -236,6 +236,17 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public Surcharge9PriceLabel: string;
     public Surcharge10PriceLabel: string;
 
+    public Surcharge1MinPriceLabel: string;
+    public Surcharge2MinPriceLabel: string;
+    public Surcharge3MinPriceLabel: string;
+    public Surcharge4MinPriceLabel: string;
+    public Surcharge5MinPriceLabel: string;
+    public Surcharge6MinPriceLabel: string;
+    public Surcharge7MinPriceLabel: string;
+    public Surcharge8MinPriceLabel: string;
+    public Surcharge9MinPriceLabel: string;
+    public Surcharge10MinPriceLabel: string;
+
     public Surcharge1PriceVisibility: boolean;
     public Surcharge2PriceVisibility: boolean;
     public Surcharge3PriceVisibility: boolean;
@@ -272,6 +283,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
                 this['Surcharge' + index + 'PriceLabel'] = displyText;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
+                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;
             }
         }
     }
