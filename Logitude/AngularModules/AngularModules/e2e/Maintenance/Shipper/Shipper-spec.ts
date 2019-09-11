@@ -18,7 +18,11 @@ describe('NewAgent', () => {
 
     browser.ignoreSynchronization = true;
 
+    it('QuickSearch', function () {
 
+        ShipperScenario.Quicksearch();
+    });
+    
     it('SearchShippertTab', function () {
 
         ShipperScenario.SearchShippertTab();
