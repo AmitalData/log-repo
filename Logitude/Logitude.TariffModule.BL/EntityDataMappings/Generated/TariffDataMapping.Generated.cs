@@ -31,7 +31,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ExpirationDate, 
 	         Name, 
 	         InActive, 
-	         Description, 
+	         Notes, 
 	         SellerId, 
 	         CurrencyId, 
 	         CreateDate, 
@@ -79,7 +79,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ExpirationDate, 
 	         Name, 
 	         InActive, 
-	         Description, 
+	         Notes, 
 	         SellerId, 
 	         CurrencyId, 
 	         CreateDate, 
@@ -171,9 +171,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 				entityPOCO.InActive = entityPM.InActive;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Description))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
             {
-				entityPOCO.Description = entityPM.Description;
+				entityPOCO.Notes = entityPM.Notes;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SellerId))
@@ -387,9 +387,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.InActive = entityPOCO.InActive;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Description))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Notes))
             {
-					entityPM.Description = entityPOCO.Description;
+					entityPM.Notes = entityPOCO.Notes;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SellerId))
@@ -598,9 +598,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
                 oldEntityPM.InActive = entityPM.InActive;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Description))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
             {
-                oldEntityPM.Description = entityPM.Description;
+                oldEntityPM.Notes = entityPM.Notes;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SellerId))
@@ -780,9 +780,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             {
                 entityPM.Name = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Name));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.Description)) //T4 find type == nText 
+            if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
             {
-                entityPM.Description = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Description));
+                entityPM.Notes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Notes));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
