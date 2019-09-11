@@ -38,7 +38,7 @@ using System.Web;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-
+using Simplog.Data.Helpers;
 
 namespace CommunicationWorkerRole
 {

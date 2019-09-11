@@ -504,47 +504,50 @@ namespace CommunicationWorkerRole
 				else
 				{
 					string transError = resultadoTimbre.Descripcion;
-					if (waitingCommLog.Retries == 4)
-					{
-						if (!string.IsNullOrEmpty(resultadoTimbre.Descripcion))
-						{
-							transError = resultadoTimbre.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
-							if (!string.IsNullOrEmpty(resultadoTimbre.DescripcionInterna))
-							{
-								transError += Environment.NewLine + resultadoTimbre.DescripcionInterna;
-							}
+                    //if (waitingCommLog.Retries == 4)
+                    //{
 
-						}
+                    //}
 
-						if (waitingCommLog.Subject == "Payment SAT Interface")
-						{
-							Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
-							if (payment != null)
-							{
-								if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
-								{
-									payment.SATTransferStatusCode = "TE";
-									payment.TransmissionError = transError;
-									arpaymentRep.Update(payment);
-									arpaymentRep.SubmitChanges();
-								}
-							}
-						}
-						else
-						{
-							Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
-							if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
-							{
-								invoice.SATTransferStatusCode = "TE";
-								invoice.TransmissionError = transError;
+                    if (!string.IsNullOrEmpty(resultadoTimbre.Descripcion))
+                    {
+                        transError = resultadoTimbre.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
+                        if (!string.IsNullOrEmpty(resultadoTimbre.DescripcionInterna))
+                        {
+                            transError += Environment.NewLine + resultadoTimbre.DescripcionInterna;
+                        }
 
-								arinvoiceRep.Update(invoice);
-								arinvoiceRep.SubmitChanges();
-							}
-						}
-					}
+                    }
 
-					throw new Exception("Failed," + transError);
+                    if (waitingCommLog.Subject == "Payment SAT Interface")
+                    {
+                        Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
+                        if (payment != null)
+                        {
+                            if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
+                            {
+                                payment.SATTransferStatusCode = "TE";
+                                payment.TransmissionError = transError;
+                                arpaymentRep.Update(payment);
+                                arpaymentRep.SubmitChanges();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
+                        if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
+                        {
+                            invoice.SATTransferStatusCode = "TE";
+                            invoice.TransmissionError = transError;
+
+                            arinvoiceRep.Update(invoice);
+                            arinvoiceRep.SubmitChanges();
+                        }
+                    }
+
+
+                    throw new Exception("Failed," + transError);
 				}
 
 			}

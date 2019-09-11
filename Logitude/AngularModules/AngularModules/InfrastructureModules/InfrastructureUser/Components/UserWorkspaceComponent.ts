@@ -122,7 +122,7 @@ export class UserWorkspaceComponent implements OnInit {
 
     private FillLicensesManagmentsList() {
         if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
-            var usersCount: number = this.allUserLicenses.filter(d => d.PackageCode == SessionLocator.TenantManagementJS.PackageCode).length;
+            var usersCount: number = this.ActiveNotAdditionalUsersCount;
             var numberOfUsers: number = SessionLocator.TenantManagementJS.NumberOfFreeUsers + SessionLocator.TenantManagementJS.NumberOfUsers;
             var myCountText: string = usersCount + "/" + numberOfUsers;
 
@@ -178,6 +178,7 @@ export class UserWorkspaceComponent implements OnInit {
         var args: UserLicenseArgs = new UserLicenseArgs();
         args.AllPackages = this.allPackages;
         args.AllUserLicenses = this.allUserLicenses;
+        args.ActiveNotAdditionalUsersCount = this.ActiveNotAdditionalUsersCount;
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 960;
@@ -208,8 +209,7 @@ export class UserWorkspaceComponent implements OnInit {
     }
 
     RefreshButtonClicked() {
-        this.LoadAllData();
-        this.LoadUserLicenses();
+        this.LoadAllData();        
     }
 
     public AllUsersCount: string;
@@ -218,6 +218,7 @@ export class UserWorkspaceComponent implements OnInit {
     public ActiveUsersCount: string;
     public InactiveUsersCount: string;
     public ActiveNotLicensedCount: string;
+    private ActiveNotAdditionalUsersCount: number;
     LoadDataSummary() {
         this.InitCounts();
         this.isLoadDataSummaryCompleted = false;
@@ -233,8 +234,10 @@ export class UserWorkspaceComponent implements OnInit {
                     this.InactiveUsersCount = myResult.InactiveUsersCount > 1000 ? "1000+" : myResult.InactiveUsersCount.toString();
                     this.ActiveLicensedCount = myResult.ActiveLicensedCount > 1000 ? "1000+" : myResult.ActiveLicensedCount.toString();
                     this.ActiveNotLicensedCount = myResult.ActiveNotLicensedCount > 1000 ? "1000+" : myResult.ActiveNotLicensedCount.toString();
+                    this.ActiveNotAdditionalUsersCount = myResult.ActiveNotAdditionalUsersCount;
 
                     this.isLoadDataSummaryCompleted = true;
+                    this.LoadUserLicenses();
                     this.RefreshBackButtonEnabled();
                 }
             }

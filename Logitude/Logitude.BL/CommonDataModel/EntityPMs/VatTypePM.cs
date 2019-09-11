@@ -53,7 +53,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ExternalTAXItemIdExternalId { get; set; }
 
         public bool IsMultiPercentage { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
 
+        public double? RecognizedPercentage { get; set; }
         List<VatTypePercentagePM> vatTypePercentages;
         [Include]
         [Association("VatTypeVatTypePercentage","Id","VatTypeId")]

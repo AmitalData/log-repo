@@ -36,7 +36,8 @@ export class ColumnCheckBoxComponent {
         switch (this.columnIndex) {
             case "0":
                 {
-                    this.isChecked = this.rowData.IsChecked0;
+                    this.isChecked = this.rowData.AdditionalPackagesOnly ? false : true;
+                    this.IsEnabled = false;
                     break;
                 }
 

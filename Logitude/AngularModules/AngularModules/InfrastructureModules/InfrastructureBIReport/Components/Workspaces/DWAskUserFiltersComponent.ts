@@ -9,7 +9,7 @@ import { DWSubQueryPMService } from '../../../../Infrastructure/Services/Standar
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-
+import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'DWAskUserFiltersComponent',
@@ -197,10 +197,35 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
 
             }
             else {
+
+                if (myResult.ErrorsArray && myResult.ErrorsArray.length > 0) {
+                    this.ShowMessageWindow(myResult.ErrorsArray[0]);
+                }
+
                 this.CurrentSession.StopBusyIndicator();
             }
         });
     }
+
+
+
+    public ShowMessageWindow(message: string, title: string = "") {
+
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
+
+        if (title) {
+            messageWindow.Title = title;
+        }
+    }
+
+
+
+
+
+
+
+
 
     AddFilterToGroup(item) {
         var DWObjectField = new DWObjectFieldsDetails(null, item.MyParentClass);

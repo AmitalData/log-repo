@@ -119,12 +119,12 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         }
     }
     
-    get Description() {
-        return this.EntityPM.Description;
+    get Notes() {
+        return this.EntityPM.Notes;
     }
-    set Description(value: string) {
-        if (this.EntityPM.Description != value) {
-            this.EntityPM.Description = value;
+    set Notes(value: string) {
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
         }
     }
        

@@ -36,6 +36,19 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.JournalId == journalId && a.Line == line && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+        public List<JournalLine> GetJournalLineByLedgerTransactionIdList(List<String> idList, int tenant)
+        {
+            var qLedgerTransactions =
+               (from a in context.LedgerTransactions
+                where idList.Contains(a.Id) && a.Tenant == tenant
+                select a);
+            var q = (from j in this.GetAll(tenant)
+                     join l in qLedgerTransactions
+                     on new { j.JournalId, j.Line } equals new { l.JournalId, Line = l.JournalLineNumber }
+                     select j);
+            var pocos = q.ToList();
+            return pocos;
+        }
 
 
         public IQueryable<JournalLine> GetQueryContainsAccId(IQueryable<string> GLAccountIDList, int tenant

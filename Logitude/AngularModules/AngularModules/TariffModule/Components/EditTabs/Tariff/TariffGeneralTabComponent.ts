@@ -498,10 +498,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         }
     }
 
-    get Description() { return this.EntityPM.Description; }
-    set Description(value: string) {
-        if (this.EntityPM.Description != value) {
-            this.EntityPM.Description = value;
+    get Notes() { return this.EntityPM.Notes; }
+    set Notes(value: string) {
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
         }
     }
 

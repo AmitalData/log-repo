@@ -11,9 +11,10 @@
         <td>
             <table *ngIf="IsResourcesReady">
 
-                <!--<tr class="FormFieldRow">
-                    <td style="width:110px;">
-                        <label>{{'ARInvoice.F.PartnerType' | TextCodeTranslationPipe}}</label>
+                <tr class="FormFieldRow" *ngIf="IsAccountingActivated">
+                    <td style="width:140px;">
+                        <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [TextCode]="'ARInvoice.F.PartnerType'"></LogLabel>
+                        <!--<label style="padding-left: 10px;">{{'ARInvoice.F.PartnerType' | TextCodeTranslationPipe}}</label>-->
                     </td>
 
                     <td style="width:230px;">
@@ -33,7 +34,7 @@
                     <td>
                         <div></div>
                     </td>
-                </tr>-->
+                </tr>
 
                 <!-- BillToId -->
                 <tr class="FormFieldRow">
@@ -41,14 +42,15 @@
                         <LogLabel [ObjectFieldName]="'BillToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td  style="width:230px;">
+                    <td style="width:230px;">
                         <LogLov [ObjectFieldName]="'BillToId'"
                                 [SelectedValue]="BillToId"
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'Card'"
-                                [DependencyFilter1Value]="BillToDependencyProperty1"
-                                [DependencyFilter1IsList]="BillToDependencyProperty1IsList">
+                                [DependencyFilter1Value]="BillToDependencyValue1"
+                                [DependencyFilter2Value]="BillToDependencyValue2"
+                                [DependencyFilter1IsList]="BillToDependencyValue1IsList">
                         </LogLov>
                     </td>
 

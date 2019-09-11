@@ -52,10 +52,12 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     public DisplaySATPaymentMethod: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
+    IsAccountingActivated:boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
+         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.InitializeServices();
@@ -228,12 +230,14 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     }
 
     // BillTo
-    public BillToDependencyProperty1: string = null;
-    public BillToDependencyProperty1IsList: boolean = true;
+    public BillToDependencyValue1: string = "CS";
+    public BillToDependencyValue2: boolean = false;
+    public BillToDependencyProperty1IsList: boolean = false;
     BuildPartnersTypes() {
 
-        this.BillToDependencyProperty1 = "CS";
-
+      //  this.BillToDependencyProperty1 = "CS";
+        this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
+        this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
         if (this.EntityPM.Id == null) {
             //if (this.args.EntityTableName == "Shipment") {
             //    var customer: InvoicePartnerType = this.InvoicePartners.filter(d => d.Code == "CUS")[0];
@@ -249,8 +253,25 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
     }
 
+  
     public SelectedPartnerType: InvoicePartnerType = null;
+    PartnersTypeSelectionMethod(selected: InvoicePartnerType) {
+        if (this.SelectedPartnerType != selected) {
+            this.SelectedPartnerType = selected;
 
+            this.BillToId = null;
+            this.BillToAddressId = null;
+            this.BillToPartnerTypeId = null;
+
+            if (selected) {
+                this.BillToPartnerTypeId = selected.PartnerTypeId;
+                this.BillToDependencyValue1 = selected.PartnerTypeId;
+                this.BillToDependencyValue2 = selected.IsCustomer;
+            }
+
+            this.SetUIProperties();
+        }
+    }
     private billToPartnerTypeId: string;
     get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
     set BillToPartnerTypeId(newValue: string) {

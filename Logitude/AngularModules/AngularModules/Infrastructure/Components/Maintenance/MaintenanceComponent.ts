@@ -767,7 +767,7 @@ export class MaintenanceComponent {
                     var windowTitle = "Payment Gateway Definition";
                     var logWindow = new LogitudeWindow();
                     logWindow.Width = 600;
-                    logWindow.Height = 350;
+                    logWindow.Height = 250;
                     logWindow.Title = windowTitle;
                     logWindow.IsShowCloseButton = true;
                     this._entityResourceService.getEntityResourceByTableName("TenantAdditionalData").subscribe(response => {

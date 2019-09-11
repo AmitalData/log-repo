@@ -71,9 +71,9 @@ export class TariffPM {
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
-    private description: string;
-    public get Description() { return this.description; }
-    public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
+    private notes: string;
+    public get Notes() { return this.notes; }
+    public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
        
 	 
     private sellerId: string;
@@ -348,6 +348,11 @@ export class TariffPM {
             this.deletedLinesExpirationDates = newValue;
         }
     }
+    private isFromUpdateScreen: boolean;
+    public get IsFromUpdateScreen() { return this.isFromUpdateScreen; }
+    public set IsFromUpdateScreen(newValue: boolean) { if (this.isFromUpdateScreen != newValue) { this.isFromUpdateScreen = newValue; this.MarkAsDirty("IsFromUpdateScreen"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

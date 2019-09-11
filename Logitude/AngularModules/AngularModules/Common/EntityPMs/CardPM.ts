@@ -239,29 +239,29 @@ export class CardPM {
     public set StateName(newValue: string) { if (this.stateName != newValue) { this.stateName = newValue; this.MarkAsDirty("StateName"); } }
        
 	 
-    private customAgent: string;
+    private customAgent: any;
     public get CustomAgent() { return this.customAgent; }
-    public set CustomAgent(newValue: string) { if (this.customAgent != newValue) { this.customAgent = newValue; this.MarkAsDirty("CustomAgent"); } }
+    public set CustomAgent(newValue: any) { if (this.customAgent != newValue) { this.customAgent = newValue; this.MarkAsDirty("CustomAgent"); } }
        
 	 
-    private shippingAgent: string;
+    private shippingAgent: any;
     public get ShippingAgent() { return this.shippingAgent; }
-    public set ShippingAgent(newValue: string) { if (this.shippingAgent != newValue) { this.shippingAgent = newValue; this.MarkAsDirty("ShippingAgent"); } }
+    public set ShippingAgent(newValue: any) { if (this.shippingAgent != newValue) { this.shippingAgent = newValue; this.MarkAsDirty("ShippingAgent"); } }
        
 	 
-    private customer: string;
+    private customer: any;
     public get Customer() { return this.customer; }
-    public set Customer(newValue: string) { if (this.customer != newValue) { this.customer = newValue; this.MarkAsDirty("Customer"); } }
+    public set Customer(newValue: any) { if (this.customer != newValue) { this.customer = newValue; this.MarkAsDirty("Customer"); } }
        
 	 
-    private agent: string;
+    private agent: any;
     public get Agent() { return this.agent; }
-    public set Agent(newValue: string) { if (this.agent != newValue) { this.agent = newValue; this.MarkAsDirty("Agent"); } }
+    public set Agent(newValue: any) { if (this.agent != newValue) { this.agent = newValue; this.MarkAsDirty("Agent"); } }
        
 	 
-    private vendor: string;
+    private vendor: any;
     public get Vendor() { return this.vendor; }
-    public set Vendor(newValue: string) { if (this.vendor != newValue) { this.vendor = newValue; this.MarkAsDirty("Vendor"); } }
+    public set Vendor(newValue: any) { if (this.vendor != newValue) { this.vendor = newValue; this.MarkAsDirty("Vendor"); } }
        
 	 
     private countryId: string;

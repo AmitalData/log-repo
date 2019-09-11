@@ -130,7 +130,7 @@ namespace WebFreight.Web.Helpers
 
             if (operationCode == "After" && !string.IsNullOrEmpty(fieldValue))
             {
-                fieldValue = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(fieldValue).AddDays(1));
+                fieldValue = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(fieldValue));
             }
             string operationSimpol = operationCode == "After" ? " >'" : "<'";
             string result = fieldName + operationSimpol + fieldValue + "'";

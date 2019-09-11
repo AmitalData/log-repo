@@ -623,7 +623,8 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         public int ActiveUsersCount { get; set; }
         public int InactiveUsersCount { get; set; }
         public int ActiveLicensedCount { get; set; }
-        public int ActiveNotLicensedCount { get; set; }        
+        public int ActiveNotLicensedCount { get; set; }
+        public int ActiveNotAdditionalUsersCount { get; set; }
     }
 
     public class UsersWorkspaceRecentItem

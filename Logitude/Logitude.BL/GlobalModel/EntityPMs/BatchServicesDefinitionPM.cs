@@ -27,5 +27,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public int DoneItemsInFiveMinutes { get; set; }
         public int WaitingItems { get; set; }
         public int FailedItems { get; set; }
+        public string QueueDefinitionCode { get; set; }
+
     }
 }

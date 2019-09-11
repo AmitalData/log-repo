@@ -16,9 +16,10 @@ export class NewGLAccount {
     browser.ignoreSynchronization = true;
 
     
+ 
+    this.Helper.ItemsPresent('NewGLAccount');
+    this.Helper.ItemsVisibility('NewGLAccount');
     this.Helper.WaitByIdAndClick('NewGLAccount');
-   
-
     this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsTypeCode', 'Banks');
     this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
     this.Helper.WaitBusyIndicator();
@@ -26,12 +27,15 @@ export class NewGLAccount {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitBusyIndicator();
       this.Helper.WaitByIdAndFill('GLAccount_LocalName', LocalName);
+      this.Helper.ItemsVisibility('GLAccount_CurrencyId');  
+     
       this.Helper.ItemsPresent('GLAccount_CurrencyId');
-      this.Helper.ItemsVisibility('GLAccount_CurrencyId');
       this.Helper.WaitByIdAndFill('GLAccount_CurrencyId', 'NIS');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0); 
     //this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
     this.Helper.WaitBusyIndicator();
+    this.Helper.ItemsPresent('GLAccount_RevenueExpenseType');
+    this.Helper.ItemsVisibility('GLAccount_RevenueExpenseType');
     this.Helper.WaitByIdAndFill('GLAccount_RevenueExpenseType', 'other');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0); 
     this.Helper.WaitBusyIndicator();
