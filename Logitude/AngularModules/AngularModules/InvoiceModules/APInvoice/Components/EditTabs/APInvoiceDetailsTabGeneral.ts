@@ -561,7 +561,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
                         myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.PayableVATCard;
                         myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
-                        myQroupItem.VatRecognizedPercentage = lineVatType.RecognizedPercentage;
+                       // myQroupItem.VatRecognizedPercentage = lineVatType.RecognizedPercentage;
                         group_Source.push(myQroupItem);
                     }
 
@@ -581,7 +581,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                             var vatType = this.AllVatTypes.filter(f => f.Id == itemGroup.SingleVATTypeId)[0];
                             if (vatType) {
                                 myQroupItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
-                                myQroupItem.VatRecognizedPercentage = vatType.RecognizedPercentage;
+                              //  myQroupItem.VatRecognizedPercentage = vatType.RecognizedPercentage;
                                 myQroupItem.VatTypePercentage = this.GetVatTypePercentage(vatType.Id);
                             }
 
