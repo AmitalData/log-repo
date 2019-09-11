@@ -33,6 +33,7 @@ import { CourierPendingReasonList } from '../../../../Customs/EntityLists/Courie
 import { element } from 'protractor';
 import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { CacheCourierPendingReasonService } from '../../../../Customs/Services/Others/CacheCourierPendingReasonService';
 
 @Component({
     moduleId: module.id,
@@ -132,7 +133,7 @@ implements OnDestroy
         //        });
         //);
         this.GetMamanPUR();
-        
+        CacheCourierPendingReasonService.Instance.CreateCacheCourierPendingReasonList();
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -501,7 +502,7 @@ implements OnDestroy
         this.RefreshMasterRequiredFields();
         if (this._SelectedTabFilter.Code != "HOLD")this.RefreshList();
         this.DisplayOnlyCheck();
-
+        CacheCourierPendingReasonService.Instance.CreateCacheCourierPendingReasonList();
     }
 
     RefreshList() {

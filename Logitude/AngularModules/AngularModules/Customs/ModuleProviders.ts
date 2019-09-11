@@ -329,7 +329,7 @@ import { CustomsRequestMenuService } from './Services/Others/CustomsRequestMenuS
 import { MultiCertificatesService } from './Services/Others/MultiCertificatesService';
 import { SupplierInvoiceService } from './Services/Others/SupplierInvoiceService';
 import { GITITEMCacheService } from './Services/Others/GITITEMCacheService';
-
+import { CacheCourierPendingReasonService } from './Services/Others/CacheCourierPendingReasonService';
 
 import { DeclarationMenuButtonsHandler } from './Components/MenuButtons/DeclarationMenuButtonsHandler';
 import { VehicleMenuButtonsHandler } from './Components/MenuButtons/VehicleMenuButtonsHandler';
