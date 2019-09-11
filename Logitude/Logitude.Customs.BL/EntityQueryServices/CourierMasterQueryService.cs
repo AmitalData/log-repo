@@ -130,6 +130,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int DEC = 0;
             int DEC_C = 0;
             int DEC_W = 0;
+            int DEC_I = 0;
+            int DEC_V = 0;
             int PAY = 0;
             int MNFR = 0;
             int DECR = 0;
@@ -140,7 +142,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int MNFR_RV = 0;
             int DECR_RV = 0;
             int PAY_C = 0;
-            int PAY_R = 0;
             int PAY_I = 0;
 
             var totQ =
@@ -159,7 +160,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  dEC = g.Count(r => (r.CourierDeclarationStatusCode == "M" || r.CourierDeclarationStatusCode == "X")),
                  dEC_C = g.Count(r => (r.CourierDeclarationStatusCode == "M")),
                  dEC_W = g.Count(r => (r.CourierDeclarationStatusCode == "X")),
+                 dEC_I = g.Count(r => (r.CourierDeclarationStatusCode == "I")),
+                 dEC_V = g.Count(r => (r.CourierDeclarationStatusCode == "V")),
                  pAY = g.Count(r => (r.CourierPaymentStatusCode == "R")),
+                 pAY_I = g.Count(r => (r.CourierPaymentStatusCode == "I")),
+                 pAY_C = g.Count(r => (r.CourierPaymentStatusCode == "R") || (r.CourierPaymentStatusCode == "P")),
                  //PAY_RL = g.Count(r => (r.CourierPaymentStatusCode == "R" && r.HighLowValue=="L")),
                  PAYReadyNotFastindividual = g.Count(r => (r.CourierPaymentStatusCode == "R" && r.FastIndividualProcessCode == "F")),//Task 47220: שינוי לוגיקת תשלום מרוכז 
                  MNFR = g.Count(r => (r.CourierManifestStatusCode == "R")),
@@ -187,6 +192,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DEC = tot.dEC;
                 DEC_C = tot.dEC_C;
                 DEC_W = tot.dEC_W;
+                DEC_I = tot.dEC_I;
+                DEC_V = tot.dEC_V;
                 PAY = tot.pAY;
                 MNFR = tot.MNFR;
                 DECR = tot.DECR;
@@ -196,6 +203,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 ACC = tot.ACC;
                 ACC_W = tot.ACC_W;
                 ACC_WS = tot.ACC_WS;
+                PAY_I = tot.pAY_I;
+                PAY_C = tot.pAY_C;
             }
 
             keyValuePairList.Add(new KeyValuePair<string, int>("ALL", ALL));
@@ -209,7 +218,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             keyValuePairList.Add(new KeyValuePair<string, int>("DEC", DEC));
             keyValuePairList.Add(new KeyValuePair<string, int>("DEC_C", DEC_C));
             keyValuePairList.Add(new KeyValuePair<string, int>("DEC_W", DEC_W));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DEC_I", DEC_I));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DEC_V", DEC_V));
             keyValuePairList.Add(new KeyValuePair<string, int>("PAY", PAY));
+            keyValuePairList.Add(new KeyValuePair<string, int>("PAY_I", PAY_I));
+            keyValuePairList.Add(new KeyValuePair<string, int>("PAY_C", PAY_C));
             keyValuePairList.Add(new KeyValuePair<string, int>("HOLD", HOLD));
             keyValuePairList.Add(new KeyValuePair<string, int>("DECR", DECR));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNFR", MNFR));

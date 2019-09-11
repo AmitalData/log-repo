@@ -87,7 +87,10 @@ implements OnDestroy
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
     _SelectedACCValue: string = 'A'; // Wrong/WrongSpecial
-    _SelectedPAYValue: string = 'C'; // Correct/InProgress/ReadyToSend
+
+    //Selected tabs
+    _SelectedPAYValue: string = 'R'; // Correct/InProgress/ReadyToSend
+    _SelectedDECTABValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
 
     public columns: any[] = null;
 
@@ -148,9 +151,10 @@ implements OnDestroy
         this._SelectedTabFilter = item;
         this._SelectedMNFValue = 'A';
         this._SelectedDECValue = 'A';
+        this._SelectedDECTABValue = 'MX';
         this._SelectedDOCValue = 'A';
         this._SelectedACCValue = 'A';
-        this._SelectedPAYValue = 'C';
+        this._SelectedPAYValue = 'R';
 
         switch (item.Code) {
             case "DECR": 
@@ -512,6 +516,10 @@ implements OnDestroy
     _DOC_C_Total = 0;
     _DEC_W_Total = 0;
     _DEC_C_Total = 0;
+    _DEC_MX_Total = 0;
+    _DEC_R_Total = 0;
+    _DEC_I_Total = 0;
+    _DEC_V_Total = 0;
     _MNF_W_Total = 0;
     _MNF_C_Total = 0;
     _ACC_W_Total = 0;
@@ -558,6 +566,7 @@ implements OnDestroy
                                 this._ReadyDECToBatchSend = 0;
                             } 
                             this._ReadyDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSendR") + ' (' + this._ReadyDECToBatchSend + ')';
+                            this._DEC_R_Total = item.Value;
                             break;
                         }
                         case "DECR_RV": {
@@ -617,12 +626,26 @@ implements OnDestroy
                             this._DOC_C_Total = item.Value;
                             break;
                         }
+                        case "DEC": {
+                            this._DEC_MX_Total = item.Value;
+                            var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
+                            TabFilter.Total = item.Value;
+                            break;
+                        }
                         case "DEC_C": {
                             this._DEC_C_Total = item.Value;
                             break;
                         }
                         case "DEC_W": {
                             this._DEC_W_Total = item.Value;
+                            break;
+                        }
+                        case "DEC_V": {
+                            this._DEC_V_Total = item.Value;
+                            break;
+                        }
+                        case "DEC_I": {
+                            this._DEC_I_Total = item.Value;
                             break;
                         }
                         case "PAYReadyNotFastindividual": {
@@ -639,17 +662,16 @@ implements OnDestroy
                             break;
                         }
                         case "PAY_C": {
-                            //statements; 
                             this._PAY_C_Total = item.Value;
                             break;
                         }
-                        case "PAY_R": {
-                            //statements; 
+                        case "PAY": {
                             this._PAY_R_Total = item.Value;
+                            var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
+                            TabFilter.Total = item.Value;
                             break;
                         }
                         case "PAY_I": {
-                            //statements; 
                             this._PAY_I_Total = item.Value;
                             break;
                         }
@@ -936,7 +958,9 @@ implements OnDestroy
 
         switch (this._SelectedTabFilter.Code) {
             //case "ACC":
-            case "ALL": {
+            case "ALL":
+            case "PAY":
+            case "DEC":{
                 break;
             }
             default: {
@@ -978,14 +1002,38 @@ implements OnDestroy
             }
         }
 
-        switch (this._SelectedDECValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
+        if (this._SelectedTabFilter.Code == "DEC") {
+            switch (this._SelectedDECTABValue) {
+                case "I": {
+                    filters.addAdditionalFilter("CourierDeclarationStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "R": {
+                    filters.addAdditionalFilter("CourierDeclarationStatusCode", "R", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "V": {
+                    filters.addAdditionalFilter("CourierDeclarationStatusCode", "V", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "MX": {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    switch (this._SelectedDECValue) {
+                        case "C": {
+                            filters.addAdditionalFilter("CourierDeclarationStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                        case "W": {
+                            filters.addAdditionalFilter("CourierDeclarationStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
@@ -1041,18 +1089,21 @@ implements OnDestroy
             }
         }
 
-        switch (this._SelectedPAYValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierPaymentStatusCode", "R,O", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "R": {
-                filters.addAdditionalFilter("CourierPaymentStatusCode", "R", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "I": {
-                filters.addAdditionalFilter("CourierPaymentStatusCode", "I", null, null, "Equals", false, false, false, "string");
-                break;
+        if (this._SelectedTabFilter.Code == "PAY") {
+            switch (this._SelectedPAYValue) {
+                case "C": {
+                    filters.addAdditionalFilter("CourierPaymentStatusCode", "R,O", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "R": {
+                    //filters.addAdditionalFilter("CourierPaymentStatusCode", "R", null, null, "Equals", false, false, false, "string");
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
+                case "I": {
+                    filters.addAdditionalFilter("CourierPaymentStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
             }
         }
 
@@ -1106,6 +1157,13 @@ implements OnDestroy
 
         if (this._SelectedDECValue != value) {
             this._SelectedDECValue = value;
+            this.RefreshList();
+        }
+    }
+
+    DECTABFilterClicked(value: string) {
+        if (this._SelectedDECTABValue != value) {
+            this._SelectedDECTABValue = value;
             this.RefreshList();
         }
     }
