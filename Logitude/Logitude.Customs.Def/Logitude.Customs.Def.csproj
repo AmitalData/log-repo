@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="ClosedTable\CustomsDeploymentStage.cs" />
     <Compile Include="ClosedTable\CustomsRequestsSheetStatusDetails.cs" />
+    <Compile Include="ClosedTable\CustomsSchedulerProcedureDetails.cs" />
     <Compile Include="ClosedTable\ICloseTable.cs" />
     <Compile Include="ClosedTable\InterfaceManagementDetails.cs" />
     <Compile Include="ClosedTable\InterfaceSendOptionsDetails.cs" />

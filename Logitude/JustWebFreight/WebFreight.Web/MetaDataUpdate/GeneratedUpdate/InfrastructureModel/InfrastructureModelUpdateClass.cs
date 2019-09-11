@@ -705,13 +705,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
                 PrepaidCollectUpdateClass.FillPrepaidCollect();
 
 
-                //SchedulerProcedureUpdateClass.FillSchedulerProcedure();
+                SchedulerProcedureUpdateClass.FillSchedulerProcedure();
 
 
 
                 VolumeUnitUpdateClass.FillVolumeUnit();
             }
-            SchedulerProcedureUpdateClass.FillSchedulerProcedure();
+            //SchedulerProcedureUpdateClass.FillSchedulerProcedure();
 
         }
 

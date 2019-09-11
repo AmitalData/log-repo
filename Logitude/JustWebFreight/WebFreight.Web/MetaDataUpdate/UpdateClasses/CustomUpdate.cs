@@ -17349,6 +17349,17 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                                 Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails,
                                 Logitude.Customs.Data.Repsitories.InterfaceSendOptionRepository>(repo, dic);
         }
+        //SchedulerProcedureUpdateClass.FillSchedulerProcedure();
+        public void FillSchedulerProcedure()
+        {
+            var repo = new SchedulerProcedureRepository(0);
+            var dic = repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
+            this.FillCloseTable<
+                                SchedulerProcedure,
+                                CustomsSchedulerProcedureDetails,
+                                SchedulerProcedureRepository>(repo, dic);
+        }
+    
 
         public void FillAssigneeNotificationTypeTable()
         {

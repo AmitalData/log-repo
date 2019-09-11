@@ -324,6 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.FillCustomsNotificationDefinitions();
 
                             updateClass.FillCustomsInterfaceSendOptions();
+                            updateClass.FillSchedulerProcedure();
                             updateClass.FillCustomsInterfaceManagements();
 
 
