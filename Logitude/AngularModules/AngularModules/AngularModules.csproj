@@ -929,6 +929,7 @@
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\Others\CacheCourierPendingReasonService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AgentTalkBackTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ApprovedProfessionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\ContinuousRequestTypeListService.ts" />
