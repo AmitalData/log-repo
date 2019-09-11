@@ -5,6 +5,7 @@
             <div class="MediaFill">
 
                 <div *ngIf="FieldName == 'FollowUpDate'" [ngStyle]="{color: FieldValue | FollowUpDatePipe:'F'}">{{FieldValue | DateTimeToDatePipe}}</div>
+                <div *ngIf="FieldName == 'AcceptedDate'">{{FieldValue | DateTimePipe :'DT'}}</div>
 
                 <div *ngIf="FieldName == 'Notes'">{{FieldValue}}</div>
 
