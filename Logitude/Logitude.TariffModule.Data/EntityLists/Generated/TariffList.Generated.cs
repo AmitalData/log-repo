@@ -62,6 +62,8 @@ namespace Logitude.TariffModule.Data.EntityLists
        public string TariffNumber  { get; set; }
        [DataMember]
        public bool IsFromUpdateScreen  { get; set; }
+       [DataMember]
+       public bool IsFromCopy  { get; set; }
    }
 
 }

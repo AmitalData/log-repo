@@ -12,6 +12,7 @@ import { CommonDomainService } from '../../../../Common/Services/CommonDomainSer
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffDomainService, UpdateSurchargeArgs } from '../../../Services/TariffDomainService';
 import { AppTool } from '../../../../Infrastructure/Tools';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
     moduleId: module.id,
@@ -23,7 +24,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public DataContext = this;
     public ObjectTableName = "Tariff";
     public EntityPM: TariffVersionPM;
-    public Logs= [];
+    public Logs: ObservableCollection;
     public ValidationErrorsList: string[] = [];
     public TariffChargesObsList: TariffCharge[];
     public FromAirlineAreas: AirlineAreaClass[];
@@ -69,10 +70,19 @@ export class UpdateSurchargesComponent extends BaseComponent {
     }
 
     private FillLogs() {
+        this.Logs  = new ObservableCollection([]);
         var service: TariffDomainService = new TariffDomainService();
         service.GetTariffsLogsByTariffId(this.EntityPM.TariffId, this.EntityPM.Version).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.Logs = myResponse.Result;
+                var list: TariffSurchargesUpdateItem[] = [];
+                var index = 1;
+                if (myResponse.Result != null) {
+                    myResponse.Result.forEach(item => {
+                        list.push(new TariffSurchargesUpdateItem(item, index));
+                        index = index + 1;
+                    });
+                    this.Logs.InsertCollection(list);
+                }             
             }
         });
     }
@@ -524,16 +534,18 @@ export class AirlineAreaClass {
 }
 
 export class TariffSurchargesUpdateItem {
-    public entity: TariffSurchargesUpdatePM;
-
-    constructor() {
-
+    public EntityPM: TariffSurchargesUpdatePM;
+    public Index;
+    constructor(entity: TariffSurchargesUpdatePM, index: number) {
+        this.EntityPM = entity;
+        this.Index = index;
     }
-
-    public get To() { return this.entity.To; }
-    public get From() { return this.entity.From; }
-    public get CreateDate() { return this.entity.CreateDate; }
-    public get StartDate() { return this.entity.StartDate; }
-    public get LinesUpdated() { return this.entity.LinesUpdated; }
-    public get Surcharges() { return this.entity.Surcharges; }
+    public get To() { return this.EntityPM.To; }
+    public get From() { return this.EntityPM.From; }
+    public get CreateDate() { return this.EntityPM.CreateDate; }
+    public get StartDate() { return this.EntityPM.StartDate; }
+    public get LinesUpdated() { return this.EntityPM.LinesUpdated; }
+    public get Surcharges() { return this.EntityPM.Surcharges; }
+    public get UpdateMethodCode() { return this.EntityPM.UpdateMethodCode; }
+    public get UpdateMethodName() { return this.EntityPM.UpdateMethodName; }
 }
