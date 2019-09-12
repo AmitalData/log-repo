@@ -91,6 +91,7 @@ implements OnDestroy
     //Selected tabs
     _SelectedPAYValue: string = 'R'; // Correct/InProgress/ReadyToSend
     _SelectedDECTABValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
+    _SelectedMNFTABValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
 
     public columns: any[] = null;
 
@@ -150,6 +151,7 @@ implements OnDestroy
         this._CourierWorksheetSharedDataService._SelectedItems.Collection = [];
         this._SelectedTabFilter = item;
         this._SelectedMNFValue = 'A';
+        this._SelectedMNFTABValue = 'MX';
         this._SelectedDECValue = 'A';
         this._SelectedDECTABValue = 'MX';
         this._SelectedDOCValue = 'A';
@@ -522,6 +524,10 @@ implements OnDestroy
     _DEC_V_Total = 0;
     _MNF_W_Total = 0;
     _MNF_C_Total = 0;
+    _MNF_MX_Total = 0;
+    _MNF_R_Total = 0;
+    _MNF_I_Total = 0;
+    _MNF_V_Total = 0;
     _ACC_W_Total = 0;
     _ACC_WS_Total = 0;
     _CorrectMNFToBatchSend = 0;
@@ -584,6 +590,7 @@ implements OnDestroy
                                 this._ReadyMNFToBatchSend = 0;
                             }
                             this._ReadyMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSendR") + ' (' + this._ReadyMNFToBatchSend + ')';
+                            this._MNF_R_Total = item.Value;
                             break;
                         }
                         case "MNFR_RV": {
@@ -601,6 +608,12 @@ implements OnDestroy
                             TabFilter.Total = item.Value;
                             break;
                         }
+                        case "MNF": {
+                            this._MNF_MX_Total = item.Value;
+                            var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
+                            TabFilter.Total = item.Value;
+                            break;
+                        }
                         case "MNF_W": {
                             //statements; 
                             this._MNF_W_Total = item.Value;
@@ -608,6 +621,14 @@ implements OnDestroy
                         }
                         case "MNF_C": {
                             this._MNF_C_Total = item.Value;
+                            break;
+                        }
+                        case "MNF_V": {
+                            this._MNF_V_Total = item.Value;
+                            break;
+                        }
+                        case "MNF_I": {
+                            this._MNF_I_Total = item.Value;
                             break;
                         }
                         case "DOC": {
@@ -960,6 +981,7 @@ implements OnDestroy
             //case "ACC":
             case "ALL":
             case "PAY":
+            case "MNF":
             case "DEC":{
                 break;
             }
@@ -991,14 +1013,38 @@ implements OnDestroy
             }
         }
 
-        switch (this._SelectedMNFValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
+        if (this._SelectedTabFilter.Code == "MNF") {
+            switch (this._SelectedDECTABValue) {
+                case "I": {
+                    filters.addAdditionalFilter("CourierManifestStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "R": {
+                    filters.addAdditionalFilter("CourierManifestStatusCode", "R", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "V": {
+                    filters.addAdditionalFilter("CourierManifestStatusCode", "V", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "MX": {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    switch (this._SelectedMNFValue) {
+                        case "C": {
+                            filters.addAdditionalFilter("CourierManifestStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                        case "W": {
+                            filters.addAdditionalFilter("CourierManifestStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
@@ -1104,6 +1150,10 @@ implements OnDestroy
                     filters.addAdditionalFilter("CourierPaymentStatusCode", "I", null, null, "Equals", false, false, false, "string");
                     break;
                 }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
@@ -1149,6 +1199,13 @@ implements OnDestroy
 
         if (this._SelectedMNFValue != value) {
             this._SelectedMNFValue = value;
+            this.RefreshList();
+        }
+    }
+
+    MNFTABFilterClicked(value: string) {
+        if (this._SelectedMNFTABValue != value) {
+            this._SelectedMNFTABValue = value;
             this.RefreshList();
         }
     }
