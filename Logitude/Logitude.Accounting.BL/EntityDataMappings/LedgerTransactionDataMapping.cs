@@ -77,7 +77,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.OppositeAccountId != null)
             {
                 GLAccountQueryService glaQuery = new GLAccountQueryService(entityPOCO.Tenant);
-                GLAccountPM gla = glaQuery.GetSinglePM(entityPOCO.OppositeAccountId, entityPOCO.Tenant);
+                GLAccountPM gla =
+                    //glaQuery.GetSinglePM(entityPOCO.OppositeAccountId, entityPOCO.Tenant);
+                    glaQuery.GetSingle(entityPOCO.OppositeAccountId, false, true);
                 entityPM.OppositeAccountEnglishName = gla.EnglishName;
                 entityPM.OppositeAccountLocalName = gla.LocalName;
                 entityPM.OppositeAccountDisplayNumber = gla.DisplayNumber;
@@ -95,7 +97,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 // get reconciliaiton
                 if (recoLine != null)
                 {
-                    var reco = recoQuery.GetSingle(recoLine.ReconciliationId, false, false);
+                    var reco = recoQuery.GetSingle(recoLine.ReconciliationId, false, true);
                     entityPM.RecoNumber = reco.Number;
                     entityPM.ReconciliationId = reco.Id;
                 }
