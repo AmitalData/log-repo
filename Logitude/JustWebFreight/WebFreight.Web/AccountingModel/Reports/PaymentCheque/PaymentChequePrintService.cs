@@ -94,7 +94,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                 PaymentChequeDP.TaxDeductionLocalAmount = appayment.TaxDeductionLocalAmount;
                 PaymentChequeDP.TaxDeductionPercentage = appayment.TaxDeductionPercentage;
                 PaymentChequeDP.AmountInLocalCurrency = appayment.AmountInLocalCurrency;
-                PaymentChequeDP.InternalNotes = appayment.InternalNotes;
+                PaymentChequeDP.PrintNotes = appayment.PrintNotes;
 
             }
             if (paymentChequePM.CurrencyCode == "NIS" || paymentChequePM.CurrencyCode == "ILS")
