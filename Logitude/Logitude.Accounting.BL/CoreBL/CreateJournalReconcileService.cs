@@ -40,8 +40,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 _AccountingContext = accountingContext;
                 var usrid = AuthenticationUtil.ResolveUserId(tenant);
-                var totReconciliationAmount = ReconciliationLines.Sum(r => r.ReconciliationAmount);
-                if (totReconciliationAmount == 0)
+                decimal totReconciliationAmountFromUnknownCurrency = ReconciliationLines.Sum(r => r.ReconciliationAmount);
+                if (totReconciliationAmountFromUnknownCurrency == 0)
                 {
                     throw new Exception("Total ReconciliationAmount is zero");
                 }
@@ -99,7 +99,25 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     throw new Exception("שער המטבע לא קיים בטבלת שערי המטבעות");
                 }
-                var totForeign = totReconciliationAmount / (decimal)rate.Rate.GetValueOrDefault();
+                
+                
+                
+
+
+                decimal totForeign;//= totReconciliationAmount / (decimal)rate.Rate.GetValueOrDefault();
+                decimal totReconciliationLocalAmount;
+                bool useLocalRecoMethod = (glPM.ReconcileMethodCode == "0");
+                if (useLocalRecoMethod)
+                {
+                    totReconciliationLocalAmount = totReconciliationAmountFromUnknownCurrency;
+                    totForeign = totReconciliationLocalAmount / (decimal)rate.Rate.GetValueOrDefault();
+                }
+                else
+                {
+                    totForeign = totReconciliationAmountFromUnknownCurrency;
+                    totReconciliationLocalAmount = totForeign * (decimal)rate.Rate.GetValueOrDefault();
+                }
+
                 JournalPM journal = new JournalPM()
                 {
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -131,9 +149,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 };
 
                 //totForeign= TranslateForeignAmount(journal.AccountingDate , totReconciliationAmount)
-                if (totReconciliationAmount < 0)///credit //Ohad :
+                if (totReconciliationLocalAmount < 0)///credit //Ohad :
                 {
-                    totReconciliationAmount = -1 * totReconciliationAmount; //Ohad :
+                    totReconciliationLocalAmount = -1 * totReconciliationLocalAmount; //Ohad :
                     totForeign = -1 * totForeign; //Ohad :
                     journal.JournalLines.Add(new JournalLinePM()
                     {
@@ -143,7 +161,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         AccountingDate = journal.AccountingDate,
                         ActionCode = "2",//- Debit
                         DebitAccountId = TheAccountId,
-                        LocalAmount = totReconciliationAmount,
+                        LocalAmount = totReconciliationLocalAmount,
                         CurrencyId = theCurrencyId,
                         ForeignAmount = totForeign,
 
@@ -160,7 +178,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         AccountingDate = journal.AccountingDate,
                         ActionCode = "1",//- Credit
                         CreditAccountId = AdjustAccountId,
-                        LocalAmount = totReconciliationAmount,
+                        LocalAmount = totReconciliationLocalAmount,
 
                         CurrencyId = theCurrencyId,
                         ForeignAmount = totForeign,
@@ -179,7 +197,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         AccountingDate = journal.AccountingDate,
                         ActionCode = "1",//- Credit 
                         CreditAccountId = TheAccountId,
-                        LocalAmount = totReconciliationAmount,
+                        LocalAmount = totReconciliationLocalAmount,
 
                         CurrencyId = theCurrencyId,
                         ForeignAmount = totForeign,
@@ -198,7 +216,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         ActionCode = "2",//- Debit
                         DebitAccountId = AdjustAccountId,
-                        LocalAmount = totReconciliationAmount,
+                        LocalAmount = totReconciliationLocalAmount,
 
 
                         CurrencyId = theCurrencyId,

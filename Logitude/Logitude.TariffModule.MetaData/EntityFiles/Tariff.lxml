@@ -139,5 +139,6 @@
   <AdditionalFeatures>
     <Feature Code="&quot;TARRIFAPPROVEVERSION&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Tariff.Features.TARRIFAPPROVEVERSION&quot;" FeatureDefaultText="&quot;Approve Version&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;UPDATESURCHARGES&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Tariff.Features.UPDATESURCHARGES&quot;" FeatureDefaultText="&quot;Update Surcharges&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;UPDATEMISSINGPORTS&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Tariff.Features.UPDATEMISSINGPORTS&quot;" FeatureDefaultText="&quot; Update Missing Ports &quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
