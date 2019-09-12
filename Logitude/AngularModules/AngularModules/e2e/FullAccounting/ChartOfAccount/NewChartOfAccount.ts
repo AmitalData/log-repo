@@ -27,7 +27,9 @@ export class NewChartOfAccount {
         if (Type == 'Revenue') {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Revenue');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'R');
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -37,7 +39,9 @@ export class NewChartOfAccount {
         else if (Type == 'Customer') {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Customer');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'C');
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -48,7 +52,9 @@ export class NewChartOfAccount {
         else if (Type == 'Vendor') {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Vendor');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'V');
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -59,7 +65,9 @@ export class NewChartOfAccount {
         else if (Type == 'Banks') {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Banks');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'B');
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -69,7 +77,9 @@ export class NewChartOfAccount {
         else if (Type == 'Expenses') {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Expenses');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'E');
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -79,7 +89,9 @@ export class NewChartOfAccount {
         else if (Type == 'Works') {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Works');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'W');
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -89,7 +101,9 @@ export class NewChartOfAccount {
         else if (Type == 'Debtors And Creditors') {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Debtors And Creditors');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'D');
+            this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
