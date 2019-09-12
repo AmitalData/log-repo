@@ -455,7 +455,10 @@ namespace WebFreight.Web
         bool _IAmDebuging_StopOpenNewThreads = false;
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-
+            if (LogitudeSettings.ForceHttps)
+            {
+                SecurityUtility.RedirectToHttps();
+            }
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 var he = new CultureInfo("he-IL");// '("en-US") '    "he-IL")

@@ -43,8 +43,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string Name { get; set; }
         [Column("InActive")]
 	    public bool InActive { get; set; }
-        [Column("Description")]
-	    public string Description { get; set; }
+        [Column("Notes")]
+	    public string Notes { get; set; }
         [ForeignKey("Seller")]
         [Column("SellerId")]
 	    public string SellerId { get; set; }

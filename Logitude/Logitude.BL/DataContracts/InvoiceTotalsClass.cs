@@ -16,5 +16,6 @@ namespace Logitude.BL.DataContracts
         public string ExternalVatCard { get; set; }
         public string ExternalTAXItemId { get; set; }
         public string VatTypeCell { get; set; }
+        public double VatRecognizedPercentage { get; set; }
     }
 }

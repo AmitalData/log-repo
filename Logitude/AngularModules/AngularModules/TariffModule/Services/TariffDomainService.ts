@@ -96,10 +96,10 @@ export class TariffDomainService {
         });
     }
 
-    GetTariffsLogsByTariffId( tariffId: string) {
+    GetTariffsLogsByTariffId( tariffId: string, version: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetTariffsLogsByTariffId?tariffId=' + tariffId;
+        var url = this._apiUrl + '/GetTariffsLogsByTariffId?tariffId=' + tariffId + "&version=" + version;
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
                 var listJason = response.json();

@@ -11,6 +11,7 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.EntityPMs; 
 using Logitude.TariffModule.Data;
 using Simplog.Server.Infrastructure;
+using Logitude.TariffModule.Data.Repositories;
 
 namespace Logitude.TariffModule.BL.EntityDataMappings
 {
@@ -31,9 +32,19 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 
         public void CustomPOCOToPM(TariffSurchargesUpdatePM entityPM, TariffSurchargesUpdate entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPMProperties.Add(PMPropertyNames.UpdateMethodName);
+
+            if (!string.IsNullOrEmpty(entityPOCO.UpdateMethodCode))
+            {
+                TariffSurchargesUpdateMethodRepository repository = new TariffSurchargesUpdateMethodRepository(entityPOCO.Tenant);
+                TariffSurchargesUpdateMethod method = repository.GetSingle(entityPOCO.UpdateMethodCode);
+                if (method != null)
+                {
+                    entityPM.UpdateMethodName = method.Name;
+                }
+            }
         }
-   }
+    }
 
 
 }
