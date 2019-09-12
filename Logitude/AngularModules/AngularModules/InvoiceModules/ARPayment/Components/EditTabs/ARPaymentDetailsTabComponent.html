@@ -22,9 +22,13 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td style="width:600px">{{'ARPayment.TH.Details' | TextCodeTranslationPipe}}</td>
+                                    <td style="width:120px">{{'ARPayment.TH.Details' | TextCodeTranslationPipe}}</td>
                                     <td>
-                                        <div></div>
+                                        <div class="MediaFill">
+                                            <!--<div class="OrangeInfo">{{EntityWarning}}</div>-->
+                                            <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0" [ItemsSource]="EntityWarningsList"></WarningSummary>
+                                        </div>
+
                                     </td>
                                 </tr>
                             </table>

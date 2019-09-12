@@ -38,7 +38,7 @@ using System.Web;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-
+using Simplog.Data.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -237,8 +237,8 @@ namespace CommunicationWorkerRole
                                                 ShipmentNumber = ForwarderShipment.ForwarderShipmentNumber,
                                                 Tenant = (int)Partner.PartnerTenant,
                                                 Code = "VDK",
-                                                Date = DateTime.Now.ToShortDateString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
-                                                Time = DateTime.Now.ToShortTimeString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
+                                                Date = TenantServerConfigration.GetCurrentDateTime(tenant).ToShortDateString(), //DateTime.Now.ToShortDateString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
+                                                Time = TenantServerConfigration.GetCurrentDateTime(tenant).ToShortTimeString(),//DateTime.Now.ToShortTimeString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
                                                 Remarks = "Approval Task Received",
                                                 Direction = ForwarderShipment.DirectionId
                                             };

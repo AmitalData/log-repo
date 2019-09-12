@@ -240,12 +240,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(entityPM.PageNo, entityPM.BankAccountId, entityPM.Tenant);
                 if (prevPage != null)
                 {
-                    //1
-                    if (entityPM.FromDate.Date <= prevPage.ToDate.Date)
-                    {
-                        errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.FromDateShouldBiggerPrevToDate", entityPM.Tenant, useLocal));
-                    }
+                    bool avoidCheckReferenceDate = true;//ohad+ eyal
 
+                    if (avoidCheckReferenceDate)
+                    {
+
+                    }
+                    else
+                    {
+                        //1
+                        if (entityPM.FromDate.Date <= prevPage.ToDate.Date)
+                        {
+                            errors.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.FromDateShouldBiggerPrevToDate", entityPM.Tenant, useLocal));
+                        }
+                    }
                     //2
                     if (entityPM.ToDate.Date < entityPM.FromDate.Date)
                     {

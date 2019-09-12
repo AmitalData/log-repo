@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "26266606-8022-4848-b10d-a6e739513d76",
 		"name": "DocumentsOut",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -772,7 +772,16 @@
 					"mode": "raw",
 					"raw": "{\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": true,\n  \"$id\": \"1\",\n  \"id\": \"{{DocumentOutAirManifestId}}\",\n  \"tenant\": \"{{Tenant}}\",\n  \"Note\": null,\n  \"issuedDate\": null,\n  \"entityId\": \"{{DirectShipmentAirExportId}}\",\n  \"objectTableId\": \"{{ObjectTableId}}\",\n  \"issuedByUserId\": \"{{LoggedUserId}}\",\n  \"documentTypeId\": \"{{AirManifestId}}\",\n  \"issued\": true,\n  \"followUpId\": null,\n  \"followUpCount\": 0,\n  \"issuedByUserName\": \"\",\n  \"extension\": null,\n  \"documentTypeName\": \"Air Manifest\",\n  \"reportTemplate\": null,\n  \"hasFollowUp\": false,\n  \"documentTypeCode\": \"785A\",\n  \"hTMLTemplate\": null,\n  \"templateType\": \"P\",\n  \"documentTypeSubject\": null,\n  \"editableFields\": null,\n  \"documentTemplateId\": \"{{documentTemplateId}}\",\n  \"emailTemplateId\": \"{{emailTemplateId}}\",\n  \"childEntityId\": null,\n  \"childEntityReference\": null,\n  \"xamlDocumentId\": null,\n  \"documentTemplateEditorTool\": \"S\",\n  \"documentTypeObjectTableId\": \"{{ObjectTableId}}\",\n  \"needsRebuild\": false,\n  \"isBlobExist\": false,\n  \"fileSize\": null,\n  \"fileName\": null,\n  \"name\": null,\n  \"isChangeIssuedDate\": true,\n  \"documentOutCopies\": [\n  \t    {\n      \"$id\": \"2\",\n      \"Id\": \"{{DocumentOutCopyId}}\",\n      \"Tenant\": \"{{Tenant}}\",\n      \"DocumentId\": \"{{DocumentOutCopyId}}\",\n      \"DocumentOutId\": \"{{DocumentOutAirManifestId}}\",\n      \"DocumentTypeCopyId\": \"{{DocumentTypeCopyId}}\",\n      \"DocoumentTypeCopyName\": \"Air Manifest\",\n      \"DocumentTypeCopyNameWithDocumentTypeName\": \"Air Manifest\",\n      \"LastPrintedByUserId\": null,\n      \"LastPrintDate\": null,\n      \"FileSize\": null,\n      \"FileName\": \"Air Manifest\",\n      \"LastPrintedByUserName\": null,\n      \"CalculatedFileName\": \"Air Manifest\",\n      \"changeOp\": 0\n    }\n  \t],\n  \"IsAgentView\": false,\n  \"IsCustomerView\": false\n}"
 				},
-				"url": "{{URL}}/api/DocumentOutExtended"
+				"url": {
+					"raw": "{{URL}}/api/DocumentOutExtended",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"DocumentOutExtended"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1034,7 +1043,17 @@
 					"mode": "raw",
 					"raw": "{\"HtmlString\":\"<html><head><meta http- equiv='Content- Type' content= 'text/html; charset = iso-8859-1' > <style type='text/css' style= 'display: none; '></style></head><body><p style=\\\"font-size: 16px; overflow-wrap: break-word;\\\">Integration Test</p></body></html>\",\"InternalDocumentId\":\"{{DocumentOutAirManifestId}}\",\"ToEmail\":\"ahmadb@logitudeworld.com\",\"Tenant\":\"{{Tenant}}\",\"UserId\":\"{{LoggedUserId}}\",\"ObjectTableId\":\"{{ObjectTableId}}\",\"EntityReference\":\"\",\"EntityId\":\"{{DirectShipmentAirExportId}}\",\"Subject\":\"Air Manifest\",\"Cc\":\"\",\"Bcc\":\"\",\"Attachments\":\"{{DocumentOutCopyId}},\",\"ObjectTableName\":\"Shipment\",\"From\":\"\",\"ReplyTo\":\"\"}"
 				},
-				"url": "{{URL}}/api/HtmlEditor/postsendhtmldocument"
+				"url": {
+					"raw": "{{URL}}/api/HtmlEditor/postsendhtmldocument",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"HtmlEditor",
+						"postsendhtmldocument"
+					]
+				}
 			},
 			"response": []
 		}
