@@ -353,6 +353,11 @@ export class TariffPM {
     public set IsFromUpdateScreen(newValue: boolean) { if (this.isFromUpdateScreen != newValue) { this.isFromUpdateScreen = newValue; this.MarkAsDirty("IsFromUpdateScreen"); } }
        
 	 
+    private isFromCopy: boolean;
+    public get IsFromCopy() { return this.isFromCopy; }
+    public set IsFromCopy(newValue: boolean) { if (this.isFromCopy != newValue) { this.isFromCopy = newValue; this.MarkAsDirty("IsFromCopy"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

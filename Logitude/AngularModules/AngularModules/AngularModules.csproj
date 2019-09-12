@@ -796,9 +796,8 @@
     <TypeScriptCompile Include="e2e\FullAccounting\BankAccount\NewBankAccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\BankAccount\NewGLAccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\ChartOfAccount-spec.ts" />
-    <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\ChartOFAccountModule.ts" />
-    <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\EditEntity\EditChartOfAccount.ts" />
-    <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\NewEntity\NewChartOfAccount.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\EditChartOfAccount.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\NewChartOfAccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\FullAccScenarios-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\FullAccScenarios.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\Edit\EditGLaccount.ts" />
@@ -808,6 +807,9 @@
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\New\NewGLaccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\CustomerGLAccount-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\VendorGLAccount-spec.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\PaymentCheque\EditPaymentCheque.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\PaymentCheque\NewPaymentCheque-spec.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\PaymentCheque\NewPaymentCheque.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Helpers\FieldsHelper.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Helpers\GeneralFunctions.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Shipments\CreateLogboxShipment.ts" />
@@ -2142,6 +2144,7 @@
     <Content Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.html" />
+    <Content Include="TariffModule\Components\Helpers\TariffHelperComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
@@ -6528,6 +6531,7 @@
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\Helpers\TariffHelperComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\MenuButtons\TariffMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.ts" />
