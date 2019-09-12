@@ -113,7 +113,7 @@
                                 </div>
 
                                 <div style="width: 100%; text-align: center;" *ngIf="logcelltemplate.IsEditMode && item.GridViewCellEditControlVisibility">
-                                    <LogTextBox [FocusOnMe]="'true'" [InputType]="'double'" [ObjectFieldName]="'TEU'" [Text]="item.TEU" [ObjectTableName]="'OpportunityProduct'" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'TEU'" [Text]="item.TEU" [DataContext]="item" [ObjectTableName]="'OpportunityProduct'" [HideColumns]="true"></LogTextBox>
                                 </div>
                             </log-cell-template>
                         </log-column>

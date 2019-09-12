@@ -2623,7 +2623,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                             arrayChargeType = charge_array[4];
                                         }
 
-                                        mySurchargesText += arrayChargeType + ",";
+                                        mySurchargesText += arrayChargeType + ", ";
 
                                         PropertyInfo valuePropInfo1 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
                                         PropertyInfo valuePropInfo2 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
@@ -2667,7 +2667,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                             arrayChargeType = charge_array[4];
                                         }
 
-                                        mySurchargesText += arrayChargeType + ",";
+                                        mySurchargesText += arrayChargeType + ", ";
                                         PropertyInfo valuePropInfo1 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
                                         PropertyInfo valuePropInfo2 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
                                         valuePropInfo1.SetValue(tariffLine, price, null);
@@ -2683,14 +2683,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 tariffSurchageLog = new TariffSurchargesUpdatePM();
                                 tariffSurchageLog.TariffId = tariff.Id;
                                 tariffSurchageLog.Version = tariff.LastVersion;
-                                tariffSurchageLog.Surcharges = mySurchargesText != null ? mySurchargesText.TrimEnd(',') : mySurchargesText;
+                                tariffSurchageLog.Surcharges = mySurchargesText != null ? mySurchargesText.Trim().TrimEnd(',') : mySurchargesText;
                                 tariffSurchageLog.StartDate = args.StartDate;
                                 tariffSurchageLog.LinesUpdated = item.Count;
                                 tariffSurchageLog.UpdateMethodCode = "BA";
                                 tariffSurchageLog.ChangeSetOp = ChangeSetOperation.Insert;
                                 tariffSurchageLog.Tenant = authToken.Tenant;
-                                tariffSurchageLog.To = SurchargeLog != null ? string.Join(",", item.ToPorts.ToArray()) : null;
-                                tariffSurchageLog.From = SurchargeLog != null ? string.Join(",", item.FromPorts.ToArray()) : null;
+                                tariffSurchageLog.To = SurchargeLog != null ? string.Join(", ", item.ToPorts.ToArray()) : null;
+                                tariffSurchageLog.From = SurchargeLog != null ? string.Join(", ", item.FromPorts.ToArray()) : null;
                                 tariffSurchargeUpdateService.Update(tariffSurchageLog, true);
                             }
 

@@ -20,7 +20,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public double? ProfitVatableAmount { get; set; }
         public string ExternalVATCard { get; set; }
         public string ExternalTAXItemId { get; set; }
-
+   
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }
 

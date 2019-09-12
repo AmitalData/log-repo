@@ -6,7 +6,7 @@ import { variable } from '@angular/compiler/src/output/output_ast';
 
 
 
-export class NewBankAccount {
+export class NewPaymentCheque {
     private Helper = new FieldsHelper();
     private gn = new GeneralFunctions();
 
@@ -15,48 +15,27 @@ export class NewBankAccount {
 
     }
 
-    CreateNewBankAccount(Name: string, Name1: string, Name2: string, Name3: string) {
+    CreateNewPaymentCheque() {
         browser.ignoreSynchronization = true;
         this.Helper.WaitByIdAndClick('FABNKS');
-        this.Helper.WaitByIdAndClick('NEWBANK');
-        this.Helper.ItemsVisibility('BankAccount_BankId');
-        this.Helper.ItemsPresent('BankAccount_BankId');
-       
-        this.Helper.WaitByIdAndFill('BankAccount_BankId', 'Leumi');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-        this.Helper.WaitByIdAndFill('BankAccount_BranchNumber', '12544');
-        this.Helper.WaitByIdAndFill('BankAccount_AccountNumber', Name);
-        this.Helper.WaitByIdAndFill('BankAccount_LocalName', Name);
-        this.Helper.WaitByIdAndFill('BankAccount_EnglishName', Name + 'English');
-        
-        this.Helper.WaitByIdAndFill('BankAccount_CurrencyId', 'NIS');
-        this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0),
-        this.Helper.WaitBusyIndicator();
-        this.Helper.WaitByIdAndFill('BankAccount_GLAccountId', Name1);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0),
-         this.Helper.WaitBusyIndicator();
-        this.Helper.WaitByIdAndFill('BankAccount_DeferredGLAccountId', Name2);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0),
-        this.Helper.WaitBusyIndicator();
-        this.Helper.ItemsPresent('BankAccount_TransferGLAcccountId');
 
-        this.Helper.WaitByIdAndFill('BankAccount_TransferGLAcccountId', Name3);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0),
-        this.Helper.WaitBusyIndicator();
-        this.Helper.WaitByIdAndClick('OKBUTTON');
+        this.Helper.ItemsVisibility('NEWPaymentCheque');
+        this.Helper.ItemsPresent('NEWPaymentCheque');
+        this.Helper.WaitByIdAndClick('NEWPaymentCheque');
+
+   
+        this.Helper.WaitByIdAndFill('PaymentCheque_PayToGLAccountId', 'אובי קנובי');
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+        this.Helper.WaitByIdAndFill('PaymentCheque_BankAccountId', 'לאומי חיפה');
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+
+        this.Helper.WaitByIdAndFill('PaymentCheque_LocalAmount', '1200');
+      
+        this.Helper.WaitByIdAndClick('CREATEPAYMENTCHEQUE');
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitWindowClosed();
-
-
-
-        // browser.sleep(6000);
-        // this.Helper.WaitByIdAndClick('EditBackbutton');
-
-
-
-
-
-
 
 
 

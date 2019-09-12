@@ -561,6 +561,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
                         myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.PayableVATCard;
                         myQroupItem.ExternalTAXItemId = lineVatType.ExternalTAXItemId;
+                       // myQroupItem.VatRecognizedPercentage = lineVatType.RecognizedPercentage;
                         group_Source.push(myQroupItem);
                     }
 
@@ -574,11 +575,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                             myQroupItem.LocalCurrencyAmount = item.LocalCurrencyAmount;
                             myQroupItem.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
                             myQroupItem.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+                     
                             myQroupItem.ExternalVatCard = SessionLocator.AccountingSettingPM.PayableVATCard;
 
                             var vatType = this.AllVatTypes.filter(f => f.Id == itemGroup.SingleVATTypeId)[0];
                             if (vatType) {
                                 myQroupItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
+                              //  myQroupItem.VatRecognizedPercentage = vatType.RecognizedPercentage;
                                 myQroupItem.VatTypePercentage = this.GetVatTypePercentage(vatType.Id);
                             }
 
@@ -608,6 +611,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     record.LocalCurrencyAmount = item.LocalCurrencyAmount;
                     record.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
                     record.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+
                     group_data.push(record);
                 }
             });
@@ -632,6 +636,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 itemTotalVAT.InvoiceCurrencyVATAmount = AppTool.Round((itemTotalVAT.InvoiceCurrencyVatableAmount * itemTotalVAT.VatPercent / 100), 2);
                 itemTotalVAT.ProfitCurrencyVATAmount = AppTool.Round((itemTotalVAT.ProfitVatableAmount * itemTotalVAT.VatPercent / 100), 2);
                 itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + itemTotalVAT.VatPercent + "%)";
+                itemTotalVAT.VatRecognizedPercentage = itemVatType.RecognizedPercentage/100;
                 this.EntityPM.AddAPInvoiceTotalVATPM(itemTotalVAT);
             });
         }
@@ -1570,7 +1575,7 @@ export class APInvoiceLineItem extends BaseComponent {
         }
 
         else {
-            this.fatherComponent.myVatTypeListService.getSingleFromCache(this.VatTypeId).subscribe((myResponse: ServiceResponse) => {
+            this.fatherComponent.myVatTypeListService.getSingle(this.VatTypeId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     var list: VatTypeList = myResponse.Result;
                     if (list != null) {
@@ -1578,7 +1583,7 @@ export class APInvoiceLineItem extends BaseComponent {
                         this.VatIsMultiPercentage = list.IsMultiPercentage;
                         //this.invoiceLinePM.ExternalVATCard = list.ExternalVATCard;
                         this.invoiceLinePM.ExternalTAXItemId = list.ExternalTAXItemId;
-
+                        this.invoiceLinePM.VatRecognizedPercentage = list.RecognizedPercentage/100;
                         if (list.IsMultiPercentage) {
                             this.VatPercentage = null;
                         }
