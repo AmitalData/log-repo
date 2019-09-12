@@ -37,7 +37,7 @@ describe('CRM Module',function (){
      
       
      // E.EditChartOfAccount(chartOfAccountNo+'C');
-    browser.sleep(5000);
+   // browser.sleep(5000);
 
 
 
