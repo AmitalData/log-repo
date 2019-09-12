@@ -21,7 +21,8 @@ export class NewVendor {
     this.Helper.WaitByIdAndFill('Address_CountryId', 'ps');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitBusyIndicator();
-    this.Helper.WaitByIdAndFill('Address_City', 'Nablus');
+      this.Helper.WaitByIdAndFill('Address_City', 'Nablus');
+      this.Helper.WaitBusyIndicator();
     this.Helper.WaitByIdAndClick('Ok-AddVendor');
     this.Helper.WaitBusyIndicator();
     this.Helper.WaitWindowClosed();
@@ -44,7 +45,7 @@ export class NewVendor {
    // this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name + DisplayNumber);
     this.Helper.WaitByIdAndFill('GLAccount_CurrencyId', 'Nis');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
+      this.Helper.WaitBusyIndicator();
       this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
       this.Helper.WaitBusyIndicator();
       this.Helper.WaitWindowClosed();
@@ -52,15 +53,15 @@ export class NewVendor {
       this.Helper.WaitBusyIndicator();
     //browser.sleep(5000);
     //this.Helper.WaitBusyIndicator();
-     var boo=this.Helper.ItemsVisibility('3mo');
-      if ('boo') {
-          this.Helper.WaitBusyIndicator();
-      this.Helper.WaitByIdAndClick('Vendor-SaveClose');
-      this.Helper.WaitBusyIndicator();
+   //  var boo=this.Helper.ItemsVisibility('3mo');
+      //if ('boo') {
+      //    this.Helper.WaitBusyIndicator();
+    //  this.Helper.WaitByIdAndClick('Vendor-SaveClose');
+     // this.Helper.WaitBusyIndicator();
     }
   }
 
-}
+//}
 
 
 
