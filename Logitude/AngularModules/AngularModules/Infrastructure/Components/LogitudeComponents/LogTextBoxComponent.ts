@@ -1753,11 +1753,14 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
             }
             else {
                 var _element = document.getElementById(this.InputId);
-                var elHeight = _element.clientHeight;
-                var calculatedRowsCount = (elHeight / 18);
-                var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
-                this.RowsCount = ___roundedCalculatedRowsCountHaha;
-                this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+
+                if (_element) {
+                    var elHeight = _element.clientHeight;
+                    var calculatedRowsCount = (elHeight / 18);
+                    var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
+                    this.RowsCount = ___roundedCalculatedRowsCountHaha;
+                    this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+                }
             }
         }, 100);
     }
