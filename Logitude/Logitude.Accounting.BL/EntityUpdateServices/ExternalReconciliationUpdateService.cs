@@ -215,7 +215,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             decimal ledgerLinesTotal = GetLedgerTransactionsTotal(entityPM);
             decimal bankLinesTotal = GetBankPageLinesTotal(entityPM);
 
-            decimal totalDifference = Math.Abs(bankLinesTotal - ledgerLinesTotal);
+            //decimal totalDifference = Math.Abs(bankLinesTotal - ledgerLinesTotal);
+            decimal totalDifference = Math.Abs(bankLinesTotal + ledgerLinesTotal);
 
             if (totalDifference != 0)
             {
