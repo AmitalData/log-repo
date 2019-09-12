@@ -11,7 +11,7 @@
         <td>
             <table *ngIf="IsResourcesReady">
 
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" *ngIf="IsAccountingActivated">
                     <td style="width:140px;">
                         <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [TextCode]="'ARInvoice.F.PartnerType'"></LogLabel>
                         <!--<label style="padding-left: 10px;">{{'ARInvoice.F.PartnerType' | TextCodeTranslationPipe}}</label>-->

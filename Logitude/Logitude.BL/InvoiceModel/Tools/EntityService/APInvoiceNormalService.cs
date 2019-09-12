@@ -1420,7 +1420,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     List<InvoiceTotalsClass> group_data
                         = (from items in group_Source
-                           group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId } into g
+                           group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId, items.VatRecognizedPercentage} into g
                            select new InvoiceTotalsClass()
                            {
                                Id = g.Key.VatTypeId,
@@ -1430,7 +1430,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
                                ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
                                ExternalVatCard = g.Key.ExternalVatCard,
-                               ExternalTAXItemId = g.Key.ExternalTAXItemId
+                               ExternalTAXItemId = g.Key.ExternalTAXItemId,
+                               VatRecognizedPercentage = g.Key.VatRecognizedPercentage
                            }).ToList();
 
                     foreach (InvoiceTotalsClass item in group_data)
@@ -1446,7 +1447,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             InvoiceCurrencyVatableAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2),
                             ProfitVatableAmount = MethodHelper.Round(item.ProfitCurrencyAmount, 2),
                             ExternalVATCard = item.ExternalVatCard,
-                            ExternalTAXItemId = item.ExternalTAXItemId
+                            ExternalTAXItemId = item.ExternalTAXItemId,
+                           // VatRecognizedPercentage = item.VatRecognizedPercentage,
                         };
 
                         record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
@@ -2044,7 +2046,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             DocumentDate = theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                             DueDate = theEntityPm.DueDate.Value,
-                                                            LocalAmount = (decimal)g.Sum(a => a.LocalCurrencyAmount),
+                                                            LocalAmount = (decimal)g.Sum(a => a.VatRecognizedPercentage != null?   a.LocalCurrencyAmount +((a.VatPercentage/100) * ((1- a.VatRecognizedPercentage) * a.LocalCurrencyAmount)) : a.LocalCurrencyAmount),
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
                                                             ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
                                                             ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
@@ -2057,14 +2059,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journal.JournalLines.AddRange(journalLines);
 
                     // [Vats]
-                    List<APInvoiceTotalVAT> APInvoiceTotalVATs = new List<APInvoiceTotalVAT>();
+                    //List<APInvoiceTotalVAT> APInvoiceTotalVATs = new List<APInvoiceTotalVAT>();
+
                     APInvoiceTotalVATRepository vatRepository = new APInvoiceTotalVATRepository(tenant);
-                    APInvoiceTotalVATs = vatRepository.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(theEntityPm.Id, tenant).ToList();
+                    APInvoiceTotalVATQuery aPInvoiceTotalVATQuery = new APInvoiceTotalVATQuery(tenant);
+                    //APInvoiceTotalVATs = vatRepository.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(theEntityPm.Id, tenant).ToList();
+                    List<APInvoiceTotalVATPM> totalVats = aPInvoiceTotalVATQuery.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(theEntityPm.Id, tenant);
                     counter = journal.JournalLines.Count();
 
                     // Accounting settings 
                     FullAccountingSettingPM accountingSettings = getFullAccountingSettings(theEntityPm.Tenant);
-                    foreach (APInvoiceTotalVAT vat in APInvoiceTotalVATs)
+                    foreach (APInvoiceTotalVATPM vat in totalVats)
                     {
                         journalLine = new JournalLinePM()
                         {
@@ -2077,12 +2082,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             DocumentDate = theEntityPm.InvoiceDate.Value,
                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                             DueDate = theEntityPm.DueDate.Value,
-                            LocalAmount = (decimal)vat.LocalVATAmount,
+                            LocalAmount = vat.VatRecognizedPercentage != null? (((decimal)vat.VatRecognizedPercentage /100 ) *(decimal)vat.LocalVATAmount)  : (decimal) vat.LocalVATAmount,
                             CurrencyId = theEntityPm.InvoiceCurrencyId,
                             ForeignAmount = (decimal)vat.InvoiceCurrencyVATAmount,
                             ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
                             Reference1 = theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
+
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                             CreditAccountId = theEntityPm.VendorGLAccountId,
                         };

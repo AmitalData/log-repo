@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "concurrently": "2.2.0",
+    "jasmine-reporters": "^2.0.0",
     "lite-server": "2.2.2",
     "protractor-jasmine2-html-reporter": "0.0.6",
     "protractor-jasmine2-screenshot-reporter": "0.3.2",

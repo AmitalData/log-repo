@@ -227,25 +227,25 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
-	  private string description ;
+	  private string notes ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Description  
+       public string Notes  
 	   {
 	    
 	     get
 		{
-		   return description;
+		   return notes;
 		 }
 		 set
 		 {
-		   if(description != value)
+		   if(notes != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Description",OldValue=description,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Notes",OldValue=notes,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   description=value;
+		   notes=value;
 		   }
 			
 		 }
@@ -1333,6 +1333,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromUpdateScreen",OldValue=isFromUpdateScreen,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   isFromUpdateScreen=value;
+		   }
+			
+		 }
+	   }
+	  private bool isFromCopy ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFromCopy  
+	   {
+	    
+	     get
+		{
+		   return isFromCopy;
+		 }
+		 set
+		 {
+		   if(isFromCopy != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromCopy",OldValue=isFromCopy,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFromCopy=value;
 		   }
 			
 		 }

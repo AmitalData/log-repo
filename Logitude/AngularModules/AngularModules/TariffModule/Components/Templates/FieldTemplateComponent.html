@@ -13,7 +13,18 @@
                             </div>
                         </td>
                     </tr>
-                </table>                
+                </table>
+
+                <table *ngIf="ObjectTableName == 'Tariff' && FieldName == 'CurrencyId'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                               {{FieldValue}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
             </div>
         </td>
     </tr>

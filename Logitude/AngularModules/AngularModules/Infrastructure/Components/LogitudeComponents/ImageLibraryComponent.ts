@@ -63,17 +63,19 @@ export class ImageLibraryComponent implements OnInit, AfterViewInit {
     }
 
     OnImageClick($imageUrl) {
-        if ($imageUrl) {
-            this.getBase64ImageFromURL($imageUrl).subscribe(base64data => {
-                console.log(base64data);
-                // this is the image as dataUrl
-                let base64Image:string  = 'data:image/jpg;base64,' + base64data;
+        this.CurrentSession.CurrentWindow.Close($imageUrl);
+        
+        //if ($imageUrl) {
+        //    this.getBase64ImageFromURL($imageUrl).subscribe(base64data => {
+        //        console.log(base64data);
+        //        // this is the image as dataUrl
+        //        let base64Image:string  = 'data:image/jpg;base64,' + base64data;
 
-                this.CurrentSession.CurrentWindow.Close(base64Image);
-            });
-        }
-        else
-            this.CurrentSession.CurrentWindow.Close(null);
+        //        this.CurrentSession.CurrentWindow.Close(base64Image);
+        //    });
+        //}
+        //else
+        //    this.CurrentSession.CurrentWindow.Close(null);
     }
 
     getBase64ImageFromURL(url: string) {
