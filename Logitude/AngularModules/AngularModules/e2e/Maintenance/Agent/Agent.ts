@@ -20,6 +20,7 @@ export class NewAgent {
         this.helper.WaitByIdAndClick('General.MH.Maintenance');
         this.helper.waitByCss('#null_Search');
         this.helper.WaitBusyIndicator();
+
     }
 
     SearchAgentTab() {
@@ -51,6 +52,8 @@ export class NewAgent {
         this.helper.WaitByIdAndClick('LogGrid_0_0row0');
         //edit 
         this.helper.WaitByIdAndFill('Agent_Notes', "This Is Test For Protractor")
+     //   this.helper.ItemsVisibility('Agent-Save')
+      //  this.helper.ItemsPresent('Agent-Save')
         this.helper.WaitByIdAndClick('Agent-Save');
 
     }
