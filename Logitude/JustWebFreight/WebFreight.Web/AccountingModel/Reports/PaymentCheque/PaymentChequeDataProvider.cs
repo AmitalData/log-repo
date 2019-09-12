@@ -36,7 +36,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         public decimal? TaxDeductionLocalAmount { get; set; }
         public int? TaxDeductionPercentage { get; set; }
         public double? AmountInLocalCurrency { get; set; }
-        public string InternalNotes { get; set; }
+        public string PrintNotes { get; set; }
     }
 
     
