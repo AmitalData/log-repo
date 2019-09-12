@@ -459,7 +459,7 @@
                                                                 </log-cell-template>
                                                             </log-column>
 
-                                                            <log-column [width]="'75'" [header]="'Start Date'">
+                                                            <log-column [width]="'80'" [header]="'Start Date'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
                                                                     <div style="width: 100%; text-align: left;">
                                                                         {{item.StartDate| DateTimeToDatePipe}}
@@ -475,7 +475,7 @@
                                                                 </log-cell-template>
                                                             </log-column>
 
-                                                            <log-column [width]="'75'" [header]="'Lines Updated'">
+                                                            <log-column [width]="'70'" [header]="'Lines Updated'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
                                                                     <div style="width: 100%; text-align: center;">
                                                                         {{item.LinesUpdated}}
@@ -483,7 +483,7 @@
                                                                 </log-cell-template>
                                                             </log-column>
 
-                                                            <log-column [width]="'50'" [header]="'Manual'">
+                                                            <log-column [width]="'40'" [header]="'Manual'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
                                                                     <div style="width: 100%; text-align: center;">
                                                                         <img *ngIf="item.UpdateMethodCode == 'MA'" class="CenterCenter" src="./Images/CheckBoxIcon.png" style="width:15px;height:12px;" />
@@ -491,7 +491,7 @@
                                                                 </log-cell-template>
                                                             </log-column>
 
-                                                            <log-column [width]="'70'" [header]="'Create Date'">
+                                                            <log-column [width]="'80'" [header]="'Create Date'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
                                                                     <div style="width: 100%; text-align: left;">
                                                                         {{item.CreateDate| DateTimePipe: 'DT'}}
