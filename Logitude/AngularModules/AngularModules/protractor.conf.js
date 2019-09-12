@@ -58,8 +58,16 @@ exports.config = {
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
         });
-        const junitReporter = new JUnitXmlReporter({
-            savePath: 'C:/Program Files (x86)/Jenkins/workspace/E2ETestResults',
+        const junitReporterAyman = new JUnitXmlReporter({
+            savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamAymanE2EScripts',
+            consolidateAll: false
+        });
+        const junitReporterIslam = new JUnitXmlReporter({
+            savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamIslamE2EScripts',
+            consolidateAll: false
+        });
+        const junitReporterMohammad = new JUnitXmlReporter({
+            savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamMohammadE2EScripts',
             consolidateAll: false
         });
         if (browser.params.Env == "prod") {
@@ -136,13 +144,19 @@ exports.config = {
         //------------------------------------- Reporter --------------------------------
         if (browser.params.Team == "ayman") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamAyman/screenshots' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamAyman/Test/screenshots' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(junitReporterAyman);
+
         } else if (browser.params.Team == "islam") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamIslam/screenshots' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(junitReporterIslam);
+
         } else if (browser.params.Team == "mohammad") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamMohammad/screenshots' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(junitReporterMohammad);
+
         } else {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/e2eTracking/screenshots' }).getJasmine2Reporter());
@@ -172,9 +186,11 @@ exports.config = {
         // ********************* FullAccounting **********************************
         ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
         NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
+        
         FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
         ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
         BankAccount: 'e2e/FullAccounting/BankAccount/**/NewBank-spec.ts',
+        PaymentCheque: 'e2e/FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts' ,
         VendorGLAccount: 'e2e/FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
         CustomerGLAccount: 'e2e/FullAccounting/**/CustomerGLAccount-spec.ts',
         APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',

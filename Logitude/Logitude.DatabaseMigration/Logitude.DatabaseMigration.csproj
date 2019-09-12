@@ -1469,6 +1469,14 @@
     <Compile Include="Migrations\201909091017333_VatTypeRecognizedPercentageMigration.Designer.cs">
       <DependentUpon>201909091017333_VatTypeRecognizedPercentageMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs" />
+    <Compile Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.Designer.cs">
+      <DependentUpon>201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909121018044_ARInvoiceDocumentFilingMigration.cs" />
+    <Compile Include="Migrations\201909121018044_ARInvoiceDocumentFilingMigration.Designer.cs">
+      <DependentUpon>201909121018044_ARInvoiceDocumentFilingMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs" />
     <Compile Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.Designer.cs">
       <DependentUpon>201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs</DependentUpon>
@@ -2520,6 +2528,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909091017333_VatTypeRecognizedPercentageMigration.resx">
       <DependentUpon>201909091017333_VatTypeRecognizedPercentageMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.resx">
+      <DependentUpon>201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909121018044_ARInvoiceDocumentFilingMigration.resx">
+      <DependentUpon>201909121018044_ARInvoiceDocumentFilingMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.resx">
       <DependentUpon>201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs</DependentUpon>

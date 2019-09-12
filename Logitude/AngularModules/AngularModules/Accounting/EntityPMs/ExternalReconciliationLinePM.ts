@@ -57,6 +57,11 @@ export class ExternalReconciliationLinePM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
+    private ledgerGLAccountId: string;
+    public get LedgerGLAccountId() { return this.ledgerGLAccountId; }
+    public set LedgerGLAccountId(newValue: string) { if (this.ledgerGLAccountId != newValue) { this.ledgerGLAccountId = newValue; this.MarkAsDirty("LedgerGLAccountId"); } }
+       
+	 
 
     public OldEntityPM: ExternalReconciliationLinePM;
 	

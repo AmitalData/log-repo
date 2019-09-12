@@ -369,6 +369,7 @@
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceLine.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceStatus.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceTransferStatus.Generated.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARInvoiceAdditionalData.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentCheque.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentChequeStatusReplica.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentInvoice.cs" />

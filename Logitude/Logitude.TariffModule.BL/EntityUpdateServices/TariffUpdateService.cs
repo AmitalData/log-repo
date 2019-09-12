@@ -111,7 +111,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         List<ChargesType> ChargeTypes; 
         private void InsertTariffSurchargeLog(TariffPM tariff)
         {
-            if (tariff.TypeCode == "ASC" && !tariff.IsFromUpdateScreen)
+            if (tariff.TypeCode == "ASC" && !tariff.IsFromUpdateScreen && !tariff.IsFromCopy )
             {
                 TariffSurchargesUpdateUpdateService tariffSurchargeUpdateService = new TariffSurchargesUpdateUpdateService(TariffModuleContext.GetContext(tariff.Tenant), new Dictionary<string, IContext>(), tariff.Tenant);
                 TariffVersionPM version = tariff.TariffVersions.Where(prop => prop.IsDraft == true).FirstOrDefault();
