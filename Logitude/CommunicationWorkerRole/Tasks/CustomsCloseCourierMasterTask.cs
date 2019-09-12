@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Contracts;
+using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,29 +13,33 @@ namespace CommunicationWorkerRole.Tasks
 {
     public class CustomsCloseCourierMasterTask : TaskManagerBase
     {
+        private int _SeedDefaultTenant=0;
+        private string _TaskId;
+
         public CustomsCloseCourierMasterTask(string Id, int tenant)
             : base(Id, tenant)
         {
-
+            _SeedDefaultTenant = tenant;
+            _TaskId = Id;
         }
         public override void StartTask()
         {
-            //Thread.CurrentThread.Abort();
-            for (int i = 0; i <= 3; i++)
+
+            LogMessagingUtil.Instance.Clear();
+            try
             {
-                Logwarning("Log warning # " + i + " , Be careful !!");
-                LogInfoToDB("Log LogInfoToDB # " + i + " !!");
-                LogInfo($"LogInfo({i})");
-                LogException($"LogException{i}");
+                ICustomsCloseCourierMasterService myICustomsCloseCourierMasterService = ContainerAccessor.Container.Resolve(typeof(ICustomsCloseCourierMasterService), "CloseCourierMasterService", new ParameterOverride("", this._SeedDefaultTenant)) as ICustomsCloseCourierMasterService;
+                myICustomsCloseCourierMasterService.StartRun(_TaskId, _SeedDefaultTenant);
             }
+            catch (Exception e)
+            {
 
-            //if (DateTime.Now.Minute % 5 == 0)
-            //{
-            //    Thread.CurrentThread.Abort();
-            //}
-            //Thread.Sleep(60000);
-
-
+                LogException(e.ToString());
+            }
+            finally
+            {
+                this.LogInfoToDB(LogMessagingUtil.Instance.ToString());
+            }
         }
     }
 }
