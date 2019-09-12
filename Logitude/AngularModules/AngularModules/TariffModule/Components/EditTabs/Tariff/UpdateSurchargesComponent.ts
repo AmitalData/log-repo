@@ -294,7 +294,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
         if (type == "From") {
             var index = this.FromObsList.indexOf(item);
             if (index > -1) {
-                this.FromObsList.splice(index);
+                this.FromObsList.splice(index, 1);
             }
 
             if (item.Indication == "Area") {
@@ -305,7 +305,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
         else {
             var index = this.ToObsList.indexOf(item);
             if (index > -1) {
-                this.ToObsList.splice(index);
+                this.ToObsList.splice(index, 1);
             }
 
             if (item.Indication == "Area") {
