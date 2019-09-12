@@ -186,9 +186,11 @@ exports.config = {
         // ********************* FullAccounting **********************************
         ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
         NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
+        
         FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
         ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
         BankAccount: 'e2e/FullAccounting/BankAccount/**/NewBank-spec.ts',
+        PaymentCheque: 'e2e/FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts' ,
         VendorGLAccount: 'e2e/FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
         CustomerGLAccount: 'e2e/FullAccounting/**/CustomerGLAccount-spec.ts',
         APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
