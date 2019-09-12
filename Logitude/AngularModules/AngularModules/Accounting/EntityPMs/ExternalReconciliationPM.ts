@@ -119,6 +119,11 @@ export class ExternalReconciliationPM {
     public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
        
 	 
+    private bankAccountId: string;
+    public get BankAccountId() { return this.bankAccountId; }
+    public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
+       
+	 
 
     public OldEntityPM: ExternalReconciliationPM;
 		
