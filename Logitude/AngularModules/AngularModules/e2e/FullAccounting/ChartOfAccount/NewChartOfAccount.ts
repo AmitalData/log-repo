@@ -1,26 +1,27 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
-import { FieldsHelper } from '../../../Helpers/FieldsHelper';
-import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
-import { EditChartOfAccount } from '../EditEntity/EditChartOfAccount';
+import { FieldsHelper } from '../../Helpers/FieldsHelper';
+import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
+//import { EditChartOfAccount } from '../EditEntity/EditChartOfAccount';
 import { createBreak } from 'typescript';
 export class NewChartOfAccount {
   private Helper: FieldsHelper;
     private GeneralFun: GeneralFunctions;
-    private Edit: EditChartOfAccount;
+    //private Edit: EditChartOfAccount;
 
 
   constructor() {
       this.Helper = new FieldsHelper();
       this.GeneralFun = new GeneralFunctions();
-      this.Edit = new EditChartOfAccount();
+     // this.Edit = new EditChartOfAccount();
   }
 
 
     public CreateNewChartOFAccount(ChartOfAccountNo: string, Type: String) {
-
-         //var chartOfAccountNo = this.GeneralFun.RandomNumAcc();
+        
+        this.Helper.WaitByIdAndFill('null_Search','chart');
+        this.Helper.WaitByIdAndClick('MaintenanceItemMTCA');
         this.Helper.WaitByIdAndClick('NewButton_ChartOfAccount');
-       // this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo);
+
         this.Helper.WaitByIdAndFill('ChartOfAccount_EnglishName', Type + ChartOfAccountNo);
         this.Helper.WaitByIdAndFill('ChartOfAccount_LocalName', Type + ChartOfAccountNo);
         if (Type == 'Revenue') {
@@ -30,7 +31,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
-            this.Edit.EditChartOfAccount(ChartOfAccountNo + 'R');
+           // this.Edit.EditChartOfAccount(ChartOfAccountNo + 'R');
            // this.Helper.WaitBusyIndicator();
         }
         else if (Type == 'Customer') {
@@ -40,7 +41,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
-            this.Edit.EditChartOfAccount(ChartOfAccountNo + 'C');
+           // this.Edit.EditChartOfAccount(ChartOfAccountNo + 'C');
            // this.Helper.WaitBusyIndicator();
 
         }
@@ -51,7 +52,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
-            this.Edit.EditChartOfAccount(ChartOfAccountNo + 'V');
+           // this.Edit.EditChartOfAccount(ChartOfAccountNo + 'V');
         //this.Helper.WaitBusyIndicator();
         }
 
@@ -62,7 +63,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
-            this.Edit.EditChartOfAccount(ChartOfAccountNo + 'B');
+            //this.Edit.EditChartOfAccount(ChartOfAccountNo + 'B');
            // this.Helper.WaitBusyIndicator();
         }
         else if (Type == 'Expenses') {
@@ -72,7 +73,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
-            this.Edit.EditChartOfAccount(ChartOfAccountNo + 'E');
+            //this.Edit.EditChartOfAccount(ChartOfAccountNo + 'E');
            // this.Helper.WaitBusyIndicator();
         }
         else if (Type == 'Works') {
@@ -82,7 +83,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
-            this.Edit.EditChartOfAccount(ChartOfAccountNo + 'W');
+          //  this.Edit.EditChartOfAccount(ChartOfAccountNo + 'W');
             //this.Helper.WaitBusyIndicator();
         }
         else if (Type == 'Debtors And Creditors') {
@@ -92,7 +93,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
-            this.Edit.EditChartOfAccount(ChartOfAccountNo + 'D');
+          // this.Edit.EditChartOfAccount(ChartOfAccountNo + 'D');
             //this.Helper.WaitBusyIndicator();
         }
     //this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode','r');

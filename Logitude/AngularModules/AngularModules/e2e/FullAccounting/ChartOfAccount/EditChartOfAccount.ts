@@ -1,4 +1,4 @@
-import { FieldsHelper } from '../../../Helpers/FieldsHelper';
+import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { browser, by, element, protractor } from 'protractor';
 
 
@@ -20,6 +20,7 @@ export class EditChartOfAccount {
         this.Helper.WaitByIdAndFill('ChartOfAccount_LocalName','Local Name Modified');
 
 //this.EditAppointmentGeneralTab(appointmentNo);
+this.Helper.ItemsPresent('ChartOfAccount-SaveClose');
     this.Helper.WaitByIdAndClick('ChartOfAccount-SaveClose');
 this.Helper.WaitBusyIndicator();
 

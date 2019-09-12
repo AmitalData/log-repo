@@ -3,8 +3,8 @@ import { browser, by, element } from 'protractor';
 import {ChartOFAccountModule} from './ChartOFAccountModule'
 import{ GeneralFunctions } from'../../Helpers/GeneralFunctions';
 import { FieldsHelper } from '../../Helpers/fieldshelper'
-import { NewChartOfAccount } from './NewEntity/NewChartOfAccount';
-import { EditChartOfAccount } from './EditEntity/EditChartOfAccount';
+import { NewChartOfAccount } from './NewChartOfAccount';
+import { EditChartOfAccount } from './EditChartOfAccount';
 
 describe('CRM Module',function (){
     let chartofaccount = new ChartOFAccountModule();
@@ -17,13 +17,25 @@ describe('CRM Module',function (){
   it('Chart Of Account Success', function () {
     browser.ignoreSynchronization = true;
 
+
+    console.log('Go To maintenance ')
+    browser.ignoreSynchronization = true;
     z.GoToMainMenu('General.MH.Maintenance');
-     y.WaitByIdAndClick('ACC');
-     y.WaitByIdAndClick('MaintenanceItemMTCA')
+    
+    var chartOfAccountNo = this.GeneralFun.RandomNumAcc(); 
+    c.CreateNewChartOFAccount(chartOfAccountNo, 'Customer');
+    E.EditChartOfAccount(chartOfAccountNo);
+  
+
+
+
+    
+     //y.WaitByIdAndClick('ACC');
+   
    //  y.WaitByIdAndClick('NewButton_ChartOfAccount')
       // chartofaccount.CreateAndEditChartOfAccount();
-     var chartOfAccountNo = this.GeneralFun.RandomNumAcc();
-      c.CreateNewChartOFAccount(chartOfAccountNo, 'Customer');
+     
+      
      // E.EditChartOfAccount(chartOfAccountNo+'C');
     browser.sleep(5000);
 
