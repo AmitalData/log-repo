@@ -623,7 +623,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.loadedTariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
             var tariffLine = new TariffLinePM(copiedVersion);
             tariffLine.StartDate = item.StartDate;
-            tariffLine.ExpirationDate = item.ExpirationDate;
             tariffLine.Tenant = SessionLocator.Tenant;
             tariffLine.Version = copiedVersion.Version;
             tariffLine.OriginPortId = item.OriginPortId;
