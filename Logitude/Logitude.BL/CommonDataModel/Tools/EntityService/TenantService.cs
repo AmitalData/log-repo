@@ -27,7 +27,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         bool isNewEntity;
         private int tenant;
         public Tenant Poco { get; set; }
-
+        public LogBoxTenantSetting LBtenantsettingPoco { get; set; }
         //public int Tenant
         //{
         //    get { return tenant; }
@@ -41,19 +41,23 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         //}
 
         private TenantPM entityPM;
+        private LogBoxTenantSettingPM LBTenantSettingentityPM;
         private ICommonDataContext objectContext;
         private TenantRepository entityRepository;
+        private LogBoxTenantSettingRepository LBsettingentityRepository;
         public TenantService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new TenantRepository(objectContext);
+            this.LBsettingentityRepository = new LogBoxTenantSettingRepository(objectContext);
         }
 
         public void Create(TenantPM theEntityPm)
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
+         
             this.entityPM.TenantVATManagement = true;
             
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -141,20 +145,25 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.Poco = new Tenant();
+            this.LBtenantsettingPoco = new LogBoxTenantSetting();
+
             this.Poco.Id = this.entityPM.Id;
+            this.LBtenantsettingPoco.Id = this.entityPM.Id;
 
             this.InitializeComponent();
 
             TenantValidating.Validate(theEntityPm);
             TenantTracing.Trace(theEntityPm, Poco, isNewEntity);
             TenantMapping.MapEntity(theEntityPm, Poco, isNewEntity);
-
+          
             AesFunction aesFunction = new AesFunction();
             Poco.StorageEncryptionKey = aesFunction.GenerateAesKey();
             
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
+            LBsettingentityRepository.Add(LBtenantsettingPoco);
+            LBsettingentityRepository.SubmitChanges();
             //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             //{
             //    TenantManagementLicenseRepository tenantManagementLicenseRepository = new TenantManagementLicenseRepository();
