@@ -435,7 +435,7 @@
                                                 <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
                                                     <div class="MediaFill"> 
                                                         <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="Logs">
-                                                            <log-column [width]="'30'" [header]="'#'">
+                                                            <log-column [width]="'20'" [header]="'#'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
                                                                     <div style="width: 100%; text-align: center;">
                                                                         {{item.Index}}
@@ -443,7 +443,7 @@
                                                                 </log-cell-template>
                                                             </log-column>
 
-                                                            <log-column [width]="'100'" [header]="'From'">
+                                                            <log-column [width]="'90'" [header]="'From'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
                                                                     <div style="width: 100%; text-align: left;">
                                                                         {{item.From}}
@@ -451,7 +451,7 @@
                                                                 </log-cell-template>
                                                             </log-column>
 
-                                                            <log-column [width]="'100'" [header]="'To'">
+                                                            <log-column [width]="'90'" [header]="'To'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
                                                                     <div style="width: 100%; text-align: left;">
                                                                         {{item.To}}
@@ -459,7 +459,7 @@
                                                                 </log-cell-template>
                                                             </log-column>
 
-                                                            <log-column [width]="'80'" [header]="'Start Date'">
+                                                            <log-column [width]="'75'" [header]="'Start Date'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
                                                                     <div style="width: 100%; text-align: left;">
                                                                         {{item.StartDate| DateTimeToDatePipe}}
@@ -467,10 +467,18 @@
                                                                 </log-cell-template>
                                                             </log-column>
 
-                                                            <log-column [width]="'100'" [header]="'Surcharges'">
+                                                            <log-column [width]="'80'" [header]="'Surcharges'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
                                                                     <div style="width: 100%; text-align: left;">
                                                                         {{item.Surcharges}}
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <log-column [width]="'75'" [header]="'Lines Updated'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width: 100%; text-align: center;">
+                                                                        {{item.LinesUpdated}}
                                                                     </div>
                                                                 </log-cell-template>
                                                             </log-column>
@@ -483,15 +491,7 @@
                                                                 </log-cell-template>
                                                             </log-column>
 
-                                                            <log-column [width]="'80'" [header]="'Lines Updated'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div style="width: 100%; text-align: center;">
-                                                                        {{item.LinesUpdated}}
-                                                                    </div>
-                                                                </log-cell-template>
-                                                            </log-column>
-
-                                                            <log-column [width]="'80'" [header]="'Create Date'">
+                                                            <log-column [width]="'70'" [header]="'Create Date'">
                                                                 <log-cell-template template="let item" #logcelltemplate>
                                                                     <div style="width: 100%; text-align: left;">
                                                                         {{item.CreateDate| DateTimePipe: 'DT'}}
