@@ -1,4 +1,3 @@
-
 <style type="text/css">
     .Box {
         position: absolute;
@@ -418,9 +417,7 @@
                             </tr>
                         </table>
                     </td>
-
                     <td style=" width:10px;"></td>
-
                     <!--Right Side-->
                     <td>
                         <table>
@@ -436,80 +433,72 @@
 
                                             <tr>
                                                 <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
-                                                    <div class="MediaFill">
-                                                        <div class="SimpleGridView">
-                                                            <div class="SimpleGridViewHeader">
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width: 30px; max-width:30px; min-width:30px;">#</td>
-                                                                        <td style="width: 120px; max-width:120px; min-width:120px;">Create Date</td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">From</td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">To</td>
-                                                                        <td style="width: 120px; max-width:120px; min-width:120px;">Start Date</td>
-                                                                        <td style="width: 120px; max-width:120px; min-width:120px;">Surcharges</td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">
-                                                                            Change Type
-                                                                        </td>
-                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Lines Updated</td>
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
+                                                    <div class="MediaFill"> 
+                                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="Logs">
+                                                            <log-column [width]="'30'" [header]="'#'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width: 100%; text-align: center;">
+                                                                        {{item.Index}}
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
 
-                                                            <div class="SimpleGridViewBody">
-                                                                <table>
-                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of Logs;let i = index">
-                                                                        <td class="GridViewCell" style="width: 30px; max-width:30px; min-width:30px;">
-                                                                            {{i+1}}
-                                                                        </td>
-                                                                        <td class="GridViewCell" style="width: 120px; max-width:120px; min-width:120px;">
-                                                                            {{item.CreateDate| DateTimeToDatePipe}}
-                                                                        </td>
-                                                                        <td class="GridViewCell" style="width: 100px; max-width:100px; min-width:100px;">
-                                                                            <div class="TextTrimming" style="width: 120px;">
-                                                                                {{item.From}}
-                                                                            </div>
+                                                            <log-column [width]="'100'" [header]="'From'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width: 100%; text-align: left;">
+                                                                        {{item.From}}
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
 
-                                                                        </td>
-                                                                        <td class="GridViewCell" style="width: 100px; max-width:100px; min-width:100px;">
-                                                                            <div class="TextTrimming" style="width: 120px;">
-                                                                                {{item.To}}
-                                                                            </div>
-                                                                        </td>
-                                                                        <td class="GridViewCell" style="width: 120px; max-width:120px; min-width:120px;">
-                                                                            {{item.StartDate| DateTimeToDatePipe}}
-                                                                        </td>
-                                                                        <td class="GridViewCell" style="width: 120px; max-width:120px; min-width:120px;">
-                                                                            <div class="TextTrimming" style="width: 120px;">
-                                                                                {{item.Surcharges}}
-                                                                            </div>
-                                                                        </td>
+                                                            <log-column [width]="'100'" [header]="'To'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width: 100%; text-align: left;">
+                                                                        {{item.To}}
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
 
-                                                                        <td class="GridViewCell" style="width: 100px; max-width:100px; min-width:100px;">
-                                                                            <div class="TextTrimming" style="width: 120px;">
-                                                                                {{item.UpdateMethodName}}
-                                                                            </div>
-                                                                        </td>
-                                
-                                                                        <td class="GridViewCell" style="width: 100px; max-width:100px; min-width:100px;">
-                                                                            <div  class="TextTrimming" style="width: 120px;text-align:center;">
-                                                                                {{item.LinesUpdated}}
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td colspan="8">
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
-                                                        </div>
+                                                            <log-column [width]="'80'" [header]="'Start Date'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width: 100%; text-align: left;">
+                                                                        {{item.StartDate| DateTimeToDatePipe}}
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <log-column [width]="'100'" [header]="'Surcharges'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width: 100%; text-align: left;">
+                                                                        {{item.Surcharges}}
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <log-column [width]="'50'" [header]="'Manual'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width: 100%; text-align: center;">
+                                                                        <img *ngIf="item.UpdateMethodCode == 'MA'" class="CenterCenter" src="./Images/CheckBoxIcon.png" style="width:15px;height:12px;" />
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <log-column [width]="'80'" [header]="'Lines Updated'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width: 100%; text-align: center;">
+                                                                        {{item.LinesUpdated}}
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <log-column [width]="'80'" [header]="'Create Date'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width: 100%; text-align: left;">
+                                                                        {{item.CreateDate| DateTimePipe: 'DT'}}
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+                                                        </logitude-edit-grid>
                                                     </div>
                                                 </td>
                                             </tr>

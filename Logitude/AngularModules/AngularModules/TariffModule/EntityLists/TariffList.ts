@@ -32,6 +32,7 @@ export class TariffList {
 	UpdatedByUserName: string;
 	TariffNumber: string;
 	IsFromUpdateScreen: boolean;
+	IsFromCopy: boolean;
 	
 }
  

@@ -1246,6 +1246,9 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set OriginPortId(value: string) {
         if (this.EntityPM.OriginPortId != value) {
             this.EntityPM.OriginPortId = value;
+            if (this.IsFromAllOtherPorts) {
+                this.EntityPM.IsFromAllOtherPorts = false;
+            }
             this.SetUIProperties_From();
             this.CheckIfLineHasError();
         }
@@ -1300,6 +1303,9 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set DestinationPortId(value: string) {
         if (this.EntityPM.DestinationPortId != value) {
             this.EntityPM.DestinationPortId = value;
+            if (this.IsToAllOtherPorts) {
+                this.EntityPM.IsToAllOtherPorts = false;
+            }
             this.SetUIProperties_To();
             this.CheckIfLineHasError();
         }
