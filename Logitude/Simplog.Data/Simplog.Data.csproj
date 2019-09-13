@@ -340,6 +340,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ShippingLine.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\SmallDocument.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TemperatureUnit.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\LogBoxTenantSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TenantLoginPolicy.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TenantAdditionalData.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TenantManagmentLicense.cs" />
@@ -443,6 +444,7 @@
     <Compile Include="CommonDataModel\Mapping\TenantAdditionalDataMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TenantLoginPolicyMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TenantManagmentLicenseMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\LogBoxTenantSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TwoFactorAuthenticationDeviceMap.cs" />
     <Compile Include="CommonDataModel\Mapping\LoginPolicyMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UserLicenseMap.cs" />
@@ -476,6 +478,7 @@
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTableRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\LogBoxTenantSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CountryCityRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CreditLimitSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerDepositionRepository.cs" />
