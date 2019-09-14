@@ -20,12 +20,16 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { ARInvoicePMService } from '../../Services/StandardPMs/ARInvoicePMService';
 import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
 import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
+import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 
 export class ARInvoiceMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
     public EntityPM: ARInvoicePM;
     public entityArgs: EntityArgs
     private isRunningBatchTaskExecution: boolean = false;
+    DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -1098,6 +1102,7 @@ export class ARInvoiceMenuButtonsHandler {
             this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
         }
         else if (this.EntityPM.IsGeneralInvoice) {
+
             myEntityId = this.EntityPM.Id;
             myChildEntityId = null;
             mychildObjectTableId = null;
@@ -1156,5 +1161,24 @@ export class ARInvoiceMenuButtonsHandler {
             ServiceLocator.SendTotangoUserActivity("ARInvoice", "PrintInvoice");
             myPrintHelper.ShowPrintControl();
         }
+    }
+    GetDocument() {
+
+
+
+        this.DocumentsFilingExtendedPMService.getDocumentsFilingsById(this.EntityPM.DocumentFilingId).subscribe(myResult => {
+           
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                var documentFiling = mm.Result;
+                if (documentFiling) {
+                    var securityIds = documentFiling.SecurityId;
+                    DownloadManager.DownloadPage(null, securityIds);
+                }
+
+            }
+        });
+
+
     }
 }
