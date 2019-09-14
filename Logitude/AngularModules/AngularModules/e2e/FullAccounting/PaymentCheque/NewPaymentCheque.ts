@@ -36,6 +36,8 @@ export class NewPaymentCheque {
         this.Helper.WaitByIdAndClick('CREATEPAYMENTCHEQUE');
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitWindowClosed();
+        this.Helper.WaitByIdAndClick('EditBackbutton_2');
+
 
 
 
