@@ -178,7 +178,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, true);
 
         }
+      
+        public HttpResponseMessage GetDocumentsFilingsById(string id)
+        {
+            Authentication();
 
+
+            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
+            DocumentsFilingPM myResult = documentsFilingQuery.GetSinglePM(id, tenant);
+
+            return Request.CreateResponse(HttpStatusCode.OK, myResult);
+        }
 
         public HttpResponseMessage GetFileSizeAndUnit(int? fileBytes)
         {
@@ -242,11 +252,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             var result = documentsFilingQuery.GetDocumentsFilingByDocumentType(documentTypeId, objectTableId, entityId, tenant);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-
+       private static   int tenant;
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
+            
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            tenant = authToken.Tenant;
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
            
         }
