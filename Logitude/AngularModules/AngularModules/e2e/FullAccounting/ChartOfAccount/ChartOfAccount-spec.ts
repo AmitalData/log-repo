@@ -6,7 +6,7 @@ import { FieldsHelper } from '../../Helpers/fieldshelper'
 import { NewChartOfAccount } from './NewChartOfAccount';
 import { EditChartOfAccount } from './EditChartOfAccount';
 
-describe('CRM Module',function (){
+describe('ChartOfAccount Module',function (){
     //let chartofaccount = new ChartOFAccountModule();
     let z:GeneralFunctions=new GeneralFunctions();
     let y: FieldsHelper=new FieldsHelper();
@@ -37,7 +37,7 @@ describe('CRM Module',function (){
      
       
      // E.EditChartOfAccount(chartOfAccountNo+'C');
-    browser.sleep(5000);
+   // browser.sleep(5000);
 
 
 

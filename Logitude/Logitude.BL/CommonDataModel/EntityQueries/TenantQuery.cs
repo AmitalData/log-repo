@@ -42,6 +42,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             {
                                                 Id = a.Id,
                                                 AddressId = a.AddressId,
+                                              
                                                 LocalAddressId = a.LocalAddressId,
                                                 CompanyAddress = a.Address != null ? a.Address.Name : null,
                                                 Company = a.Company,
@@ -117,11 +118,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsMobileActivated = a.IsMobileActivated,
                                                 RegulatedAgentNumber = a.RegulatedAgentNumber,
                                                 RegulatedAgentRegimeActivated = a.RegulatedAgentRegimeActivated,
-                                                IsDocumentsArchive = a.IsDocumentsArchive,
+                                               
                                                 CustomerId = a.CustomerId,
                                                 CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
                                                 IsCustomerTenantShare = a.IsCustomerTenantShare,
-                                                CustomerTenantShareImportFile = a.CustomerTenantShareImportFile,
+                                               
                                                 CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                 AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
                                                 IsPotentialTelRequired = a.IsPotentialTelRequired,
@@ -131,7 +132,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsNumeric = a.IsNumeric,
                                                 VatSize = a.VatSize,
                                                 IsWebAccessActivated = a.IsWebAccessActivated,
-                                                LogBoxAdminUserId = a.LogBoxAdminUserId,
+                                            
                                                 IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                                 IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                                 IsInternalTicketByDefault = a.IsInternalTicketByDefault,
@@ -139,12 +140,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 SCACCode = a.SCACCode,
                                                 ExportQuotationsToIntegratedSystem = a.ExportQuotationsToIntegratedSystem,
                                                 FMCNumber = a.FMCNumber,
-                                                DocumentShareAsDefault = a.DocumentShareAsDefault,
+                                              
                                                 //DropBoxAccessToken = a.DropBoxAccessToken
                                                 TenantVATManagement = a.TenantVATManagement,
                                                 TemperatureUnitCode = a.TemperatureUnitCode,
                                                 DefaultSLAId = a.DefaultSLAId,
-                                                AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                              
                                                 NumberFormatCode = a.NumberFormatCode,
                                                 CAAT = a.CAAT,
                                                 CBSA = a.CBSA,
@@ -190,7 +191,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
-                    Tenant tt = (from a in repository.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country")
+                    Tenant tt = (from a in repository.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country").Include("LogBoxTenantSetting")
                                  where a.Id == id
                                  select a).FirstOrDefault();
 
@@ -201,6 +202,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         LocalAddressId = tt.LocalAddressId,
                         CompanyAddress = tt.Address != null ? tt.Address.Name : null,
                         Company = tt.Company,
+                        IsDocumentsArchive = tt.LogBoxTenantSetting.IsDocumentsArchive,
+                        CustomerTenantShareImportFile =tt.LogBoxTenantSetting.CustomerTenantShareImportFile,
                         Signature = tt.Signature,
                         IATA = tt.IATA,
                         VatNumber = tt.VatNumber,
@@ -273,11 +276,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsMobileActivated = tt.IsMobileActivated,
                         RegulatedAgentNumber = tt.RegulatedAgentNumber,
                         RegulatedAgentRegimeActivated = tt.RegulatedAgentRegimeActivated,
-                        IsDocumentsArchive = tt.IsDocumentsArchive,
+                        
                         CustomerId = tt.CustomerId,
                         CustomerName = tt.CustomerCard != null ? tt.CustomerCard.EnglishName : null,
                         IsCustomerTenantShare = tt.IsCustomerTenantShare,
-                        CustomerTenantShareImportFile = tt.CustomerTenantShareImportFile,
+                      
                         CustomerTenantShareExportFile = tt.CustomerTenantShareExportFile,
                         AllowAgentInCustomersLOV = tt.AllowAgentInCustomersLOV,
                         IsPotentialTelRequired = tt.IsPotentialTelRequired,
@@ -286,7 +289,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         VatFormatCountryId = tt.VatFormatCountryId,
                         IsNumeric = tt.IsNumeric,
                         VatSize = tt.VatSize,
-                        LogBoxAdminUserId = tt.LogBoxAdminUserId,
+                       
                         IsWebAccessActivated = tt.IsWebAccessActivated,
                         IsCorrespondenceRightToLeftEnabled = tt.IsCorrespondenceRightToLeftEnabled,
                         IsNotesRightToLeftEnabled = tt.IsNotesRightToLeftEnabled,
@@ -297,13 +300,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         SCACCode = tt.SCACCode,
                         ExportQuotationsToIntegratedSystem = tt.ExportQuotationsToIntegratedSystem,
                         FMCNumber = tt.FMCNumber,
-                        DocumentShareAsDefault = tt.DocumentShareAsDefault,
+                      
                         //DropBoxAccessToken = tt.DropBoxAccessToken
                         TenantVATManagement = tt.TenantVATManagement,
                         TemperatureUnitCode = tt.TemperatureUnitCode,
                         DefaultSLAId = tt.DefaultSLAId,
-                        StockTypeCode = tt.StockTypeCode,
-                        AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice,
+                 
                         NumberFormatCode = tt.NumberFormatCode,
                         EcommerceSupportEmail = tt.EcommerceSupportEmail,
                         CAAT = tt.CAAT,
@@ -355,7 +357,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             else
             {
-                Tenant tt = (from a in repository.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country")
+                Tenant tt = (from a in repository.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country").Include("LogBoxTenantSetting")
                              where a.Id == id
                              select a).FirstOrDefault();
 
@@ -439,11 +441,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsMobileActivated = tt.IsMobileActivated,
                     RegulatedAgentNumber = tt.RegulatedAgentNumber,
                     RegulatedAgentRegimeActivated = tt.RegulatedAgentRegimeActivated,
-                    IsDocumentsArchive = tt.IsDocumentsArchive,
+                   
                     CustomerId = tt.CustomerId,
                     CustomerName = tt.CustomerCard != null ? tt.CustomerCard.EnglishName : null,
                     IsCustomerTenantShare = tt.IsCustomerTenantShare,
-                    CustomerTenantShareImportFile = tt.CustomerTenantShareImportFile,
+                   
                     CustomerTenantShareExportFile = tt.CustomerTenantShareExportFile,
                     AllowAgentInCustomersLOV = tt.AllowAgentInCustomersLOV,
                     IsPotentialTelRequired = tt.IsPotentialTelRequired,
@@ -452,7 +454,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     VatFormatCountryId = tt.VatFormatCountryId,
                     IsNumeric = tt.IsNumeric,
                     VatSize = tt.VatSize,
-                    LogBoxAdminUserId = tt.LogBoxAdminUserId,
+                    
                     IsWebAccessActivated = tt.IsWebAccessActivated,
                     IsCorrespondenceRightToLeftEnabled = tt.IsCorrespondenceRightToLeftEnabled,
                     IsNotesRightToLeftEnabled = tt.IsNotesRightToLeftEnabled,
@@ -465,11 +467,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     //DropBoxAccessToken = tt.DropBoxAccessToken
                     FMCNumber = tt.FMCNumber,
                     TenantVATManagement = tt.TenantVATManagement,
-                    DocumentShareAsDefault = tt.DocumentShareAsDefault,
+               
                     TemperatureUnitCode = tt.TemperatureUnitCode,
                     DefaultSLAId = tt.DefaultSLAId,
-                    StockTypeCode = tt.StockTypeCode,
-                    AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice,
+                  
                     NumberFormatCode = tt.NumberFormatCode,
                     EcommerceSupportEmail = tt.EcommerceSupportEmail,
                     CAAT = tt.CAAT,
@@ -477,6 +478,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsTestTenant = tt.IsTestTenant,
                     CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
                     ApplyVATForAllPartners = tt.ApplyVATForAllPartners,
+                    IsDocumentsArchive = tt.LogBoxTenantSetting.IsDocumentsArchive,
+                    CustomerTenantShareImportFile = tt.LogBoxTenantSetting.CustomerTenantShareImportFile,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -589,11 +592,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsMobileActivated = a.IsMobileActivated,
                                            RegulatedAgentNumber = a.RegulatedAgentNumber,
                                            RegulatedAgentRegimeActivated = a.RegulatedAgentRegimeActivated,
-                                           IsDocumentsArchive = a.IsDocumentsArchive,
+                                         
                                            CustomerId = a.CustomerId,
                                            CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
                                            IsCustomerTenantShare = a.IsCustomerTenantShare,
-                                           CustomerTenantShareImportFile = a.CustomerTenantShareImportFile,
+                                         
                                            CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                            AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
                                            IsPotentialTelRequired = a.IsPotentialTelRequired,
@@ -602,7 +605,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            VatFormatCountryId = a.VatFormatCountryId,
                                            IsNumeric = a.IsNumeric,
                                            VatSize = a.VatSize,
-                                           LogBoxAdminUserId = a.LogBoxAdminUserId,
+                                         
                                            IsWebAccessActivated = a.IsWebAccessActivated,
                                            IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                            IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
@@ -611,13 +614,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SCACCode = a.SCACCode,
                                            ExportQuotationsToIntegratedSystem = a.ExportQuotationsToIntegratedSystem,
                                            FMCNumber = a.FMCNumber,
-                                           DocumentShareAsDefault = a.DocumentShareAsDefault,
+                                      
                                            //DropBoxAccessToken = a.DropBoxAccessToken
                                            TenantVATManagement = a.TenantVATManagement,
                                            TemperatureUnitCode = a.TemperatureUnitCode,
                                            DefaultSLAId = a.DefaultSLAId,
-                                           StockTypeCode = a.StockTypeCode,
-                                           AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                         
                                            NumberFormatCode = a.NumberFormatCode,
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
                                            CAAT = a.CAAT,
@@ -625,6 +627,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsTestTenant = a.IsTestTenant,
                                            CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                            ApplyVATForAllPartners = a.ApplyVATForAllPartners,
+                                          
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -736,11 +739,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsMobileActivated = a.IsMobileActivated,
                                        RegulatedAgentNumber = a.RegulatedAgentNumber,
                                        RegulatedAgentRegimeActivated = a.RegulatedAgentRegimeActivated,
-                                       IsDocumentsArchive = a.IsDocumentsArchive,
+                                    
                                        CustomerId = a.CustomerId,
                                        CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
                                        IsCustomerTenantShare = a.IsCustomerTenantShare,
-                                       CustomerTenantShareImportFile = a.CustomerTenantShareImportFile,
+                                    
                                        CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                        AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
                                        IsPotentialTelRequired = a.IsPotentialTelRequired,
@@ -749,7 +752,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        VatFormatCountryId = a.VatFormatCountryId,
                                        IsNumeric = a.IsNumeric,
                                        VatSize = a.VatSize,
-                                       LogBoxAdminUserId = a.LogBoxAdminUserId,
+                              
                                        IsWebAccessActivated = a.IsWebAccessActivated,
                                        IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                        IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
@@ -760,11 +763,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        //DropBoxAccessToken = a.DropBoxAccessToken
                                        FMCNumber = a.FMCNumber,
                                        TenantVATManagement = a.TenantVATManagement,
-                                       DocumentShareAsDefault = a.DocumentShareAsDefault,
+                                     
                                        TemperatureUnitCode = a.TemperatureUnitCode,
                                        DefaultSLAId = a.DefaultSLAId,
-                                       StockTypeCode = a.StockTypeCode,
-                                       AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                   
                                        NumberFormatCode = a.NumberFormatCode,
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
                                        CAAT = a.CAAT,
@@ -772,6 +774,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsTestTenant = a.IsTestTenant,
                                        CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                        ApplyVATForAllPartners = a.ApplyVATForAllPartners,
+                                  
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -885,11 +888,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                IsMobileActivated = a.IsMobileActivated,
                                                RegulatedAgentNumber = a.RegulatedAgentNumber,
                                                RegulatedAgentRegimeActivated = a.RegulatedAgentRegimeActivated,
-                                               IsDocumentsArchive = a.IsDocumentsArchive,
+                                            
                                                CustomerId = a.CustomerId,
                                                CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
                                                IsCustomerTenantShare = a.IsCustomerTenantShare,
-                                               CustomerTenantShareImportFile = a.CustomerTenantShareImportFile,
+                                            
                                                CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
                                                IsPotentialTelRequired = a.IsPotentialTelRequired,
@@ -898,7 +901,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                VatFormatCountryId = a.VatFormatCountryId,
                                                IsNumeric = a.IsNumeric,
                                                VatSize = a.VatSize,
-                                               LogBoxAdminUserId = a.LogBoxAdminUserId,
+                                             
                                                IsWebAccessActivated = a.IsWebAccessActivated,
                                                IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                                IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
@@ -911,11 +914,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                //DropBoxAccessToken = a.DropBoxAccessToken
                                                FMCNumber = a.FMCNumber,
                                                TenantVATManagement = a.TenantVATManagement,
-                                               DocumentShareAsDefault = a.DocumentShareAsDefault,
+                                         
                                                TemperatureUnitCode = a.TemperatureUnitCode,
                                                DefaultSLAId = a.DefaultSLAId,
-                                               StockTypeCode = a.StockTypeCode,
-                                               AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                        
                                                NumberFormatCode = a.NumberFormatCode,
                                                EcommerceSupportEmail = a.EcommerceSupportEmail,
                                                CAAT = a.CAAT,
@@ -1035,11 +1037,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsMobileActivated = a.IsMobileActivated,
                                            RegulatedAgentNumber = a.RegulatedAgentNumber,
                                            RegulatedAgentRegimeActivated = a.RegulatedAgentRegimeActivated,
-                                           IsDocumentsArchive = a.IsDocumentsArchive,
+                                        
                                            CustomerId = a.CustomerId,
                                            CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
                                            IsCustomerTenantShare = a.IsCustomerTenantShare,
-                                           CustomerTenantShareImportFile = a.CustomerTenantShareImportFile,
+                                         
                                            CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                            AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
                                            IsPotentialTelRequired = a.IsPotentialTelRequired,
@@ -1048,7 +1050,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            VatFormatCountryId = a.VatFormatCountryId,
                                            IsNumeric = a.IsNumeric,
                                            VatSize = a.VatSize,
-                                           LogBoxAdminUserId = a.LogBoxAdminUserId,
+                                         
                                            IsWebAccessActivated = a.IsWebAccessActivated,
                                            IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                            IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
@@ -1061,11 +1063,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            //DropBoxAccessToken = a.DropBoxAccessToken
                                            FMCNumber = a.FMCNumber,
                                            TenantVATManagement = a.TenantVATManagement,
-                                           DocumentShareAsDefault = a.DocumentShareAsDefault,
+                                  
                                            TemperatureUnitCode = a.TemperatureUnitCode,
                                            DefaultSLAId = a.DefaultSLAId,
-                                           StockTypeCode = a.StockTypeCode,
-                                           AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                        
+                                        
                                            NumberFormatCode = a.NumberFormatCode,
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
                                            CAAT = a.CAAT,
@@ -1177,11 +1179,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsMobileActivated = a.IsMobileActivated,
                                        RegulatedAgentNumber = a.RegulatedAgentNumber,
                                        RegulatedAgentRegimeActivated = a.RegulatedAgentRegimeActivated,
-                                       IsDocumentsArchive = a.IsDocumentsArchive,
+                                  
                                        CustomerId = a.CustomerId,
                                        CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
                                        IsCustomerTenantShare = a.IsCustomerTenantShare,
-                                       CustomerTenantShareImportFile = a.CustomerTenantShareImportFile,
+                                    
                                        CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                        AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
                                        IsPotentialTelRequired = a.IsPotentialTelRequired,
@@ -1190,7 +1192,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        VatFormatCountryId = a.VatFormatCountryId,
                                        IsNumeric = a.IsNumeric,
                                        VatSize = a.VatSize,
-                                       LogBoxAdminUserId = a.LogBoxAdminUserId,
+                                     
                                        IsWebAccessActivated = a.IsWebAccessActivated,
                                        IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                        IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
@@ -1203,11 +1205,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        //DropBoxAccessToken = a.DropBoxAccessToken
                                        FMCNumber = a.FMCNumber,
                                        TenantVATManagement = a.TenantVATManagement,
-                                       DocumentShareAsDefault = a.DocumentShareAsDefault,
+                                    
                                        TemperatureUnitCode = a.TemperatureUnitCode,
                                        DefaultSLAId = a.DefaultSLAId,
-                                       StockTypeCode = a.StockTypeCode,
-                                       AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                    
                                        NumberFormatCode = a.NumberFormatCode,
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
                                        CAAT = a.CAAT,
@@ -1354,11 +1355,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsMobileActivated = myPOCO.IsMobileActivated,
                     RegulatedAgentNumber = myPOCO.RegulatedAgentNumber,
                     RegulatedAgentRegimeActivated = myPOCO.RegulatedAgentRegimeActivated,
-                    IsDocumentsArchive = myPOCO.IsDocumentsArchive,
+                 
                     CustomerId = myPOCO.CustomerId,
                     CustomerName = myPOCO.CustomerCard != null ? myPOCO.CustomerCard.EnglishName : null,
                     IsCustomerTenantShare = myPOCO.IsCustomerTenantShare,
-                    CustomerTenantShareImportFile = myPOCO.CustomerTenantShareImportFile,
+                 
                     CustomerTenantShareExportFile = myPOCO.CustomerTenantShareExportFile,
                     AllowAgentInCustomersLOV = myPOCO.AllowAgentInCustomersLOV,
                     IsPotentialTelRequired = myPOCO.IsPotentialTelRequired,
@@ -1367,7 +1368,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     VatFormatCountryId = myPOCO.VatFormatCountryId,
                     IsNumeric = myPOCO.IsNumeric,
                     VatSize = myPOCO.VatSize,
-                    LogBoxAdminUserId = myPOCO.LogBoxAdminUserId,
+              
                     IsWebAccessActivated = myPOCO.IsWebAccessActivated,
                     IsCorrespondenceRightToLeftEnabled = myPOCO.IsCorrespondenceRightToLeftEnabled,
                     IsNotesRightToLeftEnabled = myPOCO.IsNotesRightToLeftEnabled,
@@ -1378,13 +1379,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     SCACCode = myPOCO.SCACCode,
                     ExportQuotationsToIntegratedSystem = myPOCO.ExportQuotationsToIntegratedSystem,
                     FMCNumber = myPOCO.FMCNumber,
-                    DocumentShareAsDefault = myPOCO.DocumentShareAsDefault,
+                  
                     TenantVATManagement = myPOCO.TenantVATManagement,
                     LayoutDirection = myPOCO.LayoutDirection,
                     TemperatureUnitCode = myPOCO.TemperatureUnitCode,
                     DefaultSLAId = myPOCO.DefaultSLAId,
-                    StockTypeCode = myPOCO.StockTypeCode,
-                    AutoArchiveOnInvoice = myPOCO.AutoArchiveOnInvoice,
+            
                     NumberFormatCode = myPOCO.NumberFormatCode,
                     EcommerceSupportEmail = myPOCO.EcommerceSupportEmail,
                     CAAT = myPOCO.CAAT,
@@ -1501,11 +1501,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsMobileActivated = a.IsMobileActivated,
                                                 RegulatedAgentNumber = a.RegulatedAgentNumber,
                                                 RegulatedAgentRegimeActivated = a.RegulatedAgentRegimeActivated,
-                                                IsDocumentsArchive = a.IsDocumentsArchive,
+                                    
                                                 CustomerId = a.CustomerId,
                                                 CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
                                                 IsCustomerTenantShare = a.IsCustomerTenantShare,
-                                                CustomerTenantShareImportFile = a.CustomerTenantShareImportFile,
+                                              
                                                 CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                 AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
                                                 IsWebAccessActivated = a.IsWebAccessActivated,
@@ -1542,7 +1542,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    CustomerName = a.CustomerCard != null && a.CustomerCard.PrimaryContact != null ? a.CustomerCard.PrimaryContact.EnglishName : null,
                                    CustomerMobile = a.CustomerCard != null && a.CustomerCard.PrimaryContact != null ? a.CustomerCard.PrimaryContact.Mobile : null,
                                    CustomerPhone = a.CustomerCard != null && a.CustomerCard.PrimaryContact != null ? a.CustomerCard.PrimaryContact.BusinessPhone : "",
-                                   StockTypeCode = a.StockTypeCode
+                                 
                                }).FirstOrDefault();
             return entity;
         }

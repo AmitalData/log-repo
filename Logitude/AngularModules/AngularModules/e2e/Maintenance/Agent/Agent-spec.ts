@@ -40,7 +40,11 @@ describe('NewAgent', () => {
 
         AgentScenario.SearchAgent();
     });
+    
+    it('SaveAgent', function () {
 
+        AgentScenario.SaveAgent();
+    });
 
 
 });
