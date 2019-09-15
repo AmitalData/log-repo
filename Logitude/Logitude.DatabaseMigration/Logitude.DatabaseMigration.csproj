@@ -1249,6 +1249,10 @@
     <Compile Include="Migrations\201908281125076_ChangeTemperatureFieldType.Designer.cs">
       <DependentUpon>201908281125076_ChangeTemperatureFieldType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.cs" />
+    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
+      <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2127,6 +2131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908281125076_ChangeTemperatureFieldType.resx">
       <DependentUpon>201908281125076_ChangeTemperatureFieldType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.resx">
+      <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
