@@ -227,7 +227,7 @@ export class WebFreightDomainService {
                 QueryData.DWQueryData = temp;
                 var temp2 = this.deepClone(QueryData);
                 /////////////////////////////////////////////////////
-                return this._http.put(this._apiUrl + "/PutExportBIReportToExcelByWR", JSON.stringify(temp2),
+                return this._http.put(this._apiUrl + "/PutExportBIReportToExcel", JSON.stringify(temp2),
                     { headers: authHeader }).map((res) => {
                         var entity = res.json();
                         var serviceResponse: ServiceResponse;

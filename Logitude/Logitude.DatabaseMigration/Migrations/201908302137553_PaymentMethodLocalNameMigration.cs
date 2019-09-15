@@ -7,12 +7,12 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            //AddColumn("dbo.AccountingPaymentMethods", "LocalName", c => c.String(maxLength: 100));
+            AddColumn("dbo.AccountingPaymentMethods", "LocalName", c => c.String(maxLength: 100));
         }
         
         public override void Down()
         {
-            //DropColumn("dbo.AccountingPaymentMethods", "LocalName");
+            DropColumn("dbo.AccountingPaymentMethods", "LocalName");
         }
     }
 }

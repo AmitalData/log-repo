@@ -457,7 +457,7 @@ namespace WebFreight.Web
         {
             if (LogitudeSettings.ForceHttps)
             {
-                SecurityUtility.RedirectToHttps();
+              //  SecurityUtility.RedirectToHttps();
             }
             if (LogitudeSettings.IsCostomsDeploy)
             {
