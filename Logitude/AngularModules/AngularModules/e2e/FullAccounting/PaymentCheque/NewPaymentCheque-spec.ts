@@ -22,6 +22,7 @@ describe('PaymentCheque Module', function () {
     browser.ignoreSynchronization = true;
     gn1.GoToMainMenu('General.MH.FullAccounting');
     h.WaitByIdAndClick('FABNKS');
+    PYC.CreateNewPaymentCheque();
     PYCE.EditPaymentCheque();
     //edit.EditBankAccount(bank);
   
