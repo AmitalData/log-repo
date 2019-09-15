@@ -2520,6 +2520,9 @@
     <EmbeddedResource Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.resx">
       <DependentUpon>201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.resx">
+      <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
