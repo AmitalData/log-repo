@@ -46,11 +46,15 @@ export class HouseShipment {
           this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'MIA');
           this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageFromPortId', 'MIA');
 
+          this.Helper.WaitByIdAndFill('Shipment_DescriptionOfGoods', 'Protractor testing - Create New House ... ');
+
           this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'MIA');
           this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageToPortId', 'MIA');
         } else {
           this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');
           this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageFromPortId', 'eze');
+
+          this.Helper.WaitByIdAndFill('Shipment_DescriptionOfGoods', 'Protractor testing - Create New House ... ');
 
           this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'mvd');
           this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageToPortId', 'mvd');

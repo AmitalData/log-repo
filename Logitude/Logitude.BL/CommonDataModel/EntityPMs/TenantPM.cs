@@ -385,6 +385,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool CustomerTenantShareImportFile { get; set; }
 
 
+        public bool DocumentShareAsDefault { get; set; }
 
+        public string StockTypeCode { get; set; }
+
+        public bool AutoArchiveOnInvoice { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string LogBoxAdminUserId { get; set; }
     }
 }
