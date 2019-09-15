@@ -841,6 +841,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public string MainPackageCode { get; set; }
         public bool IsMultiPackage { get; set; }
         public bool MainAdditionalPackageApplied { get; set; }
+        private bool IsUserAdditionalPackagesOnly { get; set; }
         public List<string> BasePackagesCodes { get; set; }
         public List<string> AdonsPackagesCodes { get; set; }
         public List<string> AdditionalPackagesCodes { get; set; }
@@ -857,6 +858,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             this.AdditionalPackagesCodes = new List<string>();
             this.iCommonContext = CommonDataContext.GetContext(this.Tenant);
             this.GetGlobalData();
+            this.GetUserData();
             this.BuildPackages();
         }
 
@@ -902,6 +904,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
         }
 
+        private void GetUserData()
+        {
+            User loggedUser = this.iCommonContext.Users.Where(d => d.Id == this.LoggedUserId).FirstOrDefault();
+            if(loggedUser != null)
+            {
+                this.IsUserAdditionalPackagesOnly = loggedUser.AdditionalPackagesOnly;
+            }
+        }
+
         private void BuildPackages()
         {
             if (this.MainAdditionalPackageApplied)
@@ -928,7 +939,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 allCodes = this.FilterPackagesUserLicenses(allCodes);
             }
 
-            if (!allCodes.Contains(this.MainPackageCode))
+            if (!this.IsUserAdditionalPackagesOnly && !allCodes.Contains(this.MainPackageCode))
             {
                 allCodes.Add(this.MainPackageCode);
             }
