@@ -166,7 +166,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             {
 
 
-                var error = "Integrity Check for tenant:{tenant} {remark}  (TASK 56708)";
+                var error = $"Integrity Check for tenant:{tenant} {remark}  (TASK 56708)";
                 string emailbody = $"<div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>{error}</div>";
                 EmailCommunicationParams emailParams = new EmailCommunicationParams();
 
