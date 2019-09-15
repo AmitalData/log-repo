@@ -1674,41 +1674,7 @@ namespace WarehouseData.Helper
 
             return !string.IsNullOrEmpty(deletedRowIds) ? ("(" + deletedRowIds + ")").Replace(",)", ")"):null;
         }
-        public void RemoveOldRowsFromFactTable(TableClass table, string connectionString)
-        {
-            using (SqlConnection sourceConnection =
-                       new SqlConnection(connectionString))
-            {
-                sourceConnection.Open();
-
-                SqlCommand commandSourceData = new SqlCommand(
-               "SELECT " + table.KeyName +
-               " FROM dbo." + table.Dw_TableName + " where AutomaticLastUpdateDate > ( select LastUpdateDate from dw_WaterMarks where TableName = " + "'" + table.TableName + "');", sourceConnection);
-
-                SqlDataReader reader =
-                    commandSourceData.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    var dataTable = new DataTable();
-                    dataTable.Load(reader);
-
-
-                    var columns = dataTable.Rows
-                                     .Cast<DataRow>()
-                                     .Select(r => (string)r[table.KeyName].ToString())
-                                     .ToList();
-
-                    DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = "Fact_" + table.DBTableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = connectionString });
-
-                }
-
-                reader.Close();
-            }
-
-
-        }
-
+      
 
         private void DataWarehousDeletedRows(TableClass table, string ids, string connectionString)
         {
