@@ -37,7 +37,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<TenantPM> GetTenantPMs()
         {
-            IQueryable<TenantPM> tenants = (from a in repository.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country")
+            IQueryable<TenantPM> tenants = (from a in repository.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country").Include("LogBoxTenantSetting")
                                             select new TenantPM()
                                             {
                                                 Id = a.Id,
@@ -152,6 +152,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsTestTenant = a.IsTestTenant,
                                                 CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                                 ApplyVATForAllPartners = a.ApplyVATForAllPartners,
+                                                IsDocumentsArchive = a.LogBoxTenantSetting.IsDocumentsArchive,
+                                                CustomerTenantShareImportFile = a.LogBoxTenantSetting.CustomerTenantShareImportFile,
+                                                AutoArchiveOnInvoice = a.LogBoxTenantSetting.AutoArchiveOnInvoice,
+                                                StockTypeCode = a.LogBoxTenantSetting.StockTypeCode,
+                                                DocumentShareAsDefault = a.LogBoxTenantSetting.DocumentShareAsDefault,
+                                                LogBoxAdminUserId = a.LogBoxTenantSetting.LogBoxAdminUserId,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -202,8 +208,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         LocalAddressId = tt.LocalAddressId,
                         CompanyAddress = tt.Address != null ? tt.Address.Name : null,
                         Company = tt.Company,
-                        IsDocumentsArchive = tt.LogBoxTenantSetting.IsDocumentsArchive,
-                        CustomerTenantShareImportFile =tt.LogBoxTenantSetting.CustomerTenantShareImportFile,
+                       
                         Signature = tt.Signature,
                         IATA = tt.IATA,
                         VatNumber = tt.VatNumber,
@@ -313,6 +318,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsTestTenant = tt.IsTestTenant,
                         CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
                         ApplyVATForAllPartners = tt.ApplyVATForAllPartners,
+                        IsDocumentsArchive = a.LogBoxTenantSetting.IsDocumentsArchive,
+                        CustomerTenantShareImportFile = a.LogBoxTenantSetting.CustomerTenantShareImportFile,
+                        AutoArchiveOnInvoice = a.LogBoxTenantSetting.AutoArchiveOnInvoice,
+                        StockTypeCode = a.LogBoxTenantSetting.StockTypeCode,
+                        DocumentShareAsDefault = a.LogBoxTenantSetting.DocumentShareAsDefault,
+                        LogBoxAdminUserId = a.LogBoxTenantSetting.LogBoxAdminUserId,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -478,8 +489,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsTestTenant = tt.IsTestTenant,
                     CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
                     ApplyVATForAllPartners = tt.ApplyVATForAllPartners,
-                    IsDocumentsArchive = tt.LogBoxTenantSetting.IsDocumentsArchive,
-                    CustomerTenantShareImportFile = tt.LogBoxTenantSetting.CustomerTenantShareImportFile,
+                    IsDocumentsArchive = a.LogBoxTenantSetting.IsDocumentsArchive,
+                    CustomerTenantShareImportFile = a.LogBoxTenantSetting.CustomerTenantShareImportFile,
+                    AutoArchiveOnInvoice = a.LogBoxTenantSetting.AutoArchiveOnInvoice,
+                    StockTypeCode = a.LogBoxTenantSetting.StockTypeCode,
+                    DocumentShareAsDefault = a.LogBoxTenantSetting.DocumentShareAsDefault,
+                    LogBoxAdminUserId = a.LogBoxTenantSetting.LogBoxAdminUserId,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1270,7 +1285,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             TenantPM entityPM = new TenantPM();
 
-            Tenant myPOCO = (from a in repository.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country")
+            Tenant myPOCO = (from a in repository.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country").Include("LogBoxTenantSetting")
                              where a.Id == tenant
                              select a).FirstOrDefault();
 
@@ -1355,11 +1370,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsMobileActivated = myPOCO.IsMobileActivated,
                     RegulatedAgentNumber = myPOCO.RegulatedAgentNumber,
                     RegulatedAgentRegimeActivated = myPOCO.RegulatedAgentRegimeActivated,
-                 
+
                     CustomerId = myPOCO.CustomerId,
                     CustomerName = myPOCO.CustomerCard != null ? myPOCO.CustomerCard.EnglishName : null,
                     IsCustomerTenantShare = myPOCO.IsCustomerTenantShare,
-                 
+
                     CustomerTenantShareExportFile = myPOCO.CustomerTenantShareExportFile,
                     AllowAgentInCustomersLOV = myPOCO.AllowAgentInCustomersLOV,
                     IsPotentialTelRequired = myPOCO.IsPotentialTelRequired,
@@ -1368,7 +1383,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     VatFormatCountryId = myPOCO.VatFormatCountryId,
                     IsNumeric = myPOCO.IsNumeric,
                     VatSize = myPOCO.VatSize,
-              
+
                     IsWebAccessActivated = myPOCO.IsWebAccessActivated,
                     IsCorrespondenceRightToLeftEnabled = myPOCO.IsCorrespondenceRightToLeftEnabled,
                     IsNotesRightToLeftEnabled = myPOCO.IsNotesRightToLeftEnabled,
@@ -1379,12 +1394,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     SCACCode = myPOCO.SCACCode,
                     ExportQuotationsToIntegratedSystem = myPOCO.ExportQuotationsToIntegratedSystem,
                     FMCNumber = myPOCO.FMCNumber,
-                  
+
                     TenantVATManagement = myPOCO.TenantVATManagement,
                     LayoutDirection = myPOCO.LayoutDirection,
                     TemperatureUnitCode = myPOCO.TemperatureUnitCode,
                     DefaultSLAId = myPOCO.DefaultSLAId,
-            
+
                     NumberFormatCode = myPOCO.NumberFormatCode,
                     EcommerceSupportEmail = myPOCO.EcommerceSupportEmail,
                     CAAT = myPOCO.CAAT,
@@ -1392,6 +1407,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsTestTenant = myPOCO.IsTestTenant,
                     CheckDigitControlAlgorithmCode = myPOCO.CheckDigitControlAlgorithmCode,
                     ApplyVATForAllPartners = myPOCO.ApplyVATForAllPartners,
+                    IsDocumentsArchive = myPOCO.LogBoxTenantSetting.IsDocumentsArchive,
+                    CustomerTenantShareImportFile = myPOCO.LogBoxTenantSetting.CustomerTenantShareImportFile,
+                    AutoArchiveOnInvoice = myPOCO.LogBoxTenantSetting.AutoArchiveOnInvoice,
+                    StockTypeCode = myPOCO.LogBoxTenantSetting.StockTypeCode,
+                    DocumentShareAsDefault = myPOCO.LogBoxTenantSetting.DocumentShareAsDefault,
+                    LogBoxAdminUserId = myPOCO.LogBoxTenantSetting.LogBoxAdminUserId,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
