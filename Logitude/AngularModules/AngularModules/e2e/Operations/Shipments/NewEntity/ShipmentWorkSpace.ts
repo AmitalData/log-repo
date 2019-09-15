@@ -52,17 +52,17 @@ export class ShipmentWorkSpace {
                 this.DirectShipment.CreateDirectShipment(shipperRef1, Direction, TransportMode, ShipmentType);
                 this.Helper.WaitBusyIndicator();
                 this.Helper.WaitWindowClosed();
-
-                this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
-                this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
+                return shipperRef1;
+                // this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
+                // this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
             }
             else if ((TransportMode == 'O' || TransportMode == 'I') && ShipmentType != '') {
                 var shipperRef1 = this.GeneralFunction.RandomNum();
                 this.DirectShipment.CreateDirectShipment(shipperRef1, Direction, TransportMode, ShipmentType);
                 this.Helper.WaitBusyIndicator();
-
-                this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
-                this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
+                return shipperRef1;
+                // this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
+                // this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
             }
             // this.shipHelper.OperationalCloseShipment();
             // this.shipHelper.AccountingCloseShipment();
