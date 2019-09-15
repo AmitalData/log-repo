@@ -1501,7 +1501,7 @@ namespace WarehouseData.Helper
 
             foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
             {
-                RemoveOldRowsFromFactTable(table, destinationConnectionString);
+                RemoveDataFromFactShipment(table, destinationConnectionString);
                 BuildAndExecuteDataWarehouseScript("IncrementalWarehouse", destinationConnectionString, table);
             }
 
