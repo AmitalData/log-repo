@@ -57,7 +57,10 @@
                     <tr style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:125px;">  <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'WarehouseRelease'" [DataContext]="warehouseReleasePM"></LogLabel></td>
-                        <td style="width:270px"><LogLov [DependencyFilter1Value]="'CS'"  (SelectedItemChanged)="CustomerValueChange($event)"  style="width:230px"  [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'WarehouseRelease'" [DataContext]="warehouseReleasePM" [LookUpTableName]="'Card'"></LogLov></td>
+                        <td style="width:270px"><LogLov *ngIf="IsRefreshCustomer" [DependencyFilter1Value]="'CS'"  (SelectedItemChanged)="CustomerValueChange($event)"  style="width:230px"  [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'WarehouseRelease'" [DataContext]="warehouseReleasePM" [LookUpTableName]="'Card'"></LogLov>
+                            <LogLov *ngIf="!IsRefreshCustomer" [DependencyFilter1Value]="'CS'" (SelectedItemChanged)="CustomerValueChange($event)" style="width:230px" [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'WarehouseRelease'" [DataContext]="warehouseReleasePM" [LookUpTableName]="'Card'"></LogLov>
+                        
+                        </td>
                         <td><div></div></td>
                     </tr>
 

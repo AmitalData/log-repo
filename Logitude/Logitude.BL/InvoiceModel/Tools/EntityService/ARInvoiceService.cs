@@ -1948,7 +1948,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         if (this.isNewEntity)
                         {
-                            myResult = "OAMT";
+                            //myResult = "OAMT";
+                            myResult = "ACCT";
                         }
 
                         break;

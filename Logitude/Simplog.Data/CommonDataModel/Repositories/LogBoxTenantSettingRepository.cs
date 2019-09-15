@@ -13,6 +13,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             commonDataContext = CommonDataContext.GetContext(tenant);  
         }
+        
 
         public LogBoxTenantSettingRepository(ICommonDataContext context)
         {
