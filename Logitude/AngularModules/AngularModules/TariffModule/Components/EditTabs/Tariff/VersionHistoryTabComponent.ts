@@ -444,7 +444,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
         copiedVersion.Version = this.EntityPM.LastVersion;
         copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
         copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
-        copiedVersion.ExpirationDate = this.VersionPM.ExpirationDate != null ? this.VersionPM.ExpirationDate : this.VersionPM.InitialEnddate;
+
+        if (this.EntityPM.TypeCode == "AFC") {
+            copiedVersion.ExpirationDate = this.VersionPM.ExpirationDate != null ? this.VersionPM.ExpirationDate : this.VersionPM.InitialEnddate;
+        }
 
 
         copiedVersion.IsDraft = true;
@@ -497,7 +500,6 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.StartDate = item.StartDate;
                 tariffLine.CurrencyId = item.CurrencyId;
                 tariffLine.CurrencyCode = item.CurrencyCode;
-                tariffLine.ExpirationDate = item.ExpirationDate;
                 tariffLine.Surcharge1MinPrice = item.Surcharge1MinPrice;
                 tariffLine.Surcharge2MinPrice = item.Surcharge2MinPrice;
                 tariffLine.Surcharge3MinPrice = item.Surcharge3MinPrice;
