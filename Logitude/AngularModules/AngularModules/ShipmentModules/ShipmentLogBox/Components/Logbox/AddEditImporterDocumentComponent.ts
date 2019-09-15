@@ -217,7 +217,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
     }
     public set Description(newValue: string) {
         this.ValidationErrorsList = [];
-        if (!AppTool.IsNullOrEmpty(newValue) && newValue.length > 70) {
+        if (!AppTool.IsNullOrEmpty(newValue) && newValue.length > 52) {
             this.ValidationErrorsList.push("Description shouldn't be more than 70 Character");
         }
         else {

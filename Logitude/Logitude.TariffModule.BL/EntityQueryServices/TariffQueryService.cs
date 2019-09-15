@@ -545,7 +545,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     AirlinePM airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
                     tariffsSummary.Name = airline.Card != null ? airline.Card.EnglishName : "";
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
-                    tariffsSummary.Remarks = result.Description;
+                    tariffsSummary.Remarks = result.Notes;
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId, tenant): 0;
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
                     tariffsSummary.VersionId = item.TariffVersion + "";
