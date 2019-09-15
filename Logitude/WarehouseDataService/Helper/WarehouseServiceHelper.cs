@@ -122,9 +122,16 @@ namespace WarehouseDataService.Helper
         public void UpdateWarehouseFieldSettings(string fieldName, bool value, string connectionString)
         {
             string connection = connectionString.Replace("Main", "Global");
+            string sql = "update  dbo.Settings set " + fieldName + "= " + (value ? 1 : 0) + " ";
+            RunScript(sql, connection);
+        }
+
+
+        private void RunScript(string sql , string connection)
+        {
             using (SqlConnection cn = new SqlConnection(connection))
             {
-                SqlCommand sqlCommand = new SqlCommand("update  dbo.Settings set " + fieldName + "= " + (value ? 1 : 0) + " ;", cn);
+                SqlCommand sqlCommand = new SqlCommand(sql, cn);
                 sqlCommand.CommandTimeout = (int)timeOut;
                 cn.Open();
                 sqlCommand.ExecuteNonQuery();
@@ -136,6 +143,13 @@ namespace WarehouseDataService.Helper
         {
             string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
             return result;
+        }
+
+        public void UpdateLastIncrementalDWUpdateDate(string sourceConnectionString)
+        {
+            string connection = sourceConnectionString.Replace("Main", "Global");
+            string sql = "update  dbo.Settings set LastIncrementalDWUpdateDate = "+ "'" + DateTime.Now + "'";
+            RunScript(sql, connection);
         }
 
         public string BuildConnectionString(string dbSourceConnection)
