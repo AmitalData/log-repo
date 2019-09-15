@@ -246,6 +246,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
                 }
 
                 this.warehouseReleasePM.WarehouseReleasePackages = this.WarehouseReleasePackagesLists;
+                this.ViewModelTrigger.IsRefreshCustomer = !this.ViewModelTrigger.IsRefreshCustomer;
             }
         });
 
