@@ -1109,10 +1109,11 @@ export class ARInvoiceMenuButtonsHandler {
             myObjectTableName = "ARInvoice";
             myDocumentTypeCode = "999G";
             myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
-            if (AppTool.IsNullOrEmpty(this.EntityPM.DocumentFilingId)) {
-                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
-            } else {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DocumentFilingId) && SessionLocator.TenantPM.AccountingActivated == true) {
                 this.GetDocument();
+            } else {
+               
+                this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
 
             }
         }
