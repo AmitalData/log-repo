@@ -37,6 +37,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     private TariffDomainService: TariffDomainService;
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
+    public IsUpdateMissingPortsVisible: boolean = false;
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
@@ -123,6 +124,11 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                         this.isUploadExcelFinished = false;
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
+
+                    if (this.isUpdateMissingPortsClicked) {
+                        this.isUpdateMissingPortsClicked = false;
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
                 }
 
                 else {
@@ -182,12 +188,21 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     SetUIProperties() {
         var isApproveVersionButtonVisible: boolean = false;
-        
+        var isUpdateMissingPortsVisible: boolean = false;
+
         if (this.IsDraftVersion && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
-            isApproveVersionButtonVisible = true;
+            if (this.IsDraftVersion) {
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
+                    isApproveVersionButtonVisible = true;
+                }
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATEMISSINGPORTS")) {
+                    isUpdateMissingPortsVisible = true;
+                }
+            }
         }
 
         this.IsApproveVersionButtonVisible = isApproveVersionButtonVisible;
+        this.IsUpdateMissingPortsVisible = isUpdateMissingPortsVisible;
     }
 
     get VersionNumber() {
@@ -550,30 +565,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.EntityPM.IsApprovingDraftVersion = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
-
-        //var errors: string[] = [];
-
-        //if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
-        //    errors.push("Invalid Tariff Lines");
-        //}
-
-        //if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
-        //    errors.push("Approving past version is not allowed, please update the dates");
-        //}
-        
-        //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-
-        //if (errors.length == 0) {
-        //    this.isApproveButtonClicked = true;
-
-        //    if (this.EntityPM.IsDirty) {
-        //        this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
-        //    }
-
-        //    else {
-        //        this.DoApprove();
-        //    }
-        //}
     }
     
     CopyVersionClicked() {
@@ -736,6 +727,15 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 
             }
         });
+    }
+
+    private isUpdateMissingPortsClicked: boolean = false;
+    UpdateMissingPortsClicked() {
+        if (!this.isUpdateMissingPortsClicked) {
+            this.isUpdateMissingPortsClicked = true;
+            this.EntityPM.IsUpdatingMissingPorts = true;
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
     }
 }
 
