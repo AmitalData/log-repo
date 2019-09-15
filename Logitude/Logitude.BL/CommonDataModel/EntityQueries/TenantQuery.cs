@@ -318,12 +318,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsTestTenant = tt.IsTestTenant,
                         CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
                         ApplyVATForAllPartners = tt.ApplyVATForAllPartners,
-                        IsDocumentsArchive = a.LogBoxTenantSetting.IsDocumentsArchive,
-                        CustomerTenantShareImportFile = a.LogBoxTenantSetting.CustomerTenantShareImportFile,
-                        AutoArchiveOnInvoice = a.LogBoxTenantSetting.AutoArchiveOnInvoice,
-                        StockTypeCode = a.LogBoxTenantSetting.StockTypeCode,
-                        DocumentShareAsDefault = a.LogBoxTenantSetting.DocumentShareAsDefault,
-                        LogBoxAdminUserId = a.LogBoxTenantSetting.LogBoxAdminUserId,
+                        IsDocumentsArchive = tt.LogBoxTenantSetting.IsDocumentsArchive,
+                        CustomerTenantShareImportFile = tt.LogBoxTenantSetting.CustomerTenantShareImportFile,
+                        AutoArchiveOnInvoice = tt.LogBoxTenantSetting.AutoArchiveOnInvoice,
+                        StockTypeCode = tt.LogBoxTenantSetting.StockTypeCode,
+                        DocumentShareAsDefault = tt.LogBoxTenantSetting.DocumentShareAsDefault,
+                        LogBoxAdminUserId = tt.LogBoxTenantSetting.LogBoxAdminUserId,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -489,12 +489,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsTestTenant = tt.IsTestTenant,
                     CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
                     ApplyVATForAllPartners = tt.ApplyVATForAllPartners,
-                    IsDocumentsArchive = a.LogBoxTenantSetting.IsDocumentsArchive,
-                    CustomerTenantShareImportFile = a.LogBoxTenantSetting.CustomerTenantShareImportFile,
-                    AutoArchiveOnInvoice = a.LogBoxTenantSetting.AutoArchiveOnInvoice,
-                    StockTypeCode = a.LogBoxTenantSetting.StockTypeCode,
-                    DocumentShareAsDefault = a.LogBoxTenantSetting.DocumentShareAsDefault,
-                    LogBoxAdminUserId = a.LogBoxTenantSetting.LogBoxAdminUserId,
+                    IsDocumentsArchive = tt.LogBoxTenantSetting.IsDocumentsArchive,
+                    CustomerTenantShareImportFile = tt.LogBoxTenantSetting.CustomerTenantShareImportFile,
+                    AutoArchiveOnInvoice = tt.LogBoxTenantSetting.AutoArchiveOnInvoice,
+                    StockTypeCode = tt.LogBoxTenantSetting.StockTypeCode,
+                    DocumentShareAsDefault = tt.LogBoxTenantSetting.DocumentShareAsDefault,
+                    LogBoxAdminUserId = tt.LogBoxTenantSetting.LogBoxAdminUserId,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
