@@ -466,7 +466,7 @@
                                                                 <table *ngIf="_SelectedTabFilter.Code=='DEC' ">
                                                                     <tr>
                                                                         <td style="width: 300px;">
-                                                                            <ul class="FiltersMenu" style="float:right; padding-right: 5px;" [class.FiltersMenuDisabled]="_SelectedDECTABValue != 'MX'">
+                                                                            <ul class="FiltersMenu" style="float:right; padding-right: 5px;" [class.FiltersMenuDisabled]="_SelectedDECTabValue != 'MX'">
                                                                                 <li (click)="DECFilterClicked('W')" style="width:140px; height: 25px;" [class.SelectedFilter]="_SelectedDECValue === 'W'">
                                                                                     {{'Customs.CourierMaster.MNF.HandleWrong' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._DEC_W_Total + ')' }} </span>
@@ -480,19 +480,19 @@
                                                                         <td></td>
                                                                         <td style="width: 500px;">
                                                                             <ul class="FiltersMenu" style="float:left; padding-left: 5px;">
-                                                                                <li (click)="DECTABFilterClicked('I')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTABValue === 'I'">
+                                                                                <li (click)="DECTabFilterClicked('I')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTabValue === 'I'">
                                                                                     {{'Customs.CourierMaster.O.InProgress' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._DEC_I_Total + ')' }} </span>
                                                                                 </li>
-                                                                                <li (click)="DECTABFilterClicked('R')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTABValue === 'R'">
+                                                                                <li (click)="DECTabFilterClicked('R')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTabValue === 'R'">
                                                                                     {{'Customs.CourierMaster.O.ReadyToSend' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._DEC_R_Total + ')' }} </span>
                                                                                 </li>
-                                                                                <li (click)="DECTABFilterClicked('MX')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTABValue === 'MX'">
+                                                                                <li (click)="DECTabFilterClicked('MX')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTabValue === 'MX'">
                                                                                     {{'Customs.CourierMaster.O.InCorrect' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._DEC_MX_Total + ')' }} </span>
                                                                                 </li>
-                                                                                <li (click)="DECTABFilterClicked('V')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTABValue === 'V'">
+                                                                                <li (click)="DECTabFilterClicked('V')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDECTabValue === 'V'">
                                                                                     {{'Customs.CourierMaster.O.Correct' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._DEC_V_Total + ')' }} </span>
                                                                                 </li>
@@ -504,7 +504,7 @@
                                                                 <table *ngIf="_SelectedTabFilter.Code=='DOC' ">
                                                                     <tr>
                                                                         <td style="width: 250px;">
-                                                                            <ul class="FiltersMenu" style="float:right; padding-right: 5px;">
+                                                                            <ul class="FiltersMenu" style="float:right; padding-right: 5px;" [class.FiltersMenuDisabled]="_SelectedDOCTabValue != 'MX'">
                                                                                 <li (click)="DOCFilterClicked('U')" style="width:80px; height: 25px;" [class.SelectedFilter]="_SelectedDOCValue === 'U'">
                                                                                     {{'Customs.CourierMaster.DOC.DocumentCorrectionUploaded' | TextCodeTranslationPipe }}
                                                                                     <span> {{' (' +this._DOC_U_Total + ')' }} </span>
@@ -533,6 +533,22 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td></td>
+                                                                        <td style="width: 500px;">
+                                                                            <ul class="FiltersMenu" style="width: 500px; float:left; padding-left: 5px;">
+                                                                                <li (click)="DOCTabFilterClicked('I')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDOCTabValue === 'I'">
+                                                                                    {{'Customs.CourierMaster.O.InProgress' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DOC_I_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="DOCTabFilterClicked('MX')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDOCTabValue === 'MX'">
+                                                                                    {{'Customs.CourierMaster.O.InCorrect' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DOC_MX_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="DOCTabFilterClicked('V')" style="width:120px; height: 25px;" [class.SelectedFilter]="_SelectedDOCTabValue === 'V'">
+                                                                                    {{'Customs.CourierMaster.O.Correct' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._DOC_V_Total + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
                                                                 <!--PAY-->

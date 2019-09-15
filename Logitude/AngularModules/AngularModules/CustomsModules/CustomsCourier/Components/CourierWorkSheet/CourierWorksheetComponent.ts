@@ -90,8 +90,9 @@ implements OnDestroy
 
     //Selected tabs
     _SelectedPAYValue: string = 'R'; // Correct/InProgress/ReadyToSend
-    _SelectedDECTABValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
+    _SelectedDECTabValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
     _SelectedMNFTABValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
+    _SelectedDOCTabValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
 
     public columns: any[] = null;
 
@@ -153,7 +154,8 @@ implements OnDestroy
         this._SelectedMNFValue = 'A';
         this._SelectedMNFTABValue = 'MX';
         this._SelectedDECValue = 'A';
-        this._SelectedDECTABValue = 'MX';
+        this._SelectedDECTabValue = 'MX';
+        this._SelectedDOCTabValue = 'MX';
         this._SelectedDOCValue = 'A';
         this._SelectedACCValue = 'A';
         this._SelectedPAYValue = 'R';
@@ -516,6 +518,9 @@ implements OnDestroy
     _DOCTotal = 0;
     _DOC_U_Total = 0;
     _DOC_C_Total = 0;
+    _DOC_MX_Total = 0;
+    _DOC_V_Total = 0;
+    _DOC_I_Total = 0;
     _DEC_W_Total = 0;
     _DEC_C_Total = 0;
     _DEC_MX_Total = 0;
@@ -636,6 +641,7 @@ implements OnDestroy
                             this._DOCTotal = item.Value;
                             var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
                             TabFilter.Total = item.Value;
+                            this._DOC_MX_Total = item.Value;
                             break;
                         }
                         case "DOC_U": {
@@ -645,6 +651,14 @@ implements OnDestroy
                         }
                         case "DOC_C": {
                             this._DOC_C_Total = item.Value;
+                            break;
+                        }
+                        case "DOC_I": {
+                            this._DOC_I_Total = item.Value;
+                            break;
+                        }
+                        case "DOC_V": {
+                            this._DOC_V_Total = item.Value;
                             break;
                         }
                         case "DEC": {
@@ -982,7 +996,8 @@ implements OnDestroy
             case "ALL":
             case "PAY":
             case "MNF":
-            case "DEC":{
+            case "DEC":
+            case "DOC": {
                 break;
             }
             default: {
@@ -1014,7 +1029,7 @@ implements OnDestroy
         }
 
         if (this._SelectedTabFilter.Code == "MNF") {
-            switch (this._SelectedDECTABValue) {
+            switch (this._SelectedMNFTABValue) {
                 case "I": {
                     filters.addAdditionalFilter("CourierManifestStatusCode", "I", null, null, "Equals", false, false, false, "string");
                     break;
@@ -1049,7 +1064,7 @@ implements OnDestroy
         }
 
         if (this._SelectedTabFilter.Code == "DEC") {
-            switch (this._SelectedDECTABValue) {
+            switch (this._SelectedDECTabValue) {
                 case "I": {
                     filters.addAdditionalFilter("CourierDeclarationStatusCode", "I", null, null, "Equals", false, false, false, "string");
                     break;
@@ -1083,14 +1098,34 @@ implements OnDestroy
             }
         }
 
-        switch (this._SelectedDOCValue) {
-            case "C": {
-                filters.addAdditionalFilter("DocumentStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "U": {
-                filters.addAdditionalFilter("DocumentStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
+        if (this._SelectedTabFilter.Code == "DOC") {
+            switch (this._SelectedDOCTabValue) {
+                case "I": {
+                    filters.addAdditionalFilter("DocumentStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "V": {
+                    filters.addAdditionalFilter("DocumentStatusCode", "V", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "MX": {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    switch (this._SelectedDOCValue) {
+                        case "C": {
+                            filters.addAdditionalFilter("DocumentStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                        case "U": {
+                            filters.addAdditionalFilter("DocumentStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
@@ -1138,11 +1173,10 @@ implements OnDestroy
         if (this._SelectedTabFilter.Code == "PAY") {
             switch (this._SelectedPAYValue) {
                 case "C": {
-                    filters.addAdditionalFilter("CourierPaymentStatusCode", "R,O", null, null, "Equals", false, false, false, "string");
+                    filters.addAdditionalFilter("CourierPaymentStatusCode", "R,P", null, null, "InList", false, false, false, "string");
                     break;
                 }
                 case "R": {
-                    //filters.addAdditionalFilter("CourierPaymentStatusCode", "R", null, null, "Equals", false, false, false, "string");
                     filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
                     break;
                 }
@@ -1218,9 +1252,9 @@ implements OnDestroy
         }
     }
 
-    DECTABFilterClicked(value: string) {
-        if (this._SelectedDECTABValue != value) {
-            this._SelectedDECTABValue = value;
+    DECTabFilterClicked(value: string) {
+        if (this._SelectedDECTabValue != value) {
+            this._SelectedDECTabValue = value;
             this.RefreshList();
         }
     }
@@ -1229,6 +1263,13 @@ implements OnDestroy
 
         if (this._SelectedDOCValue != value) {
             this._SelectedDOCValue = value;
+            this.RefreshList();
+        }
+    }
+
+    DOCTabFilterClicked(value: string) {
+        if (this._SelectedDOCTabValue != value) {
+            this._SelectedDOCTabValue = value;
             this.RefreshList();
         }
     }

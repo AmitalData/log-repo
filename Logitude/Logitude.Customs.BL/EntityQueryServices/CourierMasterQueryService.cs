@@ -123,6 +123,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int DOC = 0;
             int DOC_U = 0;
             int DOC_C = 0;
+            int DOC_I = 0;
+            int DOC_V = 0;
             int SVG = 0;
             int MNF = 0;
             int MNF_C = 0;
@@ -155,6 +157,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  dOC = g.Count(r => r.DocumentStatusCode == "M" || r.DocumentStatusCode == "X"),
                  DOC_U = g.Count(r => r.DocumentStatusCode == "X"),
                  DOC_C = g.Count(r => r.DocumentStatusCode == "M"),
+                 DOC_I = g.Count(r => r.DocumentStatusCode == "I"),
+                 DOC_V = g.Count(r => r.DocumentStatusCode == "V"),
                  sVG = g.Count(r => (r.IsCourierMissingClassification == true)),
                  MNF = g.Count(r => (r.CourierManifestStatusCode == "M" || r.CourierManifestStatusCode == "X")),
                  MNF_C = g.Count(r => (r.CourierManifestStatusCode == "M")),
@@ -189,6 +193,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DOC = tot.dOC;
                 DOC_U = tot.DOC_U;
                 DOC_C = tot.DOC_C;
+                DOC_I = tot.DOC_I;
+                DOC_V = tot.DOC_V;
                 SVG = tot.sVG;
                 MNF = tot.MNF;
                 MNF_C = tot.MNF_C;
@@ -217,6 +223,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             keyValuePairList.Add(new KeyValuePair<string, int>("DOC", DOC));
             keyValuePairList.Add(new KeyValuePair<string, int>("DOC_U", DOC_U));
             keyValuePairList.Add(new KeyValuePair<string, int>("DOC_C", DOC_C));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DOC_I", DOC_I));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DOC_V", DOC_V));
             keyValuePairList.Add(new KeyValuePair<string, int>("SVG", SVG));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNF", MNF));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNF_C", MNF_C));
