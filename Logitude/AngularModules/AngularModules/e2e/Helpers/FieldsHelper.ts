@@ -138,29 +138,35 @@ export class FieldsHelper {
     WaitByCssAndClick_FromTagInsideListWithCheck(className: string, index: number, Id: string = null, input: string = null) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000).then(a => {
-            element.all(by.css(className)).get(index).click();
-            var Newinput = element(by.id(Id)).getAttribute('value');
-            Newinput.then(p => {
-                if (p == "") {
-                    this.WaitByIdAndFill(Id, input);
-                    this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
-                } else {
-                    this.WaitDropDownToBeClosed(className);
-                    this.WaitBusyIndicator();
-                    // if(EC.visibilityOf(element(by.css(className)))){
-                    //     this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
-                    // }
-                    // browser.wait(EC.invisibilityOf(element(by.css(className))), 100000).then(a => {
-                    // });
-                    // if(EC.invisibilityOf(element(by.cs(className))).){
-                    //     console.log('element is selected ');
+            var item = element.all(by.css(className)).get(index);
+            if (item == null) {
+                this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
+            }
+            else {
+                item.click();
+                var Newinput = element(by.id(Id)).getAttribute('value');
+                Newinput.then(p => {
+                    if (p == "") {
+                        this.WaitByIdAndFill(Id, input);
+                        this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
+                    } else {
+                        this.WaitDropDownToBeClosed(className);
+                        this.WaitBusyIndicator();
+                        // if(EC.visibilityOf(element(by.css(className)))){
+                        //     this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
+                        // }
+                        // browser.wait(EC.invisibilityOf(element(by.css(className))), 100000).then(a => {
+                        // });
+                        // if(EC.invisibilityOf(element(by.cs(className))).){
+                        //     console.log('element is selected ');
 
-                    // }else{
-                    //     this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
+                        // }else{
+                        //     this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
 
-                    // }
-                }
-            });
+                        // }
+                    }
+                });
+            }
         });
     }
     WaitDropDownToBeClosed(className: string) {
