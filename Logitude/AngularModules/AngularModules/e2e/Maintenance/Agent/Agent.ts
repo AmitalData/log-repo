@@ -48,14 +48,17 @@ export class NewAgent {
         this.helper.WaitBusyIndicator();
         this.helper.WaitWindowClosed();
         this.helper.WaitByIdAndFill('SearchFieldsId_0_0', this.agentName);
-        //click on row 
         this.helper.WaitByIdAndClick('LogGrid_0_0row0');
-        //edit 
         this.helper.WaitByIdAndFill('Agent_Notes', "This Is Test For Protractor")
-     //   this.helper.ItemsVisibility('Agent-Save')
-      //  this.helper.ItemsPresent('Agent-Save')
         this.helper.WaitByIdAndClick('Agent-Save');
 
     }
+    SaveAgent() {
+        this.helper.ItemsVisibility('Agent-Save')
+        this.helper.WaitByIdAndClick('Agent-Save');
+
+
+    }
+
 
 }

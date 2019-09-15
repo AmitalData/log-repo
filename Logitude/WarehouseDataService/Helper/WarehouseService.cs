@@ -1,6 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel;
-using Simplog.Server.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;

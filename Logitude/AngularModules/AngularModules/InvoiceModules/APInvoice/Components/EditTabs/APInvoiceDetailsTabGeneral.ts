@@ -1583,7 +1583,11 @@ export class APInvoiceLineItem extends BaseComponent {
                         this.VatIsMultiPercentage = list.IsMultiPercentage;
                         //this.invoiceLinePM.ExternalVATCard = list.ExternalVATCard;
                         this.invoiceLinePM.ExternalTAXItemId = list.ExternalTAXItemId;
-                        this.invoiceLinePM.VatRecognizedPercentage = list.RecognizedPercentage/100;
+                        if (list.RecognizedPercentage != null) {
+                            this.invoiceLinePM.VatRecognizedPercentage = list.RecognizedPercentage / 100;
+                        } else { this.invoiceLinePM.VatRecognizedPercentage =  null;}
+                     
+                      
                         if (list.IsMultiPercentage) {
                             this.VatPercentage = null;
                         }

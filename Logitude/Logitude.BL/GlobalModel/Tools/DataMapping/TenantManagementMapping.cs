@@ -139,13 +139,18 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             {
                 TenantRepository tenantRepository = new TenantRepository(entityPM.Id);
                 PackageRepository packageRepository = new PackageRepository(entityPM.Id);
+                LogBoxTenantSettingRepository LBtenantsettingRepository = new LogBoxTenantSettingRepository(entityPM.Id);
 
                 Tenant tenant = tenantRepository.GetSingleTenant(entityPM.Id);
+                LogBoxTenantSetting LBtenantsetting = LBtenantsettingRepository.GetSingleLBTenant(entityPM.Id);
+
+              
+
                 if (tenant != null)
                 {
                     tenant.Company = entityPM.Name;
-                    tenant.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
-                    tenant.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
+                    LBtenantsetting.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
+                    LBtenantsetting.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
                     if (!entityPM.ManagesRegisteredAgent)
                     {
                         tenant.RegulatedAgentRegimeActivated = false;

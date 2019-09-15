@@ -131,7 +131,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public Decimal? TotaVatableAmountForTaxReport { get; set; }
         public Decimal? TotalVAT { get; set; }
         public DateTime? SATApprovalDate { get; set; }
-
+        public string DocumentFilingId { get; set; }
         public bool IsFullAccounting { get; set; }
         public string ARInvoiceStockId { get; set; }
         public bool IsInvoiceNumberFromStock { get; set; }
