@@ -187,6 +187,7 @@
     </None>
     <None Include="EntityFiles\CommonDataModel\CardContactProduct.lxml" />
     <None Include="EntityFiles\CommonDataModel\CheckDigitControlAlgorithm.lxml" />
+    <None Include="EntityFiles\CommonDataModel\LogBoxTenantSetting.lxml" />
     <None Include="EntityFiles\CommonDataModel\NumberFormat.lxml">
       <SubType>Designer</SubType>
     </None>

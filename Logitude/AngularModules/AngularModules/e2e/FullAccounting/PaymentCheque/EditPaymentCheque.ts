@@ -21,7 +21,6 @@ export class EditPaymentCheque {
         this.Helper.ItemsPresent('PaymentCheque.B.PaymentChequeSaveAsDraft');    
         this.Helper.WaitByIdAndClick('PaymentCheque.B.PaymentChequeSaveAsDraft');
         this.Helper.WaitBusyIndicator();
-
       //  this.Helper.ItemsVisibility('NewButton_BankAccount');
 
 // browser.driver.sleep(5000)
