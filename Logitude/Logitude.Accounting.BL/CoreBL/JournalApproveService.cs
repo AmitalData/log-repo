@@ -28,6 +28,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -961,6 +962,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
                     {
+                        if (DateTime.Now < new DateTime(2020, 01, 01))
+                        {
+                            CreateBatchAccountingIntegrityCheck();
+                        }
                         _NextDueDoneAt = DateTime.UtcNow.Date;
                         var myDueLocalBalanceService = new DueLocalBalanceService();
                         myDueLocalBalanceService.RunAllTenants();
@@ -972,6 +977,53 @@ namespace Logitude.Accounting.BL.CoreBL
                     throw;
                 }
 
+            }
+
+            private void CreateBatchAccountingIntegrityCheck()
+            {
+                try
+                {
+
+                    int year = DateTime.Now.Year;
+                    var repo = new GLAccountTotalByMonthRepository(0);
+                    var activeTenants =repo.GetActiveTenantPerYear(year);
+                    foreach (var tenant in activeTenants)
+                    {
+
+                        using (var scope = TransactionFactory.GetNewTransaction())
+                        {
+                            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+                            AccountingIntegrityCheckUpdateService service = new AccountingIntegrityCheckUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
+                            service.Update(new AccountingIntegrityCheckPM()
+                            {
+                                ChangeSetOp = ChangeSetOperation.Insert,
+                                Tenant = tenant,
+                                CreateDateTimeUTC = DateTime.UtcNow,
+                                FromMonthInclusive = new DateTime(year, 1, 1),
+                                ToMonthInclusive = DateTime.Now,
+                                StatusCode = "1",
+                                SendEmailWhileError=true
+
+                            }
+                            , true);
+                            scope.Complete();
+                        }
+
+                    }
+
+
+
+
+
+
+                }
+                catch (Exception ee)
+                {
+
+                    ExceptionHandler.HandleException(ee, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
+                    //throw;
+                }
             }
         }
     }
