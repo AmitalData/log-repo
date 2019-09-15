@@ -124,7 +124,13 @@ namespace WarehouseDataService.Helper
             string connection = connectionString.Replace("Main", "Global");
             using (SqlConnection cn = new SqlConnection(connection))
             {
-                SqlCommand sqlCommand = new SqlCommand("update  dbo.Settings set " + fieldName + "= " + (value ? 1 : 0) + " ;", cn);
+                string sql = "update  dbo.Settings set " + fieldName + "= " + (value ? 1 : 0) + " ";
+                if (fieldName == "IsIncrementalDWRunning" && value == false)
+                {
+                    sql += " , LastIncrementalDWUpdateDate =" + "'" + DateTime.Now + "'";
+                }
+
+                SqlCommand sqlCommand = new SqlCommand(sql, cn);
                 sqlCommand.CommandTimeout = (int)timeOut;
                 cn.Open();
                 sqlCommand.ExecuteNonQuery();
