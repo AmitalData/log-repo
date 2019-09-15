@@ -80,6 +80,11 @@ exports.config = {
             browser.params.Login.Email = "protractor@test.com";
             browser.params.Login.Password = "!P123t456";
         }
+        else if (browser.params.Env == "logitudepre") {
+            browser.params.Link = "https://pre.logitudeworld.com";
+            browser.params.Login.Email = "protractor@test.com";
+            browser.params.Login.Password = "!P123t456";
+        }
         else if (browser.params.Env == "test") {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "protractor@test.com";
