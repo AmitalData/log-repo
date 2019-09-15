@@ -37,6 +37,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     private TariffDomainService: TariffDomainService;
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
+    public IsUpdateMissingPortsVisible: boolean = false;
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
@@ -182,12 +183,20 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     SetUIProperties() {
         var isApproveVersionButtonVisible: boolean = false;
-        
-        if (this.IsDraftVersion && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
-            isApproveVersionButtonVisible = true;
+        var isUpdateMissingPortsVisible: boolean = false;
+
+        if (this.IsDraftVersion) {
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
+                isApproveVersionButtonVisible = true;
+            }
+
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATEMISSINGPORTS")) {
+                isUpdateMissingPortsVisible = true;
+            }
         }
 
         this.IsApproveVersionButtonVisible = isApproveVersionButtonVisible;
+        this.IsUpdateMissingPortsVisible = isUpdateMissingPortsVisible;
     }
 
     get VersionNumber() {
@@ -736,6 +745,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 
             }
         });
+    }
+
+    UpdateMissingPortsClicked() {
+
     }
 }
 

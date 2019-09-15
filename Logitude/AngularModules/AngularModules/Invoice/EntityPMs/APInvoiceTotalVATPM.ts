@@ -108,6 +108,11 @@ export class APInvoiceTotalVATPM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
+    private vatRecognizedPercentage: number;
+    public get VatRecognizedPercentage() { return this.vatRecognizedPercentage; }
+    public set VatRecognizedPercentage(newValue: number) { if (this.vatRecognizedPercentage != newValue) { this.vatRecognizedPercentage = newValue; this.MarkAsDirty("VatRecognizedPercentage"); } }
+       
+	 
 
     public OldEntityPM: APInvoiceTotalVATPM;
 	    

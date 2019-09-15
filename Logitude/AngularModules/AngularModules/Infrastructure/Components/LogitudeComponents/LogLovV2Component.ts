@@ -1199,29 +1199,57 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     var lis = input.getElementsByTagName("li");
                     lis[0].classList.add("highlighted");
                 }
+                else if(this.IsAllDataVisible){
+                    if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
+                        var input = document.getElementById(this.AllDataListId);
+                        var lis = input.getElementsByTagName("li");
+                        lis[0].classList.add("highlighted");
+                    }
+                }
 
             }
             else {
                 if (active[0].nextElementSibling) {
                     active[0].nextElementSibling.classList.add("highlighted");
                     active[0].classList.remove("highlighted");
-
-
                     active[0].scrollIntoView(false);
+                }
+                else if(this.IsAllDataVisible){
+                    if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
+                        var input = document.getElementById(this.AllDataListId);
+                        active[0].classList.remove("highlighted");
+                        var lis = input.getElementsByTagName("li");
+                        lis[0].classList.add("highlighted");
+                    }
                 }
             }
         }
         else {
             var active = document.getElementsByClassName("highlighted");
             if (active[0]) {
-                if (this.ItemsSource && this.ItemsSource.length > 0) {
+                // if (this.ItemsSource && this.ItemsSource.length > 0) {
                     if (active[0].previousElementSibling) {
                         active[0].previousElementSibling.classList.add("highlighted");
                         active = document.getElementsByClassName("highlighted");
                         active[1].classList.remove("highlighted");
                         active[0].scrollIntoView(false);
                     }
-                }
+                    else if(this.IsAllDataVisible){
+                        if (this.ItemsSource && this.ItemsSource.length > 0) {
+                            var input = document.getElementById(this.MyDataListId);
+                            active[0].classList.remove("highlighted");
+                            var lis = input.getElementsByTagName("li");
+                            lis[lis.length-1].classList.add("highlighted");
+                        }
+                    }
+                // }
+                // else if(this.IsAllDataVisible){
+                //     if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
+                //         var input = document.getElementById(this.AllDataListId);
+                //         var lis = input.getElementsByTagName("li");
+                //         lis[0].classList.add("highlighted");
+                //     }
+                // }
             }
         }
     }
@@ -1247,72 +1275,15 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.tabkeyDown = true;
 
             if (this.IsOpen) {
-                var active = document.getElementsByClassName("highlighted");
-                if (active[0]) {
-                    var input = document.getElementById(this.MyDataListId);
-                    var lis = input.getElementsByTagName("li");
-                    for (var i = 0; i < lis.length; i++) {
-
-                        if (lis[i].className.search("highlighted") > -1) {
-                            this.FocusOnSelect = false;
-                            lis[i].classList.remove("highlighted");
-                            lis[i].click();
-                        }
-                    }
-
-                }
-                else {
-                    var selected = document.getElementsByClassName("liItemSelected");
-                    if (selected[0]) {
-                        var input = document.getElementById(this.MyDataListId);
-                        var lis = input.getElementsByTagName("li");
-                        for (var i = 0; i < lis.length; i++) {
-
-                            if (lis[i].className.search("liItemSelected") > -1) {
-                                this.FocusOnSelect = false;
-                                lis[i].classList.remove("liItemSelected");
-                                lis[i].click();
-                            }
-                        }
-                    }
-                }
-
-            }
-            if (this.IsOpen) {
+                this.FocusOnSelect = false;
+                this.SelectHighlightedItem();
                 this.ToggleOpenDropDown();
             }
-            //this.OnBlurEvent.emit("");
         }
 
         if ($event.keyCode == ENTERKEY) {
             if (this.IsOpen) {
-                var active = document.getElementsByClassName("highlighted");
-                if (active[0]) {
-                    var input = document.getElementById(this.MyDataListId);
-                    var lis = input.getElementsByTagName("li");
-                    for (var i = 0; i < lis.length; i++) {
-
-                        if (lis[i].className.search("highlighted") > -1) {
-                            lis[i].classList.remove("highlighted");
-                            lis[i].click();
-                        }
-                    }
-
-                }
-                else {
-                    var selected = document.getElementsByClassName("liItemSelected");
-                    if (selected[0]) {
-                        var input = document.getElementById(this.MyDataListId);
-                        var lis = input.getElementsByTagName("li");
-                        for (var i = 0; i < lis.length; i++) {
-
-                            if (lis[i].className.search("liItemSelected") > -1) {
-                                lis[i].classList.remove("liItemSelected");
-                                lis[i].click();
-                            }
-                        }
-                    }
-                }
+                this.SelectHighlightedItem();
             }
             else {
                 this.KeyDownEvent.emit(13)
@@ -1369,6 +1340,59 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         //if ((48 <= key && key <= 57) || (65 <= key && key <= 90) || key == 8 || key == 46 || key == 32) {
         //    this.OnDeleteValue(false);
         //}
+    }
+
+
+
+    ClickOnHighlightedItemReturnStatus(dropDownListId:string){
+        var input = document.getElementById(dropDownListId);
+        var lis = input.getElementsByTagName("li");
+        var selectedItemFound:boolean=false;
+        for (var i = 0; i < lis.length; i++) {
+
+            if (lis[i].className.search("highlighted") > -1) {
+                selectedItemFound=true;
+                lis[i].classList.remove("highlighted");
+                lis[i].click();
+            }
+        }
+        return selectedItemFound;
+    }
+
+    ClickOnSelectedItemReturnStatus(dropDownListId:string){
+        var input = document.getElementById(dropDownListId);
+        var lis = input.getElementsByTagName("li");
+        var selectedItemFound:boolean=false;
+        for (var i = 0; i < lis.length; i++) {
+
+            if (lis[i].className.search("liItemSelected") > -1) {
+                selectedItemFound=true;
+                lis[i].classList.remove("liItemSelected");
+                lis[i].click();
+            }
+        }
+        return selectedItemFound;
+    }
+
+    SelectHighlightedItem(){
+        var selectedItemFound:boolean=false;
+        var active = document.getElementsByClassName("highlighted");
+                if (active[0]) {
+                    selectedItemFound=this.ClickOnHighlightedItemReturnStatus(this.MyDataListId);
+                    if(!selectedItemFound){
+                        selectedItemFound=this.ClickOnHighlightedItemReturnStatus(this.AllDataListId);
+                    }
+
+                }
+                else {
+                    var selected = document.getElementsByClassName("liItemSelected");
+                    if (selected[0]) {
+                     selectedItemFound=this.ClickOnSelectedItemReturnStatus(this.MyDataListId);
+                    }
+                    if(!selectedItemFound){
+                        selectedItemFound=this.ClickOnHighlightedItemReturnStatus(this.AllDataListId);
+                    }
+                }
     }
 
     OnLiMouseOver($event) {

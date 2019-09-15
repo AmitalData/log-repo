@@ -68,6 +68,11 @@ export class APInvoiceLinePM {
     public set VatPercentage(newValue: number) { if (this.vatPercentage != newValue) { this.vatPercentage = newValue; this.MarkAsDirty("VatPercentage"); } }
        
 	 
+    private vatRecognizedPercentage: number;
+    public get VatRecognizedPercentage() { return this.vatRecognizedPercentage; }
+    public set VatRecognizedPercentage(newValue: number) { if (this.vatRecognizedPercentage != newValue) { this.vatRecognizedPercentage = newValue; this.MarkAsDirty("VatRecognizedPercentage"); } }
+       
+	 
     private vatTypeName: string;
     public get VatTypeName() { return this.vatTypeName; }
     public set VatTypeName(newValue: string) { if (this.vatTypeName != newValue) { this.vatTypeName = newValue; this.MarkAsDirty("VatTypeName"); } }

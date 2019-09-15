@@ -5,7 +5,7 @@ import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
 
-describe('CRM Module', function () {
+describe('GLAccount Module', function () {
   var gn1 = new GeneralFunctions();
   var h = new FieldsHelper();
   browser.driver.manage().window().maximize();

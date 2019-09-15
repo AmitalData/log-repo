@@ -179,12 +179,14 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                         TenantRepository tenantRep = new TenantRepository(tenant.Id);
                         Tenant ten = tenantRep.GetSingleTenant(tenant.Id);
+                        LogBoxTenantSettingRepository tenantsettingRep = new LogBoxTenantSettingRepository(tenant.Id);
+                        LogBoxTenantSetting tens = tenantsettingRep.GetSingleLBTenant(tenant.Id);
                         if (ten != null)
                         {
                             //tenant.CountryName = ten.Address != null ? (ten.Address.Country != null ? ten.Address.Country.EnglishName : null) : null;
                             tenant.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
-                            tenant.DocumentShareAsDefault = ten.DocumentShareAsDefault;
-                            tenant.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
+                            tenant.DocumentShareAsDefault = tens.DocumentShareAsDefault;
+                            tenant.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
                             tenant.IsTestTenant = ten.IsTestTenant;
                         }
 
@@ -350,12 +352,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                     TenantRepository tenantRep = new TenantRepository(tenant1.Id);
                     Tenant ten = tenantRep.GetSingleTenant(tenant1.Id);
+
+                    LogBoxTenantSettingRepository tenantsettingRep = new LogBoxTenantSettingRepository(tenant1.Id);
+                    LogBoxTenantSetting tens = tenantsettingRep.GetSingleLBTenant(tenant1.Id);
                     if (ten != null)
                     {
                         //tenant1.CountryName = ten.Address.Country.EnglishName;
                         tenant1.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
-                        tenant1.DocumentShareAsDefault = ten.DocumentShareAsDefault;
-                        tenant1.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
+                        tenant1.DocumentShareAsDefault = tens.DocumentShareAsDefault;
+                        tenant1.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
                         tenant1.IsTestTenant = ten.IsTestTenant;
                     }
 
