@@ -62,7 +62,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             string mySearchFields = "";
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Name);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Description);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Notes);
 
             if (entityPM.ContractNumber != null)
             {
