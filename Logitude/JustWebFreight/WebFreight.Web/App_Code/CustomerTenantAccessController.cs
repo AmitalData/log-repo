@@ -157,10 +157,11 @@ namespace WebFreight.Web.App_Code
                             CustomerTenantAccessService service = new CustomerTenantAccessService(objectContext, entityPM.Tenant, entityPM, SystemUser);
                             service.Create();
                             TenantPM currentTenant = TenantQuery.GetSingleTenantPM(entityPM.Tenant, false);
+                            LogBoxTenantSettingPM currentLBtenant = LogBoxTenantSettingQuery.GetSingleLogBoxTenantSettingPM(entityPM.Tenant);
                             if (currentTenant != null)
                             {
                                 ContactRepository Repos = new ContactRepository(entityPM.Tenant);
-                                var Contact = Repos.GetSingleContact(currentTenant.LogBoxAdminUserId, entityPM.Tenant);
+                                var Contact = Repos.GetSingleContact(currentLBtenant.LogBoxAdminUserId, entityPM.Tenant);
                                 var emailMessage = GetEmailMessage(entityPM);
 
                                 string env = entityPM.IsPrivateLabelCustomer? "DSV Digital": "Logbox";
@@ -171,7 +172,7 @@ namespace WebFreight.Web.App_Code
                                     To = Contact.Email,
                                     Subject = subject,
                                     EmailBody = emailMessage,
-                                    LoggingUserId = currentTenant.LogBoxAdminUserId,
+                                    LoggingUserId = currentLBtenant.LogBoxAdminUserId,
                                     Tenant = entityPM.Tenant,
                                 };
                                 Communications.AddEmailCommunicationLogQueue(emailParams, entityPM.Tenant);
