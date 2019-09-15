@@ -43,6 +43,7 @@ export class NewARPayment {
 //        this.Helper.WaitWindowClosed();
         var ec = protractor.ExpectedConditions;
         browser.wait(ec.invisibilityOf(element(by.id("ARPaymentSpinner"))), 100000);
+        this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('ARPayment.B.Approve');
         this.Helper.WaitBusyIndicator();
       //  browser.sleep(6000);
