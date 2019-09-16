@@ -56,6 +56,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                bool isAuthenticated = (id == authToken.Tenant) ? true : false;
+                if (!isAuthenticated && !SecurityUtility.CheckIsUserCustomerCare(authToken.Email))
+                {
+                    throw new Exception("Sorry you’re not authenticated to view AccountingSetting data for this tenant");
+                }
                 AccountingSettingQuery accountingSettingQuery = new AccountingSettingQuery(authToken.Tenant);
                 AccountingSettingPM accountingSettingPM = accountingSettingQuery.GetSinglePM(id);
                 
