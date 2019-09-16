@@ -1501,13 +1501,54 @@ namespace WarehouseData.Helper
 
             foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
             {
-                RemoveDataFromFactShipment(table, destinationConnectionString);
+                RemoveOldRowsFromFactTable(table, destinationConnectionString);
                 BuildAndExecuteDataWarehouseScript("IncrementalWarehouse", destinationConnectionString, table);
             }
 
             #endregion
 
         }
+
+
+        public void RemoveOldRowsFromFactTable(TableClass table, string connectionString)
+        {
+            using (SqlConnection sourceConnection =
+                       new SqlConnection(connectionString))
+            {
+                sourceConnection.Open();
+
+                SqlCommand commandSourceData = new SqlCommand(
+               "SELECT " + table.KeyName +
+               " FROM dbo." + table.Dw_TableName + " where AutomaticLastUpdateDate > ( select LastUpdateDate from dw_WaterMarks where TableName = " + "'" + table.TableName + "');", sourceConnection);
+
+                SqlDataReader reader =
+                    commandSourceData.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    var dataTable = new DataTable();
+                    dataTable.Load(reader);
+
+
+                    var columns = dataTable.Rows
+                                     .Cast<DataRow>()
+                                     .Select(r => (string)r[table.KeyName].ToString())
+                                     .ToList();
+
+                    DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = "Fact_" + table.DBTableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = connectionString });
+
+                }
+
+                reader.Close();
+            }
+
+
+        }
+
+
+
+
+
 
         public void UpdateDWDataBase(TableClass table, string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
         {
@@ -1646,53 +1687,7 @@ namespace WarehouseData.Helper
             }
         }
 
-        public string RemoveDataFromFactShipment(TableClass table, string connectionString)
-        {
-            string ids = String.Empty;
-
-
-            string factTableName = "Fact_" + table.DBTableName;
-
-            using (SqlConnection sourceConnection =
-                       new SqlConnection(connectionString))
-            {
-                sourceConnection.Open();
-
-                SqlCommand commandSourceData = new SqlCommand(
-               "SELECT " + table.KeyName +
-               " FROM dbo." + table.Dw_TableName + " where AutomaticLastUpdateDate > ( select LastUpdateDate from dw_WaterMarks where TableName = " + "'" + table.TableName + "');", sourceConnection);
-
-                SqlDataReader reader =
-                    commandSourceData.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    var dataTable = new DataTable();
-                    dataTable.Load(reader);
-
-
-                    var columns = dataTable.Rows
-                                     .Cast<DataRow>()
-                                     .Select(r => (string)r[table.KeyName].ToString())
-                                     .ToList();
-
-                    DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = "Fact_" + table.DBTableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = connectionString });
-
-                }
-
-                reader.Close();
-            }
-
-
-            if (!string.IsNullOrEmpty(ids))
-            {
-                string cmd = "delete " + factTableName + " where " + table.KeyName + " in " + ids;
-                ExecuteSql(cmd, connectionString);
-
-            }
-
-            return ids;
-        }
+       
 
         private void UpdateWareMarkTable(TableClass table, string date, string connectionString, int? privateTenant = null)
         {

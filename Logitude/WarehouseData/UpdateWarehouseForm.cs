@@ -175,7 +175,7 @@ namespace WarehouseData
                                     SetControlPropertyValue("Text", "Updating...", table.DBTableName, "Fact");
                                 }
 
-                                warehouseHelper.RemoveDataFromFactShipment(table, destinationConnectionString);
+                                warehouseHelper.RemoveOldRowsFromFactTable(table, destinationConnectionString);
                                 warehouseHelper.BuildAndExecuteDataWarehouseScript( "IncrementalWarehouse", destinationConnectionString, table);
 
 
