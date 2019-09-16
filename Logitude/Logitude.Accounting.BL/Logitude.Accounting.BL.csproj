@@ -229,7 +229,6 @@
     <Compile Include="CoreBL\JournalLineOnUpdate.cs" />
     <Compile Include="CoreBL\JournalUpdateOnUpdating.cs" />
     <Compile Include="CoreBL\Reconcile\CreateAutoReconcileWhileStreamingService.cs" />
-    <Compile Include="CoreBL\Reports\AgingReportV1Service.cs" />
     <Compile Include="CoreBL\Reports\ARPaymentChequeRedemptionService.cs" />
     <Compile Include="CoreBL\Reports\ITrailReportBase.cs" />
     <Compile Include="CoreBL\Reports\LedgerTransactionCardIndexService.cs" />
