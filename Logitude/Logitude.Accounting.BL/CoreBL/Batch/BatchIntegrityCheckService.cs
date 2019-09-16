@@ -150,10 +150,10 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     }
                     else
                     {
-                        if (DateTime.Now< new DateTime(2019, 09, 20))
-                        {
-                            SendEmailWhileError(args.Tenant, "has been finish -without problem ");
-                        }
+                        //if (DateTime.Now< new DateTime(2019, 09, 20))
+                        //{
+                        //    SendEmailWhileError(args.Tenant, "has been finish -without problem ");
+                        //}
                     }
                 }
 
@@ -173,7 +173,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 emailParams = new EmailCommunicationParams()
                 {
                     From = "admin@fnarsoft.com",
-                    To = "itzik@amital.co.il;yaronc@amital.co.il;ohad@amital.co.il",
+                    To = "eyal@amital.co.il;yaronc@amital.co.il;ohad@amital.co.il",
                     Subject = error,
                     EmailBody = emailbody,
                     Tenant = tenant,
