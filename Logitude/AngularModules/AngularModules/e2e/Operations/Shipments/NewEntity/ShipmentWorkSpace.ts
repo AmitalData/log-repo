@@ -76,9 +76,10 @@ export class ShipmentWorkSpace {
             var shipperRef1 = this.GeneralFunction.RandomNum();
             this.HouseShipment.CreateHouseShipment(shipperRef1, ShipmentLevelCode, Direction, TransportMode, ShipmentType);// Create shipment 
             this.Helper.WaitBusyIndicator();
+            return shipperRef1;
 
-            this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
-            this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
+           // this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
+           // this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
         }
         else if (ShipmentLevelCode == 'M') {
             this.shipHelper.CreateAndCloseNewShipment('NEWMASTER', 'MasterCancelbtn', Direction, TransportMode, ShipmentType);
@@ -89,9 +90,9 @@ export class ShipmentWorkSpace {
             //  this.Helper.WaitBusyIndicatorToShow();
             // this.Helper.WaitWindowClosed();
             this.Helper.WaitBusyIndicator();
-
-            this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
-            this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
+            return shipperRef1;
+            //this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
+            //this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
         }
   
     }
