@@ -81,7 +81,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        AverageRunTime = a.AverageRunTime, 
+                        Duration = a.AverageRunTime,
 
 
                     }).FirstOrDefault();
@@ -126,7 +128,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        AverageRunTime = a.AverageRunTime,
+                        Duration = a.AverageRunTime
                     }).FirstOrDefault();
         }
 
@@ -169,7 +173,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        AverageRunTime = a.AverageRunTime,
+                        Duration = a.AverageRunTime
                     }).ToList();
         }
 
@@ -211,7 +217,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              Status = a.Status,
                              Retries = a.Retries,
                              LastRunEndTime = a.LastRunEndTime,
-                             LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                             LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                             AverageRunTime = a.AverageRunTime,
+                             Duration = a.AverageRunTime,
                          }).ToList().OrderByDescending(x => x.CreateDateTime);
 
             //foreach (var Task in Tasks)
@@ -297,7 +305,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                         Status = a.Status,
                                                         Retries = a.Retries,
                                                         LastRunEndTime = a.LastRunEndTime,
-                                                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                                                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                                                        AverageRunTime = a.AverageRunTime
                                                     };
             return result;
         }
@@ -341,7 +350,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        AverageRunTime = a.AverageRunTime,
+                        Duration = a.AverageRunTime,
                     }).FirstOrDefault();
         }
 
@@ -383,7 +394,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        AverageRunTime = a.AverageRunTime,
+                        Duration = a.AverageRunTime,
                     }).ToList();
         }
 
