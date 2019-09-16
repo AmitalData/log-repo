@@ -22,7 +22,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
                 schedulerLogs.CreateDate = schedulerLogsPM.CreateDate; 
             }
             schedulerLogs.HistoryId = schedulerLogsPM.HistoryId;
-            schedulerLogs.Log = schedulerLogsPM.Log; 
+            //schedulerLogs.Log = schedulerLogsPM.Log; 
         }
     }
 }
