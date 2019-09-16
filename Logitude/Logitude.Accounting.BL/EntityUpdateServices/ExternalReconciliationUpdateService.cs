@@ -46,6 +46,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             TransferTransactionsMovingService movingService = new TransferTransactionsMovingService(entityPM);
             movingService.HandleTransferAccountTransactions();
 
+            TransferTransactionsExternalReconciliationService movingService = new TransferTransactionsExternalReconciliationService(entityPM);
+            movingService.HandleTransferAccountTransactions();
+
             base.OnCreating(entityPM, entityParentPM);
         }
 
