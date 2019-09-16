@@ -113,22 +113,22 @@ namespace CommunicationWorkerRole
 
                 StringBuilder MyFinalLog = new StringBuilder();
                 MyFinalLog.AppendLine(Message.ToString());
-                SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskSchedulerHistory.Id);
-                if (SchedulerLog == null)
-                {
-                    SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskSchedulerHistory.Id };
-                    SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
-                    SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
-                    SchedulerLogsService.Create(SchedulerLog);
-                }
-                else
-                {
-                    SchedulerLog.Log += StringHelper.TruncateLongString(Environment.NewLine + MyFinalLog.ToString(), 4000);
-                    SchedulerLogsService.Update(SchedulerLog);
-                }
+                //SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskSchedulerHistory.Id);
+                //if (SchedulerLog == null)
+                //{
+                //    SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskSchedulerHistory.Id };
+                //    SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+                //    //SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
+                //    SchedulerLogsService.Create(SchedulerLog);
+                //}
+                //else
+                //{
+                //    //SchedulerLog.Log += StringHelper.TruncateLongString(Environment.NewLine + MyFinalLog.ToString(), 4000);
+                //    SchedulerLogsService.Update(SchedulerLog);
+                //}
 
 
-                TaskManagerBase.AppendLogMessageToFile(TaskSchedulerHistory, Message);
+                TaskManagerBase.AppendLogMessageToFile(TaskSchedulerHistory,  Environment.NewLine + Message);
 
                 //}
             }

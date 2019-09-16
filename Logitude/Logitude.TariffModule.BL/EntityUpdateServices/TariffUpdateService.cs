@@ -111,7 +111,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         List<ChargesType> ChargeTypes; 
         private void InsertTariffSurchargeLog(TariffPM tariff)
         {
-            if (tariff.TypeCode == "ASC" && !tariff.IsFromUpdateScreen)
+            if (tariff.TypeCode == "ASC" && !tariff.IsFromUpdateScreen && !tariff.IsFromCopy )
             {
                 TariffSurchargesUpdateUpdateService tariffSurchargeUpdateService = new TariffSurchargesUpdateUpdateService(TariffModuleContext.GetContext(tariff.Tenant), new Dictionary<string, IContext>(), tariff.Tenant);
                 TariffVersionPM version = tariff.TariffVersions.Where(prop => prop.IsDraft == true).FirstOrDefault();
@@ -165,7 +165,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         {
                             PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
                             string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
-                            surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ",";
+                            surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ", ";
                         }
                     }
                     surcharges = surcharges.TrimEnd(',');
@@ -196,7 +196,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 {
                     PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
                     string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
-                    surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ",";
+                    surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ", ";
                 }
             }
             return surcharges.TrimEnd(',');

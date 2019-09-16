@@ -110,6 +110,9 @@ namespace WarehouseDataService.Helper
                         warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString);
                         warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update");
                         warehouseServiceHelper.UpdateWarehouseFieldSettings("IsIncrementalDWRunning", false, sourceConnectionString);
+                        warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate( sourceConnectionString);
+                        
+
                         Thread.Sleep(ApplicationInfo.UpdateWarehouseSleepTime);
                     }
                     else Thread.Sleep((10 * 60000));

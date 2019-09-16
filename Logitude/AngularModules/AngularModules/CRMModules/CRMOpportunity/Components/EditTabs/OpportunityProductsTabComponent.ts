@@ -351,7 +351,7 @@ export class ProductData extends BaseComponent {
             this.isActual = true;
         }
 
-        this.IsChecked = trigger.EntityPM.OpportunityProducts.indexOf(this.entityPM) != -1 ? true : false;
+        this.isChecked = trigger.EntityPM.OpportunityProducts.indexOf(this.entityPM) != -1 ? true : false;
         this.InitializeComponent();
         this.GetEstimatedVisibility();
         this.InitializeRightToLeft();

@@ -69,7 +69,3 @@ update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from Obj
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'SpecialServicesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentComputedFields') and (FieldName = 'FirstPickupATD' or FieldName = 'FirstPickupATA' or FieldName = 'FinalDeliveryETD' or FieldName = 'FinalDeliveryETA' or FieldName = 'FinalDeliveryATD' or FieldName = 'FinalDeliveryATA' or FieldName='ContainersNumbers' or FieldName ='FirstPickupLocation')
 
-
-select CopyToDW,* from  ObjectFields where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentComputedFields') and (FieldName = 'FirstPickupATD' or FieldName = 'FirstPickupATA' or FieldName = 'FinalDeliveryETD' or FieldName = 'FinalDeliveryETA' or FieldName = 'FinalDeliveryATD' or FieldName = 'FinalDeliveryATA' or FieldName='ContainersNumbers' or FieldName ='FirstPickupLocation')
-
-
