@@ -43,9 +43,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ledgerIds.Add(line.LedgerTransactionId);
             }
 
-            TransferTransactionsMovingService movingService = new TransferTransactionsMovingService(entityPM);
-            movingService.HandleTransferAccountTransactions();
-
             base.OnCreating(entityPM, entityParentPM);
         }
 
