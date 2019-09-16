@@ -301,8 +301,14 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     if (invoicetype.Code == "CD")
                     {
-                        
-                        invoicedataprovider.InvoiceType_labelHebrew = "הודעת זיכוי";
+                        if (tenantSettings.AccountingActivated)
+                        {
+                            invoicedataprovider.InvoiceType_labelHebrew = "חשבונית זיכוי";
+                        }
+                       
+                        else{
+                            invoicedataprovider.InvoiceType_labelHebrew = "הודעת זיכוי";
+                        }
                         invoicedataprovider.InvoiceType_label_Spanish = "Nota de Credito";
                     }
                     else if (invoicetype.Code == "IN")
