@@ -348,10 +348,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   DeclarationNumber = f.DeclarationNumber,
                                   ARInvoices = f.ARInvoices,
                                   Notes = f.Notes,
-                                  WarehouseLegLastFreeDate=f.WarehouseLegLastFreeDate,
-                                  LastFinalDestination=f.LastFinalDestination,
-                                  EstimatedFinalArrivalDate=f.EstimatedFinalArrivalDate,
-
+                                  WarehouseLegLastFreeDate = f.WarehouseLegLastFreeDate,
+                                  LastFinalDestination = f.LastFinalDestination,
+                                  EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
+                                  OpenReceivablesLines = f.OpenReceivablesLines,
 
                               };
 
