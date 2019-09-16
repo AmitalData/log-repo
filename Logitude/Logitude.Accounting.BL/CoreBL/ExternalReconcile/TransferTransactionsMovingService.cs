@@ -18,13 +18,13 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 {
-    class TransferTransactionsMovingService
+    class TransferTransactionsExternalReconciliationService
     {
         int tenant;
         ExternalReconciliationPM externalRecoPM;
         BankAccountPM bankAccountPM;
 
-        public TransferTransactionsMovingService(ExternalReconciliationPM _externalRecoPM)
+        public TransferTransactionsExternalReconciliationService(ExternalReconciliationPM _externalRecoPM)
         {
             ValidateExternalReconciliation(_externalRecoPM);
 
