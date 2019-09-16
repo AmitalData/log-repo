@@ -698,38 +698,31 @@ export class AmitalGatewayUtil {
                     this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                         //entityPMService.getSingle("Customs.CourierMaster", selectedCourierMasterId).then((res: any) => {
                         courierMasterService.getCourierMasterByDeclarationId(unifreightMessage.LogitudeEntityNumber).subscribe((myResponse: ServiceResponse) => {
-                                if (myResponse.HasError) {
-                                    console.log("Error while getting EntityPM", myResponse);
-                                }
-                                else {
-                                    windowArgs.CurrentEntity = myResponse.Result;
-                                    var logWindow = new LogitudeWindow();
-                                    logWindow.Width = 1500;
-                                    logWindow.Height = 1000;
-                                    logWindow.WindowArgs = windowArgs;
-                                    logWindow.ShowCloseButton = true;
-                                    //logWindow.IsHideHeader = true;
-                                    logWindow.IsFillScreen = true;
-                                    AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
-                                    logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
-                                    logWindow.WindowClosed.subscribe(($event1: any) => {
-                                        //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
-                                        this.ShowCourierMasterByIdReturnCloseSaveCallBack(isSaved);
-                                        callback2TabZero();
-
-                    }
-
-                    cmpRef.instance.SaveCompleted.subscribe(saveIt => {
-                        isSaved = true;
-                    });
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                        this.ShowDeclarationByIdUnifreightCallBack(isSaved);
-                        callback2TabZero();
-
+                            if (myResponse.HasError) {
+                                console.log("Error while getting EntityPM", myResponse);
+                            }
+                            else {
+                                windowArgs.CurrentEntity = myResponse.Result;
+                                var logWindow = new LogitudeWindow();
+                                logWindow.Width = 1500;
+                                logWindow.Height = 1000;
+                                logWindow.WindowArgs = windowArgs;
+                                logWindow.ShowCloseButton = true;
+                                //logWindow.IsHideHeader = true;
+                                logWindow.IsFillScreen = true;
+                                AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
+                                logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
+                                logWindow.WindowClosed.subscribe(($event1: any) => {
+                                    //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
+                                    this.ShowCourierMasterByIdReturnCloseSaveCallBack(isSaved);
+                                    callback2TabZero();
+                                });
+                            }
                         });
                     });
                 });
-            }
+            });
+        }
 
         private static ShowCourierMasterByIdReturnCloseSaveCallBack(save: boolean) {
             if (AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.filter((item) => item[0] == "ShowCourierMasterByIdReturnCloseSaveCallBack").length == 0) {
