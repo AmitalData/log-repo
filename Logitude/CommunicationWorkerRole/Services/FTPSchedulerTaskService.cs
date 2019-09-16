@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InfrastructureModel.DataContracts;
+﻿using CommunicationWorkerRole.Tasks;
+using Logitude.BL.InfrastructureModel.DataContracts;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.FTP;
 using Simplog.Data.Helpers;
@@ -15,9 +16,15 @@ namespace CommunicationWorkerRole.Services
 {
     public class FTPSchedulerTaskService : FTPSchedulerTaskServiceBase
     {
-        
 
-      
+
+        public FTPSchedulerTaskService()
+        {
+
+        }
+        public FTPSchedulerTaskService(TaskManagerBase task) : base(task)
+        {
+        }
         public void ReadFTPFilesBySchedulerDetailsToAnalyzeQueue(SchedulerDetails schedulerDetails)
         {
             FTPServiceMod ftpService = new FTPServiceMod(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);

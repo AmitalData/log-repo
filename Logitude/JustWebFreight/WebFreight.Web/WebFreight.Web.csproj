@@ -2887,6 +2887,7 @@
     <Content Include="Monitoring\LogBoxShipmentQueue.aspx" />
     <Content Include="Monitoring\LogBoxQueue.aspx" />
     <Content Include="Monitoring\DropBoxCommunicationLogs.aspx" />
+    <Content Include="Monitoring\MonitorIncrementalDWHService.aspx" />
     <Content Include="Monitoring\OceanInsightStatus.aspx" />
     <Content Include="Monitoring\ChampWaitingStatus.aspx" />
     <Content Include="Monitoring\CommunicationFailedStatus.aspx" />
@@ -4992,6 +4993,13 @@
     </Compile>
     <Compile Include="Monitoring\DropBoxCommunicationLogs.aspx.designer.cs">
       <DependentUpon>DropBoxCommunicationLogs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\MonitorIncrementalDWHService.aspx.cs">
+      <DependentUpon>MonitorIncrementalDWHService.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\MonitorIncrementalDWHService.aspx.designer.cs">
+      <DependentUpon>MonitorIncrementalDWHService.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\OceanInsightStatus.aspx.cs">
       <DependentUpon>OceanInsightStatus.aspx</DependentUpon>

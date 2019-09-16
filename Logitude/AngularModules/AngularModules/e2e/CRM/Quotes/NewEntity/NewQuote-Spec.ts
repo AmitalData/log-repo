@@ -5,15 +5,26 @@ import { LoginComp } from '../../../Login/Login.po';
 describe('Quote Module', () => {
   let page: NewQuote = new NewQuote();
   // let login: LoginComp=new LoginComp();
-  let count: number = 0;
 
+  var QuoteNumber;
   afterEach(() => {
     // browser.switchTo().alert().accept();
   })
 
-  it('Quote Success', function () {
+  it('Create Quote .. ', function () {
     browser.ignoreSynchronization = true;
-    page.DoOperations();
+    QuoteNumber = page.DoOperations();
+    console.log(QuoteNumber);
+  });
+  it('Search For Quote ..', function () {
+    console.log('inside the search it : ' + QuoteNumber);
+    browser.ignoreSynchronization = true;
+    page.SearchForShipment(QuoteNumber);
+  });
+  it('Edit Quote .. ', function () {
+    browser.ignoreSynchronization = true;
+      page.EditShipment(QuoteNumber);
+      
   });
 
 });

@@ -2079,6 +2079,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             IsSharedWithForwarder = item.IsSharedWithAgent,
                             SignRequestByUserEmail = loggedUserEmail,
                             DontAddToQueue = false,
+                            ReceivedDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                            ReceivedByUserId = updatedByUserId,
+                            Received = true
                         };
                         if (documentInPM.FileExtension != null && documentInPM.FileExtension.ToLower() == "pdf")
                         {
