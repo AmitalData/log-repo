@@ -350,6 +350,15 @@ export class NewTransferComponent extends BaseComponent {
         }
 
         this.ItemsSource = myResultList.sort(function (a, b) { return a.DateTicks == b.DateTicks ? 0 : a.DateTicks < b.DateTicks ? -1 : 1; });
+
+        if (this.CheckAllItemsAgain) {
+            this.ItemsSource.forEach(item => {
+                item.IsChecked = true;
+            });
+
+            this.CheckAllItemsAgain = false;
+        }
+
         this.IsFirstTimeLoading = false;
         this.OnLinesSelected();
     }
@@ -411,6 +420,7 @@ export class NewTransferComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
+    private CheckAllItemsAgain: boolean = false;
     MarkAsBlockedClicked(itemId: string) {
         this.CurrentSession.StartBusyIndicatorSaving();
 
@@ -418,7 +428,7 @@ export class NewTransferComponent extends BaseComponent {
         invoiceService.MarkEntityAsBlocked(this.TransferTypeCode, itemId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.LoadData();
-                this.IsAllChecked = true;
+                this.CheckAllItemsAgain = true;
             }
 
             this.CurrentSession.StopBusyIndicator();
