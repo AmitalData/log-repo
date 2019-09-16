@@ -39,6 +39,7 @@ using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.CloseTables;
 using System.Diagnostics;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -76,6 +77,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             entityPM.SearchFields = ///Task:25238 GetentityPM.AccountId + "," + 
                 entityPM.Number + ",";
+
+            TransferTransactionsExternalReconciliationService movingService = new TransferTransactionsExternalReconciliationService(entityPM);
+            movingService.HandleTransferAccountTransactions();
         }
 
         protected override void OnUpdating(ReconciliationPM entityPM)

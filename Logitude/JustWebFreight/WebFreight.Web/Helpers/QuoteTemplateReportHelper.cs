@@ -3512,6 +3512,10 @@ namespace Logitude.BL.Helpers
             else if (fieldCode == "PackageType4Id") orginalValue = chargePM.SaleContainerType4UnitPrice != null ? (double)chargePM.SaleContainerType4UnitPrice : 0;
             else if (fieldCode == "PackageType5Id") orginalValue = chargePM.SaleContainerType5UnitPrice != null ? (double)chargePM.SaleContainerType5UnitPrice : 0;
 
+            if (chargePM.SaleMeasurementCode == "FIXD" && orginalValue == 0)
+            {
+                orginalValue = chargePM.SaleTotalAmount != null ? (double)chargePM.SaleTotalAmount : 0;
+            }
 
             PackageType packageType = PackageTypeRepository.GetSinglePackageType(PackageTypeId, chargePM.Tenant, true);
             string printAs = packageType.PrintAs;
