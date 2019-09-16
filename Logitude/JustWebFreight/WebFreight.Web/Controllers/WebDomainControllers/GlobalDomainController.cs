@@ -9,6 +9,7 @@ using Logitude.SystemLogs.POCOs;
 using Logitude.SystemLogs.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -18,6 +19,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -43,18 +46,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IGlobalContext objectContext = GlobalContext.GetContext();
 
                 List<TenantManagementList> myResult = (from d in objectContext.TenantManagements.Include("GlobalTenant")
-                                                        where
-                                                        (d.IsAWBStockPrepaid || d.IsINTTRAStockPrepaid)
-                                                        &&
-                                                        (d.GlobalTenant != null && d.GlobalTenant.IsActive)
-                                                        select new TenantManagementList()
-                                                        {
-                                                            Id = d.Id,
-                                                            Name = d.Name,
-                                                            PackageCode = d.PackageCode,
-                                                            IsAWBStockPrepaid = d.IsAWBStockPrepaid,
-                                                            IsINTTRAStockPrepaid = d.IsINTTRAStockPrepaid,
-                                                        }).ToList();
+                                                       where
+                                                       (d.IsAWBStockPrepaid || d.IsINTTRAStockPrepaid)
+                                                       &&
+                                                       (d.GlobalTenant != null && d.GlobalTenant.IsActive)
+                                                       select new TenantManagementList()
+                                                       {
+                                                           Id = d.Id,
+                                                           Name = d.Name,
+                                                           PackageCode = d.PackageCode,
+                                                           IsAWBStockPrepaid = d.IsAWBStockPrepaid,
+                                                           IsINTTRAStockPrepaid = d.IsINTTRAStockPrepaid,
+                                                       }).ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -268,24 +271,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 //using (TransactionScope scope = TransactionFactory.GetTransaction())
                 //{
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
 
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-                    TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
-                    TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenantManagementRepository);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenantManagementRepository);
 
-                    TenantManagement entityPOCO = tenantManagementRepository.GetTenantManagementByConnectedArline(code);
-                    TenantManagementPM myResult = null;
+                TenantManagement entityPOCO = tenantManagementRepository.GetTenantManagementByConnectedArline(code);
+                TenantManagementPM myResult = null;
 
-                    if (entityPOCO != null)
-                    {
-                        myResult = tenantManagementQuery.GetSinglePM(entityPOCO.Id);
-                    }
-                    
-                    //scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                if (entityPOCO != null)
+                {
+                    myResult = tenantManagementQuery.GetSinglePM(entityPOCO.Id);
+                }
+
+                //scope.Complete();
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 //}
             }
 
@@ -303,7 +306,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                
+
                 List<BatchServicesDefinitionPM> myResult = this.GetAllBatchServices(filterByDateCode);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -350,16 +353,43 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             List<BatchServicesDefinitionPM> TempList = new List<BatchServicesDefinitionPM>();
 
             IQueryable<BatchServicesDefinitionPM> result = (from a in repository.context.BatchServicesDefinitions
-                          select new BatchServicesDefinitionPM()
-                          {
-                              ClassName = a.ClassName,
-                              Code = a.Code,
-                              InActive = a.BatchServicesDefinitionMods.InActive,
-                              NumberOfThreads = a.BatchServicesDefinitionMods.NumberOfThreads,
-                              Parameter1 = a.Parameter1,
-                              Parameter2 = a.Parameter2
-                          });
+                                                            select new BatchServicesDefinitionPM()
+                                                            {
+                                                                ClassName = a.ClassName,
+                                                                Code = a.Code,
+                                                                InActive = a.BatchServicesDefinitionMods.InActive,
+                                                                NumberOfThreads = a.BatchServicesDefinitionMods.NumberOfThreads,
+                                                                Parameter1 = a.Parameter1,
+                                                                Parameter2 = a.Parameter2
+                                                            });
+            string connectionString = TenantServerConfigration.GetDbConnection(0);
+            var FaildDataTable = new DataTable();
+            var WaitingDataTable = new DataTable();
 
+            using (SqlConnection DBConnection = new SqlConnection(connectionString))
+            {
+                DBConnection.Open();
+                SqlCommand commandWaitingData = new SqlCommand("select Count(*) as FCount,QueueDefinitionCode from QueueMessageMoreDetails where Status = 0 and CreateDateTime >= " + filterByDate.Value.Date.ToShortDateString() + " group by QueueDefinitionCode ", DBConnection);
+                SqlCommand commandFaildData = new SqlCommand("select Count(*) as WCount,QueueDefinitionCode from QueueMessageMoreDetails where Status = -1 and CreateDateTime >= " + filterByDate.Value.Date.ToShortDateString() + " group by QueueDefinitionCode ", DBConnection);
+
+                SqlDataReader reader = commandWaitingData.ExecuteReader();
+                FaildDataTable.Load(reader);
+                reader = commandFaildData.ExecuteReader();
+                WaitingDataTable.Load(reader);
+                reader.Close();
+            }
+            var FaildQueueMessageCounts = (from DataRow dr in FaildDataTable.Rows
+                                           select new QueueMessagesDetails()
+                                           {
+                                               Count = Convert.ToInt32(dr["FCount"]),
+                                               QueueMessageCode = dr["QueueDefinitionCode"].ToString()
+                                           }).ToList();
+            var WaitingQueueMessageCounts = (from DataRow dr in WaitingDataTable.Rows
+                                             select new QueueMessagesDetails()
+                                             {
+                                                 Count = Convert.ToInt32(dr["WCount"]),
+                                                 QueueMessageCode = dr["QueueDefinitionCode"].ToString()
+                                             }).ToList();
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 BatchServicesLogRepository Repo = new BatchServicesLogRepository();
@@ -377,12 +407,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     foreach (BatchServicesLog Log in Logs)
                     {
+                        var FaildQueueMessage = FaildQueueMessageCounts.Where(a => a.QueueMessageCode == Log.RelatedQueueMessage).FirstOrDefault();
+                        var WaitingQueueMessage = WaitingQueueMessageCounts.Where(a => a.QueueMessageCode == Log.RelatedQueueMessage).FirstOrDefault();
                         item.CPU = Log.CPU;
                         DoneItemsInFiveMinutes += Log.DoneItemsInFiveMinutes;
                         DoneItemsInOneHour += Log.DoneItemsInOneHour;
                         DoneItemsInOneMinute += Log.DoneItemsInOneMinute;
-                        WaitingItems += Log.WaitingItems;
-                        FailedItems += Log.FailedItems;
+                        WaitingItems += WaitingQueueMessage != null ? WaitingQueueMessage.Count : 0;//Log.WaitingItems;
+                        FailedItems += FaildQueueMessage != null ? FaildQueueMessage.Count : 0;//Log.FailedItems;
                         NumberOfDoneItems += Log.NumberOfDoneItems != null ? (int)Log.NumberOfDoneItems : 0;
 
                         if (Log.LastActivity > LActivity && LActivity != null)
@@ -760,5 +792,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 tenantManagementLicenses = value;
             }
         }
+    }
+
+    public class QueueMessagesDetails
+    {
+        public string QueueMessageCode { get; set; }
+        public int Count { get; set; }
     }
 }
