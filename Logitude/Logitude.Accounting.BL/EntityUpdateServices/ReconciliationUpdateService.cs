@@ -78,8 +78,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.SearchFields = ///Task:25238 GetentityPM.AccountId + "," + 
                 entityPM.Number + ",";
 
-            TransferTransactionsExternalReconciliationService movingService = new TransferTransactionsExternalReconciliationService(entityPM);
-            movingService.HandleTransferAccountTransactions();
         }
 
         protected override void OnUpdating(ReconciliationPM entityPM)
