@@ -223,8 +223,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             AddRef(hash, myLedgerTransactionTransferPM.Reference3);
 
             var list = hash.ToList();
+            var list2 = hash.ToList();
             int i = 1;
-            while (list.Count > 0 || i > 5)
+            while (list2.Count > 0 || i > 5)
             {
                 string myref= list[i - 1];
                 switch (i)
@@ -239,7 +240,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                         }
                         break;
                 }
-                list.RemoveAt(0);
+                list2.RemoveAt(0);
                 i++;
             }
 

@@ -172,7 +172,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         {
                             PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
                             string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
-                            surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ",";
+                            surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ", ";
                         }
                     }
                     surcharges = surcharges.TrimEnd(',');
@@ -203,7 +203,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 {
                     PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
                     string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
-                    surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ",";
+                    surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ", ";
                 }
             }
             return surcharges.TrimEnd(',');

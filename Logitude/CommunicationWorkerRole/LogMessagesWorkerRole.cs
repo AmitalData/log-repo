@@ -26,7 +26,7 @@ namespace CommunicationWorkerRole
                 if (!General.IsUpdating())
                 {
 
-                
+
                     try
                     {
                         queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
@@ -43,9 +43,11 @@ namespace CommunicationWorkerRole
                             };
 
                             storageservice.AppendText(message.Message, blobFileinfo);
-                                
-                            Thread.Sleep(1000);
+
+
                         }
+
+                        Thread.Sleep(1000);
 
                     }
 

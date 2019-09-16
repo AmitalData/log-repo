@@ -369,6 +369,10 @@
     <Compile Include="Migrations\201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.Designer.cs">
       <DependentUpon>201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs" />
+    <Compile Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.Designer.cs">
+      <DependentUpon>201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -501,6 +505,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.resx">
       <DependentUpon>201909080743100_AddingQueueDefCOdeToBatchService_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.resx">
+      <DependentUpon>201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

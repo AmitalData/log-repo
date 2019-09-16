@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="BLExt\IAutoReconcileARPaymentService.cs" />
     <Compile Include="EntityPMs\AccountingEnum.Shared.cs" />
+    <Compile Include="EntityPMs\AccountingIntegrityCheckPM.cs" />
     <Compile Include="EntityPMs\AccountingPeriodPM.cs" />
     <Compile Include="EntityPMs\AutomaticReconcileMethodPM.cs" />
     <Compile Include="EntityPMs\AutomaticReconcilePM.cs" />
