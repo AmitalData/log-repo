@@ -45,6 +45,7 @@ using Logitude.Server.Tools.QueueService;
 using WebFreight.Web.Helpers.APIHelpers;
 using System.Reflection;
 using Stimulsoft.Report.Export;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -1696,6 +1697,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             portRepository.Add(newPort);
             portRepository.SubmitChanges();
+
+            TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
 
             return newPort;
         }

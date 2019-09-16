@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools.Counters;
+﻿using Logitude.BL.Helpers;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.BL.EntityQueryServices;
@@ -11,6 +12,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
@@ -745,7 +747,9 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             portRepository.Add(newPort);
             portRepository.SubmitChanges();
 
+            TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
+
             return newPort;
-        }       
+        }
     }
 }
