@@ -175,8 +175,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LastRunEndTime = a.LastRunEndTime,
                         LastRunEndTimeUTC = a.LastRunEndTimeUTC,
                         AverageRunTime = a.AverageRunTime,
-                        Duration = a.AverageRunTime
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        Duration = a.AverageRunTime,
                         SchedulerDetailsXML = a.SchedulerDetailsXML,
                     }).ToList();
         }
