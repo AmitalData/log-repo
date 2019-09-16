@@ -196,20 +196,24 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BankAccountId = a.BankAccountId,
                                        FirstApproveDate = a.FirstApproveDate,
                                    }).FirstOrDefault();
+            if (payment != null)
+            {
+                payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant);
 
-            payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant);
+                AccountingPaymentMethod method = apPaymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
+                payment.PaymentMethodName = method != null ? method.Name : null;
+                payment.PaymentMethodCode = method != null ? method.Code : null;
 
-            AccountingPaymentMethod method = apPaymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
-            payment.PaymentMethodName = method != null ? method.Name : null;
-            payment.PaymentMethodCode = method != null ? method.Code : null;
+                Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
+                payment.PaymentCurrencyCode = currency != null ? currency.Code : null;
 
-            Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
-            payment.PaymentCurrencyCode = currency != null ? currency.Code : null;
+                APPaymentPM securedPM = new APPaymentPM();
+                SecuredMapping.GetMappedPM(payment, securedPM, "APPayment", tenant);
 
-            APPaymentPM securedPM = new APPaymentPM();
-            SecuredMapping.GetMappedPM(payment, securedPM, "APPayment", tenant);
-            
-            return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
+
+                return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
+            }
+            else return null;
         }
 
         public IQueryable<APPaymentPM> GetAPPaymentPMsByTenant(int tenant)

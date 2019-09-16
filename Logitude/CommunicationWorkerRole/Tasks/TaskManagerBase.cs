@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
+using WebFreight.Web.Helpers;
 
 namespace CommunicationWorkerRole.Tasks
 {
@@ -32,7 +33,7 @@ namespace CommunicationWorkerRole.Tasks
         int Tenant;
         TaskSchedulerHistoryPM TaskSchedulerHistory;
         ConcurrentQueueService<LogQueueMessage> queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
-        public TaskManagerBase(string Id, int tenant)
+         public TaskManagerBase(string Id, int tenant)
         {
             TaskId = Id;
             Tenant = tenant;
@@ -41,11 +42,20 @@ namespace CommunicationWorkerRole.Tasks
             this.Exceptions = new StringBuilder();
         }
 
-        public void AppendLogMessageToFile(string message)
+        private void AddFileLogQueueMessage(string message)
         {
             if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(TaskSchedulerHistory.LogDocumentId))
             {
                 queueService.Enqueue(new LogQueueMessage() { FileName = TaskSchedulerHistory.LogDocumentId, FileExtension = "txt", FolderName = "taskmanagerlogs", Message = message, Tenant = Task.Tenant });
+            }
+        }
+
+        public static void AppendLogMessageToFile(TaskSchedulerHistoryPM taskSchedulerHistory, string message)
+        {
+            ConcurrentQueueService<LogQueueMessage> queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
+            if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(taskSchedulerHistory.LogDocumentId))
+            {
+                queueService.Enqueue(new LogQueueMessage() { FileName = taskSchedulerHistory.LogDocumentId, FileExtension = "txt", FolderName = "taskmanagerlogs", Message = message, Tenant = taskSchedulerHistory.Tenant });
             }
         }
         public void Run()
@@ -76,7 +86,8 @@ namespace CommunicationWorkerRole.Tasks
                     Task.LastRunEndTime = LastExecutionHistory.EndDateTime;
                     Task.LastRunEndTimeUTC = LastExecutionHistory.EndDateTimeUTC;
                     Task.LastRunResult = LastExecutionHistory.LogType;
-                    AddSchedulerQueue(Task);
+                    SchedulerHelper SchedulerHelper = new SchedulerHelper();
+                    SchedulerHelper.AddSchedulerQueue(Task);
 
                     scope.Complete();
                 }
@@ -109,7 +120,8 @@ namespace CommunicationWorkerRole.Tasks
                         //Task.Retries = 0;
                         //Task.Status = null;
                         queueservice.CompleteAsFailed();
-                        AddSchedulerQueue(Task);
+                        SchedulerHelper SchedulerHelper = new SchedulerHelper();
+                        SchedulerHelper.AddSchedulerQueue(Task);
                         ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "", null);
                     }
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -184,20 +196,20 @@ namespace CommunicationWorkerRole.Tasks
                 MyFinalLog.AppendLine(Exceptions.ToString());
                 MyFinalLog.AppendLine(Warnings.ToString());
                 MyFinalLog.AppendLine(Infos.ToString());
-                SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
-                if (SchedulerLog == null)
-                {
-                    SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
-                    SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
-                    SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
-                    SchedulerLogsService.Create(SchedulerLog);
-                }
-                else
-                {
-                    SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
-                    SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
-                    SchedulerLogsService.Update(SchedulerLog);
-                }
+                //SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
+                //if (SchedulerLog == null)
+                //{
+                //    SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
+                //    SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+                //    //SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
+                //    SchedulerLogsService.Create(SchedulerLog);
+                //}
+                //else
+                //{
+                //    //SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
+                //    //SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
+                //    //SchedulerLogsService.Update(SchedulerLog);
+                //}
 
 
                 TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
@@ -211,12 +223,6 @@ namespace CommunicationWorkerRole.Tasks
         public virtual void StartTask()
         {
 
-        }
-
-        public void LogInfo(string Message)
-        {
-            if (!string.IsNullOrEmpty(Message))
-                this.Infos.AppendLine(Message);
         }
 
         public void LogInfoToDB(string Message)
@@ -238,20 +244,20 @@ namespace CommunicationWorkerRole.Tasks
 
                     StringBuilder MyFinalLog = new StringBuilder(); 
                     MyFinalLog.AppendLine(Message.ToString());
-                    SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
-                    if (SchedulerLog == null)
-                    {
-                        SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
-                        SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
-                        SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
-                        SchedulerLogsService.Create(SchedulerLog);
-                    }
-                    else
-                    {
-                        SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
-                        SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
-                        SchedulerLogsService.Update(SchedulerLog);
-                    }
+                    //SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
+                    //if (SchedulerLog == null)
+                    //{
+                    //    SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
+                    //    SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+                    //    //SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
+                    //    SchedulerLogsService.Create(SchedulerLog);
+                    //}
+                    //else
+                    //{
+                    //    //SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
+                    //    //SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
+                    //    //SchedulerLogsService.Update(SchedulerLog);
+                    //}
 
 
                     TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
@@ -262,140 +268,156 @@ namespace CommunicationWorkerRole.Tasks
             }
         }
 
-        public void Logwarning(string Message)
+
+        public void LogInfo(string Message)
         {
-            if (!string.IsNullOrEmpty(Message))
+            if (!string.IsNullOrEmpty(Message) && this.Infos.Length < 1000)
+                this.Infos.AppendLine(Message);
+
+            this.AddFileLogQueueMessage(Message);
+        }
+
+
+        public void LogWarning(string Message)
+        {
+            if (!string.IsNullOrEmpty(Message) && this.Warnings.Length < 1000)
                 this.Warnings.AppendLine(Message);
+
+            this.AddFileLogQueueMessage(Message);
+
         }
 
         public void LogException(string Message)
         {
-            if (!string.IsNullOrEmpty(Message))
+            if (!string.IsNullOrEmpty(Message) && this.Warnings.Length < 1000)
                 this.Exceptions.AppendLine(Message);
+         
+                this.AddFileLogQueueMessage(Environment.NewLine + Message);
         }
 
-        private void AddSchedulerQueue(TasksSchedulerPM task)
-        {
-            var queueservice = new DbQueueService();
-            if (task.NextRunTime < DateTime.Now)
-            {
-                var NewNextRunTime = new DateTime(task.NextRunTime.Value.Year, task.NextRunTime.Value.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
-                var NewNextRunTimeUTC = new DateTime(task.NextRunTimeUTC.Value.Year, task.NextRunTimeUTC.Value.Month, DateTime.Now.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
-                task.NextRunTime = NewNextRunTime;
-                task.NextRunTimeUTC = NewNextRunTimeUTC;
-                //task.NextRunTime = DateTime.Now;
-                //task.NextRunTimeUTC = DateTime.UtcNow;
-            }
-            switch (task.TriggerType)
-            {
-                case "D":
-                    {
-                        if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
-                        {
-                            task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
-                            task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
-                        }
-                        else
-                        {
-                            task.NextRunTime = task.NextRunTime.Value.AddDays(1);
-                            task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddDays(1);
-                        }
-                        break;
-                    }
-                case "W":
-                    {
-                        DateTime NextRunTime;
-                        var ToDay = DateTime.Now.DayOfWeek;
-                        var ToDayString = DateTime.Now.DayOfWeek.ToString();
-                        NextRunTime = Next(DateTime.Now, ToDay);
-                        task.NextRunTime = NextRunTime;
-                        if (task.Sunday)
-                        {
-                            NextRunTime = Next(DateTime.Now, DayOfWeek.Sunday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                            }
-                        }
-                        if (task.Monday)
-                        {
-                            NextRunTime = Next(DateTime.Now, DayOfWeek.Monday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                            }
-                        }
-                        if (task.Tuesday)
-                        {
-                            NextRunTime = Next(DateTime.Now, DayOfWeek.Tuesday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                            }
-                        }
-                        if (task.Wednesday)
-                        {
-                            NextRunTime = Next(DateTime.Now, DayOfWeek.Wednesday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                            }
-                        }
-                        if (task.Thursday)
-                        {
-                            NextRunTime = Next(DateTime.Now, DayOfWeek.Thursday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                            }
-                        }
-                        if (task.Friday)
-                        {
-                            NextRunTime = Next(DateTime.Now, DayOfWeek.Friday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                            }
-                        }
-                        if (task.Satarday)
-                        {
-                            NextRunTime = Next(DateTime.Now, DayOfWeek.Saturday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                            }
-                        }
-                        //queueservice.InitializeQueue("SchedularQueue", 0);
-                        //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
-                        break;
-                    }
-                case "M":
-                    {
-                        DateTime NextRunTime;
-                        task.NextRunTime = task.NextRunTime.Value.AddMonths(1);
-                        //queueservice.InitializeQueue("SchedularQueue", 0);
-                        //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
-                        break;
-                    }
-                default: // Once
-                    {
-                        break;
-                    }
+        //private void AddSchedulerQueue(TasksSchedulerPM task)
+        //{
+        //    var queueservice = new DbQueueService();
+        //    if (task.NextRunTime < DateTime.Now)
+        //    {
+        //        var NewNextRunTime = new DateTime(task.NextRunTime.Value.Year, task.NextRunTime.Value.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
+        //        var NewNextRunTimeUTC = new DateTime(task.NextRunTimeUTC.Value.Year, task.NextRunTimeUTC.Value.Month, DateTime.Now.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
+        //        task.NextRunTime = NewNextRunTime;
+        //        task.NextRunTimeUTC = NewNextRunTimeUTC;
+        //        //task.NextRunTime = DateTime.Now;
+        //        //task.NextRunTimeUTC = DateTime.UtcNow;
+        //    }
+        //    var TodayDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
+        //    switch (task.TriggerType)
+        //    {
+        //        case "D":
+        //            {
+        //                if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
+        //                {
+        //                    task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+        //                    task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+        //                }
+        //                else
+        //                {
+        //                    task.NextRunTime = task.NextRunTime.Value.AddDays(1);
+        //                    task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddDays(1);
+        //                }
+        //                break;
+        //            }
+        //        case "W":
+        //            {
+        //                DateTime NextRunTime;
+        //                var ToDay = DateTime.Now.DayOfWeek;
+        //                var ToDayString = DateTime.Now.DayOfWeek.ToString();
+        //                NextRunTime = Next(TodayDate, ToDay);
+        //                task.NextRunTime = NextRunTime;
+        //                if (task.Sunday)
+        //                {
+        //                    NextRunTime = Next(TodayDate, DayOfWeek.Sunday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Monday)
+        //                {
+        //                    NextRunTime = Next(TodayDate, DayOfWeek.Monday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Tuesday)
+        //                {
+        //                    NextRunTime = Next(TodayDate, DayOfWeek.Tuesday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Wednesday)
+        //                {
+        //                    NextRunTime = Next(TodayDate, DayOfWeek.Wednesday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Thursday)
+        //                {
+        //                    NextRunTime = Next(TodayDate, DayOfWeek.Thursday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Friday)
+        //                {
+        //                    NextRunTime = Next(TodayDate, DayOfWeek.Friday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Satarday)
+        //                {
+        //                    NextRunTime = Next(TodayDate, DayOfWeek.Saturday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                //queueservice.InitializeQueue("SchedularQueue", 0);
+        //                //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
+        //                break;
+        //            }
+        //        case "M":
+        //            {
+        //                DateTime NextRunTime;
+        //                task.NextRunTime = task.NextRunTime.Value.AddMonths(1);
+        //                //queueservice.InitializeQueue("SchedularQueue", 0);
+        //                //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
+        //                break;
+        //            }
+        //        default: // Once
+        //            {
+        //                break;
+        //            }
 
-            }
-            if (task.TriggerType.ToUpper() != "O")
-            {
-                queueservice.InitializeQueue("SchedularQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
+        //    }
+        //    if (task.TriggerType.ToUpper() != "O")
+        //    {
+        //        queueservice.InitializeQueue("SchedularQueue", 0);
+        //        queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
 
-            }
+        //    }
 
-            var objectContext = WebFreightContext.GetContext(task.Tenant);
-            TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
-            service.Update(task);
+        //    var objectContext = WebFreightContext.GetContext(task.Tenant);
+        //    TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
+        //    service.Update(task);
 
-            //queueservice.Complete();
-        }
+        //    //queueservice.Complete();
+        //}
 
         private void ReScheduleFaildTask(TasksSchedulerPM task, int DelaySeconds)
         {
@@ -407,13 +429,13 @@ namespace CommunicationWorkerRole.Tasks
             //TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
             //service.Update(task);
         }
-        private DateTime Next(DateTime from, DayOfWeek dayOfWeek)
-        {
-            int start = (int)from.DayOfWeek;
-            int target = (int)dayOfWeek;
-            if (target <= start)
-                target += 7;
-            return from.AddDays(target - start);
-        }
+        //private DateTime Next(DateTime from, DayOfWeek dayOfWeek)
+        //{
+        //    int start = (int)from.DayOfWeek;
+        //    int target = (int)dayOfWeek;
+        //    if (target <= start)
+        //        target += 7;
+        //    return from.AddDays(target - start);
+        //}
     }
 }

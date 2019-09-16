@@ -192,7 +192,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                 else
                 {
-                    if (!entityPM.IsHybrid && !loggedTenant.IsDocumentsArchive)
+                    if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
                         PortPM myPort = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.MainCarriageFromPortId, true);
                         if (myPort != null)
@@ -247,7 +247,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                 else
                 {
-                    if (!entityPM.IsHybrid && !loggedTenant.IsDocumentsArchive)
+
+                    if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
                         PortPM myPort = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.MainCarriageToPortId, true);
                         if (myPort != null)
@@ -724,7 +725,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             var tenantQuery = new TenantQuery(entityPM.Tenant);
             var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-            if (!entityPM.IsHybrid && !tenantPM.IsDocumentsArchive)
+
+           var LBtenantsettingQuery = new LogBoxTenantSettingQuery(entityPM.Tenant);
+           var  tenantsettingPM = LBtenantsettingQuery.GetSinglePM(entityPM.Tenant);
+
+            if (!entityPM.IsHybrid && !tenantsettingPM.IsDocumentsArchive)
             {
                 string message = "Can't set Field to future date";
                 DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);

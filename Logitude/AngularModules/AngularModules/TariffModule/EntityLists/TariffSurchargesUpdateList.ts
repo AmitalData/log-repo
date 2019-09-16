@@ -19,6 +19,8 @@ export class TariffSurchargesUpdateList {
 	To: string;
 	Version: number;
 	Surcharges: string;
+	UpdateMethodCode: string;
+	UpdateMethodName: string;
 	
 }
  

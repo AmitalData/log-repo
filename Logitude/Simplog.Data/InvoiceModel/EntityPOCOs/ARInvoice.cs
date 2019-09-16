@@ -198,7 +198,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         public string ARInvoiceStockId { get; set; }
         public bool IsInvoiceNumberFromStock { get; set; }
-
+        public string DocumentFilingId { get; set; }
 
         public string ConcurrencyGUID { get; set; }
     }

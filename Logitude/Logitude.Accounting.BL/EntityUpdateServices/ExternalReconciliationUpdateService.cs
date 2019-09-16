@@ -11,6 +11,11 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.Resolvers;
+using Simplog.Data.Helpers;
+using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.Def.BLExt;
+using Microsoft.Practices.Unity;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -38,9 +43,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ledgerIds.Add(line.LedgerTransactionId);
             }
 
+            TransferTransactionsMovingService movingService = new TransferTransactionsMovingService(entityPM);
+            movingService.HandleTransferAccountTransactions();
 
             base.OnCreating(entityPM, entityParentPM);
         }
+
+
         protected override void OnUpdating(ExternalReconciliationPM entityPM)
         {
 
@@ -216,7 +225,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             decimal bankLinesTotal = GetBankPageLinesTotal(entityPM);
 
             //decimal totalDifference = Math.Abs(bankLinesTotal - ledgerLinesTotal);
-            decimal totalDifference = Math.Abs(bankLinesTotal + ledgerLinesTotal);//professor ohad  + itzik 
+            decimal totalDifference = Math.Abs(bankLinesTotal + ledgerLinesTotal);
 
             if (totalDifference != 0)
             {

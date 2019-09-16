@@ -1,6 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel;
-using Simplog.Server.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -110,6 +108,9 @@ namespace WarehouseDataService.Helper
                         warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString);
                         warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update");
                         warehouseServiceHelper.UpdateWarehouseFieldSettings("IsIncrementalDWRunning", false, sourceConnectionString);
+                        warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate( sourceConnectionString);
+                        
+
                         Thread.Sleep(ApplicationInfo.UpdateWarehouseSleepTime);
                     }
                     else Thread.Sleep((10 * 60000));

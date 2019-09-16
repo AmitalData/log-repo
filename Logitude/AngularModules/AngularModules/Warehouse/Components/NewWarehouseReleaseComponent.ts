@@ -1,8 +1,7 @@
 declare var System: any;
 declare var window: any;
-
 import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
-import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit, ViewChildren, QueryList}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -32,6 +31,12 @@ import {DateAgeHelper} from '../../Infrastructure/Utilities/DateAgeHelper';
 
 import {WarehouseHelper} from '../Helpers/WarehouseHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
+
+
+import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
+
+
+
 @Component({
     moduleId: module.id,
     selector: 'NewWarehouseReleaseComponent',
@@ -121,13 +126,13 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     IsLCLEntity: boolean = true;
 
     Start(args: any) {
-    
+
         this.ShipmentPM = args.ShipmentPM;
 
        
         this.SetLabel();
         this.SetValue(args);
-
+        this.RunComponent();
         this.IsLoadPage = true;
 
 
@@ -279,7 +284,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
             });
         }
 
-        if (this.WarehouseReleasePackagesLists.length == 0) {
+        if (this.warehouseReleasePM.WarehouseReleasePackages.length == 0) {
 
             this.ValidationErrorsList.push("You should at least choose one package");
         }
@@ -332,12 +337,12 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
       
-                if (this.WarehouseReleasePackagesLists.length > 0) {
-                    this.WarehouseReleasePackagesLists.forEach((item) => {
-                        this.warehouseReleasePM.AddWarehouseReleasePackage(item);
-                    });
+                //if (this.WarehouseReleasePackagesLists.length > 0) {
+                //    this.WarehouseReleasePackagesLists.forEach((item) => {
+                //        this.warehouseReleasePM.AddWarehouseReleasePackage(item);
+                //    });
 
-                }
+                //}
                 
                 this.ComputeAndFullTotalPackage();
                 if (this.warehouseReleasePM.ActualReleaseDate) this.warehouseReleasePM.StatusCode = "RELE";
@@ -404,7 +409,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
     IsPackageOpen: boolean = false;
     WarehouseId: string = "";
-
+    IsRefreshCustomer: boolean = false;
     ChoosePackage(packageType:string) {
         this.IsChoosePackageOpen = true;
 
@@ -543,5 +548,62 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
 
     }
+
+
+
+    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private timerToken: any;
+    private Retries: number = 0;
+    private GeneratedComponent: any;
+
+    RunComponent() {
+        if (this.AllLocations) {
+
+            if (this.AllLocations.length == 0) {
+                this.RunComponentTimer();
+            }
+
+            else {
+                this.LoadChildComponent();
+            }
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+
+    RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+    LoadChildComponent() {
+
+        let warehouseEntryPackagesDetailsComponenttLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "WRPD")[0];
+        if (warehouseEntryPackagesDetailsComponenttLocation != null) {
+            SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseReleasePackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
+                .then(cmpRef => {
+                    var windowArgs: any = { WarehouseEntryPM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM};
+                    cmpRef.instance.SetWindowArgs(windowArgs);
+
+                });
+
+        }
+
+
+
+    }
+
+
+
 
 }

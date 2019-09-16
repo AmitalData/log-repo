@@ -16,16 +16,18 @@ export class NewAgent {
 
     QuickSearch() {
 
-       //   this.helper.WaitByIdAndClick('General.MH.Reports');
-     //   this.helper.WaitBusyIndicator();
+        this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndClick('General.MH.Maintenance');
         this.helper.waitByCss('#null_Search');
+        this.helper.WaitBusyIndicator();
+
     }
 
     SearchAgentTab() {
         browser.sleep(1000)
         this.helper.WaitByIdAndFill('null_Search', "Agent");
         this.helper.WaitByIdAndClick('MaintenanceItemMTAG');
+
 
     }
 
@@ -46,12 +48,17 @@ export class NewAgent {
         this.helper.WaitBusyIndicator();
         this.helper.WaitWindowClosed();
         this.helper.WaitByIdAndFill('SearchFieldsId_0_0', this.agentName);
-        //click on row 
         this.helper.WaitByIdAndClick('LogGrid_0_0row0');
-        //edit 
         this.helper.WaitByIdAndFill('Agent_Notes', "This Is Test For Protractor")
         this.helper.WaitByIdAndClick('Agent-Save');
 
     }
+    SaveAgent() {
+        this.helper.ItemsVisibility('Agent-Save')
+        this.helper.WaitByIdAndClick('Agent-Save');
+
+
+    }
+
 
 }

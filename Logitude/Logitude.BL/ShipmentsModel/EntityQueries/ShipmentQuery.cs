@@ -1491,6 +1491,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Origin = shipment.Origin;
             shipmentPM.AgentComputed = shipment.AgentComputed;
             shipmentPM.ComputedShipmentNumber = shipment.ComputedShipmentNumber;
+            shipmentPM.OpenReceivablesLines = shipment.OpenReceivablesLines;
 
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {
@@ -3175,6 +3176,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.MainCarriageATD = masterData.MainCarriageATD;
                 shipmentPM.MainCarriageATA = masterData.MainCarriageATA;
                 shipmentPM.FinalDistenationPortId = masterData.Transshipment3ToPortId != null ? masterData.Transshipment3ToPortId : masterData.Transshipment2ToPortId != null ? masterData.Transshipment2ToPortId : masterData.Transshipment1ToPortId != null ? masterData.Transshipment1ToPortId : masterData.MainCarriageToPortId;
+                shipmentPM.CutoffDate = masterData.CutoffDate;
             }
 
             shipmentPM.Field1 = new CustomFieldClass("Field1", "Shipment", shipment.Field1);
@@ -4073,6 +4075,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageATA = m.MainCarriageATA;
                         shipmentPM.MainCarriageCarrierId = m.MainCarriageCarrierId;
                         shipmentPM.FinalDistenationPortId = m.Transshipment3ToPortId != null ? m.Transshipment3ToPortId : m.Transshipment2ToPortId != null ? m.Transshipment2ToPortId : m.Transshipment1ToPortId != null ? m.Transshipment1ToPortId : m.MainCarriageToPortId;
+                        shipmentPM.CutoffDate = m.CutoffDate;
+ 
                     }
 
 
@@ -9716,7 +9720,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
         #endregion
 
-        public ShipmentsSummary GetShipmentsDashBoardSummary(int tenant, string directionId, string transportModeId, string loggedContactId, bool hasETDFeature, bool hasFollowupsFeature, bool hasExpDepNotTransmittedFeature, bool hasShippingInstructionsLast7DaysFeature, bool hasContainerStatusLast7DaysFeature)
+        public ShipmentsSummary GetShipmentsDashBoardSummary(int tenant, string directionId, string transportModeId, string loggedContactId, bool hasETDFeature, bool hasFollowupsFeature, bool hasExpDepNotTransmittedFeature, bool hasShippingInstructionsLast7DaysFeature, bool hasContainerStatusLast7DaysFeature, bool hasEBookingInProgress)
         {
             ShipmentsSummary myResult = new ShipmentsSummary() { Id = 1 };
 
@@ -9810,6 +9814,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 myResult.ContainerStatusLast7DaysCount = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRALastStatusDate >= lastWeekDate)).Take(1001).Count();
             }
 
+            if (hasEBookingInProgress)
+            {
+                myResult.EBookingInProgressCount = (from myShipment in iQueryable_Shipments
+                                                    join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                                    from myMasterData in ShipmentsMasters
+                                                    where myShipment.Tenant == tenant
+                                                    && (myShipment.ShipmentLevelCode == "H" || myShipment.ShipmentLevelCode == "D")
+                                                    && myShipment.DirectionId == "E"
+                                                    && myShipment.TransportModeId == "O"
+                                                    && myShipment.INTTRABookingTransStatusCode != "NST"
+                                                    && myMasterData.Tenant == tenant
+                                                    && myMasterData.MainCarriageATD == null
+                                                    select myShipment).Take(1001).Count();
+
+            }
             // Others
             myResult.CreditLimitBlockedCount = iQueryable_Shipments.Where(d => d.IsNewARInvoiceBlocked == true).Take(1001).Count();
 
@@ -11126,7 +11145,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierNumber = f.CarrierNumber,
                                AgentId = f.AgentId,
                                AgentComputed = f.AgentComputed,
-                              // ComputedShipmentNumber = f.ComputedShipmentNumber,
+                               // ComputedShipmentNumber = f.ComputedShipmentNumber,
                                ARInvoiceIssued = f.ARInvoiceIssued,
                                CreditNoteIssued = f.CreditNoteIssued,
                                CustomFileNumber = f.CustomFileNumber,
@@ -11289,7 +11308,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                To = f.To,
                                Origin = f.Origin,
                                ARInvoices = f.ARInvoices,
+                               OpenReceivablesLines = f.OpenReceivablesLines,
                            };
+
             return myResult;
         }
 
@@ -11631,6 +11652,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     To = f.To,
                     Origin = f.Origin,
                     ARInvoices = f.ARInvoices,
+                    OpenReceivablesLines = f.OpenReceivablesLines,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -11886,7 +11908,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ARInvoices = f.ARInvoices,
                     Notes = f.Notes,
                     EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
-
+                    OpenReceivablesLines = f.OpenReceivablesLines,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

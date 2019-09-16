@@ -4,6 +4,8 @@ import { NewAirFreightCostComponent } from './Components/NewEntity/NewAirFreight
 import { FieldTemplateComponent } from './Components/Templates/FieldTemplateComponent';
 import { TariffSearchAirFreightPricesComponent } from './Components/Workspaces/TariffSearchAirFreightPricesComponent';
 import { TariffPriceStepsComponent } from './Components/NewEntity/TariffPriceStepsComponent';
+import { WizardDimensionsComponent } from './Components/Workspaces/WizardDimensionsComponent';
+import { TariffHelperComponent } from './Components/Helpers/TariffHelperComponent';
 
 // Tabs
 import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
@@ -37,6 +39,8 @@ export const Components =
         ChoosePortComponent,
         AddEditAllInChargesComponent,
         TariffPriceStepsComponent,
+        WizardDimensionsComponent,
+        TariffHelperComponent,
     ];
 
 export const ControlsComponents =
@@ -66,6 +70,8 @@ export class ModuleDeclarations {
             case "ChoosePortComponent": { myResult = ChoosePortComponent; break; }
             case "AddEditAllInChargesComponent": { myResult = AddEditAllInChargesComponent; break; }
             case "TariffPriceStepsComponent": { myResult = TariffPriceStepsComponent; break; }
+            case "WizardDimensionsComponent": { myResult = WizardDimensionsComponent; break; }
+            case "TariffHelperComponent": { myResult = TariffHelperComponent; break; }
         }
 
         return myResult;

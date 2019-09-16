@@ -171,6 +171,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
 
+            LogBoxTenantSettingRepository LBtenantRepository = new LogBoxTenantSettingRepository(entityPM.Tenant);
+            LogBoxTenantSetting LBcurrentTenant = LBtenantRepository.GetSingleLBTenant(entityPM.Tenant);
+
             if (isNewEntity && entityPM.IsHybrid)
             {
                 entityPoco.StatusId = entityPM.StatusId;
@@ -186,7 +189,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 }
             }
 
-            if (currentTenant.IsDocumentsArchive)
+            if (LBcurrentTenant.IsDocumentsArchive)
             {
                 if (!isNewEntity)
                 {
@@ -406,6 +409,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.To = entityPM.To;
             entityPoco.Origin = entityPM.Origin;
             entityPoco.ComputedShipmentNumber = entityPM.ComputedShipmentNumber;
+
+            //entityPoco.OpenReceivablesLines = entityPM.OpenReceivablesLines;
+
             //entityPoco.ContainersNumbers = entityPM.ContainersNumbers;
             //entityPoco.FirstPickupLocation = entityPM.FirstPickupLocation;
             //entityPoco.Commodity = entityPM.AWBCommodityItemNumber;
@@ -418,7 +424,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             //entityPoco.ActualFinalArrivalDate = entityPM.ActualFinalArrivalDate;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
-            if (!currentTenant.IsDocumentsArchive)
+            if (!LBcurrentTenant.IsDocumentsArchive)
             {
                 BuildRoutingField(entityPM, entityPoco, entityMasterData, objectContext);
             }
@@ -2559,6 +2565,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageATA", changeTrackingPM.MainCarriageATA, pm.MainCarriageATA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationETA", changeTrackingPM.MainCarriageFinalDestinationETA, pm.MainCarriageFinalDestinationETA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationATA", changeTrackingPM.MainCarriageFinalDestinationATA, pm.MainCarriageFinalDestinationATA, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "CutoffDate", changeTrackingPM.CutoffDate, pm.CutoffDate, "DateTime?", notifyPropertyChangeValuesList);
+
+
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field3, pm.Field3, "Field3", notifyPropertyChangeValuesList);
@@ -2599,6 +2608,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field38, pm.Field38, "Field38", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field39, pm.Field39, "Field39", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field40, pm.Field40, "Field40", notifyPropertyChangeValuesList);
+
+
 
             //if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
             // {
@@ -2716,7 +2727,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.MainCarriageATA = masterShipment.MainCarriageATA;
             shipmentPM.FinalDistenationPortId = masterShipment.FinalDistenationPortId;
             shipmentPM.StatusId = masterShipment.StatusId;
-
+            shipmentPM.CutoffDate = masterShipment.CutoffDate;
 
             return shipmentPM;
 

@@ -606,6 +606,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.isCopyButtonClicked = true;
 
         this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
+        this.EntityPM.IsFromCopy = true;
         this.EntityPM.LastStartDate = this.StartDate;
         this.EntityPM.LastExpirationDate = this.ExpirationDate;
         
@@ -622,7 +623,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.loadedTariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
             var tariffLine = new TariffLinePM(copiedVersion);
             tariffLine.StartDate = item.StartDate;
-            tariffLine.ExpirationDate = item.ExpirationDate;
             tariffLine.Tenant = SessionLocator.Tenant;
             tariffLine.Version = copiedVersion.Version;
             tariffLine.OriginPortId = item.OriginPortId;
@@ -670,7 +670,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         args.AirlineId = this.EntityPM.SellerId;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
+        logWindow.Width = 1100;
         logWindow.Height = 600;
         logWindow.WindowArgs = args;
         logWindow.Title = "Tariff Surchage Update";

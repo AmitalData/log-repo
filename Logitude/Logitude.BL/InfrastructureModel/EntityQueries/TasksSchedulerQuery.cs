@@ -81,7 +81,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        AverageRunTime = a.AverageRunTime, 
+                        Duration = a.AverageRunTime,
 
 
                     }).FirstOrDefault();
@@ -126,7 +128,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        AverageRunTime = a.AverageRunTime,
+                        Duration = a.AverageRunTime
                     }).FirstOrDefault();
         }
 
@@ -169,7 +173,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        AverageRunTime = a.AverageRunTime,
+                        Duration = a.AverageRunTime,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
                     }).ToList();
         }
 
@@ -211,13 +218,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              Status = a.Status,
                              Retries = a.Retries,
                              LastRunEndTime = a.LastRunEndTime,
-                             LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                             LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                             AverageRunTime = a.AverageRunTime,
+                             Duration = a.AverageRunTime,
+                             SchedulerDetailsXML = a.SchedulerDetailsXML,
                          }).ToList().OrderByDescending(x => x.CreateDateTime);
 
-            foreach (var Task in Tasks)
-            {
-                Task.Duration = GetTaskAvarageDuration(Task.Id);
-            }
+            //foreach (var Task in Tasks)
+            //{
+            //    Task.Duration = GetTaskAvarageDuration(Task.Id);
+            //}
 
             return Tasks.ToList();
         }
@@ -297,7 +307,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                         Status = a.Status,
                                                         Retries = a.Retries,
                                                         LastRunEndTime = a.LastRunEndTime,
-                                                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                                                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                                                        AverageRunTime = a.AverageRunTime
                                                     };
             return result;
         }
@@ -341,7 +352,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        AverageRunTime = a.AverageRunTime,
+                        Duration = a.AverageRunTime,
                     }).FirstOrDefault();
         }
 
@@ -383,7 +396,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        AverageRunTime = a.AverageRunTime,
+                        Duration = a.AverageRunTime,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
+
                     }).ToList();
         }
 

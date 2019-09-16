@@ -11,16 +11,17 @@ import {NewWarehouseReleaseComponent} from '../../Warehouse/Components/NewWareho
 import {WarehouseReleasePM} from '../../Warehouse/EntityPMs/WarehouseReleasePM';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
+import {WarehouseEntryPackagePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseEntryPackagePMExtendedService';
 
 @Component({
     moduleId: module.id,
     selector: 'WarehouseReleaseChoosePackagesComponent',
     templateUrl: './WarehouseReleaseChoosePackagesComponent.html',
-
+    providers: [WarehouseEntryPackagePMExtendedService],
 })
- 
+
 export class WarehouseReleaseChoosePackagesComponent extends BaseComponent implements OnInit {
-   
+
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     ObjectTableName: string = "WarehouseEntry";
@@ -42,7 +43,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     DimensionsLabel: string;
     PackageType: string;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    constructor(private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         super();
     }
 
@@ -52,10 +53,10 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
 
 
     }
-    
+
     SetWindowArgs(args: any) {
         this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe(response => {
- 
+
             this.Start(args);
         });
 
@@ -78,7 +79,6 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         this.PackageType = args.PackageType;
 
         this.AllWarehouseEntryPackagesLists = args.WarehouseEntryPackagesLists;
-        this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
 
         this.IsStartFilter = true;
         this.FilterWarehouseEntryPackageList();
@@ -97,7 +97,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     IsShowMessageNoResult: boolean = false;
     FilterWarehouseEntryPackageList() {
         if (this.IsStartFilter) {
-           this.WarehouseEntryPackagesLists = [];
+            this.WarehouseEntryPackagesLists = [];
             if (this.PackageType == "Container") {
                 this.IsContainerShipment = true;
                 this.AllWarehouseEntryPackagesLists.filter(d => d.IsContainer).forEach((item) => {
@@ -108,9 +108,9 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
                 this.AllWarehouseEntryPackagesLists.filter(d => !d.IsContainer).forEach((item) => {
                     this.WarehouseEntryPackagesLists.push(new WarehouseEntryPackageClass(item));
                 });
-           }
+            }
 
-            if (!AppTool.IsNullOrEmpty(this.TransportModeId) && this.TransportModeId!="All") {
+            if (!AppTool.IsNullOrEmpty(this.TransportModeId) && this.TransportModeId != "All") {
                 this.WarehouseEntryPackagesLists = this.WarehouseEntryPackagesLists.filter(d => d.TransportModeId == this.TransportModeId);
             }
 
@@ -140,12 +140,12 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         }
 
     }
-    
+
     CloseButtonClicked() {
         this.WarehouseEntryPackagesLists.forEach((item) => {
             item.EntityPM.ReleaseQTY = item.OldReleaseQTY;
             item.EntityPM.IsSelected = item.OldIsSelected;
-            
+
         });
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -158,6 +158,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
                 this.UIProperties.SetEnabled("DirectionId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
                 this.IsDisableFilter = true;
             }
             else {
@@ -165,6 +166,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
                 this.UIProperties.SetEnabled("DirectionId", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, true);
+                this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, true);
                 this.IsDisableFilter = false;
             }
         }
@@ -181,23 +183,17 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         }
 
 
-     
+
 
         if (this.ValidationErrorsList.length == 0) {
 
-            //if (this.ViewModelTrigger.WarehouseReleasePackagesLists) {
-            //    this.ViewModelTrigger.WarehouseReleasePackagesLists.forEach((item) => {
-            //        var warehouseEntryPackages: any = this.WarehouseEntryPackagesLists.filter(d => d.EntityPM.Id == item.EntryPackageId)[0];
-            //        if (!warehouseEntryPackages) {
-            //            this.ViewModelTrigger.WarehouseReleasePackagesLists = this.ViewModelTrigger.WarehouseReleasePackagesLists.filter(d => d.EntryPackageId != item.EntryPackageId);
-            //        }
-            //    });
-
-            //}
+            if (this.WarehouseEntryPackagesLists.length == 0) {
+                this.ViewModelTrigger.WarehouseReleasePackagesLists = [];
+            }
 
 
             this.WarehouseEntryPackagesLists.forEach((item) => {
-              
+
                 if (item.IsSelected) {
 
 
@@ -215,7 +211,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
                     newWarehouseReleasePackagePM.ContainerNumber = item.ContainerNumber;
                     newWarehouseReleasePackagePM.Width = item.EntityPM.Width;
                     newWarehouseReleasePackagePM.Dimensions = (item.EntityPM.Length ? item.EntityPM.Length : "") + "-" + (item.EntityPM.Width ? item.EntityPM.Width : "") + "-" + (item.EntityPM.Height ? item.EntityPM.Height : "");
-                   
+
                     newWarehouseReleasePackagePM.Volume = item.EntityPM.Volume;
                     newWarehouseReleasePackagePM.Weight = item.EntityPM.Weight;
                     newWarehouseReleasePackagePM.Harmonize = item.EntityPM.Harmonize;
@@ -234,7 +230,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
                     var existItem: WarehouseReleasePackagePM = this.ViewModelTrigger.WarehouseReleasePackagesLists.filter(d => d.EntryPackageId == newWarehouseReleasePackagePM.EntryPackageId)[0];
                     if (!existItem) {
                         this.ViewModelTrigger.WarehouseReleasePackagesLists.push(newWarehouseReleasePackagePM);
-                    } 
+                    }
 
 
                 }
@@ -243,21 +239,22 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
                     var existItem: WarehouseReleasePackagePM = this.ViewModelTrigger.WarehouseReleasePackagesLists.filter(d => d.EntryPackageId == item.EntityPM.Id)[0];
                     if (existItem) {
                         this.ViewModelTrigger.WarehouseReleasePackagesLists = this.ViewModelTrigger.WarehouseReleasePackagesLists.filter(d => d.EntryPackageId != item.EntityPM.Id);
-                    } 
+                    }
 
 
                     item.EntityPM.ReleaseQTY = 0;
                 }
-             
+
             });
-            this.CurrentSession.CloseCurrentWindow();
+
+            this.CurrentSession.CurrentWindow.Close("Refresh");
         }
 
-       
-    
 
 
-     
+
+
+
     }
 
 
@@ -288,7 +285,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             this.ViewModelTrigger.DirectionId = newValue;
             this.FilterWarehouseEntryPackageList();
         }
-       
+
     }
 
 
@@ -296,7 +293,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     private customerId: string;
     get CustomerId() {
 
-  
+
 
         return this.customerId;
 
@@ -304,8 +301,12 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     set CustomerId(newValue: string) {
         if (this.customerId != newValue) {
             this.customerId = newValue;
-            this.ViewModelTrigger.CustomerId = newValue;
-            this.FilterWarehouseEntryPackageList();
+
+            if (this.warehouseReleasePM.CustomerId != newValue) {
+                this.ViewModelTrigger.CustomerId = newValue;
+                this.warehouseReleasePM.CustomerId = newValue;
+                this.LoadWarehouseEntryPackageListsByCustomerId();
+            }
         }
     }
 
@@ -332,14 +333,34 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     }
 
 
+
+
+
+
+
+
+
+
+    LoadWarehouseEntryPackageListsByCustomerId() {
+
+        this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(this.warehouseReleasePM.ShipmentId, this.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
+            var pmResponse: any = res;
+            if (!pmResponse.HasError) {
+                this.AllWarehouseEntryPackagesLists = pmResponse.Result;
+                this.ViewModelTrigger.AllWarehouseEntryPackagesLists = pmResponse.Result;
+                this.FilterWarehouseEntryPackageList();
+            }
+
+        });
+    }
+
 }
 
 
-export class WarehouseEntryPackageClass extends BaseComponent 
-{
+export class WarehouseEntryPackageClass extends BaseComponent {
 
     Instock: number;
-   
+
     EntryPackageId: string;
     IsContainer: boolean;
     PackageTypeName: string;
@@ -361,7 +382,7 @@ export class WarehouseEntryPackageClass extends BaseComponent
     FromPortId: string;
     ToPortId: string;
     CustomerId: string;
-    
+
     IsSelectedKeyId: string = Guid.newGuid();
     get ReleaseQTY() {
         var releaseQTY = 0;
@@ -374,7 +395,7 @@ export class WarehouseEntryPackageClass extends BaseComponent
 
     set ReleaseQTY(newValue: number) {
         if (this.ReleaseQTY != newValue) {
-       
+
             if (newValue) {
                 if (newValue > 0) {
                     this.EntityPM.ReleaseQTY = newValue;
@@ -385,8 +406,8 @@ export class WarehouseEntryPackageClass extends BaseComponent
                     }
 
                 }
-                
-            } 
+
+            }
             else {
                 this.EntityPM.ReleaseQTY = newValue;
                 this.ReleaseQTY = newValue;
@@ -399,8 +420,7 @@ export class WarehouseEntryPackageClass extends BaseComponent
 
 
 
-    get IsSelected()
-    {
+    get IsSelected() {
         var iselected = false;
         if (this.EntityPM) {
             iselected = this.EntityPM.IsSelected;;
@@ -418,17 +438,17 @@ export class WarehouseEntryPackageClass extends BaseComponent
             } else {
                 if (!this.IsFullReleaseQTYAuto) this.ReleaseQTY = 0;
                 else this.IsFullReleaseQTYAuto = false;
-      
+
             }
 
-            
+
         }
     }
 
 
     ReleaseQTYLostFocusMethod(value) {
-            this.ReleaseQTY = value;
-        
+        this.ReleaseQTY = value;
+
     }
 
     Height: number;
@@ -453,7 +473,7 @@ export class WarehouseEntryPackageClass extends BaseComponent
         this.Description = entityPM.Description;
         this.Instock = entityPM.Instock;
         this.IsContainer = entityPM.IsContainer;
-        this.EntryPackageId = entityPM.Id; 
+        this.EntryPackageId = entityPM.Id;
         this.EntityPM = entityPM;
         this.OldReleaseQTY = entityPM.ReleaseQTY;
         this.OldIsSelected = entityPM.IsSelected;

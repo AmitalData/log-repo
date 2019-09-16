@@ -44,6 +44,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
     Language: string = 'HB';
+    public RTL: boolean = true;
     AdditionalData: any;
     externalDocs: any[];
     public DimApproveButton: boolean = false;
@@ -60,6 +61,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         this._ImageLibraryService = new ImageLibraryService();
         this._DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
         this.Language = SessionLocator.TenantPM.Language;
+        this.RTL = (this.Language == 'HB');
     }
 
     private isAccepted: boolean = false;
@@ -164,7 +166,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
             var entity = AdditionalResult.Result
             if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName) || !AppTool.IsNullOrEmpty(entity.DenyReason)) {
-                this.messageWindow.RTL = true;
+                this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
                 this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.warning");//"אזהרה!";
@@ -197,7 +199,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                         mm = m.toString();
                     }
                     var to = dd + '/' + mm + '/' + yyyy;
-                    this.messageWindow.RTL = true;
+                    this.messageWindow.RTL = this.RTL;
                     this.messageWindow.Width = 300;
                     this.messageWindow.Height = 150;
                     this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.StatementWasApproved");//"הצהרה אושרה";
@@ -215,13 +217,13 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         this.CurrentSession.CurrentWindow.StartBusyIndicator("...");
         var newWindow = new LogitudeWindow();
         newWindow.Width = 350;
-        newWindow.Height = 220;
+        newWindow.Height = 250;
         newWindow.RTL = true;
         
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
             var entity = AdditionalResult.Result
             if (!AppTool.IsNullOrEmpty(entity.DenyReason) || !AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {
-                this.messageWindow.RTL = true;
+                this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
                 this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.warning");//"אזהרה!";
@@ -243,7 +245,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Deny Declaration");
                         this.DimDenyButton = true;
                         this.CurrentSession.CloseCurrentWindow();
-                        this.messageWindow.RTL = true;
+                        this.messageWindow.RTL = this.RTL;
                         this.messageWindow.Width = 300;
                         this.messageWindow.Height = 150;
                         this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.Astatementwasrejected");//"הצהרה נדחתה";
@@ -374,12 +376,12 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         var newWindow = new LogitudeWindow();
         newWindow.Width = 550;
         newWindow.Height = 230;
-        if (this.Language == 'HB') {
-            newWindow.RTL = true;
-        }
-        else {
-            newWindow.RTL = false;
-        }
+        //if (this.Language == 'HB') {
+        //    newWindow.RTL = true;
+        //}
+        //else {
+        newWindow.RTL = this.RTL;
+        //}
         newWindow.Title = TextCodeTranslator.Translate("Shipment.O.TaxInformation");//"פרטי מס";
         var windowArgs: any = {};
         //windowArgs.IsNew = false;

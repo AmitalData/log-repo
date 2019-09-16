@@ -502,7 +502,97 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityPM;
         }
 
+        public APInvoicePM GetSingleInvoiceByExternlaEntityId(string externalEntityId, int tenant)
+        {
+            APInvoicePM entityPM = (from a in repository.context.APInvoices
+                                    where a.ExternalAccountingEntityId == externalEntityId && a.Tenant == tenant
+                                    select new APInvoicePM()
+                                    {
+                                        ProfitCurrencyExchangeRate = a.ProfitCurrencyExchangeRate,
+                                        ProfitCurrencyId = a.ProfitCurrencyId,
+                                        SubTotalInInvoiceCurrency = a.SubTotalInInvoiceCurrency,
+                                        SubTotalInLocalCurrency = a.SubTotalInLocalCurrency,
+                                        AmountInInvoiceCurrency = a.AmountInInvoiceCurrency,
+                                        AmountInLocalCurrency = a.AmountInLocalCurrency,
+                                        AmountInProfitCurrency = a.AmountInProfitCurrency,
+                                        AmountInInvoiceCurrency_Summary = a.AmountInInvoiceCurrency,
+                                        AmountInLocalCurrency_Summary = a.AmountInLocalCurrency,
+                                        AmountInProfitCurrency_Summary = a.AmountInProfitCurrency,
+                                        AmountDue = a.AmountDue,
+                                        AmountDueInLocalCurrency = a.AmountDueInLocalCurrency,
+                                        AmountDueInProfitCurrency = a.AmountDueInProfitCurrency,
+                                        CreateDate = a.CreateDate,
+                                        CreatedByUserId = a.CreatedByUserId,
+                                        DueDate = a.DueDate,
+                                        ExchangeRateDate = a.ExchangeRateDate,
+                                        Id = a.Id,
+                                        InternalNotes = a.InternalNotes,
+                                        InternalNumber = a.InternalNumber,
+                                        InvoiceCurrencyExchangeRate = a.InvoiceCurrencyExchangeRate,
+                                        InvoiceCurrencyId = a.InvoiceCurrencyId,
+                                        InvoiceDate = a.InvoiceDate,
+                                        InvoiceNumber = a.InvoiceNumber,
+                                        IsClosed = a.IsClosed,
+                                        LocalCurrencyId = a.LocalCurrencyId,
+                                        LocalCurrencyCode = a.LocalCurrency != null ? a.LocalCurrency.Code : null,
+                                        InvoiceCurrencyCode = a.InvoiceCurrency == null ? "" : a.InvoiceCurrency.Code,
+                                        PaymentTermId = a.PaymentTermId,
+                                        StatusCode = a.StatusCode,
+                                        StatusName = a.Status == null ? "" : a.Status.Name,
+                                        VendorId = a.VendorId,
+                                        Tenant = a.Tenant,
+                                        UpdateDate = a.UpdateDate,
+                                        UpdatedByUserId = a.UpdatedByUserId,
+                                        VATNumber = a.VATNumber,
+                                        MainEntityId = a.MainEntityId,
+                                        MainEntityReference = a.MainEntityReference,
+                                        InvoiceExpectedAmount = a.AmountInInvoiceCurrency,
+                                        RefundAmount = a.RefundAmount,
+                                        BranchId = a.BranchId,
+                                        MasterNumber = a.MasterNumber,
+                                        HouseNumber = a.HouseNumber,
+                                        Description = a.Description,
+                                        VendorName = a.VendorCard == null ? "" : a.VendorCard.EnglishName,
+                                        VendorCode = a.VendorCard == null ? "" : a.VendorCard.Code,
+                                        VendorPartnerTypeId = a.VendorCard == null ? "" : a.VendorCard.PartnerTypeId,
+                                        PaymentTermName = a.PaymentTerm == null ? "" : a.PaymentTerm.EnglishName,
+                                        CreditAccount = a.CreditAccount,
+                                        TransferTries = a.TransferTries,
+                                        TransferError = a.TransferError,
+                                        IsTransferStarted = a.IsTransferStarted,
+                                        TransferStatusCode = a.TransferStatusCode,
+                                        TransferStatusName = a.TransferStatus == null ? "" : a.TransferStatus.Name,
+                                        AccountingExternalCode = a.AccountingExternalCode,
+                                        ReadyForTransfer = a.TransferStatusCode == "RD" ? true : false,
+                                        PaymentTermExternalId = a.PaymentTermExternalId,
+                                        IsMultipleEntities = a.IsMultipleEntities,
+                                        ApprovedDate = a.ApprovedDate,
+                                        ApprovedByUserId = a.ApprovedByUserId,
+                                        ApprovedByUserName = a.ApprovedByUser == null ? null : (a.ApprovedByUser.Contact == null ? null : a.ApprovedByUser.Contact.EnglishName),
+                                        CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                                        OperationalDate = a.OperationalDate,
+                                        VendorGLAccountId = a.VendorGLAccountId,
+                                        AccountingDate = a.AccountingDate,
+                                        IsExternalEntity = a.IsExternalEntity,
+                                        IsGeneralInvoice = a.IsGeneralInvoice,
+                                        ExternalAccountingEntityId = a.ExternalAccountingEntityId,
+                                        FirstApproveDate = a.FirstApproveDate,
+                                    }).FirstOrDefault();
+           
+            if(entityPM != null)
+            {
 
+                entityPM.InvoiceLines = GetAPInvoiceLineByInvoiceId(entityPM); 
+                
+            }
+            return entityPM;
+        }
+        private List<APInvoiceLinePM> GetAPInvoiceLineByInvoiceId(APInvoicePM invoice)
+        {
+            APInvoiceLineRepository invoiceLineRepository = new APInvoiceLineRepository(invoice.Tenant);
+            APInvoiceLineQuery apInvoiceLineQuery = new APInvoiceLineQuery(invoiceLineRepository);
+            return apInvoiceLineQuery.GetInvoiceLinesByInvoiceId(invoice.Id, invoice.Tenant);
+        }
         private List<APTransferLinePM> GetAPInvoiceTransferLines(APInvoicePM entityPM, List<APInvoiceLine> allInvoiceLines, List<APInvoiceLinePM> allInvoiceLinesPM)
         {
             List<APTransferLinePM> myTransferLines = new List<APTransferLinePM>();

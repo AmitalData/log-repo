@@ -41,6 +41,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
     DistributorCodeVisible: boolean;
     DemoTenantMessageVisibility: boolean;
     IsScreenEnabled: boolean;
+    public IsAdditionalPackagesOnlyVisible: boolean = false;
     //IsFreelancerVisible: boolean = false;
     IsCurrentUserFreelancer: boolean = false;
     SelectedUserRolesItemClass: UserRolesItemClass;
@@ -309,7 +310,11 @@ export class NewUserComponent extends BaseComponent implements OnInit {
         }
 
         if (FeatureLocator.HasFeaturePermession("User", "ROLES")) this.IsSalesmanVisible = true;
-        else this.IsSalesmanVisible = false;        
+        else this.IsSalesmanVisible = false;
+
+        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+            this.IsAdditionalPackagesOnlyVisible = true;
+        }
     }
 
     SetUiProperties_IsEnabled() {

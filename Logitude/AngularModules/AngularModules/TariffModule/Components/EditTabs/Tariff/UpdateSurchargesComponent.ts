@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
+import { TariffSurchargesUpdatePM } from '../../../EntityPMs/TariffSurchargesUpdatePM';
 import { UpdateTariffArgs } from '../../../Args';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
@@ -11,6 +12,7 @@ import { CommonDomainService } from '../../../../Common/Services/CommonDomainSer
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffDomainService, UpdateSurchargeArgs } from '../../../Services/TariffDomainService';
 import { AppTool } from '../../../../Infrastructure/Tools';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
     moduleId: module.id,
@@ -22,7 +24,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public DataContext = this;
     public ObjectTableName = "Tariff";
     public EntityPM: TariffVersionPM;
-    public Logs= [];
+    public Logs: ObservableCollection;
     public ValidationErrorsList: string[] = [];
     public TariffChargesObsList: TariffCharge[];
     public FromAirlineAreas: AirlineAreaClass[];
@@ -33,30 +35,25 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public ToSearchAreaId: string = "ToSearchAreaId";
     constructor() {
         super();
-
         this.FromTariffAreaDropButton += this.CurrentSession.GetNewId("FromTariffAreaDropButton_1");
         this.FromSearchAreaId += this.CurrentSession.GetNewId("FromSearchAreaId_1");
         this.ToTariffAreaDropButton += this.CurrentSession.GetNewId("ToTariffAreaDropButton_1");
         this.ToSearchAreaId += this.CurrentSession.GetNewId("ToSearchAreaId_1");
-
         this.SetUIProperties();
     }
     
     SetWindowArgs(arg: UpdateTariffArgs) {
         this.EntityPM = arg.Version;
-
-        
+        this.FillLogs();
         this.FillTariffCharges(arg.TariffCharges);
         this.LoadAirlineAreas(arg.AirlineId);
     }
 
     SetUIProperties() {
         var isStartDateRequired: boolean = false;
-
         if (this.StartDate == null || this.StartDate == undefined) {
             isStartDateRequired = true;
         }
-
         this.UIProperties.SetRequired("StartDate", null, isStartDateRequired);
     }
 
@@ -72,6 +69,23 @@ export class UpdateSurchargesComponent extends BaseComponent {
         });
     }
 
+    private FillLogs() {
+        this.Logs  = new ObservableCollection([]);
+        var service: TariffDomainService = new TariffDomainService();
+        service.GetTariffsLogsByTariffId(this.EntityPM.TariffId, this.EntityPM.Version).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: TariffSurchargesUpdateItem[] = [];
+                var index = 1;
+                if (myResponse.Result != null) {
+                    myResponse.Result.forEach(item => {
+                        list.push(new TariffSurchargesUpdateItem(item, index));
+                        index = index + 1;
+                    });
+                    this.Logs.InsertCollection(list);
+                }             
+            }
+        });
+    }
     FillAirlineAreas(type: string) {
         if (type == "From") {
             var data: AirlineAreaList[] = [];
@@ -280,7 +294,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
         if (type == "From") {
             var index = this.FromObsList.indexOf(item);
             if (index > -1) {
-                this.FromObsList.splice(index);
+                this.FromObsList.splice(index, 1);
             }
 
             if (item.Indication == "Area") {
@@ -291,7 +305,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
         else {
             var index = this.ToObsList.indexOf(item);
             if (index > -1) {
-                this.ToObsList.splice(index);
+                this.ToObsList.splice(index, 1);
             }
 
             if (item.Indication == "Area") {
@@ -337,21 +351,22 @@ export class UpdateSurchargesComponent extends BaseComponent {
             args.StartDate = this.StartDate;
 
             this.FromObsList.forEach(item => {
-                args.From.push(item.Indication + "," + item.Id);
+                args.From.push(item.Indication + "," + item.Id + "," + item.Code);
             });
 
             this.ToObsList.forEach(item => {
-                args.To.push(item.Indication + "," + item.Id);
+                args.To.push(item.Indication + "," + item.Id + "," + item.Code);
             });
 
             this.TariffChargesObsList.filter(d => d.IsChargeChecked).forEach(item => {
-                args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.NewMinPrice + "," + item.Index);
+                args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.NewMinPrice + "," + item.Index + "," + item.ChargeCode);
             });
 
             var myService: TariffDomainService = new TariffDomainService();
             myService.PostUpdateSurcharge(args).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     this.isUpdateDone = true;
+                    this.FillLogs();
                 }
 
                 else {
@@ -516,4 +531,21 @@ export class AirlineAreaClass {
             this.isChecked = value;            
         }
     }
+}
+
+export class TariffSurchargesUpdateItem {
+    public EntityPM: TariffSurchargesUpdatePM;
+    public Index;
+    constructor(entity: TariffSurchargesUpdatePM, index: number) {
+        this.EntityPM = entity;
+        this.Index = index;
+    }
+    public get To() { return this.EntityPM.To; }
+    public get From() { return this.EntityPM.From; }
+    public get CreateDate() { return this.EntityPM.CreateDate; }
+    public get StartDate() { return this.EntityPM.StartDate; }
+    public get LinesUpdated() { return this.EntityPM.LinesUpdated; }
+    public get Surcharges() { return this.EntityPM.Surcharges; }
+    public get UpdateMethodCode() { return this.EntityPM.UpdateMethodCode; }
+    public get UpdateMethodName() { return this.EntityPM.UpdateMethodName; }
 }

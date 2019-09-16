@@ -132,6 +132,12 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     showLocal: boolean = false;
     IdentityKey: string;
     public isRTL: boolean = false;
+    private isRTLNumberTxt: boolean = false;
+    public get IsRTLNumberText(){
+        this.isRTLNumberTxt= this.isRTL && (this.InputType.toLowerCase()!="text" && this.InputType.toLowerCase()!="ntext");
+        return this.isRTLNumberTxt;
+    }
+    
     private CurrentSession = SessionLocator.SelectedSession;
     keydown: boolean;
     isCtrlKeyDown: boolean = false;
@@ -1738,11 +1744,14 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             }
             else {
                 var _element = document.getElementById(this.InputId);
-                var elHeight = _element.clientHeight;
-                var calculatedRowsCount = (elHeight / 18);
-                var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
-                this.RowsCount = ___roundedCalculatedRowsCountHaha;
-                this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+
+                if (_element) {
+                    var elHeight = _element.clientHeight;
+                    var calculatedRowsCount = (elHeight / 18);
+                    var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
+                    this.RowsCount = ___roundedCalculatedRowsCountHaha;
+                    this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+                }
             }
         }, 100);
     }

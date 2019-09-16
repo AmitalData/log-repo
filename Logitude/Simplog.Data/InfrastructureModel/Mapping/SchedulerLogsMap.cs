@@ -22,8 +22,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                  .HasMaxLength(15)
                  .IsUnicode(false);
 
-            this.Property(t => t.Log)
-                .IsUnicode(false);
+            //this.Property(t => t.Log)
+            //    .IsUnicode(false);
 
             this.Property(t => t.HistoryId)
                 .IsRequired()
@@ -36,7 +36,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
-            this.Property(t => t.Log).HasColumnName("Log"); 
+           // this.Property(t => t.Log).HasColumnName("Log"); 
             this.Property(t => t.HistoryId).HasColumnName("HistoryId"); 
 
             this.HasRequired(t => t.TaskSchedulerHistory).WithMany()
