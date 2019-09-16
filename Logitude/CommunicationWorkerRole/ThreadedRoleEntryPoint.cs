@@ -221,8 +221,8 @@ namespace CommunicationWorkerRole
                 var batchTaskExecutionWR = new BatchTaskExecutionWR();
                 var dic = new Dictionary<string, string>();
 
-                dic.Add("BatchTaskExecutionId", "1-6110");
-                dic.Add("Tenant", "1106");
+                dic.Add("BatchTaskExecutionId", "1-6172");
+                dic.Add("Tenant", "989");
                 batchTaskExecutionWR.SupressStartThread = true;
                 batchTaskExecutionWR.ExecuteQueue(new Logitude.Server.Tools.QueueService.QueueResponse() { MessageValues = dic });
                 //var myEmailsWorkerRole = new EmailsWorkerRole("EmailQueue","itzik");

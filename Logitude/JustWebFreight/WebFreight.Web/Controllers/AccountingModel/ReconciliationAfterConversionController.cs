@@ -8,6 +8,8 @@ using Logitude.Accounting.BL.Utils;
 using System.Net;
 using WebFreight.Web.Helpers;
 using System.Text.RegularExpressions;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.CoreBL.Batch;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -73,14 +75,36 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
+                bool batchIt = true;
+                if (batchIt)
+                {
+                    var accountingContext = AccountingContext.GetContext(tenant);
 
-                ReconciliationAfterConversionBatch reconciliationAfterConversionBatch = new ReconciliationAfterConversionBatch();
-                reconciliationAfterConversionBatch.RunReconciliationAfterConversion(tenant, _myfromExtNum, _mytoExtNum);
-                string responseText = reconciliationAfterConversionBatch.ResponseText();
-                HttpStatusCode StatusCode = reconciliationAfterConversionBatch.StatusCode();
-                var res1 = new { Success = true, Message = responseText };
+                    var myBatckReconciliationAfterConversionTask = new BatckReconciliationAfterConversionTask(null);
+                    string subj = $"Reconciliation After Conversion({_myfromExtNum}- {_mytoExtNum})";
+                    var batchTaskId = myBatckReconciliationAfterConversionTask.CreateQBatchTaskExecution<ReconciliationAfterConversionArg>(
+                        new ReconciliationAfterConversionArg()
+                        {
+                            Tenant = tenant,
+                            FromExtNum = _myfromExtNum,
+                            ToExtNum = _mytoExtNum
+                        }, tenant, subj, false);
 
-                return Request.CreateResponse(StatusCode, res1);
+
+                    var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
+                    return Request.CreateResponse(HttpStatusCode.Accepted, res1);
+                }
+                else
+                {
+                    ReconciliationAfterConversionBatch reconciliationAfterConversionBatch = new ReconciliationAfterConversionBatch();
+                    reconciliationAfterConversionBatch.RunReconciliationAfterConversion(tenant, _myfromExtNum, _mytoExtNum);
+                    string responseText = reconciliationAfterConversionBatch.ResponseText();
+                    HttpStatusCode StatusCode = reconciliationAfterConversionBatch.StatusCode();
+                    var res1 = new { Success = true, Message = responseText };
+                    return Request.CreateResponse(StatusCode, res1);
+                }
+
+
 
             }
 
