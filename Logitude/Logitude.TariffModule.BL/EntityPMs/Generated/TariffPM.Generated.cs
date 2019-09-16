@@ -1360,6 +1360,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isUpdatingMissingPorts ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsUpdatingMissingPorts  
+	   {
+	    
+	     get
+		{
+		   return isUpdatingMissingPorts;
+		 }
+		 set
+		 {
+		   if(isUpdatingMissingPorts != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUpdatingMissingPorts",OldValue=isUpdatingMissingPorts,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isUpdatingMissingPorts=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
