@@ -178,13 +178,13 @@
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.UpdateLogosLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.FilePathTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
-            this.UpdateLogosLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -354,27 +354,27 @@
             this.internationalSiteToolStripMenuItem,
             this.createDecToolStripMenuItem});
             this.sandBoxToolStripMenuItem.Name = "sandBoxToolStripMenuItem";
-            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.sandBoxToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.sandBoxToolStripMenuItem.Text = "SandBox";
             // 
             // fillCustomsTableToolStripMenuItem
             // 
             this.fillCustomsTableToolStripMenuItem.Name = "fillCustomsTableToolStripMenuItem";
-            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.fillCustomsTableToolStripMenuItem.Text = "FillCustomsTable";
             this.fillCustomsTableToolStripMenuItem.Click += new System.EventHandler(this.FillCustomsTableToolStripMenuItem_Click);
             // 
             // updateDocTypeToolStripMenuItem
             // 
             this.updateDocTypeToolStripMenuItem.Name = "updateDocTypeToolStripMenuItem";
-            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.updateDocTypeToolStripMenuItem.Text = "UpdateDocType";
             this.updateDocTypeToolStripMenuItem.Click += new System.EventHandler(this.updateDocTypeToolStripMenuItem_Click);
             // 
             // loadTextCodesToolStripMenuItem
             // 
             this.loadTextCodesToolStripMenuItem.Name = "loadTextCodesToolStripMenuItem";
-            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.loadTextCodesToolStripMenuItem.Text = "LoadTextCodes";
             this.loadTextCodesToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodesToolStripMenuItem_Click);
             // 
@@ -385,7 +385,7 @@
             this.toolStripMenuItemExportTofil,
             this.loadTextCodeFromDiskToolStripMenuItem});
             this.textCodesToolStripMenuItem.Name = "textCodesToolStripMenuItem";
-            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.textCodesToolStripMenuItem.Text = "TextCodes";
             // 
             // toolStripTextBoxFilePath
@@ -411,14 +411,14 @@
             // internationalSiteToolStripMenuItem
             // 
             this.internationalSiteToolStripMenuItem.Name = "internationalSiteToolStripMenuItem";
-            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.internationalSiteToolStripMenuItem.Text = "InternationalSite";
             this.internationalSiteToolStripMenuItem.Click += new System.EventHandler(this.internationalSiteToolStripMenuItem_Click);
             // 
             // createDecToolStripMenuItem
             // 
             this.createDecToolStripMenuItem.Name = "createDecToolStripMenuItem";
-            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.createDecToolStripMenuItem.Text = "CreateDec";
             this.createDecToolStripMenuItem.Click += new System.EventHandler(this.createDecToolStripMenuItem_Click);
             // 
@@ -457,7 +457,7 @@
             this.exportToolStripMenuItem,
             this.importToolStripMenuItem1});
             this.expImpToolStripMenuItem.Name = "expImpToolStripMenuItem";
-            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.expImpToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.expImpToolStripMenuItem.Text = "Exp/Imp";
             // 
             // exportToolStripMenuItem
@@ -472,14 +472,14 @@
             // expPackagesToolStripMenuItem
             // 
             this.expPackagesToolStripMenuItem.Name = "expPackagesToolStripMenuItem";
-            this.expPackagesToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.expPackagesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.expPackagesToolStripMenuItem.Text = "Exp.Packages";
             this.expPackagesToolStripMenuItem.Click += new System.EventHandler(this.expPackagesToolStripMenuItem_Click);
             // 
             // expRolesToolStripMenuItem
             // 
             this.expRolesToolStripMenuItem.Name = "expRolesToolStripMenuItem";
-            this.expRolesToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.expRolesToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.expRolesToolStripMenuItem.Text = "Exp.Roles";
             this.expRolesToolStripMenuItem.Click += new System.EventHandler(this.expRolesToolStripMenuItem_Click);
             // 
@@ -513,7 +513,7 @@
             this.rTLToolStripMenuItem,
             this.lTRToolStripMenuItem});
             this.tenantRTLToolStripMenuItem.Name = "tenantRTLToolStripMenuItem";
-            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
             this.tenantRTLToolStripMenuItem.Text = "Tenant RTL";
             // 
             // tenantTxtBox
@@ -1648,7 +1648,7 @@
             this.button43.Name = "button43";
             this.button43.Size = new System.Drawing.Size(184, 26);
             this.button43.TabIndex = 95;
-            this.button43.Text = "button43";
+            this.button43.Text = "PreProd PWD Changing";
             this.button43.UseVisualStyleBackColor = true;
             this.button43.Click += new System.EventHandler(this.button43_Click);
             // 
@@ -1726,6 +1726,15 @@
             this.tabPage3.Text = "Airline Logos";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // UpdateLogosLabel
+            // 
+            this.UpdateLogosLabel.AutoSize = true;
+            this.UpdateLogosLabel.Location = new System.Drawing.Point(129, 101);
+            this.UpdateLogosLabel.Name = "UpdateLogosLabel";
+            this.UpdateLogosLabel.Size = new System.Drawing.Size(19, 13);
+            this.UpdateLogosLabel.TabIndex = 105;
+            this.UpdateLogosLabel.Text = "....";
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -1776,15 +1785,6 @@
             this.button46.Text = "Update Logos";
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
-            // 
-            // UpdateLogosLabel
-            // 
-            this.UpdateLogosLabel.AutoSize = true;
-            this.UpdateLogosLabel.Location = new System.Drawing.Point(129, 101);
-            this.UpdateLogosLabel.Name = "UpdateLogosLabel";
-            this.UpdateLogosLabel.Size = new System.Drawing.Size(19, 13);
-            this.UpdateLogosLabel.TabIndex = 105;
-            this.UpdateLogosLabel.Text = "....";
             // 
             // Form1
             // 

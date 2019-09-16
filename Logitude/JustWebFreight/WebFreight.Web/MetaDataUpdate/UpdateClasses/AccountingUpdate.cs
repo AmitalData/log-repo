@@ -372,21 +372,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
             #region Journal VoidButton Button
 
-            MenuButton JournalVoidButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-            {
-                EventCode = "JournalVoid",
-                Index = 4,
-                IsActive = true,
-                LabelTextCodeCode = "Journal.B.JournalVoid",
-                LabelTextCodeDefaultText = "Void",
-                LocalDefaultText = "ביטול",
-                ObjectTableId = journalTableId,
-                Tenant = tenant,
-                MenuButtonGroupId = journalMenuButtonGroup.Id,
-                ParentMenuButtonId = JournalMoreButton.Id,
-                FeatureId = journalFeature_SaveAsDraft.Id,
-                MenuButtonType = "menuitem",         
-            }, menuButtonRepository, tenantMenuButtons, textCodeRepository, textCodes);
+            //MenuButton JournalVoidButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            //{
+            //    EventCode = "JournalVoid",
+            //    Index = 4,
+            //    IsActive = true,
+            //    LabelTextCodeCode = "Journal.B.JournalVoid",
+            //    LabelTextCodeDefaultText = "Void",
+            //    LocalDefaultText = "ביטול",
+            //    ObjectTableId = journalTableId,
+            //    Tenant = tenant,
+            //    MenuButtonGroupId = journalMenuButtonGroup.Id,
+            //    ParentMenuButtonId = JournalMoreButton.Id,
+            //    FeatureId = journalFeature_SaveAsDraft.Id,
+            //    MenuButtonType = "menuitem",         
+            //}, menuButtonRepository, tenantMenuButtons, textCodeRepository, textCodes);
 
             #endregion
 

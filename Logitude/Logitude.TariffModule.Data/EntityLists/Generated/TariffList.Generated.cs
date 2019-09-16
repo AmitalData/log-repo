@@ -33,7 +33,7 @@ namespace Logitude.TariffModule.Data.EntityLists
        [DataMember]
        public bool InActive  { get; set; }
        [DataMember]
-       public string Description  { get; set; }
+       public string Notes  { get; set; }
        [DataMember]
        public string SellerId  { get; set; }
        [DataMember]

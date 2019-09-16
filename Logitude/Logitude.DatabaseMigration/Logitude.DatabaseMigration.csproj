@@ -1469,6 +1469,10 @@
     <Compile Include="Migrations\201909091017333_VatTypeRecognizedPercentageMigration.Designer.cs">
       <DependentUpon>201909091017333_VatTypeRecognizedPercentageMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs" />
+    <Compile Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.Designer.cs">
+      <DependentUpon>201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2512,6 +2516,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909091017333_VatTypeRecognizedPercentageMigration.resx">
       <DependentUpon>201909091017333_VatTypeRecognizedPercentageMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.resx">
+      <DependentUpon>201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.resx">
+      <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
