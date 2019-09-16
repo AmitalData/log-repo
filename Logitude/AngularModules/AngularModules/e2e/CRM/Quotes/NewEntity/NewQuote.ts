@@ -28,10 +28,21 @@ export class NewQuote {
     DoOperations() {
         this.Quotes.GoToMainMenu('General.MH.CRM');
         this.Quotes.SelectMenuWorkSpaceTabs('CRMQUT');
-        this.CreateQuote(browser.params.QuoteParams.Direction, browser.params.QuoteParams.TransportMode, browser.params.QuoteParams.ShipmentType, browser.params.QuoteParams.QuoteType);
+         return  this.CreateQuote(browser.params.QuoteParams.Direction, browser.params.QuoteParams.TransportMode, browser.params.QuoteParams.ShipmentType, browser.params.QuoteParams.QuoteType);
 
     }
-
+    SearchForShipment(QuoteNumber:string){
+        this.Quotes.UseSearchBox('Quote_Search', QuoteNumber, 'LogitudeQuickSearchItem');
+      }
+    
+      EditShipment(QuoteNumber: string) {
+         
+         this.EditQuoteTabs.EditTabs(QuoteNumber,browser.params.QuoteParams.ShipmentType,browser.params.QuoteParams.Direction,browser.params.QuoteParams.TransportMode,browser.params.QuoteParams.QuoteType);
+        //this.EditShipment(shipperRef1,browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.Direction, browser.params.ShipParams.TransportMode, browser.params.ShipParams.ShipmentType);
+    
+          this.Helper.WaitByIdAndClick('Shipment-Save');
+          this.Helper.WaitEditComponentBusyIndicator();
+      }
     CreateQuote(Direction: string, TransportMode: string, ShipmentType: string, QuoteType: string) {
         var EC = protractor.ExpectedConditions;
         this.QuoteHepler.CreateAndCloseNewQuote(Direction, TransportMode, ShipmentType);
@@ -44,9 +55,9 @@ export class NewQuote {
 
         this.Helper.WaitWindowClosed();
         this.Helper.WaitBusyIndicator();
-
-        this.Quotes.UseSearchBox('Quote_Search', QuoteNumber, 'LogitudeQuickSearchItem');
-        this.EditQuoteTabs.EditTabs(QuoteNumber, ShipmentType, Direction, TransportMode, QuoteType);
+        return QuoteNumber;
+       // this.Quotes.UseSearchBox('Quote_Search', QuoteNumber, 'LogitudeQuickSearchItem');
+        //this.EditQuoteTabs.EditTabs(QuoteNumber, ShipmentType, Direction, TransportMode, QuoteType);
         // // this.Helper.WaitByIdAndClick('Quote-Save');
         // // this.Helper.WaitEditComponentBusyIndicator();
         this.QuoteActions.QuoteMenubuttonActions('copybuild', Direction, TransportMode, QuoteType);
