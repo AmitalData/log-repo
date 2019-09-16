@@ -358,6 +358,11 @@ export class TariffPM {
     public set IsFromCopy(newValue: boolean) { if (this.isFromCopy != newValue) { this.isFromCopy = newValue; this.MarkAsDirty("IsFromCopy"); } }
        
 	 
+    private isUpdatingMissingPorts: boolean;
+    public get IsUpdatingMissingPorts() { return this.isUpdatingMissingPorts; }
+    public set IsUpdatingMissingPorts(newValue: boolean) { if (this.isUpdatingMissingPorts != newValue) { this.isUpdatingMissingPorts = newValue; this.MarkAsDirty("IsUpdatingMissingPorts"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		
