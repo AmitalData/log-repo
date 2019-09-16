@@ -861,29 +861,40 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.SetUIProperties_Totals();
     }
 
-    get GrossWeight() { return this.EntityPM.GrossWeight == null ? 0 : this.EntityPM.GrossWeight; }
+    get GrossWeight() { return this.EntityPM.GrossWeight; }
     set GrossWeight(newValue: number) {
         if (this.EntityPM.GrossWeight != newValue) {
-            this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);
-
-            if (this.EntityPM.QuotePackages.length == 0) {
-                this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
-            }
-
-            this.ComputeGrossWeigh_Kg_Ton();
+            this.EntityPM.GrossWeight = AppTool.Round(newValue, 2);
+            this.ComputeChargeableWeight();
+            //this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
         }
     }
 
-    get Volume() { return this.EntityPM.Volume == null ? 0 : this.EntityPM.Volume; }
+    get Volume() { return this.EntityPM.Volume; }
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
-            this.EntityPM.Volume = AppTool.Round(newValue, 3);
-            this.ComputeVolume_CBM();
-
-            if (this.EntityPM.QuotePackages.length == 0) {
-                this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
-            }
+            this.EntityPM.Volume = AppTool.Round(newValue, 2);
+            this.ComputeVolumetricWeight();
+            //this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
         }
+    }
+
+
+    ComputeChargeableWeight() {
+        this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+    }
+    ComputeVolumetricWeight() {
+        var myResult = null;
+
+        if (this.Volume != null) {
+            myResult = AppTool.GetWeightFromVolume(this.EntityPM.VolumeUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.Volume, this.EntityPM.Ratio);
+        }
+
+        else if (this.GrossWeight != null) {
+            myResult = AppTool.GetWeightFromWeight(this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeight);
+        }
+
+        this.VolumetricWeight = myResult;
     }
 
     private ComputeVolume_CBM() {
@@ -920,18 +931,16 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    get ChargeableWeight() { return this.EntityPM.ChargeableWeight == null ? 0 : this.EntityPM.ChargeableWeight; }
+    get ChargeableWeight() { return AppTool.IsNullOrZero(this.EntityPM.ChargeableWeight) ? null : this.EntityPM.ChargeableWeight; }
     set ChargeableWeight(newValue: number) {
         if (this.EntityPM.ChargeableWeight != newValue) {
             var result = AppTool.Round(newValue, 2);
             this.EntityPM.ChargeableWeight = result;
-            this.ChargeableWeight_Kg();
-            if (this.EntityPM.QuotePackages.length == 0) {
-                if (this.GrossWeight == null && this.EntityPM.VolumetricWeight == null) {
-                    this.EntityPM.VolumetricWeight = result;
-                    this.EntityPM.GrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, result);
-                    this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.EntityPM.Ratio);
-                }
+
+            if (this.GrossWeight == null && this.EntityPM.VolumetricWeight == null) {
+                this.EntityPM.VolumetricWeight = result;
+                this.EntityPM.GrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, result);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.EntityPM.Ratio);
             }
         }
     }
