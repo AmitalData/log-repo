@@ -93,8 +93,7 @@ export class ShipmentWorkSpace {
             this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
             this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
         }
-        this.Helper.WaitByIdAndClick('Shipment-Save');
-        this.Helper.WaitEditComponentBusyIndicator();
+  
     }
 
     CreateWizard(LogitudeWizardType: string) {
