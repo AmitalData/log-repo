@@ -25,8 +25,11 @@ export class NewCustomer{
       this.Helper.WaitBusyIndicator();
 
       this.Helper.WaitByIdAndFill('Customer_City_Potential', 'Nablus');
-     
-    this.Helper.WaitByIdAndFill('Contact_EnglishName', 'My Contact');
+      this.Helper.WaitBusyIndicator();
+
+      this.Helper.WaitByIdAndFill('Contact_EnglishName', 'My Contact');
+      this.Helper.WaitBusyIndicator();
+
     this.Helper.WaitByIdAndClick('Ok-AddPotCustomer');
     this.Helper.WaitBusyIndicator();
     this.Helper.WaitWindowClosed();
@@ -47,20 +50,24 @@ export class NewCustomer{
       this.Helper.WaitByIdAndClick('Activate');
       this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'cust');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitBusyIndicator();
+
      // this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
       //this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name+DisplayNumber);
       this.Helper.WaitByIdAndFill('GLAccount_CurrencyId','Nis');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitBusyIndicator();
+
 
       this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
       this.Helper.WaitWindowClosed();
      this.Helper.WaitBusyIndicator();
      //this.Helper.WaitBusyIndicator();
-     var boo=this.Helper.ItemsVisibility('3mo');
-      if ('boo') {
-          this.Helper.WaitBusyIndicator();
-        this.Helper.WaitByIdAndClick('Customer-SaveClose');
-     }
+    // var boo=this.Helper.ItemsVisibility('3mo');
+      //if ('boo') {
+        //  this.Helper.WaitBusyIndicator();
+       // this.Helper.WaitByIdAndClick('Customer-SaveClose');
+    // }
    
  
 

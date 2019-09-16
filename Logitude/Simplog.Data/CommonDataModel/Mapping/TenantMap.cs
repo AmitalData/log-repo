@@ -57,21 +57,20 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.VatMandatoryCountryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.VatFormatCountryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.RegulatedAgentNumber).HasMaxLength(5).IsUnicode(false);
-            this.Property(t => t.IsDocumentsArchive).IsRequired();
+           
             this.Property(t => t.CustomerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IsCustomerTenantShare).IsRequired();
-            this.Property(t => t.CustomerTenantShareImportFile).IsRequired();
+           
             this.Property(t => t.CustomerTenantShareExportFile).IsRequired();
             this.Property(t => t.AllowAgentInCustomersLOV).IsRequired();
-            this.Property(t => t.LogBoxAdminUserId).HasMaxLength(15).IsUnicode(false);
+           
             this.Property(t => t.SCACCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.FMCNumber).HasMaxLength(25).IsUnicode(false);
-            this.Property(t => t.DocumentShareAsDefault).IsRequired();
+           
             this.Property(t => t.StorageEncryptionKey).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.TemperatureUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.DefaultSLAId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.AutoArchiveOnInvoice).IsRequired();
-            this.Property(t => t.StockTypeCode).HasMaxLength(15).IsUnicode(false);
+           
             this.Property(t => t.EcommerceSupportEmail).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CBSA).HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.CAAT).HasMaxLength(4).IsUnicode(false);
@@ -110,10 +109,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ProfitCurrencyId).HasColumnName("ProfitCurrencyId");
             this.Property(t => t.AgentId).HasColumnName("AgentId");
             this.Property(t => t.PasswordPolicyCode).HasColumnName("PasswordPolicyCode");
-            this.Property(t => t.IsDocumentsArchive).HasColumnName("IsDocumentsArchive");
+           
             this.Property(t => t.CustomerId).HasColumnName("CustomerId");
             this.Property(t => t.IsCustomerTenantShare).HasColumnName("IsCustomerTenantShare");
-            this.Property(t => t.CustomerTenantShareImportFile).HasColumnName("CustomerTenantShareImportFile");
+           
             this.Property(t => t.CustomerTenantShareExportFile).HasColumnName("CustomerTenantShareExportFile");
             this.Property(t => t.IsNotesRightToLeftEnabled).HasColumnName("IsNotesRightToLeftEnabled");
             this.Property(t => t.IsInternalTicketByDefault).HasColumnName("IsInternalTicketByDefault");
@@ -122,12 +121,11 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SCACCode).HasColumnName("SCACCode");
             this.Property(t => t.FMCNumber).HasColumnName("FMCNumber");
             this.Property(t => t.TenantVATManagement).HasColumnName("TenantVATManagement");
-            this.Property(t => t.DocumentShareAsDefault).HasColumnName("DocumentShareAsDefault");
+           
             this.Property(t => t.StorageEncryptionKey).HasColumnName("StorageEncryptionKey");
             this.Property(t => t.TemperatureUnitCode).HasColumnName("TemperatureUnitCode");
             this.Property(t => t.DefaultSLAId).HasColumnName("DefaultSLAId");
-            this.Property(t => t.StockTypeCode).HasColumnName("StockTypeCode");
-            this.Property(t => t.AutoArchiveOnInvoice).HasColumnName("AutoArchiveOnInvoice");
+           
             this.Property(t => t.NumberFormatCode).HasColumnName("NumberFormatCode");
             this.Property(t => t.EcommerceSupportEmail).HasColumnName("EcommerceSupportEmail");
             this.Property(t => t.CBSA).HasColumnName("CBSA");
@@ -199,9 +197,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AllowEAWBMoreThanTenPackages).HasColumnName("AllowEAWBMoreThanTenPackages");
             this.Property(t => t.RegulatedAgentNumber).HasColumnName("RegulatedAgentNumber");
             this.Property(t => t.RegulatedAgentRegimeActivated).HasColumnName("RegulatedAgentRegimeActivated");
-            this.Property(t => t.LogBoxAdminUserId).HasColumnName("LogBoxAdminUserId");
+          
             this.Property(t => t.TenantEmailSendingQuota).HasColumnName("TenantEmailSendingQuota");
-
+            this.HasRequired(t => t.LogBoxTenantSetting).WithRequiredPrincipal(d => d.Tenant);
             this.HasOptional(t => t.Address).WithMany().HasForeignKey(d => d.AddressId);
             this.HasOptional(t => t.LocalAddress).WithMany().HasForeignKey(d => d.LocalAddressId);
             this.HasOptional(t => t.AgentCard).WithMany().HasForeignKey(d => d.AgentId);

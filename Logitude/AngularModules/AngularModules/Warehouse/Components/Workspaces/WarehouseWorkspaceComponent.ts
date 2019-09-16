@@ -233,6 +233,26 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
 
     }
 
+
+
+    NewReleaseButtonclick() {
+        var args: any = {};
+        args.ShipmentLevelCode = "D";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 940;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = args;
+        logWindow.Title = "New Cross Dock Release";
+        logWindow.Show('./Warehouse/Components/NewEntity/NewFullWarehouseReleaseComponent');
+
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                this.LoadAllData();
+            }
+        });
+
+    }
+
     EditWarehouseEntry() {
 
     }

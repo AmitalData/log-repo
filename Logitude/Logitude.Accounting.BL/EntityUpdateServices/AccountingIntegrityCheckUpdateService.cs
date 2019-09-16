@@ -47,7 +47,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             // 1- create BTE record
             BatchTaskExecutionPM taskExe;
 
-            IntegrityCheckArgs args = new IntegrityCheckArgs() { Tenant = entityPM.Tenant, EntityId = entityPM.Id };
+            IntegrityCheckArgs args = new IntegrityCheckArgs() { Tenant = entityPM.Tenant, EntityId = entityPM.Id ,SendEmailWhileError= entityPM.SendEmailWhileError };
             var stringwriter = new System.IO.StringWriter();
             var serializer = new XmlSerializer(typeof(IntegrityCheckArgs));
             serializer.Serialize(stringwriter, args);
@@ -104,6 +104,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         // others
         public string EntityId { get; set; }
+
+        public bool SendEmailWhileError { get; set; }
 
     }
 

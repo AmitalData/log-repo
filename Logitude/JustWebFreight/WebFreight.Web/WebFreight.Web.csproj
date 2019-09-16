@@ -1099,6 +1099,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\FilingInboxViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\FTPDetailViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HybridTenantThresholdViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\LogBoxTenantSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\NumberFormatViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\PaymentGatewayPartnerViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\RegistryDateTypeViewsController.Generated.cs" />
@@ -1228,6 +1229,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\FTPDetailController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\HybridPartnerController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\HybridTenantThresholdController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\LogBoxTenantSettingController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\LogitudeMessagesTransmissionLogController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplateController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplatesVersionController.Generated.cs" />
@@ -2293,6 +2295,7 @@
     <Compile Include="ExternalAPIs\QuoteDocumentController.cs" />
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
     <Compile Include="ExternalAPIs\V1\APInvoiceController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARInvoiceAdditionalDataController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />
     <Compile Include="ExternalAPIs\V1\ARPaymentCancellationController.cs" />
     <Compile Include="ExternalAPIs\V1\ARPaymentController.cs" />
@@ -2515,6 +2518,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\INTTRASettingModeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\INTTRASettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\LeadSourceUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\LogBoxTenantSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\LoginPolicyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\LogitudeMessagesTransmissionLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\MAWBStackUpdateClass.cs" />
@@ -2913,6 +2917,10 @@
     <Content Include="Integration Test\Security\SecurityTests.postman_collection.json" />
     <Content Include="Integration Test\Maintenance\SystemSettings.postman_collection.json" />
     <Content Include="Integration Test\Quotes\Quotes.postman_collection.json" />
+    <Content Include="Integration Test\FullAccounting\FullAccountingTesting.postman_collection.json" />
+    <Content Include="Integration Test\FullAccounting\PrepareFullAccountingVars.postman_collection.json" />
+    <Content Include="Integration Test\FullAccounting\Ahmad.csv" />
+    <Content Include="Integration Test\FullAccounting\AhmadCloud.csv" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
@@ -6295,7 +6303,6 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
-    <Folder Include="Integration Test\FullAccounting\" />
     <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />

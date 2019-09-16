@@ -47,7 +47,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AccountName, 
 	         CreatedByUserName, 
 	         AccountCurrencyId, 
-	         IsCancelled,
+	         IsCancelled, 
+	         BankAccountId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

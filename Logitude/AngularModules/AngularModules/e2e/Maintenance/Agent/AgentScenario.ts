@@ -36,6 +36,8 @@ export class NewAgentScenario {
         this.NewAgent.SearchAgent();
 
     }
-
+    public SaveAgent() {
+        this.NewAgent.SaveAgent();
+    }
 
 }

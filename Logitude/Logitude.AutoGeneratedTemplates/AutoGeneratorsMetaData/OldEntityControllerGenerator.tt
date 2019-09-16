@@ -307,7 +307,7 @@ void SaveEntityControllerOutput(string outputFileName)
          }
 
 		 string tenantStringParam = "entityPM.Tenant";
-		 if(tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting")
+		 if(tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting" || tableName == "LogBoxTenantSetting")
 			 tenantStringParam = "entityPM.Id";
 
 		 string primarykeyParam="";
@@ -340,7 +340,7 @@ void SaveEntityControllerOutput(string outputFileName)
 		databaseConnTenant = "authToken.Tenant";
 		contextTenantParam = "entityPM.Tenant";
 
-		 if(tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting")
+		 if(tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting" || tableName == "LogBoxTenantSetting")
 			 contextTenantParam = "entityPM.Id";
 
             if(tableName == "Distributor")
@@ -441,7 +441,7 @@ else
          
 		
 <#+
-		 if(hasTenant || tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting" || tableName == "Distributor")
+		 if(hasTenant || tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting" || tableName == "Distributor" || tableName == "LogBoxTenantSetting")
          {
 	#><#= ""
  #>

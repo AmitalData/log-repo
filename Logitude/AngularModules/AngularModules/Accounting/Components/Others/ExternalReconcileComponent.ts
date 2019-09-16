@@ -1085,6 +1085,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         newEntity.Id = "new";
         newEntity.GLAccountId = this.BankAccountPM.GLAccountId;
+        newEntity.BankAccountId = this.BankAccountPM.Id;
         newEntity.Tenant = this.BankAccountPM.Tenant;
         newEntity.CreateDate = new Date();
         newEntity.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -1094,7 +1095,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         //insert glaccount transaction lines
         for (var i = 0; i < this.TransactionSelectedLines.Length; i++) {
-            var selectedTransaction = this.TransactionSelectedLines.Collection[i];
+            let selectedTransaction: TransactionLineModel = this.TransactionSelectedLines.Collection[i];
             var newLine: ExternalReconciliationLinePM = new ExternalReconciliationLinePM(newEntity);
 
             newLine.ChangeSetOp = "1";
@@ -1104,6 +1105,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             newLine.GroupNumber = selectedTransaction.GroupHash ? selectedTransaction.GroupHash : 1;
             newLine.LedgerTransactionId = selectedTransaction.Id;
             newLine.ExternalPageLineId = null;
+            newLine.LedgerGLAccountId = selectedTransaction.LedgerTransactionPM.AccountId;
             newEntity.AddExternalReconciliationLine(newLine);
 
             lineNumber++;
@@ -1111,7 +1113,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         //insert bank transaction lines
         for (var i = 0; i < this.BankSelectedLines.Length; i++) {
-            var selectedTransaction = this.BankSelectedLines.Collection[i];
+            let selectedTransaction = this.BankSelectedLines.Collection[i];
             var newLine: ExternalReconciliationLinePM = new ExternalReconciliationLinePM(newEntity);
 
             newLine.ChangeSetOp = "1";
