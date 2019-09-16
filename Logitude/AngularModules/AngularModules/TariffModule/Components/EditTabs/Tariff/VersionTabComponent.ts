@@ -20,6 +20,7 @@ import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/Ta
 import { DatePipe } from '@angular/common';
 import { TariffVersionAllInChargePM } from '../../../EntityPMs/TariffVersionAllInChargePM';
 import { AirCostTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
+import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 declare var ResultAsArray: any;
 
 @Component({
@@ -122,11 +123,13 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
                     if (this.isUploadExcelFinished) {
                         this.isUploadExcelFinished = false;
+                        CachedDataManager.RefreshTableData("Port", true);
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
                     if (this.isUpdateMissingPortsClicked) {
                         this.isUpdateMissingPortsClicked = false;
+                        CachedDataManager.RefreshTableData("Port", true);
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 }
