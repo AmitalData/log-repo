@@ -564,7 +564,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
         if (this.LookUpTableName == 'Port' || this.LookUpTableName == 'Carrier') {
             this.IsAllDataVisible = true;
-            this.DropDownHeight = 276;
+            this.DropDownHeight = 280;
             this.MyDropDownHeight = { 'height': '105px' }
             this.DisplayHeader = false;
             if (this.LookUpTableName == 'Port') {
@@ -1301,14 +1301,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             else {
                 var selected = document.getElementsByClassName("liItemSelected");
                 if (selected[0]) {
-                    var input = document.getElementById(this.MyDataListId);
-                    var lis = input.getElementsByTagName("li");
-                    for (var i = 0; i < lis.length; i++) {
+                    if (this.ItemsSource && this.ItemsSource.length > 0) {
+                        this.RemoveSelectedAddHighlighted(this.MyDataListId);
+                    }
+                    else if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
+                        this.RemoveSelectedAddHighlighted(this.AllDataListId);
 
-                        if (lis[i].className.search("liItemSelected") > -1) {
-                            lis[i].classList.remove("liItemSelected");
-                            lis[i].classList.add("highlighted");
-                        }
                     }
                 }
                 this.NavigateListItems(true);
@@ -1342,7 +1340,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         //}
     }
 
+    RemoveSelectedAddHighlighted(dropDownId: string) {
+        var myDataDropDown = document.getElementById(dropDownId);
+        var lis = myDataDropDown.getElementsByTagName("li");
+        for (var i = 0; i < lis.length; i++) {
 
+            if (lis[i].className.search("liItemSelected") > -1) {
+                lis[i].classList.remove("liItemSelected");
+                lis[i].classList.add("highlighted");
+            }
+        }
+    }
 
     ClickOnHighlightedItemReturnStatus(dropDownListId: string) {
         var input = document.getElementById(dropDownListId);
@@ -1412,14 +1420,14 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         $event.target.classList.remove("highlighted");
     }
     SelectedItemKey: any;
-    SelectedZeroItemKey:any;
+    SelectedZeroItemKey: any;
     KeyPropertyPath: any;
     HighlightSelectedValue() {
         this.SelectedItemKey = null;
         //this.SelectedZeroItemKey=null;
         if (this.SearchTextNgModel != null && this.SearchTextNgModel != undefined && this.SearchTextNgModel != "") {
 
-            if (this.ItemsSource.length > 0) {
+            if (this.ItemsSource && this.ItemsSource.length > 0) {
                 var oldItems = this.ItemsSource;
 
                 var item = this.ItemsSource.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
@@ -1448,7 +1456,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     this.SelectedItemKey = this.ItemsSource[0][this.KeyPropertyPath];
                 }
             }
-            else if (this.ZeroItemsSource.length > 0) {
+            else if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
                 if (this.ZeroItemsSource.length > 0) {
                     var oldItems = this.ZeroItemsSource;
 
@@ -1626,7 +1634,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.CalculateWidths(resp.Result);
                         this.ZeroItemsSourceCount = resp.Result.length;
                         this.ZeroItemsSource = resp.Result;
-                        
+
                     }
                     else {
                         this.CalculateWidths(resp);

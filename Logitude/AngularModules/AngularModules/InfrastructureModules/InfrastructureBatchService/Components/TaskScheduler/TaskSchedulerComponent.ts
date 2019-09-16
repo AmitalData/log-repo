@@ -269,7 +269,7 @@ export class TaskSchedulerComponent implements OnInit  {
             FieldName: "ViewLog",
             DataTypeCode: 'String',
             Display: '',
-            Styles: { width: '200px' },
+            Styles: { width: '100px' },
             HtmlListComponentName: 'SchedulerDateListTemplate',
             HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
             IsCustomTemplate: true,
