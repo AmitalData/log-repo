@@ -331,6 +331,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string bankAccountId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BankAccountId  
+	   {
+	    
+	     get
+		{
+		   return bankAccountId;
+		 }
+		 set
+		 {
+		   if(bankAccountId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankAccountId",OldValue=bankAccountId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bankAccountId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
