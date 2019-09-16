@@ -15,6 +15,8 @@ using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -312,14 +314,17 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 }
             }
 
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int currentTenant = authToken.Tenant;
 
 
-            ObjectFieldModification mod = entityRepository.GetObjectFieldModificationByObjectField(theEntityPm.Id, theEntityPm.UserTenant);
+            ObjectFieldModification mod = entityRepository.GetObjectFieldModificationByObjectField(theEntityPm.Id, currentTenant);
             if ((theEntityPm.IsRequiered != this.Poco.IsRequiered) || (theEntityPm.MinLength != this.Poco.MinLength) || (theEntityPm.MaxLength != this.Poco.MaxLength))
             {
                 if (mod == null && this.Poco.Tenant == 0)
                 {
-                    mod = new ObjectFieldModification() { Id = IdCounter.GetNumber("ObjectFieldModification", theEntityPm.Tenant), ObjectFieldId = this.Poco.Id, IsRequired = theEntityPm.IsRequiered, MaxLength = theEntityPm.MaxLength, MinLength = theEntityPm.MinLength, Tenant = theEntityPm.UserTenant, UpdateDateGMT = DateTime.UtcNow };
+                    mod = new ObjectFieldModification() { Id = IdCounter.GetNumber("ObjectFieldModification", theEntityPm.Tenant), ObjectFieldId = this.Poco.Id, IsRequired = theEntityPm.IsRequiered, MaxLength = theEntityPm.MaxLength, MinLength = theEntityPm.MinLength, Tenant = currentTenant, UpdateDateGMT = DateTime.UtcNow };
                     this.ObjectContext.ObjectFieldModifications.Add(mod);
                 }
             }
@@ -463,17 +468,30 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 }
             }
 
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int currentTenant = authToken.Tenant;
 
-
-            ObjectFieldModification mod = entityRepository.GetObjectFieldModificationByObjectField(theEntityPm.Id, theEntityPm.UserTenant);
+            ObjectFieldModification mod = entityRepository.GetObjectFieldModificationByObjectField(theEntityPm.Id, currentTenant);
             if ((theEntityPm.IsRequiered != this.Poco.IsRequiered) || (theEntityPm.MinLength != this.Poco.MinLength) || (theEntityPm.MaxLength != this.Poco.MaxLength))
             {
                 if (mod == null && this.Poco.Tenant == 0)
                 {
-                    mod = new ObjectFieldModification() { Id = IdCounter.GetNumber("ObjectFieldModification", theEntityPm.Tenant), ObjectFieldId = this.Poco.Id, IsRequired = theEntityPm.IsRequiered, MaxLength = theEntityPm.MaxLength, MinLength = theEntityPm.MinLength, Tenant = theEntityPm.UserTenant, UpdateDateGMT = DateTime.UtcNow };
+                   
+                     mod = new ObjectFieldModification()
+                    {
+                        Id = IdCounter.GetNumber("ObjectFieldModification", theEntityPm.Tenant),
+                        ObjectFieldId = this.Poco.Id,
+                        IsRequired = theEntityPm.IsRequiered,
+                        MaxLength = theEntityPm.MaxLength,
+                        MinLength = theEntityPm.MinLength,
+                        Tenant = currentTenant,
+                        UpdateDateGMT = DateTime.UtcNow
+                    };
                     this.ObjectContext.ObjectFieldModifications.Add(mod);
                 }
             }
+            
 
             ObjectFieldMapping.MapEntity(theEntityPm, Poco, isNewEntity, mod);
 

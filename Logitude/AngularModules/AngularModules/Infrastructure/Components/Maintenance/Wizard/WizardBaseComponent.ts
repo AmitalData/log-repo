@@ -394,6 +394,7 @@ export class WizardBaseComponent extends BaseComponent {
 
                 else {
                     this.TenantPM.AgentId = this.AgentPM.Id;
+                    this.AddressPM.CardId = this.AgentPM.Id;
                     this.SaveAddress();
                 }
             });
@@ -407,6 +408,7 @@ export class WizardBaseComponent extends BaseComponent {
 
                 else {
                     this.TenantPM.AgentId = this.AgentPM.Id;
+                    this.AddressPM.CardId = this.AgentPM.Id;
                     this.SaveAddress();
                 }
             });

@@ -55,41 +55,41 @@ export class SchedulerDateListTemplate {
         }
     }
 
-    ShowFullLog() {
-        this.CurrentSession.StartBusyIndicator("Loading...");
-        this.schedulerExtendedPMService.GetSchedulerHistoryLogs(this.rowData["Id"]).subscribe(myResult => {
-            var myResponse: ServiceResponse = myResult;
-            if (!myResponse.HasError) {
+    //ShowFullLog() {
+    //    this.CurrentSession.StartBusyIndicator("Loading...");
+    //    this.schedulerExtendedPMService.GetSchedulerHistoryLogs(this.rowData["Id"]).subscribe(myResult => {
+    //        var myResponse: ServiceResponse = myResult;
+    //        if (!myResponse.HasError) {
 
-                var windowArgs: any = {};
-                if (myResponse.Result) {
-                    windowArgs.TextValue = myResponse.Result.Log;
-                }
-                else {
-                    windowArgs.TextValue = "";
-                }
-                windowArgs.DisplayMode = true;
+    //            var windowArgs: any = {};
+    //            if (myResponse.Result) {
+    //                windowArgs.TextValue = myResponse.Result.Log;
+    //            }
+    //            else {
+    //                windowArgs.TextValue = "";
+    //            }
+    //            windowArgs.DisplayMode = true;
                  
-                var wind = new LogitudeWindow();
+    //            var wind = new LogitudeWindow();
 
-                wind.Width = 960;
-                wind.Height = 570;
-                wind.WindowArgs = windowArgs;
+    //            wind.Width = 960;
+    //            wind.Height = 570;
+    //            wind.WindowArgs = windowArgs;
 
-                wind.Title = "";
+    //            wind.Title = "";
 
-                wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
-            }
+    //            wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
+    //        }
 
-            //else {
-            //    this.ValidationErrorsList = myResponse.ErrorsArray;
-            //}
+    //        //else {
+    //        //    this.ValidationErrorsList = myResponse.ErrorsArray;
+    //        //}
            
-            this.CurrentSession.StopBusyIndicator();
-        });
+    //        this.CurrentSession.StopBusyIndicator();
+    //    });
       
         
-    }
+    //}
 
 
     ViewLogFile() {

@@ -169,7 +169,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
                     }).ToList();
         }
 
@@ -211,7 +212,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              Status = a.Status,
                              Retries = a.Retries,
                              LastRunEndTime = a.LastRunEndTime,
-                             LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                             LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                             SchedulerDetailsXML = a.SchedulerDetailsXML,
                          }).ToList().OrderByDescending(x => x.CreateDateTime);
 
             //foreach (var Task in Tasks)
@@ -297,7 +299,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                         Status = a.Status,
                                                         Retries = a.Retries,
                                                         LastRunEndTime = a.LastRunEndTime,
-                                                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                                                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                                                         
                                                     };
             return result;
         }
@@ -383,7 +386,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Status = a.Status,
                         Retries = a.Retries,
                         LastRunEndTime = a.LastRunEndTime,
-                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
+
                     }).ToList();
         }
 
