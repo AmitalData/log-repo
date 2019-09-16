@@ -530,14 +530,28 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             if (glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5")
             {
+                FillGLAccountCurrencyCode(glaccounPM);
+
                 CommunicationsParams comParams = CreateCommunicationParamsForGLAccount(glaccounPM);
 
                 List<QueueTask> queueTasks = CreateQueueTasks(glaccounPM);
+
                 comParams.ByteData = LogitudeXmlSerializer.SerializeObject(queueTasks);
 
                 Communications.AddCommunicationLog(comParams);
             }
 
+        }
+
+        private static void FillGLAccountCurrencyCode(GLAccountPM glaccounPM)
+        {
+            if (glaccounPM.CurrencyId != null)
+            {
+                CurrencyQuery currencyQuery = new CurrencyQuery(glaccounPM.Tenant);
+                CurrencyPM currency = currencyQuery.GetSinglePM(glaccounPM.CurrencyId, glaccounPM.Tenant);
+                glaccounPM.CurrencyCode = currency.Code;
+                glaccounPM.CurrencySign = currency.Sign;
+            }
         }
 
         private List<QueueTask> CreateQueueTasks(GLAccountPM glaccounPM)
