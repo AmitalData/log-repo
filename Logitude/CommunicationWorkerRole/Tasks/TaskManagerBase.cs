@@ -33,8 +33,7 @@ namespace CommunicationWorkerRole.Tasks
         int Tenant;
         TaskSchedulerHistoryPM TaskSchedulerHistory;
         ConcurrentQueueService<LogQueueMessage> queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
-        public bool EnableWriteLogToFile { get; set; }
-        public TaskManagerBase(string Id, int tenant)
+         public TaskManagerBase(string Id, int tenant)
         {
             TaskId = Id;
             Tenant = tenant;
@@ -43,7 +42,7 @@ namespace CommunicationWorkerRole.Tasks
             this.Exceptions = new StringBuilder();
         }
 
-        public void AppendLogMessageToFile(string message)
+        private void AddFileLogQueueMessage(string message)
         {
             if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(TaskSchedulerHistory.LogDocumentId))
             {
@@ -197,20 +196,20 @@ namespace CommunicationWorkerRole.Tasks
                 MyFinalLog.AppendLine(Exceptions.ToString());
                 MyFinalLog.AppendLine(Warnings.ToString());
                 MyFinalLog.AppendLine(Infos.ToString());
-                SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
-                if (SchedulerLog == null)
-                {
-                    SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
-                    SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
-                    SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
-                    SchedulerLogsService.Create(SchedulerLog);
-                }
-                else
-                {
-                    SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
-                    SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
-                    SchedulerLogsService.Update(SchedulerLog);
-                }
+                //SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
+                //if (SchedulerLog == null)
+                //{
+                //    SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
+                //    SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+                //    //SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
+                //    SchedulerLogsService.Create(SchedulerLog);
+                //}
+                //else
+                //{
+                //    //SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
+                //    //SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
+                //    //SchedulerLogsService.Update(SchedulerLog);
+                //}
 
 
                 TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
@@ -224,12 +223,6 @@ namespace CommunicationWorkerRole.Tasks
         public virtual void StartTask()
         {
 
-        }
-
-        public void LogInfo(string Message)
-        {
-            if (!string.IsNullOrEmpty(Message))
-                this.Infos.AppendLine(Message);
         }
 
         public void LogInfoToDB(string Message)
@@ -251,20 +244,20 @@ namespace CommunicationWorkerRole.Tasks
 
                     StringBuilder MyFinalLog = new StringBuilder(); 
                     MyFinalLog.AppendLine(Message.ToString());
-                    SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
-                    if (SchedulerLog == null)
-                    {
-                        SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
-                        SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
-                        SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
-                        SchedulerLogsService.Create(SchedulerLog);
-                    }
-                    else
-                    {
-                        SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
-                        SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
-                        SchedulerLogsService.Update(SchedulerLog);
-                    }
+                    //SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskHistoryId);
+                    //if (SchedulerLog == null)
+                    //{
+                    //    SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
+                    //    SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+                    //    //SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
+                    //    SchedulerLogsService.Create(SchedulerLog);
+                    //}
+                    //else
+                    //{
+                    //    //SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
+                    //    //SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
+                    //    //SchedulerLogsService.Update(SchedulerLog);
+                    //}
 
 
                     TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
@@ -275,19 +268,31 @@ namespace CommunicationWorkerRole.Tasks
             }
         }
 
-        public void Logwarning(string Message)
+
+        public void LogInfo(string Message)
         {
-            if (!string.IsNullOrEmpty(Message))
+            if (!string.IsNullOrEmpty(Message) && this.Infos.Length < 1000)
+                this.Infos.AppendLine(Message);
+
+            this.AddFileLogQueueMessage(Message);
+        }
+
+
+        public void LogWarning(string Message)
+        {
+            if (!string.IsNullOrEmpty(Message) && this.Warnings.Length < 1000)
                 this.Warnings.AppendLine(Message);
+
+            this.AddFileLogQueueMessage(Message);
 
         }
 
         public void LogException(string Message)
         {
-            if (!string.IsNullOrEmpty(Message))
+            if (!string.IsNullOrEmpty(Message) && this.Warnings.Length < 1000)
                 this.Exceptions.AppendLine(Message);
-            if (this.EnableWriteLogToFile)
-                this.AppendLogMessageToFile(Message);
+         
+                this.AddFileLogQueueMessage(Environment.NewLine + Message);
         }
 
         //private void AddSchedulerQueue(TasksSchedulerPM task)
