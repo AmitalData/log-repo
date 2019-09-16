@@ -492,8 +492,10 @@ export class DeclarationValidator {
 
         if (this._DeclarationPM != null && !AppTool.IsNullOrEmpty(this._DeclarationPM.ImporterCode)) {
 
-
-            if (this._DeclarationPM.ImporterCode[0] == "P" || this._DeclarationPM.ImporterCode[0] == "F") {
+            this._DeclarationPM.ImporterTypeCode
+            if (///this._DeclarationPM.ImporterCode[0] == "P" || this._DeclarationPM.ImporterCode[0] == "F") {
+                this._DeclarationPM.ImporterTypeCode == "2" /*"P"*/ ||
+                this._DeclarationPM.ImporterTypeCode == "3" /*"F"*/) {
                 if (!AppTool.IsNullOrEmpty(this._DeclarationPM.ImporterPassportNumber)) {
                     if (this._DeclarationPM.ImporterPassportNumber.length > 15) {
                         this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
