@@ -176,6 +176,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LastRunEndTimeUTC = a.LastRunEndTimeUTC,
                         AverageRunTime = a.AverageRunTime,
                         Duration = a.AverageRunTime
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
                     }).ToList();
         }
 
@@ -220,6 +222,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              LastRunEndTimeUTC = a.LastRunEndTimeUTC,
                              AverageRunTime = a.AverageRunTime,
                              Duration = a.AverageRunTime,
+                             SchedulerDetailsXML = a.SchedulerDetailsXML,
                          }).ToList().OrderByDescending(x => x.CreateDateTime);
 
             //foreach (var Task in Tasks)
@@ -397,6 +400,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LastRunEndTimeUTC = a.LastRunEndTimeUTC,
                         AverageRunTime = a.AverageRunTime,
                         Duration = a.AverageRunTime,
+                        SchedulerDetailsXML = a.SchedulerDetailsXML,
+
                     }).ToList();
         }
 
