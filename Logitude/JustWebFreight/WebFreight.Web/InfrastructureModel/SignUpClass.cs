@@ -41,6 +41,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -1166,6 +1167,14 @@ namespace WebFreight.Web.InfrastructureModel
                     newTenant.MasterExportOtherPrepaidCollectId = tenantZero.MasterExportOtherPrepaidCollectId;
                     newTenant.MasterImportFreightPrepaidCollectId = tenantZero.MasterImportFreightPrepaidCollectId;
                     newTenant.MasterImportOtherPrepaidCollectId = tenantZero.MasterImportOtherPrepaidCollectId;
+                    if (CheckIsDayLightSettingsRequiredForEnvironment())
+                    {
+                        newTenant.DayLightStartDate = tenantZero.DayLightStartDate;
+                        newTenant.DayLightEndDate = tenantZero.DayLightEndDate;
+                        newTenant.DayLightOffset = tenantZero.DayLightOffset;
+                    }
+                   
+
                 }
                 scope.Complete();
             }
@@ -1183,6 +1192,17 @@ namespace WebFreight.Web.InfrastructureModel
             //tenantRepository.Add(newTenant);
             //tenantRepository.SubmitChanges();           
             return newTenant.Id;
+        }
+        private static bool CheckIsDayLightSettingsRequiredForEnvironment()
+        {
+            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2" || LogitudeSettings.DeploymentStage.ToLower() == "amitalstorage"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public static void UpdateLogBoxTenant(int tenant, SignUpInfoClass signUpInfoClass, TenantRepository tenantRepository, GlobalTenantRepository globalTenantRepository)
         {
