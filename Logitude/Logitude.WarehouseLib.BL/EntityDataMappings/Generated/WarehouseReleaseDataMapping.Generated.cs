@@ -56,7 +56,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         DirectionId, 
 	         TotalQuantity, 
 	         ChargeableWeightUnitCode, 
-	         ConnectedTo,
+	         ConnectedTo, 
+	         FromPortId, 
+	         ToPortId, 
+	         CustomerAddressId,
 	      }
 
 
@@ -103,7 +106,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ReleaseDate, 
 	         TotalQuantity, 
 	         ChargeableWeightUnitCode, 
-	         ConnectedTo,
+	         ConnectedTo, 
+	         FromPortId, 
+	         ToPortId, 
+	         CustomerAddressId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -280,6 +286,21 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
             {
 				entityPOCO.ConnectedTo = entityPM.ConnectedTo;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromPortId))
+            {
+				entityPOCO.FromPortId = entityPM.FromPortId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToPortId))
+            {
+				entityPOCO.ToPortId = entityPM.ToPortId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerAddressId))
+            {
+				entityPOCO.CustomerAddressId = entityPM.CustomerAddressId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -463,6 +484,21 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.ConnectedTo = entityPOCO.ConnectedTo;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromPortId))
+            {
+					entityPM.FromPortId = entityPOCO.FromPortId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToPortId))
+            {
+					entityPM.ToPortId = entityPOCO.ToPortId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerAddressId))
+            {
+					entityPM.CustomerAddressId = entityPOCO.CustomerAddressId;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseReleasePM entityPM, WarehouseReleasePM oldEntityPM)
@@ -637,6 +673,21 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
             {
                 oldEntityPM.ConnectedTo = entityPM.ConnectedTo;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromPortId))
+            {
+                oldEntityPM.FromPortId = entityPM.FromPortId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToPortId))
+            {
+                oldEntityPM.ToPortId = entityPM.ToPortId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerAddressId))
+            {
+                oldEntityPM.CustomerAddressId = entityPM.CustomerAddressId;
             }
 			
 		}
