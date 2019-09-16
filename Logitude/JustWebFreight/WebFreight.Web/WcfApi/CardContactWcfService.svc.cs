@@ -38,7 +38,7 @@ namespace WebFreight.Web.WcfApi
                 SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                   
+
                     ClassLevelValidator validationClass = new ClassLevelValidator("CardContact", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
@@ -90,14 +90,49 @@ namespace WebFreight.Web.WcfApi
 
                     CardContact entity = cardContactRepository.GetSingleCardContact(contact.Id, card.Id, entityPM.Tenant);
 
-                   
+                    foreach (CardContactProductPM product in entityPM.CardContactProducts)
+                    {
+                        if (!string.IsNullOrEmpty(product.ProductTypeCode))
+                        {
+                            product.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+
+                            ProductTypeRepository productTypeRepository = new ProductTypeRepository(objectContext);
+                            ProductType type = productTypeRepository.GetSingleProductType(product.ProductTypeCode, entityPM.Tenant);
+                            if (type == null)
+                            {
+
+                                response.HasError = true;
+                                response.ErrorMessage = "ProductTypeCode field doesn't exist in the database,Upsert this entity before using it.";
+                                return response;
+                            }
+
+                        }
+                        else
+                        {
+                            response.HasError = true;
+                            response.ErrorMessage = "ProductTypeCode field is required";
+                            return response;
+                        }
+                    }
 
                     if (entity == null)
                     {
+                        service.SetChangeSet(entityPM.CardContactProducts);
                         service.Create(entityPM);
                     }
                     else
                     {
+
+                        CardContactProductQuery productTypeQuery = new CardContactProductQuery(new CardContactProductRepository(objectContext));
+                        List<CardContactProductPM> oldProducts = productTypeQuery.GetCardContactProductPMsByCardContactId(entity.Id, entity.Tenant);
+                        foreach (CardContactProductPM product in oldProducts)
+                        {
+                            product.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            entityPM.CardContactProducts.Add(product);
+                        }
+
+                        service.SetChangeSet(entityPM.CardContactProducts);
+
                         entityPM.Id = entity.Id;
                         service.Update(entityPM);
 

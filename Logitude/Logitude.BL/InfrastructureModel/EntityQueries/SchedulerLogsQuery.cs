@@ -40,7 +40,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tenant = a.Tenant,
                         CreateDate = a.CreateDate,
                         HistoryId = a.HistoryId,
-                        Log = a.Log, 
+                        //Log = a.Log, 
 
                     }).FirstOrDefault();
         }
@@ -55,7 +55,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tenant = a.Tenant,
                         CreateDate = a.CreateDate,
                         HistoryId = a.HistoryId,
-                        Log = a.Log,
+                        //Log = a.Log,
                     }).FirstOrDefault();
         }
 
@@ -69,7 +69,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tenant = a.Tenant,
                         CreateDate = a.CreateDate,
                         HistoryId = a.HistoryId,
-                        Log = a.Log,
+                        //Log = a.Log,
 
                     }).FirstOrDefault();
         }
@@ -85,7 +85,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tenant = a.Tenant,
                         CreateDate = a.CreateDate,
                         HistoryId = a.HistoryId,
-                        Log = a.Log,
+                        //Log = a.Log,
 
                     }).ToList();
         }
@@ -100,7 +100,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Tenant = a.Tenant,
                         CreateDate = a.CreateDate,
                         HistoryId = a.HistoryId,
-                        Log = a.Log,
+                        //Log = a.Log,
 
                     }).FirstOrDefault();
         }
@@ -115,7 +115,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                               Tenant = a.Tenant,
                                                               CreateDate = a.CreateDate,
                                                               HistoryId = a.HistoryId,
-                                                              Log = a.Log,
+                                                              //Log = a.Log,
                                                           };
             return result;
         }
