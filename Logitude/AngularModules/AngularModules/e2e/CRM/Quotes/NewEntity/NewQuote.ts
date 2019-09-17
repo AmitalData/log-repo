@@ -25,17 +25,17 @@ export class NewQuote {
 
     }
 
-    DoOperations() {
+    DoQuoteActions() {
         this.Quotes.GoToMainMenu('General.MH.CRM');
         this.Quotes.SelectMenuWorkSpaceTabs('CRMQUT');
          return  this.CreateQuote(browser.params.QuoteParams.Direction, browser.params.QuoteParams.TransportMode, browser.params.QuoteParams.ShipmentType, browser.params.QuoteParams.QuoteType);
 
     }
-    SearchForShipment(QuoteNumber:string){
+    SearchForQuote(QuoteNumber:string){
         this.Quotes.UseSearchBox('Quote_Search', QuoteNumber, 'LogitudeQuickSearchItem');
       }
     
-      EditShipment(QuoteNumber: string) {
+      EditQuote(QuoteNumber: string) {
          
          this.EditQuoteTabs.EditTabs(QuoteNumber,browser.params.QuoteParams.ShipmentType,browser.params.QuoteParams.Direction,browser.params.QuoteParams.TransportMode,browser.params.QuoteParams.QuoteType);
         //this.EditShipment(shipperRef1,browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.Direction, browser.params.ShipParams.TransportMode, browser.params.ShipParams.ShipmentType);
@@ -60,7 +60,7 @@ export class NewQuote {
         //this.EditQuoteTabs.EditTabs(QuoteNumber, ShipmentType, Direction, TransportMode, QuoteType);
         // // this.Helper.WaitByIdAndClick('Quote-Save');
         // // this.Helper.WaitEditComponentBusyIndicator();
-        this.QuoteActions.QuoteMenubuttonActions('copybuild', Direction, TransportMode, QuoteType);
+       // this.QuoteActions.QuoteMenubuttonActions('copybuild', Direction, TransportMode, QuoteType);
         /* }
          else if ((TransportMode == 'O' || TransportMode == 'I') && QuoteType != '') {
            var QuoteNumber = this.Quotes.RandomNum();
