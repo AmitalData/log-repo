@@ -252,13 +252,18 @@ export class CommonDomainService {
         return Observable.defer(() => {
 
             return this._http.get(url, { headers: authHeader }).map(response => {
+   
+                var entity: VatTypePM;
+                var myResponse = response.json();
 
-                var myResponse= response.json();
-                var myService = new VatTypePMService();
-                var myResult: VatTypePM = myService.MapJsonToEntityPM(myResponse);
+                if (myResponse) {
+                    var myService = new VatTypePMService();
+                    entity = myService.MapJsonToEntityPM(myResponse);
+                    
+                }
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = myResult;
+                serviceResponse.Result = entity;
                 return serviceResponse;
 
             }).catch(ServiceHelper.HandleServiceError);

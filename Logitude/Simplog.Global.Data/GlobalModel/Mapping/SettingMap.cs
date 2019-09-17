@@ -72,6 +72,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ChampTestAPIPassword).IsRequired().HasMaxLength(40).IsUnicode(false);
 
 
+
+
             // Table & Column Mappings
             this.ToTable("Settings");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -122,8 +124,10 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ChampProdAPIPassword).HasColumnName("ChampProdAPIPassword");
             this.Property(t => t.ChampTestAPIPassword).HasColumnName("ChampTestAPIPassword");
             this.Property(t => t.ChampTestAPIURL).HasColumnName("ChampTestAPIURL");
+            this.Property(t => t.LastIncrementalDWUpdateDate).HasColumnName("LastIncrementalDWUpdateDate");
 
 
+            
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

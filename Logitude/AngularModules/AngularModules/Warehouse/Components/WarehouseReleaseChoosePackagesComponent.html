@@ -9,29 +9,29 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
-     
+
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
         <td colspan="3">
-            <div style="height:5px"></div> 
+            <div style="height:5px"></div>
         </td>
-    </tr> 
+    </tr>
 
 
 
     <!-- Measurment -->
-    <tr  style="height: 34px;" >
+    <tr style="height: 34px;">
         <td>
             <table>
                 <tr>
                     <td style="width:117px;">
-                        <div [style.opacity]="IsDisableFilter ? '0.5':'1'"   [style.pointer-events]="IsDisableFilter ? 'none':'auto'">
+                        <div [style.opacity]="IsDisableFilter ? '0.5':'1'" [style.pointer-events]="IsDisableFilter ? 'none':'auto'">
 
                             <TransportsFilter [SelectedValue]="TransportModeId" (SelectedValueChanged)="TransportModeId = $event"></TransportsFilter>
-                        
-                        </div>
-</td>
 
-            
+                        </div>
+                    </td>
+
+
 
                     <td style="width:35px;">
                         <div></div>
@@ -45,7 +45,7 @@
 
 
                     <td>
-                       
+
 
                         <div style="width: 70px; display: block; float:left; margin-left: 35px;">
                             <LogLabel [HideColumns]="true" [DataContext]="DataContext" [Text]="'Customer'"></LogLabel>
@@ -57,14 +57,13 @@
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Card'"
-                                    [HideColumns]="true"
-                                   >
+                                    [HideLastColumn]="true">
                             </LogLov>
                         </div>
 
                         <div style="width: 50px; display: block; float:left; margin-left: 35px;">
                             <LogLabel [HideColumns]="true" [DataContext]="DataContext" [Text]="'Origin'"></LogLabel>
-                          
+
                         </div>
 
 
@@ -75,9 +74,7 @@
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Port'"
                                     [HideLastColumn]="true"
-                                     
-                                    [DependencyFilter1Value]="TransportModeId"
-                                   >
+                                    [DependencyFilter1Value]="TransportModeId">
                             </LogLov>
                         </div>
 
@@ -96,8 +93,7 @@
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Port'"
                                     [DependencyFilter1Value]="TransportModeId"
-                                    [HideLastColumn]="true"
-                                   >
+                                    [HideLastColumn]="true">
                             </LogLov>
                         </div>
                     </td>
@@ -112,7 +108,7 @@
         </td>
     </tr>
 
-      
+
 
     <tr style="vertical-align:central;">
         <td colspan="3">
@@ -128,8 +124,8 @@
 
                     <td>
                         <table>
-                        
-                     
+
+
                             <tr style="height:100%">
                                 <td>
                                     <div class="MediaFill">
@@ -225,8 +221,8 @@
 
 
                                                                                 <!--<td *ngIf="!IsContainerShipment" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;text-align:right">
-                                                    {{item.Dimensions}}
-                                                </td>-->
+                                                                                    {{item.Dimensions}}
+                                                                                </td>-->
 
                                                                                 <td *ngIf="!IsContainerShipment" class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
                                                                                     {{item.Length}}

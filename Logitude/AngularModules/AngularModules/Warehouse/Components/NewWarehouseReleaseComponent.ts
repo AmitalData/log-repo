@@ -409,7 +409,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
     IsPackageOpen: boolean = false;
     WarehouseId: string = "";
-
+    IsRefreshCustomer: boolean = false;
     ChoosePackage(packageType:string) {
         this.IsChoosePackageOpen = true;
 

@@ -1469,6 +1469,14 @@
     <Compile Include="Migrations\201909091017333_VatTypeRecognizedPercentageMigration.Designer.cs">
       <DependentUpon>201909091017333_VatTypeRecognizedPercentageMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs" />
+    <Compile Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.Designer.cs">
+      <DependentUpon>201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.cs" />
+    <Compile Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.Designer.cs">
+      <DependentUpon>201909111400134_Nawras_Delete7FieldsFromTenantTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs" />
     <Compile Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.Designer.cs">
       <DependentUpon>201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs</DependentUpon>
@@ -1477,13 +1485,17 @@
     <Compile Include="Migrations\201909121018044_ARInvoiceDocumentFilingMigration.Designer.cs">
       <DependentUpon>201909121018044_ARInvoiceDocumentFilingMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs" />
-    <Compile Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.Designer.cs">
-      <DependentUpon>201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs</DependentUpon>
+    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.cs" />
+    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
+      <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.cs" />
-    <Compile Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.Designer.cs">
-      <DependentUpon>201909111400134_Nawras_Delete7FieldsFromTenantTable.cs</DependentUpon>
+    <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.cs" />
+    <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.Designer.cs">
+      <DependentUpon>201909151332019_AddOpenReceivablesLinesField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.cs" />
+    <Compile Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.Designer.cs">
+      <DependentUpon>201909161137037_AddCreditLimitPartnersSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2529,17 +2541,26 @@
     <EmbeddedResource Include="Migrations\201909091017333_VatTypeRecognizedPercentageMigration.resx">
       <DependentUpon>201909091017333_VatTypeRecognizedPercentageMigration.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.resx">
+      <DependentUpon>201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.resx">
+      <DependentUpon>201909111400134_Nawras_Delete7FieldsFromTenantTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.resx">
       <DependentUpon>201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909121018044_ARInvoiceDocumentFilingMigration.resx">
       <DependentUpon>201909121018044_ARInvoiceDocumentFilingMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.resx">
-      <DependentUpon>201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.resx">
+      <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.resx">
-      <DependentUpon>201909111400134_Nawras_Delete7FieldsFromTenantTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909151332019_AddOpenReceivablesLinesField.resx">
+      <DependentUpon>201909151332019_AddOpenReceivablesLinesField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.resx">
+      <DependentUpon>201909161137037_AddCreditLimitPartnersSettings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
