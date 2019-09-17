@@ -39,8 +39,8 @@ namespace WarehouseDataService.Helper
             {
                 try
                 {
-                    DWBuildTime dwBuildTime = !ApplicationInfo.IsBuildDWHNow ? GetDWBuildInfoTime() : new DWBuildTime();
-                    if (ApplicationInfo.IsBuildDWHNow)
+                    DWBuildTime dwBuildTime = !ApplicationInfo.IsStartBuildingDataWarehouse ? GetDWBuildInfoTime() : new DWBuildTime();
+                    if (ApplicationInfo.IsStartBuildingDataWarehouse)
                     {
                         dwBuildTime.IsBuildNow = true;
                         warehouseServiceHelper.UpdateDWNextRunTime(sourceConnectionString, DateTime.Now);
@@ -61,7 +61,7 @@ namespace WarehouseDataService.Helper
                         StartBuildWarehouseData();
                         dwBuildTime.DWNextRunTime = warehouseServiceHelper.CalculateDWNextRunTime(DateTime.Now);
                         warehouseServiceHelper.UpdateDWNextRunTime(sourceConnectionString, dwBuildTime.DWNextRunTime);
-                        ApplicationInfo.IsBuildDWHNow = false;
+                        ApplicationInfo.IsStartBuildingDataWarehouse = false;
                     }
                     else Thread.Sleep((10 * 60000));
                 }
@@ -80,7 +80,7 @@ namespace WarehouseDataService.Helper
             bool isBuildStart = false;
             while (!isBuildStart)
             {
-                if (warehouseServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
+                if (!warehouseServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
                 {
                     bool isIncrementalDWRunning = warehouseServiceHelper.GetFieldValueFromDBByTableNameAndFieldName("IsIncrementalDWRunning", "Settings",sourceConnectionString);
                     if (!isIncrementalDWRunning)
@@ -108,9 +108,9 @@ namespace WarehouseDataService.Helper
             {
                 try
                 {
-                    if (!ApplicationInfo.IsBuildDWHNow)
+                    if (!ApplicationInfo.IsStartBuildingDataWarehouse)
                     {
-                        if (warehouseServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
+                        if (!warehouseServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
                         {
                             bool isFullBuildDWRunning = warehouseServiceHelper.GetFieldValueFromDBByTableNameAndFieldName("IsFullBuildDWRunning", "Settings", sourceConnectionString);
                             if (!isFullBuildDWRunning)
