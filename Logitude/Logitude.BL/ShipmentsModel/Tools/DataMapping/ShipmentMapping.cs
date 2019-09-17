@@ -2208,6 +2208,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ProjectNumber);
 
+         //   if(entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
+        //    {
+         //       MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.FromPartnerCity);
+         //       MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ToPartnerCity);
+
+         //   }
+
             #region Quote
             if (!string.IsNullOrEmpty(entityPM.QuoteId))
             {
