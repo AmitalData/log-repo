@@ -2389,14 +2389,31 @@ export class PartnerItem extends BaseComponent {
                         var myPartnerId = cmp.CurrentPartnerId;
                         var myAddressId = cmp.CurrentAddressId;
 
-                        if (this.IssuingCarrierAgentId != myPartnerId) {
-                            this.IssuingCarrierAgentId = myPartnerId;
+                        if (isNewPartner) {
+                            if (this.IssuingCarrierAgentId != myPartnerId) {
+                                this.IssuingCarrierAgentId = myPartnerId;
+                            }
+
+                            else {
+                                this.EntityPM.IssuingCarrierAddressId = myAddressId;
+                                this.GetPartnerCard();
+                            } 
                         }
 
                         else {
-                            this.EntityPM.IssuingCarrierAddressId = myAddressId;
-                            this.GetPartnerCard();
-                        } 
+
+                            if (this.Name != cmp.CardEnglishName) {
+                                this.Name = cmp.CardEnglishName;
+                            }
+                                
+                            if (this.IssuingCarrierAddressId != myAddressId) {
+                                this.IssuingCarrierAddressId = myAddressId;
+                            }
+
+                            else {
+                                this.GetPartnerAddress();
+                            }
+                        }
                     }
                 });
             });
