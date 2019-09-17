@@ -304,7 +304,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
             this.EntityPM.ExpirationDays = newValue;
 
             if (newValue == null) {
-                this.EntityPM.ExpirationDate = null;
+                this.ExpirationDate = null;
             }
 
             else {
@@ -322,7 +322,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
             }
             else {
                 if (this.ExpirationDate.valueOf() != date.valueOf()) {
-                    this.EntityPM.ExpirationDate = date;
+                    this.ExpirationDate = date;
                 }
             }
         }

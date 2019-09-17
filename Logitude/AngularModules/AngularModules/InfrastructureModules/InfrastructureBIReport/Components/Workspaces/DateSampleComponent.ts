@@ -13,12 +13,12 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
     selector: 'DateSampleComponent',
     moduleId: module.id,
     templateUrl: './DateSampleComponent.html',
-    inputs: ['ShowSampleDateCommand']
+    inputs: ['ShowSampleDateCommand','OrigionalDate']
 })
 
 export class DateSampleComponent implements OnInit {
  
-    DateSample = "";
+    DateSample = ""; 
     //DateFilter: DWObjectFieldsDetails
     public _DWQueryBuilderService: DWQueryBuilderService;
     public ShowSampleDateCommand: EventEmitter<any>;
@@ -43,6 +43,23 @@ export class DateSampleComponent implements OnInit {
                 });
             });
         }
-    }  
+    }
+
+
+    private origionalDate: any;// = "";
+    public get OrigionalDate() { return this.origionalDate; }
+    public set OrigionalDate(newValue: any) {
+        this.origionalDate = newValue;
+        this._DWQueryBuilderService.GetDateFilterSample(this.origionalDate).subscribe(myResult => {
+            if (!myResult.HasError) {
+                this.DateSample = myResult.Result;
+                //SessionLocator.CurrentSession.StopBusyIndicator();
+                //this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count });// more than 50000
+            }
+            else {
+                //SessionLocator.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
 }
 

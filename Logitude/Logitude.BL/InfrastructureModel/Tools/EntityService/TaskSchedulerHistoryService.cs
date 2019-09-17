@@ -109,8 +109,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                                           {
                                               StartDateTime = a.StartDateTime,
                                               EndDateTime = a.EndDateTime,
-                                              Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
-                                          }).Where(x => x.StartDateTime != null && x.EndDateTime != null && x.StartDateTime > x.EndDateTime).OrderByDescending(x => x.StartDateTime).Take(15);
+                                              Duration = DbFunctions.DiffSeconds(a.StartDateTime, a.EndDateTime),
+                                          }).Where(x => x.StartDateTime != null && x.EndDateTime != null && x.EndDateTime > x.StartDateTime).OrderByDescending(x => x.StartDateTime).Take(15);
 
             double? Latest15HistoriesAverageRunTime = Latest15HistoriesQuery.Average(a => a.Duration);//.ToList();.OrderByDescending(x => x.StartDateTime).Take(10)
            
