@@ -470,7 +470,7 @@
                                     <table>
 
                                         <!--Subscription Details-->
-                                        <tr style="height: 480px;">
+                                        <tr style="height: 515px;">
                                             <td>
                                                 <div class="MediaFill">
                                                     <fieldset class="FieldSet">
@@ -586,7 +586,7 @@
                                                                                     </tr>
 
                                                                                     <tr style="height: 22px;">
-                                                                                        <td *ngIf="!IsMultiPackage">
+                                                                                        <td *ngIf="MainAdditionalPackageApplied || !IsMultiPackage">
                                                                                             <LogLov [ObjectFieldName]="'PackageCode'"
                                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                                     [DataContext]="DataContext"
@@ -596,7 +596,7 @@
                                                                                             </LogLov>
                                                                                         </td>
 
-                                                                                        <td *ngIf="IsMultiPackage">
+                                                                                        <td *ngIf="!MainAdditionalPackageApplied && IsMultiPackage">
                                                                                             <div class="MultiPackageText" style="border:1px solid #ccc9c9;border-radius:3px;">
                                                                                                 <div style="padding-left:1px;display:inline-block;vertical-align:middle;">
                                                                                                     <span style="padding-left:5px;vertical-align:middle;">Multi Package</span>

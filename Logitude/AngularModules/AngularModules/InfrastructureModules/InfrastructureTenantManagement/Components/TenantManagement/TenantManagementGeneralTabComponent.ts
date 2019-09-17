@@ -171,7 +171,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         var isEditable = false;
 
         if (this.isTenantManagementEditable) {
-            if (!this.IsMultiPackage) {
+            if (this.MainAdditionalPackageApplied || !this.IsMultiPackage) {
                 isEditable = true;
             }
         }
@@ -179,7 +179,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         this.UIProperties.SetEnabled("PackageCode", this.ObjectTableName, isEditable);
         this.UIProperties.SetEnabled("NumberOfUsers", this.ObjectTableName, isEditable);
         this.UIProperties.SetEnabled("FreeUsers", this.ObjectTableName, isEditable);
-        this.UIProperties.SetEnabled("LicensePrice", this.ObjectTableName, isEditable);
+        this.UIProperties.SetEnabled("LicensePrice", this.ObjectTableName, true);
     }
     private SetUIProperties_Distributor() {
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
@@ -312,7 +312,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
     SetUIProperties_TotalPrice() {
-        this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, this.MainAdditionalPackageApplied == false);
+        this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, false);
 
         this.PackagesList.forEach(item => {
             item.SetUIProperties_TotalPrice();
@@ -1189,7 +1189,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.IsSingleMultiPackage = true;
             this.IsMainAdditionalPackage = false;
             this.MainAdditionalPackageApplied = false;
-            this.SetUIProperties_TotalPrice();
             this.SetUIProperties_NumberOfUsers();
         }
     }
@@ -1198,7 +1197,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set MainAdditionalPackageApplied(newValue: boolean) {
         if (this.EntityPM.MainAdditionalPackageApplied != newValue) {
             this.EntityPM.MainAdditionalPackageApplied = newValue;
-            this.SetUIProperties_TotalPrice();
             this.SetUIProperties_NumberOfUsers();
         }
     }
@@ -1270,11 +1268,12 @@ export class PackageItem extends BaseComponent{
         this.IsNew = isNew;
         this.TenantManagementPM = fatherComponent.EntityPM;
 
+        this.SetUIProperties_TotalPrice();
         this.GetPackageName();
     }
 
     SetUIProperties_TotalPrice() {
-        this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, this.fatherComponent.MainAdditionalPackageApplied == false);
+        this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, false);
     }
 
     private old_PackageCode: string;

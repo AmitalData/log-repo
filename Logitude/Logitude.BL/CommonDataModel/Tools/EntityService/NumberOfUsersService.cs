@@ -55,10 +55,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.licencedUser = entityPM.LicencedUser;
             this.additionalPackagesOnly = entityPM.AdditionalPackagesOnly;
             this.licencedUser_DB = entityPOCO.LicencedUser;
-            this.inactive_DB = entityPOCO.Contact.InActive;
+            this.inactive_DB = this.isNewUser ? false : entityPOCO.Contact.InActive;
             this.inactive = entityPM.InActive;
-            this.additionalPackagesOnly_DB = entityPOCO.AdditionalPackagesOnly;
-            this.isNewUser = false;
+            this.additionalPackagesOnly_DB = entityPOCO.AdditionalPackagesOnly;            
 
             this.InitializeService();
             this.Validate();
@@ -351,6 +350,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         {
                             userLicenseRepository.Remove(item);
                         }
+
+                        userLicenseRepository.SubmitChanges();
                     }
                 }
             }
@@ -374,7 +375,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 else
                 {
-                    throw new Exception("You reached maximum number of users, mark the user as AdditionalPackagesOnly!");
+                    if (this.isMultiPackage)
+                    {
+                        throw new Exception("You reached maximum number of users!");
+                    }
+
+                    else
+                    {
+                        throw new Exception("You reached maximum number of users, mark the user as AdditionalPackagesOnly!");
+                    }
                 }
             }
 
