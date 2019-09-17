@@ -61,7 +61,7 @@ namespace WebFreight.Web.Monitoring
                 {
 
                     isFailed = (from d in myRepository.context.Settings
-                                                 where (EntityFunctions.DiffMinutes(d.LastIncrementalDWUpdateDate, todayDateTime) > 5)
+                                                 where d.LastIncrementalDWUpdateDate == null || (EntityFunctions.DiffMinutes(d.LastIncrementalDWUpdateDate, todayDateTime) > 5)
                                                  select d).Any();
                     
                 }
