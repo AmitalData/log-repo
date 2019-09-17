@@ -47,17 +47,27 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public SelectedVersionNumber: number;
     constructor(public entityArgs: EntityArgs) {
         super();
-        this.EntityPM = entityArgs.EntityPM;       
+        this.EntityPM = entityArgs.EntityPM;
+
+        this.CurrentSession.SessionEvent.subscribe((res) => {
+            if (res == "PriceStepsModified") {
+                this.LoadVersions();
+            }
+        })
+
         this.Listen();        
     }
 
     Intialize(args: any) {
+        this.CurrentVersion = args['CurrentVersion'];
+        this.SelectedVersionNumber = args['SelectedVersionNumber'];
+        this.LoadVersions();
+    }
+
+    LoadVersions() {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.TariffDomainService = new TariffDomainService();
-
-        this.CurrentVersion = args['CurrentVersion'];
-        this.SelectedVersionNumber = args['SelectedVersionNumber'];
 
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
@@ -79,7 +89,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         else {
             this.LoadTariffLines("currentVersion");
         }
-
         this.GetTariffSettings();
     }
 

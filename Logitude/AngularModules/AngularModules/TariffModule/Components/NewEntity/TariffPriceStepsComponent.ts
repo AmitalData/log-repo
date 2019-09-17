@@ -93,7 +93,7 @@ export class TariffPriceStepsComponent extends BaseComponent {
             }
 
             else {
-                if (item.Step <= SortedItemStep) {
+                if (Number(item.Step) <= Number(SortedItemStep)) {
                     isValidSort = false;
                 }
 

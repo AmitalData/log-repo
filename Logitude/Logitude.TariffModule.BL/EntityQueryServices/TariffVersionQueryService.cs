@@ -101,5 +101,27 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             return entityPMs;
         }
+
+        public List<TariffVersionPM> GetAllVersionsWithLines(string tariffId, int tenant, bool getComposition = true)
+        {
+            ITariffModuleContext context = MainContext as ITariffModuleContext;
+            TariffVersionRepository repository = new TariffVersionRepository(context);
+            List<TariffVersion> entityPOCOs = repository.GetAllVersions(tariffId, tenant);
+            List<TariffVersionPM> entityPMs = new List<TariffVersionPM>();
+            foreach (TariffVersion entityPOCO in entityPOCOs)
+            {
+                TariffVersionPM entityPM = new TariffVersionPM();
+                EntityKeyFields entityKeys = GetKeys(entityPOCO);
+                if (entityKeys != null && getComposition)
+                {
+                    GetComposition(entityKeys, entityPM);
+                }
+
+                mapping.CustomPOCOToPM(entityPM, entityPOCO);
+                mapping.POCOToPM(entityPM, entityPOCO);
+                entityPMs.Add(entityPM);
+            }
+            return entityPMs;
+        }
     }
 }
