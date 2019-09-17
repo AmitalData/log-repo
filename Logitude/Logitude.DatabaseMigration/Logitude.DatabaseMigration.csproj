@@ -1485,6 +1485,18 @@
     <Compile Include="Migrations\201909121018044_ARInvoiceDocumentFilingMigration.Designer.cs">
       <DependentUpon>201909121018044_ARInvoiceDocumentFilingMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.cs" />
+    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
+      <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.cs" />
+    <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.Designer.cs">
+      <DependentUpon>201909151332019_AddOpenReceivablesLinesField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.cs" />
+    <Compile Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.Designer.cs">
+      <DependentUpon>201909161137037_AddCreditLimitPartnersSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.cs" />
     <Compile Include="Migrations\201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.Designer.cs">
       <DependentUpon>201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.cs</DependentUpon>
@@ -2544,6 +2556,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909121018044_ARInvoiceDocumentFilingMigration.resx">
       <DependentUpon>201909121018044_ARInvoiceDocumentFilingMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.resx">
+      <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909151332019_AddOpenReceivablesLinesField.resx">
+      <DependentUpon>201909151332019_AddOpenReceivablesLinesField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.resx">
+      <DependentUpon>201909161137037_AddCreditLimitPartnersSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.resx">
       <DependentUpon>201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.cs</DependentUpon>
