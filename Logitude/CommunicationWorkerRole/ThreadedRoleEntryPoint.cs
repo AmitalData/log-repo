@@ -221,7 +221,7 @@ namespace CommunicationWorkerRole
                 var batchTaskExecutionWR = new BatchTaskExecutionWR();
                 var dic = new Dictionary<string, string>();
 
-                dic.Add("BatchTaskExecutionId", "1-5726");
+                dic.Add("BatchTaskExecutionId", "1-6110");
                 dic.Add("Tenant", "1106");
                 batchTaskExecutionWR.SupressStartThread = true;
                 batchTaskExecutionWR.ExecuteQueue(new Logitude.Server.Tools.QueueService.QueueResponse() { MessageValues = dic });
