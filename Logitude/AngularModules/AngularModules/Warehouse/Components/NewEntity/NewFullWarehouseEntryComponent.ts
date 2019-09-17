@@ -187,7 +187,7 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
             this.FromPortId = null;
             this.ToPortId = null;
-
+            this.ShipmentTypeId = null;
             this.OnFiltersChanged();
             this.BuildShipmentTypes();
         }
