@@ -406,16 +406,30 @@ export class AWBAddEditPartnerComponent extends BaseComponent implements AfterVi
     private LoadAddress() {
         this.isAddressLoaded = false;
 
-        var myService = new AddressPMService();
-        myService.get(this.CurrentAddressId).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.EntityPM = myResponse.Result;
-                    this.isAddressLoaded = true;
-                    this.OnLoadCompleted();
+        if (AppTool.IsNullOrEmpty(this.CurrentAddressId)) {
+            this.EntityPM = new AddressPM();
+            this.EntityPM.Description = "Other Address";
+            this.EntityPM.Tenant = SessionLocator.Tenant;
+            this.EntityPM.CardId = this.CurrentPartnerId;
+            this.EntityPM.AddressTypeId = 'O';
+            this.EntityPM.InActive = false;
+
+            this.isAddressLoaded = true;
+            this.OnLoadCompleted();
+        }
+
+        else {
+            var myService = new AddressPMService();
+            myService.get(this.CurrentAddressId).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.EntityPM = myResponse.Result;
+                        this.isAddressLoaded = true;
+                        this.OnLoadCompleted();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     private OnLoadCompleted() {
         if (this.isPartnerLoaded && this.isAddressLoaded) {                        
