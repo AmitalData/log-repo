@@ -61,7 +61,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				LogBoxTenantSettingRepository  logBoxTenantSettingRepository = new LogBoxTenantSettingRepository(MyContext);
 				LogBoxTenantSettingList entityList = null;
-				LogBoxTenantSetting entityPoco = logBoxTenantSettingRepository.GetSingleLBTenant(id );
+				LogBoxTenantSetting entityPoco = logBoxTenantSettingRepository.GetSingleLogBoxTenantSetting(id );
 
 				if (entityPoco != null)
 				{

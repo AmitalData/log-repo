@@ -25,19 +25,19 @@ export class NewQuote {
 
     }
 
-    DoOperations() {
+    DoQuoteActions() {
         this.Quotes.GoToMainMenu('General.MH.CRM');
         this.Quotes.SelectMenuWorkSpaceTabs('CRMQUT');
-        return this.CreateQuote(browser.params.QuoteParams.Direction, browser.params.QuoteParams.TransportMode, browser.params.QuoteParams.ShipmentType, browser.params.QuoteParams.QuoteType);
+         return  this.CreateQuote(browser.params.QuoteParams.Direction, browser.params.QuoteParams.TransportMode, browser.params.QuoteParams.ShipmentType, browser.params.QuoteParams.QuoteType);
 
     }
-    SearchForShipment(QuoteNumber: string) {
+    SearchForQuote(QuoteNumber:string){
         this.Quotes.UseSearchBox('Quote_Search', QuoteNumber, 'LogitudeQuickSearchItem');
-    }
-
-    EditShipment(QuoteNumber: string) {
-
-        this.EditQuoteTabs.EditTabs(QuoteNumber, browser.params.QuoteParams.ShipmentType, browser.params.QuoteParams.Direction, browser.params.QuoteParams.TransportMode, browser.params.QuoteParams.QuoteType);
+      }
+    
+      EditQuote(QuoteNumber: string) {
+         
+         this.EditQuoteTabs.EditTabs(QuoteNumber,browser.params.QuoteParams.ShipmentType,browser.params.QuoteParams.Direction,browser.params.QuoteParams.TransportMode,browser.params.QuoteParams.QuoteType);
         //this.EditShipment(shipperRef1,browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.Direction, browser.params.ShipParams.TransportMode, browser.params.ShipParams.ShipmentType);
 
       
