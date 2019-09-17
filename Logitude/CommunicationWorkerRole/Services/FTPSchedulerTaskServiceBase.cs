@@ -11,8 +11,8 @@ namespace CommunicationWorkerRole.Services
     public abstract class FTPSchedulerTaskServiceBase
     {
 
-        public List<string> WarningsList { get; set; }
-        public List<string> MessagesList { get; set; }
+        //public List<string> WarningsList { get; set; }
+        //public List<string> MessagesList { get; set; }
 
         public int DownloadedFilesCount = 0;
         public int FailedFilesCount = 0;
@@ -20,8 +20,8 @@ namespace CommunicationWorkerRole.Services
         
         public FTPSchedulerTaskServiceBase()
         {
-            this.WarningsList = new List<string>();
-            this.MessagesList = new List<string>();
+            //this.WarningsList = new List<string>();
+            //this.MessagesList = new List<string>();
 
             QueueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
         }
@@ -32,33 +32,40 @@ namespace CommunicationWorkerRole.Services
             this.currentTask = task;
         }
 
-        private void AddLogMessageToFile(string message)
-        {
-            if(this.currentTask != null && this.currentTask.EnableWriteLogToFile)
-            {
-                currentTask.AppendLogMessageToFile(message);
-            }
-        }
+        //private void AddLogMessageToFile(string message)
+        //{
+        //    if(this.currentTask != null)
+        //    {
+        //        currentTask.LogInfo(message);
+        //    }
+        //}
 
         public void AddWarning(string warningMessage)
         {
-            if (!string.IsNullOrEmpty(warningMessage) && !this.WarningsList.Contains(warningMessage))
+            //if (!string.IsNullOrEmpty(warningMessage) && !this.WarningsList.Contains(warningMessage))
+            //{
+            //    this.WarningsList.Add(warningMessage);
+            //}
+            //currentTask.Logwarning()
+            if (this.currentTask != null)
             {
-                this.WarningsList.Add(warningMessage);
+                currentTask.LogWarning(warningMessage);
             }
-
-            this.AddLogMessageToFile(warningMessage);
+           // this.AddLogMessageToFile(warningMessage);
             //QueueService.Enqueue(new LogQueueMessage() { })
         }
 
         public void AddMessage(string message)
         {
-            if (!string.IsNullOrEmpty(message) && !this.MessagesList.Contains(message))
-            {
-                this.MessagesList.Add(message);
-            }
+            //if (!string.IsNullOrEmpty(message) && !this.MessagesList.Contains(message))
+            //{
+            //    this.MessagesList.Add(message);
+            //}
 
-            this.AddLogMessageToFile(message);
+            if (this.currentTask != null)
+            {
+                currentTask.LogInfo(message);
+            }
         }
 
         public string GetFilesDownloadingSummery()

@@ -16,7 +16,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Id { get; set; }
         public int Tenant { get; set; } 
         public DateTime CreateDate { get; set; }
-        public string Log { get; set; }
+        //public string Log { get; set; }
         public string HistoryId { get; set; }
 
         [ForeignKey("HistoryId")]

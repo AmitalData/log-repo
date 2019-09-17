@@ -255,6 +255,12 @@ void SaveEntityControllerOutput(string outputFileName)
 				 
     }
 
+    bool primaryKeyIsTenant = false;
+    if( entity.PrimaryKeyIsTenant.GetType() == typeof(string))
+	{
+	    primaryKeyIsTenant = (entity.PrimaryKeyIsTenant == "true");
+				 
+    }
 	
 
 	  Dictionary<string,string> primaryKeys = new Dictionary<string,string>();
@@ -421,7 +427,16 @@ else
 #>
 
 <#+
-} 
+}
+if(primaryKeyIsTenant){
+#>
+                bool isAuthenticated = (id == authToken.Tenant) ? true : false;
+                if (!isAuthenticated && !SecurityUtility.CheckIsUserCustomerCare(authToken.Email))
+                {
+                    throw new Exception("Sorry you’re not authenticated to view <#= tableName #> data for this tenant");
+                }
+<#+
+}
 #>
                 <#= tableName #>Query <#= queryName #> = new <#= tableName #>Query(<#= databaseConnTenant #>);
                 <#= pmName #> <#= FirstServiceCharacterToLower(pmName) #> = <#= queryName #>.GetSinglePM(<#= primaryonlyparam #><#= tenantonlyParam#>);

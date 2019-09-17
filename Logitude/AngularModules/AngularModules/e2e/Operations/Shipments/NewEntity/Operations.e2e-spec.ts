@@ -27,7 +27,8 @@ describe('Operations Module', () => {
   });
   it('Edit Shipment .. ', function () {
     browser.ignoreSynchronization = true;
-    page.EditShipment(shipperRef1);
+      page.EditShipment(shipperRef1);
+      
   });
 });
 

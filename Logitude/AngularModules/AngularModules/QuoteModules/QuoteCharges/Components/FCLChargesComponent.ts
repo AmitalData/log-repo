@@ -1031,10 +1031,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
 
-            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != entityQuantity).length > 0) {
+            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != this.EntityPM.NumberOfContainers).length > 0) {
                 isDifferentOrders = true;
             }
-            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != entityQuantity).length > 0) {
+            else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != this.EntityPM.NumberOfContainers).length > 0) {
                 isDifferentOrders = true;
             }
 
@@ -1064,7 +1064,6 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             item.SetCostQuantity();
             item.SetSaleQuantity();
         })
-
         //this.SetUIProperties_UpdateCharges();
     }
     UpdateCharges() {

@@ -26,7 +26,8 @@ namespace CommunicationWorkerRole.Tasks
             //{
             //    Thread.CurrentThread.Abort();
             //}
-            //Thread.Sleep(60000);
+            //Logwarning("Log warning , Be careful !!");
+            Thread.Sleep(20000);
 
 
         }

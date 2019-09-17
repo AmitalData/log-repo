@@ -409,6 +409,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.To = entityPM.To;
             entityPoco.Origin = entityPM.Origin;
             entityPoco.ComputedShipmentNumber = entityPM.ComputedShipmentNumber;
+
+            //entityPoco.OpenReceivablesLines = entityPM.OpenReceivablesLines;
+
             //entityPoco.ContainersNumbers = entityPM.ContainersNumbers;
             //entityPoco.FirstPickupLocation = entityPM.FirstPickupLocation;
             //entityPoco.Commodity = entityPM.AWBCommodityItemNumber;
