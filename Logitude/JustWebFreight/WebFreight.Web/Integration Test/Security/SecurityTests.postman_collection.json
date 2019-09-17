@@ -1947,6 +1947,206 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GetContactLoggedUserFromMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "98c20003-9d37-4976-bb78-c88a43b2b37b",
+						"exec": [
+							"pm.test(\"GetContactLoggedUserFromMyTenant\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue2 = pm.environment.get(\"CreatedByUserId\");",
+							"    var idvalue3 = (pm.response.json().Email);",
+							"    var idexist = idvalue1 !== null;",
+							"    ",
+							"     if (idvalue1 == idvalue2)  {",
+							"        tests[\"GetContactLoggedUserFromMyTenant successfully : \" + idvalue3] = responseBody.has(idvalue3);",
+							"   ",
+							"    } ",
+							"    ",
+							"   ",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36 OPR/63.0.3368.71"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19170914/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=bcnhxmem2y11pnejrrx2yktb"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/ngMetaData?tenant={{Tenant}}&useremail={{Email}}&getloggeduser=true",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ngMetaData"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						},
+						{
+							"key": "useremail",
+							"value": "{{Email}}"
+						},
+						{
+							"key": "getloggeduser",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetContactLoggedUserFromNotMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "98c20003-9d37-4976-bb78-c88a43b2b37b",
+						"exec": [
+							"pm.test(\"GetContactLoggedUserFromNotMyTenant Fail\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue1 = (pm.response.json());",
+							"    var idvalue2 = pm.environment.get(\"CreatedByUserId\");",
+							"    ",
+							"    var idexist = idvalue1 !== null;",
+							"    ",
+							"     if (idvalue1 !== idvalue2)  {",
+							"        tests[\"Exception: \" + idvalue1] = responseBody.has(idvalue1);",
+							"   ",
+							"    } ",
+							"    ",
+							"   ",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36 OPR/63.0.3368.71"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19170914/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=bcnhxmem2y11pnejrrx2yktb"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/ngMetaData?tenant={{Tenant}}&useremail={{Email2}}&getloggeduser=true",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ngMetaData"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						},
+						{
+							"key": "useremail",
+							"value": "{{Email2}}"
+						},
+						{
+							"key": "getloggeduser",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
