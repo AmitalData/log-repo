@@ -305,13 +305,23 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 var tempList = MyType.split(' ');
                 var tempName = "";
                 if (tempList.length == 1) {
-                    tempName = tempList[0].substring(0, 3).toUpperCase();
+                    tempName = tempList[0].substring(0, 3);
+                    if (tempName != null) {
+                        tempName = tempName.toUpperCase();
+                    }
                 }
                 else if (tempList.length == 2) {
-                    tempName = (tempList[0].substring(0, 1) + tempList[1].substring(0, 2)).toUpperCase();
+                    tempName = (tempList[0].substring(0, 1) + tempList[1].substring(0, 2));
+                    if (tempName != null) {
+                        tempName = tempName.toUpperCase();
+                    }
                 }
                 else {
-                    tempName = (tempList[0].substring(0, 1) + tempList[1].substring(0, 1) + tempList[2].substring(0, 1)).toUpperCase();
+                
+                    tempName = (tempList[0].substring(0, 1) + tempList[1].substring(0, 1) + tempList[2].substring(0, 1));
+                    if (tempName != null) {
+                        tempName = tempName.toUpperCase();
+                    }
                 }
                 item.OrderedDisplayName = tempName;
             });
@@ -1537,13 +1547,6 @@ export class FilingInboxData {
     FillFilingInboxAttachments() {
         this.FilingInboxAttachments = [];
         this.FilingInboxAttachments = [];
-        //this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null && (a.FileName.split('.')[1] != null && a.FileName.split('.')[1].toUpperCase() == "PDF")).forEach(item => {
-        //    this.FilingInboxAttachments.push(new FilingInboxAttachment(item, this.father));
-        //});
-        //this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null && (a.FileName.split('.')[1] != null && a.FileName.split('.')[1].toUpperCase() != "PDF")).forEach(item => {
-        //    this.FilingInboxAttachments.push(new FilingInboxAttachment(item, this.father));
-        //});
-
         this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null).forEach(item => {
 
             this.FilingInboxAttachments.push(new FilingInboxAttachment(item, this.father));
