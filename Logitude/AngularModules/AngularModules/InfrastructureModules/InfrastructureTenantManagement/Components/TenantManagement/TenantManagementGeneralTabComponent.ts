@@ -171,12 +171,15 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         var isEditable = false;
 
         if (this.isTenantManagementEditable) {
-            if (!this.IsMultiPackage || this.MainAdditionalPackageApplied) {
+            if (!this.IsMultiPackage) {
                 isEditable = true;
             }
         }
 
+        this.UIProperties.SetEnabled("PackageCode", this.ObjectTableName, isEditable);
         this.UIProperties.SetEnabled("NumberOfUsers", this.ObjectTableName, isEditable);
+        this.UIProperties.SetEnabled("FreeUsers", this.ObjectTableName, isEditable);
+        this.UIProperties.SetEnabled("LicensePrice", this.ObjectTableName, isEditable);
     }
     private SetUIProperties_Distributor() {
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
@@ -669,9 +672,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     }
 
     //Subscription Details
-
-
-
     get BluesnapContractQTYs() { return this.EntityPM.BluesnapContractQTY; }
     set BluesnapContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapContractQTY != newValue) {
@@ -681,7 +681,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
 
     }
-
 
     get BluesnapInttraStockContractQTYs() { return this.EntityPM.BluesnapInttraStockContractQTY; }
     set BluesnapInttraStockContractQTYs(newValue: number) {
@@ -693,7 +692,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
 
     }
 
-
     get BluesnapCRMContractQTYs() { return this.EntityPM.BluesnapCRMContractQTY; }
     set BluesnapCRMContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapCRMContractQTY != newValue) {
@@ -702,7 +700,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.EntityPM.BluesnapCRMContractQTY = newValue;
         }
     }
-
 
     get BluesnapEAWBContractQTYs() { return this.EntityPM.BluesnapEAWBContractQTY; }
     set BluesnapEAWBContractQTYs(newValue: number) {
@@ -713,7 +710,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-
     get BluesnapEAWBSContractQTYs() { return this.EntityPM.BluesnapEAWBSContractQTY; }
     set BluesnapEAWBSContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapEAWBSContractQTY != newValue) {
@@ -723,7 +719,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-
     get BluesnapOneTimeContractQTYs() { return this.EntityPM.BluesnapOneTimeContractQTY; }
     set BluesnapOneTimeContractQTYs(newValue: number) {
         if (this.EntityPM.BluesnapOneTimeContractQTY != newValue) {
@@ -732,7 +727,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.EntityPM.BluesnapOneTimeContractQTY = newValue;
         }
     }
-
 
     AddPackageClicked(packageType: string) {
         if (packageType == "AD") {
@@ -1013,7 +1007,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-
     get BluesnapContractId() {
         return this.EntityPM.BluesnapContractId;
     }
@@ -1032,8 +1025,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-
-
     get BluesnapEAWBContractId() {
         return this.EntityPM.BluesnapEAWBContractId;
     }
@@ -1042,8 +1033,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.EntityPM.BluesnapEAWBContractId = newValue;
         }
     }
-
-
 
     get BluesnapEAWBSContractId() {
         return this.EntityPM.BluesnapEAWBSContractId;
@@ -1054,8 +1043,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-
-
     get BluesnapOneTimeContract() {
         return this.EntityPM.BluesnapOneTimeContract;
     }
@@ -1065,7 +1052,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         }
     }
 
-
     get BluesnapInttraStockContractId() {
         return this.EntityPM.BluesnapInttraStockContractId;
     }
@@ -1074,8 +1060,6 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.EntityPM.BluesnapInttraStockContractId = newValue;
         }
     }
-
-
 
     get BillingByLogitude() { return this.EntityPM.BillingByLogitude; }
     set BillingByLogitude(newValue: boolean) {
