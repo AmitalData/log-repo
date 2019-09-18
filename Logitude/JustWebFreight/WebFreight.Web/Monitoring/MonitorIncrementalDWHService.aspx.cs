@@ -60,10 +60,19 @@ namespace WebFreight.Web.Monitoring
                 try
                 {
 
-                    isFailed = (from d in myRepository.context.Settings
-                                                 where d.LastIncrementalDWUpdateDate == null || (EntityFunctions.DiffMinutes(d.LastIncrementalDWUpdateDate, todayDateTime) > 5)
+                    isFailed = (from d in myRepository.context.Settings 
+                                                 where (d.LastIncrementalDWUpdateDate == null ||  (EntityFunctions.DiffMinutes(d.LastIncrementalDWUpdateDate, todayDateTime) > 5)) && !d.IsFullBuildDWRunning
                                                  select d).Any();
-                    
+                    var isUpgrading = false;
+                    if (isFailed)
+                    {
+                        isUpgrading = (from d in myRepository.context.GlobalDBs
+                                    where d.IsUpgrading
+                                    select d).Any();
+
+                        if (isUpgrading) isFailed = false;
+                    }
+
                 }
 
                 catch (Exception errorInfo)
