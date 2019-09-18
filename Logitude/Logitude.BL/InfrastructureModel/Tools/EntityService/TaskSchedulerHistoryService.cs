@@ -70,7 +70,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             TaskSchedulerHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-            ComputeTaskAverageRunTime(Poco.TaskId);
+           
             //SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, theEntityPm.Tenant);
             //SchedulerLogsPM SchedulerLog = new SchedulerLogsPM() { Tenant = theEntityPm.Tenant, HistoryId = theEntityPm.Id };
             //SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
@@ -88,6 +88,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             TaskSchedulerHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            ComputeTaskAverageRunTime(Poco.TaskId);
             //SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, theEntityPm.Tenant);
             //SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(theEntityPm.Tenant);
 
