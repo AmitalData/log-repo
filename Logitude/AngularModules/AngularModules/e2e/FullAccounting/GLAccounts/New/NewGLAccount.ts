@@ -17,7 +17,8 @@ export class NewGLAccount {
 
     
     this.Helper.WaitByIdAndClick('NewGLAccount');
-   
+      this.Helper.ItemsVisibility('GLAccount_ChartOfAccountsTypeCode');
+      this.Helper.ItemsPresent('GLAccount_ChartOfAccountsTypeCode');
 
     this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsTypeCode', 'Revenues');
       this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);

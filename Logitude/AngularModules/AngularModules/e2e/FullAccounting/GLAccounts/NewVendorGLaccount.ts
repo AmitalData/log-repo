@@ -16,7 +16,9 @@ export class NewVendor {
       this.Helper.WaitByIdAndClick('General.MH.Maintenance');
       this.Generator.GoToMainMenu('MaintenanceItemMTVD');
     //this.Helper.WaitByIdAndClick('MaintenanceItemMTVD');
-    this.Helper.WaitByIdAndClick('NewButton_Vendor');
+      this.Helper.WaitByIdAndClick('NewButton_Vendor');
+      this.Helper.ItemsVisibility('Address_Name');
+      this.Helper.ItemsPresent('Address_Name');
     this.Helper.WaitByIdAndFill('Address_Name', Name);
     this.Helper.WaitByIdAndFill('Address_CountryId', 'ps');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
