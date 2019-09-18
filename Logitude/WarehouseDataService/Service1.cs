@@ -40,19 +40,14 @@ namespace WarehouseDataService
                 string sourceConnection = warehouseServiceHelper.BuildConnectionString(ConfigurationSettings.AppSettings["SourceConnection"]);
                 ApplicationInfo.SourceConnection = warehouseServiceHelper.GetMainDBConnectionString(sourceConnection);
                 ApplicationInfo.DestinationConnection = ConfigurationSettings.AppSettings["DestinationConnection"];
-
-
-
                 string updateWarehouseSleepTime = ConfigurationSettings.AppSettings["UpdateWarehouseSleepTime"];
                 ApplicationInfo.UpdateWarehouseSleepTime = (!string.IsNullOrEmpty(updateWarehouseSleepTime) ? Int32.Parse(updateWarehouseSleepTime) : 1) * 60000;
-
-
                 string warehouseBuildDays = ConfigurationSettings.AppSettings["WarehouseBuildDays"];
                 string warehouseBuildHoures = ConfigurationSettings.AppSettings["WarehouseBuildHoures"];
 
                 string retryBuildWithinHours = ConfigurationSettings.AppSettings["RetryBuildWithinHours"];
                 ApplicationInfo.RetryBuildWithinHours = !string.IsNullOrEmpty(retryBuildWithinHours) ? Int32.Parse(retryBuildWithinHours) : 0;
-
+                ApplicationInfo.IsStartBuildingDataWarehouse = GetIsBuildDataWarehouseFromConfigurationSettings();
 
                 List<int> buildDays = new List<int>();
                 if (!string.IsNullOrEmpty(warehouseBuildDays))
@@ -87,6 +82,18 @@ namespace WarehouseDataService
             }
 
 
+        }
+
+        private bool GetIsBuildDataWarehouseFromConfigurationSettings()
+        {
+            bool result = false;
+            var isBuildDWHNow = ConfigurationSettings.AppSettings["IsStartBuildingDataWarehouse"] != null ? ConfigurationSettings.AppSettings["IsStartBuildingDataWarehouse"].ToString() : null;
+            if (!string.IsNullOrEmpty(isBuildDWHNow))
+            {
+                result = Boolean.Parse(isBuildDWHNow);
+            }
+
+            return result;
         }
 
         protected override void OnStop()

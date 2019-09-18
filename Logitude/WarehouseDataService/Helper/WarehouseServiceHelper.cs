@@ -40,17 +40,20 @@ namespace WarehouseDataService.Helper
             return countStart;
         }
 
-        public bool GetWarehouseFieldFromSettings(string fieldName, string connectionString)
+
+
+
+        public bool GetFieldValueFromDBByTableNameAndFieldName(string fieldName, string tableName,string connectionString)
         {
             string connection = connectionString.Replace("Main", "Global");
 
             bool result = false;
-
+            
             SqlConnection con = new SqlConnection(connection);
 
             SqlCommand com = new SqlCommand(
 "select " + fieldName + " " +
-"FROM dbo.Settings" + " ;", con);
+"FROM dbo." + tableName + " ;", con);
 
             try
             {
@@ -243,6 +246,14 @@ namespace WarehouseDataService.Helper
 
             return warehouseDate;
         }
+
+
+        public bool CheckIsUpgradingSystem(string sourceConnectionString)
+        {
+            return GetFieldValueFromDBByTableNameAndFieldName("IsUpgrading", "GlobalDBs", sourceConnectionString);
+
+        }
+
 
 
 
