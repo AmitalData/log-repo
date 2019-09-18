@@ -70,7 +70,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             TaskSchedulerHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-            ComputeTaskAverageRunTime(Poco.TaskId);
+           
             //SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, theEntityPm.Tenant);
             //SchedulerLogsPM SchedulerLog = new SchedulerLogsPM() { Tenant = theEntityPm.Tenant, HistoryId = theEntityPm.Id };
             //SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
@@ -88,6 +88,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             TaskSchedulerHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            ComputeTaskAverageRunTime(Poco.TaskId);
             //SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, theEntityPm.Tenant);
             //SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(theEntityPm.Tenant);
 
@@ -109,8 +110,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                                           {
                                               StartDateTime = a.StartDateTime,
                                               EndDateTime = a.EndDateTime,
-                                              Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
-                                          }).Where(x => x.StartDateTime != null && x.EndDateTime != null && x.StartDateTime > x.EndDateTime).OrderByDescending(x => x.StartDateTime).Take(15);
+                                              Duration = DbFunctions.DiffSeconds(a.StartDateTime, a.EndDateTime),
+                                          }).Where(x => x.StartDateTime != null && x.EndDateTime != null && x.EndDateTime > x.StartDateTime).OrderByDescending(x => x.StartDateTime).Take(15);
 
             double? Latest15HistoriesAverageRunTime = Latest15HistoriesQuery.Average(a => a.Duration);//.ToList();.OrderByDescending(x => x.StartDateTime).Take(10)
            

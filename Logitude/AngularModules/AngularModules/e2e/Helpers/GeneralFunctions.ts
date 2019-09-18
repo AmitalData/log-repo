@@ -14,8 +14,18 @@ export class GeneralFunctions {
         var selectTab = this.Helper.WaitByIdAndClick(id);
     }
     public RandomNum() {
-        var randomNumber = Math.floor(Math.random() * 1000000).toString();
-        return randomNumber;
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var charactersLength = characters.length;
+        for (var i = 0; i < 2; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        result += Math.floor(Math.random() * 1000000).toString();
+        for (var i = 0; i < 2; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+
+        return result;
     }
     public RandomNumAcc() {
         var randomNumber = Math.floor(Math.random() * 10000).toString();

@@ -92,6 +92,12 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.ConnectedTo).HasColumnName("ConnectedTo").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.FromPortId).HasColumnName("FromPortId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ToPortId).HasColumnName("ToPortId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.CustomerAddressId).HasColumnName("CustomerAddressId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

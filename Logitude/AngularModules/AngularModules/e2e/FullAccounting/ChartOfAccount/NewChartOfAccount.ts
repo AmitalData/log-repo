@@ -21,7 +21,8 @@ export class NewChartOfAccount {
         this.Helper.WaitByIdAndFill('null_Search','chart');
         this.Helper.WaitByIdAndClick('MaintenanceItemMTCA');
         this.Helper.WaitByIdAndClick('NewButton_ChartOfAccount');
-
+        this.Helper.ItemsVisibility('ChartOfAccount_EnglishName');
+        this.Helper.ItemsPresent('ChartOfAccount_EnglishName');
         this.Helper.WaitByIdAndFill('ChartOfAccount_EnglishName', Type + ChartOfAccountNo);
         this.Helper.WaitByIdAndFill('ChartOfAccount_LocalName', Type + ChartOfAccountNo);
         if (Type == 'Revenue') {

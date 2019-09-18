@@ -14,7 +14,9 @@ export class NewCustomer{
 
   public CreateNewCustomerGLAccount(Name: string) {
 
-    this.Helper.WaitByIdAndClick('NewCustomer');
+      this.Helper.WaitByIdAndClick('NewCustomer');
+      this.Helper.ItemsVisibility('Customer_EnglishName');
+      this.Helper.ItemsPresent('Customer_EnglishName');
       this.Helper.WaitByIdAndFill('Customer_EnglishName', Name);
       this.Helper.WaitByIdAndFill('Customer_LocalName', Name);
     this.Helper.WaitByIdAndFill('Customer_Address1_Potential', 'Ramallah');
