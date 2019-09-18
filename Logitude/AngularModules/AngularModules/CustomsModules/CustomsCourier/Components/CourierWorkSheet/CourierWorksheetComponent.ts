@@ -935,7 +935,7 @@ implements OnDestroy
             FieldName: 'SendSplitButton',
             DataTypeCode: 'String',
             //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '110px' },
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
