@@ -451,7 +451,7 @@
     <Compile Include="CommonDataModel\Mapping\VATTypesGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\NumberFormatMap.cs" />
     <Compile Include="CommonDataModel\Mapping\WarehouseTypeMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnersMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnerMap.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedDocumentRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedManifestRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AirlineAreasPortRepository.cs" />
@@ -518,7 +518,7 @@
     <Compile Include="CommonDataModel\Repositories\ReportsTemplateRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ReportsTemplatesVersionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TemperatureUnitRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\PaymentGatewayPartnersRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\PaymentGatewayPartnerRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TenantLoginPolicyRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TwoFactorAuthenticationDeviceRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\LoginPolicyRepository.cs" />
@@ -536,6 +536,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQuery .cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryColumn.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryFilter.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerProcedure.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerLogs.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldCategoriesMap.cs" />
@@ -545,6 +546,7 @@
     <Compile Include="InfrastructureModel\Mapping\DWQueryColumnMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWQueryFilterMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\SchedulerProcedureMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SchedulerLogsMap.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWObjectFieldCategoriesRepository.cs" />
