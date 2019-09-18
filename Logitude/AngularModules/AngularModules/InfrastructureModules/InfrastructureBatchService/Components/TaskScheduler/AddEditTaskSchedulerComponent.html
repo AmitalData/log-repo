@@ -335,7 +335,7 @@
                                                                                     </td>
                                                                                 </tr>
 
-                                                                                <tr class="FormFieldRow" *ngIf="false || DataContext.TriggerType == 'M'">
+                                                                                <tr class="FormFieldRow" *ngIf="false && DataContext.TriggerType == 'M'">
                                                                                     <td>
                                                                                         <LogLabel [ObjectFieldName]="'MonthlyDay'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Day Number'"></LogLabel>
                                                                                     </td>
