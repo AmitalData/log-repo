@@ -982,6 +982,11 @@ export class ARInvoicePM {
     public set IsInvoiceNumberFromStock(newValue: boolean) { if (this.isInvoiceNumberFromStock != newValue) { this.isInvoiceNumberFromStock = newValue; this.MarkAsDirty("IsInvoiceNumberFromStock"); } }
        
 	 
+    private documentFilingId: string;
+    public get DocumentFilingId() { return this.documentFilingId; }
+    public set DocumentFilingId(newValue: string) { if (this.documentFilingId != newValue) { this.documentFilingId = newValue; this.MarkAsDirty("DocumentFilingId"); } }
+       
+	 
     private batchTaskExecutionId: string;
     public get BatchTaskExecutionId() { return this.batchTaskExecutionId; }
     public set BatchTaskExecutionId(newValue: string) { if (this.batchTaskExecutionId != newValue) { this.batchTaskExecutionId = newValue; this.MarkAsDirty("BatchTaskExecutionId"); } }

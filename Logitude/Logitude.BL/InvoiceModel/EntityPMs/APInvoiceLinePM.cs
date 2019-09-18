@@ -26,7 +26,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string VatTypeId { get; set; }
         public double? VatPercentage { get; set; }
-
+        public double? VatRecognizedPercentage { get; set; }
         public string VatTypeName { get; set; }
         public string ExternalVATCard { get; set; }
         public string ExternalTAXItemId { get; set; }

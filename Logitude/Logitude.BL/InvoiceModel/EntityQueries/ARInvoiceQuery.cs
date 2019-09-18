@@ -1719,6 +1719,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsFullAccounting = entityPOCO.IsFullAccounting,
                     ARInvoiceStockId = entityPOCO.ARInvoiceStockId,
                     IsInvoiceNumberFromStock = entityPOCO.IsInvoiceNumberFromStock,
+                    DocumentFilingId = entityPOCO.DocumentFilingId
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
