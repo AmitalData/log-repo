@@ -105,6 +105,8 @@ export class NewChartOfAccount {
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'D');
             this.Helper.WaitBusyIndicator();
+            this.Helper.ItemsVisibility('ok-AddChartOfAccount');
+            this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
