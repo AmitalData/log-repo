@@ -110,10 +110,10 @@ namespace WebFreight.Web.DataProviders
         public string CustomerContactName { get; set; }
         public string CustomerContactEmail { get; set; }
         public string MasterShipmentNumber { get; set; }
-        public string AccountedPayable { get; set; }
-        public string OpenPayable { get; set; }
-        public string AccountedReceivables  { get; set; }
-        public string OpenReceivables { get; set; }
+        public double? AccountedPayable { get; set; }
+        public double? OpenPayable { get; set; }
+        public double? AccountedReceivables  { get; set; }
+        public double? OpenReceivables { get; set; }
         public string LeadSource { get; set; }
         public string PaymentTerms { get; set; }
 
