@@ -1,4 +1,4 @@
-<!--<style type="text/css">
+<style type="text/css">
     .NotesBox p {
         font-size: 11px;
         color: #6E7172;
@@ -219,8 +219,8 @@
                                                                             <table>
                                                                                 <tr>
                                                                                     <td [style.width.px]="ControlColumnWidth - 18">
-                                                                                        <LogLov [ObjectFieldName]="'FromAddressId'"
-                                                                                                [SelectedValue]="FromAddressId"
+                                                                                        <LogLov [ObjectFieldName]="'CustomerAddressId'"
+                                                                                                [SelectedValue]="CustomerAddressId"
                                                                                                 [ObjectTableName]="ObjectTableName"
                                                                                                 [DataContext]="DataContext"
                                                                                                 [LookUpTableName]="'Address'"
@@ -229,7 +229,7 @@
                                                                                     </td>
                                                                                     <td>
                                                                                         <div style="margin-left: 2px;">
-                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked()" [disabled]="!FromAddressId || !IsScreenEnabled"></IconButton>
+                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked()" [disabled]="!CustomerAddressId || !IsScreenEnabled"></IconButton>
                                                                                             <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked()" [disabled]="!IsScreenEnabled"></IconButton>
                                                                                         </div>
                                                                                     </td>
@@ -262,8 +262,8 @@
                                                     <table class="FixedTable">
                                                         <tr>
                                                             <td style="width: 360px">
-                                                                <table>-->
-                                                                    <!--<tr class="FormFieldRow">
+                                                                <table>
+                                                                   <tr class="FormFieldRow">
                                                                         <td   style="width:140px;">
                                                                             <LogLabel [ObjectFieldName]="'FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="FromPortText"></LogLabel>
                                                                         </td>
@@ -293,10 +293,10 @@
                                                                             </LogLov>
                                                                         </td>
                                                                         <td></td>
-                                                                    </tr>-->
+                                                                    </tr>
 
 
-                                                                <!--</table>
+                                                                </table>
                                                             </td>
 
                                                             <td>
@@ -343,8 +343,7 @@
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
                                                                                     [LookUpTableName]="'Shipment'"
-                                                                                     [DependencyFilter1Value]="TransportModeId"
-                                                                                     [DependencyFilter2Value]="DirectionId">
+                                                                                    >
                                                                             </LogLov>
                                                                         </td>
                                                                         <td></td>
@@ -550,4 +549,4 @@
             </table>
         </td>
     </tr>
-</table>-->
+</table>

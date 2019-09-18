@@ -2186,6 +2186,7 @@
     <Content Include="Warehouse\Components\FiltersMenu\WarehouseEntryFiltersMenuComponent.html" />
     <Content Include="Warehouse\Components\FiltersMenu\WarehouseReleaseFiltersMenuComponent.html" />
     <Content Include="Warehouse\Components\NewEntity\NewFullWarehouseEntryComponent.html" />
+    <Content Include="Warehouse\Components\NewEntity\NewFullWarehouseReleaseComponent.html" />
     <Content Include="Warehouse\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="Warehouse\Components\WarehouseReleasePackagesDetailsComponent.html" />
     <Content Include="webpack.config-prod-Cust.js" />
@@ -6639,6 +6640,7 @@
     <TypeScriptCompile Include="Warehouse\Components\FiltersMenu\WarehouseReleaseFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\MenuButtons\WarehouseReleaseMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewEntity\NewFullWarehouseEntryComponent.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\NewEntity\NewFullWarehouseReleaseComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewWarehouseEntryComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewWarehouseReleaseComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\ShortTitles\WarehouseEntryShortTitleComponent.ts" />

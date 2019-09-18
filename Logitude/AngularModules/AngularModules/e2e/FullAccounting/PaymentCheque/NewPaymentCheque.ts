@@ -24,10 +24,10 @@ export class NewPaymentCheque {
         this.Helper.WaitByIdAndClick('NEWPaymentCheque');
 
         
-        this.Helper.WaitByIdAndFill('PaymentCheque_PayToGLAccountId', 'אובי קנובי');
+        this.Helper.WaitByIdAndFill('PaymentCheque_PayToGLAccountId', 'diff');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        this.Helper.WaitByIdAndFill('PaymentCheque_BankAccountId', 'לאומי חיפה');
+        this.Helper.WaitByIdAndFill('PaymentCheque_BankAccountId', 'Bank');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 

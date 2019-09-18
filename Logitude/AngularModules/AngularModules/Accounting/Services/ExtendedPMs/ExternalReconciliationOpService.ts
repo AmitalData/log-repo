@@ -1,0 +1,249 @@
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+
+import {ExternalReconciliationPM} from '../../EntityPMs/ExternalReconciliationPM';
+
+import {ExternalReconciliationLinePM} from '../../EntityPMs/ExternalReconciliationLinePM';
+@Injectable()
+
+export class ExternalReconciliationOpService {
+    private _http: Http;
+    private _apiUrl: string;
+    constructor() {
+        this._http = ServiceHelper.Http;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExternalReconciliationOp';
+    }
+
+    insert(entityPM: ExternalReconciliationPM) {
+
+        var callTime = new Date();
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var validator: ClassLevelValidator;
+
+            validator = new ClassLevelValidator();
+
+            var errorsArray = validator.Validate("ExternalReconciliation", entityPM);
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            if (errorsArray.length == 0) {
+                var mappedEntity: ExternalReconciliationPM;
+                mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((response) => {
+
+                        var pm = response.json();
+                        if (pm) {
+                            var mappedResult: ExternalReconciliationPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            serviceResponse.Result = mappedResult;
+                        }
+
+                        return serviceResponse;
+
+                    }).catch(ServiceHelper.HandleServiceError);
+            }
+            else {
+
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+
+                return Observable.of(serviceResponse);
+
+            }
+        }
+
+        );
+    }
+
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ExternalReconciliationPM = null) {
+
+
+        if (!entityPM) {
+
+            entityPM = new ExternalReconciliationPM();
+        }
+
+        var customFields: Array<string> = [];
+        for (var i = 1; i < 11; i++) {
+            customFields.push("Field" + i);
+        }
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+
+                continue;
+            }
+            var property = jsonPMKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
+                if (jsonPM[property]) {
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+                    entityPM[property] = customFieldClass;
+                }
+            }
+            else {
+                entityPM[property] = jsonPM[property];
+            }
+
+        }
+
+        this.MapExternalReconciliationLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
+
+
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
+            entityPM.OldEntityPM.ExternalReconciliationLines = [];
+            for (var item in entityPM.ExternalReconciliationLines) {
+                var myExternalReconciliationLinePM = entityPM.ExternalReconciliationLines[item];
+                var newExternalReconciliationLinePM: ExternalReconciliationLinePM = this.clone(myExternalReconciliationLinePM);
+
+
+                entityPM.OldEntityPM.ExternalReconciliationLines.push(newExternalReconciliationLinePM);
+            }
+
+        }
+        else {
+
+            entityPM.OldEntityPM = null;
+        }
+        entityPM.IsDirty = false;
+        return entityPM;
+    }
+
+    MapExternalReconciliationLines(entityPM: ExternalReconciliationPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldExternalReconciliationLines: ExternalReconciliationLinePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldExternalReconciliationLines = entityPM.OldEntityPM.ExternalReconciliationLines;
+        }
+
+        entityPM.ExternalReconciliationLines = new Array<ExternalReconciliationLinePM>();
+        for (var item in jsonPM.ExternalReconciliationLines) {
+            var jItem = jsonPM.ExternalReconciliationLines[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newExternalReconciliationLinePM: ExternalReconciliationLinePM;
+
+            if (mapParent) {
+                newExternalReconciliationLinePM = new ExternalReconciliationLinePM(entityPM);
+            }
+            else {
+                newExternalReconciliationLinePM = new ExternalReconciliationLinePM(null);
+            }
+
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newExternalReconciliationLinePM[pmProperty] = jItem[pmProperty];
+            }
+
+
+            if (mapParent) {
+                newExternalReconciliationLinePM.UniqueKey = Guid.newGuid();
+                newExternalReconciliationLinePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newExternalReconciliationLinePM.OldEntityPM = this.clone(newExternalReconciliationLinePM);
+
+
+            }
+            else {
+                if (newExternalReconciliationLinePM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newExternalReconciliationLinePM.ChangeSetOp = "Update";
+                }
+                else {
+                    newExternalReconciliationLinePM.ChangeSetOp = "Insert";
+                }
+
+                newExternalReconciliationLinePM.OldEntityPM = null;
+                newExternalReconciliationLinePM.EntityParentPM = null;
+            }
+
+            newExternalReconciliationLinePM.IsDirty = false;
+            entityPM.ExternalReconciliationLines.push(newExternalReconciliationLinePM);
+        }
+        if (oldExternalReconciliationLines) {
+
+            for (var itemKey in oldExternalReconciliationLines) {
+                if (entityPM.ExternalReconciliationLines.filter(p => p.UniqueKey === oldExternalReconciliationLines[itemKey].UniqueKey).length === 0) {
+
+                    if (oldExternalReconciliationLines[itemKey]) {
+                        //oldExternalReconciliationLines[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ExternalReconciliationLines.push(oldExternalReconciliationLines[itemKey]);
+                        var oldItemJson = oldExternalReconciliationLines[itemKey];
+                        var deletedPM: ExternalReconciliationLinePM = new ExternalReconciliationLinePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ExternalReconciliationLines.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+
+    public clone(jsonPM: any) {
+        var entityPM: any;
+        entityPM = {};
+
+        var jsonPMKeys = Object.keys(jsonPM);
+        for (var key in jsonPMKeys) {
+
+            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
+                continue;
+            }
+
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+
+        }
+        return entityPM;
+    }
+
+    public GetNewEntityPM() {
+        var entityPM: ExternalReconciliationPM;
+        entityPM = new ExternalReconciliationPM();
+        entityPM.Tenant = InfraSettings.TenantPM.Id;
+        return entityPM;
+    }
+
+
+}
