@@ -210,11 +210,13 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     throw new ApplicationException("VatType is not provided"); 
 
             }
-
-            APInvoicePM invoice = query.GetSingleInvoiceByExternlaEntityId(apinvoice.ExternalAccountingEntityId, apinvoice.Tenant);
-            if(invoice != null)
+            if (apinvoice.ExternalAccountingEntityId != null)
             {
-                throw new Exception("invoice with the same externla id already exist!"); 
+                APInvoicePM invoice = query.GetSingleInvoiceByExternlaEntityId(apinvoice.ExternalAccountingEntityId, apinvoice.Tenant);
+                if (invoice != null)
+                {
+                    throw new Exception("invoice with the same externla id already exist!");
+                }
             }
             // validate totals
             double SubTotalInLocalCurrency =    Math.Round(apinvoice.InvoiceLines.Sum(d => d.LocalCurrencyAmount).Value, 2);
