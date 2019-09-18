@@ -178,11 +178,16 @@ export class ARPaymentMenuButtonsHandler {
 
                         case "ReTransfer":
                             {
-                                button.IsDisabled = true;
-                                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
-                                    if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
-                                        if (this.EntityPM.TransferStatusCode == "TR") {
-                                            button.IsDisabled = false;
+                                if (SessionLocator.TenantPM.AccountingActivated) {
+                                    button.IsHidden = true;
+                                }
+                                else {
+                                    button.IsDisabled = true;
+                                    if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
+                                        if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
+                                            if (this.EntityPM.TransferStatusCode == "TR") {
+                                                button.IsDisabled = false;
+                                            }
                                         }
                                     }
                                 }
