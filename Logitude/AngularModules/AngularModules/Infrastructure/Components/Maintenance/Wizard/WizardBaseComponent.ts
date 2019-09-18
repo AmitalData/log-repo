@@ -135,8 +135,9 @@ export class WizardBaseComponent extends BaseComponent {
                     }
 
                     this.PercentagePM = myPercentagePM;
-                    this.InitAgentObject();
+                   
                 }
+                this.InitAgentObject();
             }
         });
     }
