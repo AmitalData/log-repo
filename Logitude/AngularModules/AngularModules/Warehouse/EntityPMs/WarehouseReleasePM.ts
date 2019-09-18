@@ -279,6 +279,16 @@ export class WarehouseReleasePM {
     public set CustomerAddressId(newValue: string) { if (this.customerAddressId != newValue) { this.customerAddressId = newValue; this.MarkAsDirty("CustomerAddressId"); } }
        
 	 
+    private totalVolumetricWeight: number;
+    public get TotalVolumetricWeight() { return this.totalVolumetricWeight; }
+    public set TotalVolumetricWeight(newValue: number) { if (this.totalVolumetricWeight != newValue) { this.totalVolumetricWeight = newValue; this.MarkAsDirty("TotalVolumetricWeight"); } }
+       
+	 
+    private ratio: number;
+    public get Ratio() { return this.ratio; }
+    public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
+       
+	 
 
     public OldEntityPM: WarehouseReleasePM;
 		
