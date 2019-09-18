@@ -312,7 +312,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
         if (FeatureLocator.HasFeaturePermession("User", "ROLES")) this.IsSalesmanVisible = true;
         else this.IsSalesmanVisible = false;
 
-        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied && SessionLocator.TenantManagementJS.IsMultiPackage) {
             this.IsAdditionalPackagesOnlyVisible = true;
         }
     }
