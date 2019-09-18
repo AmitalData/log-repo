@@ -213,6 +213,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 #region Partners Section
                 Shipment.Shipper = item.ShipperName;
                 Shipment.Consignee = item.ConsigneeName;
+                Shipment.ConsigneeRef1 = item.ConsigneeReference1;
+                Shipment.ConsigneeRef2 = item.ConsigneeReference2;
+
                 if (!string.IsNullOrEmpty(item.ConsigneeId))
                 {
                     Address ConsigneeAddress = ConsgineeAddressLists.Where(d => d.CardId == item.ConsigneeId).FirstOrDefault();
@@ -282,6 +285,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     if (card != null)
                     {
                         Shipment.Customer = card.EnglishName;
+                        Shipment.CustomerId = card.Code;
+                        //Shipment.LeadSource = card.Customer.LeadSource.lead;
+                        Shipment.PaymentTerms = card.PaymentTerm.EnglishName;
+
+
                     }
                 }
 
@@ -595,6 +603,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         if (myPort != null)
                         {
                             Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
+                            Shipment.ToPortCountryCode = myPort.CountryCode;
                         }
 
                     }
@@ -650,12 +659,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                         Shipment.MainCarriageLeg1ATA = MasterData.MainCarriageATA != null ? MasterData.MainCarriageATA : (MasterShipment != null ? MasterShipment.MainCarriageATA : null);
 
+                         Shipment.MasterShipmentNumber = MasterData.MasterShipmentNumber;
 
 
-           
-                    
-                  
-                    
+
+
+
+
 
                     if (!string.IsNullOrEmpty(MasterData.Transshipment1CarrierId))
                     {
@@ -713,6 +723,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         Shipment.MainCarriageLeg1ETA = MasterShipment != null ? MasterShipment.MainCarriageETA : null;
                         Shipment.MainCarriageLeg1ATD = MasterShipment != null ? MasterShipment.MainCarriageATD : null;
                         Shipment.MainCarriageLeg1ATA = MasterShipment != null ? MasterShipment.MainCarriageATA : null;
+                        Shipment.MasterShipmentNumber = MasterData.MasterShipmentNumber;
 
                         if (MasterShipment != null)
                         {

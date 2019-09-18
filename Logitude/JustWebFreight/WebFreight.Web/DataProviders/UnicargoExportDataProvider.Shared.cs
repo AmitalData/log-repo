@@ -103,6 +103,19 @@ namespace WebFreight.Web.DataProviders
         public DateTime? DeliveryActualArrival { get; set; }
         public string ConsigneeAddress { get; set; }
         public string ConsigneePhone { get; set; }
+        public string ConsigneeRef1 { get; set; }
+        public string ConsigneeRef2 { get; set; }
+        public string ToPortCountryCode { get; set; }
+        public string CustomerId { get; set; }
+        public string CustomerContactName { get; set; }
+        public string CustomerContactEmail { get; set; }
+        public string MasterShipmentNumber { get; set; }
+        public string AccountedPayable { get; set; }
+        public string OpenPayable { get; set; }
+        public string AccountedReceivables  { get; set; }
+        public string OpenReceivables { get; set; }
+        public string LeadSource { get; set; }
+        public string PaymentTerms { get; set; }
 
 
 
