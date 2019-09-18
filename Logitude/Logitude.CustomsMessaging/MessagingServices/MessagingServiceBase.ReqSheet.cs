@@ -347,7 +347,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             TResponseData responseData = default(TResponseData);
             DCAServerUploadResponse dCAServerUploadResponse = null;
             DCAServerUploadStatus dCAServerUploadStatus = null;
-            LogMessagingUtil.Instance.Clear();
+            //LogMessagingUtil.Instance.Clear();
             Stopwatch totalStopwatch = null;
 
 

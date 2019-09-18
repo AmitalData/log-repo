@@ -27,6 +27,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Server.Infrastructure;
 using System.Transactions;
+using Logitude.Server.Tools.Utils;
 
 namespace CustomsWorkerRole
 {
@@ -379,23 +380,29 @@ namespace CustomsWorkerRole
 
             
             
-            CustomDBQueueMessage response;
+            CustomDBQueueMessage response=null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
             {
                 while (true)
                 {
+                    LogMessagingUtilWR.Instance.Clear();
+                    LogMessagingUtil.Instance.Clear();
                     //throw new Exception("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
+                    LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         try
                         {
 
+                            LogMessagingUtilWR.Instance.AppendLine("QRecive");
+                            LogMessagingUtil.Instance.LogActionTime(() =>
+                            {
+                                response = _CustomDbQueueService.Receive();
+                            }, "_CustomDbQueueService.Receive()");
 
-
-
-                            response = _CustomDbQueueService.Receive();
+                            
 
 
                             // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
@@ -416,9 +423,16 @@ namespace CustomsWorkerRole
 
                         LastActivity = DateTime.UtcNow;
                         proccesDone = true;
+                        LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db(response);");
                         ProcessMessage_Db(response);
+                        LogMessagingUtilWR.Instance.AppendLine("scope.Complete();");
                         scope.Complete();
+                        LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
                         LogDoneItemInMemory();
+                        if (Environment.MachineName.ToLower().Contains("itzik"))
+                        {
+                            Logger.LogMe(LogMessagingUtilWR.Instance.ToString(), false, this.GetType().ToString());
+                        }
                     }
                 }
             }

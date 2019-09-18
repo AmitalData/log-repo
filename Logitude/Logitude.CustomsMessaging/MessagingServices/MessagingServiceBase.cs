@@ -88,7 +88,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public MessagingServiceBase()
         {
-            LogMessagingUtil.Instance.Clear();
+            string cmd= Environment.CommandLine ?? "";
+            if (!cmd.Contains("AmitalCustomsWindowsService"))
+            //if (CurrentCustomsCommandWR == null)
+            {
+                LogMessagingUtil.Instance.Clear();
+            }
             _swMessagingServiceBase = Stopwatch.StartNew(); 
             MessagingServiceFactoryHelper.InitContainer();
             var interfaceCode = this.MainInterfaceCode;//may raise NotImplementedException

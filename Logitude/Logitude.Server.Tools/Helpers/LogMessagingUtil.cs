@@ -41,6 +41,7 @@ namespace Logitude.Server.Tools.Helpers
             }
             LogMessaging = true;//default yes yes yes !!!
             _StringBuilder = new StringBuilder();
+            
         }
         public bool ToggleLogMessaging()
         {
@@ -69,16 +70,22 @@ namespace Logitude.Server.Tools.Helpers
             _StringBuilder.Append(value);
             return this;
         }
+        
         public void Clear(int max = 10000)
         {
             _Max = max;
             if (!LogMessaging) return;
             _StringBuilder.Clear();
+            
         }
+
+        
+
         public override string ToString()
         {
             return _StringBuilder.ToString();
         }
+        
         public LogMessagingUtil LogActionTime(Action myAction,
             string ActionName = ""
             , [CallerMemberName] string myCallerMemberName = ""
@@ -101,7 +108,7 @@ namespace Logitude.Server.Tools.Helpers
             finally
             {
 
-                if (string.IsNullOrWhiteSpace(ActionName))
+                if (!string.IsNullOrWhiteSpace(ActionName))
                 {
                     this.Append(ActionName);
                 }
@@ -109,7 +116,7 @@ namespace Logitude.Server.Tools.Helpers
                 {
                     this.Append(myCallerFilePath).Append(":").Append(myCallerMemberName).Append("+").Append(myCallerLineNumber);
                 }
-                this.Append(":took:").Append(sw);
+                this.Append(":took:").AppendLine(sw.Elapsed.ToString());
 
 
             }
@@ -145,6 +152,96 @@ namespace Logitude.Server.Tools.Helpers
             //return _StringBuilder.ToString().Substring(0, maxLength - 1);
             return myString.Substring(len - maxLength);
 
+        }
+    }
+
+    public class LogMessagingUtilWR
+    {
+        [ThreadStatic]
+        private static LogMessagingUtilWR _Instance;
+        public static LogMessagingUtilWR Instance
+        {
+            get
+            {
+                if (_Instance == null)
+                {
+                    _Instance = new LogMessagingUtilWR();
+                }
+                return _Instance;
+            }
+
+        }
+        StringBuilder _StringBuilder;
+        
+        private int _Max;
+        public bool LogMessaging { get; private set; }
+
+        //public static LogMessagingUtil Instance { get; private set; }
+
+
+
+        LogMessagingUtilWR()
+        {
+            if (Environment.UserDomainName.Equals("ntdomain", StringComparison.OrdinalIgnoreCase))
+            {
+                LogMessaging = true;
+            }
+            LogMessaging = true;//default yes yes yes !!!
+            _StringBuilder = new StringBuilder();
+            
+        }
+
+        public LogMessagingUtilWR AppendLine(string value)
+        {
+            if (value.Length > 2048)
+            {
+                value = "<<<Truncate" + value.Substring(0, 2048) + "Truncate>>>";
+            }
+            Debug.WriteLine(value);
+            if (!LogMessaging) return this;
+
+            if (_StringBuilder.Length > _Max) return this;
+            _StringBuilder.Append(DateTime.Now.ToLongTimeString()).AppendLine(value);
+            return this;
+        }
+       
+
+        public void Clear(int max = 10000)
+        {
+            _Max = max;
+            if (!LogMessaging) return;
+            _StringBuilder.Clear();
+            
+        }
+
+
+
+        public override string ToString()
+        {
+            return _StringBuilder.ToString();
+        }
+
+        
+        public string GetLastChars(int maxLength)
+        {
+
+
+            return _StringBuilder.ToString().GetLast(maxLength);
+        }
+        public string ToString(int maxLength)
+        {
+            if (_StringBuilder.Length < maxLength)
+            {
+                return ToString();
+            }
+            return _StringBuilder.ToString().Substring(0, maxLength - 1);
+            //return _StringBuilder.ToString().Substring(_StringBuilder.Length - maxLength);
+
+        }
+        string _CustomsRequestsSheetId;
+        public void SetCustomsRequestsSheetId(string CustomsRequestsSheetId)
+        {
+            _CustomsRequestsSheetId = CustomsRequestsSheetId;
         }
     }
 
