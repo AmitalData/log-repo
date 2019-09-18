@@ -640,9 +640,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         myPartnerText = TranslateTextsClass.Translate("Shipment.F.AgentId", tenant) + ": " + entityPM.AgentName;
                         ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity);
                     }
+
+                    if (isNewEntity)
+                    {
+                        ValidateCreditLimitPartnerCreation(entityPM, mySettings);
+                    }
                 }
             }
         }
+
+
         private static void ValidateCreditLimitPartner(int tenant, AgentRepository myAgentRepository, CustomerRepository myCustomerRepository, string myPartnerId, string mydbPartnerId, string myPartnerText, string localCurrencyCode, bool isNewEntity)
         {
             if (!string.IsNullOrEmpty(myPartnerId))
@@ -716,6 +723,122 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+        private static void ValidateCreditLimitPartnerCreation(ShipmentPM entityPM, CreditLimitSetting mySettings)
+        {
+            if (entityPM.CustomerId != null)
+            {
+                Card iCard = CardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant, true);
+
+                if(iCard != null)
+                {                   
+                    string errorText_Blocking = "Credit limit setting is blocking creating shipment for ";
+
+                    switch (iCard.PartnerTypeId)
+                    {
+                        case "CS":
+                            {
+                                if (iCard.IsCustomer)
+                                {
+                                    if (mySettings.CustomersShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Customers");
+                                    }
+                                }
+
+                                else
+                                {
+                                    if (mySettings.ShipperConsigneeShipmentBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shippers and Consignees");
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "AG":
+                            {
+                                if (mySettings.AgentsShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Agents");
+                                }
+
+                                break;
+                            }
+
+                        case "CG":
+                            {
+                                if (mySettings.CustomsAgentsShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Customs Agents");
+                                }
+
+                                break;
+                            }
+
+                        case "SG":
+                            {
+                                if (mySettings.ShippingAgentsShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Shipping Agents");
+                                }
+
+                                break;
+                            }
+
+                        case "AL":
+                            {
+                                if (mySettings.AirlinesShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Airlines");
+                                }
+
+                                break;
+                            }
+
+                        case "SL":
+                            {
+                                if (mySettings.ShippingLinesShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Shipping Lines");
+                                }
+
+                                break;
+                            }
+
+                        case "TR":
+                            {
+                                if (mySettings.TruckersShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Truckers");
+                                }
+
+                                break;
+                            }
+
+                        case "VD":
+                            {
+                                if (mySettings.VendorsShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Vendors");
+                                }
+
+                                break;
+                            }
+
+                        case "WH":
+                            {
+                                if (mySettings.WarehousesShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Warehouses");
+                                }
+
+                                break;
+                            }
                     }
                 }
             }
