@@ -324,6 +324,12 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @DIM_PartnersVATNumberNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersVATNumberNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersVATNumberNewId,0,'DIM_Partners','[VAT Number ]','VAT Number ','Text','false',0,20,'false','false','true','false','false','false')  
+declare @DIM_PartnersCreditLimitAmountLocalNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersCreditLimitAmountLocalNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersCreditLimitAmountLocalNewId,0,'DIM_Partners','[Credit Limit Amount (Local)]','Credit Limit Amount (Local)','Decimal','false',0,0,'false','false','true','false','false','false')  
+declare @DIM_PartnersOpenBalanceLocalNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersOpenBalanceLocalNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_PartnersOpenBalanceLocalNewId,0,'DIM_Partners','[Open Balance (Local)]','Open Balance (Local)','Decimal','false',0,0,'false','false','true','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @DIM_PortsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PortsNewId OUTPUT,'DWObjectTable' 
