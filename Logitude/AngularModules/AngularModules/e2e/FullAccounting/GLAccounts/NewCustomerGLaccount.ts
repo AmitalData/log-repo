@@ -14,14 +14,17 @@ export class NewCustomer{
 
   public CreateNewCustomerGLAccount(Name: string) {
 
-    this.Helper.WaitByIdAndClick('NewCustomer');
+      this.Helper.WaitByIdAndClick('NewCustomer');
+      this.Helper.ItemsVisibility('Customer_EnglishName');
+      this.Helper.ItemsPresent('Customer_EnglishName');
       this.Helper.WaitByIdAndFill('Customer_EnglishName', Name);
       this.Helper.WaitByIdAndFill('Customer_LocalName', Name);
     this.Helper.WaitByIdAndFill('Customer_Address1_Potential', 'Ramallah');
     this.Helper.WaitByIdAndFill('Customer_Address2_Potential', 'Nablus');
     this.Helper.WaitByIdAndFill('Customer_ZipCode_Potential', '00970');
     this.Helper.WaitByIdAndFill('Customer_CountryId_Potential', 'ps');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Customer_CountryId_Potential', 'ps')
+      // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitBusyIndicator();
 
       this.Helper.WaitByIdAndFill('Customer_City_Potential', 'Nablus');

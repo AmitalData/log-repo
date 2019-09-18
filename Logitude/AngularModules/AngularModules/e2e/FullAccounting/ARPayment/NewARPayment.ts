@@ -19,6 +19,8 @@ export class NewARPayment {
         browser.ignoreSynchronization = true;
         this.Helper.WaitByIdAndClick('NewARPayment');
         this.Helper.WaitBusyIndicator();
+        this.Helper.ItemsVisibility('ARPayment_BillToId');
+        this.Helper.ItemsPresent('ARPayment_BillToId');
         this.Helper.WaitByIdAndFill('ARPayment_BillToId', BillToName);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitBusyIndicator();

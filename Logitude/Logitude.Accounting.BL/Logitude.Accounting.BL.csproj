@@ -249,6 +249,7 @@
     <Compile Include="CoreBL\Reports\TrailReportGLAccount.cs" />
     <Compile Include="CoreBL\Reports\TrailReportService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\AccountingIntegrityService.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\ReconcileOpenAmountService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerGLAccountBalance.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerLedgerTransactionService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerTotalByMonthService.cs" />

@@ -21,7 +21,8 @@ export class NewChartOfAccount {
         this.Helper.WaitByIdAndFill('null_Search','chart');
         this.Helper.WaitByIdAndClick('MaintenanceItemMTCA');
         this.Helper.WaitByIdAndClick('NewButton_ChartOfAccount');
-
+        this.Helper.ItemsVisibility('ChartOfAccount_EnglishName');
+        this.Helper.ItemsPresent('ChartOfAccount_EnglishName');
         this.Helper.WaitByIdAndFill('ChartOfAccount_EnglishName', Type + ChartOfAccountNo);
         this.Helper.WaitByIdAndFill('ChartOfAccount_LocalName', Type + ChartOfAccountNo);
         if (Type == 'Revenue') {
@@ -30,6 +31,8 @@ export class NewChartOfAccount {
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'R');
             this.Helper.WaitBusyIndicator();
+            this.Helper.ItemsVisibility('ok-AddChartOfAccount');
+            this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -42,6 +45,8 @@ export class NewChartOfAccount {
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'C');
             this.Helper.WaitBusyIndicator();
+            this.Helper.ItemsVisibility('ok-AddChartOfAccount');
+            this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -55,6 +60,8 @@ export class NewChartOfAccount {
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'V');
             this.Helper.WaitBusyIndicator();
+            this.Helper.ItemsVisibility('ok-AddChartOfAccount');
+            this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -68,6 +75,8 @@ export class NewChartOfAccount {
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'B');
             this.Helper.WaitBusyIndicator();
+            this.Helper.ItemsVisibility('ok-AddChartOfAccount');
+            this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -80,6 +89,8 @@ export class NewChartOfAccount {
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'E');
             this.Helper.WaitBusyIndicator();
+            this.Helper.ItemsVisibility('ok-AddChartOfAccount');
+            this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -92,6 +103,8 @@ export class NewChartOfAccount {
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'W');
             this.Helper.WaitBusyIndicator();
+            this.Helper.ItemsVisibility('ok-AddChartOfAccount');
+            this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
@@ -104,6 +117,8 @@ export class NewChartOfAccount {
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'D');
             this.Helper.WaitBusyIndicator();
+            this.Helper.ItemsVisibility('ok-AddChartOfAccount');
+            this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
             this.Helper.WaitBusyIndicator();
             this.Helper.WaitWindowClosed();
