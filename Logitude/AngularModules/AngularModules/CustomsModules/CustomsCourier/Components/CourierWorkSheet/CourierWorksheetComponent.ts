@@ -1081,8 +1081,6 @@ implements OnDestroy
             }
         }
 
-            }
-        }
         if (this.SelectedPendingCodeFilter != null) {
             switch (this.SelectedPendingCodeFilter.Key) {
                 case "A": {
