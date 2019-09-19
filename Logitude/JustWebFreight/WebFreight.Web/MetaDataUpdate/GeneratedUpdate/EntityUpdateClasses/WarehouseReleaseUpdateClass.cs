@@ -3166,6 +3166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalVolumetricWeight",
+					  						OldFieldName =  "TotalVolumetricWeight",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3185,6 +3186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TotalVolumetricWeight",
 					  						ListPropertyPath =  "TotalVolumetricWeight",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3225,6 +3227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Ratio",
+					  						OldFieldName =  "Ratio",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -3244,6 +3247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Ratio",
 					  						ListPropertyPath =  "Ratio",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3524,7 +3528,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature WarehouseReleaseFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature WarehouseReleaseFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature WarehouseReleaseFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseReleaseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.PackageFeature", NameTextCodeDefaultText = "WarehouseRelease Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature WarehouseReleaseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.PackageFeature", NameTextCodeDefaultText = "WarehouseRelease Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature WarehouseReleaseFeature_ShowNewFullWarehouseRelease = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShowNewFullWarehouseRelease", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.ShowNewFullWarehouseRelease", NameTextCodeDefaultText = @"Show New Full Warehouse Release Button" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
