@@ -813,10 +813,130 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                 }
                             }
                         }
+
+                        ValidateCreditLimitPartnerCreation(entityPM, mySettings);
                     }
                 }
             }
         }
+
+        private static void ValidateCreditLimitPartnerCreation(ARInvoicePM entityPM, CreditLimitSetting mySettings)
+        {
+            if (entityPM.BillToId != null)
+            {
+                Card iCard = CardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant, true);
+
+                if (iCard != null)
+                {
+                    string errorText_Blocking = "Credit limit setting is blocking creating invoice for ";
+
+                    switch (iCard.PartnerTypeId)
+                    {
+                        case "CS":
+                            {
+                                if (iCard.IsCustomer)
+                                {
+                                    if (mySettings.CustomersShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Customers");
+                                    }
+                                }
+
+                                else
+                                {
+                                    if (mySettings.ShipperConsigneeShipmentBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shippers and Consignees");
+                                    }
+                                }
+
+                                break;
+                            }
+
+                        case "AG":
+                            {
+                                if (mySettings.AgentsShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Agents");
+                                }
+
+                                break;
+                            }
+
+                        case "CG":
+                            {
+                                if (mySettings.CustomsAgentsShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Customs Agents");
+                                }
+
+                                break;
+                            }
+
+                        case "SG":
+                            {
+                                if (mySettings.ShippingAgentsShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Shipping Agents");
+                                }
+
+                                break;
+                            }
+
+                        case "AL":
+                            {
+                                if (mySettings.AirlinesShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Airlines");
+                                }
+
+                                break;
+                            }
+
+                        case "SL":
+                            {
+                                if (mySettings.ShippingLinesShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Shipping Lines");
+                                }
+
+                                break;
+                            }
+
+                        case "TR":
+                            {
+                                if (mySettings.TruckersShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Truckers");
+                                }
+
+                                break;
+                            }
+
+                        case "VD":
+                            {
+                                if (mySettings.VendorsShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Vendors");
+                                }
+
+                                break;
+                            }
+
+                        case "WH":
+                            {
+                                if (mySettings.WarehousesShipmentsBlock)
+                                {
+                                    throw new ApplicationException(errorText_Blocking + "Warehouses");
+                                }
+
+                                break;
+                            }
+                    }
+                }
+            }
+        }
+
         private static void ValidateAccountingSetting(ARInvoicePM entityPM, IInvoiceContext myContext, ICommonDataContext myCommonContext, bool isNew)
         {
             Tenant loggedTenant = (from a in myCommonContext.Tenants.Include("AccountingSetting")
