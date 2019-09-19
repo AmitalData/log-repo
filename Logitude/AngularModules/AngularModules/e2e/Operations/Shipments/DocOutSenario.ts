@@ -31,10 +31,6 @@ export class DocOutSenario {
     shipperRef = this.NewDirectShipment.DoOperations();
     this.NewDirectShipment.SearchForShipment(shipperRef);
     this.NewDirectShipment.EditShipment(shipperRef);
-   // this.NewDirectShipment.DoOperations();
-
-//this.docsOutTab.DocsOutTab();
-//  this.helper.WaitBusyIndicator();
 
 }
 
