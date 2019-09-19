@@ -647,7 +647,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             depositLine.IsOutOfDeposit = false;
             depositLine.LocalAmount = cashbookLine.LocalAmount;
             depositLine.ForeignAmount = cashbookLine.ForeignAmount;
-
+            depositLine.DueDate = cashbookLine.DueDate;
             this.EntityPM.AddBankDepositLine(depositLine);
             this.BankDepositLines.push(depositLine);
         }
