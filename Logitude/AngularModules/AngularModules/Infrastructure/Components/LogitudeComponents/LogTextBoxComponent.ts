@@ -100,7 +100,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }
 
         this.textValue = newValue;
-        this.textValue = this.FormatTextValueNumbers(newValue);
+        //this.textValue = this.FormatTextValueNumbers(newValue);
         if (this.IsPasted) {
             this.IsPasted = false;
             switch (this.InputType && this.InputType.toLowerCase()) {
