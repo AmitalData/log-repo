@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
@@ -30,7 +30,7 @@ import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
                                     <li class="ValidationItem" [ngStyle]="{width: ItemWidth}" *ngFor="let item of ItemsSource" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
                                         <img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="./Images/ValidationError.png" />
                                         <span [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'"
-                                                [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '20px'} : {'margin-left': '20px'}">{{item}}</span>
+                                               id="{{'ValidationSummaryText' | IdGeneratorPipe}}" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '20px'} : {'margin-left': '20px'}">{{item}}</span>
                                     </li>
                                 </ul>
                             </td>
