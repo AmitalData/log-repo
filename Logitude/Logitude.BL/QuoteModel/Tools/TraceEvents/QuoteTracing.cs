@@ -20,6 +20,8 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
         {
             int tenant = entityPM.Tenant;
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+
             ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode("Quote", entityPM.Tenant);
             EventTypeQuery eventTypeQuery = new EventTypeQuery(tenant);
             QuoteStageRepository myQuoteStageRepository = new QuoteStageRepository(tenant);
@@ -264,7 +266,7 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                     {
                         entityPM.StageId = myStage.Id;
                         entityPM.StageName = myStage.Name;
-                        entityPM.AcceptedDate = todayDate;
+                        entityPM.AcceptedDate = todayDateTime;
                         entityPM.IsClosed = true;
                         entityPM.LastStageDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
