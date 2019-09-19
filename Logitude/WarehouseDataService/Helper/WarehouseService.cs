@@ -93,7 +93,7 @@ namespace WarehouseDataService.Helper
                     }
                     else Thread.Sleep(2000);
                 }
-                else Thread.Sleep(new TimeSpan(0, 15, 0));
+                else Thread.Sleep(new TimeSpan(0, 10, 0));
             }
         }
 
@@ -122,11 +122,11 @@ namespace WarehouseDataService.Helper
                                 warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
                                 Thread.Sleep(ApplicationInfo.UpdateWarehouseSleepTime);
                             }
-                            else Thread.Sleep(new TimeSpan(0, 15, 0));
+                            else Thread.Sleep(new TimeSpan(0, 10, 0));
                         }
-                        else Thread.Sleep(new TimeSpan(0,15,0));
+                        else Thread.Sleep(new TimeSpan(0, 10, 0));
                     }
-                    else Thread.Sleep(new TimeSpan(0, 15, 0));
+                    else Thread.Sleep(new TimeSpan(0, 10, 0));
                 }
 
                 catch (Exception ex)

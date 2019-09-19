@@ -12,6 +12,7 @@ export class InvoiceTotalsClass {
     public ExternalVatCard: string;
     public ExternalTAXItemId: string;
     public VatTypeCell: string;
+    public VatRecognizedPercentage: number;
 }
 
 export class SummaryItem {

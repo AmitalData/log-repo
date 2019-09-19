@@ -167,14 +167,14 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                 scope.Complete();
             }
 
-            if (entityPM.IsMultiPackage)
+            if (entityPM.MainAdditionalPackageApplied || !entityPM.IsMultiPackage)
             {
-                entityPM.PackageName = "Multi Package";
+                entityPM.PackageName = packageName;
             }
 
             else
             {
-                entityPM.PackageName = packageName;
+                entityPM.PackageName = "Multi Package";
             }
 
             entityPOCO.PackageName = entityPM.PackageName;

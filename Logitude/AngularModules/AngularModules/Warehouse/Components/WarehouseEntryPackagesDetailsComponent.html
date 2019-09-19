@@ -176,7 +176,7 @@
 
 
                         <!-- PackageTypeName -->
-                        <log-column [width]="'120'" [header]="'Package Type'">
+                        <log-column [width]="'90'" [header]="'Package Type'">
 
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'left'">
                                <div [attr.title]="item.PackageTypeName">{{item.PackageTypeName }} </div>
@@ -187,7 +187,7 @@
 
 
                         <!-- Container# -->
-                        <log-column *ngIf="!IsLCLEntity" [width]="'120'" [header]="'Container Number'">
+                        <log-column *ngIf="!IsLCLEntity" [width]="'80'" [header]="'Container #'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
 
                                 <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.ContainerNumber">
@@ -240,10 +240,10 @@
 
 
             <!-- Quantity -->
-            <log-column [width]="'80'" [header]="'Quantity'">
+            <log-column [width]="'70'" [header]="'Quantity'">
                 <log-cell-template template="let item" #logcelltemplate  [IsEnabled]="item.IsQuantityEnabled && !item.IsDisabled"> 
 
-                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                    <div [attr.title]="item.Quantity" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Quantity}}
                     </div>
 
@@ -255,9 +255,9 @@
 
 
             <!--Length-->
-            <log-column [width]="'85'" [header]="LengthLabel" >
+            <log-column [width]="'59'" [header]="LengthLabel" >
                 <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer && !item.IsDisabled">
-                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                    <div [attr.Length]="item.Length" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Length}}
                     </div>
 
@@ -269,9 +269,9 @@
 
 
               <!--Width-->
-            <log-column [width]="'80'" [header]="WidthLabel" >
+            <log-column  [width]="'59'" [header]="WidthLabel" >
                 <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer && !item.IsDisabled">
-                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                    <div [attr.title]="item.Width" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Width}}
                     </div>
 
@@ -283,9 +283,9 @@
                         
                         
              <!--Height-->
-            <log-column [width]="'85'" [header]="HeightLabel">
+            <log-column  [width]="'58'" [header]="HeightLabel">
                 <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsDimensionEnabled && !item.IsContainer && !item.IsDisabled">
-                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                    <div [attr.title]="item.Height" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Height}}
                     </div>
 
@@ -299,7 +299,7 @@
             <!-- Volume -->
             <log-column [width]="'95'" [header]="VolumeLabel">
                 <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsVolumeEnabled && !item.IsDisabled">
-                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                    <div  *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                         {{item.Volume | NumbersPipe:'N3'}}
                     </div>
 
@@ -331,14 +331,14 @@
             </log-column>
 
             <!-- Commodity No-->
-            <log-column [width]="'100'" [header]="'Commodity #'">
+            <!--<log-column [width]="'100'" [header]="'Commodity #'">
                 <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
                     {{item.CommodityNumber}}
                 </log-cell-template>
-            </log-column>
+            </log-column>-->
 
                         <!--Description-->
-                        <log-column [width]="'170'" [header]="'Description Of Goods'">
+                        <log-column [width]="'140'" [header]="'Description Of Goods'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
 
                                 <div [attr.title]="item.Description" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;">
@@ -353,7 +353,7 @@
 
 
                         <!--Location-->
-                        <log-column [width]="'90'" [header]="'Location'">
+                        <!--<log-column [width]="'90'" [header]="'Location'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="!item.IsDisabled">
 
                                 <div [attr.title]="item.Location" *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;">
@@ -364,7 +364,7 @@
                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Location'" [Text]="item.Location" [DataContext]="item" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </div>
                             </log-cell-template>
-                        </log-column>
+                        </log-column>-->
 
 
                         <!-- In stock-->

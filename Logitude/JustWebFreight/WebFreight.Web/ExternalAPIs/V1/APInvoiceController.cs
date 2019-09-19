@@ -179,6 +179,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 VatTypePercentagePM vat = vatTypePercentageQuery.GetVatTypePercentagesForVatType(tenant, line.VatTypeId).FirstOrDefault();
                 line.VatPercentage = vat?.Percentage;
 
+                VatTypeQuery vatTypeQuery = new VatTypeQuery(tenant);
+                VatTypePM vatType = vatTypeQuery.GetSinglePM(line.VatTypeId, line.Tenant);
+                line.VatRecognizedPercentage = vatType.RecognizedPercentage/100;
 
                 // LocalCurrencyAmount,ForiegnCurrencyAmount
                 double? valueInLocal = line.InvoiceCurrencyAmount * apinvoice.InvoiceCurrencyExchangeRate;
