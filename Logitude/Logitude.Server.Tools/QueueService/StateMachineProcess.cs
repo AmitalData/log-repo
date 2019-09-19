@@ -83,7 +83,7 @@ namespace Logitude.Server.Tools.QueueService
         {
 
             CurrentCommand = command;
-
+            LogMessagingUtilWR.Instance.AppendLine(command.ToString());
 
             CurrentState = GetNext(command);
             bool testClient = false;

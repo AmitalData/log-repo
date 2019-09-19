@@ -172,7 +172,7 @@ namespace Logitude.Server.Tools.Helpers
 
         }
         StringBuilder _StringBuilder;
-        
+
         private int _Max;
         public bool LogMessaging { get; private set; }
 
@@ -188,61 +188,79 @@ namespace Logitude.Server.Tools.Helpers
             }
             LogMessaging = true;//default yes yes yes !!!
             _StringBuilder = new StringBuilder();
-            
+
         }
 
-        public LogMessagingUtilWR AppendLine(string value)
+        private DateTime _LastClearAt;
+        DateTime _LastWriteLineAt = DateTime.Now;
+        public LogMessagingUtilWR AppendLine(string Line)
         {
-            if (value.Length > 2048)
+            var ts = DateTime.Now.Subtract(_LastWriteLineAt);
+            _LastWriteLineAt = DateTime.Now;
+            if (Line.Length > 2048)
             {
-                value = "<<<Truncate" + value.Substring(0, 2048) + "Truncate>>>";
+                Line = "<<<Truncate" + Line.Substring(0, 2048) + "Truncate>>>";
             }
-            Debug.WriteLine(value);
+            Debug.WriteLine(Line);
             if (!LogMessaging) return this;
 
             if (_StringBuilder.Length > _Max) return this;
-            _StringBuilder.Append(DateTime.Now.ToLongTimeString()).AppendLine(value);
+            var formatLine = ts.TotalMilliseconds + ":" + Line;
+            _StringBuilder.AppendLine(formatLine);
             return this;
         }
-       
+
 
         public void Clear(int max = 10000)
         {
+            _LastClearAt = DateTime.Now;
+            _LastWriteLineAt = DateTime.Now;
             _Max = max;
             if (!LogMessaging) return;
             _StringBuilder.Clear();
-            
+
         }
 
 
 
         public override string ToString()
         {
-            return _StringBuilder.ToString();
-        }
-
-        
-        public string GetLastChars(int maxLength)
-        {
-
-
-            return _StringBuilder.ToString().GetLast(maxLength);
-        }
-        public string ToString(int maxLength)
-        {
-            if (_StringBuilder.Length < maxLength)
+            var ts = DateTime.Now.Subtract(_LastClearAt);
+            if (ts.TotalSeconds > 120)
             {
-                return ToString();
+
+                return _StringBuilder.AppendLine(">120:" + ts.TotalMilliseconds).ToString();
             }
-            return _StringBuilder.ToString().Substring(0, maxLength - 1);
-            //return _StringBuilder.ToString().Substring(_StringBuilder.Length - maxLength);
+
+            if (ts.TotalSeconds > 60)
+            {
+                return _StringBuilder.AppendLine(">60:" + ts.TotalMilliseconds).ToString();
+            }
+            if (ts.TotalSeconds > 30)
+            {
+                return _StringBuilder.AppendLine(">30:" + ts.TotalMilliseconds).ToString();
+            }
+
+            if (ts.TotalSeconds > 10)
+            {
+                return _StringBuilder.AppendLine(">10:" + ts.TotalMilliseconds).ToString();
+            }
+            if (ts.TotalSeconds > 5)
+            {
+                return _StringBuilder.AppendLine(">5:" + ts.TotalMilliseconds).ToString();
+            }
+
+            if (ts.TotalSeconds > 1)
+            {
+                return _StringBuilder.AppendLine(">1:" + ts.TotalMilliseconds).ToString();
+            }
+            return _StringBuilder.AppendLine("<1:" + ts.TotalMilliseconds).ToString();
 
         }
-        string _CustomsRequestsSheetId;
-        public void SetCustomsRequestsSheetId(string CustomsRequestsSheetId)
-        {
-            _CustomsRequestsSheetId = CustomsRequestsSheetId;
-        }
+
+
+
+
     }
 
 

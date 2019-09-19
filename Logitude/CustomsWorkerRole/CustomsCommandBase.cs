@@ -397,12 +397,11 @@ namespace CustomsWorkerRole
                         {
 
                             LogMessagingUtilWR.Instance.AppendLine("QRecive");
-                            LogMessagingUtil.Instance.LogActionTime(() =>
-                            {
-                                response = _CustomDbQueueService.Receive();
-                            }, "_CustomDbQueueService.Receive()");
-
                             
+                            response = _CustomDbQueueService.Receive();
+                            LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
+
+
 
 
                             // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
@@ -416,7 +415,8 @@ namespace CustomsWorkerRole
 
                         if (response == null || (response != null && response.MessageId == null))
                         {
-                            Thread.Sleep(TimeSpan.FromSeconds(5));
+                            //Thread.Sleep(TimeSpan.FromSeconds(5));
+                            Thread.Sleep(TimeSpan.FromMilliseconds(100));
                             break;
                         }
 
@@ -429,6 +429,7 @@ namespace CustomsWorkerRole
                         scope.Complete();
                         LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
                         LogDoneItemInMemory();
+                        LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
                         if (Environment.MachineName.ToLower().Contains("itzik"))
                         {
                             Logger.LogMe(LogMessagingUtilWR.Instance.ToString(), false, this.GetType().ToString());
