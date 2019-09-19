@@ -24,7 +24,7 @@ import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 
                             <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;" >
 
-                                <div *ngIf="isSingleError" class="SingleError" [ngStyle]="LayoutDirection == 'rtl' ? {'padding-right': '25px'} : {'padding-left': '25px'}"><img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="./Images/ValidationError.png" />{{ItemsSource[0]}}</div>
+                                <div *ngIf="isSingleError"  class="SingleError" id="{{'ValidationSummaryText' | IdGeneratorPipe}}" [ngStyle]="LayoutDirection == 'rtl' ? {'padding-right': '25px'} : {'padding-left': '25px'}"><img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="./Images/ValidationError.png" />{{ItemsSource[0]}}</div>
 
                                 <ul *ngIf="!isSingleError">
                                     <li class="ValidationItem" [ngStyle]="{width: ItemWidth}" *ngFor="let item of ItemsSource" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
