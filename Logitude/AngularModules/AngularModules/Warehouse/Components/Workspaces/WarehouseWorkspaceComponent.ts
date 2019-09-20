@@ -40,6 +40,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         super();
         this.SetReleasesQueriesVisibility();
         this.SetEntrysQueriesVisibility();
+        this.SetNewReleaseVisibility();
         this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
         this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
         this.warehouseReleaseListExtendedService = new WarehouseReleaseListExtendedService();
@@ -52,7 +53,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
     WarehouseEntryConnectedToShipmentsQueryCount: number = 0;
     WarehouseEntryNotConnectedToShipmentsQueryCount: number = 0;
     WarehouseEntryAllQueryCount: number = 0;
-
+    IsNewReleaseVisible: boolean = false;
 
     WarehouseReleaseCreatedQueryCount: number = 0;
     WarehouseReleaseReleasedQueryCount: number = 0;
@@ -117,7 +118,12 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         this.WarehouseReleaseVisibility = this.AllReleaseQueriesVisibility || this.ReleasedQueriesVisibility || this.CancledReleaseQueriesVisibility || this.CreatedReleaseQueriesVisibility? true : false;
     }
 
-
+    SetNewReleaseVisibility() {
+        
+        if (FeatureLocator.HasFeaturePermession("WarehouseRelease", "ShowNewFullWarehouseRelease")) {
+            this.IsNewReleaseVisible = true;
+        }
+    }
 
     CreatedEntryQueriesVisibility: boolean = false;
     EnteredEntryQueriesVisibility: boolean = false;

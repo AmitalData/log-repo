@@ -42,6 +42,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     GrossWeightLabel: string;
     DimensionsLabel: string;
     PackageType: string;
+    IsFromFullWarehouseReleaseComponent: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         super();
@@ -56,7 +57,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
 
     SetWindowArgs(args: any) {
         this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe(response => {
-
+         
             this.Start(args);
         });
 
@@ -66,22 +67,28 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     Start(args) {
 
         this.WarehouseEntryPackagesLists = [];
+        this.IsFromFullWarehouseReleaseComponent = args.IsFromFullWarehouseReleaseComponent;
         this.warehouseReleasePM = args.WarehouseReleasePM;
         this.ViewModelTrigger = args.ViewModelTrigger;
-
+        
         this.transportModeId = this.ViewModelTrigger.TransportModeId;
         this.DirectionId = this.ViewModelTrigger.DirectionId;
         this.CustomerId = this.ViewModelTrigger.CustomerId;
         this.FromPortId = this.ViewModelTrigger.FromPortId;
         this.ToPortId = this.ViewModelTrigger.ToPortId;
-
+      
 
         this.PackageType = args.PackageType;
 
         this.AllWarehouseEntryPackagesLists = args.WarehouseEntryPackagesLists;
-
+        
         this.IsStartFilter = true;
         this.FilterWarehouseEntryPackageList();
+
+        //if (this.IsFromFullWarehouseReleaseComponent) {
+
+        //    this.LoadWarehouseEntryPackageListsByCustomerId();
+        //}
 
         this.SetValue();
         this.IsLoadPage = true;
@@ -125,6 +132,8 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             if (!AppTool.IsNullOrEmpty(this.ToPortId)) {
                 this.WarehouseEntryPackagesLists = this.WarehouseEntryPackagesLists.filter(d => d.ToPortId == this.ToPortId);
             }
+
+           
 
             if (this.WarehouseEntryPackagesLists.length == 0) {
                 this.IsShowMessageNoResult = true;
@@ -301,7 +310,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     set CustomerId(newValue: string) {
         if (this.customerId != newValue) {
             this.customerId = newValue;
-
+           
             if (this.warehouseReleasePM.CustomerId != newValue) {
                 this.ViewModelTrigger.CustomerId = newValue;
                 this.warehouseReleasePM.CustomerId = newValue;
@@ -342,8 +351,8 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
 
 
     LoadWarehouseEntryPackageListsByCustomerId() {
-
-        this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(this.warehouseReleasePM.ShipmentId, this.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
+        var shipmentId = this.IsFromFullWarehouseReleaseComponent ? this.warehouseReleasePM.ShipmentId : null;
+        this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(shipmentId, this.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
             var pmResponse: any = res;
             if (!pmResponse.HasError) {
                 this.AllWarehouseEntryPackagesLists = pmResponse.Result;

@@ -102,6 +102,10 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string ToPortId  { get; set; }
        [DataMember]
        public string CustomerAddressId  { get; set; }
+       [DataMember]
+       public decimal TotalVolumetricWeight  { get; set; }
+       [DataMember]
+       public double? Ratio  { get; set; }
    }
 
 }
