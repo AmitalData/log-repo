@@ -48,13 +48,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
-
-        this.CurrentSession.SessionEvent.subscribe((res) => {
-            if (res == "PriceStepsModified") {
-                this.LoadVersions();
-            }
-        })
-
         this.Listen();        
     }
 
@@ -79,9 +72,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         this.LoadCompareToVersions();
 
-        this.SetUIProperties();
-        this.SetStepsLabelsAndVisibility();
-
+       
         if (this.CurrentVersion.IsDraft) {
             this.FillTariffLines(this.CurrentVersion.TariffLines);
         }
@@ -90,6 +81,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.LoadTariffLines("currentVersion");
         }
         this.GetTariffSettings();
+        this.SetUIProperties();
+        this.SetStepsLabelsAndVisibility();
     }
 
     private GetTariffSettings() {
@@ -141,6 +134,13 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                         CachedDataManager.RefreshTableData("Port", true);
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
+
+                    this.CurrentSession.SessionEvent.subscribe((res) => {
+                        if (res == "PriceStepsModified") {
+                            this.LoadVersions();
+                        }
+                    });
+
                 }
 
                 else {
@@ -368,8 +368,19 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public Step7PriceVisibility: boolean;
     public Step8PriceVisibility: boolean;
 
+    ResetStepsVisibility() {
+        this.Step1PriceVisibility = false;
+        this.Step2PriceVisibility = false;
+        this.Step3PriceVisibility = false;
+        this.Step4PriceVisibility = false;
+        this.Step5PriceVisibility = false;
+        this.Step6PriceVisibility = false;
+        this.Step7PriceVisibility = false;
+        this.Step8PriceVisibility = false;
+    }
     SetStepsLabelsAndVisibility() {
         if (!AppTool.IsNullOrEmpty(this.PriceSteps)) {
+            this.ResetStepsVisibility();
             if (this.PriceSteps.indexOf(',') > -1) {
                 var steps: string[] = [] = this.PriceSteps.split(",");
                 var count = steps.length;
@@ -381,6 +392,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                     this["Step" + i + "PriceLabel"] = steps[i - 1] + " KG";
                     this["Step" + i + "PriceVisibility"] = true;
                 }
+            }
+            else {
+                this.Step1PriceLabel = this.PriceSteps;
+                this.Step1PriceVisibility = true;
             }
         }
     }
