@@ -43,13 +43,14 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Customer');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
             this.Helper.WaitBusyIndicator();
-            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', '5787' + 'C');
+            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'C');
             this.Helper.WaitBusyIndicator();
             this.Helper.ItemsVisibility('ok-AddChartOfAccount');
             this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
 
             var boo = this.Helper.ItemsVisibility('ValidationSummaryText');
+
             if ('boo') {
 
                 var chartOfAccountNo1 = this.GeneralFun.RandomNumAcc();
