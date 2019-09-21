@@ -27,7 +27,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private bool IncludeInnerProject = false;
         private ITimeManagementContext iContext;
         private IQueryable<TMProject> iQueryable_Projects = null;
-        private IQueryable<TMProject> iQueryable_InnerProjects = null;       
         private IQueryable<TMEmployeeTime> iQueryable_EmployeeTimes = null;
         private List<TMProjectCategory> AllCategories = null;
         private WorkDaysPerCategoryDataProvider iDataProvider;
@@ -165,7 +164,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private void BuildSourceData()
         {
             this.iQueryable_Projects = (from d in iContext.TMProjects where d.Tenant == tenant && d.IsProrated == false select d);
-            this.iQueryable_InnerProjects = this.iQueryable_Projects;
             this.iQueryable_EmployeeTimes = (from d in iContext.TMEmployeeTimes where d.Tenant == tenant select d);
             this.iQueryable_EmployeeTimes = this.iQueryable_EmployeeTimes.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
             this.iQueryable_EmployeeTimes = this.iQueryable_EmployeeTimes.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
@@ -173,7 +171,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             if (!string.IsNullOrEmpty(this.projectId))
             {
                 iQueryable_Projects = iQueryable_Projects.Where(d => d.Id == this.projectId);
-                this.iQueryable_InnerProjects = iQueryable_Projects;
                 iQueryable_EmployeeTimes = iQueryable_EmployeeTimes.Where(d => d.ProjectId == this.projectId);
             }
 
@@ -207,10 +204,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 iQueryable_Projects = iQueryable_Projects.Where(d => d.ExternalProjectNumber == this.externalProjectNumber);
             }
 
-            if (!this.IncludeInnerProject)
-            {
-                iQueryable_Projects = iQueryable_Projects.Where(d => d.IsInnerProject == this.IncludeInnerProject);
-            }
+            //if (!this.IncludeInnerProject)
+            //{
+            //    iQueryable_Projects = iQueryable_Projects.Where(d => d.IsInnerProject == this.IncludeInnerProject);
+            //}
         }
         private void BuildReportData()
         {
@@ -300,9 +297,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     ProjectId = item.ProjectId,
                     OwnerId = item.OwnerId,
                     TotalDaysWithoutIncludingInnerDouble = item.TotalMinutes,
+                    IsVisisble = IncludeInnerProject,
                 };
 
-                var listOfCategoryInnerProjects = this.iQueryable_InnerProjects.Where(d => d.ProjectNumber.StartsWith(item.ProjectNumber + "-") || d.ProjectNumber == item.ProjectNumber).Select(a=>a.Id).ToList();
+                var listOfCategoryInnerProjects = this.iQueryable_Projects.Where(d => d.ProjectNumber.StartsWith(item.ProjectNumber + "-") || d.ProjectNumber == item.ProjectNumber).Select(a=>a.Id).ToList();
                 var daysOfListCategoryInnerProjects = DataGroups.Where(d => listOfCategoryInnerProjects.Contains(d.ProjectId)).ToList();
                 itemRecord.TotalDaysWithoutIncludingInner = this.GetDaysFormatFromMinutes(item.TotalMinutes);
                 itemRecord.TotalDaysIncludingInnerDouble = daysOfListCategoryInnerProjects.Sum(s => s.TotalMinutes);
@@ -362,7 +360,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 iList.Add(itemRecord);
             }
 
-            this.iDataProvider.GategoryRecordList = iList.ToList();
+            this.iDataProvider.GategoryRecordList = iList.Where(a=>a.IsVisisble).ToList();
             if (this.iDataProvider.GategoryRecordList.Count > 0)
             {
                 double iTotalDaysIncludingInnerDouble = this.iDataProvider.GategoryRecordList.Sum(s => s.TotalDaysIncludingInnerDouble);

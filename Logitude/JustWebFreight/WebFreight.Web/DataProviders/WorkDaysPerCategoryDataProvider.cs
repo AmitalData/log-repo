@@ -38,5 +38,6 @@ namespace WebFreight.Web.DataProviders
         public double TotalDaysIncludingInnerDouble { get; set; }
         public double TotalDaysWithoutIncludingInnerDouble { get; set; }
         public double TotalGategoryDaysDouble { get; set; }
+        public bool IsVisisble { get; set; }
     }
 }
