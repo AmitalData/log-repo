@@ -297,9 +297,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     ProjectId = item.ProjectId,
                     OwnerId = item.OwnerId,
                     TotalDaysWithoutIncludingInnerDouble = item.TotalMinutes,
-                    IsVisisble = IncludeInnerProject,
+                    IsVisisble = true,
                 };
 
+           
                 var listOfCategoryInnerProjects = this.iQueryable_Projects.Where(d => d.ProjectNumber.StartsWith(item.ProjectNumber + "-") || d.ProjectNumber == item.ProjectNumber).Select(a=>a.Id).ToList();
                 var daysOfListCategoryInnerProjects = DataGroups.Where(d => listOfCategoryInnerProjects.Contains(d.ProjectId)).ToList();
                 itemRecord.TotalDaysWithoutIncludingInner = this.GetDaysFormatFromMinutes(item.TotalMinutes);
@@ -333,9 +334,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         if (iProject != null)
                         {
                             itemRecord.ProjectName = iProject.Name;
+
+                            if (!this.IncludeInnerProject)
+                            {
+                                itemRecord.IsVisisble = iProject.IsInnerProject ? false : true;
+                            }
                         }
                     }
                 }
+
 
                 if (string.IsNullOrEmpty(itemRecord.CategoryName))
                 {
