@@ -812,9 +812,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                     }
                                 }
                             }
-                        }
 
-                        ValidateCreditLimitPartnerCreation(entityPM, mySettings);
+                            ValidateCreditLimitPartnerCreation(entityPM, mySettings);
+                        }                        
                     }
                 }
             }
@@ -836,7 +836,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             {
                                 if (iCard.IsCustomer)
                                 {
-                                    if (mySettings.CustomersShipmentsBlock)
+                                    if (mySettings.CustomersInvoicesBlock)
                                     {
                                         throw new ApplicationException(errorText_Blocking + "Customers");
                                     }
@@ -855,7 +855,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                         case "AG":
                             {
-                                if (mySettings.AgentsShipmentsBlock)
+                                if (mySettings.AgentsInvoicesBlock)
                                 {
                                     throw new ApplicationException(errorText_Blocking + "Agents");
                                 }
@@ -865,7 +865,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                         case "CG":
                             {
-                                if (mySettings.CustomsAgentsShipmentsBlock)
+                                if (mySettings.CustomsAgentsInvoicesBlock)
                                 {
                                     throw new ApplicationException(errorText_Blocking + "Customs Agents");
                                 }
@@ -875,7 +875,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                         case "SG":
                             {
-                                if (mySettings.ShippingAgentsShipmentsBlock)
+                                if (mySettings.ShippingAgentsInvoicesBlock)
                                 {
                                     throw new ApplicationException(errorText_Blocking + "Shipping Agents");
                                 }
@@ -885,7 +885,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                         case "AL":
                             {
-                                if (mySettings.AirlinesShipmentsBlock)
+                                if (mySettings.AirlinesInvoicesBlock)
                                 {
                                     throw new ApplicationException(errorText_Blocking + "Airlines");
                                 }
@@ -895,7 +895,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                         case "SL":
                             {
-                                if (mySettings.ShippingLinesShipmentsBlock)
+                                if (mySettings.ShippingLinesInvoicesBlock)
                                 {
                                     throw new ApplicationException(errorText_Blocking + "Shipping Lines");
                                 }
@@ -905,7 +905,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                         case "TR":
                             {
-                                if (mySettings.TruckersShipmentsBlock)
+                                if (mySettings.TruckersInvoicesBlock)
                                 {
                                     throw new ApplicationException(errorText_Blocking + "Truckers");
                                 }
@@ -915,7 +915,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                         case "VD":
                             {
-                                if (mySettings.VendorsShipmentsBlock)
+                                if (mySettings.VendorsInvoicesBlock)
                                 {
                                     throw new ApplicationException(errorText_Blocking + "Vendors");
                                 }
@@ -925,7 +925,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                         case "WH":
                             {
-                                if (mySettings.WarehousesShipmentsBlock)
+                                if (mySettings.WarehousesInvoicesBlock)
                                 {
                                     throw new ApplicationException(errorText_Blocking + "Warehouses");
                                 }
