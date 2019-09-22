@@ -113,8 +113,8 @@ namespace WebFreight.Web.ReportsWebServices
                     apPaymentDataProvider.APPaymentNo = currentPayment.PaymentNo != null ? currentPayment.PaymentNo : "";
 
                     //paid to = bill to name + address
-                    Card paidToCard = (from a in commonContext.Cards
-                                       where a.Id == currentPayment.VendorId
+                    Card paidToCard = (from a in commonContext.Cards.Include("Airline")
+                                       where a.Id == currentPayment.VendorId && a.Tenant == currentPayment.Tenant
                                        select a).FirstOrDefault();
                      
                     if (paidToCard != null)
@@ -129,7 +129,13 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.VendorIBANNo = paidToCard.IBANNumber;
                         apPaymentDataProvider.ClientNumber = paidToCard.Code; //client number
                         apPaymentDataProvider.PaidToName = paidToCard.EnglishName;
-
+                        apPaymentDataProvider.BankAddress = paidToCard.BankAddress;
+                        apPaymentDataProvider.BankName = paidToCard.BankName;
+                        apPaymentDataProvider.BankAccountNumber = paidToCard.AccountNumber;
+                        apPaymentDataProvider.IBANNumber = paidToCard.IBANNumber;
+                        apPaymentDataProvider.Swift = paidToCard.Swift;
+                        apPaymentDataProvider.AccountNumber = GetPartnerAccountNumber(paidToCard);
+                         
                         Address address = addressRepository.GetSingleAddress(currentPayment.VendorAddressId, tenant);
                         if (address != null)
                         {
@@ -330,5 +336,22 @@ namespace WebFreight.Web.ReportsWebServices
 
          return apPaymentDataProvider;
         }
+
+        private string GetPartnerAccountNumber(Card card)
+        {
+          
+            if (card.PartnerTypeId =="AL")
+            {
+               
+             return card.Airline.AccountNumber;
+                
+
+            }
+            else return null;
+
+        }
     }
+
+
+    
 }
