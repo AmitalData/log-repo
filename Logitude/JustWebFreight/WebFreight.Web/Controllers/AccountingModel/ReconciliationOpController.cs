@@ -259,7 +259,7 @@ tenant);
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = callback.TotalRecord;
+                    int count = openReconciliation.Count;
                     response.Count = count;
                 }
 
