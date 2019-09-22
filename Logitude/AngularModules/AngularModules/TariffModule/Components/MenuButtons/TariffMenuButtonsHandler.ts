@@ -126,7 +126,7 @@ export class TariffMenuButtonsHandler {
                     var steps = s.DefaultPriceSteps;
                     this.EntityPM.PriceSteps = steps;
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
-                    this.CurrentSession.SessionEvent.emit("PriceStepsModified");
+                   // this.CurrentSession.SessionEvent.emit("PriceStepsModified");
                 }
             });
         });

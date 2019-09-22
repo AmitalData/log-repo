@@ -48,7 +48,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
-        this.Listen();        
+        this.Listen();
     }
 
     Intialize(args: any) {
@@ -94,8 +94,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     private SaveCompletedEvent: any = null;
+    private PriceStepsModifiedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
+
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
@@ -135,12 +137,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
-                    this.CurrentSession.SessionEvent.subscribe((res) => {
-                        if (res == "PriceStepsModified") {
-                            this.LoadVersions();
-                        }
-                    });
-
+                    this.LoadVersions();
+                    //this.PriceStepsModifiedEvent = this.CurrentSession.SessionEvent.subscribe((res) => {
+                    //    if (res == "PriceStepsModified") {
+                    //        this.LoadVersions();
+                    //    }
+                    //});
                 }
 
                 else {
@@ -162,6 +164,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     KillEvents() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.PriceStepsModifiedEvent);
     }
 
     ngOnDestroy() {
