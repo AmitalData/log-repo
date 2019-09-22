@@ -51,28 +51,38 @@ export class GLAccountShortTitleComponent {
             });
         }
     }
+    ObjectTableName: string = null;
+    OpenCardScreen() {
 
-    OpenVendorScreen() {
-
-      
-
+       this.ObjectTableName= this.GetObjectTableName();
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.CustomerGLAccountId)) {
-            this.OpenVendorScreenForNotSplittedGLAccount();
+            this.OpenCardScreenForNotSplittedGLAccount(this.ObjectTableName);
         }
         else {
            
-            this.OpenVendorScreenForSplittedGLAccount();
+            this.OpenCardScreenForSplittedGLAccount(this.ObjectTableName);
            
         }
     }
 
-    OpenVendorScreenForNotSplittedGLAccount() {
+    private  GetObjectTableName() {
+
+        if (this.EntityPM.AccountTypeCode == "3") {
+           return "Vendor"
+        }
+        else if (this.EntityPM.AccountTypeCode == "2") {
+         return  "Customer"
+        }
+
+    }
+
+    OpenCardScreenForNotSplittedGLAccount(objectTableName:string) {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.CardId)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: this.EntityPM.CardId, ObjectTableName: 'Vendor' });
+                    cmpRef.instance.Run({ EntityId: this.EntityPM.CardId, ObjectTableName: objectTableName });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                     });
                 });
@@ -83,7 +93,7 @@ export class GLAccountShortTitleComponent {
 
     }
 
-    OpenVendorScreenForSplittedGLAccount() {
+    OpenCardScreenForSplittedGLAccount(objectTableName: string) {
 
         this.CurrentSession.StartBusyIndicatorLoading();
         this.GLAccountPMService.get(this.EntityPM.CustomerGLAccountId).subscribe((myResponse: ServiceResponse) => {
@@ -97,7 +107,7 @@ export class GLAccountShortTitleComponent {
                                 .then(cmpRef => {
                                     this.CurrentSession.StopBusyIndicator();
                                     cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run({ EntityId: ParentAccount.CardId, ObjectTableName: 'Vendor' });
+                                    cmpRef.instance.Run({ EntityId: ParentAccount.CardId, ObjectTableName: objectTableName });
                                     cmpRef.instance.BackCompleted.subscribe(bk => {
                                     });
                                 });
