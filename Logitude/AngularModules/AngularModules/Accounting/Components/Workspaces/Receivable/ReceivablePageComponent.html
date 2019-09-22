@@ -132,7 +132,7 @@
                                                         <img src="./Images/ToggleIcon.png" />
                                                         <div  [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'" class="ToggleButtonMenu" style="width: 120px;">
                                                             <button  id="{{'NewGeneralInvoice' | IdGeneratorPipe}}" (click)="NewGeneralARInvoice('IN')">{{'Accounting.General.O.NewInvoice' | TextCodeTranslationPipe}} </button>
-                                                            <button  id="{{'NewCreditNote' | IdGeneratorPipe}}" (click)="NewGeneralARInvoice('CD')">{{'Accounting.General.O.NewCreditNote' | TextCodeTranslationPipe}} </button>
+                                                            <button  id="{{'NewCreditNote' | IdGeneratorPipe}}" *ngIf="IsNewCreditNoteVisibile" (click)="NewGeneralARInvoice('CD')">{{'Accounting.General.O.NewCreditNote' | TextCodeTranslationPipe}} </button>
                                                         </div>
                                                     </div>
                                                 </div>

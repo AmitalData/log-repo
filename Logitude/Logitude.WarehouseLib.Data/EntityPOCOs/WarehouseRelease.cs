@@ -131,6 +131,10 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
         public virtual Port ToPort { get; set; }
         [Column("CustomerAddressId")]
 	    public string CustomerAddressId { get; set; }
+        [Column("TotalVolumetricWeight")]
+	    public decimal TotalVolumetricWeight { get; set; }
+        [Column("Ratio")]
+	    public double? Ratio { get; set; }
     }
 }
 	 

@@ -342,7 +342,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     private DateCellRenderer(params: any) {
         var datepipe = new DateTimePipe();
-        return datepipe.transform(params.value, "SD");
+        return datepipe.transform(params.value, "D");
     }
 
     private DateTimeCellRenderer(params: any) {
