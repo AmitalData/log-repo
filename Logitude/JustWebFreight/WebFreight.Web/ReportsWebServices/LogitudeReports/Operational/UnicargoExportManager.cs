@@ -119,6 +119,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 #region  General Section
                 Shipment.House = item.House;
                 Shipment.FileNumber = item.ShipmentNumber;
+                
                 if (!string.IsNullOrEmpty(item.IncotermId))
                 {
                     Shipment.Incoterms = incoterms.ContainsKey(item.IncotermId) ? incoterms[item.IncotermId] != null ? incoterms[item.IncotermId] : null : null;
@@ -900,9 +901,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             if (myPort != null)
                             {
                                 Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
+                                Shipment.ToPortCountryCode = myPort.CountryCode;
+
                             }
 
                         }
+
+                   
 
                     }
 
