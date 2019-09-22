@@ -24,7 +24,7 @@ export class NewAgent {
     }
 
     SearchAgentTab() {
-        browser.sleep(1000)
+        
         this.helper.WaitByIdAndFill('null_Search', "Agent");
         this.helper.WaitByIdAndClick('MaintenanceItemMTAG');
 
