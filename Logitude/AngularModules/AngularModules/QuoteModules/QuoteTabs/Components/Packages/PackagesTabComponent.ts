@@ -991,13 +991,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 }
             });
 
-            if (!AppTool.IsNullOrEmpty(input)) {
-                input = AppTool.Replace(input, ",", "");
-                valueInserted = Number(input);
-            }
+            // if (!AppTool.IsNullOrEmpty(input)) {
+            //     input = AppTool.Replace(input, ",", "");
+            //     valueInserted = Number(input);
+            // }
 
             valueComputed = valueComputed == 0 ? null : valueComputed;
-            valueInserted = valueInserted == 0 ? null : valueInserted;
+            valueInserted = valueInserted = AppTool.GetNumberFromText(input);
             this.GrossWeightEdited = !(valueComputed == valueInserted);
             this.GrossWeight = valueInserted;
             this.ComputeTotals();
@@ -1010,13 +1010,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
-            if (!AppTool.IsNullOrEmpty(input)) {
-                input = AppTool.Replace(input, ",", "");
-                valueInserted = Number(input);
-            }
+            // if (!AppTool.IsNullOrEmpty(input)) {
+            //     input = AppTool.Replace(input, ",", "");
+            //     valueInserted = Number(input);
+            // }
 
             valueComputed = valueComputed == 0 ? null : valueComputed;
-            valueInserted = valueInserted == 0 ? null : valueInserted;
+            valueInserted = AppTool.GetNumberFromText(input);
             this.ChargeableWeightEdited = !(valueComputed == valueInserted);
             this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
             this.ComputeTotals();
