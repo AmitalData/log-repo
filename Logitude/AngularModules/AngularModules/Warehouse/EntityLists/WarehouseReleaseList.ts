@@ -52,6 +52,8 @@ export class WarehouseReleaseList {
 	FromPortId: string;
 	ToPortId: string;
 	CustomerAddressId: string;
+	TotalVolumetricWeight: number;
+	Ratio: number;
 	
 }
  

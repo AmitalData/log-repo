@@ -191,7 +191,7 @@
                                                                 <table>
 
                                                                     <tr class="FormFieldRow">
-                                                                        <td  style="width:140px;">
+                                                                        <td style="width:140px;">
                                                                             <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
                                                                         </td>
@@ -210,8 +210,8 @@
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                       <tr *ngIf="CustomerId && IsInlandDomestic" class="FormFieldRow">
-                                                                        <td  style="width:140px;">
+                                                                    <tr *ngIf="CustomerId && IsInlandDomestic" class="FormFieldRow">
+                                                                        <td style="width:140px;">
                                                                             <LogLabel [Text]="'Address'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
                                                                         <td colspan="2">
@@ -238,17 +238,30 @@
                                                                         </td>
 
                                                                     </tr>
+                                                                    <tr *ngIf="CustomerId && IsInlandDomestic" class="FormFieldRow" style="height: 80px;">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <div></div>
+                                                                        </td>
 
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <AddressTemplate [Address]="CustomerAddressList" [Right]="36"></AddressTemplate>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+
+                                                                    </tr>
 
 
                                                                 </table>
                                                             </td>
 
-                                                            <td>
+                                                            <!--<td>
                                                                 <div></div>
-                                                            </td>
+                                                            </td>-->
 
-                                                            <td style="width: 330px;"></td>
+                                                           <!-- <td style="width: 330px;"></td>-->
                                                         </tr>
                                                     </table>
 
