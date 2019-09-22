@@ -34,7 +34,13 @@ namespace WebFreight.Web.DataProviders
         public string VendorSwift { get; set; }
         public string VendorBankAccountNumber { get; set; }
         public string VendorIBANNo { get; set; }
-
+        public string BankAddress { get; set; }
+        public string BankName { get; set; }
+        public string AccountNumber { get; set; }
+        public string IBANNumber { get; set; }
+        public string Swift { get; set; }
+        public string BankAccountNumber { get; set; }
+        
         //tenant data
         public string Signature { get; set; }
         public string TenantData { get; set; }
