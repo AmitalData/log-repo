@@ -222,38 +222,45 @@ namespace Logitude.Server.Tools.Helpers
         }
 
 
-
-        public override string ToString()
+     
+        public string GetString(out string morethan)
         {
+            
             var ts = DateTime.Now.Subtract(_LastClearAt);
             if (ts.TotalSeconds > 120)
             {
-
+                morethan = "120";
                 return _StringBuilder.AppendLine(">120:" + ts.TotalMilliseconds).ToString();
             }
 
             if (ts.TotalSeconds > 60)
             {
+                morethan = "60";
                 return _StringBuilder.AppendLine(">60:" + ts.TotalMilliseconds).ToString();
             }
             if (ts.TotalSeconds > 30)
             {
+                morethan = "30";
                 return _StringBuilder.AppendLine(">30:" + ts.TotalMilliseconds).ToString();
             }
 
             if (ts.TotalSeconds > 10)
             {
+                morethan = "10";
                 return _StringBuilder.AppendLine(">10:" + ts.TotalMilliseconds).ToString();
             }
             if (ts.TotalSeconds > 5)
             {
+                morethan = "5";
                 return _StringBuilder.AppendLine(">5:" + ts.TotalMilliseconds).ToString();
             }
 
             if (ts.TotalSeconds > 1)
             {
+                morethan = "1";
                 return _StringBuilder.AppendLine(">1:" + ts.TotalMilliseconds).ToString();
             }
+            morethan = "lt1";
             return _StringBuilder.AppendLine("<1:" + ts.TotalMilliseconds).ToString();
 
         }

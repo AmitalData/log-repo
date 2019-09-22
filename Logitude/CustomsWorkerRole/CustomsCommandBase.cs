@@ -28,6 +28,7 @@ using Logitude.Server.Tools.QueueService;
 using Simplog.Server.Infrastructure;
 using System.Transactions;
 using Logitude.Server.Tools.Utils;
+using System.Configuration;
 
 namespace CustomsWorkerRole
 {
@@ -430,9 +431,14 @@ namespace CustomsWorkerRole
                         LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
                         LogDoneItemInMemory();
                         LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
-                        if (Environment.MachineName.ToLower().Contains("itzik"))
+
+                        string logItMessagingUtilWR = ConfigurationManager.AppSettings.Get("LogMessagingUtilWR");
+
+                        if (!string.IsNullOrWhiteSpace(logItMessagingUtilWR))
                         {
-                            Logger.LogMe(LogMessagingUtilWR.Instance.ToString(), false, this.GetType().ToString());
+                            string morethan = "";
+                            string str = LogMessagingUtilWR.Instance.GetString(out morethan);
+                            Logger.LogMe(str, false, this.GetType().ToString() + "_" + morethan);
                         }
                     }
                 }
@@ -443,7 +449,7 @@ namespace CustomsWorkerRole
 
         protected virtual bool ProcessMessage_Db(CustomDBQueueMessage msgResponse)
         {
-
+            LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
             try
             {
                 int tenant = -1;
@@ -475,6 +481,7 @@ namespace CustomsWorkerRole
                 }
 
                 string correlationId = msgResponse.Properties["CorrelationId"].ToString();
+                LogMessagingUtilWR.Instance.AppendLine($"correlationId = {correlationId};analyzeClass={analyzeClass}");
                 // var correlationId = message.CorrelationId;
                 //LogMessagingUtil.Instance.AppendLine("receivedMessage.DeliveryCount =" + message.DeliveryCount.ToString());
 
@@ -488,7 +495,7 @@ namespace CustomsWorkerRole
                 {
                     throw new Exception("Enum.TryParse<CustomsCommandEnum>(s, out myCustomsCommandEnum)");
                 }
-
+                LogMessagingUtilWR.Instance.AppendLine("ResolveAndExecute");
                 MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
 
                 
