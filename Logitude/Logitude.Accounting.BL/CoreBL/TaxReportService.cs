@@ -376,20 +376,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     Reference = Reference.Substring(0, 19);
                 }
-                //var array = Regex.Matches(Reference, @"\D+|\d+")
-                //    .Cast<Match>()
-                //    .Select(m => m.Value)
-                //    .ToArray();
-                //if (array.Length > 1)
-                //{
-                //    referenceGroup = array[0];
-                //    reference = array[1];
-                //}
-                //else
-                //{
-                //    reference = Reference;
-                //    referenceGroup = "0000";
-                //}
+            
                 Regex isMatche = new Regex("([A-Za-z])");
                 bool letters = isMatche.IsMatch(Reference);
                 if (letters)
@@ -408,10 +395,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             reference = Reference.Substring(i, Reference.Length - i);
                             break;
                         }
-                        //var array = Regex.Matches("12s4rt", @"\D+|\d+")
-                        //.Cast<Match>()
-                        //.Select(m => m.Value)
-                        //.ToArray();
+                       
                     }
                 }
                 else
@@ -420,6 +404,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     referenceGroup = "0000";
                 }
 
+            }
+            else
+            {
+                referenceGroup = "0000";
             }
         }
 
