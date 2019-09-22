@@ -2214,6 +2214,29 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ProjectNumber);
 
+            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
+            {
+                if (!string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
+                {
+                    Card myCard = CardRepository.GetSingleCard(entityPM.MainCarriageFromPartnerId, tenant, true);
+                    if (myCard != null)
+                    {
+                        MethodHelper.AddToSearchFields(ref mySearchFields, myCard.CityName);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
+                {
+                    Card myCard = CardRepository.GetSingleCard(entityPM.MainCarriageToPartnerId, tenant, true);
+                    if (myCard != null)
+                    {
+                        MethodHelper.AddToSearchFields(ref mySearchFields, myCard.CityName);
+                    }
+                }
+
+
+            }
+
             #region Quote
             if (!string.IsNullOrEmpty(entityPM.QuoteId))
             {

@@ -191,7 +191,7 @@ namespace CommunicationWorkerRole
                                     ShipmentAdditionalCloudDataRepository Repo = new ShipmentAdditionalCloudDataRepository(tenant);
                                     ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
                                     HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
-                                    HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository); 
+                                    HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository);
                                     HybridPartnerPM Partner = HybridPartnerQuerey.GetSinglePM(ForwarderShipment.ForwarderPartnerId);
                                     //var Shipment = shipmentQuery.GetSinglePM(ShipmentId, tenant);
                                     var Data = Repo.GetSingleShipmentAdditionalCloudData(ShipmentId, tenant);
@@ -210,8 +210,8 @@ namespace CommunicationWorkerRole
                                             string ImporterShipmentsURI = URI + "ImporterApprovalReceived";
                                             client.DefaultRequestHeaders.Add("Token", Token);
                                             client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
-                                           
-                                            
+
+
                                             LogPM.Subject = "Send ImporterApprovalReceived Confirmation To Forwarder By ImporterApprovalReceived Controller";
                                             if (IsNewLog)
                                             {
@@ -237,13 +237,13 @@ namespace CommunicationWorkerRole
                                                 ShipmentNumber = ForwarderShipment.ForwarderShipmentNumber,
                                                 Tenant = (int)Partner.PartnerTenant,
                                                 Code = "VDK",
-                                                Date = DateTime.Now.ToShortDateString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
-                                                Time = DateTime.Now.ToShortTimeString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
+                                                Date = TenantServerConfigration.GetCurrentDateTime((int)Partner.PartnerTenant).ToShortDateString(),//DateTime.Now.ToShortDateString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortDateString() : "",
+                                                Time = TenantServerConfigration.GetCurrentDateTime((int)Partner.PartnerTenant).ToShortTimeString(),//DateTime.Now.ToShortTimeString(),//Data.ApproveDateTime != null ? Data.ApproveDateTime.Value.ToShortTimeString() : "",
                                                 Remarks = "Approval Task Received",
                                                 Direction = ForwarderShipment.DirectionId
                                             };
                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DataAM), null, null, "");
-                                            
+
                                             var serializedObject = JsonConvert.SerializeObject(DataAM);
                                             var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
                                             var result = await client.PostAsync(ImporterShipmentsURI, content);

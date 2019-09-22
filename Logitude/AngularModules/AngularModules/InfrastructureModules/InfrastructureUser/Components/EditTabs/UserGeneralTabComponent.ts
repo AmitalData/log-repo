@@ -134,7 +134,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
             this.IsShowContactInMobileVisiable = true;
         }
 
-        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+        if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied && SessionLocator.TenantManagementJS.IsMultiPackage) {
             this.IsAdditionalPackagesOnlyVisible = true;
         }
 
