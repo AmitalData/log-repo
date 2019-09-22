@@ -24,7 +24,7 @@ describe('ChartOfAccount Module',function (){
     
     var chartOfAccountNo = z.RandomNumAcc(); 
     c.CreateNewChartOFAccount(chartOfAccountNo, 'Customer');
-   // E.EditChartOfAccount(chartOfAccountNo);
+    E.EditChartOfAccount(chartOfAccountNo+'C');
   
 
 

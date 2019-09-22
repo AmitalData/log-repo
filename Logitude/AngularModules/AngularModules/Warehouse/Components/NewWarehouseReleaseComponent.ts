@@ -454,8 +454,8 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     TransportModeId: string;
     DirectionId: string;
     CustomerId: string;
-    FromPortId: string;
-    ToPortId: string;
+    //FromPortId: string;
+    //ToPortId: string;
     ConnectedTo: string;
     OpenChoosePackage(packageType: string) {
 
@@ -510,6 +510,35 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         }
     }
 
+    get FromPortId() {
+        var fromportid: string = null;
+        if (this.warehouseReleasePM) fromportid = this.warehouseReleasePM.FromPortId;
+        return fromportid;
+    }
+    set FromPortId(value: string) {
+        if (this.warehouseReleasePM != null) {
+            if (value != this.warehouseReleasePM.FromPortId) {
+                this.warehouseReleasePM.FromPortId = value;
+               // this.OnActualReleaseDateDatePickerChange(value);
+            }
+        }
+    }
+
+
+    get ToPortId() {
+        var toportid: string = null;
+        if (this.warehouseReleasePM) toportid = this.warehouseReleasePM.ToPortId;
+        return toportid;
+    }
+    set ToPortId(value: string) {
+        if (this.warehouseReleasePM != null) {
+            if (value != this.warehouseReleasePM.ToPortId) {
+                this.warehouseReleasePM.ToPortId = value;
+                // this.OnActualReleaseDateDatePickerChange(value);
+            }
+        }
+    }
+
     get ActualReleaseDate() {
         var actualReleaseDate: Date = null;
         if (this.warehouseReleasePM) actualReleaseDate = this.warehouseReleasePM.ActualReleaseDate;
@@ -523,6 +552,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
             }
         }
     }
+
 
     SetActualDateClicked(fieldName: string) {
         this.ActualReleaseDate = DateTool.GetDateParts(this.warehouseReleasePM.ExpectedReleaseDate).DateObject;

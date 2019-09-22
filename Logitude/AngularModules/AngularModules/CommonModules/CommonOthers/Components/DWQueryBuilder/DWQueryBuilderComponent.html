@@ -728,7 +728,7 @@
                                                                                             </div>
 
                                                                                             <div *ngIf="Column.DataTypeCode == 'Date'" >
-                                                                                                {{item[Column.DisplayName.replace('[', '').replace(']','')] | DateTimePipe:'SD'}}
+                                                                                                {{item[Column.DisplayName.replace('[', '').replace(']','')] | DateTimePipe:'D'}}
                                                                                             </div>
                                                                                             
                                                                                             <div *ngIf="Column.DataTypeCode == 'DateTime'" >
