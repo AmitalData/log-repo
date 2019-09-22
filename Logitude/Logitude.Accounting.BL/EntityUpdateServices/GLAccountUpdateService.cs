@@ -528,7 +528,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void SendHybridTask(GLAccountPM glaccounPM)
         {
-            if (glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5")
+            if (glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5" && glaccounPM.IsControlAccount==false)
             {
                 FillGLAccountCurrencyCode(glaccounPM);
 
