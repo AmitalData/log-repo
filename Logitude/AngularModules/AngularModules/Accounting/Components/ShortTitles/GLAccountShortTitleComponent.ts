@@ -51,28 +51,41 @@ export class GLAccountShortTitleComponent {
             });
         }
     }
+    ObjectTableName: string;
+    SelectedTabCode: string;
+    OpenCardScreen() {
 
-    OpenVendorScreen() {
-
-      
-
+       this.GetObjectTableNameAndTabCode();
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.CustomerGLAccountId)) {
-            this.OpenVendorScreenForNotSplittedGLAccount();
+            this.OpenCardScreenForNotSplittedGLAccount(this.ObjectTableName, this.SelectedTabCode);
         }
         else {
            
-            this.OpenVendorScreenForSplittedGLAccount();
+            this.OpenCardScreenForSplittedGLAccount(this.ObjectTableName, this.SelectedTabCode);
            
         }
     }
 
-    OpenVendorScreenForNotSplittedGLAccount() {
+    private GetObjectTableNameAndTabCode() {
+
+        if (this.EntityPM.AccountTypeCode == "3") {
+            this.ObjectTableName = "Vendor";
+            this.SelectedTabCode = null;
+        }
+        else if (this.EntityPM.AccountTypeCode == "2") {
+            this.ObjectTableName = "Customer";
+            this.SelectedTabCode = "CLOV";
+        }
+
+    }
+
+    OpenCardScreenForNotSplittedGLAccount(objectTableName: string, selectedTabCode:string) {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.CardId)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: this.EntityPM.CardId, ObjectTableName: 'Vendor' });
+                    cmpRef.instance.Run({ EntityId: this.EntityPM.CardId, ObjectTableName: objectTableName, SelectedTabCode: selectedTabCode });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                     });
                 });
@@ -83,7 +96,7 @@ export class GLAccountShortTitleComponent {
 
     }
 
-    OpenVendorScreenForSplittedGLAccount() {
+    OpenCardScreenForSplittedGLAccount(objectTableName: string, selectedTabCode: string) {
 
         this.CurrentSession.StartBusyIndicatorLoading();
         this.GLAccountPMService.get(this.EntityPM.CustomerGLAccountId).subscribe((myResponse: ServiceResponse) => {
@@ -97,7 +110,7 @@ export class GLAccountShortTitleComponent {
                                 .then(cmpRef => {
                                     this.CurrentSession.StopBusyIndicator();
                                     cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run({ EntityId: ParentAccount.CardId, ObjectTableName: 'Vendor' });
+                                    cmpRef.instance.Run({ EntityId: ParentAccount.CardId, ObjectTableName: objectTableName, SelectedTabCode: selectedTabCode });
                                     cmpRef.instance.BackCompleted.subscribe(bk => {
                                     });
                                 });

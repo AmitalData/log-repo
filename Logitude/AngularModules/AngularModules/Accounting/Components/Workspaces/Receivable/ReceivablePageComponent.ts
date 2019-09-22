@@ -56,7 +56,7 @@ export class ReceivablePageComponent {
     public ARPaymentsOpenedCount: string;
     public ARGeneralInvoiceDraftCount: string;
     //#endregion
-
+    IsNewCreditNoteVisibile: boolean = false;
     RecentGLAccountsCount: number = 0;
 
     public isRTL: boolean = false;
@@ -308,6 +308,7 @@ export class ReceivablePageComponent {
         this.activeCustomersGLAVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "activeCustomersGLA") ? true : false;
         this.inactiveCustomersGlaVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "inactiveCustomersGla") ? true : false;
         this.CLIENTGLACCOUNTSGlaVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "CLIENTGLACCOUNTS") ? true : false;
+        this.IsNewCreditNoteVisibile = FeatureLocator.HasFeaturePermession("ARInvoice", "NEWCREDITNOTE") ? true : false;
     }
 
     public RecentGLAccountsList: GLAccountList[];
