@@ -43,7 +43,7 @@ export class NewAgent {
     }
 
 
-    SearchAgent() {
+  /*  SearchAgent() {
 
         this.helper.WaitBusyIndicator();
         this.helper.WaitWindowClosed();
@@ -58,7 +58,7 @@ export class NewAgent {
         this.helper.WaitByIdAndClick('Agent-Save');
 
 
-    }
+    }*/
 
 
 }
