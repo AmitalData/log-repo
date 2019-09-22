@@ -710,13 +710,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             }
         });
 
-        if (!AppTool.IsNullOrEmpty(input)) {
-            input = AppTool.Replace(input, ",", "");
-            valueInserted = Number(input);
-        }
+        // if (!AppTool.IsNullOrEmpty(input)) {
+        //     input = AppTool.Replace(input, ",", "");
+        //     valueInserted = Number(input);
+        // }
 
         valueComputed = valueComputed == null ? 0 : valueComputed;
-        valueInserted = valueInserted == null ? 0 : valueInserted;
+        valueInserted = AppTool.GetNumberFromText(input);
 
         if (valueComputed != valueInserted) {
             this.GrossWeightEdited = true;
@@ -732,8 +732,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
         if (!AppTool.IsNullOrEmpty(input)) {
-            input = AppTool.Replace(input, ",", "");
-            valueInserted = Number(input);
+            valueInserted = AppTool.GetNumberFromText(input);
             valueInserted = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
         }
 

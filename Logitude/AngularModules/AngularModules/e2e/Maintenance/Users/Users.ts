@@ -20,7 +20,7 @@ export class NewUser {
     }
 
     SearchUserTab() {
-        browser.sleep(1000)
+    
         this.helper.WaitByIdAndFill('null_Search', "User");
         this.helper.WaitByIdAndClick('MaintenanceItemMTUS');
 

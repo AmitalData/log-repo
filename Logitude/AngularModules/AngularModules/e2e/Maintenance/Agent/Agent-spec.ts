@@ -35,7 +35,7 @@ describe('NewAgent', () => {
         AgentScenario.CreateNewAgent();
     });
 
-    it('SearchAgent', function () {
+  /*  it('SearchAgent', function () {
 
 
         AgentScenario.SearchAgent();
@@ -44,7 +44,7 @@ describe('NewAgent', () => {
     it('SaveAgent', function () {
 
         AgentScenario.SaveAgent();
-    });
+    });*/
 
 
 });

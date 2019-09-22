@@ -74,7 +74,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            if (authToken == null || (authToken != null && authToken.Tenant != entityPM.Id))
+            if (authToken != null && authToken.Tenant != entityPM.Id)
             {
                 throw new ApplicationException("You are not authorized to do this operation");
             }
