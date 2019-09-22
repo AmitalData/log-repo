@@ -128,14 +128,10 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             EntityLastActivityRepository entityLastActivityRepository = new EntityLastActivityRepository(tenant);
             List<EntityLastActivity> lastActivities = entityLastActivityRepository.GetTopEntityLastActivities(tenant, userId, objectTableId).ToList();
 
-            List<string> ids = new List<string>();
-            foreach (EntityLastActivity activity in lastActivities)
-            {
-                ids.Add(activity.EntityId);
-            }
-
+            List<string> entityIds = lastActivities.Select(d => d.EntityId).ToList();
+            
             WarehouseReleaseRepository repository = new WarehouseReleaseRepository(tenant);
-            List<WarehouseRelease> warehouseReleases = repository.GetWarehouseReleasesFromIdList(ids, tenant).ToList();
+            List<WarehouseRelease> warehouseReleases = repository.GetWarehouseReleasesFromIdList(entityIds, tenant).ToList();
 
             warehouseReleases = BranchPermitionsFilter.AddUserBranchRestrictionFilters<WarehouseRelease>(new QueryOperations(), warehouseReleases.AsQueryable<WarehouseRelease>(), tenant).ToList();
             warehouseReleases = ProductPermitionsFilter.AddUserProductRestrictionFilters<WarehouseRelease>(new QueryOperations(), warehouseReleases.AsQueryable<WarehouseRelease>(), tenant).ToList();
@@ -148,15 +144,15 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                 List<string> cardIds = new List<string>();
                 List<string> portIds = new List<string>();
                 List<string> addressIds = new List<string>();
-                List<string> shipmentIds = new List<string>();
+
                 foreach (WarehouseRelease warehouseRelease in warehouseReleases)
                 {
+                    var isInlandDomestic = warehouseRelease.TransportModeId == "I" && warehouseRelease.DirectionId == "D" ? true : false;
                     if (!string.IsNullOrEmpty(warehouseRelease.WarehouseId) && !cardIds.Contains(warehouseRelease.WarehouseId)) cardIds.Add(warehouseRelease.WarehouseId);
                     if (!string.IsNullOrEmpty(warehouseRelease.CustomerId) && !cardIds.Contains(warehouseRelease.CustomerId)) cardIds.Add(warehouseRelease.CustomerId);
-                    if (!string.IsNullOrEmpty(warehouseRelease.ShipmentId) && !shipmentIds.Contains(warehouseRelease.ShipmentId)) shipmentIds.Add(warehouseRelease.ShipmentId);
-
+                    if (!isInlandDomestic && !string.IsNullOrEmpty(warehouseRelease.FromPortId) && !cardIds.Contains(warehouseRelease.FromPortId)) portIds.Add(warehouseRelease.FromPortId);
+                    if (!isInlandDomestic && !string.IsNullOrEmpty(warehouseRelease.ToPortId) && !cardIds.Contains(warehouseRelease.ToPortId)) portIds.Add(warehouseRelease.ToPortId);
                 }
-
 
                 List<CardList> cardLists = new List<CardList>();
                 if (cardIds.Count > 0)
@@ -164,12 +160,11 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                     CardQuery cardQuery = new CardQuery(tenant);
                     cardLists = cardQuery.GetCardListsByListIds(cardIds, tenant);
                 }
-
-                List<ShipmentList> shipmentLists = new List<ShipmentList>();
-                if (shipmentIds.Count > 0)
+                List<PortList> portLists = new List<PortList>();
+                if (portIds.Count > 0)
                 {
-                    ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                    shipmentLists = shipmentQuery.GetShipmentsForCrossDock(shipmentIds, tenant);
+                    PortQuery portQuery = new PortQuery(tenant);
+                    portLists = portQuery.GetPortListsByListIds(portIds, tenant);
                 }
 
                 foreach (EntityLastActivity activity in lastActivities)
@@ -177,16 +172,14 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                     WarehouseRelease warehouseRelease = warehouseReleases.Where(d => d.Id == activity.EntityId).FirstOrDefault();
                     if (warehouseRelease != null)
                     {
-                        ShipmentList shipmentList = shipmentLists.Where(d => d.Id == warehouseRelease.ShipmentId).FirstOrDefault();
-                        var isInlandDomestic = shipmentList != null && shipmentList.TransportModeId == "I" && shipmentList.DirectionId == "D" ? true : false;
-         
+                        var isInlandDomestic = warehouseRelease.TransportModeId == "I" && warehouseRelease.DirectionId == "D" ? true : false;
                         var warehouseReleaseList = new WarehouseReleaseList()
                         {
                             Id = warehouseRelease.Id,
                             Tenant = warehouseRelease.Tenant,
                             ReleaseNumber = warehouseRelease.ReleaseNumber,
                             TransportModeId = warehouseRelease.TransportModeId,
-                            DirectionId = shipmentList.DirectionId,
+                            DirectionId = warehouseRelease.DirectionId,
                             StatusName = warehouseRelease.WarehouseReleaseStatus != null ? warehouseRelease.WarehouseReleaseStatus.Name : "",
                             WarehouseId = warehouseRelease.WarehouseId,
                             CustomerId = warehouseRelease.CustomerId,
@@ -194,9 +187,9 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                             ActivityDate = activity.ActivityDate,
                             ActivityTypeName = activity.ActivityType != null ? activity.ActivityType.Name : "",
                             ActivityByUserName = activity.User != null ? activity.User.Contact.EnglishName : "",
-                            DirectionName = shipmentList != null ? shipmentList.DirectionName : "",
-                            TransportModeName = shipmentList != null ? shipmentList.TransportModeName : "",
-                            Routing = shipmentList != null ? shipmentList.Routing : "",
+                            DirectionName = warehouseRelease.Direction != null ? warehouseRelease.Direction.Name : "",
+                            TransportModeName = warehouseRelease.TransportMode != null ? warehouseRelease.TransportMode.Name : "",
+                     
                         };
 
                         #region Full Other Prop
@@ -214,6 +207,46 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                             if (cardList != null) warehouseReleaseList.CustomerName = cardList.EnglishName;
 
                         }
+
+                        if (!isInlandDomestic && !string.IsNullOrEmpty(warehouseRelease.FromPortId) && !string.IsNullOrEmpty(warehouseRelease.ToPortId))
+                        {
+                            string fromPorCode = "";
+                            string toPorCode = "";
+
+                            PortList fromPort = portLists.Where(d => d.Id == warehouseRelease.FromPortId).FirstOrDefault();
+                            if (fromPort != null) fromPorCode = fromPort.Code;
+
+
+                            PortList toPor = portLists.Where(d => d.Id == warehouseRelease.ToPortId).FirstOrDefault();
+                            if (toPor != null) toPorCode = toPor.Code;
+
+                            warehouseReleaseList.Routing = (fromPorCode + " > " + toPorCode);
+
+                        }
+
+
+                        //if (isInlandDomestic && !string.IsNullOrEmpty(warehouseRelease.FromAddressId) && !string.IsNullOrEmpty(warehouseRelease.ToAddressId))
+                        //{
+                        //    string fromAddressCity = "";
+                        //    string toAddressCity = "";
+
+                        //    AddressList fromAddress = addressLists.Where(d => d.Id == warehouseRelease.FromAddressId).FirstOrDefault();
+                        //    if (fromAddress != null) fromAddressCity = fromAddress.City;
+
+
+                        //    AddressList toAddress = addressLists.Where(d => d.Id == warehouseRelease.ToAddressId).FirstOrDefault();
+                        //    if (toAddress != null) toAddressCity = toAddress.City;
+
+                        //    warehouseEntryList.Routing = (fromAddressCity + " > " + toAddressCity);
+
+                        //}
+
+
+
+
+
+
+
 
                         #endregion
 

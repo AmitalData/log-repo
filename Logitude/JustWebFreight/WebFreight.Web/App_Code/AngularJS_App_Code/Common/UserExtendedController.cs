@@ -369,10 +369,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 #region Users Licenses
                 List<string> Codes = tenantManagementLicenses.Select(s => s.PackageCode).ToList();
 
-                if (tenantManagement.MainAdditionalPackageApplied)
-                {
-                    Codes.Add(tenantManagement.PackageCode);
-                }
+                //if (tenantManagement.MainAdditionalPackageApplied)
+                //{
+                //    Codes.Add(tenantManagement.PackageCode);
+                //}
 
                 UserLicenseRepository myRepository = new UserLicenseRepository(tenant);
                 IQueryable<UserLicense> myResult = myRepository.GetUserLicenses(tenant);
@@ -393,13 +393,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                         SearchFields = user.EnglishName + "," + user.Email,
                     };
 
-                    if(tenantManagement.MainAdditionalPackageApplied)
+                    if (tenantManagement.MainAdditionalPackageApplied)
                     {
-                        UserLicense item = usersLicenses.Where(d => d.PackageCode == tenantManagement.PackageCode && d.UserId == user.Id).FirstOrDefault();
-                        if (item != null)
-                        {
-                            this.SetUserLicenseExists(myResultItem, 0, tenantManagement.PackageCode);
-                        }
+                        this.SetUserLicenseExists(myResultItem, 0, tenantManagement.PackageCode);
                     }
 
                     int index = 0;
@@ -497,7 +493,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             {
                 case 0:
                     {
-                        myResultItem.IsChecked0 = true;
+                        myResultItem.IsChecked0 = myResultItem.AdditionalPackagesOnly ? false : true;
                         myResultItem.PackageCode0 = packageCode;
                         break;
                     }

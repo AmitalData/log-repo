@@ -1067,6 +1067,52 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private decimal totalVolumetricWeight ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal TotalVolumetricWeight  
+	   {
+	    
+	     get
+		{
+		   return totalVolumetricWeight;
+		 }
+		 set
+		 {
+		   if(totalVolumetricWeight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalVolumetricWeight",OldValue=totalVolumetricWeight,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   totalVolumetricWeight=value;
+		   }
+			
+		 }
+	   }
+	  private double? ratio ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? Ratio  
+	   {
+	    
+	     get
+		{
+		   return ratio;
+		 }
+		 set
+		 {
+		   if(ratio != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Ratio",OldValue=ratio,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   ratio=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

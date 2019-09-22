@@ -98,6 +98,10 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.ToPortId).HasColumnName("ToPortId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CustomerAddressId).HasColumnName("CustomerAddressId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TotalVolumetricWeight).HasColumnName("TotalVolumetricWeight").HasPrecision(18, 3);
+
+            this.Property(t => t.Ratio).HasColumnName("Ratio");
         }
     }
 }

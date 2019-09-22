@@ -637,25 +637,25 @@ export class AWBPackagesTabComponent extends BaseComponent {
             }
         });
 
-        if (!AppTool.IsNullOrEmpty(input)) {
-            if (this.firstDigit == ".") {
-                if (!this.GrossWeightPasted) {
-                    input = input.replace(/\./g, '');
-                }
-                input = input.replace(/,/g, ".");
-            }
+        // if (!AppTool.IsNullOrEmpty(input)) {
+        //     if (this.firstDigit == ".") {
+        //         if (!this.GrossWeightPasted) {
+        //             input = input.replace(/\./g, '');
+        //         }
+        //         input = input.replace(/,/g, ".");
+        //     }
 
-            else if (this.firstDigit == "'") {
-                input = input.replace(/'/g, '');
-            }
-            else {
-                input = AppTool.Replace(input, ",", "");
-            }
-            valueInserted = Number(input);
-        }
+        //     else if (this.firstDigit == "'") {
+        //         input = input.replace(/'/g, '');
+        //     }
+        //     else {
+        //         input = AppTool.Replace(input, ",", "");
+        //     }
+        //     valueInserted = Number(input);
+        // }
 
         valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = valueInserted == 0 ? null : valueInserted;
+        valueInserted = AppTool.GetNumberFromText(input);
         this.EntityPM.GrossWeightEdited = !(valueComputed == valueInserted);
         this.GrossWeight = valueInserted;        
         this.ComputeTotals();
@@ -667,25 +667,25 @@ export class AWBPackagesTabComponent extends BaseComponent {
 
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
-        if (!AppTool.IsNullOrEmpty(input)) {
-            if (this.firstDigit == ".") {
-                if (!this.ChargeableWeightPasted) {
-                    input = input.replace(/\./g, '');
-                }
-                input = input.replace(/,/g, ".");
-            }
+        // if (!AppTool.IsNullOrEmpty(input)) {
+        //     if (this.firstDigit == ".") {
+        //         if (!this.ChargeableWeightPasted) {
+        //             input = input.replace(/\./g, '');
+        //         }
+        //         input = input.replace(/,/g, ".");
+        //     }
 
-            else if (this.firstDigit == "'") {
-                input = input.replace(/'/g, '');
-            }
-            else {
-                input = AppTool.Replace(input, ",", "");
-            }
-            valueInserted = Number(input);
-        }
+        //     else if (this.firstDigit == "'") {
+        //         input = input.replace(/'/g, '');
+        //     }
+        //     else {
+        //         input = AppTool.Replace(input, ",", "");
+        //     }
+        //     valueInserted = Number(input);
+        // }
 
         valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = valueInserted == 0 ? null : valueInserted;
+        valueInserted = AppTool.GetNumberFromText(input);
         this.EntityPM.ChargeableWeightEdited = !(valueComputed == valueInserted);
         this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
         this.ComputeTotals();

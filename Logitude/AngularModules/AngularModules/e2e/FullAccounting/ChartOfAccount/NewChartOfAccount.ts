@@ -1,17 +1,19 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
-//import { EditChartOfAccount } from '../EditEntity/EditChartOfAccount';
+import { EditChartOfAccount } from './EditChartOfAccount';
 import { createBreak } from 'typescript';
 export class NewChartOfAccount {
     private Helper: FieldsHelper;
     private GeneralFun: GeneralFunctions;
-    //private Edit: EditChartOfAccount;
+   // let E: EditChartOfAccount = new EditChartOfAccount();
+    private Edit: EditChartOfAccount;
 
 
     constructor() {
         this.Helper = new FieldsHelper();
         this.GeneralFun = new GeneralFunctions();
+        this.Edit = new EditChartOfAccount();
         // this.Edit = new EditChartOfAccount();
     }
 
@@ -43,25 +45,21 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Customer');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
             this.Helper.WaitBusyIndicator();
-            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', '5787' + 'C');
+            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'C');
             this.Helper.WaitBusyIndicator();
             this.Helper.ItemsVisibility('ok-AddChartOfAccount');
             this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
+           
+           
+                this.Helper.WaitBusyIndicator();
+                this.Helper.WaitWindowClosed();
+             
 
-            var boo = this.Helper.ItemsVisibility('ValidationSummaryText');
-            if ('boo') {
-
-                var chartOfAccountNo1 = this.GeneralFun.RandomNumAcc();
+            
 
 
-                this.Helper.WaitByIdAndFill('ChartOfAccount_Code', chartOfAccountNo1 + 'C');
-                this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
-            }
-
-            this.Helper.WaitBusyIndicator();
-            this.Helper.WaitWindowClosed();
-            // this.Edit.EditChartOfAccount(ChartOfAccountNo + 'C');
+             
             // this.Helper.WaitBusyIndicator();
 
         }
@@ -74,8 +72,14 @@ export class NewChartOfAccount {
             this.Helper.ItemsVisibility('ok-AddChartOfAccount');
             this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
-            this.Helper.WaitBusyIndicator();
-            this.Helper.WaitWindowClosed();
+            
+
+
+                this.Helper.WaitBusyIndicator();
+                this.Helper.WaitWindowClosed();
+               
+
+            
             // this.Edit.EditChartOfAccount(ChartOfAccountNo + 'V');
             //this.Helper.WaitBusyIndicator();
         }

@@ -332,13 +332,16 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                         INTTRABooking2Confirm.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
                         this.ShipmentNumber = iMessageProperties.ShipmentID.Value;
                     }
+
+                    this.ConnectAnalyzeQueue();
                 }
             }
+         
             catch (Exception ex)
             {
                 this.OnCatchAnalyzingError(ex);
             }
-            this.ConnectAnalyzeQueue();
+          
         }
         private void ConnectAnalyzeQueue()
         {
@@ -582,36 +585,39 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                 case "Booking":
                     {
-                        INTTRABooking2Confirm.MessageBodyType iMessageBody = this.iMessage_Booking.MessageBody;
-                        if (iMessageBody != null)
+                        if (iMessage_Booking != null)
                         {
-                            if (iMessageBody.MessageProperties != null)
+                            INTTRABooking2Confirm.MessageBodyType iMessageBody = this.iMessage_Booking.MessageBody;
+                            if (iMessageBody != null)
                             {
-                                if (iMessageBody.MessageProperties.Party != null)
+                                if (iMessageBody.MessageProperties != null)
                                 {
-                                    INTTRABooking2Confirm.PartiesType forwarder = iMessageBody.MessageProperties.Party.Where(d => d.Role == INTTRABooking2Confirm.PartyTypeValues.Forwarder).FirstOrDefault();
-                                    if (forwarder != null)
+                                    if (iMessageBody.MessageProperties.Party != null)
                                     {
-                                        if (forwarder.Identifier != null)
+                                        INTTRABooking2Confirm.PartiesType forwarder = iMessageBody.MessageProperties.Party.Where(d => d.Role == INTTRABooking2Confirm.PartyTypeValues.Forwarder).FirstOrDefault();
+                                        if (forwarder != null)
                                         {
-                                            if (forwarder.Identifier.Value != null)
+                                            if (forwarder.Identifier != null)
                                             {
-                                                Branch iBranch = this.myCommonContext.Branches.Where(d => d.INTTRAAlias == forwarder.Identifier.Value).FirstOrDefault();
-                                                if (iBranch != null)
+                                                if (forwarder.Identifier.Value != null)
                                                 {
-                                                    iMessageTenant = iBranch.Tenant;
-                                                }
+                                                    Branch iBranch = this.myCommonContext.Branches.Where(d => d.INTTRAAlias == forwarder.Identifier.Value).FirstOrDefault();
+                                                    if (iBranch != null)
+                                                    {
+                                                        iMessageTenant = iBranch.Tenant;
+                                                    }
 
-                                                else
-                                                {
-                                                    iMessageTenantError = "There is no Tenant for this Forwarder";
+                                                    else
+                                                    {
+                                                        iMessageTenantError = "There is no Tenant for this Forwarder";
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                    else
-                                    {
-                                        iMessageTenantError = "Unknown message Forwarder";
+                                        else
+                                        {
+                                            iMessageTenantError = "Unknown message Forwarder";
+                                        }
                                     }
                                 }
                             }

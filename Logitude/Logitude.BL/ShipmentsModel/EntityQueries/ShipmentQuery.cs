@@ -11005,6 +11005,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierLastStatusCode = f.CarrierLastStatusCode,
                                ShipmentViewId = f.Id,
                                Id = f.Id,
+                               Tenant =f.Tenant,
                                Shipper = f.Shipper,
                                Consignee = f.Consignee,
                                DirectionId = f.DirectionId,
