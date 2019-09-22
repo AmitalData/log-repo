@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Customs.CustomsHouseTypeAdditional", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("CustomsHouseTypeAdditional", entityPM.Tenant, authToken.Tenant);
 	                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CustomsHouseTypeAdditionalUpdateService service = new CustomsHouseTypeAdditionalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -141,6 +142,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Customs.CustomsHouseTypeAdditional", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("CustomsHouseTypeAdditional", entityPM.Tenant, authToken.Tenant);
 	
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CustomsHouseTypeAdditionalUpdateService service = new CustomsHouseTypeAdditionalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
