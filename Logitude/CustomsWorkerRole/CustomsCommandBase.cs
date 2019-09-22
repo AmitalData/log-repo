@@ -176,11 +176,11 @@ namespace CustomsWorkerRole
                 if (DateTime.Now.Subtract(_LastGC) > TimeSpan.FromMinutes(10))//cache 20 min
                 {
                     _LastGC = DateTime.Now;
-                    CacheManager.ClearCacheItems();
-                    CustomsWorkerRole.Utils.GenUtil.CollectGC();
+                    //CacheManager.ClearCacheItems();
+                    //CustomsWorkerRole.Utils.GenUtil.CollectGC();
 
                     ///_AllCustomsSetting.Clear();
-                    GenUtil.CollectGC();
+                    //GenUtil.CollectGC();
                 }
 
                 OnStart();
