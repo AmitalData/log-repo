@@ -79,11 +79,7 @@ export class UserWorkspaceComponent implements OnInit {
                 isLicensesManagmentSystem = true;
             }
         }
-
-        else if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
-            isLicensesManagmentSystem = true;
-        }
-
+        
         this.IsLicensesManagmentSystem = isLicensesManagmentSystem;
 
         if (this.IsLicensesManagmentSystem) {

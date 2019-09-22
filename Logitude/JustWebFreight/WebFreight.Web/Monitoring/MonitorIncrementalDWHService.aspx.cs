@@ -47,52 +47,41 @@ namespace WebFreight.Web.Monitoring
 
         private bool AnyFailedStatus()
         {
-
             bool isFailed = false;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                DateTime todayDateTime = DateTime.Now;
-
-                IGlobalContext globalContext = GlobalContext.GetContext();
-                MobileNotificationLogRepository myRepository = new MobileNotificationLogRepository(globalContext);
-
-
                 try
                 {
-
-                    isFailed = (from d in myRepository.context.Settings 
-                                                 where (d.LastIncrementalDWUpdateDate == null ||  (EntityFunctions.DiffMinutes(d.LastIncrementalDWUpdateDate, todayDateTime) > 5)) && !d.IsFullBuildDWRunning
-                                                 select d).Any();
-                    var isUpgrading = false;
-                    if (isFailed)
-                    {
-                        isUpgrading = (from d in myRepository.context.GlobalDBs
-                                    where d.IsUpgrading
-                                    select d).Any();
-
-                        if (isUpgrading) isFailed = false;
-                    }
-
+                    isFailed = CheckIfIncrementalDWUpdateFailed();
                 }
-
                 catch (Exception errorInfo)
                 {
                     ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "MonitorIncrementalDWHService", "Bug in MonitorIncrementalDWHService Method : globaldbRep.All()", null);
                 }
-
-
-
                 scope.Complete();
             }
-
             return isFailed;
-
-
         }
 
+        private static bool CheckIfIncrementalDWUpdateFailed()
+        {
+            DateTime todayDateTime = DateTime.Now;
+            IGlobalContext globalContext = GlobalContext.GetContext();
+            MobileNotificationLogRepository myRepository = new MobileNotificationLogRepository(globalContext);
 
+            bool isFailed = (from d in myRepository.context.Settings
+                             where (d.LastIncrementalDWUpdateDate == null || (EntityFunctions.DiffMinutes(d.LastIncrementalDWUpdateDate, todayDateTime) > 5)) && !d.IsFullBuildDWRunning
+                             select d).Any();
+            var isUpgrading = false;
+            if (isFailed)
+            {
+                isUpgrading = (from d in myRepository.context.GlobalDBs
+                               where d.IsUpgrading
+                               select d).Any();
 
-
-
+                if (isUpgrading) isFailed = false;
+            }
+            return isFailed;
+        }
     }
 }
