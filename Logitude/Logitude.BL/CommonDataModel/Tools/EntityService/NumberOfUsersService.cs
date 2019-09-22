@@ -375,7 +375,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 else
                 {
-                    if (this.isMultiPackage)
+                    if (!this.isMultiPackage)
                     {
                         throw new Exception("You reached maximum number of users!");
                     }

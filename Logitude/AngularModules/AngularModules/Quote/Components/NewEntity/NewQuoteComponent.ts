@@ -1099,7 +1099,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 this.EntityPM.ExpirationDays = null;
             }
             else {
-                if (this.ExpirationDate.valueOf() != date.valueOf()) {
+                if (this.ExpirationDate == null || (this.ExpirationDate != null && this.ExpirationDate.valueOf() != date.valueOf())) {
                     this.ExpirationDate = date;
                 }
             }

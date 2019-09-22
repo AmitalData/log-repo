@@ -265,9 +265,9 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseEntryPM.ChargeableWeightUnitCode + ")";
         this.ChargeableWeightUnitCodeLabel = "Chargeable Weight (" + this.warehouseEntryPM.ChargeableWeightUnitCode + ")";
         this.DimensionsUnitLable = " (" + this.warehouseEntryPM.DimensionsUnitCode + ")";
-        this.WidthLabel = "Width (" + this.DimensionsUnitCode + ")";
-        this.HeightLabel = "Height (" + this.DimensionsUnitCode + ")";
-        this.LengthLabel = "Length (" + this.DimensionsUnitCode + ")";
+        this.WidthLabel = "W (" + this.DimensionsUnitCode + ")";
+        this.HeightLabel = "H (" + this.DimensionsUnitCode + ")";
+        this.LengthLabel = "L (" + this.DimensionsUnitCode + ")";
 
 
     }
