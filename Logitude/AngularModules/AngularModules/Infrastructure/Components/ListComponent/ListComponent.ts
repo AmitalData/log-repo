@@ -149,7 +149,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     SearchMethod() {
-        this.ApplyPreDefinedFilters();
+        //this.ApplyPreDefinedFilters();
         this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
         //if (this.searchFields && this.searchFields != "") {
         //    this.searchFields = this.searchFields.replace(/"/g, '');
