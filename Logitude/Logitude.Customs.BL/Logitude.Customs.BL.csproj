@@ -1797,6 +1797,7 @@
     <Compile Include="EntityUpdateServices\PhysicalCheckUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsVendorUpdateService.cs" />
+    <Compile Include="Tasks\CloseCourierMasterService.cs" />
     <Compile Include="TraceEvents\UnifreightFUStatusTaskService.cs" />
     <Compile Include="WCOResource.Designer.cs">
       <AutoGen>True</AutoGen>

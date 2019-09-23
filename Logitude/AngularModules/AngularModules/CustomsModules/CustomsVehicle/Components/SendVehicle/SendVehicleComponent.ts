@@ -133,6 +133,7 @@ export class SendVehicleComponent {
                                 .then((res) => {
                                     console.log(res);
                                     //this.CancelButtonClicked();
+                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                 }
                                 ).catch((err) => {
                                     this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(err);

@@ -23,6 +23,10 @@ import { ClientPM } from '../../Customs/Entitypms/ClientPM';
 //import { DeclarationPMService } from '../../Customs/Services/StandardPMs/DeclarationPMService';                                       
 import { DeclarationPM } from '../../Customs/EntityPMs/DeclarationPM';
 import { ConsignmentPM } from '../../Customs/EntityPMs/ConsignmentPM';
+import { EntityResourceService } from '../Services/EntityResourceService';
+import { EntityPMService } from '../Services/EntityPMService';
+import { CourierMasterService } from '../../Customs/Services/Others/CourierMasterService';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
 
 
 
@@ -373,6 +377,12 @@ export class AmitalGatewayUtil {
 
                 }
                 break;
+
+            case "ShowCourierMasterByIdReturnCloseSave": {
+                this.ShowCourierMasterByIdReturnCloseSaveMethod(
+                    myParam, myEditTab, change2EditTab, change2CA23Tab);
+                break;
+            }
                  
             default: {
                 //throw new Error("UnifaceRequest get bad  unifreightMessage (LogitudeCommandId is unknown ) " + unifreightMessage.LogitudeCommandId);
@@ -660,6 +670,81 @@ export class AmitalGatewayUtil {
             AmitalGatewayUtil.Instance.SendRequestJSONToUnifreightAsync(myRequestWrapperM);
         }
     }
+
+    ShowCourierMasterByIdReturnCloseSaveMethod(
+        myParam,
+        myEditTab,
+        change2EditTab: () => void,
+        change2CA23Tab: () => void) {
+        change2EditTab();
+        if (AppTool.IsNullOrEmpty(myEditTab.SessionComponent)) {
+            setTimeout(() => { AmitalGatewayUtil.Instance.ShowCourierMasterById.StartDoItForCourier(this._LastUnifreightMessageM, myEditTab, change2CA23Tab); }, 500);
+        } else {
+
+            AmitalGatewayUtil.Instance.ShowCourierMasterById.StartDoItForCourier(this._LastUnifreightMessageM, myEditTab, change2CA23Tab);
+        }
+    }
+
+    ShowCourierMasterById = class {
+        static _entityResourceService: EntityResourceService = new EntityResourceService();
+        static StartDoItForCourier(unifreightMessage: UnifreightMessageM, myEditTab, callback2TabZero: () => void) {
+            let isSaved: boolean = false;
+            let BackButtonLabel = "תיק עמילות"
+            var windowArgs: any = {};
+            let courierMasterService: CourierMasterService = new CourierMasterService();
+
+            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
+                    this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                        //entityPMService.getSingle("Customs.CourierMaster", selectedCourierMasterId).then((res: any) => {
+                        courierMasterService.getCourierMasterByDeclarationId(unifreightMessage.LogitudeEntityNumber).subscribe((myResponse: ServiceResponse) => {
+                                if (myResponse.HasError) {
+                                    console.log("Error while getting EntityPM", myResponse);
+                                }
+                                else {
+                                    windowArgs.CurrentEntity = myResponse.Result;
+                                    var logWindow = new LogitudeWindow();
+                                    logWindow.Width = 1500;
+                                    logWindow.Height = 1000;
+                                    logWindow.WindowArgs = windowArgs;
+                                    logWindow.ShowCloseButton = true;
+                                    //logWindow.IsHideHeader = true;
+                                    logWindow.IsFillScreen = true;
+                                    AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
+                                    logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
+                                    logWindow.WindowClosed.subscribe(($event1: any) => {
+                                        //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
+                                        this.ShowCourierMasterByIdReturnCloseSaveCallBack(isSaved);
+                                        callback2TabZero();
+
+                                    });
+                                }
+                            });
+
+                        });
+                    });
+                });
+            }
+
+        private static ShowCourierMasterByIdReturnCloseSaveCallBack(save: boolean) {
+            if (AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.filter((item) => item[0] == "ShowCourierMasterByIdReturnCloseSaveCallBack").length == 0) {
+                AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.push(["ShowCourierMasterByIdReturnCloseSaveCallBack", save.toString()]);
+            }
+            let tuple = AmitalGatewayUtil.Instance._LastUnifreightMessageM.Requset.filter((item) => item[0] == "ShowCourierMasterByIdReturnCloseSaveCallBack")[0];
+            tuple[1] = save.toString();
+
+
+            var myRequestWrapperM = new RequestWrapperM();
+
+
+            myRequestWrapperM.SenderID = "UnifreightMassageHandler.ShowCourierMasterByIdReturnCloseSaveCallBack";
+            myRequestWrapperM.ReceiverID = "CFIHMAIN.LogitudeTask";
+            myRequestWrapperM.MessageID = "ShowCourierMasterByIdReturnCloseSaveCallBack";
+            myRequestWrapperM.UnifreightMessage = AmitalGatewayUtil.Instance._LastUnifreightMessageM;
+
+            AmitalGatewayUtil.Instance.SendRequestJSONToUnifreightAsync(myRequestWrapperM);
+        }
+    }
     GeneralMessaging = class {
         public static get ResponseEntityAlreadyLockKey() { return "Response.EntityAlreadyLock"; }
         public static get ResponseEntityAlreadyLockMessage() { return "Response.EntityAlreadyLockMessage"; }
@@ -875,6 +960,7 @@ export class AmitalGatewayUtil {
                 unifreightMessageM,
                 " שיתוף מסמכים");
         }
+
     }
 }
 export class RequestWrapperM {

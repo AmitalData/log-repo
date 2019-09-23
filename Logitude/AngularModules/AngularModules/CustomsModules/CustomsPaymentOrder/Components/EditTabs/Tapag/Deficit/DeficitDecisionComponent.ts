@@ -28,6 +28,21 @@ export class DeficitDecisionComponent extends BaseComponent {
                 this.IsLoaded = true;
             });
         }
+        this.SetScreenFieldsEditability();
+    }
+
+    SetScreenFieldsEditability() {
+        this.UIProperties.SetEnabled("RequestID", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("RequestTypeCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("RequestDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ApprovedProfessionCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("DecisionCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("DecisionNoteForLetter", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("TotalComponentAmount", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("TotalEstimatedAmount", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("TotalFinancialPenaltyAmount", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("TotalInterestAmount", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("TotalLinkingAmount", this.ObjectTableName, false);
     }
 
     SetWindowArgs(args: any) {

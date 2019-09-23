@@ -161,6 +161,11 @@
                             <span>{{'Customs.Declaration.O.No' | TextCodeTranslationPipe}}</span>
                         </div>
                     </div>
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['IsClosed']">
+                            <img class="CenterCenter" style="width:10px;height:10px;margin-top:6px" title="Yes" src="./Images/CheckBoxIcon.png" />
+                        </div>
+                    </div>
                 </div>
             </div>
 

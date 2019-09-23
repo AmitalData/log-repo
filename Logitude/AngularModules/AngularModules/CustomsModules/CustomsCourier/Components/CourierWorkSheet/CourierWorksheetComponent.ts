@@ -33,6 +33,7 @@ import { CourierPendingReasonList } from '../../../../Customs/EntityLists/Courie
 import { element } from 'protractor';
 import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { CacheCourierPendingReasonService } from '../../../../Customs/Services/Others/CacheCourierPendingReasonService';
 
 @Component({
     moduleId: module.id,
@@ -132,7 +133,7 @@ implements OnDestroy
         //        });
         //);
         this.GetMamanPUR();
-        
+        CacheCourierPendingReasonService.Instance.CreateCacheCourierPendingReasonList();
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -501,7 +502,7 @@ implements OnDestroy
         this.RefreshMasterRequiredFields();
         if (this._SelectedTabFilter.Code != "HOLD")this.RefreshList();
         this.DisplayOnlyCheck();
-
+        CacheCourierPendingReasonService.Instance.CreateCacheCourierPendingReasonList();
     }
 
     RefreshList() {
@@ -734,7 +735,7 @@ implements OnDestroy
             FieldName: 'ImporterName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-            Styles: { width: '200px' },
+            Styles: { width: '160px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -743,7 +744,7 @@ implements OnDestroy
             FieldName: 'ImporterCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
-            Styles: { width: '100px' },
+            Styles: { width: '90px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });

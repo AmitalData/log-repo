@@ -43,6 +43,7 @@ import { CourierPendingReasonListService } from '../../../Customs/Services/Stand
 import { CourierPendingReasonList } from '../../../Customs/EntityLists/CourierPendingReasonList';
 //import { DeclarationPendingPMService } from '../../../Customs/Services/StandardPMs/DeclarationPendingPMService';
 import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { CacheCourierPendingReasonService } from "../../../Customs/Services/Others/CacheCourierPendingReasonService";
 
 @Component({
     moduleId: module.id,
@@ -92,6 +93,7 @@ export class CourierWorksheetListTemplate {
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
     private _DeclarationCourierStatusWebService: DeclarationCourierStatusWebService = new DeclarationCourierStatusWebService();
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
+    
 
     FirePreventSelect() {
         SessionLocator.SelectedSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
@@ -351,15 +353,57 @@ export class CourierWorksheetListTemplate {
     get IsDisplayOnly() { return this._CourierWorksheetSharedDataService.IsDisplayOnly }
     get WebAPICourierGWMessageECTHRDataMaman() { return this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman }
     //get CourierPendingReasonListToolTip() { return this.CourierPendingReasonListToolTip ; }
-    get CourierPendingReasonListToolTip() { return this.getCourierPendingReasonName(this._CourierWorksheet.CourierPendingReasonList); }
-    
+    get CourierPendingReasonListToolTip() {
+
+        if (AppTool.IsNullOrEmpty(this._CourierWorksheet.CourierPendingReasonList)) {
+            return "";
+        }
+        if (this._CourierWorksheet.CourierPendingReasonList.indexOf(',') < 0) {
+            return this._CourierWorksheet.CourierPendingReasonName;
+        }
+
+        let myToolTip = "";
+        var mycache: Array<CourierPendingReasonList> = CacheCourierPendingReasonService.Instance.GetCache();
+        let listString: string =this._CourierWorksheet.CourierPendingReasonList;
+        let arry = listString.split(',');
+        arry.forEach(itemReason => {
+            let rec = mycache.filter(r => r.Code == itemReason)[0];
+            if (rec != null) {
+                if (!AppTool.IsNullOrEmpty(myToolTip)) {
+                    myToolTip += '\n'
+                }
+                if (!AppTool.IsNullOrEmpty(rec.LocalName)) {
+                    myToolTip += rec.LocalName;
+                } else if (!AppTool.IsNullOrEmpty(rec.EnglishName)) {
+                    myToolTip += rec.EnglishName;
+                } else {
+                    myToolTip += rec.Code;
+                }
+            }
+        });
+        
+        return myToolTip; 
+
+        ///return this.getCourierPendingReasonName(this._CourierWorksheet.CourierPendingReasonList);
+    }
+    get CourierPendingReasonListText() {
+        if (AppTool.IsNullOrEmpty(this._CourierWorksheet.CourierPendingReasonList)) {
+            return "";
+        }
+        if (this._CourierWorksheet.CourierPendingReasonList.indexOf(',') < 0) {
+            return this._CourierWorksheet.CourierPendingReasonName;
+        }
+        return "הצג רשימה";
+
+    }
+
     set CourierPendingReasonListToolTip(value: string) {
         if (this.CourierPendingReasonListToolTip != value) {
             this.CourierPendingReasonListToolTip = value;
         }
     }
 
-    getCourierPendingReasonName(courierPendingReason: string) {
+    getCourierPendingReasonName(courierPendingReason: string, isToolTip: boolean) {
         var toolTip = courierPendingReason
         if (!AppTool.IsNullOrEmpty(toolTip) && toolTip.indexOf(',') < 0) {
             if (this._CourierWorksheet != null && this._CourierWorksheet.CourierPendingReasonName != null) {

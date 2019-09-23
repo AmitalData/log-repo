@@ -711,7 +711,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 
                 VolumeUnitUpdateClass.FillVolumeUnit();
             }
-	
+            //SchedulerProcedureUpdateClass.FillSchedulerProcedure();
+
         }
 
    	 
