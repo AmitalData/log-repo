@@ -42,6 +42,7 @@ import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
+import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
 
 @Component({
     moduleId: module.id,
@@ -81,6 +82,7 @@ export class LoginComponent implements OnInit {
     //public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
     private sATInterfaceSettingPMService: SATInterfaceSettingPMService;
     private UserExtendedPMService: UserExtendedPMService;
+    private generalDomainService: GeneralDomainService;
     constructor(private logitudeApplicationService: LogitudeApplicationService, private loginService: LoginService, public IndexedDbService: IndexedDbService, private entityResourceService: EntityResourceService, private _applicationTimersManager: ApplicationTimersManager, public entityListService: EntityListService,
         private _userLastLoginPMService: UserLastLoginPMService
     ) {
@@ -136,6 +138,7 @@ export class LoginComponent implements OnInit {
         this.myInfrastructureDomainService = new InfrastructureDomainService();
         this.sATInterfaceSettingPMService = new SATInterfaceSettingPMService();
         this.UserExtendedPMService = new UserExtendedPMService();
+        this.generalDomainService = new GeneralDomainService();
         //FileLoader.LoadFroalaResources();
     }
 
@@ -490,6 +493,16 @@ export class LoginComponent implements OnInit {
                         this.IncreaseProgressBar("General Resources");
                         //26
                     });
+                });
+
+                this.generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe(response => {
+
+                    if (!response.HasError) {
+                        window.DWObjectFields = response.Result;
+                    }
+                    this.IncreaseProgressBar("ObjectField Modifications");
+                        //26
+                     
                 });
 
                 // LastFilters
@@ -888,7 +901,7 @@ export class LoginComponent implements OnInit {
     IncreaseProgressBar(loadOPName: string = "") {
         console.log(loadOPName + "==>Completed Login Loads Count: " + this.CompletedLoadsCount);
         if (this.TotalNumberOfLoads == 0) {
-            this.TotalNumberOfLoads = 36;
+            this.TotalNumberOfLoads = 37;
 
             if (!SessionLocator.UseCachedData) {
                 this.TotalNumberOfLoads += 1;

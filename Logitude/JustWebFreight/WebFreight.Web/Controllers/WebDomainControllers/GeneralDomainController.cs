@@ -44,7 +44,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 GeneralDomainService service = new GeneralDomainService();
                 List<FieldsTranslations> result = service.GetTranslationsByParam(tenant, typeCode, tableId, translationLanguageCode);
 
-                return Request.CreateResponse(HttpStatusCode.OK, result.OrderBy(d=> d.ObjectTableName));
+                return Request.CreateResponse(HttpStatusCode.OK, result.OrderBy(d => d.ObjectTableName));
             }
 
             catch (Exception ex)
@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 DataTypeRepository dataTypeRepository = new DataTypeRepository(tenant);
-                List<FieldDataType> result = dataTypeRepository.GetDataTypes().Where(d => d.Code != "Byte[]" && d.Code != "Emails"  && d.Code != "Constant" && d.Code != "List" && d.Code != "SigDouble" && d.Code != "UnsDecimal" && d.Code != "UnsInteger").ToList();
+                List<FieldDataType> result = dataTypeRepository.GetDataTypes().Where(d => d.Code != "Byte[]" && d.Code != "Emails" && d.Code != "Constant" && d.Code != "List" && d.Code != "SigDouble" && d.Code != "UnsDecimal" && d.Code != "UnsInteger").ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
@@ -134,7 +134,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage PutObjectField(ObjectFieldPM objectField)
         {
             try
@@ -153,7 +153,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }           
+            }
         }
 
         public HttpResponseMessage GetTranslationsList(string typeCode)
@@ -175,7 +175,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetTranslationsByFilters_Old([FromUri] CustomApiQueryFilters filters)
         {
             try
@@ -266,7 +266,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetCustomPickListsByCode(string code)
         {
             try
@@ -277,7 +277,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                
+
                 var customPickListsRepository = new CustomPickListRepository(objectContext);
                 var customPickListQuery = new CustomPickListQuery(customPickListsRepository);
                 var temp = customPickListQuery.GetCustomPickListPMsByCode(tenant, code);
@@ -287,7 +287,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-            
+
         }
 
         public HttpResponseMessage PostPickList(PickListGeneralEntitiesArgs args)
@@ -308,9 +308,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 }
 
-				TableLastUpdateClass.UpdateTableHistory(authToken.Tenant, "CustomPickList");
+                TableLastUpdateClass.UpdateTableHistory(authToken.Tenant, "CustomPickList");
 
-				return Request.CreateResponse(HttpStatusCode.OK, args);
+                return Request.CreateResponse(HttpStatusCode.OK, args);
             }
 
             catch (Exception ex)
@@ -340,10 +340,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             customPickListService.Create(entityPM);
                         }
-                    } 
+                    }
 
                 }
-                
+
                 if (args.RemovedCustomPickListPMs != null && args.RemovedCustomPickListPMs.Count > 0)
                 {
                     CustomPickListRepository repo = new CustomPickListRepository(authToken.Tenant);
@@ -358,9 +358,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-				TableLastUpdateClass.UpdateTableHistory(authToken.Tenant, "CustomPickList");
+                TableLastUpdateClass.UpdateTableHistory(authToken.Tenant, "CustomPickList");
 
-				return Request.CreateResponse(HttpStatusCode.OK, args);
+                return Request.CreateResponse(HttpStatusCode.OK, args);
             }
 
             catch (Exception ex)
@@ -415,7 +415,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 TextCodeTypesRepository repository = new TextCodeTypesRepository(tenant);
                 IQueryable<TextCodeType> result = repository.GetTextCodeTypes();
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
@@ -482,8 +482,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                 ScreenFieldsQuery MyQuery = new ScreenFieldsQuery(authToken.Tenant);
-                var MyTenantFields = MyQuery.GetScreenFieldPMsByTenant(authToken.Tenant).Where(a=>a.Tenant != 0);
-                ScreenFieldService MyService = new ScreenFieldService(objectContext,authToken.Tenant);
+                var MyTenantFields = MyQuery.GetScreenFieldPMsByTenant(authToken.Tenant).Where(a => a.Tenant != 0);
+                ScreenFieldService MyService = new ScreenFieldService(objectContext, authToken.Tenant);
                 ScreensRepository myRepo = new ScreensRepository(authToken.Tenant);
                 var ScreenModification = myRepo.GetScreenModificationByScreen(args.ScreenId, authToken.Tenant);
                 if (ScreenModification == null)
@@ -559,7 +559,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 ScreensRepository myRepo = new ScreensRepository(authToken.Tenant);
                 var temp = myRepo.GetScreenModificationByScreen(ScreenId, authToken.Tenant);
-                 
+
                 return Request.CreateResponse(HttpStatusCode.OK, temp);
             }
             catch (Exception ex)
@@ -579,7 +579,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(0);
                 ObjectFieldPM objectFieldPM = objectFieldQuery.GetSinglePM(id, 0);
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, objectFieldPM);
 
             }
@@ -609,6 +609,28 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+
+        public HttpResponseMessage GetObjectFieldModificationForLoggedTenant()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ObjectFieldRepository objectFieldsRepository = new ObjectFieldRepository(tenant);
+
+                List<ObjectFieldModification> result = objectFieldsRepository.GetAllObjectFieldModificationByTenant(tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 }
