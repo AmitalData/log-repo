@@ -648,6 +648,13 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             depositLine.LocalAmount = cashbookLine.LocalAmount;
             depositLine.ForeignAmount = cashbookLine.ForeignAmount;
             depositLine.DueDate = cashbookLine.DueDate;
+            depositLine.Bank = cashbookLine.Bank;
+            depositLine.Branch = cashbookLine.Branch;
+            depositLine.ARPaymentNumber = cashbookLine.ARPaymentNumber;
+            depositLine.ChequeStatusName = cashbookLine.ARPChequeStatusName;
+            depositLine.ChequeNumber = cashbookLine.ChequeNumber;
+            depositLine.Currency = cashbookLine.Currency;
+            depositLine.ARPaymentId = cashbookLine.ARPaymentId;
             this.EntityPM.AddBankDepositLine(depositLine);
             this.BankDepositLines.push(depositLine);
         }
