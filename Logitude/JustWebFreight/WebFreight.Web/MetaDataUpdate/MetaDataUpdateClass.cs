@@ -66117,9 +66117,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ReportFeature62 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicles", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.Vehicles", NameTextCodeDefaultText = "Vehicles Shipping", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature63 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHEL", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.ShipmentsEventsList", NameTextCodeDefaultText = "Shipments Events List", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature64 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATRE", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.AutomationTestReport", NameTextCodeDefaultText = "Automation Test Report", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-
-
+            Feature ReportFeature65 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WORKDAYSPERGATEGORY", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.WorkDaysPerCategory", NameTextCodeDefaultText = "Work Days Per Category", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             #endregion
 
             #region ProductTypeFeatures
