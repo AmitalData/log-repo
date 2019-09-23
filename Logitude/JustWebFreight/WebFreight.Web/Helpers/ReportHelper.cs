@@ -1165,6 +1165,17 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
+
+                case "WGTS":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(WorkDaysPerCategoryDataProvider));
+                        WorkDaysPerCategoryDataProvider reportDataProvider = (WorkDaysPerCategoryDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "WorkPerDaysCategoryManager", Name = "WorkDaysPerCategoryDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
                 case "TPTS":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(TasksWithoutProjectsDataProvider));
@@ -1757,7 +1768,12 @@ namespace WebFreight.Web.Helpers
 
                             break;
                         }
-
+                    case "WGTS":
+                        {
+                            WorkPerDaysCategoryManager myDataManager = new WorkPerDaysCategoryManager(filters, reportFliter.tenant);
+                            dataProvider = myDataManager.GetData();
+                            break;
+                        }
                     case "TPTS":
                         {
                             dataProvider = logitudeReportsWebService.LoadTasksWithoutProjectsData(filters, reportFliter.tenant);
