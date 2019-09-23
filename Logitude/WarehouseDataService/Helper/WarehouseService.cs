@@ -61,12 +61,12 @@ namespace WarehouseDataService.Helper
                         warehouseServiceHelper.UpdateDWNextRunTime(sourceConnectionString, dwBuildTime.DWNextRunTime);
                         ApplicationInfo.IsStartBuildingDataWarehouse = false;
                     }
-                    else Thread.Sleep((10 * 60000));
+                    else Thread.Sleep(new TimeSpan(0, 5, 0));
                 }
 
                 catch (Exception ex)
                 {
-                    Thread.Sleep((10 * 60000));
+                    Thread.Sleep(new TimeSpan(0, 5, 0));
                 }
             }
 
@@ -88,10 +88,11 @@ namespace WarehouseDataService.Helper
                         warehouseHelper.BuildDataBase(sourceConnectionString, destinationConnectionString);
                         warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
                         warehouseServiceHelper.UpdateWarehouseFieldSettings("IsFullBuildDWRunning", false, sourceConnectionString);
+                        warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
                     }
                     else Thread.Sleep(2000);
                 }
-                else Thread.Sleep(new TimeSpan(0, 10, 0));
+                else Thread.Sleep(new TimeSpan(0, 5, 0));
             }
         }
 
@@ -120,11 +121,11 @@ namespace WarehouseDataService.Helper
                                 warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
                                 Thread.Sleep(ApplicationInfo.UpdateWarehouseSleepTime);
                             }
-                            else Thread.Sleep(new TimeSpan(0, 10, 0));
+                            else Thread.Sleep(new TimeSpan(0, 5, 0));
                         }
-                        else Thread.Sleep(new TimeSpan(0, 10, 0));
+                        else Thread.Sleep(new TimeSpan(0, 5, 0));
                     }
-                    else Thread.Sleep(new TimeSpan(0, 10, 0));
+                    else Thread.Sleep(new TimeSpan(0, 5, 0));
                 }
 
                 catch (Exception ex)
