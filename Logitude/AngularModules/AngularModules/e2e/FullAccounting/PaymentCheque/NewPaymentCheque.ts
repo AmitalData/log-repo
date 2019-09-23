@@ -18,7 +18,8 @@ export class NewPaymentCheque {
     CreateNewPaymentCheque() {
         browser.ignoreSynchronization = true;
         this.Helper.WaitByIdAndClick('FABNKS');
-
+        this.Helper.ItemsVisibility('NEWPaymentCheque');
+        this.Helper.ItemsPresent('NEWPaymentCheque');
         this.Helper.ItemsVisibility('NEWPaymentCheque');
         this.Helper.ItemsPresent('NEWPaymentCheque');
         this.Helper.WaitByIdAndClick('NEWPaymentCheque');
