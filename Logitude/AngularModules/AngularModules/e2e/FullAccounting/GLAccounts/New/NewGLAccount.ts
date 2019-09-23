@@ -20,11 +20,14 @@ export class NewGLAccount {
       this.Helper.ItemsVisibility('GLAccount_ChartOfAccountsTypeCode');
       this.Helper.ItemsPresent('GLAccount_ChartOfAccountsTypeCode');
 
-    this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsTypeCode', 'Revenues');
-      this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+      this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsTypeCode', 'Revenues');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'GLAccount_ChartOfAccountsTypeCode' , 'Revenues')
+     // this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
       this.Helper.WaitBusyIndicator();
-    this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'Rev');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'Rev');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'GLAccount_ChartOfAccountsId', 'Rev')
+
+    //  this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitBusyIndicator();
       this.Helper.WaitByIdAndFill('GLAccount_LocalName', LocalName);
       this.Helper.WaitBusyIndicator();

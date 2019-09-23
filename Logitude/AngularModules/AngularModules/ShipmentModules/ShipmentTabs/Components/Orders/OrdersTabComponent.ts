@@ -459,13 +459,13 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
                 }
             });
 
-            if (!AppTool.IsNullOrEmpty(input)) {
-                input = AppTool.Replace(input, ",", "");
-                valueInserted = Number(input);
-            }
+            // if (!AppTool.IsNullOrEmpty(input)) {
+            //     input = AppTool.Replace(input, ",", "");
+            //     valueInserted = Number(input);
+            // }
 
             valueComputed = valueComputed == 0 ? null : valueComputed;
-            valueInserted = valueInserted == 0 ? null : valueInserted;
+            valueInserted = AppTool.GetNumberFromText(input);
             this.OrderGrossWeightEdited = !(valueComputed == valueInserted);
             this.OrderGrossWeight = valueInserted;
             this.ComputeTotals();
@@ -478,13 +478,13 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
 
             valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.OrderGrossWeight, this.EntityPM.OrderVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
-            if (!AppTool.IsNullOrEmpty(input)) {
-                input = AppTool.Replace(input, ",", "");
-                valueInserted = Number(input);
-            }
+            // if (!AppTool.IsNullOrEmpty(input)) {
+            //     input = AppTool.Replace(input, ",", "");
+            //     valueInserted = Number(input);
+            // }
 
             valueComputed = valueComputed == 0 ? null : valueComputed;
-            valueInserted = valueInserted == 0 ? null : valueInserted;
+            valueInserted = AppTool.GetNumberFromText(input);
             this.OrderChargeableWeightEdited = !(valueComputed == valueInserted);
             this.OrderChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
             this.ComputeTotals();

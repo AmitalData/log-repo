@@ -20,8 +20,10 @@ export class NewVendor {
       this.Helper.ItemsVisibility('Address_Name');
       this.Helper.ItemsPresent('Address_Name');
     this.Helper.WaitByIdAndFill('Address_Name', Name);
-    this.Helper.WaitByIdAndFill('Address_CountryId', 'ps');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByIdAndFill('Address_CountryId', 'ps');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Address_CountryId', 'ps')
+
+  //    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitBusyIndicator();
       this.Helper.WaitByIdAndFill('Address_City', 'Nablus');
       this.Helper.WaitBusyIndicator();

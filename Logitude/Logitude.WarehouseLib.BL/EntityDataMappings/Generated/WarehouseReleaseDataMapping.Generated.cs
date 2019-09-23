@@ -59,7 +59,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ConnectedTo, 
 	         FromPortId, 
 	         ToPortId, 
-	         CustomerAddressId,
+	         CustomerAddressId, 
+	         TotalVolumetricWeight, 
+	         Ratio,
 	      }
 
 
@@ -109,7 +111,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ConnectedTo, 
 	         FromPortId, 
 	         ToPortId, 
-	         CustomerAddressId,
+	         CustomerAddressId, 
+	         TotalVolumetricWeight, 
+	         Ratio,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -301,6 +305,16 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerAddressId))
             {
 				entityPOCO.CustomerAddressId = entityPM.CustomerAddressId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
+            {
+				entityPOCO.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+				entityPOCO.Ratio = entityPM.Ratio;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -499,6 +513,16 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.CustomerAddressId = entityPOCO.CustomerAddressId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotalVolumetricWeight))
+            {
+					entityPM.TotalVolumetricWeight = entityPOCO.TotalVolumetricWeight;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Ratio))
+            {
+					entityPM.Ratio = entityPOCO.Ratio;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseReleasePM entityPM, WarehouseReleasePM oldEntityPM)
@@ -688,6 +712,16 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerAddressId))
             {
                 oldEntityPM.CustomerAddressId = entityPM.CustomerAddressId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
+            {
+                oldEntityPM.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+                oldEntityPM.Ratio = entityPM.Ratio;
             }
 			
 		}

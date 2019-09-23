@@ -1457,8 +1457,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return newValue;
         }
 
-
-
 		public HttpResponseMessage GetARPaymentSATCancellationStatus(string paymentId)
 		{
 			if (ModelState.IsValid)
@@ -1519,7 +1517,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 			}
 		}
 
-
 		public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
 		{
 			if (ModelState.IsValid)
@@ -1564,7 +1561,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 			}
 		}
 
-
 		public HttpResponseMessage getConnectedARPayments(string invoiceId)
         {
             if (ModelState.IsValid)
@@ -1599,8 +1595,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-
-
         public HttpResponseMessage getConnectedAPPayments(string invoiceId)
         {
             if (ModelState.IsValid)
@@ -1634,7 +1628,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
-
 
         public HttpResponseMessage GetListOfARInvoiceStockPM()
         {
@@ -1679,7 +1672,78 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetMarkEntityAsBlocked(string transferTypeCode, string entityId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
 
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+                switch (transferTypeCode)
+                {
+                    case "ARIN":
+                        {
+                            ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(invoiceContext);
+                            ARInvoice aRInvoice = aRInvoiceRepository.GetSingleARInvoice(entityId, tenant);
+                            if (aRInvoice != null)
+                            {
+                                aRInvoice.TransferStatusCode = "BL";
+                                aRInvoiceRepository.Update(aRInvoice);                                
+                            }
+                            break;
+                        }
+
+                    case "APIN":
+                        {
+                            APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(invoiceContext);
+                            APInvoice aPInvoice = aPInvoiceRepository.GetSingleAPInvoice(entityId, tenant);
+                            if (aPInvoice != null)
+                            {
+                                aPInvoice.TransferStatusCode = "BL";
+                                aPInvoiceRepository.Update(aPInvoice);
+                            }
+                            break;
+                        }
+
+                    case "ARPA":
+                        {
+                            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(invoiceContext);
+                            ARPayment aRPayment = aRPaymentRepository.GetSingleARPayment(entityId, tenant);
+                            if (aRPayment != null)
+                            {
+                                aRPayment.TransferStatusCode = "BL";
+                                aRPaymentRepository.Update(aRPayment);
+                            }
+                            break;
+                        }
+
+                    case "APPA":
+                        {
+                            APPaymentRepository aPPaymentRepository = new APPaymentRepository(invoiceContext);
+                            APPayment aPPayment = aPPaymentRepository.GetSingleAPPayment(entityId, tenant);
+                            if (aPPayment != null)
+                            {
+                                aPPayment.TransferStatusCode = "BL";
+                                aPPaymentRepository.Update(aPPayment);
+                            }
+                            break;
+                        }
+                }
+
+                invoiceContext.SaveChanges();               
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
     public class APInvoiceNumberDuplicationCheckArgs
     {

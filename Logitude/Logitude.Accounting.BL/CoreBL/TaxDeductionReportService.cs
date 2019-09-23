@@ -261,7 +261,7 @@ namespace Logitude.Accounting.BL.CoreBL
                    myStringBuilder.Append('0', 2);
                 }
                 myStringBuilder.Append("60");
-                myStringBuilder.Append('\n');
+                myStringBuilder.Append("\r\n");
 
             }
 
@@ -425,7 +425,7 @@ namespace Logitude.Accounting.BL.CoreBL
             myStringBuilder.Append("בדיקה");
             myStringBuilder.Append(' ', 6);
             myStringBuilder.Append("70");
-            myStringBuilder.Append("\n");
+            myStringBuilder.Append("\r\n");
 
             //80s
 
@@ -520,7 +520,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
                 myStringBuilder.Append(' ', 131);
                 myStringBuilder.Append("80");
-                myStringBuilder.Append("\n");
+                myStringBuilder.Append("\r\n");
 
             }
 
