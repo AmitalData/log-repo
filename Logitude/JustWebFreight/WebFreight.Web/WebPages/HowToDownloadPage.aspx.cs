@@ -455,6 +455,10 @@ namespace WebFreight.Web.WebPages
                     documentName = "july_2019_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
+                case "REL020":
+                    documentName = "september_2019_release.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
             }
 
             if (data != null)

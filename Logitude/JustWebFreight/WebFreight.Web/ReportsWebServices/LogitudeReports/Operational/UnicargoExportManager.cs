@@ -107,6 +107,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             List<Country> FromAddressCountryLists = (from record in commonDataContext.Countries.Include("GlobalZone") where FromAddressCountryIds.Contains(record.Id) && record.Tenant == tenant select record).ToList();
             List<Address> ToPartnerAddressLists = (from a in commonDataContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && ToPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
 
+            Dictionary<string, string> LeadSources = commonDataContext.LeadSources.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
 
 
 
@@ -118,6 +119,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 #region  General Section
                 Shipment.House = item.House;
                 Shipment.FileNumber = item.ShipmentNumber;
+                
                 if (!string.IsNullOrEmpty(item.IncotermId))
                 {
                     Shipment.Incoterms = incoterms.ContainsKey(item.IncotermId) ? incoterms[item.IncotermId] != null ? incoterms[item.IncotermId] : null : null;
@@ -213,6 +215,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 #region Partners Section
                 Shipment.Shipper = item.ShipperName;
                 Shipment.Consignee = item.ConsigneeName;
+                Shipment.ConsigneeRef1 = item.ConsigneeReference1;
+                Shipment.ConsigneeRef2 = item.ConsigneeReference2;
+                Shipment.AccountedPayable = item.AccountedPayablesInProfitCurrency;
+                Shipment.OpenPayable = item.OpenPayablesInProfitCurrency;
+                Shipment.AccountedReceivables = item.AccountedReceivablesInProfitCurrency;
+                Shipment.OpenReceivables = item.OpenReceivablesInProfitCurrency;
+
                 if (!string.IsNullOrEmpty(item.ConsigneeId))
                 {
                     Address ConsigneeAddress = ConsgineeAddressLists.Where(d => d.CardId == item.ConsigneeId).FirstOrDefault();
@@ -282,6 +291,31 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     if (card != null)
                     {
                         Shipment.Customer = card.EnglishName;
+                        Shipment.CustomerId = card.Code;
+                        if (card.Customer != null)
+                        {
+                            if (!string.IsNullOrEmpty(card.Customer.LeadSourceId))
+                            {
+                                if (LeadSources.ContainsKey(card.Customer.LeadSourceId))
+                                {
+                                    Shipment.LeadSource = LeadSources[card.Customer.LeadSourceId];
+                                }
+                            }
+                        }
+                        Shipment.PaymentTerms = card.PaymentTerm!=null?card.PaymentTerm.EnglishName:null;
+
+
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(item.CustomerContactId))
+                {
+                    Contact contact = ContactRepository.GetSingleContactByIdAndTenant(item.CustomerContactId, tenant, true);
+                    if (contact != null)
+                    {
+                        Shipment.CustomerContactEmail = contact.Email;
+                        Shipment.CustomerContactName = contact.EnglishName;
+
                     }
                 }
 
@@ -595,6 +629,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         if (myPort != null)
                         {
                             Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
+                            Shipment.ToPortCountryCode = myPort.CountryCode;
                         }
 
                     }
@@ -650,12 +685,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                         Shipment.MainCarriageLeg1ATA = MasterData.MainCarriageATA != null ? MasterData.MainCarriageATA : (MasterShipment != null ? MasterShipment.MainCarriageATA : null);
 
+                         Shipment.MasterShipmentNumber = MasterData.MasterShipmentNumber;
 
 
-           
-                    
-                  
-                    
+
+
+
 
                     if (!string.IsNullOrEmpty(MasterData.Transshipment1CarrierId))
                     {
@@ -713,6 +748,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         Shipment.MainCarriageLeg1ETA = MasterShipment != null ? MasterShipment.MainCarriageETA : null;
                         Shipment.MainCarriageLeg1ATD = MasterShipment != null ? MasterShipment.MainCarriageATD : null;
                         Shipment.MainCarriageLeg1ATA = MasterShipment != null ? MasterShipment.MainCarriageATA : null;
+                        Shipment.MasterShipmentNumber = MasterShipment.MasterShipmentNumber;
 
                         if (MasterShipment != null)
                         {
@@ -769,6 +805,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                 if (myPort != null)
                                 {
                                     Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
+                                    Shipment.ToPortCountryCode = myPort.CountryCode;
+
                                 }
 
                             }
@@ -837,6 +875,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                                 Shipment.Transshipment1Vessel = vessel;
                             }
+
+
+                          
+
                         }
                     }
                     else
@@ -859,9 +901,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             if (myPort != null)
                             {
                                 Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
+                                Shipment.ToPortCountryCode = myPort.CountryCode;
+
                             }
 
                         }
+
+                   
 
                     }
 

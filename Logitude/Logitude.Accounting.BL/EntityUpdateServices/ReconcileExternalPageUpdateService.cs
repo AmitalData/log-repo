@@ -132,6 +132,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             IAccountingContext accountingContext = AccountingContext.GetContext(pagePM.Tenant);
             if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "3" && pagePOCO.StatusCode != "3"))
             {
+                pagePM.ReconcileExternalPageLines.ForEach(a=>{ a.ChangeSetOp = ChangeSetOperation.None; });
+
                 // canceled!!
                 //update bankaccount , last page fields
                 ReconcileExternalPageQueryService pageQuery = new ReconcileExternalPageQueryService(pagePOCO.Tenant);
