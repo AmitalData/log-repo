@@ -934,6 +934,21 @@ export class DeclarationPM {
     public set CourierMasterId(newValue: string) { if (this.courierMasterId != newValue) { this.courierMasterId = newValue; this.MarkAsDirty("CourierMasterId"); } }
        
 	 
+    private isClosedForFollowUp: boolean;
+    public get IsClosedForFollowUp() { return this.isClosedForFollowUp; }
+    public set IsClosedForFollowUp(newValue: boolean) { if (this.isClosedForFollowUp != newValue) { this.isClosedForFollowUp = newValue; this.MarkAsDirty("IsClosedForFollowUp"); } }
+       
+	 
+    private fastIndividualProcessCode: string;
+    public get FastIndividualProcessCode() { return this.fastIndividualProcessCode; }
+    public set FastIndividualProcessCode(newValue: string) { if (this.fastIndividualProcessCode != newValue) { this.fastIndividualProcessCode = newValue; this.MarkAsDirty("FastIndividualProcessCode"); } }
+       
+	 
+    private totalInvoiceAmountInUSD: number;
+    public get TotalInvoiceAmountInUSD() { return this.totalInvoiceAmountInUSD; }
+    public set TotalInvoiceAmountInUSD(newValue: number) { if (this.totalInvoiceAmountInUSD != newValue) { this.totalInvoiceAmountInUSD = newValue; this.MarkAsDirty("TotalInvoiceAmountInUSD"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

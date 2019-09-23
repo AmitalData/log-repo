@@ -141,7 +141,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<DeclarationList> GetIqueryableList(IQueryable<Declaration> iQueryable)
         {
 
-
+            var qJoin =
+(from p in context.CourierDeclarations
+ join dec in context.Declarations
+                     on p.DeclarationId equals dec.Id
+                     into DecJoin
+ from myDeclarations in DecJoin
+ join sts1 in context.DeclarationCourierStatuses
+                     on myDeclarations.Id equals sts1.DeclarationId
+                     into DeclarationCourierStatusesJoin
+ from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
+ select new { p.CourierMasterId, myDeclarations, myDeclarationCourierStatuses }
+ );
 
 
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
@@ -259,6 +270,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CourierSuspentionCode = a.CourierSuspentionCode,
                                                      CourierSuspentionName = a.CourierSuspention != null ? a.CourierSuspention.LocalName : null,
                                                      DepositionStatusCode = a.DepositionStatusCode,
+                                                     //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
+                                                     //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
+                                                     IsClosedForFollowUp = qJoin != null ? (qJoin.FirstOrDefault().myDeclarationCourierStatuses != null ? qJoin.FirstOrDefault().myDeclarationCourierStatuses.IsClosedForFollowUp : false) : false,
+                                                     FastIndividualProcessCode = qJoin != null ? (qJoin.FirstOrDefault().myDeclarationCourierStatuses != null ? qJoin.FirstOrDefault().myDeclarationCourierStatuses.FastIndividualProcessCode : null) : null,
+                                                     TotalInvoiceAmountInUSD = qJoin != null ? (qJoin.FirstOrDefault().myDeclarationCourierStatuses != null ? qJoin.FirstOrDefault().myDeclarationCourierStatuses.TotalInvoiceAmountInUSD : null) : null,
                                                  });
 
 

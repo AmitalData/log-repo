@@ -239,6 +239,11 @@ export class CourierMasterPM {
     public set IsReadyForInvoice(newValue: boolean) { if (this.isReadyForInvoice != newValue) { this.isReadyForInvoice = newValue; this.MarkAsDirty("IsReadyForInvoice"); } }
        
 	 
+    private isAllDecClosedForFollowUp: boolean;
+    public get IsAllDecClosedForFollowUp() { return this.isAllDecClosedForFollowUp; }
+    public set IsAllDecClosedForFollowUp(newValue: boolean) { if (this.isAllDecClosedForFollowUp != newValue) { this.isAllDecClosedForFollowUp = newValue; this.MarkAsDirty("IsAllDecClosedForFollowUp"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

@@ -3720,6 +3720,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isClosedForFollowUp ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsClosedForFollowUp  
+	   {
+	    
+	     get
+		{
+		   return isClosedForFollowUp;
+		 }
+		 set
+		 {
+		   if(isClosedForFollowUp != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsClosedForFollowUp",OldValue=isClosedForFollowUp,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isClosedForFollowUp=value;
+		   }
+			
+		 }
+	   }
+	  private string fastIndividualProcessCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FastIndividualProcessCode  
+	   {
+	    
+	     get
+		{
+		   return fastIndividualProcessCode;
+		 }
+		 set
+		 {
+		   if(fastIndividualProcessCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FastIndividualProcessCode",OldValue=fastIndividualProcessCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fastIndividualProcessCode=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? totalInvoiceAmountInUSD ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalInvoiceAmountInUSD  
+	   {
+	    
+	     get
+		{
+		   return totalInvoiceAmountInUSD;
+		 }
+		 set
+		 {
+		   if(totalInvoiceAmountInUSD != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalInvoiceAmountInUSD",OldValue=totalInvoiceAmountInUSD,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalInvoiceAmountInUSD=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

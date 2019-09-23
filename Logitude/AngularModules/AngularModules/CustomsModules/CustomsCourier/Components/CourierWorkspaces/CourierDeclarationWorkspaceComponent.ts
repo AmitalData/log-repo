@@ -40,7 +40,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     _CourierMasterService: CourierMasterService = new CourierMasterService();
 
     // Queries Features
-    public OpenCourierMasterVisibility: boolean = false;
+    public OpenCourierMasterVisibility: boolean = true;
     public InactiveGLAccountsVisibility: boolean = false;
     public AllGLAccountsVisibility: boolean = false;
     public OpenFilesVisibility: boolean = false;
@@ -54,10 +54,12 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
-            {
-                this.isScreenLoaded = true;
-                this.CurrentSession.StopBusyIndicator();
-            }
+            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => { 
+                {
+                    this.isScreenLoaded = true;
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
         });
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -83,7 +85,8 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     }
 
     SetQueriesVisibility() {
-        this.OpenCourierMasterVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ACTIVEGLACCOUNTS") ? true : false;
+        //this.OpenCourierMasterVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ACTIVEGLACCOUNTS") ? true : false;
+        this.OpenCourierMasterVisibility = true;
         this.InactiveGLAccountsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "INACTIVEGLACCOUNTS") ? true : false;
         this.AllGLAccountsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLGLACCOUNTS") ? true : false;
         this.OpenFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "OPENFILESGLACCOUNTS") ? true : false;
@@ -123,7 +126,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Main") });
+                    cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Customs.CourierMaster', BackButtonLabel: TextCodeTranslator.Translate("General.MH.CourierMaster") });
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                         this.RefreshButtonClicked();
                     });
@@ -145,7 +148,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         logWindow.Show('./Accounting/Components/NewEntity/NewGLAccountComponent');
     }
 
-    ViewAccountingQuery(myQueryCode: string) {
+    ViewCourierMasterQuery(myQueryCode: string) {
         if (myQueryCode != null) {
 
             var displayTitle = "";
@@ -158,7 +161,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                         displayTitle = "Open Courier Master";
                         displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.CourierMasterOpen");
 
-                        //filters.addAdditionalFilter("AccountTypeCode", "1", null, null, "Equals", false, false, false, "string");
+                        filters.addAdditionalFilter("IsAllDecClosedForFollowUp", true, null, null, "Equals", false, false, false, "boolean");
                         //filters.addAdditionalFilter("Inactive", false, null, null, "Equals", false, false, false, "boolean");
 
                         break;
@@ -219,13 +222,18 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                 default: { break; }
             }
 
+            //filters.SortBy = this.currentSortingCol;
+            //filters.SortDirection = this.currentSortingDir;
+
+            this.BuildFiltersForQuery(filters);
+
             var listArgs = new ListComponentArgs();
             listArgs.QueryCode = myQueryCode;
             listArgs.Filters = filters;
-            listArgs.ObjectTableName = "GLAccount";
+            listArgs.ObjectTableName = "Customs.Declaration";
             listArgs.DisplayTitle = displayTitle;
-            listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Main");
-            listArgs.Perspective = "GLAccountMain";
+            listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.CourierMaster");
+            listArgs.Perspective = "CourierMasterWS";
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
@@ -238,6 +246,170 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             });
         }
     }
+
+
+    BuildFiltersForQuery(filters: ApiQueryFilters = null) {
+
+        if (filters == null) {
+            filters = new ApiQueryFilters();
+        }
+        //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+        /*
+        switch (this._SelectedTabFilter.Code) {
+            //case "ACC":
+            case "ALL": {
+                break;
+            }
+            default: {
+                filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                break;
+            }
+        }
+        
+        switch (this._SelectedBOLValue) {
+            case "L": {
+                filters.addAdditionalFilter("HighLowValue", "L", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "H": {
+                filters.addAdditionalFilter("HighLowValue", "H", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
+        switch (this._SelectedStatusValue) {
+            case "O": {
+                filters.addAdditionalFilter("IsClosedForFollowUp", false, null, null, "Equals", false, false, false, "Boolean");
+                break;
+            }
+            case "C": {
+                filters.addAdditionalFilter("IsClosedForFollowUp", true, null, null, "Equals", false, false, false, "Boolean");
+                break;
+            }
+        }
+
+        switch (this._SelectedMNFValue) {
+            case "C": {
+                filters.addAdditionalFilter("CourierManifestStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "W": {
+                filters.addAdditionalFilter("CourierManifestStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
+        switch (this._SelectedDECValue) {
+            case "C": {
+                filters.addAdditionalFilter("CourierDeclarationStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "W": {
+                filters.addAdditionalFilter("CourierDeclarationStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
+        switch (this._SelectedDOCValue) {
+            case "C": {
+                filters.addAdditionalFilter("DocumentStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "U": {
+                filters.addAdditionalFilter("DocumentStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
+        switch (this._SelectedTotalInvoiceValue) {
+            case "75": {
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75, null, null, "LessThanOrEqual", false, false, false, "number");
+                break;
+            }
+            case "500": {
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 76, 500, null, "Between", false, false, false, "number", false);
+                break;
+            }
+            case "1000": {
+                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 501, 1000, null, "Between", false, false, false, "number", false);
+                break;
+            }
+        }
+
+        switch (this._SelectedAvailableValue) {
+            case "AD": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "AV": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "1", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "NAV": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "null", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
+        switch (this._SelectedACCValue) {
+            case "W": {
+                filters.addAdditionalFilter("StorageSiteStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "WS": {
+                filters.addAdditionalFilter("SpecialActionStatus", "X", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
+        if (this.SelectedPendingCodeFilter != null && this._SelectedTabFilter.Code == "HOLD") {
+            switch (this.SelectedPendingCodeFilter.Key) {
+                case "A": {
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("CourierPendingReasonList", this.SelectedPendingCodeFilter.Key, null, null, "Contains", false, false, false, "string");
+                    break;
+                }
+            }
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
+            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
+        }
+        if (AppTool.IsNullOrEmpty(filters.SortBy)) {
+            filters.SortBy = "CourierHawb";
+        }
+        if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
+            filters.SortDirection = "Descending";
+        }
+
+        switch (this._SelectedFastIndividualProcessValue) {
+            case "F": {
+                filters.addAdditionalFilter("FastIndividualProcessCode", "F", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "I": {
+                filters.addAdditionalFilter("FastIndividualProcessCode", "I", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
+        switch (this._SelectedCustomStatusValue) {
+            case "H": {
+                filters.addAdditionalFilter("CourierCustomStatusCode", "1", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "S": {
+                filters.addAdditionalFilter("CourierCustomStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+        */
+    }
+
+
 
     /*
 

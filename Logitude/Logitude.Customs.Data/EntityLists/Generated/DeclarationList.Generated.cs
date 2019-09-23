@@ -266,6 +266,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierSuspentionName  { get; set; }
        [DataMember]
        public string DepositionStatusCode  { get; set; }
+       [DataMember]
+       public bool IsClosedForFollowUp  { get; set; }
+       [DataMember]
+       public string FastIndividualProcessCode  { get; set; }
+       [DataMember]
+       public decimal? TotalInvoiceAmountInUSD  { get; set; }
    }
 
 }

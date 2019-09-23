@@ -54,6 +54,8 @@
                             <tr class="SectionHeader">
                                 <td>
                                     <label float-start style="margin-right: 10px;">{{'Customs.CourierMaster.O.CourierMasterQueries' | TextCodeTranslationPipe}}</label>
+                                    
+                                    
                                 </td>
                             </tr>
 
@@ -68,7 +70,7 @@
 
                                             <!-- CourierMaster -->
                                             <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{'Customs.CourierMaster.O.CourierMasterQueries' | TextCodeTranslationPipe}}</div>
+                                                <!--<div>{{'Customs.CourierMaster.O.CourierMasterQueries' | TextCodeTranslationPipe}}</div>-->
                                                 <!--
     <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
         <button id="{{'NewGLAccount' | IdGeneratorPipe}}" class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
@@ -82,18 +84,18 @@
                                                                     <tr>
                                                                         <td style="width:190px;">
                                                                             <!-- ({{glAccountSummary.ActiveGLAccountCount}}) -->
-                                                                            <p class="QueryLink" *ngIf="OpenCourierMasterVisibility" (click)="ViewAccountingQuery('OpenCourierMaster')"> {{'Customs.CourierMaster.O.CourierMasterOpen' | TextCodeTranslationPipe}}  </p>
+                                                                            <p class="QueryLink" *ngIf="OpenCourierMasterVisibility" (click)="ViewCourierMasterQuery('OpenCourierMaster')"> {{'Customs.CourierMaster.O.CourierMasterOpen' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
                                                                             <!-- ({{glAccountSummary.InactiveGLAccountCount}})  -->
-                                                                            <p class="QueryLink" *ngIf="InactiveGLAccountsVisibility" (click)="ViewAccountingQuery('InactiveGLAccounts')"> {{'GLAccounts.Q.InActiveGLAccounts' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewCourierMasterQuery('OpenCourierMaster')"> {{'Accounting.General.O.New' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="AllGLAccountsVisibility" (click)="ViewAccountingQuery('All GLAccounts')"> {{'GLAccounts.Q.AllGLAccounts' | TextCodeTranslationPipe}}</p>
+                                                                            <p class="QueryLink" (click)="ViewCourierMasterQuery('All GLAccounts')"> {{'Accounting.General.O.User' | TextCodeTranslationPipe}}</p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>

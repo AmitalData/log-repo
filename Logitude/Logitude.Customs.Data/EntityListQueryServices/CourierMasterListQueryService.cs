@@ -54,14 +54,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
 
 
-#if false
+//#if false
 
 
                                                    join recJoin in qMyJoin
                                                               on a.Id equals recJoin.CourierMasterId
-                                                              into qrecJoinJoin
-                                                   from myJoin in qrecJoinJoin
-#endif
+                                                              into qrecJoin
+                                                   from myJoin in qrecJoin.DefaultIfEmpty()
+//#endif
                                                    select new CourierMasterList()
                                                    {
                                                        // comments made because of cannot convert nclob to char exception ---mohammad
@@ -101,6 +101,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        TruckerId = a.TruckerId,
                                                        IntegratorCode = a.IntegratorCode,
                                                        IntegratorName = a.Card != null ? a.Card.LocalName : null,
+                                                       IsAllDecClosedForFollowUp = myJoin != null ?
+                                                                  (
+                                                                  myJoin.IsClosedForFollowUp0 > 0 ? false : true)
+                                                                  : true,
+                                                       //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
+                                                       //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
                                                    });
             return query;
 		}

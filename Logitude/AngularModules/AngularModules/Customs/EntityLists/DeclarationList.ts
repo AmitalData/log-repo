@@ -134,6 +134,9 @@ export class DeclarationList {
 	CourierSuspentionCode: string;
 	CourierSuspentionName: string;
 	DepositionStatusCode: string;
+	IsClosedForFollowUp: boolean;
+	FastIndividualProcessCode: string;
+	TotalInvoiceAmountInUSD: number;
 	
 }
  
