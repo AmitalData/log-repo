@@ -112,6 +112,9 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                     PaymentChequeDP.BankLogo = Image.FromStream(new MemoryStream(byteImage));
                 }
             }
+
+
+
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSinglePM(tenantPM.AddressId, tenant);
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
@@ -183,7 +186,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                 }).ToList();
                 PaymentChequeDP.PaymentChequeLines = lines;
                 PaymentChequeDP.TotalAmount = (decimal)paymentChequePM.ForeignAmount;// (decimal) paymentChequePM.PaymentChequeLines.Sum(d => d.Amount);
-
+                PaymentChequeDP.AccountDisplayNumber = GetPayToGLAccountDisplayNumber(paymentChequePM);
 
             }
 
@@ -280,6 +283,21 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             return payment;
         }
 
+        public string GetPayToGLAccountDisplayNumber(PaymentChequePM paymentCheque)
+        {
+            GLAccountQueryService accountQueryService = new GLAccountQueryService(paymentCheque.Tenant);
+            GLAccountPM account = accountQueryService.GetSinglePM(paymentCheque.PayToGLAccountId, paymentCheque.Tenant);
+            if(account != null)
+            {
+                return account.DisplayNumber;
+
+            }
+            else
+            {
+                return null;
+            }
+
+        }
 
     }
 }

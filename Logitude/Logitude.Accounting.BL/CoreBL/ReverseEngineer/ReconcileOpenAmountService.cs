@@ -13,7 +13,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
     public class ReconcileOpenAmountService
     {
 
-        public List<ReconcileOpenAmountDTO> CheckReconciliationOpenAmount(int tenant, int yyyy)
+        public List<LedgerOpenAmountRecoDiffM> GetLedgerOpenAmountDiff(int tenant, int yyyy)
         {
             using (var scope = TransactionFactory.GetTransaction())
             {
@@ -26,7 +26,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                 var qTotalReconciliationAmountPerTranId = (from rl in myReconciliationLineRepository.GetAll(tenant)
                                                            group rl by rl.TransactionId into grl
-                                                           select new ReconcileOpenAmountDTO
+                                                           select new LedgerOpenAmountRecoDiffM
                                                            {
                                                                LedgerTransactionId = grl.Key,
                                                                OpenAmount = 0,
@@ -53,7 +53,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                          join acc in myGLAccountRepository.GetAll(tenant) on l.AccountId equals acc.Id
                          join rl in qTotalReconciliationAmountPerTranId on l.Id equals rl.LedgerTransactionId into outerj_rl
                          from subRL in outerj_rl.DefaultIfEmpty()
-                         select new ReconcileOpenAmountDTO
+                         select new LedgerOpenAmountRecoDiffM
                          {
                              LedgerTransactionId = l.Id,
                              OpenAmount = l.OpenAmount,
@@ -71,7 +71,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             }
         }
     }
-    public class ReconcileOpenAmountDTO
+    public class LedgerOpenAmountRecoDiffM
     {
         public string LedgerTransactionId { get; internal set; }
         public decimal? OpenAmount { get; internal set; }

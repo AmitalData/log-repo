@@ -47,7 +47,7 @@ export class FieldsHelper {
 
     ItemsVisibility(Id: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.id(Id))), 1000000).then(a => function () {
+        browser.wait(EC.visibilityOf(element(by.id(Id))), 5000).then(a => function () {
         });
     }
     ItemsPresent(Id: string) {

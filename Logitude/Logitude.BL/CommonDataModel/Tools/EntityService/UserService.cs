@@ -39,15 +39,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private UserPermittedBranchRepository userPermittedBranchRepository;
         private UserPermittedProductRepository userPermittedProductRepository;
         private ContactQuery contactQuery;
-        private NumberOfUsersService numberOfUsersService;
         public UserService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new UserRepository(objectContext);
             this.userPermittedBranchRepository = new UserPermittedBranchRepository(objectContext);
-            this.userPermittedProductRepository = new UserPermittedProductRepository(objectContext);
-            this.numberOfUsersService = new NumberOfUsersService(entityRepository, tenant);
+            this.userPermittedProductRepository = new UserPermittedProductRepository(objectContext);            
         }
 
         private List<UserPermittedBranchPM> userPermittedBranchPMChangeSet;
@@ -259,7 +257,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPm.UserRoles = this.ComputeUserRoles();
             CheckDocumentFilingInbox(entityPM, Poco);
             ContactService service = new ContactService(objectContext, entityPM.Tenant);
-            service.ValidateNumberOfUsers = false;
             MapUserToContact(entityPM, contact);
             service.Update(contact);
 
@@ -274,32 +271,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void CheckNumberOfUsers()
         {
-            NumberOfUsersArgs numberOfUsersArgs = new NumberOfUsersArgs()
-            {
-                UserId = this.entityPm.Id,
-                UserEnglishName = this.entityPm.EnglishName,
-                UserPMIsDistributor = this.entityPm.IsDistributor,
-                UserPMLicencedUser = this.entityPm.LicencedUser,
-                UserPMAdditionalPackagesOnly = this.entityPm.AdditionalPackagesOnly,
-            };
-
-            if (this.isNewEntity)
-            {
-                numberOfUsersArgs.IsNewUser = true;
-                this.numberOfUsersService.CheckNumberOfUsersOnCreateUser(numberOfUsersArgs);
-            }
-
-            else
-            {
-                numberOfUsersArgs.UserPOCOLicencedUser = this.Poco.LicencedUser;
-                numberOfUsersArgs.UserPOCOInactive = this.Poco.Contact.InActive;
-                numberOfUsersArgs.UserPMInactive = this.entityPm.InActive;
-                numberOfUsersArgs.UserPOCOAdditionalPackagesOnly = this.Poco.AdditionalPackagesOnly;
-                numberOfUsersArgs.IsNewUser = false;                
-
-                this.numberOfUsersService.CheckNumberOfUsersOnUpdateUser(numberOfUsersArgs);
-                this.numberOfUsersService.DeleteUserLicenses(numberOfUsersArgs);
-            }
+            NumberOfUsersService numberOfUsersService = new NumberOfUsersService(this.entityPm, this.Poco, this.isNewEntity);
         }
 
         private void UpdateUserRolesForHybrid(UserPM entityPM, ContactTenant contactTenant)
