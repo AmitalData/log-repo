@@ -130,9 +130,10 @@
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;TariffEdit&quot;" MenuButtonGroupName="&quot;TariffEditButtonsGroup&quot;">
-    <MenuButton EventCode="&quot;Actions&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;More&quot;">
-      <MenuItem EventCode="&quot;Inactive&quot;" DefaultText="&quot;Inactive&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;Inactive&quot;" />
-      <MenuItem EventCode="&quot;Reactivate&quot;" DefaultText="&quot;Reactivate&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="1" LocalDefaultText="&quot;Reactivate&quot;" />
+    <MenuButton EventCode="&quot;Actions&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;More&quot;" IsPackagable="false">
+      <MenuItem EventCode="&quot;Inactive&quot;" DefaultText="&quot;Inactive&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;Inactive&quot;" IsPackagable="false" />
+      <MenuItem EventCode="&quot;Reactivate&quot;" DefaultText="&quot;Reactivate&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="1" LocalDefaultText="&quot;Reactivate&quot;" IsPackagable="false" />
+      <MenuItem EventCode="&quot;EditPriceSteps&quot;" DefaultText="&quot;Edit Price Steps&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="2" LocalDefaultText="&quot;Edit Price Steps&quot;" IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />
