@@ -20,6 +20,7 @@ import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/Ta
 import { DatePipe } from '@angular/common';
 import { TariffVersionAllInChargePM } from '../../../EntityPMs/TariffVersionAllInChargePM';
 import { AirCostTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
+import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 declare var ResultAsArray: any;
 
 @Component({
@@ -37,6 +38,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     private TariffDomainService: TariffDomainService;
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
+    public IsUpdateMissingPortsVisible: boolean = false;
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
@@ -45,17 +47,20 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public SelectedVersionNumber: number;
     constructor(public entityArgs: EntityArgs) {
         super();
-        this.EntityPM = entityArgs.EntityPM;       
-        this.Listen();        
+        this.EntityPM = entityArgs.EntityPM;
+        this.Listen();
     }
 
     Intialize(args: any) {
+        this.CurrentVersion = args['CurrentVersion'];
+        this.SelectedVersionNumber = args['SelectedVersionNumber'];
+        this.LoadVersions();
+    }
+
+    LoadVersions() {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.TariffDomainService = new TariffDomainService();
-
-        this.CurrentVersion = args['CurrentVersion'];
-        this.SelectedVersionNumber = args['SelectedVersionNumber'];
 
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
@@ -67,9 +72,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         this.LoadCompareToVersions();
 
-        this.SetUIProperties();
-        this.SetStepsLabelsAndVisibility();
-
+       
         if (this.CurrentVersion.IsDraft) {
             this.FillTariffLines(this.CurrentVersion.TariffLines);
         }
@@ -77,8 +80,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         else {
             this.LoadTariffLines("currentVersion");
         }
-
         this.GetTariffSettings();
+        this.SetUIProperties();
+        this.SetStepsLabelsAndVisibility();
     }
 
     private GetTariffSettings() {
@@ -90,8 +94,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     private SaveCompletedEvent: any = null;
+    private PriceStepsModifiedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
+
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
@@ -121,8 +127,22 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
                     if (this.isUploadExcelFinished) {
                         this.isUploadExcelFinished = false;
+                        CachedDataManager.RefreshTableData("Port", true);
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
+
+                    if (this.isUpdateMissingPortsClicked) {
+                        this.isUpdateMissingPortsClicked = false;
+                        CachedDataManager.RefreshTableData("Port", true);
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+
+                    this.LoadVersions();
+                    //this.PriceStepsModifiedEvent = this.CurrentSession.SessionEvent.subscribe((res) => {
+                    //    if (res == "PriceStepsModified") {
+                    //        this.LoadVersions();
+                    //    }
+                    //});
                 }
 
                 else {
@@ -144,6 +164,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     KillEvents() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.PriceStepsModifiedEvent);
     }
 
     ngOnDestroy() {
@@ -182,12 +203,21 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     SetUIProperties() {
         var isApproveVersionButtonVisible: boolean = false;
-        
+        var isUpdateMissingPortsVisible: boolean = false;
+
         if (this.IsDraftVersion && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
-            isApproveVersionButtonVisible = true;
+            if (this.IsDraftVersion) {
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
+                    isApproveVersionButtonVisible = true;
+                }
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATEMISSINGPORTS")) {
+                    isUpdateMissingPortsVisible = true;
+                }
+            }
         }
 
         this.IsApproveVersionButtonVisible = isApproveVersionButtonVisible;
+        this.IsUpdateMissingPortsVisible = isUpdateMissingPortsVisible;
     }
 
     get VersionNumber() {
@@ -341,8 +371,19 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public Step7PriceVisibility: boolean;
     public Step8PriceVisibility: boolean;
 
+    ResetStepsVisibility() {
+        this.Step1PriceVisibility = false;
+        this.Step2PriceVisibility = false;
+        this.Step3PriceVisibility = false;
+        this.Step4PriceVisibility = false;
+        this.Step5PriceVisibility = false;
+        this.Step6PriceVisibility = false;
+        this.Step7PriceVisibility = false;
+        this.Step8PriceVisibility = false;
+    }
     SetStepsLabelsAndVisibility() {
         if (!AppTool.IsNullOrEmpty(this.PriceSteps)) {
+            this.ResetStepsVisibility();
             if (this.PriceSteps.indexOf(',') > -1) {
                 var steps: string[] = [] = this.PriceSteps.split(",");
                 var count = steps.length;
@@ -354,6 +395,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                     this["Step" + i + "PriceLabel"] = steps[i - 1] + " KG";
                     this["Step" + i + "PriceVisibility"] = true;
                 }
+            }
+            else {
+                this.Step1PriceLabel = this.PriceSteps;
+                this.Step1PriceVisibility = true;
             }
         }
     }
@@ -550,30 +595,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.EntityPM.IsApprovingDraftVersion = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
-
-        //var errors: string[] = [];
-
-        //if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
-        //    errors.push("Invalid Tariff Lines");
-        //}
-
-        //if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
-        //    errors.push("Approving past version is not allowed, please update the dates");
-        //}
-        
-        //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-
-        //if (errors.length == 0) {
-        //    this.isApproveButtonClicked = true;
-
-        //    if (this.EntityPM.IsDirty) {
-        //        this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
-        //    }
-
-        //    else {
-        //        this.DoApprove();
-        //    }
-        //}
     }
     
     CopyVersionClicked() {
@@ -736,6 +757,15 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 
             }
         });
+    }
+
+    private isUpdateMissingPortsClicked: boolean = false;
+    UpdateMissingPortsClicked() {
+        if (!this.isUpdateMissingPortsClicked) {
+            this.isUpdateMissingPortsClicked = true;
+            this.EntityPM.IsUpdatingMissingPorts = true;
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
     }
 }
 

@@ -1396,7 +1396,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              InternalNotes = entity.InternalNotes,
                              InvoiceCurrencyId = entity.InvoiceCurrencyId,
                              InvoiceDate = entity.InvoiceDate,
-                             InvoiceNumber = entity.StatusCode != "DR" ? entity.InvoiceNumber : (!string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id),
+                             InvoiceNumber = entity.StatusCode != "DR" && entity.StatusCode != "LL" ? entity.InvoiceNumber : (!string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id),
                              DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id,
                              StatusCode = entity.StatusCode,
                              StatusName = entity.Status == null ? "" : entity.Status.Name,
@@ -1719,6 +1719,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsFullAccounting = entityPOCO.IsFullAccounting,
                     ARInvoiceStockId = entityPOCO.ARInvoiceStockId,
                     IsInvoiceNumberFromStock = entityPOCO.IsInvoiceNumberFromStock,
+                    DocumentFilingId = entityPOCO.DocumentFilingId
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -1936,7 +1937,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              InternalNotes = entity.InternalNotes,
                              InvoiceCurrencyId = entity.InvoiceCurrencyId,
                              InvoiceDate = entity.InvoiceDate,
-                             InvoiceNumber = entity.StatusCode != "DR" ? entity.InvoiceNumber : (!string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id),
+                             InvoiceNumber = entity.StatusCode != "DR" && entity.StatusCode != "LL" ? entity.InvoiceNumber : (!string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id),
                              DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id,
                              StatusCode = entity.StatusCode,
                              StatusName = entity.Status == null ? "" : entity.Status.Name,

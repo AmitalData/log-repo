@@ -52,7 +52,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         protected override void OnCreating(GLAccountPM entityPM, EntityPM entityParentPM)
         {
-            if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4")
+            if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4" && entityPM.ChartOfAccountsTypeCode != "6")
                 SetDisplayNumber(entityPM);
 
             AddAcitivityLog(entityPM, "N");
@@ -80,9 +80,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 string application = entityPM.Application;
                 if (String.IsNullOrWhiteSpace(application))
                 {
-                    if (!String.IsNullOrWhiteSpace(entityPM.DisplayNumber) && entityPM.DisplayNumber.Length > 4 && entityPM.DisplayNumber.Substring(0, 3) == "SPD")
+                    if (!String.IsNullOrWhiteSpace(entityPM.InternalNumber) && entityPM.InternalNumber.Length > 4 && entityPM.InternalNumber.Substring(0, 3) == "SPD")
                     {
-                        application = entityPM.DisplayNumber.Substring(3, 1);
+                        if (entityPM.InternalNumber.Substring(3, 1) == "I")
+                        {
+                            application = entityPM.InternalNumber.Substring(3, 2);
+                        }
+                        else
+                        {
+                            application = entityPM.InternalNumber.Substring(3, 1);
+                        }
                     }
                 }
                 if (!String.IsNullOrWhiteSpace(application))
@@ -102,9 +109,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 jobControlAccountId = fullAccountingSetting.OceanExportJobControlAccountId;
                                 break;
                             case "I":
+                            case "IA":
                                 jobControlAccountId = fullAccountingSetting.AirImportJobControlAccountId;
                                 break;
                             case "R":
+                            case "IO":
+                            case "IL":
                                 jobControlAccountId = fullAccountingSetting.OceanImportJobControlAccountId;
                                 break;
                             default:
@@ -528,16 +538,30 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void SendHybridTask(GLAccountPM glaccounPM)
         {
-            if (glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5")
+            if (glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5" && glaccounPM.IsControlAccount==false)
             {
+                FillGLAccountCurrencyCode(glaccounPM);
+
                 CommunicationsParams comParams = CreateCommunicationParamsForGLAccount(glaccounPM);
 
                 List<QueueTask> queueTasks = CreateQueueTasks(glaccounPM);
+
                 comParams.ByteData = LogitudeXmlSerializer.SerializeObject(queueTasks);
 
                 Communications.AddCommunicationLog(comParams);
             }
 
+        }
+
+        private static void FillGLAccountCurrencyCode(GLAccountPM glaccounPM)
+        {
+            if (glaccounPM.CurrencyId != null)
+            {
+                CurrencyQuery currencyQuery = new CurrencyQuery(glaccounPM.Tenant);
+                CurrencyPM currency = currencyQuery.GetSinglePM(glaccounPM.CurrencyId, glaccounPM.Tenant);
+                glaccounPM.CurrencyCode = currency.Code;
+                glaccounPM.CurrencySign = currency.Sign;
+            }
         }
 
         private List<QueueTask> CreateQueueTasks(GLAccountPM glaccounPM)
@@ -1655,8 +1679,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CreateUpdateTraceEvent(oldValue, newValue, eventCode);
 
             }
-        }
 
+            CreateEventForVatERxcempt();
+        }
+        private void CreateEventForVatERxcempt()
+        {
+            if (EntityPOCO.IsVATExempt != EntityPM.IsVATExempt)
+            {
+                
+                string oldValue = GetBooleanText(EntityPOCO.IsVATExempt);
+                string newValue = GetBooleanText(EntityPM.IsVATExempt);
+
+
+
+                CreateUpdateTraceEvent(oldValue, newValue, "VAEX");
+
+            }
+
+
+
+
+        }
         private string GetBooleanText(bool? value)
         {
             if (value == true)

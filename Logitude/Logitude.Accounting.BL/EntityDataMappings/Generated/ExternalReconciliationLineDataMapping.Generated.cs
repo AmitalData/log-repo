@@ -39,7 +39,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LedgerTransactionId, 
 	         GroupNumber, 
 	         ExternalPageLineId, 
-	         Tenant,
+	         Tenant, 
+	         LedgerGLAccountId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

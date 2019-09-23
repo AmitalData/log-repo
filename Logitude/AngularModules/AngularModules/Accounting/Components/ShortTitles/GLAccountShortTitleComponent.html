@@ -2,14 +2,14 @@
     <tr>
         <td>
             <div class="ShortTitleMainControl" [style.float]="isRTL ? 'right' : 'left'">
-                <div class="ShortTitleDiv" *ngIf="EntityPM.AccountTypeCode=='3' && isRTL" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
-                    <a href="#" style="font-size:12px" (click)="OpenVendorScreen()">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
+                <div class="ShortTitleDiv" *ngIf="(EntityPM.AccountTypeCode=='3' || EntityPM.AccountTypeCode=='2') && isRTL" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
+                    <a href="#" style="font-size:12px" (click)="OpenCardScreen()">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
                 </div>
                 <div class="ShortTitleDiv" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
                     {{EntityPM.LocalName}}
                 </div>
-                <div class="ShortTitleDiv" *ngIf="EntityPM.AccountTypeCode=='3' && !isRTL" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
-                    <a href="#" style="font-size:12px" (click)="OpenVendorScreen()">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
+                <div class="ShortTitleDiv" *ngIf="(EntityPM.AccountTypeCode=='3'|| EntityPM.AccountTypeCode=='2') && !isRTL" style="padding-left: 5px; font-size: 18px; color: #333333;font-family: Arial;">
+                    <a href="#" style="font-size:12px" (click)="OpenCardScreen()">{{'Accounting.General.O.MoreData'| TextCodeTranslationPipe}}</a>
                 </div>
             </div>
 

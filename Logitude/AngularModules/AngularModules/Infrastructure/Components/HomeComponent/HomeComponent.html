@@ -249,9 +249,9 @@
                                                         <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('BUY')">Buy e-AWB Stock</button>
                                                         <hr *ngIf="IsLogBox == false && !IsCountryIsrael" />
                                                         <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('CRM')">Subscribe to CRM</button>
-                                                        <hr *ngIf="IsLogBox == false"  />
+                                                        <hr *ngIf="IsLogBox == false" />
                                                         <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
-                                                        <hr *ngIf="IsLogBox == false"  />
+                                                        <hr *ngIf="IsLogBox == false" />
                                                         <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('INT')">Buy INTTRA Stock</button>
 
                                                     </div>
@@ -357,7 +357,7 @@
 
                                     <td style="width: 18px; padding-left:4px; cursor:pointer; z-index:3;" (mousedown)="HideReleaseMessageClicked()">
                                         <div class="MediaFill">
-                                            <div style="width: 12px; height: 12px;" >
+                                            <div style="width: 12px; height: 12px;">
                                                 <img class="CenterCenter" style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" />
                                             </div>
                                         </div>
@@ -366,10 +366,10 @@
                             </table>
                         </div>
 
-                        <div *ngIf="LayoutDirection == 'rtl'"  class="GreenInfo" style="margin: 5px;">
+                        <div *ngIf="LayoutDirection == 'rtl'" class="GreenInfo" style="margin: 5px;">
                             <table>
                                 <tr>
-                                    <td style="width: 18px; padding-left:4px;" cursor:pointer; z-index:3;" (mousedown)="HideReleaseMessageClicked()">
+                                    <td style="width: 18px; padding-left:4px; cursor:pointer; z-index:3;" (mousedown)="HideReleaseMessageClicked()">
                                         <div class="MediaFill">
                                             <div style="width: 12px; height: 12px;">
                                                 <img class="CenterCenter" style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" />
@@ -378,7 +378,7 @@
                                     </td>
 
                                     <td style="width:5px;">
-                                       <div></div>
+                                        <div></div>
                                     </td>
 
                                     <td style="font-size:12px;">
@@ -454,8 +454,6 @@
                                                         </div>
                                                     </td>
 
-
-
                                                     <td style="width: 2px; min-width: 2px;">
                                                         <div></div>
                                                     </td>
@@ -480,12 +478,10 @@
 
                                     <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!_AmitalBrowserInUse && !IsApplicationBlocked">+</li>
                                 </ul>
+
                                 <div *ngIf="IsShowLastSuccessfulLoginComponent" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'" style="height:20px;margin-top:-23px">
                                     <LastSuccessfulLoginComponent></LastSuccessfulLoginComponent>
-
                                 </div>
-
-
                             </div>
 
                             <div class="TabControlBody" (mouseup)="OnSessionMouseUp($event)" style="background: white;" id="ApplicationSession">

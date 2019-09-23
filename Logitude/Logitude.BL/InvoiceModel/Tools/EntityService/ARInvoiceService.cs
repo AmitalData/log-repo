@@ -3240,7 +3240,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             Reference2 = theEntityPm.MainEntityReference,
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                                                             Notes = theEntityPm.InternalNotes,
-                                                        }).ToList();
+                                                            DebitAccountId= splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.Id,
+                                                           
+                }).ToList();
 
                     journal.JournalLines.AddRange(journalLines);
 
@@ -3272,6 +3274,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Reference1 = theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
+                            DebitAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.Id,
+                            
                         };
 
                         journal.JournalLines.Add(journalLine);

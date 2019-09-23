@@ -297,6 +297,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\MetodoPago.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PackageConnectedPackage.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Participant.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\PaymentGatewayPartner.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PaymentTermDateType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\RegistryDateType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ReportExecutionLog.cs" />
@@ -353,7 +354,6 @@
     <Compile Include="CommonDataModel\EntityPOCOs\VATTypesGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\NumberFormat.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\WarehouseType.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\PaymentGatewayPartner.cs" />
     <Compile Include="CommonDataModel\ICustomersDataViewContext.cs" />
     <Compile Include="CommonDataModel\IDocumentsFilingsViewContext.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentSharedDocumentMap.cs" />
@@ -561,7 +561,7 @@
     <Compile Include="InfrastructureModel\Repositories\DWCategoriesRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\ScheduleProcedureRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\SchedulerProcedureRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SchedulerLogsRepository.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStock.cs" />
