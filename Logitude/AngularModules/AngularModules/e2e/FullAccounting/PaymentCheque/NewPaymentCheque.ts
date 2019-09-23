@@ -26,10 +26,10 @@ export class NewPaymentCheque {
         this.Helper.ItemsPresent('PaymentCheque_PayToGLAccountId');
         
         this.Helper.WaitByIdAndFill('PaymentCheque_PayToGLAccountId', 'diff');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'PaymentCheque_BankAccountId', 'Bank');
 
         this.Helper.WaitByIdAndFill('PaymentCheque_BankAccountId', 'Bank');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'PaymentCheque_BankAccountId', 'Bank');
 
 
         this.Helper.WaitByIdAndFill('PaymentCheque_LocalAmount', '1200');
