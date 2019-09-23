@@ -63,56 +63,115 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
 
         public List<WarehouseEntryPackagePM> GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(string warehouseId, string customerId,string shipmentId, int tenant)
         {
-
-            List<WarehouseEntryPackagePM> myResult = (from a in context.WarehouseEntryPackages.Include("WarehouseEntry").Include("PackageType")
-                                                      where a.Tenant == tenant && a.WarehouseEntry.CustomerId == customerId && a.WarehouseEntry.WarehouseId == warehouseId   && a.Instock > 0 
-                                                      select new WarehouseEntryPackagePM()
-                                                      {
-                                                          Id = a.Id,
-                                                          Tenant = a.Tenant,
-                                                          Seal = a.Seal,
-                                                          Description = a.Description,
-                                                          ContainerNumber = a.ContainerNumber,
-                                                          Dimensions = a.IsContainer ? "" : a.Length + "-" + a.Width + "-" + a.Height,
-                                                          Harmonize = a.Harmonize,
-                                                          Height = a.Height,
-                                                          Instock = a.Instock,
-                                                          ReleaseQTY = 0,
-                                                          InstockTemp = a.Instock,
-                                                          Length = a.Length,
-                                                          PackageTypeName = a.PackageType.EnglishName,
-                                                          WarehouseEntryId = a.WarehouseEntryId,
-                                                          Width = a.Width,
-                                                          PackageTypeId = a.PackageTypeId,
-                                                          Volume = a.Volume,
-                                                          Quantity = a.Quantity,
-                                                          Weight = a.Weight,
-                                                          CustomerId = a.WarehouseEntry.CustomerId,
-                                                          WarehouseId = a.WarehouseEntry.WarehouseId,
-                                                          ActualEntryDate =  a.WarehouseEntry.ActualEntryDate,
-                                                          IsContainer = a.IsContainer,
-                                                          FromPortId = a.WarehouseEntry.FromPortId,
-                                                          ToPortId = a.WarehouseEntry.ToPortId,
-                                                          TransportModeId = a.WarehouseEntry.TransportModeId,
-                                                          DirectionId = a.WarehouseEntry.DirectionId,
-                                                          IsConnectedToShipment = a.IsConnectedToShipment,
-                                                          VolumetricWeight = a.VolumetricWeight,
-                                                          ChargeableWeightUnitCode = a.WarehouseEntry.ChargeableWeightUnitCode,
-                                                      }).ToList();
-
-
-
-
-            foreach (WarehouseEntryPackagePM item in myResult)
+            if (shipmentId != null && shipmentId != "undefined" && shipmentId != "null")
             {
-                if (!string.IsNullOrEmpty(item.ContainerNumber))
+
+                List<WarehouseEntryPackagePM> myResult = (from a in context.WarehouseEntryPackages.Include("WarehouseEntry").Include("PackageType")
+                                                          where a.Tenant == tenant && a.WarehouseEntry.CustomerId == customerId && a.WarehouseEntry.WarehouseId == warehouseId && a.WarehouseEntry.ShipmentId == shipmentId && a.Instock > 0
+                                                          select new WarehouseEntryPackagePM()
+                                                          {
+                                                              Id = a.Id,
+                                                              Tenant = a.Tenant,
+                                                              Seal = a.Seal,
+                                                              Description = a.Description,
+                                                              ContainerNumber = a.ContainerNumber,
+                                                              Dimensions = a.IsContainer ? "" : a.Length + "-" + a.Width + "-" + a.Height,
+                                                              Harmonize = a.Harmonize,
+                                                              Height = a.Height,
+                                                              Instock = a.Instock,
+                                                              ReleaseQTY = 0,
+                                                              InstockTemp = a.Instock,
+                                                              Length = a.Length,
+                                                              PackageTypeName = a.PackageType.EnglishName,
+                                                              WarehouseEntryId = a.WarehouseEntryId,
+                                                              Width = a.Width,
+                                                              PackageTypeId = a.PackageTypeId,
+                                                              Volume = a.Volume,
+                                                              Quantity = a.Quantity,
+                                                              Weight = a.Weight,
+                                                              CustomerId = a.WarehouseEntry.CustomerId,
+                                                              WarehouseId = a.WarehouseEntry.WarehouseId,
+                                                              ActualEntryDate = a.WarehouseEntry.ActualEntryDate,
+                                                              IsContainer = a.IsContainer,
+                                                              FromPortId = a.WarehouseEntry.FromPortId,
+                                                              ToPortId = a.WarehouseEntry.ToPortId,
+                                                              TransportModeId = a.WarehouseEntry.TransportModeId,
+                                                              DirectionId = a.WarehouseEntry.DirectionId,
+                                                              IsConnectedToShipment = a.IsConnectedToShipment,
+                                                              VolumetricWeight = a.VolumetricWeight,
+                                                              ChargeableWeightUnitCode = a.WarehouseEntry.ChargeableWeightUnitCode,
+                                                          }).ToList();
+
+
+
+
+                foreach (WarehouseEntryPackagePM item in myResult)
                 {
-                    item.ContainerNumberWarning = ContainerNumberWarehouseValidator.Validate(item.ContainerNumber);
+                    if (!string.IsNullOrEmpty(item.ContainerNumber))
+                    {
+                        item.ContainerNumberWarning = ContainerNumberWarehouseValidator.Validate(item.ContainerNumber);
+                    }
+
                 }
 
+                return myResult;
             }
-        
-            return myResult;
+
+            else
+            {
+
+
+                List<WarehouseEntryPackagePM> myResult = (from a in context.WarehouseEntryPackages.Include("WarehouseEntry").Include("PackageType")
+                                                          where a.Tenant == tenant && a.WarehouseEntry.CustomerId == customerId && a.WarehouseEntry.WarehouseId == warehouseId  && a.Instock > 0
+                                                          select new WarehouseEntryPackagePM()
+                                                          {
+                                                              Id = a.Id,
+                                                              Tenant = a.Tenant,
+                                                              Seal = a.Seal,
+                                                              Description = a.Description,
+                                                              ContainerNumber = a.ContainerNumber,
+                                                              Dimensions = a.IsContainer ? "" : a.Length + "-" + a.Width + "-" + a.Height,
+                                                              Harmonize = a.Harmonize,
+                                                              Height = a.Height,
+                                                              Instock = a.Instock,
+                                                              ReleaseQTY = 0,
+                                                              InstockTemp = a.Instock,
+                                                              Length = a.Length,
+                                                              PackageTypeName = a.PackageType.EnglishName,
+                                                              WarehouseEntryId = a.WarehouseEntryId,
+                                                              Width = a.Width,
+                                                              PackageTypeId = a.PackageTypeId,
+                                                              Volume = a.Volume,
+                                                              Quantity = a.Quantity,
+                                                              Weight = a.Weight,
+                                                              CustomerId = a.WarehouseEntry.CustomerId,
+                                                              WarehouseId = a.WarehouseEntry.WarehouseId,
+                                                              ActualEntryDate = a.WarehouseEntry.ActualEntryDate,
+                                                              IsContainer = a.IsContainer,
+                                                              FromPortId = a.WarehouseEntry.FromPortId,
+                                                              ToPortId = a.WarehouseEntry.ToPortId,
+                                                              TransportModeId = a.WarehouseEntry.TransportModeId,
+                                                              DirectionId = a.WarehouseEntry.DirectionId,
+                                                              IsConnectedToShipment = a.IsConnectedToShipment,
+                                                              VolumetricWeight = a.VolumetricWeight,
+                                                              ChargeableWeightUnitCode = a.WarehouseEntry.ChargeableWeightUnitCode,
+                                                          }).ToList();
+
+
+
+
+                foreach (WarehouseEntryPackagePM item in myResult)
+                {
+                    if (!string.IsNullOrEmpty(item.ContainerNumber))
+                    {
+                        item.ContainerNumberWarning = ContainerNumberWarehouseValidator.Validate(item.ContainerNumber);
+                    }
+
+                }
+
+                return myResult;
+
+            }
         }
 
 

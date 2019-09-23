@@ -27,7 +27,10 @@ update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from Obje
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'PartnerType') and (FieldName = 'Name' )
 
 
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Customer') and (FieldName = 'AccountManagerUserId' or FieldName = 'RankId'  or FieldName = 'RegionId' or FieldName = 'CustomerSizeId'  or FieldName = 'IndustryId' )
+
+
+
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Customer') and (FieldName = 'CreditLimitAmount' or FieldName = 'CreditLimitOpenBalance' or FieldName = 'AccountManagerUserId' or FieldName = 'RankId'  or FieldName = 'RegionId' or FieldName = 'CustomerSizeId'  or FieldName = 'IndustryId' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Tenant') and (FieldName = 'AddressId' or FieldName = 'CountryId' or FieldName = 'Company' or  FieldName = 'CurrencyId' )
 
 
@@ -68,8 +71,4 @@ update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from Obj
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'Vessel') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Notes' or FieldName = 'IMOCode' or FieldName='EnglishName')
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'SpecialServicesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentComputedFields') and (FieldName = 'FirstPickupATD' or FieldName = 'FirstPickupATA' or FieldName = 'FinalDeliveryETD' or FieldName = 'FinalDeliveryETA' or FieldName = 'FinalDeliveryATD' or FieldName = 'FinalDeliveryATA' or FieldName='ContainersNumbers' or FieldName ='FirstPickupLocation')
-
-
-select CopyToDW,* from  ObjectFields where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentComputedFields') and (FieldName = 'FirstPickupATD' or FieldName = 'FirstPickupATA' or FieldName = 'FinalDeliveryETD' or FieldName = 'FinalDeliveryETA' or FieldName = 'FinalDeliveryATD' or FieldName = 'FinalDeliveryATA' or FieldName='ContainersNumbers' or FieldName ='FirstPickupLocation')
-
 

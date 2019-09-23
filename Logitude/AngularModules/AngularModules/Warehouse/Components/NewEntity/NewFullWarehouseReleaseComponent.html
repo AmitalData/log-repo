@@ -1,4 +1,4 @@
-<!--<style type="text/css">
+<style type="text/css">
     .NotesBox p {
         font-size: 11px;
         color: #6E7172;
@@ -191,7 +191,7 @@
                                                                 <table>
 
                                                                     <tr class="FormFieldRow">
-                                                                        <td  style="width:140px;">
+                                                                        <td style="width:140px;">
                                                                             <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
                                                                         </td>
@@ -210,8 +210,8 @@
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                       <tr *ngIf="CustomerId && IsInlandDomestic" class="FormFieldRow">
-                                                                        <td  style="width:140px;">
+                                                                    <tr *ngIf="CustomerId && IsInlandDomestic" class="FormFieldRow">
+                                                                        <td style="width:140px;">
                                                                             <LogLabel [Text]="'Address'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
                                                                         <td colspan="2">
@@ -219,8 +219,8 @@
                                                                             <table>
                                                                                 <tr>
                                                                                     <td [style.width.px]="ControlColumnWidth - 18">
-                                                                                        <LogLov [ObjectFieldName]="'FromAddressId'"
-                                                                                                [SelectedValue]="FromAddressId"
+                                                                                        <LogLov [ObjectFieldName]="'CustomerAddressId'"
+                                                                                                [SelectedValue]="CustomerAddressId"
                                                                                                 [ObjectTableName]="ObjectTableName"
                                                                                                 [DataContext]="DataContext"
                                                                                                 [LookUpTableName]="'Address'"
@@ -229,7 +229,7 @@
                                                                                     </td>
                                                                                     <td>
                                                                                         <div style="margin-left: 2px;">
-                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked()" [disabled]="!FromAddressId || !IsScreenEnabled"></IconButton>
+                                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked()" [disabled]="!CustomerAddressId || !IsScreenEnabled"></IconButton>
                                                                                             <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked()" [disabled]="!IsScreenEnabled"></IconButton>
                                                                                         </div>
                                                                                     </td>
@@ -238,17 +238,30 @@
                                                                         </td>
 
                                                                     </tr>
+                                                                    <tr *ngIf="CustomerId && IsInlandDomestic" class="FormFieldRow" style="height: 80px;">
+                                                                        <td [style.width.px]="LabelColumnWidth">
+                                                                            <div></div>
+                                                                        </td>
 
+                                                                        <td [style.width.px]="ControlColumnWidth">
+                                                                            <AddressTemplate [Address]="CustomerAddressList" [Right]="36"></AddressTemplate>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+
+
+                                                                    </tr>
 
 
                                                                 </table>
                                                             </td>
 
-                                                            <td>
+                                                            <!--<td>
                                                                 <div></div>
-                                                            </td>
+                                                            </td>-->
 
-                                                            <td style="width: 330px;"></td>
+                                                           <!-- <td style="width: 330px;"></td>-->
                                                         </tr>
                                                     </table>
 
@@ -262,8 +275,8 @@
                                                     <table class="FixedTable">
                                                         <tr>
                                                             <td style="width: 360px">
-                                                                <table>-->
-                                                                    <!--<tr class="FormFieldRow">
+                                                                <table>
+                                                                   <tr class="FormFieldRow">
                                                                         <td   style="width:140px;">
                                                                             <LogLabel [ObjectFieldName]="'FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="FromPortText"></LogLabel>
                                                                         </td>
@@ -293,10 +306,10 @@
                                                                             </LogLov>
                                                                         </td>
                                                                         <td></td>
-                                                                    </tr>-->
+                                                                    </tr>
 
 
-                                                                <!--</table>
+                                                                </table>
                                                             </td>
 
                                                             <td>
@@ -343,8 +356,8 @@
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
                                                                                     [LookUpTableName]="'Shipment'"
-                                                                                     [DependencyFilter1Value]="TransportModeId"
-                                                                                     [DependencyFilter2Value]="DirectionId">
+                                                                                    (SelectedItemChanged)="ShipmentValueChange($event)"
+                                                                                    >
                                                                             </LogLov>
                                                                         </td>
                                                                         <td></td>
@@ -550,4 +563,4 @@
             </table>
         </td>
     </tr>
-</table>-->
+</table>

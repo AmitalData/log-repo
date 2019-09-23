@@ -344,6 +344,9 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                              OperationalDate = f.OperationalDate,
                              CutoffDate = f.CutoffDate,
                              NumberOfHouses = f.NumberOfHouses,
+                             WarehouseLegLastFreeDate = f.WarehouseLegLastFreeDate,
+                             LastFinalDestination = f.LastFinalDestination,
+                             EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
                          };
 
             query2 = filter.GetFilteredQuery<ShipmentList>(listQueryOperation, query2);

@@ -187,7 +187,7 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
             this.FromPortId = null;
             this.ToPortId = null;
-
+            this.ShipmentTypeId = null;
             this.OnFiltersChanged();
             this.BuildShipmentTypes();
         }
@@ -980,12 +980,14 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
 
     FillMorePackagesDetails() {
 
+        var isLCLEntity = AppTool.IsLCLEntity(this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId);
+
         var logeWindow = new LogitudeWindow();
-        logeWindow.Width =1000;
+        logeWindow.Width =isLCLEntity ? 1010 :1090;
         logeWindow.Height = 500;
         logeWindow.Title = "Packages Details";
 
-
+      
 
         logeWindow.WindowArgs = { WarehouseEntryPM: this.warehouseEntryPM, ViewModelTrigger: this, ShowPackageSummary: true, IsFromFullWarehouseEntryComponent:true};
         logeWindow.Show("./Warehouse/Components/WarehouseEntryPackagesDetailsComponent");

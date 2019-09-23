@@ -22,14 +22,14 @@ namespace CommunicationWorkerRole.Tasks
         }
         public override void StartTask()
         {
-            ConcurrentQueueService<LogQueueMessage> queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
+            //ConcurrentQueueService<LogQueueMessage> queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
 
             for (int i = 0; i <= 20; i++)
             {
                 var message = string.Format(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:FFF") + "Log Info # {0}.\r\n", i);
                // queueService.Enqueue(new LogQueueMessage() { FileName = "test-log-queue", FileExtension = "txt", FolderName = "logtest", Message = message, Tenant = this.Task.Tenant });
 
-                this.AppendLogMessageToFile(message);
+                //this.AppendLogMessageLogToFile(message);
                 LogInfo(message);
             }
 

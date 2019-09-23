@@ -1,7 +1,9 @@
-﻿using Logitude.Server.Tools.Counters;
+﻿using Logitude.BL.Helpers;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.BL.EntityQueryServices;
+using Logitude.TariffModule.BL.Helpers;
 using Logitude.TariffModule.Data;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
@@ -10,6 +12,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
@@ -104,14 +107,20 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 entityPM.IsApprovingDraftVersion = false;
             }
 
+            if (entityPM.IsUpdatingMissingPorts)
+            {
+                this.UpdateMissingPorts(entityPM);
+                entityPM.IsUpdatingMissingPorts = false;
+            }
+
             this.InsertTariffSurchargeLog(entityPM);
         }
 
 
-        List<ChargesType> ChargeTypes; 
+        List<ChargesType> ChargeTypes;
         private void InsertTariffSurchargeLog(TariffPM tariff)
         {
-            if (tariff.TypeCode == "ASC" && !tariff.IsFromUpdateScreen && !tariff.IsFromCopy )
+            if (tariff.TypeCode == "ASC" && !tariff.IsFromUpdateScreen && !tariff.IsFromCopy)
             {
                 TariffSurchargesUpdateUpdateService tariffSurchargeUpdateService = new TariffSurchargesUpdateUpdateService(TariffModuleContext.GetContext(tariff.Tenant), new Dictionary<string, IContext>(), tariff.Tenant);
                 TariffVersionPM version = tariff.TariffVersions.Where(prop => prop.IsDraft == true).FirstOrDefault();
@@ -144,7 +153,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         private string GetUpdatedSurcharges(TariffPM tariff, TariffLinePM itemPM, List<TariffLine> tariffUpdatedLines_POCO)
         {
             var surcharges = "";
-            if (tariffUpdatedLines_POCO != null && tariffUpdatedLines_POCO.Count > 0 )
+            if (tariffUpdatedLines_POCO != null && tariffUpdatedLines_POCO.Count > 0)
             {
                 var itemPOCO = tariffUpdatedLines_POCO.Where(a => a.Id == itemPM.Id).FirstOrDefault();
                 if (itemPOCO != null)
@@ -165,7 +174,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         {
                             PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
                             string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
-                            surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ",";
+                            surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ", ";
                         }
                     }
                     surcharges = surcharges.TrimEnd(',');
@@ -196,7 +205,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 {
                     PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
                     string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
-                    surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ",";
+                    surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ", ";
                 }
             }
             return surcharges.TrimEnd(',');
@@ -330,17 +339,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
                 throw new OptimisticConcurrencyException(msg);
             }
-
-            //if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
-            //{
-            //    if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))
-            //    {
-            //        string msg = CRMTranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
-            //        throw new OptimisticConcurrencyException(msg);
-            //    }
-            //}
-
-            //base.CheckConcurrency(entityPM, entityPOCO);
         }
 
         private void CreateTariffVersion(TariffPM entityPM)
@@ -370,9 +368,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             }
 
             entityPM.TariffVersions.Add(tariffVersionPM);
-
-            //TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            //tariffVersionUpdateService.Update(tariffVersionPM, true);
         }
 
         private TariffLineRepository iTariffLineRepository;
@@ -463,7 +458,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                             {
                                 if (tariffLinePM.ChangeSetOp == ChangeSetOperation.Delete)
                                 {
-                                   
+
                                 }
 
                                 else
@@ -482,7 +477,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                 else
                 {
-                    this.ComputeTariffLinesExpirationDates(iDraftVersion, entityPM);               
+                    this.ComputeTariffLinesExpirationDates(iDraftVersion, entityPM);
                 }
             }
         }
@@ -494,7 +489,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             TariffVersion iPreviousVersion = tariffVersionRepository.GetAllVersions(entityPM.Id, entityPM.Tenant).Where(o => o.Version != iDraftVersion.Version).OrderByDescending(o => o.CreateDate).FirstOrDefault();
             if (iPreviousVersion != null)
             {
-                if(iPreviousVersion.StartDate.Value.Date>= iDraftVersion.StartDate.Value.Date)
+                if (iPreviousVersion.StartDate.Value.Date >= iDraftVersion.StartDate.Value.Date)
                 {
                     throw new ApplicationException("Start date is smaller than start date of the previous version");
                 }
@@ -522,7 +517,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         {
             bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "expiration", TariffLineExpirationDateItem = tariffLineExpirationDateItem, PreviousLine = previousLine });
 
-            if(isExpirationDateValid)
+            if (isExpirationDateValid)
             {
                 previousLine.ExpirationDate = tariffLineExpirationDateItem.ExpirationDate;
                 iTariffLineRepository.Update(previousLine);
@@ -556,8 +551,8 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             if (previousLineDatesArgs.DateField == "expiration")
             {
                 if (previousLineDatesArgs.TariffLineExpirationDateItem.ExpirationDate < previousLineDatesArgs.PreviousLine.StartDate)
-                {                    
-                    isExpirationDateValid = false;                    
+                {
+                    isExpirationDateValid = false;
                 }
             }
 
@@ -565,7 +560,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             {
                 if (previousLineDatesArgs.TariffLinePM.StartDate <= previousLineDatesArgs.PreviousLine.StartDate)
                 {
-                    isExpirationDateValid = false;                    
+                    isExpirationDateValid = false;
                 }
             }
 
@@ -589,6 +584,172 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     throw new ApplicationException("Tariff surcharge seller should be unique");
                 }
             }
+        }
+
+        private void UpdateMissingPorts(TariffPM entityPM)
+        {
+            this.iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
+            PortRepository portRepository = new PortRepository(entityPM.Tenant);
+
+            TariffVersionPM iDraftVersion = entityPM.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
+            List<TariffLine> iDraftVersionLines = new List<TariffLine>();
+
+            if (iDraftVersion == null)
+            {
+                throw new ApplicationException("No Draft version found");
+            }
+
+            else
+            {
+                iDraftVersionLines = this.iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iDraftVersion.Version, entityPM.Tenant);
+            }
+
+            if (iDraftVersionLines != null)
+            {
+                iDraftVersionLines = iDraftVersionLines.Where(d => d.HasErrors && (string.IsNullOrEmpty(d.OriginPortId) || string.IsNullOrEmpty(d.DestinationPortId))).ToList();
+
+                if (iDraftVersionLines.Count > 0)
+                {
+                    foreach (TariffLine tariffLine in iDraftVersionLines)
+                    {
+                        bool tariffLineUpdated = false;
+
+                        if (string.IsNullOrEmpty(tariffLine.OriginPortId) && !string.IsNullOrEmpty(tariffLine.OriginPortText))
+                        {
+                            Port fromPort = portRepository.GetAirlinePortByCode(entityPM.Tenant, tariffLine.OriginPortText.Trim(), true);
+                            if (fromPort == null)
+                            {
+                                Port portZero = portRepository.GetAirlinePortByCode(0, tariffLine.OriginPortText.Trim(), true);
+                                if (portZero != null)
+                                {
+                                    fromPort = this.GetPortCopyToCurrentTenant(portZero, entityPM.Tenant, portRepository);
+                                }
+                            }
+
+                            if (fromPort != null)
+                            {
+                                tariffLine.OriginPortId = fromPort.Id;
+                                tariffLine.OriginPortText = null;
+                                tariffLineUpdated = true;
+                            }
+                        }
+
+                        if (string.IsNullOrEmpty(tariffLine.DestinationPortId) && !string.IsNullOrEmpty(tariffLine.DestinationPortText))
+                        {
+                            Port toPort = portRepository.GetAirlinePortByCode(entityPM.Tenant, tariffLine.DestinationPortText.Trim(), true);
+                            if (toPort == null)
+                            {
+                                Port portZero = portRepository.GetAirlinePortByCode(0, tariffLine.DestinationPortText.Trim(), true);
+                                if (portZero != null)
+                                {
+                                    toPort = this.GetPortCopyToCurrentTenant(portZero, entityPM.Tenant, portRepository);
+                                }
+                            }
+
+                            if (toPort != null)
+                            {
+                                tariffLine.DestinationPortId = toPort.Id;
+                                tariffLine.DestinationPortText = null;
+                                tariffLineUpdated = true;
+                            }
+                        }
+
+                        if (tariffLineUpdated)
+                        {
+                            tariffLine.ErrorText = TariffLineHelper.ComputeTariffLineErrorText(tariffLine);
+
+                            if(string.IsNullOrEmpty(tariffLine.ErrorText))
+                            {
+                                tariffLine.HasErrors = false;
+                            }
+                            else
+                            {
+                                tariffLine.HasErrors = true;
+                            }
+
+                            iTariffLineRepository.Update(tariffLine);
+                        }
+                    }
+
+                    iTariffLineRepository.SubmitChanges();
+                }
+            }
+        }
+        private Port GetPortCopyToCurrentTenant(Port ZeroPort, int tenant, PortRepository portRepository)
+        {
+            ICommonDataContext objectContext = portRepository.context;
+
+            CountryRepository countryRepository = new CountryRepository(objectContext);
+            GlobalZoneRepository globalZoneRepository = new GlobalZoneRepository(objectContext);
+
+            Country country = countryRepository.GetSingleCountryByCode(ZeroPort.Country.Code, tenant, false);
+
+            if (country == null)
+            {
+                GlobalZone globalzone = globalZoneRepository.GetSingleGlobalZoneByCode(ZeroPort.Country.GlobalZone.Code, tenant);
+
+                if (globalzone == null)
+                {
+                    GlobalZone oldZone = globalZoneRepository.GetSingleGlobalZone(ZeroPort.Country.GlobalZoneId, 0);
+                    globalzone = new GlobalZone()
+                    {
+                        Id = IdCounter.GetNumber("GlobalZone", tenant).ToString(),
+                        Code = oldZone.Code,
+                        EnglishName = oldZone.EnglishName,
+                        LocalName = oldZone.LocalName,
+                        Notes = oldZone.Notes,
+                        SearchFields = oldZone.SearchFields,
+                        Tenant = tenant,
+                    };
+
+                    globalZoneRepository.Add(globalzone);
+                    globalZoneRepository.SubmitChanges();
+                }
+
+                Country oldCountry = CountryRepository.GetSingleCountry(ZeroPort.CountryId, 0, false);
+                country = new Country()
+                {
+                    Id = IdCounter.GetNumber("Country", tenant).ToString(),
+                    Tenant = tenant,
+                    GlobalZoneId = oldCountry.GlobalZoneId,
+                    EC = oldCountry.EC,
+                    EnglishName = oldCountry.EnglishName,
+                    Code = oldCountry.Code,
+                    InActive = oldCountry.InActive,
+                    Notes = oldCountry.Notes,
+                    LocalName = oldCountry.LocalName,
+                    SearchFields = oldCountry.SearchFields,
+                };
+
+                countryRepository.Add(country);
+                countryRepository.SubmitChanges();
+            }
+
+            Port newPort = new Port()
+            {
+                Id = IdCounter.GetNumber("Port", tenant).ToString(),
+                Code = ZeroPort.Code,
+                EnglishName = ZeroPort.EnglishName,
+                LocalName = ZeroPort.LocalName,
+                Tenant = tenant,
+                AddedManually = false,
+                InActive = false,
+                CountryId = country.Id,
+                IsAir = ZeroPort.IsAir,
+                IsInland = ZeroPort.IsInland,
+                IsOcean = ZeroPort.IsOcean,
+                Latitude = ZeroPort.Latitude,
+                Longtitude = ZeroPort.Longtitude,
+                SearchFields = ZeroPort.SearchFields,
+                Notes = ZeroPort.Notes,
+            };
+
+            portRepository.Add(newPort);
+            portRepository.SubmitChanges();
+
+            TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
+
+            return newPort;
         }
     }
 }

@@ -47,7 +47,7 @@ export class FieldsHelper {
 
     ItemsVisibility(Id: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.id(Id))), 1000000).then(a => function () {
+        browser.wait(EC.visibilityOf(element(by.id(Id))), 5000).then(a => function () {
         });
     }
     ItemsPresent(Id: string) {
@@ -137,7 +137,7 @@ export class FieldsHelper {
     }
     WaitByCssAndClick_FromTagInsideListWithCheck(className: string, index: number, Id: string = null, input: string = null) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.css(className))), 1000000).then(a => {
             var item = element.all(by.css(className)).get(index);
             if (item == null) {
                 this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);

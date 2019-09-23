@@ -2500,7 +2500,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         if (isHaveAutomation)
                         {
 
-                            string fields = "MainCarriageCarrierId,MainCarriageETD,MainCarriageATD,MainCarriageETA,MainCarriageATA,FinalDistenationPortId,StatusId,CutoffDate";
+                            string fields = "MainCarriageCarrierId,MainCarriageETD,MainCarriageATD,MainCarriageFinalDestinationETA,MainCarriageFinalDestinationATA,FinalDistenationPortId,StatusId,CutoffDate";
                             List<NotifyPropertyChangeValues> changedProperties = notifyPropertyChangeValuesLists.Where(d => fields.Split(',').Contains(d.PropertyName)).ToList();
                             if (changedProperties.Count > 0)
                             {

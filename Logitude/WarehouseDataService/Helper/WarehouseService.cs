@@ -37,8 +37,15 @@ namespace WarehouseDataService.Helper
             {
                 try
                 {
-                    DWBuildTime dwBuildTime = GetDWBuildInfoTime();
-                    if (dwBuildTime.IsUpdateDWNextRunTime) warehouseServiceHelper.UpdateDWNextRunTime(sourceConnectionString, dwBuildTime.DWNextRunTime);
+                    DWBuildTime dwBuildTime = !ApplicationInfo.IsStartBuildingDataWarehouse ? GetDWBuildInfoTime() : new DWBuildTime();
+                    if (ApplicationInfo.IsStartBuildingDataWarehouse)
+                    {
+                        dwBuildTime.IsBuildNow = true;
+                        warehouseServiceHelper.UpdateDWNextRunTime(sourceConnectionString, DateTime.Now);
+                    }
+                    
+                     if (dwBuildTime.IsUpdateDWNextRunTime) warehouseServiceHelper.UpdateDWNextRunTime(sourceConnectionString, dwBuildTime.DWNextRunTime);
+                    
 
                     if (dwBuildTime.DWRunTime != null || dwBuildTime.IsBuildNow)
                     {
@@ -52,43 +59,42 @@ namespace WarehouseDataService.Helper
                         StartBuildWarehouseData();
                         dwBuildTime.DWNextRunTime = warehouseServiceHelper.CalculateDWNextRunTime(DateTime.Now);
                         warehouseServiceHelper.UpdateDWNextRunTime(sourceConnectionString, dwBuildTime.DWNextRunTime);
+                        ApplicationInfo.IsStartBuildingDataWarehouse = false;
                     }
-                    else Thread.Sleep((10 * 60000));
+                    else Thread.Sleep(new TimeSpan(0, 5, 0));
                 }
 
                 catch (Exception ex)
                 {
-                    Thread.Sleep((10 * 60000));
+                    Thread.Sleep(new TimeSpan(0, 5, 0));
                 }
             }
 
 
         }
-
-
 
         private void StartBuildWarehouseData()
         {
             bool isBuildStart = false;
             while (!isBuildStart)
             {
-                bool isIncrementalDWRunning = warehouseServiceHelper.GetWarehouseFieldFromSettings("IsIncrementalDWRunning", sourceConnectionString);
-                if (!isIncrementalDWRunning)
+                if (!warehouseServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
                 {
-                    isBuildStart = true;
-                    warehouseServiceHelper.UpdateWarehouseFieldSettings("IsFullBuildDWRunning", true, sourceConnectionString);
-                    warehouseHelper.BuildDataBase(sourceConnectionString, destinationConnectionString);
-                    warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
-                    warehouseServiceHelper.UpdateWarehouseFieldSettings("IsFullBuildDWRunning", false, sourceConnectionString);
+                    bool isIncrementalDWRunning = warehouseServiceHelper.GetFieldValueFromDBByTableNameAndFieldName("IsIncrementalDWRunning", "Settings",sourceConnectionString);
+                    if (!isIncrementalDWRunning)
+                    {
+                        isBuildStart = true;
+                        warehouseServiceHelper.UpdateWarehouseFieldSettings("IsFullBuildDWRunning", true, sourceConnectionString);
+                        warehouseHelper.BuildDataBase(sourceConnectionString, destinationConnectionString);
+                        warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
+                        warehouseServiceHelper.UpdateWarehouseFieldSettings("IsFullBuildDWRunning", false, sourceConnectionString);
+                        warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
+                    }
+                    else Thread.Sleep(2000);
                 }
-                else Thread.Sleep(2000);
+                else Thread.Sleep(new TimeSpan(0, 5, 0));
             }
         }
-
-
-
-
-
 
 
         #endregion
@@ -101,16 +107,25 @@ namespace WarehouseDataService.Helper
             {
                 try
                 {
-                    bool isFullBuildDWRunning = warehouseServiceHelper.GetWarehouseFieldFromSettings("IsFullBuildDWRunning", sourceConnectionString);
-                    if (!isFullBuildDWRunning)
+                    if (!ApplicationInfo.IsStartBuildingDataWarehouse)
                     {
-                        warehouseServiceHelper.UpdateWarehouseFieldSettings("IsIncrementalDWRunning", true, sourceConnectionString);
-                        warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString);
-                        warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update");
-                        warehouseServiceHelper.UpdateWarehouseFieldSettings("IsIncrementalDWRunning", false, sourceConnectionString);
-                        Thread.Sleep(ApplicationInfo.UpdateWarehouseSleepTime);
+                        if (!warehouseServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
+                        {
+                            bool isFullBuildDWRunning = warehouseServiceHelper.GetFieldValueFromDBByTableNameAndFieldName("IsFullBuildDWRunning", "Settings", sourceConnectionString);
+                            if (!isFullBuildDWRunning)
+                            {
+                                warehouseServiceHelper.UpdateWarehouseFieldSettings("IsIncrementalDWRunning", true, sourceConnectionString);
+                                warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString);
+                                warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update");
+                                warehouseServiceHelper.UpdateWarehouseFieldSettings("IsIncrementalDWRunning", false, sourceConnectionString);
+                                warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
+                                Thread.Sleep(ApplicationInfo.UpdateWarehouseSleepTime);
+                            }
+                            else Thread.Sleep(new TimeSpan(0, 5, 0));
+                        }
+                        else Thread.Sleep(new TimeSpan(0, 5, 0));
                     }
-                    else Thread.Sleep((10 * 60000));
+                    else Thread.Sleep(new TimeSpan(0, 5, 0));
                 }
 
                 catch (Exception ex)
@@ -120,8 +135,7 @@ namespace WarehouseDataService.Helper
             }
         }
 
-
-
+        
         #endregion
 
 
@@ -132,8 +146,6 @@ namespace WarehouseDataService.Helper
             sourceConnectionString = warehouseServiceHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
             destinationConnectionString = warehouseServiceHelper.BuildConnectionString(destinationConnectionArray[0], destinationConnectionArray[1], destinationConnectionArray[2], destinationConnectionArray[3]);
         }
-
-
 
         private DWBuildTime GetDWBuildInfoTime()
         {

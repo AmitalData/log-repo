@@ -135,8 +135,9 @@ export class WizardBaseComponent extends BaseComponent {
                     }
 
                     this.PercentagePM = myPercentagePM;
-                    this.InitAgentObject();
+                   
                 }
+                this.InitAgentObject();
             }
         });
     }
@@ -394,6 +395,7 @@ export class WizardBaseComponent extends BaseComponent {
 
                 else {
                     this.TenantPM.AgentId = this.AgentPM.Id;
+                    this.AddressPM.CardId = this.AgentPM.Id;
                     this.SaveAddress();
                 }
             });
@@ -407,6 +409,7 @@ export class WizardBaseComponent extends BaseComponent {
 
                 else {
                     this.TenantPM.AgentId = this.AgentPM.Id;
+                    this.AddressPM.CardId = this.AgentPM.Id;
                     this.SaveAddress();
                 }
             });

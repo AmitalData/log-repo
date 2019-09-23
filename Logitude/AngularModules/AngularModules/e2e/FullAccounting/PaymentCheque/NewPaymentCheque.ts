@@ -22,21 +22,28 @@ export class NewPaymentCheque {
         this.Helper.ItemsVisibility('NEWPaymentCheque');
         this.Helper.ItemsPresent('NEWPaymentCheque');
         this.Helper.WaitByIdAndClick('NEWPaymentCheque');
-
-   
-        this.Helper.WaitByIdAndFill('PaymentCheque_PayToGLAccountId', 'אובי קנובי');
+        this.Helper.ItemsVisibility('PaymentCheque_PayToGLAccountId');
+        this.Helper.ItemsPresent('PaymentCheque_PayToGLAccountId');
+        
+        this.Helper.WaitByIdAndFill('PaymentCheque_PayToGLAccountId', 'diff');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        this.Helper.WaitByIdAndFill('PaymentCheque_BankAccountId', 'לאומי חיפה');
+        this.Helper.WaitByIdAndFill('PaymentCheque_BankAccountId', 'Bank');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
         this.Helper.WaitByIdAndFill('PaymentCheque_LocalAmount', '1200');
       
         this.Helper.WaitByIdAndClick('CREATEPAYMENTCHEQUE');
-        this.Helper.WaitBusyIndicator();
+       this.Helper.WaitBusyIndicator();
         this.Helper.WaitWindowClosed();
-        this.Helper.WaitByIdAndClick('EditBackbutton_2');
+        this.Helper.WaitByIdAndClick('PaymentCheque.TH.General');
+        this.Helper.ItemsVisibility('PaymentCheque_PayToGLAccountId');
+        this.Helper.ItemsPresent('PaymentCheque_PayToGLAccountId');
+        this.Helper.ItemsVisibility('EditBackbutton');
+        this.Helper.ItemsPresent('EditBackbutton');
+        
+        this.Helper.WaitByIdAndClick('EditBackbutton');
 
 
 

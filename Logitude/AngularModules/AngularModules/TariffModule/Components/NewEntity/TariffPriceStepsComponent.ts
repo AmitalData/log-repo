@@ -37,13 +37,14 @@ export class TariffPriceStepsComponent extends BaseComponent {
 
     BuildItemsSource() {
         var Steps: string[] = [];
-        if (this.DefaultPriceSteps) {
+        if (this.DefaultPriceSteps != null) {
             Steps = this.DefaultPriceSteps.split(',');
         }
 
         var index: number = 0;
         Steps.forEach(item => {
             this.ItemsSource.push(new TariffSettingStep(item, index, this));
+            this.BuildDefaultPriceSteps();
             index++;
         });
 
@@ -63,7 +64,6 @@ export class TariffPriceStepsComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(iDefaultPriceSteps)) {
                 iDefaultPriceSteps = "" + item.Step;
             }
-
             else {
                 iDefaultPriceSteps += "," + item.Step;
             }
@@ -93,7 +93,7 @@ export class TariffPriceStepsComponent extends BaseComponent {
             }
 
             else {
-                if (item.Step <= SortedItemStep) {
+                if (Number(item.Step) <= Number(SortedItemStep)) {
                     isValidSort = false;
                 }
 

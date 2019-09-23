@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -13,6 +14,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             commonDataContext = CommonDataContext.GetContext(tenant);  
         }
+        
 
         public LogBoxTenantSettingRepository(ICommonDataContext context)
         {
@@ -83,6 +85,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
             this.context.SaveChanges();
         }
 
+        public LogBoxTenantSetting GetSingleLogBoxTenantSetting(int id)
+        {
+            LogBoxTenantSetting entity;
+
+            ICommonDataContext context = CommonDataContext.GetContext(id);
+            entity = (from a in context.LogBoxTenantSettings where a.Id == id select a).FirstOrDefault();
+
+            return entity;
+        }
 
         public List<LogBoxTenantSetting> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {

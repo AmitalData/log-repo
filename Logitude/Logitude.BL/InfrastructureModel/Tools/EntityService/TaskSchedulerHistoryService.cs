@@ -18,6 +18,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using System.Data.Entity;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -69,6 +70,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             TaskSchedulerHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+           
             //SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, theEntityPm.Tenant);
             //SchedulerLogsPM SchedulerLog = new SchedulerLogsPM() { Tenant = theEntityPm.Tenant, HistoryId = theEntityPm.Id };
             //SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
@@ -86,6 +88,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             TaskSchedulerHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            ComputeTaskAverageRunTime(Poco.TaskId);
             //SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, theEntityPm.Tenant);
             //SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(theEntityPm.Tenant);
 
@@ -93,6 +96,37 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             //SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
             //SchedulerLog.Log = "Start Runing the Scheduler";
             //SchedulerLogsService.Create(SchedulerLog);
+        }
+
+        private void ComputeTaskAverageRunTime(string TaskId)
+        {
+            TasksScheduler SelectedTasksScheduler = (from a in ObjectContext.TasksSchedulers
+                                                     where a.Id == TaskId
+                                                     select a).FirstOrDefault();
+
+            IQueryable<TaskSchedulerHistoryPM> Latest15HistoriesQuery = (from a in ObjectContext.TaskSchedulerHistories
+                                                                         where a.TaskId == TaskId
+                                                                         select new TaskSchedulerHistoryPM()
+                                                                         {
+                                                                             StartDateTime = a.StartDateTime,
+                                                                             EndDateTime = a.EndDateTime,
+                                                                             Duration = DbFunctions.DiffSeconds(a.StartDateTime, a.EndDateTime),
+                                                                             DurationTS = a.EndDateTime - a.StartDateTime,
+                                                                         }).Where(x => x.StartDateTime != null && x.EndDateTime != null && x.EndDateTime > x.StartDateTime).OrderByDescending(x => x.StartDateTime).Take(15);
+
+            //double? Latest15HistoriesAverageRunTime = Latest15HistoriesQuery.Average(a => a.Duration);//.ToList();.OrderByDescending(x => x.StartDateTime).Take(10)
+            double? Latest15HistoriesAverageRunTime = Latest15HistoriesQuery.Average(a => a.DurationTS.Value.TotalSeconds);//.ToList();.OrderByDescending(x => x.StartDateTime).Take(10)
+
+            double? Duration = 0.0;
+            if (Latest15HistoriesAverageRunTime != null)
+            {
+                Duration = Latest15HistoriesAverageRunTime;
+            }
+
+            TasksSchedulerRepository TaskSchedulerRepository = new TasksSchedulerRepository(objectContext);
+            SelectedTasksScheduler.AverageRunTime = (double)Duration;
+            TaskSchedulerRepository.Update(SelectedTasksScheduler);
+            TaskSchedulerRepository.SubmitChanges();
         }
 
     }

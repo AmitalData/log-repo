@@ -80,6 +80,11 @@ exports.config = {
             browser.params.Login.Email = "protractor@test.com";
             browser.params.Login.Password = "!P123t456";
         }
+        else if (browser.params.Env == "logitudepre") {
+            browser.params.Link = "https://pre.logitudeworld.com";
+            browser.params.Login.Email = "protractor@test.com";
+            browser.params.Login.Password = "!P123t456";
+        }
         else if (browser.params.Env == "test") {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "protractor@test.com";
@@ -134,6 +139,11 @@ exports.config = {
             browser.params.Link = "https://staging.logbox.co.il";
             browser.params.Login.Email = "ahmadb@test.com";
             browser.params.Login.Password = "ahmed!A123";
+        }
+        else if (browser.params.Env == "Pre_Cloud") {
+            browser.params.Link = "https://pre.amital.co.il/";
+            browser.params.Login.Email = "sgaumtomation@pre.com";
+            browser.params.Login.Password = "Sg0592463934!";
         }
         else if (browser.params.Env == "test_1109") {
             browser.params.Link = "https://test.logitudeworld.com/test";

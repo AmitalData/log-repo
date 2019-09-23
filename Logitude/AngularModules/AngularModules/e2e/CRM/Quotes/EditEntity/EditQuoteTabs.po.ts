@@ -7,6 +7,7 @@ import { PartnerTabComponent} from './PartnerTab';
 import { PackagesTabComponent} from './PackagesTab';
 import { RoutingsTabComponent} from './RoutingsTab';
 import { ChargesTabComponent} from './ChargesTab';
+import { QuoteActions } from '../EditEntity/QuoteActions';
 
 export class EditTabsComponent {
     private Helper: FieldsHelper;
@@ -17,6 +18,7 @@ export class EditTabsComponent {
     private PackagesTabScenario: PackagesTabComponent;
     private RoutingsTabScenario: RoutingsTabComponent;
     private ChargesTabScenario: ChargesTabComponent;
+    private QuoteActions: QuoteActions;
 
 
     constructor() {
@@ -28,6 +30,7 @@ export class EditTabsComponent {
         this.PackagesTabScenario = new PackagesTabComponent();
         this.RoutingsTabScenario = new RoutingsTabComponent();
         this.ChargesTabScenario = new ChargesTabComponent();
+        this.QuoteActions = new QuoteActions();
 
     }
 
@@ -39,6 +42,9 @@ export class EditTabsComponent {
         this.PackagesTabScenario.PackagesTab(ShipmentType, QuoteType);
         this.RoutingsTabScenario.RoutingsTab(ShipmentType);
         this.ChargesTabScenario.ChargesTab(ShipmentType);
+        this.Helper.WaitByIdAndClick('Quote-Save');
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.QuoteActions.QuoteMenubuttonActions('copybuild', Direction, TransportMode, QuoteType);
     }
 
 }
