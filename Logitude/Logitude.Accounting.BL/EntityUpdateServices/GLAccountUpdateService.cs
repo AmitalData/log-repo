@@ -1679,8 +1679,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CreateUpdateTraceEvent(oldValue, newValue, eventCode);
 
             }
-        }
 
+            CreateEventForVatERxcempt();
+        }
+        private void CreateEventForVatERxcempt()
+        {
+            if (EntityPOCO.IsVATExempt != EntityPM.IsVATExempt)
+            {
+                
+                string oldValue = GetBooleanText(EntityPOCO.IsVATExempt);
+                string newValue = GetBooleanText(EntityPM.IsVATExempt);
+
+
+
+                CreateUpdateTraceEvent(oldValue, newValue, "VAEX");
+
+            }
+
+
+
+
+        }
         private string GetBooleanText(bool? value)
         {
             if (value == true)

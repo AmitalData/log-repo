@@ -142,7 +142,12 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
     }
 
 
- 
+    ShipmentValueChange(shipment: any) {
+        this.warehouseReleasePM.ShipmentNumber = null;
+        if (shipment) {
+            this.warehouseReleasePM.ShipmentNumber = shipment.ShipmentNumber;
+        }
+    }
 
 
 
