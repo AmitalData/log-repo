@@ -154,10 +154,28 @@ namespace Logitude.Customs.Data.EntityListQueryServices
  select new { p.CourierMasterId, myDeclarations, myDeclarationCourierStatuses }
  );
 
+            var qMyJoin =
+                (
+                from rec in qJoin
+                select new MyDecJoin
+                {
+                    DeclarationId = rec.myDeclarations.Id,
+                    CourierMasterId = rec.CourierMasterId,
+                    IsClosedForFollowUp = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsClosedForFollowUp : false,
+                    FastIndividualProcessCode = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.FastIndividualProcessCode : null,
+                   TotalInvoiceAmountInUSD = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.TotalInvoiceAmountInUSD : null,
+                }
+                );
 
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                  //.Include("CreatedByUser.Contact")
                                                  .Include("Importer").Include("EntitleImporter").Include("TransferImporter").Include("ImporterType").Include("TransferImporterType").Include("EntitleImporterType").Include("StorageStatus").Include("FreightPaymentMethod")
+
+                                                 join recJoin in qMyJoin
+                                                              on a.Id equals recJoin.DeclarationId
+                                                              into qrecJoin
+                                                 from myJoin in qrecJoin.DefaultIfEmpty()
+
                                                  select new DeclarationList()
                                                  {
                                                      Id = a.Id,
@@ -272,9 +290,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DepositionStatusCode = a.DepositionStatusCode,
                                                      //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
                                                      //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
-                                                     IsClosedForFollowUp = qJoin != null ? (qJoin.FirstOrDefault().myDeclarationCourierStatuses != null ? qJoin.FirstOrDefault().myDeclarationCourierStatuses.IsClosedForFollowUp : false) : false,
-                                                     FastIndividualProcessCode = qJoin != null ? (qJoin.FirstOrDefault().myDeclarationCourierStatuses != null ? qJoin.FirstOrDefault().myDeclarationCourierStatuses.FastIndividualProcessCode : null) : null,
-                                                     TotalInvoiceAmountInUSD = qJoin != null ? (qJoin.FirstOrDefault().myDeclarationCourierStatuses != null ? qJoin.FirstOrDefault().myDeclarationCourierStatuses.TotalInvoiceAmountInUSD : null) : null,
+                                                     IsClosedForFollowUp = myJoin != null ? myJoin.IsClosedForFollowUp : false,
+                                                     FastIndividualProcessCode = myJoin != null ? myJoin.FastIndividualProcessCode : null,
+                                                     TotalInvoiceAmountInUSD = myJoin != null ? myJoin.TotalInvoiceAmountInUSD : null,
                                                  });
 
 
@@ -294,6 +312,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         }
 	}
 
-
+    internal class MyDecJoin
+    {
+        public string CourierMasterId { get; set; }
+        public bool IsClosedForFollowUp { get; set; }
+        internal string DeclarationId { get; set; }
+        internal string FastIndividualProcessCode { get; set; }
+        internal decimal? TotalInvoiceAmountInUSD { get; set; }
+    }
 }
 	

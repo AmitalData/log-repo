@@ -101,10 +101,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        TruckerId = a.TruckerId,
                                                        IntegratorCode = a.IntegratorCode,
                                                        IntegratorName = a.Card != null ? a.Card.LocalName : null,
-                                                       IsAllDecClosedForFollowUp = myJoin != null ?
-                                                                  (
-                                                                  myJoin.IsClosedForFollowUp0 > 0 ? false : true)
-                                                                  : true,
+                                                       //IsAllDecClosedForFollowUp = myJoin != null ? (myJoin.IsClosedForFollowUp0 > 0 ? false : true) : true,
                                                        //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
                                                        //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
                                                    });
