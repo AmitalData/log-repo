@@ -2278,6 +2278,7 @@
     <Compile Include="DataProviders\VehiclesDataProvider.Shared.cs" />
     <Compile Include="DataProviders\VDKDataProvider.Shared.cs" />
     <Compile Include="DataProviders\VendorChargesAnalysisDataProvider.cs" />
+    <Compile Include="DataProviders\WorkDaysPerCategoryDataProvider.cs" />
     <Compile Include="DataProviders\WorkHoursPerProjectDataProvider.cs" />
     <Compile Include="DropBoxAuth.aspx.cs">
       <DependentUpon>DropBoxAuth.aspx</DependentUpon>
@@ -5145,6 +5146,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\WorkPerDaysCategoryManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VehiclesManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\AccountingLedgerManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\ArchivoExportadoManager.cs" />

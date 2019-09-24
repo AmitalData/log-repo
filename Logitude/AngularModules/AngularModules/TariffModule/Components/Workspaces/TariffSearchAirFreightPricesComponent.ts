@@ -561,7 +561,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
                 shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
                 shipmentPayable.MeasurementCode = newRecord.UnitOfMesurmentCode;
-                var nweQuantity = this.GetQuantity(chargesType);
+                var nweQuantity = this.GetQuantity(newRecord.UnitOfMesurmentCode);
                 var expectedAmount = newRecord.ActualPrice;
                 var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
                 var expectedAmountLocal = expectedAmount * rate;
@@ -625,9 +625,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         return isValid;
     }
 
-    GetQuantity(chargesType): any {
+    GetQuantity(measurementCode): any {
         var myQuantity: number = null;
-        switch (chargesType.MeasurementCode) {
+        switch (measurementCode) {
             case "GRWT": { myQuantity = this.GrossWeight; break; }
             case "CHWT": { myQuantity = this.ChargeableWeight; break; }
             case "VOLU": { myQuantity = this.Volume; break; }

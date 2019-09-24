@@ -60,11 +60,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             ValidateShipmentBookingFields(entityPM, isNewEntity);
             ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
             ValidateConvertShipmentType(entityPM);
-            ValidateContainerNumbers(entityPM);
+           
             //ValidateMultiVatPercentages(entityPM, myCommonContext);
 
             if (!entityPM.IsHybrid)
             {
+                ValidateContainerNumbers(entityPM);
                 ValidateMasterTypeDueToTransportMode(entityPM);
                 ValidateMainCarriageCarrierDueToTransportMode(entityPM);
                 ValidatePartnerTypes(entityPM);

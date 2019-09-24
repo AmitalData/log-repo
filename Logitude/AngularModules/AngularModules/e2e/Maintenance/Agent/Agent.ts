@@ -24,7 +24,7 @@ export class NewAgent {
     }
 
     SearchAgentTab() {
-        browser.sleep(1000)
+        
         this.helper.WaitByIdAndFill('null_Search', "Agent");
         this.helper.WaitByIdAndClick('MaintenanceItemMTAG');
 
@@ -43,7 +43,7 @@ export class NewAgent {
     }
 
 
-    SearchAgent() {
+  /*  SearchAgent() {
 
         this.helper.WaitBusyIndicator();
         this.helper.WaitWindowClosed();
@@ -54,11 +54,11 @@ export class NewAgent {
 
     }
     SaveAgent() {
-        this.helper.ItemsVisibility('Agent-Save')
+     //   this.helper.ItemsVisibility('Agent-Save')
         this.helper.WaitByIdAndClick('Agent-Save');
 
 
-    }
+    }*/
 
 
 }
