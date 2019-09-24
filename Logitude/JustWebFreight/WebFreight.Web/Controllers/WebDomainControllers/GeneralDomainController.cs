@@ -578,7 +578,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(0);
-                ObjectFieldPM objectFieldPM = objectFieldQuery.GetSinglePM(id, 0);
+                ObjectFieldPM objectFieldPM = objectFieldQuery.GetSinglePM(id, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, objectFieldPM);
 

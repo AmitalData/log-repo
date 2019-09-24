@@ -134,6 +134,7 @@ export class LoginComponent implements OnInit {
         window.Tips = [];
         window.TipsVisibilities = [];
         window.DWObjectFields = [];
+        window.ObjectFieldModifications = [];
 
         this.myInfrastructureDomainService = new InfrastructureDomainService();
         this.sATInterfaceSettingPMService = new SATInterfaceSettingPMService();
@@ -498,7 +499,7 @@ export class LoginComponent implements OnInit {
                 this.generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe(response => {
 
                     if (!response.HasError) {
-                        window.DWObjectFields = response.Result;
+                        window.ObjectFieldModifications = response.Result;
                     }
                     this.IncreaseProgressBar("ObjectField Modifications");
                         //26
