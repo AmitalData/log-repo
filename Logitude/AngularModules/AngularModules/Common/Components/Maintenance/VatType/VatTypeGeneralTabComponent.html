@@ -1,4 +1,4 @@
-﻿
+
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -53,7 +53,7 @@
                         </td>
                     </tr>
                     <!-- RecognizedPercentage -->
-                    <tr class="FormFieldRow" >
+                    <tr class="FormFieldRow" *ngIf="IsAccountingActivated">
                         <td>
                             <LogLabel [ObjectFieldName]="'RecognizedPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>

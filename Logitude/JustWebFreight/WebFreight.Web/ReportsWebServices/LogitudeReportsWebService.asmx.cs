@@ -10865,8 +10865,8 @@ namespace WebFreight.Web.ReportsWebServices
                     item.PeriodName = item.PeriodName.Replace("b4", showLocals ? "לפני" : "Before");
             }
 
-
-            totalData.AgingPeriods[0].Totals = new List<AgingPeriodTotal>();
+            if(totalData.AgingPeriods.Count > 0)
+                totalData.AgingPeriods[0].Totals = new List<AgingPeriodTotal>();
             //totalData.AgingPeriods[0].Totals.Add(new AgingPeriodTotal() { TotalCredit = 111, TotalDebit = 222 });
 
             //totalData.AgingPeriods.Add(new AgingPeriod() { PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance", Total = sum });
