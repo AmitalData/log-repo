@@ -198,6 +198,11 @@ namespace Logitude.Server.Tools
                 {
                     DoneItemsInRange.Add(doneDate, 1);
                 }
+                var donotwait500ms = LogitudeSettings.IsCostomsDeploy;//yaron !!
+                if (donotwait500ms)///Thread.Sleep(500);
+                {
+                    return;
+                }
                 System.Diagnostics.ProcessThreadCollection tx = default(System.Diagnostics.ProcessThreadCollection);
                 Int16 t = default(Int16);
                 Int16 tId = default(Int16);

@@ -126,7 +126,7 @@ namespace CustomsWorkerRole
             _LastActiveAt = DateTime.Now;
             if (DateTime.Now.Subtract(_LastReadAllCustomsSetting) > TimeSpan.FromMinutes(20))//cache 20 min
             {
-                CustomsWorkerRole.Utils.GenUtil.CollectGC();
+                //CustomsWorkerRole.Utils.GenUtil.CollectGC();
                 _LastReadAllCustomsSetting = DateTime.Now;
                 ///_AllCustomsSetting.Clear();
                 _AllCustomsSetting = null;

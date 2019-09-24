@@ -35,6 +35,7 @@ using Logitude.BL.Helpers;
 using Logitude.SystemLogs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Configuration;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -344,6 +345,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
             ///move after adding (was Devart.Data.Oracle.OracleException: ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_N1103284768) הופר - מפתח אב לא נמצא )
+            
             if (!tenantPM.IsDocumentsArchive && LogitudeSettings.DeploymentStage != "Simplog")
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
@@ -370,6 +372,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     AddDocumentBackupLog();
                 }
             }
+
+        }
+
+        private void TryBuildUD2LT(DocumentsFilingPM extDocPM)
+        {
+            ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
+            myICreateUD2LTService.JustDoIt(extDocPM);
 
         }
 
@@ -788,6 +797,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            
             if (!tenantPM.IsDocumentsArchive && !entityPM.DontAddToQueue)
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, null);
@@ -1077,12 +1087,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void AddToTasksQueue(DocumentsFilingPM extDocPM, bool isnew, string loggedUserId)
         {
 
-
+            TryBuildUD2LT(extDocPM);
             if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))
             {
                 DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.MetaDataVersionValue);
             }
-
+            
             if (LogitudeSettings.EnableHybridQueue && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
                 && LogitudeSettings.DeploymentStage != "Simplog" && !extDocPM.NoAddToTasksQueue)
             {
@@ -1235,6 +1245,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+        
 
         private List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet;
         public void SetChangeSet(List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet)

@@ -88,6 +88,12 @@ implements OnDestroy
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
     _SelectedACCValue: string = 'A'; // Wrong/WrongSpecial
 
+    //Selected tabs
+    _SelectedPAYValue: string = 'R'; // Correct/InProgress/ReadyToSend
+    _SelectedDECTabValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
+    _SelectedMNFTABValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
+    _SelectedDOCTabValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
+
     public columns: any[] = null;
 
     IsActionButtonsEnabled: boolean = false;
@@ -146,9 +152,13 @@ implements OnDestroy
         this._CourierWorksheetSharedDataService._SelectedItems.Collection = [];
         this._SelectedTabFilter = item;
         this._SelectedMNFValue = 'A';
+        this._SelectedMNFTABValue = 'MX';
         this._SelectedDECValue = 'A';
+        this._SelectedDECTabValue = 'MX';
+        this._SelectedDOCTabValue = 'MX';
         this._SelectedDOCValue = 'A';
         this._SelectedACCValue = 'A';
+        this._SelectedPAYValue = 'R';
 
         switch (item.Code) {
             case "DECR": 
@@ -508,14 +518,28 @@ implements OnDestroy
     _DOCTotal = 0;
     _DOC_U_Total = 0;
     _DOC_C_Total = 0;
+    _DOC_MX_Total = 0;
+    _DOC_V_Total = 0;
+    _DOC_I_Total = 0;
     _DEC_W_Total = 0;
     _DEC_C_Total = 0;
+    _DEC_MX_Total = 0;
+    _DEC_R_Total = 0;
+    _DEC_I_Total = 0;
+    _DEC_V_Total = 0;
     _MNF_W_Total = 0;
     _MNF_C_Total = 0;
+    _MNF_MX_Total = 0;
+    _MNF_R_Total = 0;
+    _MNF_I_Total = 0;
+    _MNF_V_Total = 0;
     _ACC_W_Total = 0;
     _ACC_WS_Total = 0;
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
+    _PAY_C_Total = 0;
+    _PAY_R_Total = 0;
+    _PAY_I_Total = 0;
 
     private _SelectedDECToBatchSendButtonText: string = "";
     public get SelectedDECToBatchSendButtonText(): string {
@@ -553,6 +577,7 @@ implements OnDestroy
                                 this._ReadyDECToBatchSend = 0;
                             } 
                             this._ReadyDECToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyDECToSendR") + ' (' + this._ReadyDECToBatchSend + ')';
+                            this._DEC_R_Total = item.Value;
                             break;
                         }
                         case "DECR_RV": {
@@ -570,6 +595,7 @@ implements OnDestroy
                                 this._ReadyMNFToBatchSend = 0;
                             }
                             this._ReadyMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSendR") + ' (' + this._ReadyMNFToBatchSend + ')';
+                            this._MNF_R_Total = item.Value;
                             break;
                         }
                         case "MNFR_RV": {
@@ -587,6 +613,12 @@ implements OnDestroy
                             TabFilter.Total = item.Value;
                             break;
                         }
+                        case "MNF": {
+                            this._MNF_MX_Total = item.Value;
+                            var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
+                            TabFilter.Total = item.Value;
+                            break;
+                        }
                         case "MNF_W": {
                             //statements; 
                             this._MNF_W_Total = item.Value;
@@ -596,11 +628,20 @@ implements OnDestroy
                             this._MNF_C_Total = item.Value;
                             break;
                         }
+                        case "MNF_V": {
+                            this._MNF_V_Total = item.Value;
+                            break;
+                        }
+                        case "MNF_I": {
+                            this._MNF_I_Total = item.Value;
+                            break;
+                        }
                         case "DOC": {
                             //statements; 
                             this._DOCTotal = item.Value;
                             var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
                             TabFilter.Total = item.Value;
+                            this._DOC_MX_Total = item.Value;
                             break;
                         }
                         case "DOC_U": {
@@ -612,12 +653,34 @@ implements OnDestroy
                             this._DOC_C_Total = item.Value;
                             break;
                         }
+                        case "DOC_I": {
+                            this._DOC_I_Total = item.Value;
+                            break;
+                        }
+                        case "DOC_V": {
+                            this._DOC_V_Total = item.Value;
+                            break;
+                        }
+                        case "DEC": {
+                            this._DEC_MX_Total = item.Value;
+                            var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
+                            TabFilter.Total = item.Value;
+                            break;
+                        }
                         case "DEC_C": {
                             this._DEC_C_Total = item.Value;
                             break;
                         }
                         case "DEC_W": {
                             this._DEC_W_Total = item.Value;
+                            break;
+                        }
+                        case "DEC_V": {
+                            this._DEC_V_Total = item.Value;
+                            break;
+                        }
+                        case "DEC_I": {
+                            this._DEC_I_Total = item.Value;
                             break;
                         }
                         case "PAYReadyNotFastindividual": {
@@ -631,6 +694,20 @@ implements OnDestroy
                         }
                         case "ACC_WS": {
                             this._ACC_WS_Total = item.Value;
+                            break;
+                        }
+                        case "PAY_C": {
+                            this._PAY_C_Total = item.Value;
+                            break;
+                        }
+                        case "PAY": {
+                            this._PAY_R_Total = item.Value;
+                            var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
+                            TabFilter.Total = item.Value;
+                            break;
+                        }
+                        case "PAY_I": {
+                            this._PAY_I_Total = item.Value;
                             break;
                         }
                         default: {
@@ -680,7 +757,7 @@ implements OnDestroy
             FieldName: 'ProcedureCurrentName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ProcedureCurrentName"),
-            Styles: { width: '150px' },
+            Styles: { width: '122px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -689,7 +766,7 @@ implements OnDestroy
             FieldName: 'HighLowValue',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.FastIndividualProcessCode"),
-            Styles: { width: '70px' },
+            Styles: { width: '68px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -700,7 +777,7 @@ implements OnDestroy
             FieldName: 'ImporterName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-            Styles: { width: '200px' },
+            Styles: { width: '160px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -709,7 +786,7 @@ implements OnDestroy
             FieldName: 'ImporterCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
-            Styles: { width: '100px' },
+            Styles: { width: '90px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -718,7 +795,7 @@ implements OnDestroy
             FieldName: 'DocumentStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DocumentStatusCode"),
-            Styles: { width: '60px' },
+            Styles: { width: '55px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -729,7 +806,7 @@ implements OnDestroy
             FieldName: 'IsCourierMissingClassification',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsCourierMissingClassification"),
-            Styles: { width: '55px' },
+            Styles: { width: '53px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -740,7 +817,7 @@ implements OnDestroy
             FieldName: 'CourierManifestStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierManifestStatusCode"),
-            Styles: { width: '55px' },
+            Styles: { width: '53px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -751,7 +828,7 @@ implements OnDestroy
             FieldName: 'CourierDeclarationStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierDeclarationStatusCode"),
-            Styles: { width: '55px' },
+            Styles: { width: '53px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -762,7 +839,7 @@ implements OnDestroy
             FieldName: 'CourierPaymentStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPaymentStatusCode"),
-            Styles: { width: '55px' },
+            Styles: { width: '53px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -784,7 +861,7 @@ implements OnDestroy
             FieldName: 'StorageSiteStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.StorageSiteStatusCode"),
-            Styles: { width: '100px' },
+            Styles: { width: '98px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
@@ -815,7 +892,7 @@ implements OnDestroy
             FieldName: 'CourierPendingReasonName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonName"),
-            Styles: { width: '150px' },
+            Styles: { width: '120px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
@@ -826,7 +903,7 @@ implements OnDestroy
             FieldName: 'LastMileStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.LastMileStatusCode"),
-            Styles: { width: '50px' },
+            Styles: { width: '73px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
@@ -837,7 +914,7 @@ implements OnDestroy
             FieldName: 'IsClosedForFollowUp',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '65px' },
+            Styles: { width: '62px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -848,7 +925,7 @@ implements OnDestroy
             FieldName: 'CourierPendingReasonCode',
             DataTypeCode: 'String',
             //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
-            Styles: { width: '50px' },
+            Styles: { width: '38px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -916,7 +993,11 @@ implements OnDestroy
 
         switch (this._SelectedTabFilter.Code) {
             //case "ACC":
-            case "ALL": {
+            case "ALL":
+            case "PAY":
+            case "MNF":
+            case "DEC":
+            case "DOC": {
                 break;
             }
             default: {
@@ -947,36 +1028,104 @@ implements OnDestroy
             }
         }
 
-        switch (this._SelectedMNFValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
+        if (this._SelectedTabFilter.Code == "MNF") {
+            switch (this._SelectedMNFTABValue) {
+                case "I": {
+                    filters.addAdditionalFilter("CourierManifestStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "R": {
+                    filters.addAdditionalFilter("CourierManifestStatusCode", "R", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "V": {
+                    filters.addAdditionalFilter("CourierManifestStatusCode", "V", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "MX": {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    switch (this._SelectedMNFValue) {
+                        case "C": {
+                            filters.addAdditionalFilter("CourierManifestStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                        case "W": {
+                            filters.addAdditionalFilter("CourierManifestStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
-        switch (this._SelectedDECValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
+        if (this._SelectedTabFilter.Code == "DEC") {
+            switch (this._SelectedDECTabValue) {
+                case "I": {
+                    filters.addAdditionalFilter("CourierDeclarationStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "R": {
+                    filters.addAdditionalFilter("CourierDeclarationStatusCode", "R", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "V": {
+                    filters.addAdditionalFilter("CourierDeclarationStatusCode", "V", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "MX": {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    switch (this._SelectedDECValue) {
+                        case "C": {
+                            filters.addAdditionalFilter("CourierDeclarationStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                        case "W": {
+                            filters.addAdditionalFilter("CourierDeclarationStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
-        switch (this._SelectedDOCValue) {
-            case "C": {
-                filters.addAdditionalFilter("DocumentStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "U": {
-                filters.addAdditionalFilter("DocumentStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
+        if (this._SelectedTabFilter.Code == "DOC") {
+            switch (this._SelectedDOCTabValue) {
+                case "I": {
+                    filters.addAdditionalFilter("DocumentStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "V": {
+                    filters.addAdditionalFilter("DocumentStatusCode", "V", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                case "MX": {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    switch (this._SelectedDOCValue) {
+                        case "C": {
+                            filters.addAdditionalFilter("DocumentStatusCode", "M", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                        case "U": {
+                            filters.addAdditionalFilter("DocumentStatusCode", "X", null, null, "Equals", false, false, false, "string");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
@@ -1018,6 +1167,27 @@ implements OnDestroy
             case "WS": {
                 filters.addAdditionalFilter("SpecialActionStatus", "X", null, null, "Equals", false, false, false, "string");
                 break;
+            }
+        }
+
+        if (this._SelectedTabFilter.Code == "PAY") {
+            switch (this._SelectedPAYValue) {
+                case "C": {
+                    filters.addAdditionalFilter("CourierPaymentStatusCode", "R,P", null, null, "InList", false, false, false, "string");
+                    break;
+                }
+                case "R": {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
+                case "I": {
+                    filters.addAdditionalFilter("CourierPaymentStatusCode", "I", null, null, "Equals", false, false, false, "string");
+                    break;
+                }
+                default: {
+                    filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
+                    break;
+                }
             }
         }
 
@@ -1067,10 +1237,24 @@ implements OnDestroy
         }
     }
 
+    MNFTABFilterClicked(value: string) {
+        if (this._SelectedMNFTABValue != value) {
+            this._SelectedMNFTABValue = value;
+            this.RefreshList();
+        }
+    }
+
     DECFilterClicked(value: string) {
 
         if (this._SelectedDECValue != value) {
             this._SelectedDECValue = value;
+            this.RefreshList();
+        }
+    }
+
+    DECTabFilterClicked(value: string) {
+        if (this._SelectedDECTabValue != value) {
+            this._SelectedDECTabValue = value;
             this.RefreshList();
         }
     }
@@ -1083,10 +1267,25 @@ implements OnDestroy
         }
     }
 
+    DOCTabFilterClicked(value: string) {
+        if (this._SelectedDOCTabValue != value) {
+            this._SelectedDOCTabValue = value;
+            this.RefreshList();
+        }
+    }
+
     ACCFilterClicked(value: string) {
 
         if (this._SelectedACCValue != value) {
             this._SelectedACCValue = value;
+            this.RefreshList();
+        }
+    }
+
+    PAYFilterClicked(value: string) {
+
+        if (this._SelectedPAYValue != value) {
+            this._SelectedPAYValue = value;
             this.RefreshList();
         }
     }

@@ -108,7 +108,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 var customsDocumentQueryService = new CustomsDocumentQueryService(context);
                 //var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = itemPoco.DeclarationId, ParentEntityCode = "Declaration" }, itemPoco.Tenant);
-                var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDocParentOnly(new GetTicketsParams() { ParentEntityId = itemPoco.DeclarationId, ParentEntityCode = "Declaration" }, itemPoco.Tenant);
+                bool needCustomsDocumentMetaDataValues = true;
+                var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDocParentOnly(new GetTicketsParams() { ParentEntityId = itemPoco.DeclarationId, ParentEntityCode = "Declaration" }, itemPoco.Tenant
+                    , needCustomsDocumentMetaDataValues);
 
                 foreach (var customsDocumentPMItem in customsDocumentPMList)
                 {

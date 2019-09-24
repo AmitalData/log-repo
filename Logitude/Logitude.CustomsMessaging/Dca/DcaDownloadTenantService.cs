@@ -200,12 +200,20 @@ namespace Logitude.CustomsMessaging.Dca
 
             _swDownAll = Stopwatch.StartNew();
 
+            Take50OneByOne(debugIIGMessageId);
+            _swDownAll.Stop();
+            if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr")))
+            {
+                MoveUnUseDCAFilesToDIr();
+            }
+        }
 
-
-            _totalDownload = 0;
+        private void Take50OneByOne(string debugIIGMessageId)
+        {
+            int _totalDownload = 0;
             DCAFileModel dcaFile = null;
             //foreach (var dcaFile in ListOfDCAFile)
-            while ((dcaFile = GetNext(debugIIGMessageId)) != null)
+            while ((dcaFile = GetNext(debugIIGMessageId, _totalDownload)) != null)
             {
 
 
@@ -241,11 +249,6 @@ namespace Logitude.CustomsMessaging.Dca
 
 
 
-            }
-            _swDownAll.Stop();
-            if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr")))
-            {
-                MoveUnUseDCAFilesToDIr();
             }
         }
 
@@ -324,7 +327,7 @@ out myMessageOut);
             }
         }
 
-        private DCAFileModel GetNext(string debugIIGMessageId)
+        private DCAFileModel GetNext(string debugIIGMessageId,int _totalDownload)
         {
             var allXmlFileInMyBranch = _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch ?? new List<string>();//GetFileList();
             if (_swDownAll.Elapsed > TimeSpan.FromSeconds(60))
@@ -565,7 +568,7 @@ out myMessageOut);
         DcaManager _DcaManager;
         private List<string> _AllDcaPreFixWithoutInOutUpper;
         private Stopwatch _swDownAll;
-        private int _totalDownload;
+        
         private bool DoDcaMessageFile(InterfaceTenantDefinitionManagementPM messageDCA, DCAFileModel dcaFile)
         {
             bool myErrorOccurred;
