@@ -7666,6 +7666,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountOCounterIsntDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CounterIsntDefined", DefaultText = "Counter is not defined, please check accounting settings ",LocalDefaultText = @"מונה כרטיס לא הוגדר , אנא בדוק הגדרות הנהח''ש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GLAccountTextCode_GLAccountOConnect2ExistingCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connect2ExistingCard", DefaultText = "Connect to an existing card",LocalDefaultText = @"חיבור לכרטיס קיים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOThisGLAccountConnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ThisGLAccountConnected", DefaultText = "This GL Account is already connected to card (#cards). GL Account cannot be linked to two clients card.",LocalDefaultText = @"שים לב כי הכרטסת כבר מקושרת לכרטיס תפעולי (#cards), לא ניתן לקשר כרטסת לשני לקוחות.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOThisGLAccountConnectedContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ThisGLAccountConnectedContinue", DefaultText = "This GL Account is already connected to cards (#cards), Do you want to continue?",LocalDefaultText = @"שים לב כי הכרטסת כבר מקושרת לכרטיס תפעולי (#cards), האם ברצונך להמשיך?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }
