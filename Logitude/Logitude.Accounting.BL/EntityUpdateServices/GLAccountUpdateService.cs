@@ -52,7 +52,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         protected override void OnCreating(GLAccountPM entityPM, EntityPM entityParentPM)
         {
-            if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4")
+            if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4" && entityPM.ChartOfAccountsTypeCode != "6")
                 SetDisplayNumber(entityPM);
 
             AddAcitivityLog(entityPM, "N");
@@ -80,9 +80,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 string application = entityPM.Application;
                 if (String.IsNullOrWhiteSpace(application))
                 {
-                    if (!String.IsNullOrWhiteSpace(entityPM.DisplayNumber) && entityPM.DisplayNumber.Length > 4 && entityPM.DisplayNumber.Substring(0, 3) == "SPD")
+                    if (!String.IsNullOrWhiteSpace(entityPM.InternalNumber) && entityPM.InternalNumber.Length > 4 && entityPM.InternalNumber.Substring(0, 3) == "SPD")
                     {
-                        application = entityPM.DisplayNumber.Substring(3, 1);
+                        if (entityPM.InternalNumber.Substring(3, 1) == "I")
+                        {
+                            application = entityPM.InternalNumber.Substring(3, 2);
+                        }
+                        else
+                        {
+                            application = entityPM.InternalNumber.Substring(3, 1);
+                        }
                     }
                 }
                 if (!String.IsNullOrWhiteSpace(application))
@@ -102,9 +109,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 jobControlAccountId = fullAccountingSetting.OceanExportJobControlAccountId;
                                 break;
                             case "I":
+                            case "IA":
                                 jobControlAccountId = fullAccountingSetting.AirImportJobControlAccountId;
                                 break;
                             case "R":
+                            case "IO":
+                            case "IL":
                                 jobControlAccountId = fullAccountingSetting.OceanImportJobControlAccountId;
                                 break;
                             default:
@@ -528,7 +538,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void SendHybridTask(GLAccountPM glaccounPM)
         {
-            if (glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5")
+            if (glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5" && glaccounPM.IsControlAccount==false)
             {
                 FillGLAccountCurrencyCode(glaccounPM);
 

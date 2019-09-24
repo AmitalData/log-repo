@@ -1,3 +1,5 @@
+import { TextCodeTranslator } from './../../../Infrastructure/Utilities/TextCodeTranslator';
+import { GLAccountPM } from './../../../Accounting/EntityPMs/GLAccountPM';
 import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
 import { GLAccountPMService } from './../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import {Component, OnDestroy, ViewContainerRef, ViewChild, OnInit} from '@angular/core';
@@ -29,6 +31,15 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
     private _GLAccountPMService: GLAccountPMService = new GLAccountPMService();
     ShowMessage: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+
+
+    public get ShowConnectToCardButton() : boolean {
+        if(this.CardList)
+            return this.CardList.PartnerTypeId == 'CS'||this.CardList.PartnerTypeId == 'VD';
+
+        return false;
+    }
+
     constructor(private entityArgs: EntityArgs) {
         super();
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { });
@@ -112,6 +123,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
                 {
                     this.GLAccountId = this.CardList.GLAccountId;
                     if (!AppTool.IsNullOrEmpty(this.GLAccountId)) {
+                        this.GetGLAccount();
                         this.FullAccountingLabel = this.ObjectTableName + " GLAccount";
                     }
 
@@ -169,5 +181,57 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 });
             });
+    }
+
+    Connect2ExistCard() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 650;
+        logWindow.Height = 600;
+        logWindow.Title = TextCodeTranslator.Translate("Accounting.O.GLAccounts");
+
+        var args: any = {};
+
+        var chartOfAccountTypeCode
+
+        if (this.CardList.PartnerTypeId == 'VD')
+            chartOfAccountTypeCode = '4';
+        else if (this.CardList.PartnerTypeId == 'CS')
+            chartOfAccountTypeCode = '3';
+
+        args.AccountTypeCode = chartOfAccountTypeCode;
+        args.CardId = this.CardList.Id;
+
+        logWindow.WindowArgs = args;
+        logWindow.Show('./Common/Components/AccountingTab/GLAccountSelectWindow/GLAccountSelectComponent');
+        logWindow.WindowClosed.subscribe(glaccountId => {
+            if (glaccountId) {
+                console.log('GLAccountSelectComponent',glaccountId);
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
+            }
+        });
+    }
+
+    glaccount: GLAccountPM;
+    GetGLAccount(){
+        return new Promise(resolve =>
+            {
+                this.CurrentSession.StartBusyIndicatorLoading();
+                this._GLAccountPMService.get(this.GLAccountId).subscribe(myResult => {
+
+                    var response: ServiceResponse = myResult;
+                    if (!response.HasError) {
+                        var entity = response.Result;
+                        this.glaccount = entity;
+                        resolve(entity);
+                    }
+                    else {
+                        this.CurrentSession.StopBusyIndicator();
+                        resolve(null);
+                    }
+                });
+            });
+
+
     }
 }
