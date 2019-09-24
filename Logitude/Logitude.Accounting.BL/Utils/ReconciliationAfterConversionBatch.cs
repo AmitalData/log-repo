@@ -39,6 +39,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             return _StatusCode;
         }
+        
         public void RunReconciliationAfterConversion(int tenant, string fromExtNum, string toExtNum)
         {
             try
@@ -104,7 +105,7 @@ namespace Logitude.Accounting.BL.Utils
             List<LedgerTransaction> rv = new List<LedgerTransaction>();
             journalLineRecoList.ForEach(journalLineReco =>
             {
-               // rv.AddRange(journalLineReco._oneLineLedger);
+                // rv.AddRange(journalLineReco._oneLineLedger);
                 rv.Add(journalLineReco._oneLineLedger);
             });
             return rv;
@@ -236,11 +237,18 @@ namespace Logitude.Accounting.BL.Utils
                 }
                 else if (journalLine.ActionCode == "2")
                 {
-                    this._valueToMatch = - (journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m));
+ //                   this._valueToMatch = -(journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m));
+                    this._valueToMatch = journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m);
                 }
                 this._oneLineLedger = ledgerTransaction; // ledgerTransactionQueryService.GetByJournalLineIdAndLine(journalLine.JournalId, journalLine.Line, journalLine.Tenant);
                 this._oneLineLedger.AmountToReconcile = _valueToMatch;
             }
         }
+    }
+    public class ReconciliationAfterConversionArg
+    {
+        public int Tenant { get; set; }
+        public string FromExtNum { get; set; }
+        public string ToExtNum { get; set; }
     }
 }
