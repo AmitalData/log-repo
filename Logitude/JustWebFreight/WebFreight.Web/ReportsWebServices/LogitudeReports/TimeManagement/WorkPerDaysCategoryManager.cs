@@ -442,7 +442,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 int iDays = (int)(TotalHours / 9);
                 double Hours = TotalHours % 9;
                 double iHours = Math.Round(Hours / 9, 2);
-                iResult = iDays + "." + iHours.ToString().Replace("0.", "").PadRight(2, '0');
+                iResult = iDays + "." + iHours.ToString().Replace("0.", "").PadRight(1, '0');
                 if (minutes < 0)
                 {
                     iResult = "- " + iResult;
