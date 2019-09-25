@@ -1051,6 +1051,7 @@ namespace WebFreight.Web.ReportsWebServices
                 item.InvoiceStatus = d.Status == null ? null : d.Status.Name;
                 item.InvoiceAmount = d.AmountInLocalCurrency;
                 item.AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency;
+                item.BranchId = d.BranchId;
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
 
                 list_ARInvoices.Add(item);
@@ -1077,6 +1078,7 @@ namespace WebFreight.Web.ReportsWebServices
                      InvoiceStatus = d.Status == null ? null : d.Status.Name,
                      InvoiceAmount = d.AmountInLocalCurrency,
                      AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency,
+                     BranchId = d.BranchId,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> list_ARPayments =
@@ -1094,6 +1096,7 @@ namespace WebFreight.Web.ReportsWebServices
                      ValueDate = d.ValueDate,
                      PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
                      BillToVendorId = d.BillToId,
+                     BranchId = d.BranchId,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> list_APPayments =
@@ -1111,6 +1114,7 @@ namespace WebFreight.Web.ReportsWebServices
                      ValueDate = d.ValueDate,
                      PaymentMethod = d.PaymentMethod == null ? null : d.PaymentMethod.Name,
                      BillToVendorId = d.VendorId,
+                     BranchId = d.BranchId,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> totalList = new List<StatementDataProvider.StatementRecord>();
@@ -1131,6 +1135,8 @@ namespace WebFreight.Web.ReportsWebServices
                                                              DescriptionOfGoods = d.DescriptionOfGoods,
                                                              ConsigneeName = d.ConsigneeCard == null ? null : d.ConsigneeCard.EnglishName,
                                                          }).ToList();
+
+            List<Branch> branches = (from d in commonContext.Branches where d.Tenant == tenant select d).ToList();
 
             foreach (StatementDataProvider.StatementRecord record in totalList)
             {
@@ -1184,6 +1190,15 @@ namespace WebFreight.Web.ReportsWebServices
                     record.DescriptionOfGoods = shipmentEntity.DescriptionOfGoods;
                     record.Shipper = shipmentEntity.ShipperName;
                     record.Consignee = shipmentEntity.ConsigneeName;
+                }
+
+                if (record.BranchId != null)
+                {
+                    Branch iBranch = branches.Where(d => d.Id == record.BranchId).FirstOrDefault();
+                    if (iBranch != null)
+                    {
+                        record.BranchName = iBranch.EnglishName;
+                    }
                 }
             }
 

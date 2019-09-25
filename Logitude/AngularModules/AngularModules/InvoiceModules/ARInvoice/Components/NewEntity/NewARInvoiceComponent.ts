@@ -671,6 +671,13 @@ export class NewARInvoiceComponent extends BaseComponent {
         }
     }
 
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
+
     // Load Date 
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
@@ -845,21 +852,25 @@ export class NewARInvoiceComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
             }
-      }
-
-      if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
-        //if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
-        //  errors.push(msg.replace("%FieldName", "Forma Pago"));
-        //}
-
-        if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.MetodoPagoCode")));
         }
 
-        if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
-          errors.push("Since the metodo pago was set as PUE, you can't select Por definir (99). Please choose another value for the forma Pago.");
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+            //if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
+            //  errors.push(msg.replace("%FieldName", "Forma Pago"));
+            //}
+
+            if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.MetodoPagoCode")));
+            }
+
+            if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
+                errors.push("Since the metodo pago was set as PUE, you can't select Por definir (99). Please choose another value for the forma Pago.");
+            }
         }
-      }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.BranchId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.BranchId")));
+        }
 
         this.ValidationErrorsList = errors;
 

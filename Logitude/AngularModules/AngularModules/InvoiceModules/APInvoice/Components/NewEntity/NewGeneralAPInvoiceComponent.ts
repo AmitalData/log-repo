@@ -571,6 +571,13 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         }
     }
 
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
+
     // Commands    
     FillWarnings(warnings: string[]) {
         this.ValidationWarningsList = [];
@@ -640,6 +647,10 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
 
         if (this.IsAccountingActivated && this.AccountingDate == null) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.AccountingDate")));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.BranchId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.BranchId")));
         }
 
         this.ValidationErrorsList = errors;

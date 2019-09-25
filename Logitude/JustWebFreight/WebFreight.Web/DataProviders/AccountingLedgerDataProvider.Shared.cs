@@ -64,5 +64,7 @@ namespace WebFreight.Web.DataProviders
         public string BillToVendor { get; set; }
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
+        public string BranchId { get; set; }
+        public string BranchName { get; set; }
     }
 }
