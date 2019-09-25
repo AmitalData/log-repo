@@ -1,7 +1,9 @@
 ﻿
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +28,15 @@ namespace Logitude.Accounting.BL.Validators
         BankAccountPM GetBankAccountFromReconcileExternalPageLineId(string reconcileExternalPageLineId, int tenant);
 
         ReconcileExternalPageLinePM GetReconcileExternalPageLinePM(int tenant, string reconcileExternalPageLineId);
+        List<ReconcileExternalPageLineList> GetReconcileExternalPageLineList(int tenant, List<string> reconcileExternalPageLineIdList);
+        List<ReconcileExternalPageList> GetReconcileExternalPageList(int tenant, List<string> reconcileExternalPageIdList);
+        LastRate GetLastRateByValueDate(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime valueDate);
         List<LedgerTransactionPM> GetLedgerTransactionList(List<string> theReconcileAgainstLTranIdList, int tenant);
+        //FullAccountingSettingPM GetFullAccountingSettingPM(int tenant);
+        string GetaccountingCurrencyId(int tenant);
         DateTime GetCurrentDateTime(int tenant);
         string ResolveUserId(int tenant);
+        List<GLAccountList> GetListOfGLAccountList(int tenant, List<string> listOfAccId);
     }
     public interface IGLAccountDataProvider
     {
