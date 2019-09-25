@@ -34,9 +34,11 @@ export class OperationsComp {
      
      this.EditShipmentTabs.EditTabs(shipperRef1,browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.ShipmentType,browser.params.ShipParams.Direction);
     //this.EditShipment(shipperRef1,browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.Direction, browser.params.ShipParams.TransportMode, browser.params.ShipParams.ShipmentType);
+    }
+    saveShip() {
 
-      this.Helper.WaitByIdAndClick('Shipment-Save');
-      this.Helper.WaitEditComponentBusyIndicator();
-  }
+        this.Helper.WaitByIdAndClick('Shipment-Save');
+        this.Helper.WaitEditComponentBusyIndicator();
+    }
 }
 
