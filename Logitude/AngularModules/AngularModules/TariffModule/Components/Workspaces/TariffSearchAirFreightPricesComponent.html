@@ -347,7 +347,7 @@
                                                                                                             </td>
                                                                                                             <td>
                                                                                                                 <div class="TextTrimming">
-                                                                                                                    {{item.Name}}
+                                                                                                                    {{item.SellerName}}
                                                                                                                 </div>
                                                                                                             </td>
                                                                                                         </tr>
@@ -361,7 +361,7 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:80px">
-                                                                                                                <label style="color:darkgray"> Effective till:</label>
+                                                                                                                <label style="color:darkgray"> Valid till:</label>
 
                                                                                                             </td>
                                                                                                             <td>
@@ -420,7 +420,7 @@
 
                                                                                                 <td style="width: 57px;">
                                                                                                     <div *ngIf="IsGeneratePayablesVisible">
-                                                                                                        <button class="Button" (click)="GeneratePayablesClicked(item)">Generate Payables</button>
+                                                                                                        <button class="Button" (click)="GeneratePayablesClicked(item)">Choose</button>
                                                                                                     </div>
                                                                                                 </td>
                                                                                                 <td style="width:100px;max-width:165px;font-size:x-large;font-weight:bold">

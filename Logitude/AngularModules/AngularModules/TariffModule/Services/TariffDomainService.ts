@@ -339,7 +339,7 @@ export class TariffSearchSummary {
     EffictiveDate: Date;
     Remarks: string;
     ImageId: string;
-    Name: string;
+    SellerName: string;
     CurrencyCode: string;
     CurrencyId: string;
     VersionId: string;
@@ -367,6 +367,7 @@ export class SurchargeSummary {
     UnitOfMesurmentId: string;
     VersionId: string;
     SellerId: string;
+    SellerName: string;
 }
 
 export class ExcelTariffLines {

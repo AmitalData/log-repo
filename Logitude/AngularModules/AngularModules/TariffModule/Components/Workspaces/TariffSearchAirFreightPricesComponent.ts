@@ -603,6 +603,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
                 shipmentPayable.Notes = notes;
                 shipmentPayable.VendorId = newRecord.SellerId;
+                shipmentPayable.VendorName = newRecord.SellerName;
                 this.TariffPayables.push(shipmentPayable);
             }
         });
