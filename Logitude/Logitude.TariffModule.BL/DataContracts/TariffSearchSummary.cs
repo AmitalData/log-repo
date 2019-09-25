@@ -29,7 +29,6 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string UnitOfMesurmentCode { get; set; }
         public string UnitOfMesurmentId { get; set; }
         public List<SurchargeSummary> Surcharges { get; set; }
-
-
+        public string SellerId { get;  set; }
     }
 }

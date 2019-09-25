@@ -602,6 +602,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
                 shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
                 shipmentPayable.Notes = notes;
+                shipmentPayable.VendorId = newRecord.SellerId;
                 this.TariffPayables.push(shipmentPayable);
             }
         });

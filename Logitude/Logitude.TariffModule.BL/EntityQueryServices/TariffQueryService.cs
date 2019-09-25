@@ -521,6 +521,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     SurchargeItem.CurrencyId = CurrentSurcharge.CurrencyId;
                                                     SurchargeItem.TariffNumber = CurrentSurcharge.TariffNumber;
                                                     SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
+                                                    SurchargeItem.SellerId = CurrentSurcharge.SellerId;
                                                     tariffsSummary.Surcharges.Add(SurchargeItem);
                                                 }
 
@@ -556,7 +557,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.TotalSurcharge = Sum + "";
                     tariffsSummary.WholePrice = (decimal?)Sum + calculatedLocalAmount + "";
                     tariffsSummary.UnitOfMesurmentId = airChrageType.MeasurementId;
-                    tariffsSummary.UnitOfMesurmentCode = UsedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault(); 
+                    tariffsSummary.UnitOfMesurmentCode = UsedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault();
+                    tariffsSummary.SellerId = result.SellerId;
 
                     byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
                     string resultImage = "";

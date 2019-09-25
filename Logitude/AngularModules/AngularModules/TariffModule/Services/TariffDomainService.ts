@@ -350,6 +350,7 @@ export class TariffSearchSummary {
     IsShown: boolean = false;
     UnitOfMesurmentCode: string;
     UnitOfMesurmentId: string;
+    SellerId: string;
 }
 
 
@@ -365,6 +366,7 @@ export class SurchargeSummary {
     UnitOfMesurmentCode: string;
     UnitOfMesurmentId: string;
     VersionId: string;
+    SellerId: string;
 }
 
 export class ExcelTariffLines {
