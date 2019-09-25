@@ -42,52 +42,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations iQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
 
-            QueryFilterItem filterItem_ProjectId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ProjectId").FirstOrDefault();
-            QueryFilterItem filterItem_CustomerId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
-            QueryFilterItem filterItem_OwnerId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "OwnerId").FirstOrDefault();
-            QueryFilterItem filterItem_IncludeInnerProject = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeInnerProject").FirstOrDefault();
-            QueryFilterItem filterItem_EmployeeUserId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "EmployeeUserId").FirstOrDefault();
-            QueryFilterItem filterItem_FromDate = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
-            QueryFilterItem filterItem_ToDate = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
-            QueryFilterItem filterItem_BudgetId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "BudgetId").FirstOrDefault();
-            QueryFilterItem filterItem_CategoryId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryId").FirstOrDefault();
-            QueryFilterItem filterItem_ExternalProjectNumber = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ExternalProjectNumber").FirstOrDefault();
+            this.FilterByDates(iQueryOperations);
+            this.FilterByCustomer(iQueryOperations);
+            this.FilterByOwner(iQueryOperations);
+            this.FilterByProject(iQueryOperations);
+            this.FilterByEmployee(iQueryOperations);
+            this.FilterByBudget(iQueryOperations);
+            this.FilterByCategory(iQueryOperations);
+        }
 
-            if (filterItem_FromDate != null)
-            {
-                if (filterItem_FromDate.FieldValue != null)
-                {
-                    fromDate = (DateTime)filterItem_FromDate.FieldValue;
-                }
-            }
-            if (filterItem_ToDate != null)
-            {
-                if (filterItem_ToDate.FieldValue != null)
-                {
-                    toDate = (DateTime)filterItem_ToDate.FieldValue;
-                }
-            }
-            if (filterItem_CustomerId != null)
-            {
-                if (filterItem_CustomerId.FieldValue != null)
-                {
-                    customerId = filterItem_CustomerId.FieldValue.ToString();
-                }
-            }
-            if (filterItem_EmployeeUserId != null)
-            {
-                if (filterItem_EmployeeUserId.FieldValue != null)
-                {
-                    employeeUserId = filterItem_EmployeeUserId.FieldValue.ToString();
-                }
-            }
-            if (filterItem_BudgetId != null)
-            {
-                if (filterItem_BudgetId.FieldValue != null)
-                {
-                    budgetId = filterItem_BudgetId.FieldValue.ToString();
-                }
-            }
+        private void FilterByCategory(QueryOperations iQueryOperations)
+        {
+            QueryFilterItem filterItem_CategoryId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryId").FirstOrDefault();
             if (filterItem_CategoryId != null)
             {
                 if (filterItem_CategoryId.FieldValue != null)
@@ -95,18 +61,50 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     categoryId = filterItem_CategoryId.FieldValue.ToString();
                 }
             }
+        }
+        private void FilterByBudget(QueryOperations iQueryOperations)
+        {
+            QueryFilterItem filterItem_BudgetId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "BudgetId").FirstOrDefault();
+            if (filterItem_BudgetId != null)
+            {
+                if (filterItem_BudgetId.FieldValue != null)
+                {
+                    budgetId = filterItem_BudgetId.FieldValue.ToString();
+                }
+            }
+        }
+        private void FilterByEmployee(QueryOperations iQueryOperations)
+        {
+            QueryFilterItem filterItem_EmployeeUserId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "EmployeeUserId").FirstOrDefault();
+            if (filterItem_EmployeeUserId != null)
+            {
+                if (filterItem_EmployeeUserId.FieldValue != null)
+                {
+                    employeeUserId = filterItem_EmployeeUserId.FieldValue.ToString();
+                }
+            }
+        }
+        private void FilterByCustomer(QueryOperations iQueryOperations)
+        {
+            QueryFilterItem filterItem_CustomerId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
+            if (filterItem_CustomerId != null)
+            {
+                if (filterItem_CustomerId.FieldValue != null)
+                {
+                    customerId = filterItem_CustomerId.FieldValue.ToString();
+                }
+            }
+        }
+        private void FilterByProject(QueryOperations iQueryOperations)
+        {
+            QueryFilterItem filterItem_IncludeInnerProject = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeInnerProject").FirstOrDefault();
+            QueryFilterItem filterItem_ExternalProjectNumber = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ExternalProjectNumber").FirstOrDefault();
+            QueryFilterItem filterItem_ProjectId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ProjectId").FirstOrDefault();
             if (filterItem_ProjectId != null)
             {
                 if (filterItem_ProjectId.FieldValue != null)
                 {
                     projectId = filterItem_ProjectId.FieldValue.ToString();
-                }
-            }
-            if (filterItem_OwnerId != null)
-            {
-                if (filterItem_OwnerId.FieldValue != null)
-                {
-                    ownerId = filterItem_OwnerId.FieldValue.ToString();
                 }
             }
             if (filterItem_ExternalProjectNumber != null)
@@ -121,6 +119,36 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 if (filterItem_IncludeInnerProject.FieldValue != null)
                 {
                     IncludeInnerProject = Convert.ToBoolean(filterItem_IncludeInnerProject.FieldValue);
+                }
+            }
+        }
+        private void FilterByOwner(QueryOperations iQueryOperations)
+        {
+            QueryFilterItem filterItem_OwnerId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "OwnerId").FirstOrDefault();
+            if (filterItem_OwnerId != null)
+            {
+                if (filterItem_OwnerId.FieldValue != null)
+                {
+                    ownerId = filterItem_OwnerId.FieldValue.ToString();
+                }
+            }
+        }
+        private void FilterByDates(QueryOperations iQueryOperations)
+        {
+            QueryFilterItem filterItem_FromDate = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            if (filterItem_FromDate != null)
+            {
+                if (filterItem_FromDate.FieldValue != null)
+                {
+                    fromDate = (DateTime)filterItem_FromDate.FieldValue;
+                }
+            }
+            if (filterItem_ToDate != null)
+            {
+                if (filterItem_ToDate.FieldValue != null)
+                {
+                    toDate = (DateTime)filterItem_ToDate.FieldValue;
                 }
             }
         }
@@ -414,7 +442,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 int iDays = (int)(TotalHours / 9);
                 double Hours = TotalHours % 9;
                 double iHours = Math.Round(Hours / 9, 2);
-                iResult = iDays + ":" + iHours.ToString().Replace("0.", "").PadRight(2, '0');
+                iResult = iDays + "." + iHours.ToString().Replace("0.", "").PadRight(1, '0');
                 if (minutes < 0)
                 {
                     iResult = "- " + iResult;
