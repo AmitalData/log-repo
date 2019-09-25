@@ -22,6 +22,8 @@ export class NewChartOfAccount {
 
         this.Helper.WaitByIdAndFill('null_Search', 'chart');
         this.Helper.WaitByIdAndClick('MaintenanceItemMTCA');
+        this.Helper.ItemsVisibility('NewButton_ChartOfAccount');
+        this.Helper.ItemsPresent('NewButton_ChartOfAccount');
         this.Helper.WaitByIdAndClick('NewButton_ChartOfAccount');
         this.Helper.ItemsVisibility('ChartOfAccount_EnglishName');
         this.Helper.ItemsPresent('ChartOfAccount_EnglishName');
