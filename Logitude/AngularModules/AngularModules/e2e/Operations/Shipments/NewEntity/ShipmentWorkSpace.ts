@@ -37,9 +37,7 @@ export class ShipmentWorkSpace {
         this.GeneralFunction = new GeneralFunctions();
         // this.QuickSearch = new ShipmentSearch();
         this.EditShipmentTabs = new EditTabsComponent();
-
         this.shipHelper = new ShipmentHelper();
-
     }
 
 
@@ -78,8 +76,8 @@ export class ShipmentWorkSpace {
             this.Helper.WaitBusyIndicator();
             return shipperRef1;
 
-           // this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
-           // this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
+            // this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
+            // this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
         }
         else if (ShipmentLevelCode == 'M') {
             this.shipHelper.CreateAndCloseNewShipment('NEWMASTER', 'MasterCancelbtn', Direction, TransportMode, ShipmentType);
@@ -94,7 +92,7 @@ export class ShipmentWorkSpace {
             //this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
             //this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
         }
-  
+
     }
 
     CreateWizard(LogitudeWizardType: string) {
