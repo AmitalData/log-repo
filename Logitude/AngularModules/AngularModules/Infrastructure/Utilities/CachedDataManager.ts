@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 declare var JSZip: any;
 import {ServiceHelper} from '../Utilities/ServiceHelper';
@@ -17,6 +17,7 @@ import {Output, EventEmitter} from '@angular/core';
 import {ObjectsLocator} from '../Locators/ObjectsLocator';
 import {EntityResourceService} from '../Services/EntityResourceService';;
 import {CachedDataManagerServices} from './CachedDataManagerServices';
+import { GeneralDomainService } from '../Services/GeneralDomainService';
 
 export class CachedDataManager {  
 
@@ -561,6 +562,22 @@ export class CachedDataManager {
 
     }
 
+    public static RefreshObjectFieldsModifications() {
+        console.log("calling refresh for object fields modifications");
+        var generalDomainService: GeneralDomainService = new GeneralDomainService();
+        generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe(response => {
+
+            if (!response.HasError) {
+                window.ObjectFieldModifications = response.Result;
+
+                EntityResourceService.FillObjectFieldsModifications();
+
+                console.log("refresh for object fields modification completed!");
+            }
+            else
+                console.warn("refresh for object fields modification failed!");
+        });
+    }
     //static testM(message) {
 
     //    var objectTableName = "Incoterm";
