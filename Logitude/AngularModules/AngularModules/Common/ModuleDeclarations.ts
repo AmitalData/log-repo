@@ -53,6 +53,9 @@ import {DocumentFilingEmailSettingsComponent} from  './Components/Maintenance/Do
 import {CountryCityGeneralTabComponent} from './Components/Maintenance/CountryCity/CountryCityGeneralTabComponent';
 import {VesselGeneralTabComponent} from './Components/Maintenance/Vessel/VesselGeneralTabComponent';
 import {CustomsShipperFiltersMenuComponent} from './Components/FiltersMenu/CustomsShipperFiltersMenuComponent';
+import { GLAccountSelectComponent } from './Components/AccountingTab/GLAccountSelectWindow/GLAccountSelectComponent';
+
+
 export const Components =
     [
         CustomerHelperComponent,
@@ -66,16 +69,16 @@ export const Components =
         AddEditEventComponent,
         RatesHistoryComponent,
         RatesMainTabComponent,
-        EditLastRateComponent,        
+        EditLastRateComponent,
         LogBoxSettings,
-        TenantImportComponent,       
+        TenantImportComponent,
         MeasurementGeneralComponent,
         NewCurrencyComponent,
         NewChargesTypeComponent,
         ChargesTypeGeneralTabComponent,
-        NewVatTypePercentageComponent,        
+        NewVatTypePercentageComponent,
         CreditLimitSettingsComponent,
-        CompetitorComponent,        
+        CompetitorComponent,
         NewBusinessUnitComponent,
         BusinessUnitGeneralTabComponent,
         CustomerActivationSettingsComponent,
@@ -84,11 +87,12 @@ export const Components =
         AccountingTab_ChargesType,
         AccountingTab_Currency,
         AccountingTab_Full,
+        GLAccountSelectComponent,
         AccountingTab_Partners,
         AccountingTab_PaymentTerm,
         AccountingTab_QuickBooksOnline,
         AccountingTab_VatType,
-        ExternalAccountsByProductsComponent,        
+        ExternalAccountsByProductsComponent,
         CustomsInterfaceSettingsComponent,
         LocalCustomsInterfaceDetailsComponent,
         CustomsInterfaceStartDatesComponent,
@@ -100,8 +104,8 @@ export const Components =
         AddEditCustomerFieldsUpdateSettingComponent,
         BranchGeneralTabComponent,
         VesselGeneralTabComponent,
-        AddEditBranchAddressComponent,        
-        QuoteStageGeneralTabComponent,   
+        AddEditBranchAddressComponent,
+        QuoteStageGeneralTabComponent,
         AddEditCustomerSalesNoteComponent,
         CustomerTenantAccessFiltersMenuComponent,
         DocumentsFilingShortTitleComponent,
@@ -129,18 +133,18 @@ export class ModuleDeclarations {
             case "AddEditEventComponent": { myResult = AddEditEventComponent; break; }
             case "RatesHistoryComponent": { myResult = RatesHistoryComponent; break; }
             case "RatesMainTabComponent": { myResult = RatesMainTabComponent; break; }
-            case "EditLastRateComponent": { myResult = EditLastRateComponent; break; }            
+            case "EditLastRateComponent": { myResult = EditLastRateComponent; break; }
             case "LogBoxSettings": { myResult = LogBoxSettings; break; }
             case "TenantImportComponent": { myResult = TenantImportComponent; break; }
             case "MeasurementGeneralComponent": { myResult = MeasurementGeneralComponent; break; }
             case "NewCurrencyComponent": { myResult = NewCurrencyComponent; break; }
             case "NewChargesTypeComponent": { myResult = NewChargesTypeComponent; break; }
-            case "ChargesTypeGeneralTabComponent": { myResult = ChargesTypeGeneralTabComponent; break; }                        
+            case "ChargesTypeGeneralTabComponent": { myResult = ChargesTypeGeneralTabComponent; break; }
             case "NewVatTypePercentageComponent": { myResult = NewVatTypePercentageComponent; break; }
             case "CreditLimitSettingsComponent": { myResult = CreditLimitSettingsComponent; break; }
             case "CustomerActivationSettingsComponent": { myResult = CustomerActivationSettingsComponent; break }
             case "VATSettingsComponent": { myResult = VATSettingsComponent; break }
-            case "CompetitorComponent": { myResult = CompetitorComponent; break }            
+            case "CompetitorComponent": { myResult = CompetitorComponent; break }
             case "CreditLimitSettingsComponent": { myResult = CreditLimitSettingsComponent; break; }
             case "NewBusinessUnitComponent": { myResult = NewBusinessUnitComponent; break; }
             case "BusinessUnitGeneralTabComponent": { myResult = BusinessUnitGeneralTabComponent; break; }
@@ -149,6 +153,7 @@ export class ModuleDeclarations {
             case "AccountingTab_ChargesType": { myResult = AccountingTab_ChargesType; break; }
             case "AccountingTab_Currency": { myResult = AccountingTab_Currency; break; }
             case "AccountingTab_Full": { myResult = AccountingTab_Full; break; }
+            case "GLAccountSelectComponent": { myResult = GLAccountSelectComponent; break; }
             case "AccountingTab_Partners": { myResult = AccountingTab_Partners; break; }
             case "AccountingTab_PaymentTerm": { myResult = AccountingTab_PaymentTerm; break; }
             case "AccountingTab_QuickBooksOnline": { myResult = AccountingTab_QuickBooksOnline; break; }
@@ -165,7 +170,7 @@ export class ModuleDeclarations {
             case "AddEditCustomerFieldsUpdateSettingComponent": { myResult = AddEditCustomerFieldsUpdateSettingComponent; break; }
             case "BranchGeneralTabComponent": { myResult = BranchGeneralTabComponent; break; }
             case "AddEditBranchAddressComponent": { myResult = AddEditBranchAddressComponent; break; }
-            case "VesselGeneralTabComponent": { myResult = VesselGeneralTabComponent; break; }           
+            case "VesselGeneralTabComponent": { myResult = VesselGeneralTabComponent; break; }
             case "QuoteStageGeneralTabComponent": { myResult = QuoteStageGeneralTabComponent; break; }
             case "AddEditCustomerSalesNoteComponent": { myResult = AddEditCustomerSalesNoteComponent; break; }
             case "CustomerTenantAccessFiltersMenuComponent": { myResult = CustomerTenantAccessFiltersMenuComponent; break; }
@@ -176,7 +181,7 @@ export class ModuleDeclarations {
             case "CustomsShipperFiltersMenuComponent": { myResult = CustomsShipperFiltersMenuComponent; break; }
             case "TransmissionLogAuditTabComponent": { myResult = TransmissionLogAuditTabComponent; break; }
 
-                
+
         }
 
         return myResult;
