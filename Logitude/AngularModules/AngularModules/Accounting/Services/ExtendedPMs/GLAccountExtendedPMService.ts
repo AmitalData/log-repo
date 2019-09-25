@@ -50,6 +50,30 @@ export class GLAccountExtendedPMService {
 
     }
 
+    ConnectCardToGLAccount(accountId: string, cardId: string, skipConnectedCardsValidation: boolean = false)
+    {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() =>
+        {
+            var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
+            return this._http.get(api + '/GetConnectCardToGLAccount?accountId=' + accountId
+                + '&cardId=' + cardId
+                + '&skipConnectedCardsValidation=' + skipConnectedCardsValidation, {
+                headers: authHeader
+            }).map(response =>
+            {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+
+                serviceResponse.Result = response.json();
+
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+
+    }
+
 
     MapJsonToEntityPM(jsonPM: any) {
 

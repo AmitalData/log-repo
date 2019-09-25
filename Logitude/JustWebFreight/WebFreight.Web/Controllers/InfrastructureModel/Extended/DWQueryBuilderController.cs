@@ -206,7 +206,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(Tabel, authToken.Tenant);
                 bool IsClosed = dWObjectTablePM.IsClosed;
                 string WhereStmt = " where " + Field + " is not null";
-                string PagingString = " ORDER BY " + Field + " OFFSET " + filters.PageIndex + " ROWS FETCH NEXT " + filters.PageSize + " ROWS ONLY";
+                string PagingString = " ORDER BY " + Field+ " OFFSET " + filters.PageIndex + " ROWS FETCH NEXT " + filters.PageSize + " ROWS ONLY";
 
 
 
@@ -505,14 +505,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 
 
                 DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(authToken.Tenant);
-                string MySqlString = QBHelper.GetQuerySQL(DWQueryParam);
-                DataTable MyData = QBHelper.GetDWQueryData(MySqlString);
+                SqlCommandClass sqlResults = QBHelper.GetQuerySQL(DWQueryParam);
+                DataTable MyData = QBHelper.GetDWQueryData(sqlResults);
                 DWQueryDataResult myResult = new DWQueryDataResult();
                 myResult.SQLDataResult = MyData;
                 var DWSettings = new DWHSettingRepository(authToken.Tenant);
                 var temp = DWSettings.GetSingleDWHSetting(authToken.Tenant);
                 myResult.IsParentTenant = DWSettings.IsParentTenant(authToken.Tenant);
-                myResult.SQLString = MySqlString;
+                myResult.SQLString = QBHelper.GetSQLStringFromSqlCommand(sqlResults);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 

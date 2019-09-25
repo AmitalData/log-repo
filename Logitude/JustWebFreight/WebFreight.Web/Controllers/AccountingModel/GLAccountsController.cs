@@ -202,7 +202,27 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         //}
 
 
- 
+        public HttpResponseMessage GetConnectCardToGLAccount(string accountId, string cardId, bool skipConnectedCardsValidation)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", authToken.Tenant);
+
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                GLAccountQueryService query = new GLAccountQueryService(MyContext);
+                query.ConnectCardToGLAccount(accountId, cardId, skipConnectedCardsValidation, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+            catch (Exception ex)
+            {
+                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
 
 

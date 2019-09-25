@@ -3,7 +3,8 @@ import {CreditLimitSettingPM} from '../../../EntityPMs/CreditLimitSettingPM';
 import {CreditLimitSettingPMService} from '../../../Services/StandardPMs/CreditLimitSettingPMService';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
@@ -21,9 +22,14 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
     public SelectedTabCode: string = "A";
     private myService: CreditLimitSettingPMService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsPartnersRestrictionsTabVisible: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myService = new CreditLimitSettingPMService();
+
+        if (FeatureLocator.HasFeaturePermession("CreditLimitSetting", "PartnersRestrictions")) {
+            this.IsPartnersRestrictionsTabVisible = true;
+        }
     }
 
     ngOnInit() {
