@@ -105,7 +105,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? AmountDueInProfitCurrency { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
+
         public bool IsPrinted { get; set; }
         public string ConnectedEntityReferences { get; set; }
         public CustomFieldClass Field1 { get; set; }
