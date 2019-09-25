@@ -30,6 +30,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private IQueryable<TMProject> iQueryable_AllProjects = null;
         private IQueryable<TMEmployeeTime> iQueryable_EmployeeTimes = null;
         private IQueryable<TMEmployeeTime> iQueryable_AllEmployeeTimes = null;
+        private List<WorkDaysPerGategoryData> iWorkDaysPerGategoryDataList = null; 
 
         private List<TMProjectCategory> AllCategories = null;
         private WorkDaysPerCategoryDataProvider iDataProvider;
@@ -209,6 +210,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             }
         }
 
+        private WorkDaysPerGategoryData itemRecord = null;
         private void BuildReportData()
         {
             var iQueryable_List = (
@@ -276,7 +278,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                     })
                                     ).ToList();
 
-            List<WorkDaysPerGategoryData> iList = new List<WorkDaysPerGategoryData>();
+            iWorkDaysPerGategoryDataList = new List<WorkDaysPerGategoryData>();
             List<WorkDaysPerGategoryData> dataGroups = (from x in iQueryable_List
                                                         group x by new { x.CategoryId, x.ProjectId, x.OwnerId, x.ProjectNumber } into g
                                                         select new WorkDaysPerGategoryData()
@@ -291,7 +293,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             foreach (var item in dataGroups)
             {
                 List<WorkDaysPerGategoryData> gategoryLines = dataGroups.Where(d => d.CategoryId == item.CategoryId).ToList();
-                WorkDaysPerGategoryData itemRecord = new WorkDaysPerGategoryData()
+                itemRecord = new WorkDaysPerGategoryData()
                 {
                     CategoryId = item.CategoryId,
                     ProjectId = item.ProjectId,
@@ -299,88 +301,106 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     TotalDaysWithoutIncludingInnerDouble = item.TotalMinutes,
                     IsVisisble = true,
                 };
-
-                var listOfCategoryInnerProjects = this.iQueryable_AllProjects.Where(d => d.ProjectNumber.StartsWith(item.ProjectNumber + "-") || d.ProjectNumber == item.ProjectNumber);
-                var daysOfListCategoryInnerProjects = from EmployeeTimes in iQueryable_AllEmployeeTimes
-                                                      join Projects in listOfCategoryInnerProjects on EmployeeTimes.ProjectId equals Projects.Id
-                                                      where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != ""
-                                                      select new
-                                                      {
-                                                          TotalMinutes = EmployeeTimes.FullDuration,
-                                                      };
-
-                itemRecord.TotalDaysWithoutIncludingInner = this.GetDaysFormatFromMinutes(item.TotalMinutes);
-                itemRecord.TotalDaysIncludingInnerDouble = daysOfListCategoryInnerProjects.Sum(s => s.TotalMinutes);
-                itemRecord.TotalDaysIncludingInner = this.GetDaysFormatFromMinutes(itemRecord.TotalDaysIncludingInnerDouble);
-
-                var isCategoryFirstRow = iList.Where(a => a.CategoryId == item.CategoryId && a.TotalGategoryDays != null).FirstOrDefault();
-                if (isCategoryFirstRow == null)
-                {
-                    itemRecord.TotalGategoryDaysDouble = itemRecord.TotalDaysIncludingInnerDouble;
-                    itemRecord.TotalGategoryDays = this.GetDaysFormatFromMinutes(itemRecord.TotalGategoryDaysDouble);
-                }
-
-                if (string.IsNullOrEmpty(itemRecord.OwnerName))
-                {
-                    if (!string.IsNullOrEmpty(item.OwnerId))
-                    {
-                        Contact iContact = ContactRepository.GetSingleContact(item.OwnerId, this.tenant, true);
-                        if (iContact != null)
-                        {
-                            itemRecord.OwnerName = iContact.EnglishName;
-                        }
-                    }
-                }
-
-                if (string.IsNullOrEmpty(itemRecord.ProjectName))
-                {
-                    if (!string.IsNullOrEmpty(item.ProjectId))
-                    {
-                        TMProject iProject = this.iQueryable_AllProjects.Where(a => a.Id == item.ProjectId).FirstOrDefault();
-                        if (iProject != null)
-                        {
-                            itemRecord.ProjectName = iProject.Name;
-
-                            if (!this.IncludeInnerProject)
-                            {
-                                itemRecord.IsVisisble = iProject.IsInnerProject ? false : true;
-                            }
-                        }
-                    }
-                }
-
-                if (string.IsNullOrEmpty(itemRecord.CategoryName))
-                {
-                    if (!string.IsNullOrEmpty(item.CategoryId))
-                    {
-                        TMProjectCategory iCategory = this.AllCategories.Where(d => d.Id == item.CategoryId).FirstOrDefault();
-                        if (iCategory != null)
-                        {
-                            itemRecord.CategoryName = iCategory.Name;
-                        }
-                    }
-
-                    else
-                    {
-                        if (string.IsNullOrEmpty(item.ProjectId))
-                        {
-                            itemRecord.CategoryName = "Not Connected to Projects";
-                        }
-                    }
-                }
-
-                iList.Add(itemRecord);
+                this.CalculateCategoryTotals(item);
+                this.FillProjectData(item);
+                this.FillCategoryData(item);
+                this.FillOwnerData(item);
+                iWorkDaysPerGategoryDataList.Add(itemRecord);
             }
-
-            this.iDataProvider.GategoryRecordList = iList.Where(a=>a.IsVisisble).ToList();
+            this.iDataProvider.GategoryRecordList = iWorkDaysPerGategoryDataList.Where(a=>a.IsVisisble).ToList();
             if (this.iDataProvider.GategoryRecordList.Count > 0)
             {
-                double iTotalDaysIncludingInnerDouble = this.iDataProvider.GategoryRecordList.Sum(s => s.TotalDaysIncludingInnerDouble);
-                double iTotalDaysWithoutIncludingInnerDouble = this.iDataProvider.GategoryRecordList.Sum(s => s.TotalDaysWithoutIncludingInnerDouble);
-                double iTotalGategoryDaysDouble = this.iDataProvider.GategoryRecordList.Sum(s => s.TotalGategoryDaysDouble);
-                this.iDataProvider.Total_TotalDaysIncludingInner = this.GetDaysFormatFromMinutes(iTotalDaysIncludingInnerDouble);
-                this.iDataProvider.Total_TotalDaysWithoutIncludingInner= this.GetDaysFormatFromMinutes(iTotalDaysWithoutIncludingInnerDouble);
-                this.iDataProvider.Total_TotalGategoryDays = this.GetDaysFormatFromMinutes(iTotalGategoryDaysDouble);
+                this.CalculateAllTotalsOfCategoryFields();
+            }
+        }
+
+        private void CalculateAllTotalsOfCategoryFields()
+        {
+            double iTotalDaysIncludingInnerDouble = this.iDataProvider.GategoryRecordList.Sum(s => s.TotalDaysIncludingInnerDouble);
+            double iTotalDaysWithoutIncludingInnerDouble = this.iDataProvider.GategoryRecordList.Sum(s => s.TotalDaysWithoutIncludingInnerDouble);
+            double iTotalGategoryDaysDouble = this.iDataProvider.GategoryRecordList.Sum(s => s.TotalGategoryDaysDouble);
+            this.iDataProvider.Total_TotalDaysIncludingInner = this.GetDaysFormatFromMinutes(iTotalDaysIncludingInnerDouble);
+            this.iDataProvider.Total_TotalDaysWithoutIncludingInner = this.GetDaysFormatFromMinutes(iTotalDaysWithoutIncludingInnerDouble);
+            this.iDataProvider.Total_TotalGategoryDays = this.GetDaysFormatFromMinutes(iTotalGategoryDaysDouble);
+        }
+
+        private void FillOwnerData(WorkDaysPerGategoryData item)
+        {
+            if (string.IsNullOrEmpty(itemRecord.OwnerName))
+            {
+                if (!string.IsNullOrEmpty(item.OwnerId))
+                {
+                    Contact iContact = ContactRepository.GetSingleContact(item.OwnerId, this.tenant, true);
+                    if (iContact != null)
+                    {
+                        itemRecord.OwnerName = iContact.EnglishName;
+                    }
+                }
+            }
+        }
+
+        private void FillCategoryData(WorkDaysPerGategoryData item)
+        {
+            if (string.IsNullOrEmpty(itemRecord.CategoryName))
+            {
+                if (!string.IsNullOrEmpty(item.CategoryId))
+                {
+                    TMProjectCategory iCategory = this.AllCategories.Where(d => d.Id == item.CategoryId).FirstOrDefault();
+                    if (iCategory != null)
+                    {
+                        itemRecord.CategoryName = iCategory.Name;
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(item.ProjectId))
+                    {
+                        itemRecord.CategoryName = "Not Connected to Projects";
+                    }
+                }
+            }
+        }
+
+        private void FillProjectData(WorkDaysPerGategoryData item)
+        {
+            if (string.IsNullOrEmpty(itemRecord.ProjectName))
+            {
+                if (!string.IsNullOrEmpty(item.ProjectId))
+                {
+                    TMProject iProject = this.iQueryable_AllProjects.Where(a => a.Id == item.ProjectId).FirstOrDefault();
+                    if (iProject != null)
+                    {
+                        itemRecord.ProjectName = iProject.Name;
+
+                        if (!this.IncludeInnerProject)
+                        {
+                            itemRecord.IsVisisble = iProject.IsInnerProject ? false : true;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CalculateCategoryTotals(WorkDaysPerGategoryData item)
+        {
+            var listOfCategoryInnerProjects = this.iQueryable_AllProjects.Where(d => d.ProjectNumber.StartsWith(item.ProjectNumber + "-") || d.ProjectNumber == item.ProjectNumber);
+            var daysOfListCategoryInnerProjects = from EmployeeTimes in iQueryable_AllEmployeeTimes
+                                                  join Projects in listOfCategoryInnerProjects on EmployeeTimes.ProjectId equals Projects.Id
+                                                  where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != ""
+                                                  select new
+                                                  {
+                                                      TotalMinutes = EmployeeTimes.FullDuration,
+                                                  };
+
+            itemRecord.TotalDaysWithoutIncludingInner = this.GetDaysFormatFromMinutes(item.TotalMinutes);
+            itemRecord.TotalDaysIncludingInnerDouble = daysOfListCategoryInnerProjects.Sum(s => s.TotalMinutes);
+            itemRecord.TotalDaysIncludingInner = this.GetDaysFormatFromMinutes(itemRecord.TotalDaysIncludingInnerDouble);
+
+            var isCategoryFirstRow = iWorkDaysPerGategoryDataList.Where(a => a.CategoryId == item.CategoryId && a.TotalGategoryDays != null).FirstOrDefault();
+            if (isCategoryFirstRow == null)
+            {
+                itemRecord.TotalGategoryDaysDouble = itemRecord.TotalDaysIncludingInnerDouble;
+                itemRecord.TotalGategoryDays = this.GetDaysFormatFromMinutes(itemRecord.TotalGategoryDaysDouble);
             }
         }
 

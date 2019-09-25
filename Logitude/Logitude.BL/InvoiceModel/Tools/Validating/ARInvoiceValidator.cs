@@ -233,7 +233,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             ValidateAirlineRestriction(entityPM, myCommonContext);
-            ValidateBillToCreditLimit(entityPM, myContext, myCommonContext, isNew);
+            ValidateBillToCreditLimit(entityPM, entityPOCO, myContext, myCommonContext, isNew);
             ValidateAccountingSetting(entityPM, myContext, myCommonContext, isNew);
             ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.InvoiceCurrencyId, entityPM.InvoiceDate, isNew);
             ValidateMultiVatPercentages(entityPM, accountingSetting, allVats);
@@ -754,21 +754,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateBillToCreditLimit(ARInvoicePM entityPM, IInvoiceContext myContext, ICommonDataContext myCommonContext, bool isNew)
+        private static void ValidateBillToCreditLimit(ARInvoicePM entityPM, ARInvoice entityPOCO, IInvoiceContext myContext, ICommonDataContext myCommonContext, bool isNew)
         {
-            if (isNew)
+            int tenant = entityPM.Tenant;
+            string id = tenant.ToString();
+            CreditLimitSetting mySettings = (from d in myCommonContext.CreditLimitSettings where d.Id == id select d).FirstOrDefault();
+            if (mySettings != null)
             {
-                if (!entityPM.HasCreditLimitOverrideFeature)
+                if (mySettings.IsCreditLimitEnabled)
                 {
-                    int tenant = entityPM.Tenant;
-                    string id = tenant.ToString();
-                    string myCustomerId = entityPM.BillToId;
+                    ValidateCreditLimitPartnersRestrictions(entityPM, entityPOCO, mySettings, isNew);
 
-                    CreditLimitSetting mySettings = (from d in myCommonContext.CreditLimitSettings where d.Id == id select d).FirstOrDefault();
-                    if (mySettings != null)
+                    if (isNew)
                     {
-                        if (mySettings.IsCreditLimitEnabled)
+                        if (!entityPM.HasCreditLimitOverrideFeature)
                         {
+                            string myCustomerId = entityPM.BillToId;
+
                             if (mySettings.InvoiceCreationBlock)
                             {
                                 // Bill to may be other partners. (not Customr)
@@ -812,126 +814,139 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                     }
                                 }
                             }
-
-                            ValidateCreditLimitPartnerCreation(entityPM, mySettings);
-                        }                        
+                        }
                     }
                 }
             }
         }
 
-        private static void ValidateCreditLimitPartnerCreation(ARInvoicePM entityPM, CreditLimitSetting mySettings)
+        private static void ValidateCreditLimitPartnersRestrictions(ARInvoicePM entityPM, ARInvoice entityPOCO, CreditLimitSetting mySettings, bool isNewEntity)
         {
             if (entityPM.BillToId != null)
             {
-                Card iCard = CardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant, true);
+                bool isValidating = false;
 
-                if (iCard != null)
+                if (isNewEntity)
                 {
-                    string errorText_Blocking = "Credit limit setting is blocking creating invoice for ";
+                    isValidating = true;
+                }
 
-                    switch (iCard.PartnerTypeId)
+                else if (entityPM.BillToId != entityPOCO.BillToId)
+                {
+                    isValidating = true;
+                }
+
+                if (isValidating)
+                {
+                    Card iCard = CardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant, true);
+
+                    if (iCard != null)
                     {
-                        case "CS":
-                            {
-                                if (iCard.IsCustomer)
+                        string errorText_Blocking = "Credit limit setting is blocking invoice for ";
+
+                        switch (iCard.PartnerTypeId)
+                        {
+                            case "CS":
                                 {
-                                    if (mySettings.CustomersInvoicesBlock)
+                                    if (iCard.IsCustomer)
                                     {
-                                        throw new ApplicationException(errorText_Blocking + "Customers");
+                                        if (mySettings.CustomersInvoicesBlock)
+                                        {
+                                            throw new ApplicationException(errorText_Blocking + "Customers");
+                                        }
                                     }
-                                }
 
-                                else
-                                {
-                                    if (mySettings.ShipperConsigneeShipmentBlock)
+                                    else
                                     {
-                                        throw new ApplicationException(errorText_Blocking + "Shippers and Consignees");
+                                        if (mySettings.ShipperConsigneeInvoiceBlock)
+                                        {
+                                            throw new ApplicationException(errorText_Blocking + "Shippers and Consignees");
+                                        }
                                     }
+
+                                    break;
                                 }
 
-                                break;
-                            }
-
-                        case "AG":
-                            {
-                                if (mySettings.AgentsInvoicesBlock)
+                            case "AG":
                                 {
-                                    throw new ApplicationException(errorText_Blocking + "Agents");
+                                    if (mySettings.AgentsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Agents");
+                                    }
+
+                                    break;
                                 }
 
-                                break;
-                            }
-
-                        case "CG":
-                            {
-                                if (mySettings.CustomsAgentsInvoicesBlock)
+                            case "CG":
                                 {
-                                    throw new ApplicationException(errorText_Blocking + "Customs Agents");
+                                    if (mySettings.CustomsAgentsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Customs Agents");
+                                    }
+
+                                    break;
                                 }
 
-                                break;
-                            }
-
-                        case "SG":
-                            {
-                                if (mySettings.ShippingAgentsInvoicesBlock)
+                            case "SG":
                                 {
-                                    throw new ApplicationException(errorText_Blocking + "Shipping Agents");
+                                    if (mySettings.ShippingAgentsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shipping Agents");
+                                    }
+
+                                    break;
                                 }
 
-                                break;
-                            }
-
-                        case "AL":
-                            {
-                                if (mySettings.AirlinesInvoicesBlock)
+                            case "AL":
                                 {
-                                    throw new ApplicationException(errorText_Blocking + "Airlines");
+                                    if (mySettings.AirlinesInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Airlines");
+                                    }
+
+                                    break;
                                 }
 
-                                break;
-                            }
-
-                        case "SL":
-                            {
-                                if (mySettings.ShippingLinesInvoicesBlock)
+                            case "SL":
                                 {
-                                    throw new ApplicationException(errorText_Blocking + "Shipping Lines");
+                                    if (mySettings.ShippingLinesInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shipping Lines");
+                                    }
+
+                                    break;
                                 }
 
-                                break;
-                            }
-
-                        case "TR":
-                            {
-                                if (mySettings.TruckersInvoicesBlock)
+                            case "TR":
                                 {
-                                    throw new ApplicationException(errorText_Blocking + "Truckers");
+                                    if (mySettings.TruckersInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Truckers");
+                                    }
+
+                                    break;
                                 }
 
-                                break;
-                            }
-
-                        case "VD":
-                            {
-                                if (mySettings.VendorsInvoicesBlock)
+                            case "VD":
                                 {
-                                    throw new ApplicationException(errorText_Blocking + "Vendors");
+                                    if (mySettings.VendorsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Vendors");
+                                    }
+
+                                    break;
                                 }
 
-                                break;
-                            }
-
-                        case "WH":
-                            {
-                                if (mySettings.WarehousesInvoicesBlock)
+                            case "WH":
                                 {
-                                    throw new ApplicationException(errorText_Blocking + "Warehouses");
-                                }
+                                    if (mySettings.WarehousesInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Warehouses");
+                                    }
 
-                                break;
-                            }
+                                    break;
+                                }
+                        }
                     }
                 }
             }

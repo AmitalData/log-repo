@@ -20,9 +20,12 @@ export class NewGLAccount {
   
     this.Helper.ItemsVisibility('NewGLAccount');
     this.Helper.ItemsPresent('NewGLAccount');
-    this.Helper.WaitByIdAndClick('NewGLAccount');
+      this.Helper.WaitByIdAndClick('NewGLAccount');
+      this.Helper.ItemsVisibility('GLAccount_ChartOfAccountsTypeCode');
+
+      this.Helper.ItemsPresent('GLAccount_ChartOfAccountsTypeCode');
     this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsTypeCode', 'Banks');
-    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownList', 0,'GLAccount_ChartOfAccountsTypeCode', 'Banks');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'GLAccount_ChartOfAccountsTypeCode', 'Banks');
     this.Helper.WaitBusyIndicator();
     this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'בנקים');
       this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'GLAccount_ChartOfAccountsId', 'בנקים');

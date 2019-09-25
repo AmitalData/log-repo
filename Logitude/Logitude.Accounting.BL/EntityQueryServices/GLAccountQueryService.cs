@@ -23,6 +23,9 @@ using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.CloseTables;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -1047,6 +1050,96 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                        InternalNumber = a.InternalNumber
 
                                    }).FirstOrDefault();
+        }
+
+        public void ConnectCardToGLAccount(string accountId, string cardId,bool skipConnectedCardsValidation, int tenant)
+        {
+            CardPM cardPM = GetCardById(cardId, tenant);
+
+            if (!skipConnectedCardsValidation)
+                CheckConnectCards(accountId, cardId, tenant);
+
+            cardPM.GLAccountId = accountId;
+            SubmitCard(cardPM);
+
+
+
+            //if(cardPM.PartnerTypeId == PartnerTypeValues.Vendor)
+            //{
+            //    cardPM.GLAccountId = accountId;
+            //    SubmitCard(cardPM);
+            //}
+            //else
+            //{
+            //    if(!skipConnectedCardsValidation)
+            //        CheckConnectCards(accountId, tenant);
+
+            //    cardPM.GLAccountId = accountId;
+            //    SubmitCard(cardPM);
+            //}
+
+        }
+
+        private void CheckConnectCards(string accountId, string cardId, int tenant)
+        {
+            List<CardList> connectedCards = GetConnectedCards(accountId, tenant);
+            if (connectedCards.Count > 0)
+            {
+                string msg = "";
+                CardPM cardPM = GetCardById(cardId, tenant);
+
+                if(cardPM.PartnerTypeId == PartnerTypeValues.Vendor)
+                    msg = GetVendorsWarningMessage(tenant, connectedCards);
+                else
+                    msg = GetCustomersErrorMessage(tenant, connectedCards);
+
+                throw new ApplicationException(msg);
+            }
+        }
+
+        private string GetCustomersErrorMessage(int tenant, List<CardList> connectedCards)
+        {
+            string connectedCardsCodes = string.Join(", ", connectedCards.Select(d => d.Code));
+
+            string msg;
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+            string textCode = TextCodesTranslator.TranslateText("GLAccount.O.ThisGLAccountConnected", tenant, showLocal);
+            msg = string.IsNullOrWhiteSpace(textCode) ? "This GL Account is already connected to card (#cards). GL Account cannot be linked to two clients card." : textCode;
+            msg = msg.Replace("#cards", connectedCardsCodes);
+            return msg;
+        }
+
+        private string GetVendorsWarningMessage(int tenant, List<CardList> connectedCards)
+        {
+            string connectedCardsCodes = string.Join(", ", connectedCards.Select(d => d.Code));
+
+            string msg;
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+            string textCode = TextCodesTranslator.TranslateText("GLAccount.O.ThisGLAccountConnectedContinue", tenant, showLocal);
+            msg = string.IsNullOrWhiteSpace(textCode) ? "This GL Account is already connected to cards (#cards), Do you want to continue?" : textCode;
+
+            msg = msg.Replace("#cards", connectedCardsCodes);
+            return msg;
+        }
+
+        private List<CardList> GetConnectedCards(string accountId, int tenant)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            List<CardList> connectCards = cardQuery.GetCardPMsByGLAccountId(accountId, tenant);
+            return connectCards;
+        }
+
+        private void SubmitCard(CardPM cardPM)
+        {
+            CardService service = new CardService(CommonDataContext.GetContext(cardPM.Tenant), cardPM.Tenant);
+            service.Update(cardPM);
+        }
+
+        private CardPM GetCardById(string cardId, int tenant)
+        {
+            CardQuery query = new CardQuery(tenant);
+            CardPM cardPM = query.GetSinglePM(cardId, tenant);
+            return cardPM;
         }
     }
     public class GLAccountCurrencyBalance

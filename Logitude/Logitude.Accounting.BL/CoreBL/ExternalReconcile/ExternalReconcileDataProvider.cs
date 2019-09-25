@@ -1,10 +1,17 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +23,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
     public class ExternalReconcileDataProvider : IExternalReconcileDataProvider
     {
         private IAccountingContext _AccountingContext;
+        private IWebFreightContext _IWebFreightContext;
 
         public ExternalReconcileDataProvider(IAccountingContext accountingContext)
         {
@@ -84,5 +92,49 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             return myOldTransToReconcile;
         }
 
+        public List<ReconcileExternalPageLineList> GetReconcileExternalPageLineList(int tenant, List<string> reconcileExternalPageLineIdList)
+        {
+            var qs = new ReconcileExternalPageLineListQueryService(_AccountingContext);
+
+            var q = qs.GetList(new Simplog.Server.Infrastructure.DataContracts.QueryOperations(), tenant);
+            var list = q.Where(r => reconcileExternalPageLineIdList.Contains(r.Id)).ToList();
+            return list;
+        }
+        public List<ReconcileExternalPageList> GetReconcileExternalPageList(int tenant, List<string> reconcileExternalPageIdList)
+        {
+            var qs = new ReconcileExternalPageListQueryService(_AccountingContext);
+
+            var q = qs.GetList(new Simplog.Server.Infrastructure.DataContracts.QueryOperations(), tenant);
+            var list = q.Where(r => reconcileExternalPageIdList.Contains(r.Id)).ToList();
+            return list;
+        }
+        
+        public LastRate GetLastRateByValueDate(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime valueDate)
+        {
+            if (_IWebFreightContext == null)
+            {
+                _IWebFreightContext = WebFreightContext.GetContext(tenant);
+            }
+
+            var ratesTablesRepository = new RatesTableRepository(_IWebFreightContext);
+            var ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
+
+            LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, foreignCurrencyId, baseCurrencyId, valueDate);
+            return lastRate;
+        }
+        public string GetaccountingCurrencyId(int tenant)
+        {
+            var tenantQuery = new TenantQuery(tenant);
+            var tPM = tenantQuery.GetSinglePM(tenant);
+            string accountingCurrencyId = tPM.CurrencyId;
+            return accountingCurrencyId;
+        }
+
+        public List<GLAccountList> GetListOfGLAccountList(int tenant, List<string> listOfAccId)
+        {
+            var qs = new GLAccountListQueryService(_AccountingContext);
+            var listOfGLAccountList =qs.GetList(tenant).Where(r => listOfAccId.Contains(r.Id)).ToList();
+            return listOfGLAccountList;
+        }
     }
 }

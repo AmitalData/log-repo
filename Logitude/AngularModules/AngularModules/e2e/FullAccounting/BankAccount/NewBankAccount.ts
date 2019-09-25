@@ -30,7 +30,7 @@ export class NewBankAccount {
         this.Helper.WaitByIdAndFill('BankAccount_EnglishName', Name + 'English');
         
         this.Helper.WaitByIdAndFill('BankAccount_CurrencyId', 'NIS');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownList', 0,'BankAccount_CurrencyId', 'NIS');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'BankAccount_CurrencyId', 'NIS');
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('BankAccount_GLAccountId', Name1);
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'BankAccount_GLAccountId', Name1);
