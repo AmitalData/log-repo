@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Credit Limit Setting",
-			      				    Code =  "20d2",
+			      				    Code =  "274a",
 			      				    Name =  "CreditLimitSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -386,6 +386,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomersShipmentsBlock",
+					  						OldFieldName =  "CustomersShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -406,6 +407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomersShipmentsBlock",
 					  						ListPropertyPath =  "CustomersShipmentsBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -442,6 +444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AgentsShipmentsBlock",
+					  						OldFieldName =  "AgentsShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -462,6 +465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AgentsShipmentsBlock",
 					  						ListPropertyPath =  "AgentsShipmentsBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -498,6 +502,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShipperConsigneeShipmentBlock",
+					  						OldFieldName =  "ShipperConsigneeShipmentBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -518,6 +523,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShipperConsigneeShipmentBlock",
 					  						ListPropertyPath =  "ShipperConsigneeShipmentBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -554,6 +560,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomsAgentsShipmentsBlock",
+					  						OldFieldName =  "CustomsAgentsShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -574,6 +581,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomsAgentsShipmentsBlock",
 					  						ListPropertyPath =  "CustomsAgentsShipmentsBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -610,6 +618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShippingAgentsShipmentsBlock",
+					  						OldFieldName =  "ShippingAgentsShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -630,6 +639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShippingAgentsShipmentsBlock",
 					  						ListPropertyPath =  "ShippingAgentsShipmentsBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -666,6 +676,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AirlinesShipmentsBlock",
+					  						OldFieldName =  "AirlinesShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -686,6 +697,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AirlinesShipmentsBlock",
 					  						ListPropertyPath =  "AirlinesShipmentsBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -722,6 +734,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShippingLinesShipmentsBlock",
+					  						OldFieldName =  "ShippingLinesShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -742,6 +755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShippingLinesShipmentsBlock",
 					  						ListPropertyPath =  "ShippingLinesShipmentsBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -778,6 +792,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TruckersShipmentsBlock",
+					  						OldFieldName =  "TruckersShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -798,6 +813,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TruckersShipmentsBlock",
 					  						ListPropertyPath =  "TruckersShipmentsBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -834,6 +850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VendorsShipmentsBlock",
+					  						OldFieldName =  "VendorsShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -854,6 +871,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VendorsShipmentsBlock",
 					  						ListPropertyPath =  "VendorsShipmentsBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -890,6 +908,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "WarehousesShipmentsBlock",
+					  						OldFieldName =  "WarehousesShipmentsBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -910,6 +929,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "WarehousesShipmentsBlock",
 					  						ListPropertyPath =  "WarehousesShipmentsBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -946,6 +966,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomersInvoicesBlock",
+					  						OldFieldName =  "CustomersInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -966,6 +987,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomersInvoicesBlock",
 					  						ListPropertyPath =  "CustomersInvoicesBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1002,6 +1024,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AgentsInvoicesBlock",
+					  						OldFieldName =  "AgentsInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1022,6 +1045,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AgentsInvoicesBlock",
 					  						ListPropertyPath =  "AgentsInvoicesBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1058,6 +1082,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShipperConsigneeInvoiceBlock",
+					  						OldFieldName =  "ShipperConsigneeInvoiceBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1078,6 +1103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShipperConsigneeInvoiceBlock",
 					  						ListPropertyPath =  "ShipperConsigneeInvoiceBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1114,6 +1140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomsAgentsInvoicesBlock",
+					  						OldFieldName =  "CustomsAgentsInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1134,6 +1161,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomsAgentsInvoicesBlock",
 					  						ListPropertyPath =  "CustomsAgentsInvoicesBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1170,6 +1198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShippingAgentsInvoicesBlock",
+					  						OldFieldName =  "ShippingAgentsInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1190,6 +1219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShippingAgentsInvoicesBlock",
 					  						ListPropertyPath =  "ShippingAgentsInvoicesBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1226,6 +1256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AirlinesInvoicesBlock",
+					  						OldFieldName =  "AirlinesInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1246,6 +1277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AirlinesInvoicesBlock",
 					  						ListPropertyPath =  "AirlinesInvoicesBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1282,6 +1314,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShippingLinesInvoicesBlock",
+					  						OldFieldName =  "ShippingLinesInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1302,6 +1335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShippingLinesInvoicesBlock",
 					  						ListPropertyPath =  "ShippingLinesInvoicesBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1338,6 +1372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TruckersInvoicesBlock",
+					  						OldFieldName =  "TruckersInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1358,6 +1393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TruckersInvoicesBlock",
 					  						ListPropertyPath =  "TruckersInvoicesBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1394,6 +1430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VendorsInvoicesBlock",
+					  						OldFieldName =  "VendorsInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1414,6 +1451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VendorsInvoicesBlock",
 					  						ListPropertyPath =  "VendorsInvoicesBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1450,6 +1488,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "WarehousesInvoicesBlock",
+					  						OldFieldName =  "WarehousesInvoicesBlock",
 					  						ObjectTableName =  "CreditLimitSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1470,6 +1509,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "WarehousesInvoicesBlock",
 					  						ListPropertyPath =  "WarehousesInvoicesBlock",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1528,6 +1568,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   		   //--------------> Additional Features <--------------\\
 
 		   Feature CreditLimitSettingFeature_Override = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Override", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.Override", NameTextCodeDefaultText = @"Credit limit override" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature CreditLimitSettingFeature_PartnersRestrictions = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PartnersRestrictions", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CreditLimitSetting.Features.PartnersRestrictions", NameTextCodeDefaultText = @"Partners Restrictions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
