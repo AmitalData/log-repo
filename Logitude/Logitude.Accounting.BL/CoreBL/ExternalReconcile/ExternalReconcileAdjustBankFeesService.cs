@@ -85,18 +85,86 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         {
             CreateJournalHeader(tenant);
             CreateJournalLinesFromPageLines(listOfpageLineList, bankGLAccountList, adjustGLAccountId, accountingCurrencyId, screenNotes);
-            CreateJournalExternalReco();
-            CreateJournalLineToBankGLAccount();
+
+
+
+            //CreateJournalExternalReco();
+            int line = 1;
+            _TheNewJournal.JournalExternalReconciles = listOfpageLineList.Select(r => GetJournalExternalReconcile(r,ref line)).ToList();
+
+            CreateJournalLineToadjustGLAccountId(adjustGLAccountId, bankGLAccountList);
         }
 
-        private void CreateJournalExternalReco()
+        
+
+        private JournalExternalReconcilePM GetJournalExternalReconcile(ReconcileExternalPageLineList r, ref int line)
         {
+            return new JournalExternalReconcilePM()
+            {
+                Tenant = _TheNewJournal.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+
+                JournalId = _TheNewJournal.Id,
+                Line = line++,
+                //IF EXISTS (SELECT name FROM sys.indexes WHERE name = N'IX_ReconcileExternalPageLineId' AND object_id = object_id(N'[dbo].[JournalExternalReconciles]', N'U'))
+                //DROP INDEX[IX_ReconcileExternalPageLineId] ON[dbo].[JournalExternalReconciles]
+                //ALTER TABLE[dbo].[JournalExternalReconciles] ALTER COLUMN[ReconcileExternalPageLineId][varchar](15) NULL
+                //CREATE INDEX[IX_ReconcileExternalPageLineId] ON[dbo].[JournalExternalReconciles]([ReconcileExternalPageLineId])
+                LedgerTransactionId = null,
+                ReconcileExternalPageLineId = r.Id
+            };
         }
 
-        private void CreateJournalLineToBankGLAccount()
+        private void CreateJournalLineToadjustGLAccountId(string adjustGLAccountId, GLAccountList bankGLAccountList)
         {
-            throw new NotImplementedException();
+            decimal totDebitlocal = _TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit).Sum(r => r.LocalAmount);
+            decimal totCreditlocal = _TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit).Sum(r => r.LocalAmount);
+
+
+
+            decimal totDebitForiegn = _TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit).Sum(r => r.ForeignAmount);
+            decimal totCreditForiegn = _TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit).Sum(r => r.ForeignAmount);
+            MyJournalActionTypeEnum myJournalActionTypeEnum = MyJournalActionTypeEnum.Credit;
+            if (totDebitlocal - totCreditlocal < 0)
+            {
+                myJournalActionTypeEnum =MyJournalActionTypeEnum.Debit;
+            }
+            var last=_TheNewJournal.JournalLines.Last();
+            _TheNewJournal.JournalLines.Add(new JournalLinePM
+            {
+                Tenant = last.Tenant,
+                JournalId = _TheNewJournal.Id,
+                Line = last.Line+1,
+
+
+                DocumentDate = last.DocumentDate,
+                DueDate = last.DueDate,
+                AccountingDate = _TheNewJournal.AccountingDate,
+
+
+
+                CurrencyId = last.CurrencyId,
+
+                ForeignAmount = (totDebitForiegn-totCreditForiegn),
+
+                
+                ActionTypeCodeEnum = myJournalActionTypeEnum,
+                DebitAccountId = adjustGLAccountId,
+                CreditAccountId = bankGLAccountList.Id,
+                LocalAmount = (totDebitlocal - totCreditlocal),
+                Notes = last.Notes ,
+                Reference1 = last.Reference1,
+                ChangeSetOp = ChangeSetOperation.Insert
+
+            });
+            
+
+            
+
         }
+
+
+
 
         private void CreateJournalLinesFromPageLines(List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, GLAccountList bankGLAccountList, string adjustGLAccountId, string accountingCurrencyId, string screenNotes)
         {

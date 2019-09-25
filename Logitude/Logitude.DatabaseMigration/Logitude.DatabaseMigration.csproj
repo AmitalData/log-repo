@@ -1505,6 +1505,10 @@
     <Compile Include="Migrations\201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.Designer.cs">
       <DependentUpon>201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.cs" />
+    <Compile Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.Designer.cs">
+      <DependentUpon>201909250807022_ReconcileExternalPageLineIdNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2575,6 +2579,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.resx">
       <DependentUpon>201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.resx">
+      <DependentUpon>201909250807022_ReconcileExternalPageLineIdNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
