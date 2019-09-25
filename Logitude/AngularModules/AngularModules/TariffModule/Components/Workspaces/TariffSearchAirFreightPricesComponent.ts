@@ -441,6 +441,18 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
+    ViewSurchargesClicked(item: TariffSearchSummary) {
+        if (item && item.Surcharges != null) {
+            var surcharge = item.Surcharges[0];
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.ShowEditComponent(surcharge.TariffId, "Tariff", surcharge.VersionId);
+        }
+    }
+
     private SetUIProperties() {
         this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
         this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
