@@ -436,6 +436,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).OrderByDescending(a => a.UpdateDateGMT).FirstOrDefault();
         }
 
+        public List<ObjectFieldModification> GetAllObjectFieldModificationByTenant(int tenant)
+        {
+            return (from a in context.ObjectFieldModifications
+                    where a.Tenant == tenant
+                    select a).ToList();
+        }
+
         public void Add(ObjectField entity)
         {
             context.ObjectFields.Add(entity);

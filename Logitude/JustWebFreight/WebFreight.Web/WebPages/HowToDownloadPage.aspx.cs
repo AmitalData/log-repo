@@ -361,6 +361,21 @@ namespace WebFreight.Web.WebPages
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
 
+                case "70":
+                    documentName = "inttra_setup_protection.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "71":
+                    documentName = "inttra_quicktour.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "72":
+                    documentName = "cass_report_implementation.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
                 case "REL001":
                     documentName = "december_2015_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
@@ -455,10 +470,13 @@ namespace WebFreight.Web.WebPages
                     documentName = "july_2019_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
+
                 case "REL020":
                     documentName = "september_2019_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
+
+
             }
 
             if (data != null)

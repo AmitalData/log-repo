@@ -12,6 +12,7 @@ import {ServiceHelper} from '../Utilities/ServiceHelper';
 import {WebWorkerService} from '../WebWorker/web-worker.service';
 import {IndexedDbService} from './IndexedDbService'; 
 import { LocalStorageManager } from '../Utilities/LocalStorageManager';
+import { forEach } from '@angular/router/src/utils/collection';
 @Injectable()
 
 export class EntityResourceService {
@@ -283,8 +284,10 @@ export class EntityResourceService {
                                     if (objectTable && objectTable.IsClosed == true)
                                         fieldsExists = window.ObjectFields.some(d => d.ObjectTableId == objectTable.Id);
 
-                                    if (fieldsExists == false)
+                                    if (fieldsExists == false) {
                                         window.ObjectFields = window.ObjectFields.concat(list);
+                                        EntityResourceService.FillObjectFieldsModifications();
+                                    }
                                     else
                                         console.log(objectTableName + " Object Fields already loaded in the memory");
 
@@ -456,7 +459,10 @@ export class EntityResourceService {
                                                 fieldsExists = window.ObjectFields.some(d => d.ObjectTableId == objectTable.Id);
 
                                             if (fieldsExists == false)
+                                            {
                                                 window.ObjectFields = window.ObjectFields.concat(list);
+                                                EntityResourceService.FillObjectFieldsModifications();
+                                            }
                                             else
                                                 console.log(entityName + " Object Fields already loaded in the memory");
                                             break;
@@ -508,6 +514,25 @@ export class EntityResourceService {
 
         }).share();//.publish().refCount()
 
+    }
+
+    public static FillObjectFieldsModifications() {
+
+        if (window.ObjectFieldModifications != undefined && window.ObjectFieldModifications != null) {
+            window.ObjectFieldModifications.forEach(ofMod => {
+                var objectField = window.ObjectFields.filter(d => d.Id == ofMod.ObjectFieldId)[0];
+                if (objectField) {
+                    objectField.IsRequired = objectField.IsRequiered = ofMod.IsRequired;
+                    objectField.MaxLength = ofMod.MaxLength;
+                    objectField.MinLength = ofMod.MinLength;
+                    
+                    window.ObjectFields.splice(window.ObjectFields.indexOf(objectField), 1, objectField);
+                    var objectField = window.ObjectFields.filter(d => d.Id == ofMod.ObjectFieldId)[0];
+                }
+            });
+        }
+          
+         
     }
     //================================================================================
 }

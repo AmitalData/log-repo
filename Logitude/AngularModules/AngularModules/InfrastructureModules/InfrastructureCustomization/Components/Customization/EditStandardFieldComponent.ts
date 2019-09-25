@@ -243,6 +243,7 @@ export class EditStandardFieldComponent extends BaseComponent {
                 this.myService.update(this.EntityPM).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
+                        CachedDataManager.RefreshObjectFieldsModifications();
                         if (list.length == 0) {
                             CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
                                 this.CurrentSession.StopBusyIndicator();
