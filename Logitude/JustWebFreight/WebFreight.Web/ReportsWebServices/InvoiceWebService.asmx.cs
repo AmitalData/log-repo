@@ -2511,6 +2511,7 @@ namespace WebFreight.Web.ReportsWebServices
                 List<Currency> allCurrencies = (from d in commonContext.Currencies where d.Tenant == tenant select d).ToList();
                 List<Measurement> allMeasurements = (from d in commonContext.Measurements where d.Tenant == tenant select d).ToList();
                 List<ChargesType> allChargesTypes = (from d in commonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
+                Contact loggedContact = GetLoggedContact(entityPOCO.Tenant);
                 invoiceDataProvider.AccountDisplayNumber = GetGLAccountDisplayNumberByBillToId(entityPOCO);
                 Contact loggedcontact = GetLoggedContact(entityPOCO.Tenant);
                 #region Tenant Properties

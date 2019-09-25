@@ -47,7 +47,7 @@
                                             <div class="InnerChild">Areas</div>
                                         </li>
 
-                                        <li [class.Selected]="SelectedTabCode === 'P'" (click)="SelectedTabCode = 'P'">
+                                        <li [class.Selected]="SelectedTabCode === 'P'" (click)="SelectedTabCode = 'P'" *ngIf="IsPartnersRestrictionsTabVisible">
                                             <div class="InnerChild">Partners</div>
                                         </li>
                                     </ul>
@@ -117,7 +117,7 @@
                                     </table>
 
                                     <!-- Partners -->
-                                    <table [hidden]="SelectedTabCode != 'P'">
+                                    <table [hidden]="SelectedTabCode != 'P'" *ngIf="IsPartnersRestrictionsTabVisible">
                                         <tr>
                                             <td style="width: 10px;">
                                                 <div></div>
