@@ -62,7 +62,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
             }
         }
-
         private void FilterByBudget(QueryOperations iQueryOperations)
         {
             QueryFilterItem filterItem_BudgetId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "BudgetId").FirstOrDefault();
@@ -74,7 +73,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
             }
         }
-
         private void FilterByEmployee(QueryOperations iQueryOperations)
         {
             QueryFilterItem filterItem_EmployeeUserId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "EmployeeUserId").FirstOrDefault();
@@ -86,7 +84,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
             }
         }
-
         private void FilterByCustomer(QueryOperations iQueryOperations)
         {
             QueryFilterItem filterItem_CustomerId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
@@ -136,7 +133,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
             }
         }
-
         private void FilterByDates(QueryOperations iQueryOperations)
         {
             QueryFilterItem filterItem_FromDate = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
