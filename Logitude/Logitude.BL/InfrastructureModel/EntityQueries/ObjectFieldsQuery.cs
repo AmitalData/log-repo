@@ -35,7 +35,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public ObjectFieldPM GetSinglePM(string fieldId, int tenant)
         {
             ObjectFieldPM objectField = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
-                                         where a.Tenant == tenant
+                                         where (a.Tenant == tenant || a.Tenant == 0)
                                          && a.Id == fieldId
                                          && a.InActive == false
                                          select new ObjectFieldPM()
@@ -141,6 +141,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
             objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
+
+            ObjectFieldModification mod = (from a in repository.context.ObjectFieldModifications
+                                           where a.ObjectFieldId == fieldId && a.Tenant == tenant
+                                           select a).FirstOrDefault();
+            if (mod != null)
+            {
+                objectField.IsRequiered = mod.IsRequired;
+                objectField.MaxLength = mod.MaxLength;
+                objectField.MinLength = mod.MinLength;
+            }
 
             return objectField;
         }
