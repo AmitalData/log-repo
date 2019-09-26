@@ -2266,6 +2266,7 @@
     <Content Include="Warehouse\Components\EditTabs\PartnersTab\AddEditPartnerComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\PartnersTab\WarehouseEntryPartnersTabComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\RoutingsTab\WarehouseEntryRoutingsTabComponent.html" />
+    <Content Include="Warehouse\Components\EditTabs\RoutingsTab\WarehouseReleaseRoutingsTabComponent.html" />
     <Content Include="Warehouse\Components\FiltersMenu\WarehouseEntryFiltersMenuComponent.html" />
     <Content Include="Warehouse\Components\FiltersMenu\WarehouseReleaseFiltersMenuComponent.html" />
     <Content Include="Warehouse\Components\NewEntity\NewFullWarehouseEntryComponent.html" />
@@ -6717,6 +6718,7 @@
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\PartnersTab\AddEditPartnerComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\PartnersTab\WarehouseEntryPartnersTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\RoutingsTab\WarehouseEntryRoutingsTabComponent.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\EditTabs\RoutingsTab\WarehouseReleaseRoutingsTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditWarehouseEntryComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditWarehouseReleaseComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\FiltersMenu\WarehouseEntryFiltersMenuComponent.ts" />
