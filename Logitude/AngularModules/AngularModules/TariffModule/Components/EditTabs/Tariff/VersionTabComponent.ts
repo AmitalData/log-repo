@@ -205,14 +205,13 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         var isApproveVersionButtonVisible: boolean = false;
         var isUpdateMissingPortsVisible: boolean = false;
 
-        if (this.IsDraftVersion && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
-            if (this.IsDraftVersion) {
-                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
-                    isApproveVersionButtonVisible = true;
-                }
-                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATEMISSINGPORTS")) {
-                    isUpdateMissingPortsVisible = true;
-                }
+        if (this.IsDraftVersion) {
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
+                isApproveVersionButtonVisible = true;
+            }
+
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATEMISSINGPORTS")) {
+                isUpdateMissingPortsVisible = true;
             }
         }
 

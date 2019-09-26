@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -7,12 +8,13 @@ using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
-  public partial  class GLAccountWithholdingTaxUpdateService
+    public partial class GLAccountWithholdingTaxUpdateService
     {
         public const string RaiseEventWBLKConst = "RaiseEventWBLK";
         public const string RaiseEventWLDAConst = "RaiseEventWLDA";
@@ -78,7 +80,65 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //            Notes = notes,
             //        });
             //    }
+
+
+
+
             base.OnUpdating(entityPM);
         }
+
+        protected override void Trace(GLAccountWithholdingTaxPM entityPM, GLAccountWithholdingTax entityPOCO, string changesXml)
+        {
+            
+            PropertyInfo[] pmProperties = EntityPM.GetType().GetProperties();
+            PropertyInfo[] pocoProperties = EntityPOCO.GetType().GetProperties();
+            foreach (PropertyInfo property in pmProperties)
+            {
+                PropertyInfo pmProperty = pmProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
+                PropertyInfo pocoProperty = pocoProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
+                if (pmProperty != null && pocoProperty != null)
+                {
+                    var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
+                    var pocoPropertyValue =  pocoProperty.GetValue(EntityPOCO, null);
+                    if (!pocoPropertyValue.Equals(pmPropertyValue))
+                    {
+                        CreateTraceEvent(pmProperty, pocoProperty);
+                    }
+
+                }
+
+
+
+            }
+
+        }
+
+        private void CreateTraceEvent(PropertyInfo pmProperty,PropertyInfo pocoProperty)
+        {
+            Contact contact = GetLoggedContact();
+            var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
+            var pocoPropertyValue = pocoProperty.GetValue(EntityPOCO, null);
+            String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + pocoPropertyValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + pmPropertyValue;
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = EntityParentPM.Id,
+                Tenant = EntityParentPM.Tenant,
+                UserId = contact.Id,
+                ObjectTableName = "GLAccount",
+                IsAddedManually = false,
+               EventTypeCode = "WTDU",
+               Notes = notes,
+            });
+
+        }
+
+        public Contact GetLoggedContact()
+        {
+
+            ContactRepository contactRep = new ContactRepository(EntityPM.Tenant);
+            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(EntityPM.Tenant);
+         return contactRep.GetSingleContactByEmail(resolveLoggingUserId,EntityPM.Tenant);
+        }
+
     }
 }

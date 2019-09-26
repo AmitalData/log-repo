@@ -1656,8 +1656,7 @@ namespace WarehouseData.Helper
 
             return !string.IsNullOrEmpty(deletedRowIds) ? ("(" + deletedRowIds + ")").Replace(",)", ")"):null;
         }
-
-
+      
 
         private void DataWarehousDeletedRows(TableClass table, string ids, string connectionString)
         {
