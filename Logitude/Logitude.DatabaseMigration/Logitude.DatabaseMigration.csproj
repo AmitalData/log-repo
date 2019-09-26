@@ -1512,6 +1512,9 @@
     <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.cs" />
     <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
       <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201909260744531_AbedAddToPortFieldsToWarehouseRelease.cs" />
+    <Compile Include="Migrations\201909260744531_AbedAddToPortFieldsToWarehouseRelease.Designer.cs">
+      <DependentUpon>201909260744531_AbedAddToPortFieldsToWarehouseRelease.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2584,8 +2587,8 @@
     <EmbeddedResource Include="Migrations\201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.resx">
       <DependentUpon>201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.resx">
-      <DependentUpon>201909250807022_ReconcileExternalPageLineIdNullable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909260744531_AbedAddToPortFieldsToWarehouseRelease.resx">
+      <DependentUpon>201909260744531_AbedAddToPortFieldsToWarehouseRelease.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
