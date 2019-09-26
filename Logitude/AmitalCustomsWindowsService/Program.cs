@@ -15,6 +15,7 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebFreight.Web.CustomModel;
@@ -40,6 +41,7 @@ namespace AmitalCustomsWindowsService
         [STAThread]
         static void Main()
         {
+            ThreadPool.SetMinThreads(100, 100);
             ServiceBase[] ServicesToRun;
 
             // More than one user Service may run within the same process. To add
