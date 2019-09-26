@@ -272,6 +272,16 @@ namespace Logitude.Customs.Data.EntityLists
        public string FastIndividualProcessCode  { get; set; }
        [DataMember]
        public decimal? TotalInvoiceAmountInUSD  { get; set; }
+       [DataMember]
+       public bool IsPending902  { get; set; }
+       [DataMember]
+       public bool IsCourierMissingClassification  { get; set; }
+       [DataMember]
+       public string MAWB  { get; set; }
+       [DataMember]
+       public bool IsPending900  { get; set; }
+       [DataMember]
+       public string CourierPendingReasonList  { get; set; }
    }
 
 }

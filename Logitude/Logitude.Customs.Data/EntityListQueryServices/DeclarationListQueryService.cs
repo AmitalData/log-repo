@@ -151,7 +151,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                      on myDeclarations.Id equals sts1.DeclarationId
                      into DeclarationCourierStatusesJoin
  from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
- select new { p.CourierMasterId, myDeclarations, myDeclarationCourierStatuses }
+ select new { p.CourierMasterId, p.CourierMaster, myDeclarations, myDeclarationCourierStatuses }
  );
 
             var qMyJoin =
@@ -163,7 +163,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     CourierMasterId = rec.CourierMasterId,
                     IsClosedForFollowUp = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsClosedForFollowUp : false,
                     FastIndividualProcessCode = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.FastIndividualProcessCode : null,
-                   TotalInvoiceAmountInUSD = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.TotalInvoiceAmountInUSD : null,
+                    TotalInvoiceAmountInUSD = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.TotalInvoiceAmountInUSD : null,
+                    IsPending902 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902") ? true : false) : false,
+                    IsPending900 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900") ? true : false) : false,
+                    CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
+                    MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
+                    IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
                 }
                 );
 
@@ -293,7 +298,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      IsClosedForFollowUp = myJoin != null ? myJoin.IsClosedForFollowUp : false,
                                                      FastIndividualProcessCode = myJoin != null ? myJoin.FastIndividualProcessCode : null,
                                                      TotalInvoiceAmountInUSD = myJoin != null ? myJoin.TotalInvoiceAmountInUSD : null,
+                                                     IsPending902 = myJoin != null ? myJoin.IsPending902 : false,
+                                                     IsPending900 = myJoin != null ? myJoin.IsPending900 : false,
+                                                     CourierPendingReasonList = myJoin != null ? myJoin.CourierPendingReasonList : null,
+                                                     MAWB = myJoin != null ? myJoin.MAWB : null,
+                                                     IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
                                                  });
+
 
 
 
@@ -310,7 +321,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             return iQueryable;
         }
-	}
+
+    }
 
     internal class MyDecJoin
     {
@@ -319,6 +331,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         internal string DeclarationId { get; set; }
         internal string FastIndividualProcessCode { get; set; }
         internal decimal? TotalInvoiceAmountInUSD { get; set; }
+        public bool IsPending902 { get; set; }
+        public bool IsPending900 { get; set; }
+        public string CourierPendingReasonList { get; internal set; }
+        public string MAWB { get; internal set; }
+        public bool IsCourierMissingClassification { get; internal set; }
     }
 }
 	

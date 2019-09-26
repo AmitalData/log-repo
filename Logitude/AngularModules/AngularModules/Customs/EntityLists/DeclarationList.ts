@@ -137,6 +137,11 @@ export class DeclarationList {
 	IsClosedForFollowUp: boolean;
 	FastIndividualProcessCode: string;
 	TotalInvoiceAmountInUSD: number;
+	IsPending902: boolean;
+	IsCourierMissingClassification: boolean;
+	MAWB: string;
+	IsPending900: boolean;
+	CourierPendingReasonList: string;
 	
 }
  

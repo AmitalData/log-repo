@@ -83,21 +83,59 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <!-- ({{glAccountSummary.ActiveGLAccountCount}}) -->
+                                                                            <!-- ({{courierMasterSummary.OpenCourierMaster}}) -->
                                                                             <p class="QueryLink" *ngIf="OpenCourierMasterVisibility" (click)="ViewCourierMasterQuery('OpenCourierMaster')"> {{'Customs.CourierMaster.O.CourierMasterOpen' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <!-- ({{glAccountSummary.InactiveGLAccountCount}})  -->
-                                                                            <p class="QueryLink" (click)="ViewCourierMasterQuery('OpenCourierMaster')"> {{'Accounting.General.O.New' | TextCodeTranslationPipe}}  </p>
+                                                                            <!-- ({{courierMasterSummary.CourierMasterOpenIndividual}})  -->
+                                                                            <p class="QueryLink" *ngIf="CourierMasterOpenIndividualVisibility" (click)="ViewCourierMasterQuery('CourierMasterOpenIndividual')"> {{Customs.CourierMaster.O.CourierMasterOpenIndividual' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewCourierMasterQuery('All GLAccounts')"> {{'Accounting.General.O.User' | TextCodeTranslationPipe}}</p>
+                                                                            <!-- ({{courierMasterSummary.UnReleasedFastProcess}})  -->
+                                                                            <p class="QueryLink" *ngIf="UnReleasedFastProcessVisibility" (click)="ViewCourierMasterQuery('UnReleasedFastProcess')"> {{Customs.CourierMaster.O.UnReleasedFastProcess' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <!-- ({{courierMasterSummary.UnReleasedIndividual}})  -->
+                                                                            <p class="QueryLink" *ngIf="UnReleasedIndividualVisibility" (click)="ViewCourierMasterQuery('UnReleasedIndividual')"> {{Customs.CourierMaster.O.UnReleasedIndividual' | TextCodeTranslationPipe}}  </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <!-- ({{courierMasterSummary.WithoutId}})  -->
+                                                                            <p class="QueryLink" *ngIf="WithoutIdVisibility" (click)="ViewCourierMasterQuery('WithoutId')"> {{Customs.CourierMaster.O.WithoutId' | TextCodeTranslationPipe}}  </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <!-- ({{courierMasterSummary.WithoutClassification}})  -->
+                                                                            <p class="QueryLink" *ngIf="WithoutClassificationVisibility" (click)="ViewCourierMasterQuery('WithoutClassification')"> {{Customs.CourierMaster.O.WithoutClassification' | TextCodeTranslationPipe}}  </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <!-- ({{courierMasterSummary.PendingPayment}})  -->
+                                                                            <p class="QueryLink" *ngIf="PendingPaymentVisibility" (click)="ViewCourierMasterQuery('PendingPayment')"> {{Customs.CourierMaster.O.PendingPayment' | TextCodeTranslationPipe}}  </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <!-- ({{courierMasterSummary.PendingCustoms}})  -->
+                                                                            <p class="QueryLink" *ngIf="PendingCustomsVisibility" (click)="ViewCourierMasterQuery('PendingCustoms')"> {{Customs.CourierMaster.O.PendingCustoms' | TextCodeTranslationPipe}}  </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <!-- ({{courierMasterSummary.Pending}})  -->
+                                                                            <p class="QueryLink" *ngIf="PendingVisibility" (click)="ViewCourierMasterQuery('Pending')"> {{Customs.CourierMaster.O.Pending' | TextCodeTranslationPipe}}  </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    
                                                                     <tr>
                                                                         <td><div></div></td>
                                                                     </tr>

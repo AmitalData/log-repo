@@ -949,6 +949,31 @@ export class DeclarationPM {
     public set TotalInvoiceAmountInUSD(newValue: number) { if (this.totalInvoiceAmountInUSD != newValue) { this.totalInvoiceAmountInUSD = newValue; this.MarkAsDirty("TotalInvoiceAmountInUSD"); } }
        
 	 
+    private isPending902: boolean;
+    public get IsPending902() { return this.isPending902; }
+    public set IsPending902(newValue: boolean) { if (this.isPending902 != newValue) { this.isPending902 = newValue; this.MarkAsDirty("IsPending902"); } }
+       
+	 
+    private isCourierMissingClassification: boolean;
+    public get IsCourierMissingClassification() { return this.isCourierMissingClassification; }
+    public set IsCourierMissingClassification(newValue: boolean) { if (this.isCourierMissingClassification != newValue) { this.isCourierMissingClassification = newValue; this.MarkAsDirty("IsCourierMissingClassification"); } }
+       
+	 
+    private mAWB: string;
+    public get MAWB() { return this.mAWB; }
+    public set MAWB(newValue: string) { if (this.mAWB != newValue) { this.mAWB = newValue; this.MarkAsDirty("MAWB"); } }
+       
+	 
+    private isPending900: boolean;
+    public get IsPending900() { return this.isPending900; }
+    public set IsPending900(newValue: boolean) { if (this.isPending900 != newValue) { this.isPending900 = newValue; this.MarkAsDirty("IsPending900"); } }
+       
+	 
+    private courierPendingReasonList: string;
+    public get CourierPendingReasonList() { return this.courierPendingReasonList; }
+    public set CourierPendingReasonList(newValue: string) { if (this.courierPendingReasonList != newValue) { this.courierPendingReasonList = newValue; this.MarkAsDirty("CourierPendingReasonList"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

@@ -41,12 +41,14 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     // Queries Features
     public OpenCourierMasterVisibility: boolean = true;
-    public InactiveGLAccountsVisibility: boolean = false;
-    public AllGLAccountsVisibility: boolean = false;
-    public OpenFilesVisibility: boolean = false;
-    public ClosedFilesVisibility: boolean = false;
-    public AllFilesVisibility: boolean = false;
-    public AllJobsVisibility: boolean = false;
+    public UnReleasedFastProcessVisibility: boolean = true;
+    public CourierMasterOpenIndividualVisibility: boolean = true;
+    public UnReleasedIndividualVisibility: boolean = true;
+    public WithoutIdVisibility: boolean = true;
+    public WithoutClassificationVisibility: boolean = true;
+    public PendingPaymentVisibility: boolean = true;
+    public PendingCustomsVisibility: boolean = true;
+    public PendingVisibility: boolean = true;
     public isRTL: boolean = false;
     public isScreenLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -87,14 +89,14 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     SetQueriesVisibility() {
         //this.OpenCourierMasterVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ACTIVEGLACCOUNTS") ? true : false;
         this.OpenCourierMasterVisibility = true;
-        this.InactiveGLAccountsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "INACTIVEGLACCOUNTS") ? true : false;
-        this.AllGLAccountsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLGLACCOUNTS") ? true : false;
-        this.OpenFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "OPENFILESGLACCOUNTS") ? true : false;
-        this.ClosedFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "CLOSEDFILESGLACCOUNTS") ? true : false;
-        this.AllFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLFILESGLACCOUNTS") ? true : false;
-        this.AllJobsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLJOBSGLACCOUNTS") ? true : false;
-
-        
+        this.UnReleasedFastProcessVisibility = true ;
+        this.CourierMasterOpenIndividualVisibility = true;
+        this.UnReleasedIndividualVisibility = true;
+        this.WithoutIdVisibility = true;
+        this.WithoutClassificationVisibility = true;
+        this.PendingPaymentVisibility = true;
+        this.PendingCustomsVisibility = true;
+        this.PendingVisibility = true;
     }
 
     ReloadUsersQuery() {
@@ -109,13 +111,13 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         /*
         this._CourierMasterService.GetSummary().subscribe(myResult => {
             if (myResult != null) {
-                this.glAccountSummary.ActiveGLAccountCount = myResult.ActiveGLAccountCount > 1000 ? "1000+" : myResult.ActiveGLAccountCount.toString();
-                this.glAccountSummary.InactiveGLAccountCount = myResult.InactiveGLAccountCount > 1000 ? "1000+" : myResult.InactiveGLAccountCount.toString();
-                this.glAccountSummary.AllGLAccountCount = myResult.AllGLAccountCount > 1000 ? "1000+" : myResult.AllGLAccountCount.toString();
-                this.glAccountSummary.OpenFilesCount = myResult.OpenFilesCount > 1000 ? "1000+" : myResult.OpenFilesCount.toString();
-                this.glAccountSummary.ClosedFilesGLAccountCount = myResult.ClosedFilesGLAccountCount > 1000 ? "1000+" : myResult.ClosedFilesGLAccountCount.toString();
-                this.glAccountSummary.AllFilesCount = myResult.AllFilesCount > 1000 ? "1000+" : myResult.AllFilesCount.toString();
-                this.glAccountSummary.AllJobsCount = myResult.AllJobsCount > 1000 ? "1000+" : myResult.AllJobsCount.toString();
+                this.courierMasterSummary.ActiveGLAccountCount = myResult.ActiveGLAccountCount > 1000 ? "1000+" : myResult.ActiveGLAccountCount.toString();
+                this.courierMasterSummary.InactiveGLAccountCount = myResult.InactiveGLAccountCount > 1000 ? "1000+" : myResult.InactiveGLAccountCount.toString();
+                this.courierMasterSummary.AllGLAccountCount = myResult.AllGLAccountCount > 1000 ? "1000+" : myResult.AllGLAccountCount.toString();
+                this.courierMasterSummary.OpenFilesCount = myResult.OpenFilesCount > 1000 ? "1000+" : myResult.OpenFilesCount.toString();
+                this.courierMasterSummary.ClosedFilesGLAccountCount = myResult.ClosedFilesGLAccountCount > 1000 ? "1000+" : myResult.ClosedFilesGLAccountCount.toString();
+                this.courierMasterSummary.AllFilesCount = myResult.AllFilesCount > 1000 ? "1000+" : myResult.AllFilesCount.toString();
+                this.courierMasterSummary.AllJobsCount = myResult.AllJobsCount > 1000 ? "1000+" : myResult.AllJobsCount.toString();
             }
         });
         */
@@ -160,60 +162,62 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                     {
                         displayTitle = "Open Courier Master";
                         displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.CourierMasterOpen");
-
-                        //filters.addAdditionalFilter("IsAllDecClosedForFollowUp", true, null, null, "Equals", false, false, false, "boolean");
-                        //filters.addAdditionalFilter("Inactive", false, null, null, "Equals", false, false, false, "boolean");
+                        
+                        break;
+                    }
+                case "UnReleasedFastProcess":
+                    {
+                        displayTitle = "UnReleased Fast Process";
+                        displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.UnReleasedFastProcess");
 
                         break;
                     }
-                case "InactiveGLAccounts":
+                case "CourierMasterOpenIndividual":
                     {
-                        displayTitle = "Inactive GLAccounts";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.InActiveGLAccounts");
-                        //filters.addAdditionalFilter("AccountTypeCode", "1", null, null, "Equals", false, false, false, "string");
-                        //filters.addAdditionalFilter("Inactive", true, null, null, "Equals", false, false, false, "string");
+                        displayTitle = "Courier Master Open Individual";
+                        displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.CourierMasterOpenIndividual");
 
                         break;
                     }
-                case "All GLAccounts":
+                case "UnReleasedIndividual":
                     {
-                        displayTitle = "All GLAccounts";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.AllGLAccounts");
-                        //filters.addAdditionalFilter("AccountTypeCode", "1", null, null, "Equals", false, false, false, "string");
+                        displayTitle = "UnReleased Individual";
+                        displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.UnReleasedIndividual");
 
                         break;
                     }
-                case "OpenFiles":
+                case "WithoutId":
                     {
-                        displayTitle = "Open Files";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.OpenFiles");
-                        //filters.addAdditionalFilter("AccountTypeCode", "5", null, null, "Equals", false, false, false, "string");
-                        //filters.addAdditionalFilter("BalanceInLocalCurrency", "0", null, null, "NotEqual", true, false, false, "decimal");
+                        displayTitle = "Without Id";
+                        displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.WithoutId");
 
                         break;
                     }
-                case "ClosedFiles":
+                case "WithoutClassification":
                     {
-                        displayTitle = "Closed Files";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.ClosedFiles");
-                        //filters.addAdditionalFilter("AccountTypeCode", "5", null, null, "Equals", false, false, false, "string");
-                        //filters.addAdditionalFilter("BalanceInLocalCurrency", "0", null, null, "Equals", true, false, false, "decimal");
+                        displayTitle = "Without Classification";
+                        displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.WithoutClassification");
 
                         break;
                     }
-                case "AllFiles":
+                case "PendingPayment":
                     {
-                        displayTitle = "All Files";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.AllFiles");
-                        //filters.addAdditionalFilter("AccountTypeCode", "5", null, null, "Equals", false, false, false, "string");
+                        displayTitle = "Pending Payment";
+                        displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.PendingPayment");
 
                         break;
                     }
-                case "AllJobs":
+                case "PendingCustoms":
                     {
-                        displayTitle = "All Jobs";
-                        displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.AllJobs");
-                        //filters.addAdditionalFilter("AccountTypeCode", "4", null, null, "Equals", false, false, false, "string");
+                        displayTitle = "Pending Customs";
+                        displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.PendingCustoms");
+
+                        break;
+                    }
+                case "Pending":
+                    {
+                        displayTitle = "Pending";
+                        displayTitle = TextCodeTranslator.Translate("Customs.CourierMaster.O.Pending");
 
                         break;
                     }

@@ -3789,6 +3789,121 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isPending902 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPending902  
+	   {
+	    
+	     get
+		{
+		   return isPending902;
+		 }
+		 set
+		 {
+		   if(isPending902 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPending902",OldValue=isPending902,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPending902=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCourierMissingClassification ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCourierMissingClassification  
+	   {
+	    
+	     get
+		{
+		   return isCourierMissingClassification;
+		 }
+		 set
+		 {
+		   if(isCourierMissingClassification != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCourierMissingClassification",OldValue=isCourierMissingClassification,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCourierMissingClassification=value;
+		   }
+			
+		 }
+	   }
+	  private string mAWB ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MAWB  
+	   {
+	    
+	     get
+		{
+		   return mAWB;
+		 }
+		 set
+		 {
+		   if(mAWB != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MAWB",OldValue=mAWB,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mAWB=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPending900 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPending900  
+	   {
+	    
+	     get
+		{
+		   return isPending900;
+		 }
+		 set
+		 {
+		   if(isPending900 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPending900",OldValue=isPending900,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPending900=value;
+		   }
+			
+		 }
+	   }
+	  private string courierPendingReasonList ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierPendingReasonList  
+	   {
+	    
+	     get
+		{
+		   return courierPendingReasonList;
+		 }
+		 set
+		 {
+		   if(courierPendingReasonList != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierPendingReasonList",OldValue=courierPendingReasonList,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierPendingReasonList=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
