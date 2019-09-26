@@ -142,6 +142,7 @@ export class DeclarationList {
 	MAWB: string;
 	IsPending900: boolean;
 	CourierPendingReasonList: string;
+	CargoDescription: string;
 	
 }
  

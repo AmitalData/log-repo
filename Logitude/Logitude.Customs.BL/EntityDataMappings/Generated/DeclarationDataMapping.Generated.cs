@@ -289,7 +289,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsCourierMissingClassification, 
 	         MAWB, 
 	         IsPending900, 
-	         CourierPendingReasonList,
+	         CourierPendingReasonList, 
+	         CargoDescription,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

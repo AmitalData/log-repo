@@ -282,6 +282,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsPending900  { get; set; }
        [DataMember]
        public string CourierPendingReasonList  { get; set; }
+       [DataMember]
+       public string CargoDescription  { get; set; }
    }
 
 }

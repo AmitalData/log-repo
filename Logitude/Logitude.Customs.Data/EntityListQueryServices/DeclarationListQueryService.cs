@@ -150,7 +150,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
  join sts1 in context.DeclarationCourierStatuses
                      on myDeclarations.Id equals sts1.DeclarationId
                      into DeclarationCourierStatusesJoin
+
+ 
+
  from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
+ 
  select new { p.CourierMasterId, p.CourierMaster, myDeclarations, myDeclarationCourierStatuses }
  );
 
@@ -169,8 +173,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
                     MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
                     IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
+                    
                 }
                 );
+
+           
 
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                  //.Include("CreatedByUser.Contact")
@@ -303,6 +310,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CourierPendingReasonList = myJoin != null ? myJoin.CourierPendingReasonList : null,
                                                      MAWB = myJoin != null ? myJoin.MAWB : null,
                                                      IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
+                                                     CargoDescription = "",
                                                  });
 
 
@@ -321,7 +329,44 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             return iQueryable;
         }
+        /*
+        private string getCourierPendingReasonName(DeclarationPM entityPM)
+        {
+            var courierPendingReasonList = entityPM.CourierPendingReasonList;
+            if (!string.IsNullOrWhiteSpace(courierPendingReasonList))
+            {
+                if (courierPendingReasonList.Contains(","))
+                {
+                    courierPendingReasonList = "רשימה";
+                }
+                else
+                {
+                    CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
+                    CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReasonList, false, false);
+                    courierPendingReasonList = courierPendingReasonPM.LocalName;
+                }
+            }
+            return courierPendingReasonList;
+        }
 
+        */
+
+        private string getFastIndividualProcessName(string fastIndividualProcessCode)
+        {
+            if (fastIndividualProcessCode != null)
+            {
+                if (fastIndividualProcessCode == "F")
+                {
+                    fastIndividualProcessCode = "מהיר";
+                }
+                else if (fastIndividualProcessCode == "I")
+                {
+                    fastIndividualProcessCode = "פרטני";
+                }
+            }
+            return fastIndividualProcessCode;
+        }
+        
     }
 
     internal class MyDecJoin
@@ -329,8 +374,26 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public string CourierMasterId { get; set; }
         public bool IsClosedForFollowUp { get; set; }
         internal string DeclarationId { get; set; }
-        internal string FastIndividualProcessCode { get; set; }
-        internal decimal? TotalInvoiceAmountInUSD { get; set; }
+        internal string FastIndividualProcessCode
+        {
+            get
+            {
+                return this.FastIndividualProcessCode;
+            }
+            set
+            {
+                this.FastIndividualProcessCode = value;
+                if(this.FastIndividualProcessCode == "I")
+                {
+                    this.FastIndividualProcessCode = "פרטני";
+                }
+                else if(this.FastIndividualProcessCode == "F")
+                {
+                    this.FastIndividualProcessCode = "מהיר";
+                }
+            }
+        }
+    internal decimal? TotalInvoiceAmountInUSD { get; set; }
         public bool IsPending902 { get; set; }
         public bool IsPending900 { get; set; }
         public string CourierPendingReasonList { get; internal set; }
