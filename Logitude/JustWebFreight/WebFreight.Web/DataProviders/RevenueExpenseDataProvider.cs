@@ -53,7 +53,7 @@ namespace WebFreight.Web.DataProviders
         public decimal? LocalCloseBalance { get; set; }
         public bool Error { get; set; }
         public string Type { get; set; }
-
+        public string CurrencyCode { get; set; }
         public decimal? ForeignOpenBalance { get; set; }
 
         public decimal? ForeignDebit { get; set; }
