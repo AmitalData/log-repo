@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -10,81 +10,328 @@
         <td>
             <table *ngIf="IsResourcesReady">
                 <tr style="height: 1px;">
-                    <td style="width: 20px;">
-                        <LogCheckBox [ObjectFieldName]="'IsCreditLimitEnabled'" [Checked]="IsCreditLimitEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                    <td>
+                        <table>
+                            <tr style="height: 1px;">
+                                <td style="width: 20px;">
+                                    <LogCheckBox [ObjectFieldName]="'IsCreditLimitEnabled'" [Checked]="IsCreditLimitEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                </td>
+
+                                <td class="Value" style="font-size: 13px;">Enable Credit Limit Management</td>
+                            </tr>
+
+                            <tr style="height: 1px;">
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td class="Label" style="font-size: 11px; font-family: Arial; font-style: italic;">Activating will enable entering the credit limit for customers and managing limitations when exceeding</td>
+                            </tr>
+                        </table>
                     </td>
-
-                    <td class="Value" style="font-size: 13px;">Enable Credit Limit Management</td>
-                </tr>
-
-                <tr style="height: 1px;">
-                    <td></td>
-                    <td class="Label" style="font-size: 11px; font-family: Arial; font-style: italic;">Activating will enable entering the credit limit for customers and managing limitations when exceeding</td>
                 </tr>
 
                 <tr style="height: 10px;">
-                    <td colspan="2">
+                    <td>
                         <div></div>
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="2">
-                        <div class="MediaFill GroupBox">
-                            <table>
-                                <tr style="height: 25px;">
-                                    <td class="BlueTitle">Areas</td>
-                                    <td class="Value" style="width: 80px; text-align: center;">Warning</td>
-                                    <td class="Value" style="width: 80px; text-align: center;">Block</td>
-                                </tr>
+                    <td>
+                        <div class="MediaFill">
+                            <div class="TabControl">
+                                <div class="TabControlHead">
+                                    <ul>
+                                        <li [class.Selected]="SelectedTabCode === 'A'" (click)="SelectedTabCode = 'A'">
+                                            <div class="InnerChild">Areas</div>
+                                        </li>
 
-                                <!-- Invoice Creation -->
-                                <tr style="height: 25px;">
-                                    <td class="Value">Invoice Creation</td>
+                                        <li [class.Selected]="SelectedTabCode === 'P'" (click)="SelectedTabCode = 'P'" *ngIf="IsPartnersRestrictionsTabVisible">
+                                            <div class="InnerChild">Partners</div>
+                                        </li>
+                                    </ul>
+                                </div>
 
-                                    <td>
-                                        <div style="width: 16px; margin: auto;">
-                                            <LogCheckBox [ObjectFieldName]="'InvoiceCreationWarning'" [Checked]="InvoiceCreationWarning" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                                        </div>
-                                    </td>
+                                <div class="TabControlBody">
 
-                                    <td>
-                                        <div style="width: 16px; margin: auto;">
-                                            <LogCheckBox [ObjectFieldName]="'InvoiceCreationBlock'" [Checked]="InvoiceCreationBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    <!-- Areas -->
+                                    <table [hidden]="SelectedTabCode != 'A'">
+                                        <tr>
+                                            <td style="width: 10px;">
+                                                <div></div>
+                                            </td>
 
-                                <!-- Shipment Creation -->
-                                <tr style="height: 25px;">
-                                    <td class="Value">Shipment Creation</td>
+                                            <td>
+                                                <table>
+                                                    <tr style="height: 25px;">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
 
-                                    <td>
-                                        <div style="width: 16px; margin: auto;">
-                                        </div>
-                                    </td>
+                                                        <td class="Value" style="width: 80px; text-align: center;">Warning</td>
+                                                        <td class="Value" style="width: 80px; text-align: center;">Block</td>
+                                                    </tr>
 
-                                    <td>
-                                        <div style="width: 16px; margin: auto;">
-                                            <LogCheckBox [ObjectFieldName]="'ShipmentCreationBlock'" [Checked]="ShipmentCreationBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                    <!-- Invoice Creation -->
+                                                    <tr style="height: 25px;">
+                                                        <td class="Value">Invoice Creation</td>
 
-                                <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
+                                                        <td>
+                                                            <div style="width: 16px; margin: auto;">
+                                                                <LogCheckBox [ObjectFieldName]="'InvoiceCreationWarning'" [Checked]="InvoiceCreationWarning" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                            </div>
+                                                        </td>
 
-                                    <td>
-                                        <div></div>
-                                    </td>
+                                                        <td>
+                                                            <div style="width: 16px; margin: auto;">
+                                                                <LogCheckBox [ObjectFieldName]="'InvoiceCreationBlock'" [Checked]="InvoiceCreationBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
 
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
+                                                    <!-- Shipment Creation -->
+                                                    <tr style="height: 25px;">
+                                                        <td class="Value">Shipment Creation</td>
+
+                                                        <td>
+                                                            <div style="width: 16px; margin: auto;">
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div style="width: 16px; margin: auto;">
+                                                                <LogCheckBox [ObjectFieldName]="'ShipmentCreationBlock'" [Checked]="ShipmentCreationBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <!-- Partners -->
+                                    <table [hidden]="SelectedTabCode != 'P'" *ngIf="IsPartnersRestrictionsTabVisible">
+                                        <tr>
+                                            <td style="width: 10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <table>
+                                                    <tr style="height: 10px;">
+                                                        <td></td>
+                                                    </tr>
+
+                                                    <tr style="height: 1px;">
+                                                        <td class="Label" style="font-size: 11px; font-family: Arial; font-style: italic;">
+                                                            Blocking a certain action for a partner type will block it in all cases
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height: 10px;">
+                                                        <td></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr style="height: 25px;">
+                                                                    <td class="Value" style="font-weight: bold;">Partner Type</td>
+                                                                    <td class="Value" style="width: 100px; text-align: center;">Block Shipment</td>
+                                                                    <td class="Value" style="width: 100px; text-align: center;">Block Invoice</td>
+                                                                </tr>
+
+                                                                <!-- Customers -->
+                                                                <tr style="height: 25px;">
+                                                                    <td class="Value">Customers</td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'CustomersShipmentsBlock'" [Checked]="CustomersShipmentsBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'CustomersInvoicesBlock'" [Checked]="CustomersInvoicesBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <!-- Agents -->
+                                                                <tr style="height: 25px;">
+                                                                    <td class="Value">Agents</td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'AgentsShipmentsBlock'" [Checked]="AgentsShipmentsBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'AgentsInvoicesBlock'" [Checked]="AgentsInvoicesBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <!-- Shippers and Consignees -->
+                                                                <tr style="height: 25px;">
+                                                                    <td class="Value">Shippers and Consignees</td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'ShipperConsigneeShipmentBlock'" [Checked]="ShipperConsigneeShipmentBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'ShipperConsigneeInvoiceBlock'" [Checked]="ShipperConsigneeInvoiceBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <!-- Customs Agents -->
+                                                                <tr style="height: 25px;">
+                                                                    <td class="Value">Customs Agents</td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'CustomsAgentsShipmentsBlock'" [Checked]="CustomsAgentsShipmentsBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'CustomsAgentsInvoicesBlock'" [Checked]="CustomsAgentsInvoicesBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <!-- Shipping Agents -->
+                                                                <tr style="height: 25px;">
+                                                                    <td class="Value">Shipping Agents</td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'ShippingAgentsShipmentsBlock'" [Checked]="ShippingAgentsShipmentsBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'ShippingAgentsInvoicesBlock'" [Checked]="ShippingAgentsInvoicesBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <!-- Airlines -->
+                                                                <tr style="height: 25px;">
+                                                                    <td class="Value">Airlines</td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'AirlinesShipmentsBlock'" [Checked]="AirlinesShipmentsBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'AirlinesInvoicesBlock'" [Checked]="AirlinesInvoicesBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <!-- Shipping Lines -->
+                                                                <tr style="height: 25px;">
+                                                                    <td class="Value">Shipping Lines</td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'ShippingLinesShipmentsBlock'" [Checked]="ShippingLinesShipmentsBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'ShippingLinesInvoicesBlock'" [Checked]="ShippingLinesInvoicesBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <!-- Truckers -->
+                                                                <tr style="height: 25px;">
+                                                                    <td class="Value">Truckers</td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'TruckersShipmentsBlock'" [Checked]="TruckersShipmentsBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'TruckersInvoicesBlock'" [Checked]="TruckersInvoicesBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <!-- Vendors -->
+                                                                <tr style="height: 25px;">
+                                                                    <td class="Value">Vendors</td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'VendorsShipmentsBlock'" [Checked]="VendorsShipmentsBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'VendorsInvoicesBlock'" [Checked]="VendorsInvoicesBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <!-- Warehouses -->
+                                                                <tr style="height: 25px;">
+                                                                    <td class="Value">Warehouses</td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'WarehousesShipmentsBlock'" [Checked]="WarehousesShipmentsBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="width: 16px; margin: auto;">
+                                                                            <LogCheckBox [ObjectFieldName]="'WarehousesInvoicesBlock'" [Checked]="WarehousesInvoicesBlock" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td colspan="3">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </td>
                 </tr>

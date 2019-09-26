@@ -127,7 +127,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      ChartOfAcountName3 = "",
                      ChartOfAcountName4 = "",
                      ChartOfAcountName5 = "",
-
+                     IsMultiCurrency= false,
                      ChartOfAccountId = "",
                      GLAccountName = "",
                      GLAccountNumber = "",
@@ -225,7 +225,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      ChartOfAcountName4 = chartf.Level4Name,
                      ChartOfAcountName5 = chartf.Level5Name,
 
-
+                     IsMultiCurrency = chartf.IsMultiCurrency,
 
                      ChartOfAccountId = chartf.ChartOfAccountId,
                      GLAccountName = chartf.GLAccountName,
@@ -279,7 +279,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
      ChartOfAcountName4 = chartf.Level4Name,
      ChartOfAcountName5 = chartf.Level5Name,
 
-
+     IsMultiCurrency= chartf.IsMultiCurrency,
      ChartOfAccountId = chartf.ChartOfAccountId,
      GLAccountName = chartf.GLAccountName,
      GLAccountNumber = chartf.GLAccountNumber,
@@ -329,7 +329,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  trailReportRow.ChartOfAcountName4,
                  trailReportRow.ChartOfAcountName5,
 
-
+                 trailReportRow.IsMultiCurrency,
                  trailReportRow.ChartOfAccountId,
                  trailReportRow.GLAccountName,
                  trailReportRow.GLAccountNumber,
@@ -360,7 +360,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      ChartOfAcountName5 = gCOA.Key.ChartOfAcountName5,
 
 
-
+                     IsMultiCurrency =gCOA.Key.IsMultiCurrency,
                      ChartOfAccountId = gCOA.Key.ChartOfAccountId,
                      GLAccountName = gCOA.Key.GLAccountName,
                      GLAccountNumber = gCOA.Key.GLAccountNumber,

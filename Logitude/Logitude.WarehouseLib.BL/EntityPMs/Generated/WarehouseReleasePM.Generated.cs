@@ -998,6 +998,121 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string fromPortId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromPortId  
+	   {
+	    
+	     get
+		{
+		   return fromPortId;
+		 }
+		 set
+		 {
+		   if(fromPortId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromPortId",OldValue=fromPortId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromPortId=value;
+		   }
+			
+		 }
+	   }
+	  private string toPortId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToPortId  
+	   {
+	    
+	     get
+		{
+		   return toPortId;
+		 }
+		 set
+		 {
+		   if(toPortId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToPortId",OldValue=toPortId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toPortId=value;
+		   }
+			
+		 }
+	   }
+	  private string customerAddressId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerAddressId  
+	   {
+	    
+	     get
+		{
+		   return customerAddressId;
+		 }
+		 set
+		 {
+		   if(customerAddressId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerAddressId",OldValue=customerAddressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerAddressId=value;
+		   }
+			
+		 }
+	   }
+	  private decimal totalVolumetricWeight ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal TotalVolumetricWeight  
+	   {
+	    
+	     get
+		{
+		   return totalVolumetricWeight;
+		 }
+		 set
+		 {
+		   if(totalVolumetricWeight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalVolumetricWeight",OldValue=totalVolumetricWeight,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   totalVolumetricWeight=value;
+		   }
+			
+		 }
+	   }
+	  private double? ratio ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? Ratio  
+	   {
+	    
+	     get
+		{
+		   return ratio;
+		 }
+		 set
+		 {
+		   if(ratio != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Ratio",OldValue=ratio,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   ratio=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

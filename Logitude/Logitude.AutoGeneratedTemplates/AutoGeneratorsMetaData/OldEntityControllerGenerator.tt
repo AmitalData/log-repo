@@ -255,6 +255,12 @@ void SaveEntityControllerOutput(string outputFileName)
 				 
     }
 
+    bool primaryKeyIsTenant = false;
+    if( entity.PrimaryKeyIsTenant.GetType() == typeof(string))
+	{
+	    primaryKeyIsTenant = (entity.PrimaryKeyIsTenant == "true");
+				 
+    }
 	
 
 	  Dictionary<string,string> primaryKeys = new Dictionary<string,string>();
@@ -307,7 +313,7 @@ void SaveEntityControllerOutput(string outputFileName)
          }
 
 		 string tenantStringParam = "entityPM.Tenant";
-		 if(tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting")
+		 if(tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting" || tableName == "LogBoxTenantSetting")
 			 tenantStringParam = "entityPM.Id";
 
 		 string primarykeyParam="";
@@ -340,7 +346,7 @@ void SaveEntityControllerOutput(string outputFileName)
 		databaseConnTenant = "authToken.Tenant";
 		contextTenantParam = "entityPM.Tenant";
 
-		 if(tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting")
+		 if(tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting" || tableName == "LogBoxTenantSetting")
 			 contextTenantParam = "entityPM.Id";
 
             if(tableName == "Distributor")
@@ -421,7 +427,16 @@ else
 #>
 
 <#+
-} 
+}
+if(primaryKeyIsTenant){
+#>
+                bool isAuthenticated = (id == authToken.Tenant) ? true : false;
+                if (!isAuthenticated && !SecurityUtility.CheckIsUserCustomerCare(authToken.Email))
+                {
+                    throw new Exception("Sorry you’re not authenticated to view <#= tableName #> data for this tenant");
+                }
+<#+
+}
 #>
                 <#= tableName #>Query <#= queryName #> = new <#= tableName #>Query(<#= databaseConnTenant #>);
                 <#= pmName #> <#= FirstServiceCharacterToLower(pmName) #> = <#= queryName #>.GetSinglePM(<#= primaryonlyparam #><#= tenantonlyParam#>);
@@ -441,7 +456,7 @@ else
          
 		
 <#+
-		 if(hasTenant || tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting" || tableName == "Distributor")
+		 if(hasTenant || tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting" || tableName == "Distributor" || tableName == "LogBoxTenantSetting")
          {
 	#><#= ""
  #>

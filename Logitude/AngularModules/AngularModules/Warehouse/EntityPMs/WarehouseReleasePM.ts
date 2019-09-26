@@ -264,6 +264,31 @@ export class WarehouseReleasePM {
     public set ConnectedTo(newValue: string) { if (this.connectedTo != newValue) { this.connectedTo = newValue; this.MarkAsDirty("ConnectedTo"); } }
        
 	 
+    private fromPortId: string;
+    public get FromPortId() { return this.fromPortId; }
+    public set FromPortId(newValue: string) { if (this.fromPortId != newValue) { this.fromPortId = newValue; this.MarkAsDirty("FromPortId"); } }
+       
+	 
+    private toPortId: string;
+    public get ToPortId() { return this.toPortId; }
+    public set ToPortId(newValue: string) { if (this.toPortId != newValue) { this.toPortId = newValue; this.MarkAsDirty("ToPortId"); } }
+       
+	 
+    private customerAddressId: string;
+    public get CustomerAddressId() { return this.customerAddressId; }
+    public set CustomerAddressId(newValue: string) { if (this.customerAddressId != newValue) { this.customerAddressId = newValue; this.MarkAsDirty("CustomerAddressId"); } }
+       
+	 
+    private totalVolumetricWeight: number;
+    public get TotalVolumetricWeight() { return this.totalVolumetricWeight; }
+    public set TotalVolumetricWeight(newValue: number) { if (this.totalVolumetricWeight != newValue) { this.totalVolumetricWeight = newValue; this.MarkAsDirty("TotalVolumetricWeight"); } }
+       
+	 
+    private ratio: number;
+    public get Ratio() { return this.ratio; }
+    public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
+       
+	 
 
     public OldEntityPM: WarehouseReleasePM;
 		

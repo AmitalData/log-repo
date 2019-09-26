@@ -173,7 +173,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <EmailSearchTextBox [EmailsText]="CCs" (EmailsTextChanged)="CCs = $event" (ValidationErrorsListChanged)="ValidateEmails($event)"></EmailSearchTextBox>
+                                                <EmailSearchTextBox [DontInCludeInactive]="true" [EmailsText]="CCs" (EmailsTextChanged)="CCs = $event" (ValidationErrorsListChanged)="ValidateEmails($event)"></EmailSearchTextBox>
                                             </div>
                                         </td>
                                     </tr>
@@ -191,7 +191,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <EmailSearchTextBox [EmailsText]="InternalUsers" [IsUsersList]="true" (EmailsTextChanged)="InternalUsers = $event"></EmailSearchTextBox>
+                                                <EmailSearchTextBox [DontInCludeInactive]="true" [EmailsText]="InternalUsers" [IsUsersList]="true" (EmailsTextChanged)="InternalUsers = $event"></EmailSearchTextBox>
                                             </div>
                                         </td>
                                     </tr>

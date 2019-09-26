@@ -602,6 +602,8 @@
     <TextCode Code="&quot;ARInvoice.S.ShortTitle.AutoCredit&quot;" DefaultText="&quot;Auto Credit&quot;" LocalDefaultText="&quot;ביטול&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;ARInvoice.M.MultiCurrencyMustInLocalCurrency&quot;" DefaultText="&quot;Multi currency ARInvoice should be only in Local currency&quot;" LocalDefaultText="&quot;חשבונית רב מטבעית חייבת להיות במטבע מקומי&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;ARInvoice.S.ShortTitle.ByInvoiceAutoCredited&quot;" DefaultText="&quot;By Invoice&quot;" LocalDefaultText="&quot; ע&quot;י חשבונית&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ARInvoice.O.CanNotCreditExempt&quot;" DefaultText="&quot;Can not credit card exempt VAT if the amount is not exempt&quot;" LocalDefaultText="&quot;לא ניתן לזכות כרטיס פטור בסכום חייב במע''מ&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ARInvoice.O.CanNotCreditCardIsNotExempt&quot;" DefaultText="&quot;Can not credit card that is not exempt VAT if the amount is exempt.&quot;" LocalDefaultText="&quot;לא ניתן לזכות כרטיס חייב בסכום פטור&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;TRANSFER&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;ARInvoice.Features.Transfer&quot;" FeatureDefaultText="&quot;Transfer&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />

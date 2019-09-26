@@ -36,6 +36,7 @@ import {ExternalReconciliationPMService} from '../../Services/StandardPMs/Extern
 import {ExternalReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ExternalReconciliationExtendedPMService';
 import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import {ExternalReconciliationExtendedListService} from '../../Services/ExtendedLists/ExternalReconciliationExtendedListService';
+import { ExternalReconciliationOpService } from '../../Services/ExtendedPMs/ExternalReconciliationOpService';
 
 
 
@@ -76,6 +77,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     _ExternalReconciliationExtendedListService: ExternalReconciliationExtendedListService = new ExternalReconciliationExtendedListService();
     externalReconciliationExtendedPMService: ExternalReconciliationExtendedPMService = new ExternalReconciliationExtendedPMService();
     externalReconciliationPMService: ExternalReconciliationPMService = new ExternalReconciliationPMService();
+    _ExternalReconciliationOpService: ExternalReconciliationOpService = new ExternalReconciliationOpService();
 
     txt_FiltersSelected: string = "";
     LoadGrids: boolean = false;
@@ -1133,7 +1135,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     SubmitChanges(entity) {
 
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.externalReconciliationPMService.insert(entity).subscribe(myResult => {
+        this._ExternalReconciliationOpService.insert(entity).subscribe(myResult => {
             this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;
