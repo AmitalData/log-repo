@@ -249,7 +249,7 @@ namespace WebFreight.Web.Helpers
             string result = sqlString;
             while (result.Contains("<DataFieldValue>") && result.Contains("</DataFieldValue>"))
             {
-                var dataFieldValue = GetBetweenString(result, "<DataFieldValue>", "</DataFieldValue>");
+                var dataFieldValue = GetValueBetweenTwoString(result, "<DataFieldValue>", "</DataFieldValue>");
                 if (!string.IsNullOrEmpty(dataFieldValue))
                 {
                     string parameterName = "@ValueParameter" + (SqlCommandDef.Parameters.Count() + 1).ToString();
@@ -259,7 +259,7 @@ namespace WebFreight.Web.Helpers
             }
             return result;
         }
-        public string GetBetweenString(string strSource, string strStart, string strEnd)
+        public string GetValueBetweenTwoString(string strSource, string strStart, string strEnd)
         {
             if (strSource.Contains(strStart) && strSource.Contains(strEnd))
             {
