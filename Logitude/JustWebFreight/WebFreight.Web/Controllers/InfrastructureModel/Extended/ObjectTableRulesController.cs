@@ -57,6 +57,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         ObjectTableRuleService service = new ObjectTableRuleService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 
+                        ClearRulesCache(entityPM);
+
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
@@ -86,20 +88,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                        string entityName = "ObjectTableRule" + entityPM.Id + entityPM.Tenant;
-                        string entityPmName = "ObjectTableRulePM" + entityPM.Id + entityPM.Tenant;
-                        if (CacheManager.CacheWrapper.Get(entityName) != null)
-                        {
-                            CacheManager.CacheWrapper.Invalidate(entityName);
-                        }
-                        if (CacheManager.CacheWrapper.Get(entityPmName) != null)
-                        {
-                            CacheManager.CacheWrapper.Invalidate(entityPmName);
-                        }
+                    
 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         ObjectTableRuleService service = new ObjectTableRuleService(MyContext, entityPM.Tenant);
                         service.Update(entityPM, entityPM.RuleConditionFields);
+
+                        ClearRulesCache(entityPM);
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
@@ -117,7 +112,26 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             }
         }
 
-     
+        private static void ClearRulesCache(ObjectTableRulePM entityPM)
+        {
+            string entityName = "ObjectTableRule" + entityPM.Id + entityPM.Tenant;
+            string entityPmName = "ObjectTableRulePM" + entityPM.Id + entityPM.Tenant;
+            if (CacheManager.CacheWrapper.Get(entityName) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(entityName);
+            }
+            if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(entityPmName);
+            }
+
+            string pmslistName = "objecttablerulepmstenant" + entityPM.Tenant;
+            if (CacheManager.CacheWrapper.Get(pmslistName) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(pmslistName);
+            }
+        }
+
         public HttpResponseMessage GetObjectTableRulePMsByTenant(int tenant)
         {
             try

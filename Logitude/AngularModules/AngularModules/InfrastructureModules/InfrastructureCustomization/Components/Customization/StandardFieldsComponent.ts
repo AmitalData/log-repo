@@ -167,6 +167,13 @@ export class TabItem {
         logitudeWindow.Title = "Edit Standard Field";
         logitudeWindow.WindowArgs = editedItem;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/EditStandardFieldComponent');
+
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event == "Ok") {
+                this.LoadStandardFields();
+            }
+
+        });
     }
 }
 

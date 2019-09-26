@@ -1489,6 +1489,10 @@
     <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
       <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.cs" />
+    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
+      <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.cs" />
     <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.Designer.cs">
       <DependentUpon>201909151332019_AddOpenReceivablesLinesField.cs</DependentUpon>

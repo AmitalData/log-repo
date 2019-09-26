@@ -245,6 +245,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.BuildSearchFields();
             // Full Accounting - Tax Fields Work 
             this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
+            CheckLinesVatExcempt(entityPM, isApprovingInvoice);
 
             ARInvoiceHelper helper = new ARInvoiceHelper();
             helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity,this.objectContext,this.myCommonContext,isVoidingInvoice);
@@ -266,6 +267,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.AfterServiceFinished();
+
+
         }
 
         private void ValidateInvoiceConnected()
@@ -3590,6 +3593,68 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void RunRegistryDateProcedure(string myShipmentId)
         {
             RunStoredProcedureClass.UpdateShipmentRegistryDate(myShipmentId, entityPM.Tenant);
+        }
+
+        private void CheckLinesVatExcempt(ARInvoicePM invoicePM, bool isApprovingInvoice)
+         {
+            if (IsFullAccountingActivated(invoicePM.Tenant) && isApprovingInvoice)
+            {
+                foreach (ARInvoiceLinePM line in invoicePM.InvoiceLines)
+                {
+                    CheckLineVatExcempt(invoicePM.Tenant, line);
+                }
+            }
+        }
+
+        //ChargesTypePM chargeTypePM = GetChargeTypeById(tenant, line.ChargesTypeId);
+
+        private void CheckLineVatExcempt(int tenant, ARInvoiceLinePM line)
+        {
+            GLAccountPM glaccount = GetGLAccountById(tenant, line.GLAccountId);
+
+            if (glaccount.IsVATExempt == true && line.VatPercentage != 0)
+                ShowErrorMessage("ARInvoice.O.CanNotCreditExempt", tenant);
+            else if (glaccount.IsVATExempt != true && line.VatPercentage == 0)
+                ShowErrorMessage("ARInvoice.O.CanNotCreditCardIsNotExempt", tenant);
+
+        }
+
+        private void ShowErrorMessage(string textCode, int tenant)
+        {
+            bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+            var msg = TextCodesTranslator.TranslateText(textCode, tenant, showLocals);
+
+            if (string.IsNullOrWhiteSpace(msg))
+            {
+                if (textCode == "ARInvoice.O.CanNotCreditExempt")
+                    msg = "Can not credit card exempt VAT if the amount is not exempt";
+                if (textCode == "ARInvoice.O.CanNotCreditCardIsNotExempt")
+                    msg = "Can not credit card that is not exempt VAT if the amount is exempt";
+            }
+
+            throw new ApplicationException(msg);
+        }
+
+        private ChargesTypePM GetChargeTypeById(int tenant, string id)
+        {
+            ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(tenant);
+            ChargesTypePM chargeTypePM = chargesTypeQuery.GetSingle(id, tenant);
+            return chargeTypePM;
+        }
+
+        private GLAccountPM GetGLAccountById(int tenant, string id)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            GLAccountPM glaccount = glAccountQuery.GetSingleGLAccountPM(id, tenant);
+            return glaccount;
+        }
+
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
         }
     }
 }
