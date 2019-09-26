@@ -317,9 +317,9 @@ export class AddEditTaskSchedulerComponent  {
                     }
                 case "M":
                     {
-                        if (this.DataContext.MonthlyDay == 0) {
-                            errors.push(msg.replace("%FieldName", "Day of a month"));
-                        }
+                        //if (this.DataContext.MonthlyDay == 0) {
+                        //    errors.push(msg.replace("%FieldName", "Day of a month"));
+                        //}
                         break;
                     }
             }
