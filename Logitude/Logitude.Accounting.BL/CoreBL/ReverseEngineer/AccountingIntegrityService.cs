@@ -73,6 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 GLAccountBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
 
                 DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+                LedgerOpenAmountDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
 
             }
             catch
@@ -99,7 +100,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             return myAccountingIntegrityResult;
         }
 
-
+       
 
         public void FixDBIntegrity(int tenant, List<AccountingIntegrityStep> MyAccountingIntegrityStep)
         {
@@ -190,8 +191,52 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
         }
 
-      
 
+        private void LedgerOpenAmountDiffCheck(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
+        {
+
+
+            int year = accountingIntegrityInParam.FromMonthInclusive.Year;
+            var icurrentMonth = accountingIntegrityInParam.FromMonthInclusive.Month;
+
+
+
+            var sw = Stopwatch.StartNew();
+            string ExceptionMessage = "";
+            int badRows = 0;
+
+            try
+            {
+                var myReconcileOpenAmountService = new ReconcileOpenAmountService();
+                var listDiff = myReconcileOpenAmountService.GetLedgerOpenAmountDiff(accountingIntegrityInParam.Tenant, year);
+
+                myAccountingIntegrityResult.LedgerOpenAmount = myAccountingIntegrityResult.LedgerOpenAmount ?? new List<LedgerOpenAmountRecoDiffM>();
+                myAccountingIntegrityResult.LedgerOpenAmount.AddRange(listDiff);
+                badRows = listDiff.Count();
+            }
+            catch (Exception ee)
+            {
+                ExceptionMessage = ee.ToString();
+                //throw;
+            }
+            finally
+            {
+
+                myAccountingIntegrityResult.MyAccountingIntegrityStep = myAccountingIntegrityResult.MyAccountingIntegrityStep ?? new List<AccountingIntegrityStep>();
+                myAccountingIntegrityResult.MyAccountingIntegrityStep.Add(new AccountingIntegrityStep()
+                {
+                    Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    //Month = currentMonth,
+                    ExceptionMessage = ExceptionMessage,
+                    BadRows = badRows,
+                    ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
+                    ElapsedMilliseconds = sw.ElapsedMilliseconds,
+                });
+            }
+
+
+
+        }
         private void DueLocalBalanceCheck(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult)
         {
 
@@ -474,6 +519,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         public List<GLAccountBalanceDTO> BalanceInLocalCurrencyResult { get; set; }
         public List<DueLocalBalanceDiffM> DueLocalBalance { get; set; }
         public bool ShouldFix { get;  set; }
+        public List<LedgerOpenAmountRecoDiffM> LedgerOpenAmount { get; set; }
     }
 
     public class AccountingIntegrityStep

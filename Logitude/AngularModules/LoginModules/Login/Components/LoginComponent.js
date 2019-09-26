@@ -203,37 +203,10 @@ var LoginComponent = /** @class */ (function () {
                 this.loginService.CurrentTenant = userData.CurrentTenant;
                 this.loginService.LoggedUserId = SessionInfo_1.SessionInfo.LoggedUserId;
                 this.loginService.LoggedUserEmail = SessionInfo_1.SessionInfo.LoggedUserEmail;
-                //this.loginService.GetLoggedUser().subscribe(myResult => {
-                //    this.loginService.GetTenantManagement().subscribe(myResult2 => {
-                //        SessionInfo.LoggedUserPM = myResult;
-                //        InfraSettings.TenantManagementPM = myResult2;
-                //        if (SessionInfo.LoggedUserPM.ExpirationDate != null && DateTool.GetDateParts(SessionInfo.LoggedUserPM.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
-                //            this.Blocking.emit("user");
-                //        }
-                //        else {
-                //            this.CheckTenantBlocking(userData);
-                //        }
-                //    });
-                //});
             }
         }
         window.sessionStorage.setItem("userdata", "");
     };
-    //OneUsePasswordMethod() {
-    //    this.loginService.GetOneUsePassword().subscribe(userData => {
-    //        if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
-    //            var message = "Can't use this key (" + SessionLocator.ExternalParams.OneTimePasswordId + ") again because you used it before ";
-    //            if (userData && userData.ExceptionMessage) message = userData.ExceptionMessage;
-    //            alert(message);
-    //            document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
-    //            SessionLocator.ExternalParams.OneTimePasswordId = null;
-    //        }
-    //        else {
-    //            this.StartLoading(userData);
-    //        }
-    //        this.HidePendingLoading = true;
-    //    });
-    //}
     LoginComponent.prototype.onEmailBlur = function (email) {
         if (email != this.Email) {
             this.IsShowAreaCaptcha = false;
@@ -362,16 +335,18 @@ var LoginComponent = /** @class */ (function () {
                         _this.CaptchaImageUrl = userData.CaptchaImage;
                     }
                     _this.errorMessage = "";
-                    if (userData.InValidCaptcha)
-                        _this.errorMessage = "Please re-enter the characters you see in the image above";
                     if (userData.IpRestricted)
-                        _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
-                    if (userData.InActive)
+                        _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";
+                    else if (userData.InActive)
                         _this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                    if (userData.Unlicensed)
+                    else if (userData.Unlicensed)
                         _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
-                    if (userData.InValidMailOrPassword)
+                    else if (userData.InValidMailOrPassword)
                         _this.errorMessage = "Login failed! invalid user name or password.";
+                    else if (userData.InValidCaptcha && userData.CaptchaImage)
+                        _this.errorMessage = "Please re-enter the characters you see in the image above";
+                    else
+                        _this.errorMessage = "Login failed! invalid user name or password." + "<br/>";
                 }
             }
             else {

@@ -77,9 +77,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CustomMappedPOCOProperties.Add(POCOPropertyNames.BankAccountGLAccountId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.PayToGLAccountId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.PaymentChequeStatusCode);
+
             JournalQueryService journalService = new JournalQueryService(entityPOCO.Tenant);
-            JournalPM journal = journalService.GetByAccountingEntityId(entityPOCO.Id, entityPOCO.Tenant);
-            if(journal != null)
+            JournalPM journal;
+            if (entityPOCO.APPaymentId == null)
+            {
+               
+                 journal = journalService.GetByAccountingEntityId(entityPOCO.Id, entityPOCO.Tenant);
+            }
+            else
+            {
+                journal = journalService.GetByAccountingEntityId(entityPOCO.APPaymentId, entityPOCO.Tenant);
+
+            }
+            if (journal != null)
             {
                 entityPM.JournalId = journal.Id;
                 entityPM.JournalNumber = journal.JournalNumber;

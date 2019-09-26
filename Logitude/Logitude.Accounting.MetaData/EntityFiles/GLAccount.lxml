@@ -415,6 +415,8 @@
     <EventType Code="&quot;MLUP&quot;" ObjectTableName="&quot;GLAccount&quot;" EnglishName="&quot;Is Multi Currency Changed&quot;" LocalName="&quot;שינוי רב מטבעי &quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;RMUP&quot;" ObjectTableName="&quot;GLAccount&quot;" EnglishName="&quot;Reconcile Method Changed&quot;" LocalName="&quot; שינוי שיטת התאמה &quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;ARCP&quot;" ObjectTableName="&quot;GLAccount&quot;" EnglishName="&quot;Automatic Reconcile Method Changed&quot;" LocalName="&quot; שינוי התאמה אוטומטית  &quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;VAEX&quot;" ObjectTableName="&quot;GLAccount&quot;" EnglishName="&quot;Is Vat Eexcempt Changed&quot;" LocalName="&quot;שדה פטור מע”מ שונה&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;WTDU&quot;" ObjectTableName="&quot;GLAccount&quot;" EnglishName="&quot;Withholding tax line updated&quot;" LocalName="&quot;שורת שיעור ניכוי מס&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;GLAEdit&quot;" MenuButtonGroupName="&quot;GLAEditButtonsGroup&quot;">
@@ -506,6 +508,9 @@
     <TextCode Code="&quot;GLAccount.O.CreditStatus &quot;" DefaultText="&quot;Credit Status&quot;" LocalDefaultText="&quot;מצב אשראי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;GLAccount.O.Queries&quot;" DefaultText="&quot;GL Accounts Queries&quot;" LocalDefaultText="&quot;שאילתות כרטיסים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;GLAccount.O.CounterIsntDefined&quot;" DefaultText="&quot;Counter is not defined, please check accounting settings &quot;" LocalDefaultText="&quot;מונה כרטיס לא הוגדר , אנא בדוק הגדרות הנהח''ש&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.Connect2ExistingCard&quot;" DefaultText="&quot;Connect to an existing card&quot;" LocalDefaultText="&quot;חיבור לכרטיס קיים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.ThisGLAccountConnected&quot;" DefaultText="&quot;This GL Account is already connected to card (#cards). GL Account cannot be linked to two clients card.&quot;" LocalDefaultText="&quot;שים לב כי הכרטסת כבר מקושרת לכרטיס תפעולי (#cards), לא ניתן לקשר כרטסת לשני לקוחות.&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.ThisGLAccountConnectedContinue&quot;" DefaultText="&quot;This GL Account is already connected to cards (#cards), Do you want to continue?&quot;" LocalDefaultText="&quot;שים לב כי הכרטסת כבר מקושרת לכרטיס תפעולי (#cards), האם ברצונך להמשיך?&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -512,7 +512,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<DocumentTypeTemplate> DocumentTypeTemplates { get; set; }
         public IDbSet<TemplateFormat> TemplateFormats { get; set; }
         public IDbSet<DWHSetting> DWHSettings { get; set; }
-
+        public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
 
         public IDbSet<Warehouse> Warehouses
         {

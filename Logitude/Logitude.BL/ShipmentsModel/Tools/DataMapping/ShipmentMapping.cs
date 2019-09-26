@@ -171,6 +171,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
 
+            LogBoxTenantSettingRepository LBtenantRepository = new LogBoxTenantSettingRepository(entityPM.Tenant);
+            LogBoxTenantSetting LBcurrentTenant = LBtenantRepository.GetSingleLBTenant(entityPM.Tenant);
+
             if (isNewEntity && entityPM.IsHybrid)
             {
                 entityPoco.StatusId = entityPM.StatusId;
@@ -186,7 +189,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 }
             }
 
-            if (currentTenant.IsDocumentsArchive)
+            if (LBcurrentTenant.IsDocumentsArchive)
             {
                 if (!isNewEntity)
                 {
@@ -406,6 +409,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.To = entityPM.To;
             entityPoco.Origin = entityPM.Origin;
             entityPoco.ComputedShipmentNumber = entityPM.ComputedShipmentNumber;
+
+            //entityPoco.OpenReceivablesLines = entityPM.OpenReceivablesLines;
+
             //entityPoco.ContainersNumbers = entityPM.ContainersNumbers;
             //entityPoco.FirstPickupLocation = entityPM.FirstPickupLocation;
             //entityPoco.Commodity = entityPM.AWBCommodityItemNumber;
@@ -418,7 +424,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             //entityPoco.ActualFinalArrivalDate = entityPM.ActualFinalArrivalDate;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
-            if (!currentTenant.IsDocumentsArchive)
+            if (!LBcurrentTenant.IsDocumentsArchive)
             {
                 BuildRoutingField(entityPM, entityPoco, entityMasterData, objectContext);
             }
@@ -2207,6 +2213,29 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Transshipment3AdditionalMAWBOBLBL);
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ProjectNumber);
+
+            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
+            {
+                if (!string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
+                {
+                    Card myCard = CardRepository.GetSingleCard(entityPM.MainCarriageFromPartnerId, tenant, true);
+                    if (myCard != null)
+                    {
+                        MethodHelper.AddToSearchFields(ref mySearchFields, myCard.CityName);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
+                {
+                    Card myCard = CardRepository.GetSingleCard(entityPM.MainCarriageToPartnerId, tenant, true);
+                    if (myCard != null)
+                    {
+                        MethodHelper.AddToSearchFields(ref mySearchFields, myCard.CityName);
+                    }
+                }
+
+
+            }
 
             #region Quote
             if (!string.IsNullOrEmpty(entityPM.QuoteId))

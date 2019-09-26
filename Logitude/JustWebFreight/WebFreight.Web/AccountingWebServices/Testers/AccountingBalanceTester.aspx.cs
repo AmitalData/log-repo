@@ -96,10 +96,13 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //testIt.GetDataTableFromWorkSheet(null,"");
             //var s = new ClearAccountingDB();
             //s.ClearDB(1148);
+            //var a = new ReconcileOpenAmountService();
+            //var l = a.GetLedgerOpenAmountDiff(1106, 2019);
+
+
             try
             {
 
-               
 
 
                 //AuthenticationUtil.Impersonate(1, 

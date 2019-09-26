@@ -56,7 +56,12 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         DirectionId, 
 	         TotalQuantity, 
 	         ChargeableWeightUnitCode, 
-	         ConnectedTo,
+	         ConnectedTo, 
+	         FromPortId, 
+	         ToPortId, 
+	         CustomerAddressId, 
+	         TotalVolumetricWeight, 
+	         Ratio,
 	      }
 
 
@@ -103,7 +108,12 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ReleaseDate, 
 	         TotalQuantity, 
 	         ChargeableWeightUnitCode, 
-	         ConnectedTo,
+	         ConnectedTo, 
+	         FromPortId, 
+	         ToPortId, 
+	         CustomerAddressId, 
+	         TotalVolumetricWeight, 
+	         Ratio,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -280,6 +290,31 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
             {
 				entityPOCO.ConnectedTo = entityPM.ConnectedTo;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromPortId))
+            {
+				entityPOCO.FromPortId = entityPM.FromPortId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToPortId))
+            {
+				entityPOCO.ToPortId = entityPM.ToPortId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerAddressId))
+            {
+				entityPOCO.CustomerAddressId = entityPM.CustomerAddressId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
+            {
+				entityPOCO.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+				entityPOCO.Ratio = entityPM.Ratio;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -463,6 +498,31 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.ConnectedTo = entityPOCO.ConnectedTo;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromPortId))
+            {
+					entityPM.FromPortId = entityPOCO.FromPortId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToPortId))
+            {
+					entityPM.ToPortId = entityPOCO.ToPortId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerAddressId))
+            {
+					entityPM.CustomerAddressId = entityPOCO.CustomerAddressId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotalVolumetricWeight))
+            {
+					entityPM.TotalVolumetricWeight = entityPOCO.TotalVolumetricWeight;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Ratio))
+            {
+					entityPM.Ratio = entityPOCO.Ratio;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseReleasePM entityPM, WarehouseReleasePM oldEntityPM)
@@ -637,6 +697,31 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedTo))
             {
                 oldEntityPM.ConnectedTo = entityPM.ConnectedTo;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromPortId))
+            {
+                oldEntityPM.FromPortId = entityPM.FromPortId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToPortId))
+            {
+                oldEntityPM.ToPortId = entityPM.ToPortId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerAddressId))
+            {
+                oldEntityPM.CustomerAddressId = entityPM.CustomerAddressId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
+            {
+                oldEntityPM.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+                oldEntityPM.Ratio = entityPM.Ratio;
             }
 			
 		}
