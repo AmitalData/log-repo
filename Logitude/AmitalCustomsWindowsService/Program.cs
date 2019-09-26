@@ -41,7 +41,7 @@ namespace AmitalCustomsWindowsService
         [STAThread]
         static void Main()
         {
-            ThreadPool.SetMinThreads(100, 100);
+            ///ThreadPool.SetMinThreads(100, 100);
             ServiceBase[] ServicesToRun;
 
             // More than one user Service may run within the same process. To add
