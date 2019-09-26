@@ -1,4 +1,4 @@
-﻿
+
 <style>
 
     .SectionHeader sc td, .SectionHeader sc label {
@@ -132,6 +132,9 @@
 
                                                 <div *ngIf="WarehouseReleaseVisibility" class="QueriesSection">
                                                     <div>Releases</div>
+                                                    <div *ngIf="IsNewReleaseVisible" style="height:22px; width: 35px; position: absolute; top:0px; right:0px;">
+                                                        <button class="Button" (click)="NewReleaseButtonclick()">New</button>
+                                                    </div>
                                                     <div style="height:5px"></div>
                                                     <div>
                                                         <p *ngIf="CreatedReleaseQueriesVisibility" class="QueryLink" (click)="ViewWarehouseReleaseQuery('Created')">Created  ({{WarehouseReleaseCreatedQueryCount}})</p>

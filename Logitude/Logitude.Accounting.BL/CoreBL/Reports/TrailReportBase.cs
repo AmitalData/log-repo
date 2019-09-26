@@ -417,6 +417,7 @@ into groupBy_currency
                     ParentId = a.ParentAccountId,
                     DisplayNumber = a.DisplayNumber,
                     LocalName = a.LocalName,
+                    IsMultiCurrency = a.IsMultiCurrency,
                 }
                 );
         }
@@ -460,9 +461,10 @@ into groupBy_currency
 
 
                  GLAccountId = aGL.Id,
+                 IsMultiCurrency = aGL.IsMultiCurrency,
                  GLAccountName = aGL.LocalName,
                  GLAccountNumber = aGL.DisplayNumber,
-               
+             
                  ChartOfAccountId=aGL.ChartOfAccountsId,
                  ChartOfAccountTypeCode = //aGL.AccountTypeCode,
                  aGL.ChartOfAccountsTypeCode,
@@ -634,5 +636,6 @@ into groupBy_currency
         public bool? IsControlAccount { get; set; }
         public string DisplayNumber { get; set; }
         public string ParentId { get; set; }
+        public bool? IsMultiCurrency { get;  set; }
     }
 }
