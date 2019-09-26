@@ -5,7 +5,7 @@ import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
 
-describe('APInvoice Module', function () {
+describe('APpayment Module', function () {
   var Helper = new GeneralFunctions();
   var F = new FieldsHelper();
   browser.driver.manage().window().maximize();
@@ -16,7 +16,7 @@ describe('APInvoice Module', function () {
 
 
 
-  it(' New APInvoice Was Created', function () {
+  it(' New APPayment Was Created', function () {
 
 
     browser.ignoreSynchronization = true;

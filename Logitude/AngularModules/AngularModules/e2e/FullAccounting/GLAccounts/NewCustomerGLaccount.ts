@@ -14,19 +14,25 @@ export class NewCustomer{
 
   public CreateNewCustomerGLAccount(Name: string) {
 
-    this.Helper.WaitByIdAndClick('NewCustomer');
+      this.Helper.WaitByIdAndClick('NewCustomer');
+      this.Helper.ItemsVisibility('Customer_EnglishName');
+      this.Helper.ItemsPresent('Customer_EnglishName');
       this.Helper.WaitByIdAndFill('Customer_EnglishName', Name);
       this.Helper.WaitByIdAndFill('Customer_LocalName', Name);
     this.Helper.WaitByIdAndFill('Customer_Address1_Potential', 'Ramallah');
     this.Helper.WaitByIdAndFill('Customer_Address2_Potential', 'Nablus');
     this.Helper.WaitByIdAndFill('Customer_ZipCode_Potential', '00970');
     this.Helper.WaitByIdAndFill('Customer_CountryId_Potential', 'ps');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Customer_CountryId_Potential', 'ps')
+      // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitBusyIndicator();
 
       this.Helper.WaitByIdAndFill('Customer_City_Potential', 'Nablus');
-     
-    this.Helper.WaitByIdAndFill('Contact_EnglishName', 'My Contact');
+      this.Helper.WaitBusyIndicator();
+
+      this.Helper.WaitByIdAndFill('Contact_EnglishName', 'My Contact');
+      this.Helper.WaitBusyIndicator();
+
     this.Helper.WaitByIdAndClick('Ok-AddPotCustomer');
     this.Helper.WaitBusyIndicator();
     this.Helper.WaitWindowClosed();
@@ -47,20 +53,24 @@ export class NewCustomer{
       this.Helper.WaitByIdAndClick('Activate');
       this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'cust');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitBusyIndicator();
+
      // this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
       //this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name+DisplayNumber);
       this.Helper.WaitByIdAndFill('GLAccount_CurrencyId','Nis');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      this.Helper.WaitBusyIndicator();
+
 
       this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
       this.Helper.WaitWindowClosed();
      this.Helper.WaitBusyIndicator();
      //this.Helper.WaitBusyIndicator();
-     var boo=this.Helper.ItemsVisibility('3mo');
-      if ('boo') {
-          this.Helper.WaitBusyIndicator();
-        this.Helper.WaitByIdAndClick('Customer-SaveClose');
-     }
+    // var boo=this.Helper.ItemsVisibility('3mo');
+      //if ('boo') {
+        //  this.Helper.WaitBusyIndicator();
+       // this.Helper.WaitByIdAndClick('Customer-SaveClose');
+    // }
    
  
 

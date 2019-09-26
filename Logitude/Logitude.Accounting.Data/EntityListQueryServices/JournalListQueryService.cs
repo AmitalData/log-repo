@@ -46,7 +46,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                           // OriginalJournalId = a.OriginalJournalId,
                                                            OriginalJournalName = a.OriginalJournal != null ? a.OriginalJournal.JournalNumber : null,
                                                            SearchFields = a.SearchFields,
-                                                          // StatusCode = a.StatusCode,
+                                                           StatusCode = a.StatusCode,
                                                            StatusName = a.JournalStatusType != null ? a.JournalStatusType.EnglishName : null,
                                                            StatusLocalName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
                                                            Tenant = a.Tenant,
