@@ -135,6 +135,24 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public decimal TotalVolumetricWeight { get; set; }
         [Column("Ratio")]
 	    public double? Ratio { get; set; }
+        [Column("ToTypeCode")]
+	    public string ToTypeCode { get; set; }
+        [ForeignKey("ToPartnerCard")]
+        [Column("ToPartnerCardId")]
+	    public string ToPartnerCardId { get; set; }
+	      
+        public virtual Card ToPartnerCard { get; set; }
+        [ForeignKey("ToAddress")]
+        [Column("ToAddressId")]
+	    public string ToAddressId { get; set; }
+	      
+        public virtual Address ToAddress { get; set; }
+        [Column("ToAddressZipCode")]
+	    public string ToAddressZipCode { get; set; }
+        [Column("ToAddressCity")]
+	    public string ToAddressCity { get; set; }
+        [Column("ToAddressCountryId")]
+	    public string ToAddressCountryId { get; set; }
     }
 }
 	 
