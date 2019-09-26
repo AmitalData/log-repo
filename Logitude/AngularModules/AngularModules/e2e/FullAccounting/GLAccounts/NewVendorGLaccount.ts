@@ -18,7 +18,7 @@ export class NewVendor {
     //this.Helper.WaitByIdAndClick('MaintenanceItemMTVD');
       this.Helper.WaitByIdAndClick('NewButton_Vendor');
       this.Helper.ItemsVisibility('Address_Name');
-      this.Helper.ItemsPresent('Address_Name');
+      //this.Helper.ItemsPresent('Address_Name');
     this.Helper.WaitByIdAndFill('Address_Name', Name);
       this.Helper.WaitByIdAndFill('Address_CountryId', 'ps');
       this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Address_CountryId', 'ps')
