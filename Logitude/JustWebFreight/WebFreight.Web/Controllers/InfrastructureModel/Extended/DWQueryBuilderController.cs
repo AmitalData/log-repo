@@ -206,7 +206,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(Tabel, authToken.Tenant);
                 bool IsClosed = dWObjectTablePM.IsClosed;
                 string WhereStmt = " where " + Field + " is not null";
-                string PagingString = " ORDER BY " + Field+ " OFFSET " + filters.PageIndex + " ROWS FETCH NEXT " + filters.PageSize + " ROWS ONLY";
+                string PagingString = " ORDER BY " + Field;
+                if (LogitudeSettings.LogitudeURL != "http://localhost:9996")
+                {
+                    PagingString += (" OFFSET " + filters.PageIndex + " ROWS FETCH NEXT " + filters.PageSize + " ROWS ONLY");
+                }
+
                 SqlCommandDefinition sqlCommandDefinition = new SqlCommandDefinition() { Parameters = new List<SqlParameterDetails>() };
 
                 if (!string.IsNullOrEmpty(filters.AdditionalFilters))
@@ -219,8 +224,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         if (customPickListFilter != null)
                         {
                             WhereStmt = WhereStmt + (" and ([Code] = " + "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() + " )");
-                            sqlCommandDefinition.Parameters.Add(dWQueryBuilderHelper.GetNewInstanceFromSqlParameterDetails((sqlCommandDefinition.Parameters.Count() + 1).ToString(), customPickListFilter.FieldValue.ToString()));
- 
+                            sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString(), Value = customPickListFilter.FieldValue.ToString() });
                         }
                     }
                 }
@@ -230,7 +234,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 if (!string.IsNullOrEmpty(SearchData))
                 {
                     WhereStmt = WhereStmt + " and (" + (Field + " like " + "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() + ")");
-                    sqlCommandDefinition.Parameters.Add(dWQueryBuilderHelper.GetNewInstanceFromSqlParameterDetails((sqlCommandDefinition.Parameters.Count() + 1).ToString(), SearchData + "%"));
+                    sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() , Value = SearchData + "%" });
                 }
                 
                 if (!IsClosed)
@@ -252,12 +256,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     if (Tabel == "DIM_Dates")
                     {
                         WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Date Key] not in (@DatesParameterName1,@DatesParameterName2,@DatesParameterName3) "); //authToken.Tenant
-                        sqlCommandDefinition.Parameters.Add(dWQueryBuilderHelper.GetNewInstanceFromSqlParameterDetails("DatesParameterName1", "-1"));
-                        sqlCommandDefinition.Parameters.Add(dWQueryBuilderHelper.GetNewInstanceFromSqlParameterDetails("DatesParameterName2", "-2"));
-                        sqlCommandDefinition.Parameters.Add(dWQueryBuilderHelper.GetNewInstanceFromSqlParameterDetails("DatesParameterName3", "-3"));
+                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName1", Value = "-1" });
+                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName2", Value = "-2" });
+                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName3", Value = "-3" });
                     }
 
-       
+
                 }
 
                 using (var scope = TransactionFactory.GetNewTransaction())
@@ -324,7 +328,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                         {
                             string parameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString();
-                            sqlCommandDefinition.Parameters.Add(dWQueryBuilderHelper.GetNewInstanceFromSqlParameterDetails(parameterName, SearchData + "%"));
+                            sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterName, Value = SearchData + "%" });
+
+
+
                             if (!string.IsNullOrEmpty(Field1))
                             {
                                 WhereStmt = WhereStmt.Replace(")", "");
