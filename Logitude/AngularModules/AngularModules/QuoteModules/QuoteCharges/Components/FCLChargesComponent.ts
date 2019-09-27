@@ -2989,7 +2989,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             var myResult = this.SaleContainerType1UnitPrice;
             var markup = this.ContainerType1MarkUpValue == null ? 0 : this.ContainerType1MarkUpValue;
 
-            if (this.MarkUpTypeCode == "P") {
+            if (this.ContainerType1MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPrice1InSaleCurrency + (this.CostUnitPrice1InSaleCurrency * (markup / 100));
             }
 
@@ -3013,7 +3013,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             var myResult = this.SaleContainerType2UnitPrice;
             var markup = this.ContainerType2MarkUpValue == null ? 0 : this.ContainerType2MarkUpValue;
 
-            if (this.MarkUpTypeCode == "P") {
+            if (this.ContainerType2MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPrice2InSaleCurrency + (this.CostUnitPrice2InSaleCurrency * (markup / 100));
             }
 
@@ -3037,7 +3037,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             var myResult = this.SaleContainerType3UnitPrice;
             var markup = this.ContainerType3MarkUpValue == null ? 0 : this.ContainerType3MarkUpValue;
 
-            if (this.MarkUpTypeCode == "P") {
+            if (this.ContainerType3MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPrice3InSaleCurrency + (this.CostUnitPrice3InSaleCurrency * (markup / 100));
             }
 
@@ -3061,7 +3061,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             var myResult = this.SaleContainerType4UnitPrice;
             var markup = this.ContainerType4MarkUpValue == null ? 0 : this.ContainerType4MarkUpValue;
 
-            if (this.MarkUpTypeCode == "P") {
+            if (this.ContainerType4MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPrice4InSaleCurrency + (this.CostUnitPrice4InSaleCurrency * (markup / 100));
             }
 
@@ -3085,7 +3085,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
             var myResult = this.SaleContainerType5UnitPrice;
             var markup = this.ContainerType5MarkUpValue == null ? 0 : this.ContainerType5MarkUpValue;
 
-            if (this.MarkUpTypeCode == "P") {
+            if (this.ContainerType5MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPrice5InSaleCurrency + (this.CostUnitPrice5InSaleCurrency * (markup / 100));
             }
 
