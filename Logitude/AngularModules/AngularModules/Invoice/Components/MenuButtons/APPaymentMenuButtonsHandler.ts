@@ -3,7 +3,7 @@ import {APPaymentPM} from '../../EntityPMs/APPaymentPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
-import {AppTool} from '../../../Infrastructure/Tools';
+import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {APPaymentValidator} from '../../Validators/APPaymentValidator';
 import {DocumentOutPM}  from '../../../Common/EntityPMs/DocumentOutPM';
 import {DocumentTypePM} from '../../../Common/EntityPMs/DocumentTypePM';
@@ -399,6 +399,9 @@ export class APPaymentMenuButtonsHandler {
         if (myPrintHelper.IsLoadPrintControl) {
             ServiceLocator.SendTotangoUserActivity("APPayment", "PrintAPPayment");
             myPrintHelper.ShowPrintControl();
+            this.EntityPM.PrintDate=    DateTool.GetCurrentDateTimeAsUtc();
+            this.entityArgs.EditComponent.SaveChanges();
+
         }
     }
     PrintPaymentButtonLoaded() {
