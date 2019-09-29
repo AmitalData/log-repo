@@ -15,6 +15,7 @@
     <Record Code="&quot;CBP&quot;" SearchFields="&quot;CBP,CBP direct&quot;" InterfaceType="&quot;EX&quot;" Name="&quot;CBP direct&quot;" />
     <Record Code="&quot;CMN&quot;" SearchFields="&quot;CMN,Maman Courier&quot;" InterfaceType="&quot;IM&quot;" Name="&quot;Maman Courier&quot;" />
     <Record Code="&quot;NO&quot;" SearchFields="&quot;NO,None&quot;" InterfaceType="&quot;NO&quot;" Name="&quot;None&quot;" />
+    <Record Code="&quot;AMC&quot;" Name="&quot;AMANAC ( Mexico )&quot;" SearchFields="&quot;AMC,AMANAC ( Mexico )&quot;" InterfaceType="&quot;LO&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
