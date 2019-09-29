@@ -193,6 +193,47 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 FillPaymentInvoicesFromInvoicesTransactions(_arpaymentPM, (bool)gla.IsMultiCurrency);
             }
         }
+        private void CheckFullAccountingNumericFields(ARPaymentPM payment)
+        {
+            bool isFullAccounting = IsFullAccActivated();
+            if (isFullAccounting  && (payment.AccountingPaymentMethodCode == "CH" || payment.AccountingPaymentMethodCode == "BT"))
+            {
+                if (payment.Bank != null)
+                {
+                    ReturnExceptionForNumericFields(payment.Bank, "ARPayment.F.Bank", payment.Tenant);
+
+                }
+                if (payment.BankBranch != null)
+                {
+                    ReturnExceptionForNumericFields(payment.BankBranch, "ARPayment.F.BankBranch", payment.Tenant);
+
+                }
+                if (payment.Account != null)
+                {
+                    ReturnExceptionForNumericFields(payment.Account, "ARPayment.F.Account", payment.Tenant);
+                }
+            }
+        }
+        private void ReturnExceptionForNumericFields(string field, string fieldTextCode ,int tenant)
+        {
+            var isNumeric = int.TryParse(field, out int n);
+            if (!isNumeric)
+            {
+
+                ReturnException(fieldTextCode, tenant);
+            }
+
+        }
+        private void ReturnException(string fieldTextCode, int tenant)
+        {
+            bool useLocal = true;
+            var user = GetLoggedContact(tenant);
+            if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+
+            string[] translatedText = TextCodesTranslator.TranslateText("Accounting.General.O.FieldMustBeNumeric",tenant, useLocal).Split(',');
+            throw new Exception(translatedText[0] + TextCodesTranslator.TranslateText(fieldTextCode, tenant, useLocal) + translatedText[1]);
+
+        }
 
         private AccountingPaymentMethod GetARPaymentMethod()
         {
@@ -459,7 +500,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.Id = IdCounter.GetNumber("ARPayment", entityPM.Tenant).ToString();
             }
-
+           
             if (!entityPM.IsExternalEntity && string.IsNullOrEmpty(entityPM.PaymentNo))
             {
                 entityPM.PaymentNo = TableCounter.GetNumber(entityPM.Tenant, "ARPT", "DR", null).ToString();
@@ -512,7 +553,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.ValueDate = entityPM.RegisterDate;
             }
-
+            CheckFullAccountingNumericFields(entityPM);
             tenantRepository = new TenantRepository(entityPM.Tenant);
             tenantPOCO = tenantRepository.GetSingleTenant(entityPM.Tenant);
             cashBookQuery = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;

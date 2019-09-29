@@ -20,8 +20,6 @@ export class NewPaymentCheque {
         this.Helper.WaitByIdAndClick('FABNKS');
         this.Helper.ItemsVisibility('NEWPaymentCheque');
         this.Helper.ItemsPresent('NEWPaymentCheque');
-        this.Helper.ItemsVisibility('NEWPaymentCheque');
-        this.Helper.ItemsPresent('NEWPaymentCheque');
         this.Helper.WaitByIdAndClick('NEWPaymentCheque');
         this.Helper.ItemsVisibility('PaymentCheque_PayToGLAccountId');
         this.Helper.ItemsPresent('PaymentCheque_PayToGLAccountId');

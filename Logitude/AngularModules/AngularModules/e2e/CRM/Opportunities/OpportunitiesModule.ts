@@ -37,9 +37,9 @@ export class OpportunityModule {
         this.OpportunityActions.CloseAsWon();
         this.OpportunityActions.ReOpen('Opportunity_StageId_1');
         this.OpportunityActions.CloseAsLost();
-        this.OpportunityActions.ReOpen('Opportunity_StageId_1');
+        this.OpportunityActions.ReOpen('Opportunity_StageId_2');
         this.OpportunityActions.Copy();
-        this.OpportunityActions.Cancel();
+        this.OpportunityActions.Cancel("MenuButtons_1");
         
     
 
