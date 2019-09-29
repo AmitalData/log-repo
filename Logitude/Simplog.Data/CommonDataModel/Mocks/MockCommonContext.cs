@@ -2523,7 +2523,22 @@ namespace Simplog.Data.CommonDataModel.Mocks
         }
 
 
+        public IDbSet<DWHBuildStatus> DWHBuildStatus
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
 
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+
+  
         public IDbSet<PaymentGatewayPartner> PaymentGatewayPartners
         {
             get

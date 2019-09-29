@@ -447,6 +447,8 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
             modelBuilder.Configurations.Add(new CardContactProductMap());
+            modelBuilder.Configurations.Add(new DWHBuildStatusMap());
+            
             base.OnModelCreating(modelBuilder);
         }
 
@@ -513,6 +515,8 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<TemplateFormat> TemplateFormats { get; set; }
         public IDbSet<DWHSetting> DWHSettings { get; set; }
         public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
+        public IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
+
 
         public IDbSet<Warehouse> Warehouses
         {
