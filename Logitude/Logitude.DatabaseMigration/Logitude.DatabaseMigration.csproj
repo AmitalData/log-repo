@@ -1509,10 +1509,7 @@
     <Compile Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.Designer.cs">
       <DependentUpon>201909250807022_ReconcileExternalPageLineIdNullable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.cs" />
-    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
-      <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
-    </Compile>
+  
     <Compile Include="Migrations\201909260744531_AbedAddToPortFieldsToWarehouseRelease.cs" />
     <Compile Include="Migrations\201909260744531_AbedAddToPortFieldsToWarehouseRelease.Designer.cs">
       <DependentUpon>201909260744531_AbedAddToPortFieldsToWarehouseRelease.cs</DependentUpon>
