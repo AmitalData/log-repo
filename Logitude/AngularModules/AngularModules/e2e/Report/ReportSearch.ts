@@ -19,7 +19,8 @@ export class ReportSearch {
 
   UseSearchBox(searchFeildId: string, searchByRef: string) {
     this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
-    this.Helper.waitByCss('.HyperlinkQueryButtonControl')
+   // this.Helper.waitByCss('.HyperlinkQueryButtonControl')
+    this.Helper.waitByCss('#ViewATREReportbtn');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.HyperlinkQueryButtonControl', 0);
 
   }
