@@ -6,7 +6,7 @@ import { createBreak } from 'typescript';
 export class NewChartOfAccount {
     private Helper: FieldsHelper;
     private GeneralFun: GeneralFunctions;
-   // let E: EditChartOfAccount = new EditChartOfAccount();
+    // let E: EditChartOfAccount = new EditChartOfAccount();
     private Edit: EditChartOfAccount;
 
 
@@ -33,7 +33,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Revenue');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
             this.Helper.WaitBusyIndicator();
-            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'R');
+            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo);
             this.Helper.WaitBusyIndicator();
             this.Helper.ItemsVisibility('ok-AddChartOfAccount');
             this.Helper.ItemsPresent('ok-AddChartOfAccount');
@@ -47,21 +47,21 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Customer');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
             this.Helper.WaitBusyIndicator();
-            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'C');
+            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo);
             this.Helper.WaitBusyIndicator();
             this.Helper.ItemsVisibility('ok-AddChartOfAccount');
             this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
-           
-           
-                this.Helper.WaitBusyIndicator();
-                this.Helper.WaitWindowClosed();
-             
-
-            
 
 
-             
+            this.Helper.WaitBusyIndicator();
+            this.Helper.WaitWindowClosed();
+
+
+
+
+
+
             // this.Helper.WaitBusyIndicator();
 
         }
@@ -69,19 +69,19 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Vendor');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
             this.Helper.WaitBusyIndicator();
-            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'V');
+            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo);
             this.Helper.WaitBusyIndicator();
             this.Helper.ItemsVisibility('ok-AddChartOfAccount');
             this.Helper.ItemsPresent('ok-AddChartOfAccount');
             this.Helper.WaitByIdAndClick('ok-AddChartOfAccount');
-            
 
 
-                this.Helper.WaitBusyIndicator();
-                this.Helper.WaitWindowClosed();
-               
 
-            
+            this.Helper.WaitBusyIndicator();
+            this.Helper.WaitWindowClosed();
+
+
+
             // this.Edit.EditChartOfAccount(ChartOfAccountNo + 'V');
             //this.Helper.WaitBusyIndicator();
         }
@@ -90,7 +90,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Banks');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
             this.Helper.WaitBusyIndicator();
-            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'B');
+            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo);
             this.Helper.WaitBusyIndicator();
             this.Helper.ItemsVisibility('ok-AddChartOfAccount');
             this.Helper.ItemsPresent('ok-AddChartOfAccount');
@@ -104,7 +104,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Expenses');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
             this.Helper.WaitBusyIndicator();
-            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'E');
+            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo);
             this.Helper.WaitBusyIndicator();
             this.Helper.ItemsVisibility('ok-AddChartOfAccount');
             this.Helper.ItemsPresent('ok-AddChartOfAccount');
@@ -118,7 +118,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Works');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
             this.Helper.WaitBusyIndicator();
-            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'W');
+            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo);
             this.Helper.WaitBusyIndicator();
             this.Helper.ItemsVisibility('ok-AddChartOfAccount');
             this.Helper.ItemsPresent('ok-AddChartOfAccount');
@@ -132,7 +132,7 @@ export class NewChartOfAccount {
             this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Debtors And Creditors');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
             this.Helper.WaitBusyIndicator();
-            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo + 'D');
+            this.Helper.WaitByIdAndFill('ChartOfAccount_Code', ChartOfAccountNo);
             this.Helper.WaitBusyIndicator();
             this.Helper.ItemsVisibility('ok-AddChartOfAccount');
             this.Helper.ItemsPresent('ok-AddChartOfAccount');
@@ -140,26 +140,8 @@ export class NewChartOfAccount {
             this.Helper.WaitBusyIndicator();
 
             this.Helper.WaitWindowClosed();
-            // this.Edit.EditChartOfAccount(ChartOfAccountNo + 'D');
-            //this.Helper.WaitBusyIndicator();
-        }
-        //this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode','r');
-        // this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
-        // this.Helper.WaitByIdAndClick('CheckBox');
-        //  this.Helper.WaitByIdAndClick('ok-AddChartOfAccount'); 
-        // this.Helper.WaitBusyIndicator();
-        //   this.Helper.WaitWindowClosed();
-        //  this.Edit.EditChartOfAccount(ChartOfAccountNo + 'C');
 
+
+        }
     }
 }
-
-
-   
-  
-  
-
-
-
-
-
