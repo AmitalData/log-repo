@@ -12132,7 +12132,7 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             };
-
+            List<CurrencyPM> Currencies = GetTenantCurrencies(tenant);
             switch (level)
             {
                 case "ChartOfAccountType":
@@ -12698,12 +12698,18 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     if (item != null)
                     {
+                        CurrencyPM accountCurrency = Currencies.Where(d => d.Id == item.CurrencyId).FirstOrDefault();
+                        string currencyCode = null;
+                       
+                        if (accountCurrency != null && item.IsMultiCurrency==true) {
 
+                            currencyCode = "/" + accountCurrency.Code;
+                        }
                         ResultList record = new ResultList()
                         {
                             Id = item.GLAccountId,
                             Name = item.GLAccountNumber + "-" + item.GLAccountName,
-
+                            CurrencyCode = currencyCode,
                             ParentId = item.ChartOfAccountId,
                             LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
                             LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
@@ -12815,6 +12821,13 @@ namespace WebFreight.Web.ReportsWebServices
 
             return totalData;
         }
+
+        private List<CurrencyPM> GetTenantCurrencies(int tenant)
+        {
+            CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
+            return currencyQuery.GetCurrencyPMsByTenant(tenant).ToList();
+        }
+
         #endregion
 
         #region Load Shipments Stocks

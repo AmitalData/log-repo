@@ -138,7 +138,7 @@ namespace WebFreight.Web.Helpers
                                 else
                                 {
                                     SqlCommandDefinition sqlCommandDefinitionMultiValue = GetMultiValueFilterAsSqlCommandDefinition(filter.TextValue.ToString(), " IN ( ", sqlCommandDefinition.Parameters.Count());
-                                    sqlCommandDefinition = AppendSqlCommandParameters(sqlCommandDefinition, sqlCommandDefinitionMultiValue);
+                                    sqlCommandDefinition.Parameters = sqlCommandDefinition.Parameters.Concat(sqlCommandDefinitionMultiValue.Parameters).ToList();
                                     OperationSimpol = sqlCommandDefinitionMultiValue.SQLString;
 
 
@@ -161,7 +161,7 @@ namespace WebFreight.Web.Helpers
                                 {
                                   
                                     SqlCommandDefinition sqlCommandDefinitionMultiValue = GetMultiValueFilterAsSqlCommandDefinition(filter.TextValue.ToString(), " not IN ( ", sqlCommandDefinition.Parameters.Count());
-                                    sqlCommandDefinition = AppendSqlCommandParameters(sqlCommandDefinition, sqlCommandDefinitionMultiValue);
+                                    sqlCommandDefinition.Parameters = sqlCommandDefinition.Parameters.Concat(sqlCommandDefinitionMultiValue.Parameters).ToList();
                                     OperationSimpol = sqlCommandDefinitionMultiValue.SQLString;
                                     isHaveMultiSelect = true;
                                 }
@@ -229,8 +229,10 @@ namespace WebFreight.Web.Helpers
                             DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
                             string dataWarehouseDateFieldSqlString = dataWarehouseHelper.ResolveWarehoueDateField(((!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code), filter.OperationCode, filter.TextValue.ToString(), Tenant);
                             SqlCommandDefinition sqlCommandDefinitionDateFilter = GetDateFieldValueFilterAsSqlCommandDefinition(dataWarehouseDateFieldSqlString, sqlCommandDefinition.Parameters.Count());
+                            sqlCommandDefinition.Parameters = sqlCommandDefinition.Parameters.Concat(sqlCommandDefinitionDateFilter.Parameters).ToList();
+
                             WhereStmt += sqlCommandDefinitionDateFilter.SQLString + " " + AndOr + " ";
-                            sqlCommandDefinition = AppendSqlCommandParameters(sqlCommandDefinition, sqlCommandDefinitionDateFilter);
+                         
                         }
 
 
@@ -474,7 +476,13 @@ namespace WebFreight.Web.Helpers
             {
                 OrderByString = DWQueryParam.ColumnsSort;
             }
-            string PagingString = " ORDER BY " + OrderByString + " OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
+            string PagingString = " ORDER BY " + OrderByString;
+
+            if(LogitudeSettings.LogitudeURL != "http://localhost:9996")
+            {
+                PagingString += (" OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY"); 
+            }
+
             string FinalQuery = "";
             if (Filters != null)
             {
@@ -561,10 +569,7 @@ namespace WebFreight.Web.Helpers
 
         public  SqlParameter  GetNewInstanceFromSqlParameter(string parameterName, string parameterValue)
         {
-            SqlParameter sqlParameter = new SqlParameter();
-            sqlParameter.ParameterName = parameterName;
-            sqlParameter.Value = parameterValue;
-            return sqlParameter;
+            return new SqlParameter() { ParameterName = parameterName, Value = parameterValue };
         }
 
         public  string GetSQLStringFromSqlCommandDefinition(SqlCommandDefinition sqlCommandDefinition)
@@ -579,12 +584,7 @@ namespace WebFreight.Web.Helpers
             return query;
         }
 
-        public SqlParameterDetails GetNewInstanceFromSqlParameterDetails(string parameterName, string fieldValue)
-        {
-           
-            return new SqlParameterDetails() { ParameterName = parameterName, Value = fieldValue };
-
-        }
+   
        
 
     }

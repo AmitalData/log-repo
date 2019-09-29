@@ -32,7 +32,7 @@ namespace Logitude.WarehouseLib.Data.Repositories
         public List<WarehouseRelease> GetWarehouseReleasesFromIdList(List<string> ids, int tenant)
         {
 
-            List<WarehouseRelease> myResult = (from a in context.WarehouseReleases.Include("WarehouseReleaseStatus").Include("Direction").Include("TransportMode")
+            List<WarehouseRelease> myResult = (from a in context.WarehouseReleases.Include("WarehouseReleaseStatus").Include("Direction").Include("TransportMode").Include("ToAddress.Country").Include("ToAddressCountry")
                                              where a.Tenant == tenant && ids.Contains(a.Id)
                                              select a).ToList();
             return myResult;
