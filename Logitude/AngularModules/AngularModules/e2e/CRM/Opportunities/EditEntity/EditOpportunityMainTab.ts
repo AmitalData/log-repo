@@ -5,6 +5,8 @@ import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
 import { NewPhoneCall } from '../../Activities/NewEntity/NewPhoneCall';
 import { NewTask } from '../../Activities/NewEntity/NewTask';
 import { NewAppointment } from '../../Activities/NewEntity/NewAppointment';
+import { OpportunityActions } from './OpportunitiesActions';
+
 
 export class EditOpportunityMainTab {
     private Helper: FieldsHelper;
@@ -12,6 +14,7 @@ export class EditOpportunityMainTab {
     private newTask: NewTask = new NewTask();
     private newPhoneCall: NewPhoneCall = new NewPhoneCall();
     private newAppointment: NewAppointment = new NewAppointment();
+    private opportunityActions: OpportunityActions = new OpportunityActions();
 
     constructor() {
         this.Helper = new FieldsHelper();
@@ -20,8 +23,6 @@ export class EditOpportunityMainTab {
     public EditMainTab(opportunityDesc: string) {
         this.Helper.WaitByIdAndClick('Opportunity.TH.Overview');
         this.EditMainTabFeilds(opportunityDesc);
-
-
     }
     EditMainTabFeilds(opportunityDesc: string) {
         this.Helper.WaitByIdAndFill('Opportunity_NumberOfShipments', '25');
@@ -35,13 +36,8 @@ export class EditOpportunityMainTab {
         this.newAppointment.FillAppointmentFields('Created from appointment ...');
 
         this.Helper.WaitByIdAndClick('AddQuote');
-        this.newAppointment.FillAppointmentFields('Created from appointment ...');
-
-
-
-
+        this.opportunityActions.AddQuoteFromOpportunity();
     }
-
 }
 
 
