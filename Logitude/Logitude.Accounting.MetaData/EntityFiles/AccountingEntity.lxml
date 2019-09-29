@@ -19,7 +19,6 @@
     <Record Code="&quot;9&quot;" LocalName="&quot;מערכת המחאות&quot;" EnglishName="&quot;Payment Cheque&quot;" />
     <Record Code="&quot;10&quot;" LocalName="&quot;התאמה&quot;" EnglishName="&quot;Adjustment&quot;" />
     <Record Code="&quot;11&quot;" LocalName="&quot;העברת שנה&quot;" EnglishName="&quot;Year Transfer&quot;" />
-    <Record Code="&quot;12&quot;" LocalName="&quot;התאמת בנק&quot;" EnglishName="&quot;Bank Adjustment&quot;" />
   </Records>
   <DataContracts>
     <DataContract Name="&quot;AccountingEntity&quot;" Version="&quot;ApiV1&quot;">

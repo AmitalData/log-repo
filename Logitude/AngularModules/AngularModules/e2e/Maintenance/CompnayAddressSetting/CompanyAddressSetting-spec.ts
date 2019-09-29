@@ -20,18 +20,21 @@ describe('CompanyAddressSetting', () => {
 
     it('Quicksearch', function () {
 
+        //  CompanyAddress.QuickSearch();
         CompanyAddressScenario.Quicksearch();
     });
 
 
     it('SearchCompanyAddressSetting', function () {
 
-     CompanyAddressScenario.SearchCompanyAddressSetting();
+        //   CompanyAddress.SearchCompanyAddressSetting();
+        CompanyAddressScenario.SearchCompanyAddressSetting();
     });
 
 
     it('EditCompanyAddressSitting', function () {
-        
+
+        //  CompanyAddress.EditCompanyAddressSitting();
         CompanyAddressScenario.EditCompanyAddressSitting();
 
     });

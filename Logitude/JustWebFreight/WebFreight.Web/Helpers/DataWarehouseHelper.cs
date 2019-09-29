@@ -58,13 +58,12 @@ namespace WebFreight.Web.Helpers
                 {
                     if (!string.IsNullOrEmpty(betweenDateValue1) && !string.IsNullOrEmpty(betweenDateValue2))
                     {
-                        result = fieldName + ">= <DataFieldValue>" + betweenDateValue1 + "</DataFieldValue> and " + fieldName + "<= <DataFieldValue>" + betweenDateValue2 + "</DataFieldValue>";
-
+                        result = fieldName + ">= '" + betweenDateValue1 + "' and " + fieldName + "<= '" + betweenDateValue2 + "'";
                     }
                     else
                     {
                         string betweenDateValue = !string.IsNullOrEmpty(betweenDateValue1) ? betweenDateValue1 : betweenDateValue2;
-                        result = fieldName + ">= FieldValue1Start" + betweenDateValue + "FieldValue1End and " + fieldName + "<FieldValue2Start" + string.Format("{0:yyyy-MM-dd}", DateTime.Parse(betweenDateValue).AddDays(1)) + "FieldValue2End";
+                        result = fieldName + ">= '" + betweenDateValue + "' and " + fieldName + "<'" + string.Format("{0:yyyy-MM-dd}", DateTime.Parse(betweenDateValue).AddDays(1)) + "'";
                     }
                 }
                 else
@@ -133,15 +132,11 @@ namespace WebFreight.Web.Helpers
             {
                 fieldValue = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(fieldValue));
             }
-            string operationSimpol = operationCode == "After" ? " >" : "<";
-            string result = string.Empty;
+            string operationSimpol = operationCode == "After" ? " >'" : "<'";
+            string result = fieldName + operationSimpol + fieldValue + "'";
             if (isSample)
             {
-                result = operationSimpol + " " + FormatDate(DateTime.Parse(fieldValue),tenant);
-            }
-            else
-            {
-                result = fieldName + operationSimpol + "<DataFieldValue>" + fieldValue + "</DataFieldValue>";
+                result = operationSimpol.Replace("'", "") + " " + FormatDate(DateTime.Parse(fieldValue),tenant);
             }
 
             return result;
@@ -346,7 +341,7 @@ namespace WebFreight.Web.Helpers
 
             if (range == "Day" && operatorCode == "Current")
             {
-                result = (fieldName + "= <DataFieldValue>" + fromDateString + "</DataFieldValue>");
+                result = (fieldName + "= '" + fromDateString + "'");
                 if (isSample)
                 {
                     result = " = " + FormatDate(DateTime.Parse(fromDateString), tenant);
@@ -354,7 +349,7 @@ namespace WebFreight.Web.Helpers
             }
             else
             {
-                result = (fieldName + " >= <DataFieldValue>" + fromDateString + "</DataFieldValue> and " + fieldName + " < <DataFieldValue>" + toDateString + "</DataFieldValue>");
+                result = (fieldName + " >= '" + fromDateString + "' and " + fieldName + " < '" + toDateString + "'");
                 if (isSample)
                 {
                     result = FormatDate(DateTime.Parse(fromDateString), tenant) + " - " + FormatDate(DateTime.Parse(toDateString).AddDays(-1), tenant);

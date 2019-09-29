@@ -520,7 +520,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ImporterDepositionRequestDetails { get; set; }
         public string ForwarderPartnerId { get; set; }
         public string ARInvoices { get; set; }
-        public int OpenReceivablesLines { get; set; }
 
     }
 }
