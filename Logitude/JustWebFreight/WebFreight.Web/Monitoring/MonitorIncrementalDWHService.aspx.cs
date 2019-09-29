@@ -14,6 +14,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using System.Data.Entity.Core.Objects;
 using Simplog.Data.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace WebFreight.Web.Monitoring
 {
@@ -67,15 +68,17 @@ namespace WebFreight.Web.Monitoring
         {
             DateTime todayDateTime = DateTime.Now;
             IGlobalContext globalContext = GlobalContext.GetContext();
-            MobileNotificationLogRepository myRepository = new MobileNotificationLogRepository(globalContext);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
 
-            bool isFailed = (from d in myRepository.context.Settings
+
+            bool isFailed = (from d in commonDataContext.DWHBuildStatus
                              where (d.LastIncrementalDWUpdateDate == null || (EntityFunctions.DiffMinutes(d.LastIncrementalDWUpdateDate, todayDateTime) > 5)) && !d.IsFullBuildDWRunning
                              select d).Any();
+          
             var isUpgrading = false;
             if (isFailed)
             {
-                isUpgrading = (from d in myRepository.context.GlobalDBs
+                isUpgrading = (from d in globalContext.GlobalDBs
                                where d.IsUpgrading
                                select d).Any();
 

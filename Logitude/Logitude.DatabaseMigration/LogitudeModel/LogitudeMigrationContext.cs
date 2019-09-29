@@ -907,8 +907,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<HybridPartnersPermission> HybridPartnersPermissions { get; set; }
 
         public IDbSet<DWHSetting> DWHSettings { get; set; }
-
-
+        public IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
+        
         public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
@@ -4923,6 +4923,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new MetodoPagoMap());
             modelBuilder.Configurations.Add(new HybridPartnersPermissionMap());
             modelBuilder.Configurations.Add(new DWHSettingMap());
+            modelBuilder.Configurations.Add(new DWHBuildStatusMap());
             modelBuilder.Configurations.Add(new DWObjectTableMap());
             modelBuilder.Configurations.Add(new DWObjectFieldMap());
 

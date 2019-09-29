@@ -191,6 +191,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\DocumentFilingBackupSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DocumentsFilingsView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerFieldsUpdateSetting.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\DWHBuildStatus.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DWHSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\EntityCasualData.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\EntityChange.cs" />
@@ -409,6 +410,7 @@
     <Compile Include="CommonDataModel\Mapping\DocumentStatusMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentTypeCategoryMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentTypeMetaDataMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\DWHBuildStatusMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DWHSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\EmailProviderMap.cs" />
     <Compile Include="CommonDataModel\Mapping\EntityCasualDataMap.cs" />
@@ -478,6 +480,7 @@
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTableRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\DWHBuildStatusRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\LogBoxTenantSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CountryCityRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CreditLimitSettingRepository.cs" />
